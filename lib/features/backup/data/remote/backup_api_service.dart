@@ -8,9 +8,9 @@ final backupApiServiceProvider = Provider<BackupApiService>((ref) {
 });
 
 class BackupApiService {
-  final Dio _dio;
 
   BackupApiService(this._dio);
+  final Dio _dio;
 
   Future<Map<String, dynamic>> createBackup({
     required String terminalId,

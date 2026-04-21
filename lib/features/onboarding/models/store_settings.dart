@@ -1,36 +1,4 @@
 class StoreSettings {
-  final String? id;
-  final String? storeId;
-  // Tax
-  final String? taxLabel;
-  final double taxRate;
-  final bool pricesIncludeTax;
-  final String? taxNumber;
-  // Receipt
-  final String? receiptHeader;
-  final String? receiptFooter;
-  final bool receiptShowLogo;
-  final bool receiptShowTaxBreakdown;
-  // Currency
-  final String currencyCode;
-  final String currencySymbol;
-  final int decimalPlaces;
-  final String thousandSeparator;
-  final String decimalSeparator;
-  // POS Behaviour
-  final bool allowNegativeStock;
-  final bool requireCustomerForSale;
-  final bool autoPrintReceipt;
-  final int sessionTimeoutMinutes;
-  final int maxDiscountPercent;
-  final bool enableTips;
-  final bool enableKitchenDisplay;
-  // Notifications
-  final bool lowStockAlert;
-  final int lowStockThreshold;
-  // Extra
-  final Map<String, dynamic> extra;
-  final DateTime? updatedAt;
 
   const StoreSettings({
     this.id,
@@ -91,6 +59,38 @@ class StoreSettings {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String? id;
+  final String? storeId;
+  // Tax
+  final String? taxLabel;
+  final double taxRate;
+  final bool pricesIncludeTax;
+  final String? taxNumber;
+  // Receipt
+  final String? receiptHeader;
+  final String? receiptFooter;
+  final bool receiptShowLogo;
+  final bool receiptShowTaxBreakdown;
+  // Currency
+  final String currencyCode;
+  final String currencySymbol;
+  final int decimalPlaces;
+  final String thousandSeparator;
+  final String decimalSeparator;
+  // POS Behaviour
+  final bool allowNegativeStock;
+  final bool requireCustomerForSale;
+  final bool autoPrintReceipt;
+  final int sessionTimeoutMinutes;
+  final int maxDiscountPercent;
+  final bool enableTips;
+  final bool enableKitchenDisplay;
+  // Notifications
+  final bool lowStockAlert;
+  final int lowStockThreshold;
+  // Extra
+  final Map<String, dynamic> extra;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

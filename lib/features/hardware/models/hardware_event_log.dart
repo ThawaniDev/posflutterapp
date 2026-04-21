@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class HardwareEventLog {
-  final String id;
-  final String storeId;
-  final String terminalId;
-  final HardwareDeviceType deviceType;
-  final String event;
-  final String? details;
-  final DateTime? createdAt;
 
   const HardwareEventLog({
     required this.id,
@@ -30,6 +23,13 @@ class HardwareEventLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String terminalId;
+  final HardwareDeviceType deviceType;
+  final String event;
+  final String? details;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

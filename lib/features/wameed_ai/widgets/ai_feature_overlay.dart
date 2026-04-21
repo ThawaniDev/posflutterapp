@@ -8,9 +8,9 @@ import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
 
 class AIFeatureOverlay extends ConsumerWidget {
-  final void Function(String slug, String displayName) onFeatureSelected;
 
   const AIFeatureOverlay({super.key, required this.onFeatureSelected});
+  final void Function(String slug, String displayName) onFeatureSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

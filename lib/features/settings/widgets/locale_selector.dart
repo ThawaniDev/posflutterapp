@@ -7,11 +7,11 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class LocaleSelector extends StatelessWidget {
+
+  const LocaleSelector({super.key, required this.locales, this.selectedCode, required this.onSelected});
   final List<SupportedLocale> locales;
   final String? selectedCode;
   final ValueChanged<SupportedLocale> onSelected;
-
-  const LocaleSelector({super.key, required this.locales, this.selectedCode, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {

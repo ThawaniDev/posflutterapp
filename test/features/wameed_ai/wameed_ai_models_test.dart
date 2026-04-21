@@ -145,7 +145,7 @@ void main() {
     });
 
     test('toJson only includes configurable fields', () {
-      final config = AIStoreFeatureConfig(id: 'cfg-1', storeId: 'store-1', featureId: 'feat-1', isEnabled: true, dailyLimit: 100);
+      const config = AIStoreFeatureConfig(id: 'cfg-1', storeId: 'store-1', featureId: 'feat-1', isEnabled: true, dailyLimit: 100);
       final output = config.toJson();
       expect(output['is_enabled'], true);
       expect(output['daily_limit'], 100);
@@ -154,8 +154,8 @@ void main() {
     });
 
     test('equality based on id', () {
-      final a = AIStoreFeatureConfig(id: 'cfg-1', storeId: 's1', featureId: 'f1');
-      final b = AIStoreFeatureConfig(id: 'cfg-1', storeId: 's2', featureId: 'f2');
+      const a = AIStoreFeatureConfig(id: 'cfg-1', storeId: 's1', featureId: 'f1');
+      const b = AIStoreFeatureConfig(id: 'cfg-1', storeId: 's2', featureId: 'f2');
       expect(a, equals(b));
     });
   });

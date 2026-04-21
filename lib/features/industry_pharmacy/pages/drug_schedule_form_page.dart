@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../enums/drug_schedule_type.dart';
-import '../models/drug_schedule.dart';
-import '../providers/pharmacy_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_pharmacy/enums/drug_schedule_type.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/drug_schedule.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DrugScheduleFormPage extends ConsumerStatefulWidget {
-  final DrugSchedule? schedule;
   const DrugScheduleFormPage({super.key, this.schedule});
+  final DrugSchedule? schedule;
 
   @override
   ConsumerState<DrugScheduleFormPage> createState() => _DrugScheduleFormPageState();
@@ -108,7 +108,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<DrugScheduleType>(
               hint: l10n.selectScheduleType,
               label: l10n.notifScheduleType,
@@ -134,9 +134,9 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _activeIngredientCtrl, label: l10n.pharmacyActiveIngredient, hint: l10n.pharmacyDrugNameHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -148,9 +148,9 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _manufacturerCtrl, label: l10n.pharmacyManufacturer, hint: l10n.pharmacyManufacturerHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosToggle(
               value: _requiresPrescription,
               onChanged: (v) => setState(() => _requiresPrescription = v),

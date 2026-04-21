@@ -1,17 +1,4 @@
 class DeliveryWebhookLog {
-  final String id;
-  final String platform;
-  final String? storeId;
-  final String eventType;
-  final String? externalOrderId;
-  final Map<String, dynamic>? payload;
-  final Map<String, dynamic>? headers;
-  final bool? signatureValid;
-  final bool processed;
-  final String? processingResult;
-  final String? errorMessage;
-  final String? ipAddress;
-  final DateTime? receivedAt;
 
   const DeliveryWebhookLog({
     required this.id,
@@ -46,6 +33,19 @@ class DeliveryWebhookLog {
       receivedAt: json['received_at'] != null ? DateTime.parse(json['received_at'] as String) : null,
     );
   }
+  final String id;
+  final String platform;
+  final String? storeId;
+  final String eventType;
+  final String? externalOrderId;
+  final Map<String, dynamic>? payload;
+  final Map<String, dynamic>? headers;
+  final bool? signatureValid;
+  final bool processed;
+  final String? processingResult;
+  final String? errorMessage;
+  final String? ipAddress;
+  final DateTime? receivedAt;
 
   Map<String, dynamic> toJson() {
     return {

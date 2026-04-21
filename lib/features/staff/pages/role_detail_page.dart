@@ -3,16 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/staff/models/permission.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 import 'package:wameedpos/features/staff/providers/roles_state.dart';
 
 class RoleDetailPage extends ConsumerStatefulWidget {
-  final int roleId;
 
   const RoleDetailPage({super.key, required this.roleId});
+  final int roleId;
 
   @override
   ConsumerState<RoleDetailPage> createState() => _RoleDetailPageState();
@@ -155,7 +154,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
             Text(roleState.message, style: TextStyle(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
             const SizedBox(height: AppSpacing.lg),
@@ -194,7 +193,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.info_outline, color: AppColors.info, size: 20),
+                    const Icon(Icons.info_outline, color: AppColors.info, size: 20),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
@@ -249,7 +248,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
             else if (permState is PermissionsLoaded)
               ..._buildPermissionModules(permState.grouped)
             else if (permState is PermissionsError)
-              Text(l10n.staffFailedLoadPermissions(permState.message), style: TextStyle(color: AppColors.error)),
+              Text(l10n.staffFailedLoadPermissions(permState.message), style: const TextStyle(color: AppColors.error)),
           ],
         ),
       ),
@@ -269,16 +268,16 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
         borderRadius: AppRadius.borderMd,
 
-        border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
         child: ExpansionTile(
           leading: Icon(
             _moduleIcon(module),
-            color: moduleSelected.length == permissions.length ? AppColors.primary : AppColors.textMutedLight,
+            color: moduleSelected.length == permissions.length ? AppColors.primary : AppColors.mutedFor(context),
           ),
           title: Text(_formatModule(module), style: Theme.of(context).textTheme.titleSmall),
           subtitle: Text(
             '${moduleSelected.length}/${permissions.length} ${l10n.staffActive}',
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
           ),
           trailing: _isEditing
               ? Checkbox(
@@ -321,7 +320,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
               subtitle: perm.requiresPin == true
                   ? Row(
                       children: [
-                        Icon(Icons.pin, size: 14, color: AppColors.warning),
+                        const Icon(Icons.pin, size: 14, color: AppColors.warning),
                         const SizedBox(width: 4),
                         Text(
                           l10n.staffRequiresPinOverride,
@@ -378,10 +377,10 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 }
 
 class _SectionHeader extends StatelessWidget {
-  final String title;
-  final Widget? trailing;
 
   const _SectionHeader({required this.title, this.trailing});
+  final String title;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -389,7 +388,7 @@ class _SectionHeader extends StatelessWidget {
       children: [
         Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
         const Spacer(),
-        if (trailing != null) trailing!,
+        ?trailing,
       ],
     );
   }

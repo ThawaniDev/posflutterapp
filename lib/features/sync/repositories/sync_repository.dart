@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
 
 class SyncRepository {
-  final SyncApiService _api;
   SyncRepository(this._api);
+  final SyncApiService _api;
 
   Future<Map<String, dynamic>> push({
     required String terminalId,

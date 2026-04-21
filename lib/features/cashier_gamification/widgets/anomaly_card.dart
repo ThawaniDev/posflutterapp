@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AnomalyCard extends StatelessWidget {
-  final CashierAnomaly anomaly;
-  final VoidCallback? onReview;
 
   const AnomalyCard({super.key, required this.anomaly, this.onReview});
+  final CashierAnomaly anomaly;
+  final VoidCallback? onReview;
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +76,9 @@ class AnomalyCard extends StatelessWidget {
               AppSpacing.gapH4,
               Row(
                 children: [
-                  Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
+                  const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
                   AppSpacing.gapW4,
-                  Text('Reviewed', style: TextStyle(fontSize: 12, color: AppColors.success)),
+                  const Text('Reviewed', style: TextStyle(fontSize: 12, color: AppColors.success)),
                   if (anomaly.reviewNotes != null && anomaly.reviewNotes!.isNotEmpty) ...[
                     AppSpacing.gapW8,
                     Expanded(
@@ -128,8 +127,8 @@ class AnomalyCard extends StatelessWidget {
 }
 
 class _SeverityChip extends StatelessWidget {
-  final String severity;
   const _SeverityChip({required this.severity});
+  final String severity;
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +159,9 @@ class _SeverityChip extends StatelessWidget {
 }
 
 class _InfoTag extends StatelessWidget {
+  const _InfoTag({required this.label, required this.value});
   final String label;
   final String value;
-  const _InfoTag({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

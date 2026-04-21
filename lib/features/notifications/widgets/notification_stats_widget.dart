@@ -114,10 +114,10 @@ class _NotificationStatsWidgetState extends ConsumerState<NotificationStatsWidge
       'order' => AppColors.info,
       'inventory' => AppColors.warning,
       'promotion' => AppColors.purple,
-      'system' => AppColors.textMutedLight,
+      'system' => AppColors.mutedFor(context),
       'payment' => AppColors.success,
       'staff' => AppColors.info,
-      _ => AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
   }
 

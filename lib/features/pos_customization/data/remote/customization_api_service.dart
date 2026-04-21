@@ -12,9 +12,9 @@ final customizationApiServiceProvider = Provider<CustomizationApiService>((ref) 
 });
 
 class CustomizationApiService {
-  final Dio _dio;
 
   CustomizationApiService(this._dio);
+  final Dio _dio;
 
   // ─── Settings ────────────────────────────────
 

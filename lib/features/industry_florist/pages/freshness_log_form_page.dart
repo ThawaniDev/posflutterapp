@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/flower_freshness_log.dart';
-import '../providers/florist_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FreshnessLogFormPage extends ConsumerStatefulWidget {
-  final FlowerFreshnessLog? log;
   const FreshnessLogFormPage({super.key, this.log});
+  final FlowerFreshnessLog? log;
 
   @override
   ConsumerState<FreshnessLogFormPage> createState() => _FreshnessLogFormPageState();
@@ -98,7 +98,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
               onChanged: (v) => setState(() => _selectedProductId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(
@@ -110,7 +110,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(

@@ -1,19 +1,6 @@
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class CashSession {
-  final String id;
-  final String storeId;
-  final String? terminalId;
-  final String openedBy;
-  final String? closedBy;
-  final double openingFloat;
-  final double? expectedCash;
-  final double? actualCash;
-  final double? variance;
-  final SessionStatus? status;
-  final DateTime? openedAt;
-  final DateTime? closedAt;
-  final String? closeNotes;
 
   const CashSession({
     required this.id,
@@ -48,6 +35,19 @@ class CashSession {
       closeNotes: json['close_notes'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final String? terminalId;
+  final String openedBy;
+  final String? closedBy;
+  final double openingFloat;
+  final double? expectedCash;
+  final double? actualCash;
+  final double? variance;
+  final SessionStatus? status;
+  final DateTime? openedAt;
+  final DateTime? closedAt;
+  final String? closeNotes;
 
   Map<String, dynamic> toJson() {
     return {

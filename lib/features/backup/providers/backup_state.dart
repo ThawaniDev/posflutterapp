@@ -11,13 +11,13 @@ class BackupListLoading extends BackupListState {
 }
 
 class BackupListLoaded extends BackupListState {
-  final Map<String, dynamic> data;
   const BackupListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class BackupListError extends BackupListState {
-  final String message;
   const BackupListError(this.message);
+  final String message;
 }
 
 // ── Schedule State ───────────────────────────────────────────
@@ -35,13 +35,13 @@ class BackupScheduleLoading extends BackupScheduleState {
 }
 
 class BackupScheduleLoaded extends BackupScheduleState {
-  final Map<String, dynamic> data;
   const BackupScheduleLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class BackupScheduleError extends BackupScheduleState {
-  final String message;
   const BackupScheduleError(this.message);
+  final String message;
 }
 
 // ── Storage State ────────────────────────────────────────────
@@ -59,13 +59,13 @@ class BackupStorageLoading extends BackupStorageState {
 }
 
 class BackupStorageLoaded extends BackupStorageState {
-  final Map<String, dynamic> data;
   const BackupStorageLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class BackupStorageError extends BackupStorageState {
-  final String message;
   const BackupStorageError(this.message);
+  final String message;
 }
 
 // ── Operation State (create, restore, verify, delete, export) ─
@@ -83,11 +83,11 @@ class BackupOperationRunning extends BackupOperationState {
 }
 
 class BackupOperationSuccess extends BackupOperationState {
-  final Map<String, dynamic> data;
   const BackupOperationSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class BackupOperationError extends BackupOperationState {
-  final String message;
   const BackupOperationError(this.message);
+  final String message;
 }

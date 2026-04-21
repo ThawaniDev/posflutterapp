@@ -16,17 +16,17 @@ class RolesLoading extends RolesState {
 }
 
 class RolesLoaded extends RolesState {
-  final List<Role> roles;
 
   const RolesLoaded({required this.roles});
+  final List<Role> roles;
 
   RolesLoaded copyWith({List<Role>? roles}) => RolesLoaded(roles: roles ?? this.roles);
 }
 
 class RolesError extends RolesState {
-  final String message;
 
   const RolesError({required this.message});
+  final String message;
 }
 
 /// State for role detail/edit screen
@@ -43,9 +43,9 @@ class RoleDetailLoading extends RoleDetailState {
 }
 
 class RoleDetailLoaded extends RoleDetailState {
-  final Role role;
 
   const RoleDetailLoaded({required this.role});
+  final Role role;
 }
 
 class RoleDetailSaving extends RoleDetailState {
@@ -53,15 +53,15 @@ class RoleDetailSaving extends RoleDetailState {
 }
 
 class RoleDetailSaved extends RoleDetailState {
-  final Role role;
 
   const RoleDetailSaved({required this.role});
+  final Role role;
 }
 
 class RoleDetailError extends RoleDetailState {
-  final String message;
 
   const RoleDetailError({required this.message});
+  final String message;
 }
 
 /// State for the permissions catalog
@@ -78,9 +78,9 @@ class PermissionsLoading extends PermissionsState {
 }
 
 class PermissionsLoaded extends PermissionsState {
-  final Map<String, List<Permission>> grouped;
 
   const PermissionsLoaded({required this.grouped});
+  final Map<String, List<Permission>> grouped;
 
   List<String> get modules => grouped.keys.toList();
 
@@ -88,13 +88,22 @@ class PermissionsLoaded extends PermissionsState {
 }
 
 class PermissionsError extends PermissionsState {
-  final String message;
 
   const PermissionsError({required this.message});
+  final String message;
 }
 
 /// State for the current user's effective permissions (locally cached)
 class UserPermissionsState {
+
+  const UserPermissionsState({
+    this.permissions = const [],
+    this.isLoaded = false,
+    this.error,
+    this.branchScope = 'branch',
+    this.accessibleStoreIds = const [],
+    this.branchRoles = const {},
+  });
   final List<String> permissions;
   final bool isLoaded;
   final String? error;
@@ -107,15 +116,6 @@ class UserPermissionsState {
 
   /// Per-branch role info keyed by store ID
   final Map<String, BranchRoleInfo> branchRoles;
-
-  const UserPermissionsState({
-    this.permissions = const [],
-    this.isLoaded = false,
-    this.error,
-    this.branchScope = 'branch',
-    this.accessibleStoreIds = const [],
-    this.branchRoles = const {},
-  });
 
   bool hasPermission(String code) => permissions.contains(code);
 

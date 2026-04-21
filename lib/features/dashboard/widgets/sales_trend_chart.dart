@@ -8,9 +8,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SalesTrendChart extends StatelessWidget {
-  final Map<String, dynamic> salesTrend;
 
   const SalesTrendChart({super.key, required this.salesTrend});
+  final Map<String, dynamic> salesTrend;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class SalesTrendChart extends StatelessWidget {
           child: Center(
             child: Text(
               l10n.noData,
-              style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
             ),
           ),
         ),
@@ -39,13 +39,13 @@ class SalesTrendChart extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.show_chart_rounded, color: AppColors.primary, size: 20),
+              const Icon(Icons.show_chart_rounded, color: AppColors.primary, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardSalesTrend, style: AppTypography.headlineSmall),
               const Spacer(),
               _LegendDot(color: AppColors.primary, label: l10n.dashboardThisPeriod),
               AppSpacing.gapW12,
-              _LegendDot(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight, label: l10n.dashboardPreviousPeriod),
+              _LegendDot(color: AppColors.mutedFor(context), label: l10n.dashboardPreviousPeriod),
             ],
           ),
           AppSpacing.gapH16,
@@ -60,10 +60,10 @@ class SalesTrendChart extends StatelessWidget {
 }
 
 class _LegendDot extends StatelessWidget {
-  final Color color;
-  final String label;
 
   const _LegendDot({required this.color, required this.label});
+  final Color color;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +83,11 @@ class _LegendDot extends StatelessWidget {
 }
 
 class _SalesTrendLineChart extends StatelessWidget {
+
+  const _SalesTrendLineChart({required this.current, required this.previous, required this.isDark});
   final List<Map<String, dynamic>> current;
   final List<Map<String, dynamic>> previous;
   final bool isDark;
-
-  const _SalesTrendLineChart({required this.current, required this.previous, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class _SalesTrendLineChart extends StatelessWidget {
       previousSpots.add(FlSpot(i.toDouble(), _toDouble(previous[i]['revenue'])));
     }
 
-    final secondaryColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final secondaryColor = AppColors.mutedFor(context);
 
     return LineChart(
       LineChartData(
@@ -115,7 +115,7 @@ class _SalesTrendLineChart extends StatelessWidget {
               color: secondaryColor,
               barWidth: 1.5,
               isStrokeCapRound: true,
-              dotData: FlDotData(show: false),
+              dotData: const FlDotData(show: false),
               dashArray: [6, 4],
               belowBarData: BarAreaData(show: false),
             ),
@@ -135,7 +135,7 @@ class _SalesTrendLineChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context), strokeWidth: 0.8),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -154,7 +154,7 @@ class _SalesTrendLineChart extends StatelessWidget {
                   meta: meta,
                   child: Text(
                     _shortDate(raw),
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   ),
                 );
               },
@@ -168,7 +168,7 @@ class _SalesTrendLineChart extends StatelessWidget {
                 meta: meta,
                 child: Text(
                   _formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                 ),
               ),
             ),

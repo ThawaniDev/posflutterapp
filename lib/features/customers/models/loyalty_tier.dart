@@ -1,13 +1,4 @@
 class LoyaltyTier {
-  final String id;
-  final String storeId;
-  final String tierNameAr;
-  final String tierNameEn;
-  final int tierOrder;
-  final int minPoints;
-  final Map<String, dynamic>? benefits;
-  final String? iconUrl;
-  final DateTime? createdAt;
 
   const LoyaltyTier({
     required this.id,
@@ -34,6 +25,15 @@ class LoyaltyTier {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String tierNameAr;
+  final String tierNameEn;
+  final int tierOrder;
+  final int minPoints;
+  final Map<String, dynamic>? benefits;
+  final String? iconUrl;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

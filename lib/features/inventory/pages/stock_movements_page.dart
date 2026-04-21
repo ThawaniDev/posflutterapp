@@ -7,9 +7,9 @@ import 'package:wameedpos/features/inventory/providers/inventory_providers.dart'
 import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
 
 class StockMovementsPage extends ConsumerStatefulWidget {
-  final String? productId;
 
   const StockMovementsPage({super.key, this.productId});
+  final String? productId;
 
   @override
   ConsumerState<StockMovementsPage> createState() => _StockMovementsPageState();

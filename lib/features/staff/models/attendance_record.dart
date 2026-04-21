@@ -1,17 +1,28 @@
 import 'package:wameedpos/features/auth/enums/auth_method.dart';
+import 'package:wameedpos/features/staff/models/break_record.dart';
+
+/// Minimal nested staff info returned inline by the API.
+class AttendanceStaffUser {
+
+  const AttendanceStaffUser({required this.id, required this.firstName, required this.lastName, this.photoUrl});
+
+  factory AttendanceStaffUser.fromJson(Map<String, dynamic> json) {
+    return AttendanceStaffUser(
+      id: json['id'] as String,
+      firstName: json['first_name'] as String? ?? '',
+      lastName: json['last_name'] as String? ?? '',
+      photoUrl: json['photo_url'] as String?,
+    );
+  }
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String? photoUrl;
+
+  String get fullName => '$firstName $lastName'.trim();
+}
 
 class AttendanceRecord {
-  final String id;
-  final String staffUserId;
-  final String storeId;
-  final DateTime clockInAt;
-  final DateTime? clockOutAt;
-  final int? breakMinutes;
-  final String? scheduledShiftId;
-  final int? overtimeMinutes;
-  final String? notes;
-  final AuthMethod authMethod;
-  final DateTime? createdAt;
 
   const AttendanceRecord({
     required this.id,
@@ -24,7 +35,10 @@ class AttendanceRecord {
     this.overtimeMinutes,
     this.notes,
     required this.authMethod,
+    this.status,
     this.createdAt,
+    this.staffUser,
+    this.breakRecords = const [],
   });
 
   factory AttendanceRecord.fromJson(Map<String, dynamic> json) {
@@ -38,9 +52,44 @@ class AttendanceRecord {
       scheduledShiftId: json['scheduled_shift_id'] as String?,
       overtimeMinutes: (json['overtime_minutes'] as num?)?.toInt(),
       notes: json['notes'] as String?,
-      authMethod: AuthMethod.fromValue(json['auth_method'] as String),
+      authMethod: AuthMethod.fromValue(json['auth_method'] as String? ?? 'pin'),
+      status: json['status'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      staffUser: json['staff_user'] != null && json['staff_user'] is Map<String, dynamic>
+          ? AttendanceStaffUser.fromJson(json['staff_user'] as Map<String, dynamic>)
+          : null,
+      breakRecords: json['break_records'] != null && json['break_records'] is List
+          ? (json['break_records'] as List).map((b) => BreakRecord.fromJson(b as Map<String, dynamic>)).toList()
+          : const [],
     );
+  }
+  final String id;
+  final String staffUserId;
+  final String storeId;
+  final DateTime clockInAt;
+  final DateTime? clockOutAt;
+  final int? breakMinutes;
+  final String? scheduledShiftId;
+  final int? overtimeMinutes;
+  final String? notes;
+  final AuthMethod authMethod;
+  final String? status;
+  final DateTime? createdAt;
+  final AttendanceStaffUser? staffUser;
+  final List<BreakRecord> breakRecords;
+
+  bool get isOpen => clockOutAt == null;
+  bool get isOnBreak => breakRecords.any((b) => b.breakEnd == null);
+
+  Duration get workedDuration {
+    final end = clockOutAt ?? DateTime.now();
+    return end.difference(clockInAt);
+  }
+
+  Duration get netWorkedDuration {
+    final total = workedDuration;
+    final breakDur = Duration(minutes: breakMinutes ?? 0);
+    return total - breakDur;
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +104,7 @@ class AttendanceRecord {
       'overtime_minutes': overtimeMinutes,
       'notes': notes,
       'auth_method': authMethod.value,
+      'status': status,
       'created_at': createdAt?.toIso8601String(),
     };
   }
@@ -70,7 +120,10 @@ class AttendanceRecord {
     int? overtimeMinutes,
     String? notes,
     AuthMethod? authMethod,
+    String? status,
     DateTime? createdAt,
+    AttendanceStaffUser? staffUser,
+    List<BreakRecord>? breakRecords,
   }) {
     return AttendanceRecord(
       id: id ?? this.id,
@@ -83,7 +136,10 @@ class AttendanceRecord {
       overtimeMinutes: overtimeMinutes ?? this.overtimeMinutes,
       notes: notes ?? this.notes,
       authMethod: authMethod ?? this.authMethod,
+      status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
+      staffUser: staffUser ?? this.staffUser,
+      breakRecords: breakRecords ?? this.breakRecords,
     );
   }
 

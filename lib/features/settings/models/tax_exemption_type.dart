@@ -1,10 +1,4 @@
 class TaxExemptionType {
-  final String id;
-  final String code;
-  final String name;
-  final String nameAr;
-  final String? requiredDocuments;
-  final bool? isActive;
 
   const TaxExemptionType({
     required this.id,
@@ -25,6 +19,12 @@ class TaxExemptionType {
       isActive: json['is_active'] as bool?,
     );
   }
+  final String id;
+  final String code;
+  final String name;
+  final String nameAr;
+  final String? requiredDocuments;
+  final bool? isActive;
 
   Map<String, dynamic> toJson() {
     return {

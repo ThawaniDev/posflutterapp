@@ -1,11 +1,4 @@
 class GoodsReceiptItem {
-  final String id;
-  final String goodsReceiptId;
-  final String productId;
-  final double quantity;
-  final double unitCost;
-  final String? batchNumber;
-  final DateTime? expiryDate;
 
   const GoodsReceiptItem({
     required this.id,
@@ -28,6 +21,13 @@ class GoodsReceiptItem {
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
     );
   }
+  final String id;
+  final String goodsReceiptId;
+  final String productId;
+  final double quantity;
+  final double unitCost;
+  final String? batchNumber;
+  final DateTime? expiryDate;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,7 +1,4 @@
 class PromotionProduct {
-  final String id;
-  final String promotionId;
-  final String productId;
 
   const PromotionProduct({
     required this.id,
@@ -16,6 +13,9 @@ class PromotionProduct {
       productId: json['product_id'] as String,
     );
   }
+  final String id;
+  final String promotionId;
+  final String productId;
 
   Map<String, dynamic> toJson() {
     return {

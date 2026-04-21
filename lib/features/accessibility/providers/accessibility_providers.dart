@@ -8,8 +8,8 @@ final accessibilityPrefsProvider = StateNotifierProvider<AccessibilityPrefsNotif
 );
 
 class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> {
-  final AccessibilityRepository _repo;
   AccessibilityPrefsNotifier(this._repo) : super(const PrefsInitial());
+  final AccessibilityRepository _repo;
 
   Future<void> load() async {
     if (state is! PrefsLoaded) state = const PrefsLoading();
@@ -87,8 +87,8 @@ final shortcutsProvider = StateNotifierProvider<ShortcutsNotifier, ShortcutsStat
 );
 
 class ShortcutsNotifier extends StateNotifier<ShortcutsState> {
-  final AccessibilityRepository _repo;
   ShortcutsNotifier(this._repo) : super(const ShortcutsInitial());
+  final AccessibilityRepository _repo;
 
   Future<void> load() async {
     if (state is! ShortcutsLoaded) state = const ShortcutsLoading();

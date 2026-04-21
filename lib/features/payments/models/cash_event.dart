@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/payments/enums/cash_event_type.dart';
 
 class CashEvent {
-  final String id;
-  final String cashSessionId;
-  final CashEventType type;
-  final double amount;
-  final String reason;
-  final String? notes;
-  final String performedBy;
-  final DateTime? createdAt;
 
   const CashEvent({
     required this.id,
@@ -33,6 +25,14 @@ class CashEvent {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String cashSessionId;
+  final CashEventType type;
+  final double amount;
+  final String reason;
+  final String? notes;
+  final String performedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

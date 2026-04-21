@@ -1,14 +1,4 @@
 class LoyaltyConfig {
-  final String id;
-  final String organizationId;
-  final double? pointsPerSar;
-  final double? sarPerPoint;
-  final int? minRedemptionPoints;
-  final int? pointsExpiryMonths;
-  final List<String>? excludedCategoryIds;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const LoyaltyConfig({
     required this.id,
@@ -39,6 +29,16 @@ class LoyaltyConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final double? pointsPerSar;
+  final double? sarPerPoint;
+  final int? minRedemptionPoints;
+  final int? pointsExpiryMonths;
+  final List<String>? excludedCategoryIds;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

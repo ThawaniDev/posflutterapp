@@ -11,9 +11,9 @@ final receivablesApiServiceProvider = Provider<ReceivablesApiService>((ref) {
 });
 
 class ReceivablesApiService {
-  final Dio _dio;
 
   ReceivablesApiService(this._dio);
+  final Dio _dio;
 
   // ─── List Receivables ──────────────────────────────────────────────
 
@@ -37,17 +37,17 @@ class ReceivablesApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (customerId != null) 'customer_id': customerId,
-        if (storeId != null) 'store_id': storeId,
-        if (status != null) 'status': status,
-        if (receivableType != null) 'receivable_type': receivableType,
-        if (source != null) 'source': source,
+        'customer_id': ?customerId,
+        'store_id': ?storeId,
+        'status': ?status,
+        'receivable_type': ?receivableType,
+        'source': ?source,
         if (search != null && search.isNotEmpty) 'search': search,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
         if (overdue == true) 'overdue': 1,
-        if (sortBy != null) 'sort_by': sortBy,
-        if (sortDir != null) 'sort_dir': sortDir,
+        'sort_by': ?sortBy,
+        'sort_dir': ?sortDir,
       },
     );
 
@@ -92,11 +92,11 @@ class ReceivablesApiService {
         'receivable_type': receivableType,
         'source': source,
         'amount': amount,
-        if (dueDate != null) 'due_date': dueDate,
-        if (description != null) 'description': description,
-        if (descriptionAr != null) 'description_ar': descriptionAr,
-        if (notes != null) 'notes': notes,
-        if (referenceNumber != null) 'reference_number': referenceNumber,
+        'due_date': ?dueDate,
+        'description': ?description,
+        'description_ar': ?descriptionAr,
+        'notes': ?notes,
+        'reference_number': ?referenceNumber,
       },
     );
 
@@ -131,9 +131,9 @@ class ReceivablesApiService {
       ApiEndpoints.receivablePayments(receivableId),
       data: {
         'amount': amount,
-        if (orderId != null) 'order_id': orderId,
-        if (paymentMethod != null) 'payment_method': paymentMethod,
-        if (notes != null) 'notes': notes,
+        'order_id': ?orderId,
+        'payment_method': ?paymentMethod,
+        'notes': ?notes,
       },
     );
 

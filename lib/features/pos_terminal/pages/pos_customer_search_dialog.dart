@@ -41,7 +41,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final customersState = ref.watch(posCustomersProvider);
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -134,7 +134,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
 
     return ListView.separated(
       itemCount: customers.length,
-      separatorBuilder: (_, __) => Divider(height: 1, color: isDark ? AppColors.borderLight : AppColors.borderLight),
+      separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.borderFor(context)),
       itemBuilder: (context, index) => _CustomerTile(
         customer: customers[index],
         onTap: () => _selectCustomer(customers[index]),

@@ -90,13 +90,6 @@ class SyncQueueManager {
 }
 
 class QueuedOperation {
-  final String id;
-  final String table;
-  final QueueOperationType type;
-  final Map<String, dynamic> data;
-  final DateTime createdAt;
-  final int retryCount;
-  final String? lastError;
 
   const QueuedOperation({
     required this.id,
@@ -119,6 +112,13 @@ class QueuedOperation {
       lastError: json['last_error'] as String?,
     );
   }
+  final String id;
+  final String table;
+  final QueueOperationType type;
+  final Map<String, dynamic> data;
+  final DateTime createdAt;
+  final int retryCount;
+  final String? lastError;
 
   Map<String, dynamic> toJson() => {
     'id': id,

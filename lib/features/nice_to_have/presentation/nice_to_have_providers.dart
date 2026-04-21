@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/nice_to_have_repository.dart';
-import 'nice_to_have_state.dart';
+import 'package:wameedpos/features/nice_to_have/data/nice_to_have_repository.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_state.dart';
 
 // ─── Wishlist ─────────────────────────────────────────────
 final wishlistProvider = StateNotifierProvider<WishlistNotifier, WishlistState>((ref) {
@@ -8,8 +8,8 @@ final wishlistProvider = StateNotifierProvider<WishlistNotifier, WishlistState>(
 });
 
 class WishlistNotifier extends StateNotifier<WishlistState> {
-  final NiceToHaveRepository _repo;
   WishlistNotifier(this._repo) : super(const WishlistInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load(String customerId) async {
     if (state is! WishlistLoaded) state = const WishlistLoading();
@@ -29,8 +29,8 @@ final appointmentProvider = StateNotifierProvider<AppointmentNotifier, Appointme
 });
 
 class AppointmentNotifier extends StateNotifier<AppointmentState> {
-  final NiceToHaveRepository _repo;
   AppointmentNotifier(this._repo) : super(const AppointmentInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load() async {
     if (state is! AppointmentLoaded) state = const AppointmentLoading();
@@ -50,8 +50,8 @@ final cfdConfigProvider = StateNotifierProvider<CfdConfigNotifier, CfdConfigStat
 });
 
 class CfdConfigNotifier extends StateNotifier<CfdConfigState> {
-  final NiceToHaveRepository _repo;
   CfdConfigNotifier(this._repo) : super(const CfdConfigInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load() async {
     if (state is! CfdConfigLoaded) state = const CfdConfigLoading();
@@ -71,8 +71,8 @@ final giftRegistryProvider = StateNotifierProvider<GiftRegistryNotifier, GiftReg
 });
 
 class GiftRegistryNotifier extends StateNotifier<GiftRegistryState> {
-  final NiceToHaveRepository _repo;
   GiftRegistryNotifier(this._repo) : super(const GiftRegistryInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load() async {
     if (state is! GiftRegistryLoaded) state = const GiftRegistryLoading();
@@ -92,8 +92,8 @@ final signageProvider = StateNotifierProvider<SignageNotifier, SignageState>((re
 });
 
 class SignageNotifier extends StateNotifier<SignageState> {
-  final NiceToHaveRepository _repo;
   SignageNotifier(this._repo) : super(const SignageInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load() async {
     if (state is! SignageLoaded) state = const SignageLoading();
@@ -113,8 +113,8 @@ final gamificationProvider = StateNotifierProvider<GamificationNotifier, Gamific
 });
 
 class GamificationNotifier extends StateNotifier<GamificationState> {
-  final NiceToHaveRepository _repo;
   GamificationNotifier(this._repo) : super(const GamificationInitial());
+  final NiceToHaveRepository _repo;
 
   Future<void> load() async {
     if (state is! GamificationLoaded) state = const GamificationLoading();

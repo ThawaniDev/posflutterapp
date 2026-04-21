@@ -15,19 +15,6 @@ class SettingsLoading extends CustomizationSettingsState {
 }
 
 class SettingsLoaded extends CustomizationSettingsState {
-  final String theme;
-  final String primaryColor;
-  final String secondaryColor;
-  final String accentColor;
-  final double fontScale;
-  final String handedness;
-  final int gridColumns;
-  final bool showProductImages;
-  final bool showPriceOnGrid;
-  final String cartDisplayMode;
-  final String layoutDirection;
-  final int syncVersion;
-  final Map<String, dynamic> raw;
 
   const SettingsLoaded({
     required this.theme,
@@ -44,11 +31,24 @@ class SettingsLoaded extends CustomizationSettingsState {
     required this.syncVersion,
     required this.raw,
   });
+  final String theme;
+  final String primaryColor;
+  final String secondaryColor;
+  final String accentColor;
+  final double fontScale;
+  final String handedness;
+  final int gridColumns;
+  final bool showProductImages;
+  final bool showPriceOnGrid;
+  final String cartDisplayMode;
+  final String layoutDirection;
+  final int syncVersion;
+  final Map<String, dynamic> raw;
 }
 
 class SettingsError extends CustomizationSettingsState {
-  final String message;
   const SettingsError(this.message);
+  final String message;
 }
 
 // ─── Receipt Template State ────────────────────────
@@ -66,16 +66,6 @@ class ReceiptLoading extends ReceiptTemplateState {
 }
 
 class ReceiptLoaded extends ReceiptTemplateState {
-  final String? logoUrl;
-  final String? headerLine1;
-  final String? headerLine2;
-  final String? footerText;
-  final bool showVatNumber;
-  final bool showLoyaltyPoints;
-  final bool showBarcode;
-  final int paperWidthMm;
-  final int syncVersion;
-  final Map<String, dynamic> raw;
 
   const ReceiptLoaded({
     this.logoUrl,
@@ -89,11 +79,21 @@ class ReceiptLoaded extends ReceiptTemplateState {
     required this.syncVersion,
     required this.raw,
   });
+  final String? logoUrl;
+  final String? headerLine1;
+  final String? headerLine2;
+  final String? footerText;
+  final bool showVatNumber;
+  final bool showLoyaltyPoints;
+  final bool showBarcode;
+  final int paperWidthMm;
+  final int syncVersion;
+  final Map<String, dynamic> raw;
 }
 
 class ReceiptError extends ReceiptTemplateState {
-  final String message;
   const ReceiptError(this.message);
+  final String message;
 }
 
 // ─── Quick Access State ────────────────────────────
@@ -111,11 +111,6 @@ class QuickAccessLoading extends QuickAccessState {
 }
 
 class QuickAccessLoaded extends QuickAccessState {
-  final int gridRows;
-  final int gridCols;
-  final List<Map<String, dynamic>> buttons;
-  final int syncVersion;
-  final Map<String, dynamic> raw;
 
   const QuickAccessLoaded({
     required this.gridRows,
@@ -124,9 +119,14 @@ class QuickAccessLoaded extends QuickAccessState {
     required this.syncVersion,
     required this.raw,
   });
+  final int gridRows;
+  final int gridCols;
+  final List<Map<String, dynamic>> buttons;
+  final int syncVersion;
+  final Map<String, dynamic> raw;
 }
 
 class QuickAccessError extends QuickAccessState {
-  final String message;
   const QuickAccessError(this.message);
+  final String message;
 }

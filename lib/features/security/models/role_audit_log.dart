@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/security/enums/role_audit_action.dart';
 
 class RoleAuditLog {
-  final String id;
-  final String storeId;
-  final String userId;
-  final RoleAuditAction action;
-  final int? roleId;
-  final Map<String, dynamic>? details;
-  final DateTime? createdAt;
 
   const RoleAuditLog({
     required this.id,
@@ -30,6 +23,13 @@ class RoleAuditLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String userId;
+  final RoleAuditAction action;
+  final int? roleId;
+  final Map<String, dynamic>? details;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -7,8 +7,8 @@ import 'package:wameedpos/features/notifications/providers/notification_state.da
 
 // ─── Notification List Provider ─────────────────────────
 class NotificationListNotifier extends StateNotifier<NotificationListState> {
-  final NotificationRepository _repository;
   NotificationListNotifier(this._repository) : super(const NotificationListInitial());
+  final NotificationRepository _repository;
 
   Future<void> load({String? category, bool? isRead, int? limit, String? priority}) async {
     if (state is! NotificationListLoaded) state = const NotificationListLoading();
@@ -28,8 +28,8 @@ final notificationListProvider = StateNotifierProvider<NotificationListNotifier,
 
 // ─── Unread Count Provider ──────────────────────────────
 class UnreadCountNotifier extends StateNotifier<UnreadCountState> {
-  final NotificationRepository _repository;
   UnreadCountNotifier(this._repository) : super(const UnreadCountInitial());
+  final NotificationRepository _repository;
 
   Future<void> load() async {
     if (state is! UnreadCountLoaded) state = const UnreadCountLoading();
@@ -67,8 +67,8 @@ final unreadCountProvider = StateNotifierProvider<UnreadCountNotifier, UnreadCou
 
 // ─── Notification Action Provider ───────────────────────
 class NotificationActionNotifier extends StateNotifier<NotificationActionState> {
-  final NotificationRepository _repository;
   NotificationActionNotifier(this._repository) : super(const NotificationActionInitial());
+  final NotificationRepository _repository;
 
   Future<void> markAsRead(String id) async {
     state = const NotificationActionLoading();
@@ -143,8 +143,8 @@ final notificationActionProvider = StateNotifierProvider<NotificationActionNotif
 
 // ─── Preferences Provider ───────────────────────────────
 class NotificationPreferencesNotifier extends StateNotifier<NotificationPreferencesState> {
-  final NotificationRepository _repository;
   NotificationPreferencesNotifier(this._repository) : super(const NotificationPreferencesInitial());
+  final NotificationRepository _repository;
 
   Future<void> load() async {
     if (state is! NotificationPreferencesLoaded) state = const NotificationPreferencesLoading();
@@ -201,8 +201,8 @@ final notificationPreferencesProvider = StateNotifierProvider<NotificationPrefer
 
 // ─── FCM Token Provider ─────────────────────────────────
 class FcmTokenNotifier extends StateNotifier<FcmTokenState> {
-  final NotificationRepository _repository;
   FcmTokenNotifier(this._repository) : super(const FcmTokenInitial());
+  final NotificationRepository _repository;
 
   Future<void> register({required String token, required String deviceType}) async {
     state = const FcmTokenLoading();
@@ -231,8 +231,8 @@ final fcmTokenProvider = StateNotifierProvider<FcmTokenNotifier, FcmTokenState>(
 
 // ─── Delivery Logs Provider ─────────────────────────────
 class DeliveryLogsNotifier extends StateNotifier<DeliveryLogsState> {
-  final NotificationRepository _repository;
   DeliveryLogsNotifier(this._repository) : super(const DeliveryLogsInitial());
+  final NotificationRepository _repository;
 
   Future<void> load({String? channel, String? status, int? perPage}) async {
     if (state is! DeliveryLogsLoaded) state = const DeliveryLogsLoading();
@@ -253,8 +253,8 @@ final deliveryLogsProvider = StateNotifierProvider<DeliveryLogsNotifier, Deliver
 
 // ─── Sound Configs Provider ─────────────────────────────
 class SoundConfigsNotifier extends StateNotifier<SoundConfigsState> {
-  final NotificationRepository _repository;
   SoundConfigsNotifier(this._repository) : super(const SoundConfigsInitial());
+  final NotificationRepository _repository;
 
   Future<void> load() async {
     if (state is! SoundConfigsLoaded) state = const SoundConfigsLoading();
@@ -285,8 +285,8 @@ final soundConfigsProvider = StateNotifierProvider<SoundConfigsNotifier, SoundCo
 
 // ─── Schedules Provider ─────────────────────────────────
 class SchedulesNotifier extends StateNotifier<SchedulesState> {
-  final NotificationRepository _repository;
   SchedulesNotifier(this._repository) : super(const SchedulesInitial());
+  final NotificationRepository _repository;
 
   Future<void> load() async {
     if (state is! SchedulesLoaded) state = const SchedulesLoading();
@@ -345,8 +345,8 @@ final schedulesProvider = StateNotifierProvider<SchedulesNotifier, SchedulesStat
 
 // ─── Notification Stats Provider ────────────────────────
 class NotificationStatsNotifier extends StateNotifier<NotificationStatsState> {
-  final NotificationRepository _repository;
   NotificationStatsNotifier(this._repository) : super(const NotificationStatsInitial());
+  final NotificationRepository _repository;
 
   Future<void> load() async {
     if (state is! NotificationStatsLoaded) state = const NotificationStatsLoading();
@@ -362,4 +362,38 @@ class NotificationStatsNotifier extends StateNotifier<NotificationStatsState> {
 
 final notificationStatsProvider = StateNotifierProvider<NotificationStatsNotifier, NotificationStatsState>((ref) {
   return NotificationStatsNotifier(ref.watch(notificationRepositoryProvider));
+});
+
+// ─── Notification Centre Composite Providers ────────────
+
+/// Active platform announcements for the current store.
+final announcementsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+  final repo = ref.watch(notificationRepositoryProvider);
+  final result = await repo.listAnnouncements();
+  final data = result['data'] as Map<String, dynamic>? ?? const {};
+  final list = data['announcements'] as List<dynamic>? ?? const [];
+  return list.cast<Map<String, dynamic>>();
+});
+
+/// Payment reminders + summary for the user's organization.
+final paymentRemindersProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
+  final repo = ref.watch(notificationRepositoryProvider);
+  final result = await repo.listPaymentReminders(perPage: 50);
+  return (result['data'] as Map<String, dynamic>?) ?? const {};
+});
+
+/// All active app releases.
+final appReleasesProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+  final repo = ref.watch(notificationRepositoryProvider);
+  final result = await repo.listAppReleases();
+  final data = result['data'] as Map<String, dynamic>? ?? const {};
+  final list = data['releases'] as List<dynamic>? ?? const [];
+  return list.cast<Map<String, dynamic>>();
+});
+
+/// Maintenance status (poll-able via ref.invalidate).
+final maintenanceStatusProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
+  final repo = ref.watch(notificationRepositoryProvider);
+  final result = await repo.getMaintenanceStatus();
+  return (result['data'] as Map<String, dynamic>?) ?? const {};
 });

@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class OpenTab {
-  final String id;
-  final String storeId;
-  final String orderId;
-  final String customerName;
-  final String? tableId;
-  final DateTime? openedAt;
-  final DateTime? closedAt;
-  final SessionStatus? status;
 
   const OpenTab({
     required this.id,
@@ -33,6 +25,14 @@ class OpenTab {
       status: SessionStatus.tryFromValue(json['status'] as String?),
     );
   }
+  final String id;
+  final String storeId;
+  final String orderId;
+  final String customerName;
+  final String? tableId;
+  final DateTime? openedAt;
+  final DateTime? closedAt;
+  final SessionStatus? status;
 
   Map<String, dynamic> toJson() {
     return {

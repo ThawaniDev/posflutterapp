@@ -9,8 +9,8 @@ final bakeryRepositoryProvider = Provider<BakeryRepository>((ref) {
 });
 
 class BakeryRepository {
-  final BakeryApiService _apiService;
   BakeryRepository({required BakeryApiService apiService}) : _apiService = apiService;
+  final BakeryApiService _apiService;
 
   Future<List<BakeryRecipe>> listRecipes({String? search, int perPage = 20}) =>
       _apiService.listRecipes(search: search, perPage: perPage);

@@ -7,16 +7,17 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Side-by-side plan comparison table widget.
 class PlanComparisonTable extends StatelessWidget {
+
+  const PlanComparisonTable({super.key, required this.plans, this.currentPlanId, this.isAnnual = false, this.onSelectPlan});
   final List<SubscriptionPlan> plans;
   final String? currentPlanId;
   final bool isAnnual;
   final void Function(SubscriptionPlan plan)? onSelectPlan;
 
-  const PlanComparisonTable({super.key, required this.plans, this.currentPlanId, this.isAnnual = false, this.onSelectPlan});
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final langCode = Localizations.localeOf(context).languageCode;
     if (plans.isEmpty) return const SizedBox.shrink();
 
     // Gather all unique feature keys across all plans
@@ -47,7 +48,7 @@ class PlanComparisonTable extends StatelessWidget {
           horizontalMargin: 16,
           columns: [
             DataColumn(
-              label: Text(l10n.feature, style: TextStyle(fontWeight: FontWeight.bold)),
+              label: Text(l10n.feature, style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
             ...plans.map((plan) {
               final isCurrent = plan.id == currentPlanId;
@@ -56,7 +57,7 @@ class PlanComparisonTable extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      plan.name,
+                      plan.localizedName(langCode),
                       style: TextStyle(fontWeight: FontWeight.bold, color: isCurrent ? AppColors.primary : null),
                     ),
                     if (isCurrent)
@@ -64,7 +65,7 @@ class PlanComparisonTable extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 4),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderMd),
-                        child: Text(l10n.subscriptionCurrent, style: TextStyle(color: Colors.white, fontSize: 10)),
+                        child: Text(l10n.subscriptionCurrent, style: const TextStyle(color: Colors.white, fontSize: 10)),
                       ),
                   ],
                 ),
@@ -90,8 +91,10 @@ class PlanComparisonTable extends StatelessWidget {
 
             // Feature toggles
             ...allFeatureKeys.map((key) {
+              // Resolve localized feature name from the first plan that has this key
+              final featureLabel = _resolveFeatureName(key, langCode);
               return _buildRow(
-                _formatKey(key),
+                featureLabel,
                 plans.map((plan) {
                   final feature = plan.features?.where((f) => f['feature_key'] == key).firstOrNull;
                   if (feature == null) {
@@ -132,7 +135,7 @@ class PlanComparisonTable extends StatelessWidget {
                   if (isCurrent) {
                     return Text(
                       l10n.subscriptionCurrentPlan,
-                      style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+                      style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
                     );
                   }
                   return PosButton(onPressed: () => onSelectPlan!(plan), label: l10n.subscriptionSelect);
@@ -160,5 +163,19 @@ class PlanComparisonTable extends StatelessWidget {
         .split(' ')
         .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '')
         .join(' ');
+  }
+
+  /// Resolve a localized feature name by searching across all plans for the key.
+  String _resolveFeatureName(String featureKey, String langCode) {
+    for (final plan in plans) {
+      if (plan.features == null) continue;
+      for (final f in plan.features!) {
+        if (f['feature_key'] == featureKey) {
+          final resolved = SubscriptionPlan.featureName(f, langCode);
+          if (resolved.isNotEmpty && resolved != featureKey) return resolved;
+        }
+      }
+    }
+    return _formatKey(featureKey);
   }
 }

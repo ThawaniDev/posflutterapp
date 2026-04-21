@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/hardware/enums/hardware_sale_item_type.dart';
 
 class HardwareSale {
-  final String id;
-  final String storeId;
-  final String soldBy;
-  final HardwareSaleItemType itemType;
-  final String? itemDescription;
-  final String? serialNumber;
-  final double amount;
-  final String? notes;
-  final DateTime? soldAt;
 
   const HardwareSale({
     required this.id,
@@ -36,6 +27,15 @@ class HardwareSale {
       soldAt: json['sold_at'] != null ? DateTime.parse(json['sold_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String soldBy;
+  final HardwareSaleItemType itemType;
+  final String? itemDescription;
+  final String? serialNumber;
+  final double amount;
+  final String? notes;
+  final DateTime? soldAt;
 
   Map<String, dynamic> toJson() {
     return {

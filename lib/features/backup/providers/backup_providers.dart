@@ -9,8 +9,8 @@ final backupListProvider = StateNotifierProvider<BackupListNotifier, BackupListS
 );
 
 class BackupListNotifier extends StateNotifier<BackupListState> {
-  final BackupRepository _repo;
   BackupListNotifier(this._repo) : super(const BackupListInitial());
+  final BackupRepository _repo;
 
   Future<void> load({String? backupType, String? status}) async {
     if (state is! BackupListLoaded) state = const BackupListLoading();
@@ -30,8 +30,8 @@ final backupScheduleProvider = StateNotifierProvider<BackupScheduleNotifier, Bac
 );
 
 class BackupScheduleNotifier extends StateNotifier<BackupScheduleState> {
-  final BackupRepository _repo;
   BackupScheduleNotifier(this._repo) : super(const BackupScheduleInitial());
+  final BackupRepository _repo;
 
   Future<void> load() async {
     if (state is! BackupScheduleLoaded) state = const BackupScheduleLoading();
@@ -71,8 +71,8 @@ final backupStorageProvider = StateNotifierProvider<BackupStorageNotifier, Backu
 );
 
 class BackupStorageNotifier extends StateNotifier<BackupStorageState> {
-  final BackupRepository _repo;
   BackupStorageNotifier(this._repo) : super(const BackupStorageInitial());
+  final BackupRepository _repo;
 
   Future<void> load() async {
     if (state is! BackupStorageLoaded) state = const BackupStorageLoading();
@@ -92,8 +92,8 @@ final backupOperationProvider = StateNotifierProvider<BackupOperationNotifier, B
 );
 
 class BackupOperationNotifier extends StateNotifier<BackupOperationState> {
-  final BackupRepository _repo;
   BackupOperationNotifier(this._repo) : super(const BackupOperationIdle());
+  final BackupRepository _repo;
 
   Future<void> createBackup({required String terminalId, String backupType = 'manual', bool encrypt = false}) async {
     state = const BackupOperationRunning();

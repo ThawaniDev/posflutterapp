@@ -9,8 +9,8 @@ final jewelryRepositoryProvider = Provider<JewelryRepository>((ref) {
 });
 
 class JewelryRepository {
-  final JewelryApiService _apiService;
   JewelryRepository({required JewelryApiService apiService}) : _apiService = apiService;
+  final JewelryApiService _apiService;
 
   Future<List<DailyMetalRate>> listMetalRates({String? metalType, int perPage = 20}) =>
       _apiService.listMetalRates(metalType: metalType, perPage: perPage);

@@ -24,13 +24,6 @@ const _chartColors = [
 // ─── Revenue / Trend Line Chart ─────────────────────────────
 
 class ReportLineChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
-  final String xKey;
-  final List<String> yKeys;
-  final List<String> yLabels;
-  final List<Color>? colors;
-  final double height;
-  final bool showArea;
 
   const ReportLineChart({
     super.key,
@@ -42,6 +35,13 @@ class ReportLineChart extends StatelessWidget {
     this.height = 220,
     this.showArea = false,
   });
+  final List<Map<String, dynamic>> data;
+  final String xKey;
+  final List<String> yKeys;
+  final List<String> yLabels;
+  final List<Color>? colors;
+  final double height;
+  final bool showArea;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +82,10 @@ class ReportLineChart extends StatelessWidget {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,
-            getDrawingHorizontalLine: (_) =>
-                FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+            getDrawingHorizontalLine: (_) => FlLine(
+              color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
+              strokeWidth: 0.8,
+            ),
           ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
@@ -100,10 +102,7 @@ class ReportLineChart extends StatelessWidget {
                   final raw = data[idx][xKey]?.toString() ?? '';
                   return SideTitleWidget(
                     meta: meta,
-                    child: Text(
-                      _shortenLabel(raw),
-                      style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                    ),
+                    child: Text(_shortenLabel(raw), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
                   );
                 },
               ),
@@ -114,10 +113,7 @@ class ReportLineChart extends StatelessWidget {
                 reservedSize: 44,
                 getTitlesWidget: (value, meta) => SideTitleWidget(
                   meta: meta,
-                  child: Text(
-                    formatCompact(value),
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                  ),
+                  child: Text(formatCompact(value), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
                 ),
               ),
             ),
@@ -141,14 +137,6 @@ class ReportLineChart extends StatelessWidget {
 // ─── Bar Chart (comparison: categories, staff, products) ────
 
 class ReportBarChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
-  final String labelKey;
-  final String valueKey;
-  final String? secondaryValueKey;
-  final Color? barColor;
-  final Color? secondaryBarColor;
-  final double height;
-  final bool horizontal;
 
   const ReportBarChart({
     super.key,
@@ -161,6 +149,14 @@ class ReportBarChart extends StatelessWidget {
     this.height = 220,
     this.horizontal = false,
   });
+  final List<Map<String, dynamic>> data;
+  final String labelKey;
+  final String valueKey;
+  final String? secondaryValueKey;
+  final Color? barColor;
+  final Color? secondaryBarColor;
+  final double height;
+  final bool horizontal;
 
   @override
   Widget build(BuildContext context) {
@@ -174,11 +170,13 @@ class ReportBarChart extends StatelessWidget {
 
     return _ChartContainer(
       height: height,
-      child: horizontal ? _buildHorizontal(items, isDark, color1, color2) : _buildVertical(items, isDark, color1, color2),
+      child: horizontal
+          ? _buildHorizontal(context, items, isDark, color1, color2)
+          : _buildVertical(context, items, isDark, color1, color2),
     );
   }
 
-  Widget _buildVertical(List<Map<String, dynamic>> items, bool isDark, Color c1, Color c2) {
+  Widget _buildVertical(BuildContext context, List<Map<String, dynamic>> items, bool isDark, Color c1, Color c2) {
     final groups = <BarChartGroupData>[];
     for (int i = 0; i < items.length; i++) {
       final val = (items[i][valueKey] as num?)?.toDouble() ?? 0;
@@ -210,8 +208,10 @@ class ReportBarChart extends StatelessWidget {
         gridData: FlGridData(
           show: true,
           drawVerticalLine: false,
-          getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+          getDrawingHorizontalLine: (_) => FlLine(
+            color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
+            strokeWidth: 0.8,
+          ),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -228,7 +228,7 @@ class ReportBarChart extends StatelessWidget {
                   meta: meta,
                   child: Text(
                     _shortenLabel(items[idx][labelKey]?.toString() ?? ''),
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   ),
                 );
               },
@@ -240,10 +240,7 @@ class ReportBarChart extends StatelessWidget {
               reservedSize: 44,
               getTitlesWidget: (value, meta) => SideTitleWidget(
                 meta: meta,
-                child: Text(
-                  formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                ),
+                child: Text(formatCompact(value), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
               ),
             ),
           ),
@@ -255,19 +252,14 @@ class ReportBarChart extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontal(List<Map<String, dynamic>> items, bool isDark, Color c1, Color c2) {
-    return RotatedBox(quarterTurns: 1, child: _buildVertical(items.reversed.toList(), isDark, c1, c2));
+  Widget _buildHorizontal(BuildContext context, List<Map<String, dynamic>> items, bool isDark, Color c1, Color c2) {
+    return RotatedBox(quarterTurns: 1, child: _buildVertical(context, items.reversed.toList(), isDark, c1, c2));
   }
 }
 
 // ─── Pie / Donut Chart ──────────────────────────────────────
 
 class ReportPieChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
-  final String labelKey;
-  final String valueKey;
-  final double height;
-  final bool donut;
 
   const ReportPieChart({
     super.key,
@@ -277,6 +269,11 @@ class ReportPieChart extends StatelessWidget {
     this.height = 220,
     this.donut = true,
   });
+  final List<Map<String, dynamic>> data;
+  final String labelKey;
+  final String valueKey;
+  final double height;
+  final bool donut;
 
   @override
   Widget build(BuildContext context) {
@@ -325,11 +322,11 @@ class ReportPieChart extends StatelessWidget {
 // ─── Hourly Heatmap / Bar (24-hour pattern) ─────────────────
 
 class ReportHourlyChart extends StatelessWidget {
+
+  const ReportHourlyChart({super.key, required this.data, required this.valueKey, this.height = 180});
   final List<Map<String, dynamic>> data;
   final String valueKey;
   final double height;
-
-  const ReportHourlyChart({super.key, required this.data, required this.valueKey, this.height = 180});
 
   @override
   Widget build(BuildContext context) {
@@ -366,8 +363,10 @@ class ReportHourlyChart extends StatelessWidget {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,
-            getDrawingHorizontalLine: (_) =>
-                FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+            getDrawingHorizontalLine: (_) => FlLine(
+              color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
+              strokeWidth: 0.8,
+            ),
           ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
@@ -382,10 +381,7 @@ class ReportHourlyChart extends StatelessWidget {
                   final h = value.toInt();
                   return SideTitleWidget(
                     meta: meta,
-                    child: Text(
-                      '${h}h',
-                      style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                    ),
+                    child: Text('${h}h', style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
                   );
                 },
               ),
@@ -396,10 +392,7 @@ class ReportHourlyChart extends StatelessWidget {
                 reservedSize: 40,
                 getTitlesWidget: (value, meta) => SideTitleWidget(
                   meta: meta,
-                  child: Text(
-                    formatCompact(value),
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                  ),
+                  child: Text(formatCompact(value), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
                 ),
               ),
             ),
@@ -416,12 +409,6 @@ class ReportHourlyChart extends StatelessWidget {
 // ─── Area Chart (Financial P&L trend) ───────────────────────
 
 class ReportAreaChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
-  final String xKey;
-  final String revenueKey;
-  final String costKey;
-  final String profitKey;
-  final double height;
 
   const ReportAreaChart({
     super.key,
@@ -432,6 +419,12 @@ class ReportAreaChart extends StatelessWidget {
     required this.profitKey,
     this.height = 220,
   });
+  final List<Map<String, dynamic>> data;
+  final String xKey;
+  final String revenueKey;
+  final String costKey;
+  final String profitKey;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -452,7 +445,7 @@ class ReportAreaChart extends StatelessWidget {
         color: color,
         barWidth: 2,
         isStrokeCapRound: true,
-        dotData: FlDotData(show: false),
+        dotData: const FlDotData(show: false),
         belowBarData: area ? BarAreaData(show: true, color: color.withValues(alpha: 0.08)) : BarAreaData(show: false),
       );
     }
@@ -473,8 +466,10 @@ class ReportAreaChart extends StatelessWidget {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,
-            getDrawingHorizontalLine: (_) =>
-                FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+            getDrawingHorizontalLine: (_) => FlLine(
+              color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
+              strokeWidth: 0.8,
+            ),
           ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
@@ -492,7 +487,7 @@ class ReportAreaChart extends StatelessWidget {
                     meta: meta,
                     child: Text(
                       _shortenLabel(data[idx][xKey]?.toString() ?? ''),
-                      style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                     ),
                   );
                 },
@@ -504,10 +499,7 @@ class ReportAreaChart extends StatelessWidget {
                 reservedSize: 44,
                 getTitlesWidget: (value, meta) => SideTitleWidget(
                   meta: meta,
-                  child: Text(
-                    formatCompact(value),
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                  ),
+                  child: Text(formatCompact(value), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
                 ),
               ),
             ),
@@ -542,11 +534,11 @@ String _shortenLabel(String label) {
 }
 
 class _ChartContainer extends StatelessWidget {
+
+  const _ChartContainer({required this.height, required this.child, this.legend});
   final double height;
   final Widget child;
   final Widget? legend;
-
-  const _ChartContainer({required this.height, required this.child, this.legend});
 
   @override
   Widget build(BuildContext context) {
@@ -558,7 +550,7 @@ class _ChartContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -572,10 +564,10 @@ class _ChartContainer extends StatelessWidget {
 }
 
 class _Legend extends StatelessWidget {
-  final List<String> labels;
-  final List<Color> colors;
 
   const _Legend({required this.labels, required this.colors});
+  final List<String> labels;
+  final List<Color> colors;
 
   @override
   Widget build(BuildContext context) {
@@ -607,8 +599,8 @@ class _Legend extends StatelessWidget {
 }
 
 class _EmptyChart extends StatelessWidget {
-  final double height;
   const _EmptyChart({required this.height});
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -620,17 +612,15 @@ class _EmptyChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bar_chart_rounded, size: 40, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            Icon(Icons.bar_chart_rounded, size: 40, color: AppColors.mutedFor(context)),
             const SizedBox(height: 8),
-            Text(l10n.noData,
-              style: TextStyle(fontSize: 13, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-            ),
+            Text(l10n.noData, style: TextStyle(fontSize: 13, color: AppColors.mutedFor(context))),
           ],
         ),
       ),

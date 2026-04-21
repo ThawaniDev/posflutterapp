@@ -9,9 +9,9 @@ final providerPaymentRepositoryProvider = Provider<ProviderPaymentRepository>((r
 });
 
 class ProviderPaymentRepository {
-  final ProviderPaymentApiService _apiService;
 
   ProviderPaymentRepository(this._apiService);
+  final ProviderPaymentApiService _apiService;
 
   Future<List<ProviderPayment>> listPayments({int? page, int? perPage, String? status, String? purpose}) async {
     try {
@@ -89,9 +89,9 @@ class ProviderPaymentRepository {
 }
 
 class ProviderPaymentException extends AppException {
-  final int? statusCode;
 
   const ProviderPaymentException({required super.message, this.statusCode, super.originalError});
+  final int? statusCode;
 
   @override
   String toString() => 'ProviderPaymentException($statusCode): $message';

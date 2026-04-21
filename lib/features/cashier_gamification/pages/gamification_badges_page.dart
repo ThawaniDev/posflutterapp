@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
@@ -60,7 +59,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               ),
               AppSpacing.gapH8,
               DropdownButtonFormField<String>(
-                value: triggerType,
+                initialValue: triggerType,
                 decoration: const InputDecoration(labelText: 'Trigger Type'),
                 items: [
                   DropdownMenuItem(value: 'items_per_minute', child: Text(l10n.cgItemsPerMin)),
@@ -82,7 +81,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               ),
               AppSpacing.gapH8,
               DropdownButtonFormField<String>(
-                value: period,
+                initialValue: period,
                 decoration: InputDecoration(labelText: l10n.period),
                 items: [
                   DropdownMenuItem(value: 'daily', child: Text(l10n.gamificationDaily)),

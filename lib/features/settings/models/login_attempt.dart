@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/settings/enums/login_attempt_type.dart';
 
 class LoginAttempt {
-  final String id;
-  final String storeId;
-  final String userIdentifier;
-  final LoginAttemptType attemptType;
-  final bool isSuccessful;
-  final String? ipAddress;
-  final String? deviceId;
-  final DateTime? attemptedAt;
 
   const LoginAttempt({
     required this.id,
@@ -33,6 +25,14 @@ class LoginAttempt {
       attemptedAt: json['attempted_at'] != null ? DateTime.parse(json['attempted_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String userIdentifier;
+  final LoginAttemptType attemptType;
+  final bool isSuccessful;
+  final String? ipAddress;
+  final String? deviceId;
+  final DateTime? attemptedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,14 +1,4 @@
 class OnboardingStep {
-  final String id;
-  final int stepNumber;
-  final String title;
-  final String titleAr;
-  final String? description;
-  final String? descriptionAr;
-  final bool? isRequired;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const OnboardingStep({
     required this.id,
@@ -37,6 +27,16 @@ class OnboardingStep {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final int stepNumber;
+  final String title;
+  final String titleAr;
+  final String? description;
+  final String? descriptionAr;
+  final bool? isRequired;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -5,7 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/staff/models/role.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
@@ -91,7 +90,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
             Text(
               state.message,
@@ -120,7 +119,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
               Icon(
                 Icons.admin_panel_settings_outlined,
                 size: 64,
-                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                color: AppColors.mutedFor(context),
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
@@ -164,13 +163,13 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 
 /// Card widget for a single role in the list
 class _RoleCard extends StatelessWidget {
+
+  const _RoleCard({required this.role, required this.isDark, required this.l10n, required this.onTap, this.onDelete});
   final Role role;
   final bool isDark;
   final AppLocalizations l10n;
   final VoidCallback onTap;
   final VoidCallback? onDelete;
-
-  const _RoleCard({required this.role, required this.isDark, required this.l10n, required this.onTap, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +182,7 @@ class _RoleCard extends StatelessWidget {
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderLg,
@@ -247,7 +246,7 @@ class _RoleCard extends StatelessWidget {
                       l10n.staffPermissionCount(permCount),
                       style: Theme.of(
                         context,
-                      ).textTheme.labelSmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      ).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),
@@ -256,7 +255,7 @@ class _RoleCard extends StatelessWidget {
               // Actions
               if (onDelete != null)
                 IconButton(
-                  icon: Icon(Icons.delete_outline, color: AppColors.error),
+                  icon: const Icon(Icons.delete_outline, color: AppColors.error),
                   tooltip: l10n.deleteRole,
                   onPressed: onDelete,
                 ),

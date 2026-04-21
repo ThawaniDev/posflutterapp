@@ -16,9 +16,9 @@ void main() {
     });
 
     test('InvoiceDetailLoaded holds invoice', () {
-      final invoice = Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 100.0, total: 115.0);
+      const invoice = Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 100.0, total: 115.0);
 
-      final state = InvoiceDetailLoaded(invoice: invoice);
+      const state = InvoiceDetailLoaded(invoice: invoice);
       expect(state, isA<InvoiceDetailState>());
       expect(state.invoice.id, 'inv-1');
       expect(state.invoice.invoiceNumber, 'INV-001');
@@ -32,7 +32,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      InvoiceDetailState state = const InvoiceDetailError(message: 'test');
+      const InvoiceDetailState state = InvoiceDetailError(message: 'test');
 
       final result = switch (state) {
         InvoiceDetailInitial() => 'initial',
@@ -85,7 +85,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      AddOnsState state = const AddOnsLoading();
+      const AddOnsState state = AddOnsLoading();
 
       final result = switch (state) {
         AddOnsInitial() => 'initial',
@@ -132,7 +132,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      PlanComparisonState state = const PlanComparisonInitial();
+      const PlanComparisonState state = PlanComparisonInitial();
 
       final result = switch (state) {
         PlanComparisonInitial() => 'initial',
@@ -148,7 +148,7 @@ void main() {
   // --- InvoicesLoaded pagination Tests ---
   group('InvoicesLoaded pagination', () {
     test('holds pagination metadata', () {
-      final invoices = [Invoice(id: 'inv-1', amount: 100, total: 115)];
+      final invoices = [const Invoice(id: 'inv-1', amount: 100, total: 115)];
 
       final state = InvoicesLoaded(invoices: invoices, currentPage: 2, lastPage: 5, total: 50);
 
@@ -159,7 +159,7 @@ void main() {
     });
 
     test('defaults pagination to first page', () {
-      final state = InvoicesLoaded(invoices: []);
+      const state = InvoicesLoaded(invoices: []);
       expect(state.currentPage, 1);
       expect(state.lastPage, 1);
       expect(state.total, 0);

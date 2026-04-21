@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/customers/enums/gift_registry_event_type.dart';
 
 class GiftRegistry {
-  final String id;
-  final String storeId;
-  final String customerId;
-  final String name;
-  final GiftRegistryEventType eventType;
-  final DateTime? eventDate;
-  final String shareCode;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const GiftRegistry({
     required this.id,
@@ -36,6 +27,15 @@ class GiftRegistry {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String customerId;
+  final String name;
+  final GiftRegistryEventType eventType;
+  final DateTime? eventDate;
+  final String shareCode;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

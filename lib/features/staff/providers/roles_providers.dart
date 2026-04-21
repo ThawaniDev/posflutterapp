@@ -11,9 +11,9 @@ final rolesProvider = StateNotifierProvider<RolesNotifier, RolesState>((ref) {
 });
 
 class RolesNotifier extends StateNotifier<RolesState> {
-  final RolesRepository _repository;
 
   RolesNotifier(this._repository) : super(const RolesInitial());
+  final RolesRepository _repository;
 
   Future<void> load() async {
     state = const RolesLoading();
@@ -86,10 +86,10 @@ final roleDetailProvider = StateNotifierProvider.family<RoleDetailNotifier, Role
 });
 
 class RoleDetailNotifier extends StateNotifier<RoleDetailState> {
-  final RolesRepository _repository;
-  final int _roleId;
 
   RoleDetailNotifier(this._repository, this._roleId) : super(const RoleDetailInitial());
+  final RolesRepository _repository;
+  final int _roleId;
 
   Future<void> load() async {
     state = const RoleDetailLoading();
@@ -129,9 +129,9 @@ final permissionsCatalogProvider = StateNotifierProvider<PermissionsCatalogNotif
 });
 
 class PermissionsCatalogNotifier extends StateNotifier<PermissionsState> {
-  final RolesRepository _repository;
 
   PermissionsCatalogNotifier(this._repository) : super(const PermissionsInitial());
+  final RolesRepository _repository;
 
   Future<void> load() async {
     state = const PermissionsLoading();
@@ -159,9 +159,9 @@ final hasPermissionProvider = Provider.family<bool, String>((ref, code) {
 });
 
 class UserPermissionsNotifier extends StateNotifier<UserPermissionsState> {
-  final RolesRepository _repository;
 
   UserPermissionsNotifier(this._repository) : super(const UserPermissionsState());
+  final RolesRepository _repository;
 
   Future<void> load() async {
     try {

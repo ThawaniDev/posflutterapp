@@ -2,9 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/notifications/data/remote/notification_api_service.dart';
 
 class NotificationRepository {
-  final NotificationApiService _apiService;
-
   NotificationRepository(this._apiService);
+  final NotificationApiService _apiService;
 
   Future<Map<String, dynamic>> listNotifications({
     String? category,
@@ -130,6 +129,23 @@ class NotificationRepository {
       _apiService.registerFcmToken(token: token, deviceType: deviceType);
 
   Future<Map<String, dynamic>> removeFcmToken(String token) => _apiService.removeFcmToken(token);
+
+  // ─── Notification Centre composite endpoints ──────────────
+
+  Future<Map<String, dynamic>> listAnnouncements() => _apiService.listAnnouncements();
+
+  Future<Map<String, dynamic>> dismissAnnouncement(String id) => _apiService.dismissAnnouncement(id);
+
+  Future<Map<String, dynamic>> listPaymentReminders({String? type, String? channel, int? perPage}) =>
+      _apiService.listPaymentReminders(type: type, channel: channel, perPage: perPage);
+
+  Future<Map<String, dynamic>> listAppReleases({String? platform, String? channel}) =>
+      _apiService.listAppReleases(platform: platform, channel: channel);
+
+  Future<Map<String, dynamic>> getLatestAppRelease({required String platform, String channel = 'stable'}) =>
+      _apiService.getLatestAppRelease(platform: platform, channel: channel);
+
+  Future<Map<String, dynamic>> getMaintenanceStatus() => _apiService.getMaintenanceStatus();
 }
 
 final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {

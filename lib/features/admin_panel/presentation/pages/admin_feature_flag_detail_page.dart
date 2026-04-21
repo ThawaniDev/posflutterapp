@@ -5,18 +5,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminFeatureFlagDetailPage extends ConsumerStatefulWidget {
-  final String flagId;
   const AdminFeatureFlagDetailPage({super.key, required this.flagId});
+  final String flagId;
 
   @override
   ConsumerState<AdminFeatureFlagDetailPage> createState() => _AdminFeatureFlagDetailPageState();
 }
 
 class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDetailPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -30,9 +28,9 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
     final state = ref.watch(featureFlagDetailProvider);
 
     return PosListPage(
-  title: l10n.featureFlagDetail,
-  showSearch: false,
-    child: switch (state) {
+      title: l10n.featureFlagDetail,
+      showSearch: false,
+      child: switch (state) {
         FeatureFlagDetailInitial() || FeatureFlagDetailLoading() => const Center(child: CircularProgressIndicator()),
         FeatureFlagDetailLoaded(:final flag, :final abTests) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -51,7 +49,13 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Chip(label: Text(flag['is_enabled'] == true ? 'Enabled' : 'Disabled')),
+                          Chip(
+                            label: Text(
+                              flag['is_enabled'] == true
+                                  ? AppLocalizations.of(context)!.deliveryEnabled
+                                  : AppLocalizations.of(context)!.deliveryDisabled,
+                            ),
+                          ),
                           const SizedBox(width: 8),
                           Chip(label: Text('${flag['rollout_percentage'] ?? 100}% rollout')),
                         ],
@@ -89,6 +93,6 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
           ),
         ),
       },
-);
+    );
   }
 }

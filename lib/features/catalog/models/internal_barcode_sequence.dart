@@ -1,8 +1,4 @@
 class InternalBarcodeSequence {
-  final String id;
-  final String storeId;
-  final int lastSequence;
-  final DateTime? updatedAt;
 
   const InternalBarcodeSequence({
     required this.id,
@@ -19,6 +15,10 @@ class InternalBarcodeSequence {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final int lastSequence;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

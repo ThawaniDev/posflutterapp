@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/kitchen_ticket.dart';
-import '../enums/kitchen_ticket_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_restaurant/models/kitchen_ticket.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/kitchen_ticket_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class KitchenTicketCard extends StatelessWidget {
+
+  const KitchenTicketCard({super.key, required this.ticket, this.onTap, this.onStatusChange});
   final KitchenTicket ticket;
   final VoidCallback? onTap;
   final ValueChanged<KitchenTicketStatus>? onStatusChange;
-
-  const KitchenTicketCard({super.key, required this.ticket, this.onTap, this.onStatusChange});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +35,10 @@ class KitchenTicketCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: _statusColor.withValues(alpha: 0.1),
+                      color: _statusColor(context).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
-                    child: Icon(Icons.receipt_long, size: 18, color: _statusColor),
+                    child: Icon(Icons.receipt_long, size: 18, color: _statusColor(context)),
                   ),
                   AppSpacing.gapW8,
                   Expanded(
@@ -55,18 +54,18 @@ class KitchenTicketCard extends StatelessWidget {
               if (ticket.station != null)
                 Text(
                   l10n.restaurantStation(ticket.station ?? ''),
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                 ),
               if (ticket.courseNumber != null)
                 Text(
                   l10n.restaurantCourse(ticket.courseNumber.toString()),
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                 ),
               if (ticket.fireAt != null) ...[
                 AppSpacing.gapH4,
                 Row(
                   children: [
-                    Icon(Icons.local_fire_department, size: 14, color: AppColors.warning),
+                    const Icon(Icons.local_fire_department, size: 14, color: AppColors.warning),
                     AppSpacing.gapW4,
                     Text(
                       'Fire at: ${_formatTime(ticket.fireAt!)}',
@@ -96,9 +95,9 @@ class KitchenTicketCard extends StatelessWidget {
     };
   }
 
-  Color get _statusColor {
+  Color _statusColor(BuildContext context) {
     return switch (ticket.status ?? KitchenTicketStatus.pending) {
-      KitchenTicketStatus.pending => AppColors.textMutedLight,
+      KitchenTicketStatus.pending => AppColors.mutedFor(context),
       KitchenTicketStatus.inProgress => AppColors.warning,
       KitchenTicketStatus.preparing => AppColors.warning,
       KitchenTicketStatus.ready => AppColors.success,

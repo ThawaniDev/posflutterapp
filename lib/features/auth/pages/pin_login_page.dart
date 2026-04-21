@@ -97,7 +97,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Icon
-                  Icon(Icons.lock_rounded, size: 56, color: AppColors.primary),
+                  const Icon(Icons.lock_rounded, size: 56, color: AppColors.primary),
                   const SizedBox(height: AppSpacing.md),
 
                   Text(
@@ -139,7 +139,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                       padding: const EdgeInsets.only(bottom: AppSpacing.md),
                       child: Text(
                         _errorMessage!,
-                        style: TextStyle(color: AppColors.error, fontSize: 14),
+                        style: const TextStyle(color: AppColors.error, fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                     ),

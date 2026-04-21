@@ -1,10 +1,4 @@
 class OrderItemModifier {
-  final String id;
-  final String orderItemId;
-  final String? modifierOptionId;
-  final String modifierName;
-  final String? modifierNameAr;
-  final double? priceAdjustment;
 
   const OrderItemModifier({
     required this.id,
@@ -25,6 +19,12 @@ class OrderItemModifier {
       priceAdjustment: (json['price_adjustment'] != null ? double.tryParse(json['price_adjustment'].toString()) : null),
     );
   }
+  final String id;
+  final String orderItemId;
+  final String? modifierOptionId;
+  final String modifierName;
+  final String? modifierNameAr;
+  final double? priceAdjustment;
 
   Map<String, dynamic> toJson() {
     return {

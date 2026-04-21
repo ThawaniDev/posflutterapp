@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_result_card.dart';
 
 class AIFeatureDetailPage extends ConsumerStatefulWidget {
-  final String featureSlug;
 
   const AIFeatureDetailPage({super.key, required this.featureSlug});
+  final String featureSlug;
 
   @override
   ConsumerState<AIFeatureDetailPage> createState() => _AIFeatureDetailPageState();
@@ -32,30 +30,30 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
 
   List<_FeatureParam> get _params {
     return switch (widget.featureSlug) {
-      'sales_forecast' => [_FeatureParam('days', 'Forecast days', '7', TextInputType.number)],
-      'invoice_ocr' => [_FeatureParam('image', 'Base64 Image', '', TextInputType.multiline)],
+      'sales_forecast' => [const _FeatureParam('days', 'Forecast days', '7', TextInputType.number)],
+      'invoice_ocr' => [const _FeatureParam('image', 'Base64 Image', '', TextInputType.multiline)],
       'product_description' => [
-        _FeatureParam('product_id', 'Product ID', '', TextInputType.text),
-        _FeatureParam('tone', 'Tone', 'professional', TextInputType.text),
-        _FeatureParam('language', 'Language', 'both', TextInputType.text),
+        const _FeatureParam('product_id', 'Product ID', '', TextInputType.text),
+        const _FeatureParam('tone', 'Tone', 'professional', TextInputType.text),
+        const _FeatureParam('language', 'Language', 'both', TextInputType.text),
       ],
-      'barcode_enrichment' => [_FeatureParam('barcode', 'Barcode', '', TextInputType.text)],
-      'spending_patterns' => [_FeatureParam('customer_id', 'Customer ID', '', TextInputType.text)],
-      'smart_search' => [_FeatureParam('query', 'Search Query', '', TextInputType.text)],
+      'barcode_enrichment' => [const _FeatureParam('barcode', 'Barcode', '', TextInputType.text)],
+      'spending_patterns' => [const _FeatureParam('customer_id', 'Customer ID', '', TextInputType.text)],
+      'smart_search' => [const _FeatureParam('query', 'Search Query', '', TextInputType.text)],
       'marketing_generator' => [
-        _FeatureParam('type', 'Type (sms/whatsapp)', 'sms', TextInputType.text),
-        _FeatureParam('context.goal', 'Goal', '', TextInputType.text),
+        const _FeatureParam('type', 'Type (sms/whatsapp)', 'sms', TextInputType.text),
+        const _FeatureParam('context.goal', 'Goal', '', TextInputType.text),
       ],
       'social_content' => [
-        _FeatureParam('platform', 'Platform', 'instagram', TextInputType.text),
-        _FeatureParam('topic', 'Topic', '', TextInputType.text),
+        const _FeatureParam('platform', 'Platform', 'instagram', TextInputType.text),
+        const _FeatureParam('topic', 'Topic', '', TextInputType.text),
       ],
       'translation' => [
-        _FeatureParam('texts', 'Texts (comma separated)', '', TextInputType.multiline),
-        _FeatureParam('from', 'From', 'ar', TextInputType.text),
-        _FeatureParam('to', 'To', 'en', TextInputType.text),
+        const _FeatureParam('texts', 'Texts (comma separated)', '', TextInputType.multiline),
+        const _FeatureParam('from', 'From', 'ar', TextInputType.text),
+        const _FeatureParam('to', 'To', 'en', TextInputType.text),
       ],
-      'cashflow_prediction' => [_FeatureParam('days', 'Forecast days', '30', TextInputType.number)],
+      'cashflow_prediction' => [const _FeatureParam('days', 'Forecast days', '30', TextInputType.number)],
       _ => [],
     };
   }
@@ -169,10 +167,10 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
 }
 
 class _FeatureParam {
+
+  const _FeatureParam(this.key, this.label, this.defaultValue, this.inputType);
   final String key;
   final String label;
   final String defaultValue;
   final TextInputType inputType;
-
-  const _FeatureParam(this.key, this.label, this.defaultValue, this.inputType);
 }

@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/payments/enums/gift_card_transaction_type.dart';
 
 class GiftCardTransaction {
-  final String id;
-  final String giftCardId;
-  final GiftCardTransactionType type;
-  final double amount;
-  final double balanceAfter;
-  final String? paymentId;
-  final String storeId;
-  final String performedBy;
-  final DateTime? createdAt;
 
   const GiftCardTransaction({
     required this.id,
@@ -36,6 +27,15 @@ class GiftCardTransaction {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String giftCardId;
+  final GiftCardTransactionType type;
+  final double amount;
+  final double balanceAfter;
+  final String? paymentId;
+  final String storeId;
+  final String performedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

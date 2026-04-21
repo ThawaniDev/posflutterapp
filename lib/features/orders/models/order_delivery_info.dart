@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/orders/enums/order_delivery_platform.dart';
 
 class OrderDeliveryInfo {
-  final String id;
-  final String orderId;
-  final OrderDeliveryPlatform platform;
-  final String? driverName;
-  final String? driverPhone;
-  final DateTime? estimatedDelivery;
-  final DateTime? actualDelivery;
-  final double? deliveryFee;
-  final String? trackingUrl;
 
   const OrderDeliveryInfo({
     required this.id,
@@ -36,6 +27,15 @@ class OrderDeliveryInfo {
       trackingUrl: json['tracking_url'] as String?,
     );
   }
+  final String id;
+  final String orderId;
+  final OrderDeliveryPlatform platform;
+  final String? driverName;
+  final String? driverPhone;
+  final DateTime? estimatedDelivery;
+  final DateTime? actualDelivery;
+  final double? deliveryFee;
+  final String? trackingUrl;
 
   Map<String, dynamic> toJson() {
     return {

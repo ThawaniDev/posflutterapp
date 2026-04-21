@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../providers/zatca_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ComplianceStatusCard extends StatelessWidget {
-  final ZatcaComplianceSummaryLoaded data;
 
   const ComplianceStatusCard({super.key, required this.data});
+  final ZatcaComplianceSummaryLoaded data;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ComplianceStatusCard extends StatelessWidget {
     return Container(
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: AppRadius.borderMd,
         border: Border.all(
           color: isDark
@@ -117,15 +117,15 @@ class ComplianceStatusCard extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color color;
 
   const _StatTile({
     required this.label,
     required this.value,
     required this.color,
   });
+  final String label;
+  final String value;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

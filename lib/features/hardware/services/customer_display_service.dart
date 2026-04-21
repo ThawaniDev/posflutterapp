@@ -3,14 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 /// Customer display configuration
-class CustomerDisplayConfig {
-  final String displayType; // 'pole_display', 'secondary_screen'
-  final String? comPort; // for pole display
-  final int baudRate;
-  final String? welcomeMessage;
-  final String? idleMessage;
-  final int lineWidth; // characters per line (pole displays are typically 20)
-  final int lineCount; // number of lines (pole displays are typically 2)
+class CustomerDisplayConfig { // number of lines (pole displays are typically 2)
 
   const CustomerDisplayConfig({
     this.displayType = 'pole_display',
@@ -33,6 +26,13 @@ class CustomerDisplayConfig {
       lineCount: json['line_count'] as int? ?? 2,
     );
   }
+  final String displayType; // 'pole_display', 'secondary_screen'
+  final String? comPort; // for pole display
+  final int baudRate;
+  final String? welcomeMessage;
+  final String? idleMessage;
+  final int lineWidth; // characters per line (pole displays are typically 20)
+  final int lineCount;
 
   Map<String, dynamic> toJson() => {
     'display_type': displayType,

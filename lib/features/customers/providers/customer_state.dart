@@ -16,13 +16,6 @@ class CustomersLoading extends CustomersState {
 }
 
 class CustomersLoaded extends CustomersState {
-  final List<Customer> customers;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? searchQuery;
-  final String? groupId;
 
   const CustomersLoaded({
     required this.customers,
@@ -33,6 +26,13 @@ class CustomersLoaded extends CustomersState {
     this.searchQuery,
     this.groupId,
   });
+  final List<Customer> customers;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? searchQuery;
+  final String? groupId;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -56,8 +56,8 @@ class CustomersLoaded extends CustomersState {
 }
 
 class CustomersError extends CustomersState {
-  final String message;
   const CustomersError({required this.message});
+  final String message;
 }
 
 // ─── Customer Groups State ──────────────────────────────────────
@@ -75,15 +75,15 @@ class CustomerGroupsLoading extends CustomerGroupsState {
 }
 
 class CustomerGroupsLoaded extends CustomerGroupsState {
-  final List<CustomerGroup> groups;
   const CustomerGroupsLoaded({required this.groups});
+  final List<CustomerGroup> groups;
 
   CustomerGroupsLoaded copyWith({List<CustomerGroup>? groups}) => CustomerGroupsLoaded(groups: groups ?? this.groups);
 }
 
 class CustomerGroupsError extends CustomerGroupsState {
-  final String message;
   const CustomerGroupsError({required this.message});
+  final String message;
 }
 
 // ─── Customer Detail State ──────────────────────────────────────
@@ -101,8 +101,8 @@ class CustomerDetailLoading extends CustomerDetailState {
 }
 
 class CustomerDetailLoaded extends CustomerDetailState {
-  final Customer customer;
   const CustomerDetailLoaded({required this.customer});
+  final Customer customer;
 }
 
 class CustomerDetailSaving extends CustomerDetailState {
@@ -110,11 +110,11 @@ class CustomerDetailSaving extends CustomerDetailState {
 }
 
 class CustomerDetailSaved extends CustomerDetailState {
-  final Customer customer;
   const CustomerDetailSaved({required this.customer});
+  final Customer customer;
 }
 
 class CustomerDetailError extends CustomerDetailState {
-  final String message;
   const CustomerDetailError({required this.message});
+  final String message;
 }

@@ -251,11 +251,11 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
           AppSpacing.gapH8,
           Row(
             children: [
-              Icon(Icons.schedule_rounded, size: 14, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              Icon(Icons.schedule_rounded, size: 14, color: AppColors.mutedFor(context)),
               AppSpacing.gapW4,
               Text(
                 '${schedule.scheduledAt.day}/${schedule.scheduledAt.month}/${schedule.scheduledAt.year} ${schedule.scheduledAt.hour}:${schedule.scheduledAt.minute.toString().padLeft(2, '0')}',
-                style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
               ),
               const Spacer(),
               PosBadge(label: _localizedCategory(l10n, schedule.category), variant: PosBadgeVariant.neutral, isSmall: true),

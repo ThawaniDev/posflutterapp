@@ -16,10 +16,6 @@ class RestaurantLoading extends RestaurantState {
 }
 
 class RestaurantLoaded extends RestaurantState {
-  final List<RestaurantTable> tables;
-  final List<KitchenTicket> kitchenTickets;
-  final List<TableReservation> reservations;
-  final List<OpenTab> openTabs;
 
   const RestaurantLoaded({
     required this.tables,
@@ -27,6 +23,10 @@ class RestaurantLoaded extends RestaurantState {
     required this.reservations,
     required this.openTabs,
   });
+  final List<RestaurantTable> tables;
+  final List<KitchenTicket> kitchenTickets;
+  final List<TableReservation> reservations;
+  final List<OpenTab> openTabs;
 
   RestaurantLoaded copyWith({
     List<RestaurantTable>? tables,
@@ -42,6 +42,6 @@ class RestaurantLoaded extends RestaurantState {
 }
 
 class RestaurantError extends RestaurantState {
-  final String message;
   const RestaurantError({required this.message});
+  final String message;
 }

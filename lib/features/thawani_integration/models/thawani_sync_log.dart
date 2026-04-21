@@ -1,17 +1,4 @@
 class ThawaniSyncLog {
-  final String id;
-  final String storeId;
-  final String entityType;
-  final String? entityId;
-  final String action;
-  final String direction;
-  final String status;
-  final Map<String, dynamic>? requestData;
-  final Map<String, dynamic>? responseData;
-  final String? errorMessage;
-  final int? httpStatusCode;
-  final DateTime? completedAt;
-  final DateTime createdAt;
 
   const ThawaniSyncLog({
     required this.id,
@@ -46,6 +33,19 @@ class ThawaniSyncLog {
       createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
     );
   }
+  final String id;
+  final String storeId;
+  final String entityType;
+  final String? entityId;
+  final String action;
+  final String direction;
+  final String status;
+  final Map<String, dynamic>? requestData;
+  final Map<String, dynamic>? responseData;
+  final String? errorMessage;
+  final int? httpStatusCode;
+  final DateTime? completedAt;
+  final DateTime createdAt;
 
   bool get isSuccess => status == 'success';
   bool get isFailed => status == 'failed';

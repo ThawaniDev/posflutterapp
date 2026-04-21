@@ -5,7 +5,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
 import 'package:wameedpos/features/onboarding/models/business_type_template.dart';
@@ -182,7 +181,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.base),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: const Offset(0, 2))],
       ),
       child: Column(
@@ -193,7 +192,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
             children: [
               Text(
                 'Step ${_currentIndex + 1} of ${_steps.length}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
               ),
               PosButton(
                 onPressed: _isSubmitting ? null : _skipWizard,
@@ -215,7 +214,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
           const SizedBox(height: AppSpacing.md),
           Text(_stepTitle(_step), style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: AppSpacing.xs),
-          Text(_stepSubtitle(_step), style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textMutedLight)),
+          Text(_stepSubtitle(_step), style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context))),
         ],
       ),
     );
@@ -279,7 +278,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         Text(
           "Let's set up your store in a few simple steps.\n"
           'This usually takes about 5 minutes.',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.textMutedLight),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedFor(context)),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.xxxl),
@@ -296,9 +295,9 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.base),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(AppSpacing.md),
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
         children: [
@@ -314,7 +313,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
               children: [
                 Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 2),
-                Text(subtitle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
+                Text(subtitle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
               ],
             ),
           ),
@@ -396,7 +395,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         Text(
           'Choose the type that best describes your business. '
           'This sets up smart defaults for tax, categories, and POS features.',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textMutedLight),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
         ),
         const SizedBox(height: AppSpacing.lg),
         ...templates.map((t) => _buildBusinessTypeCard(t)),
@@ -413,9 +412,9 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         margin: const EdgeInsets.only(bottom: AppSpacing.md),
         padding: const EdgeInsets.all(AppSpacing.base),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary10 : AppColors.surfaceLight,
+          color: isSelected ? AppColors.primary10 : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSpacing.md),
-          border: Border.all(color: isSelected ? AppColors.primary : AppColors.borderLight, width: isSelected ? 2 : 1),
+          border: Border.all(color: isSelected ? AppColors.primary : Theme.of(context).dividerColor, width: isSelected ? 2 : 1),
         ),
         child: Row(
           children: [
@@ -438,7 +437,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
                     const SizedBox(height: 2),
                     Text(
                       template.descriptionEn!,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -475,7 +474,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
           title: Text(l10n.settingsPricesIncludeTax),
           subtitle: Text(l10n.onboardingTaxIncludedNote),
           value: _pricesIncludeTax,
-          activeColor: AppColors.primary,
+          activeThumbColor: AppColors.primary,
           contentPadding: EdgeInsets.zero,
           onChanged: (v) => setState(() => _pricesIncludeTax = v),
         ),
@@ -521,7 +520,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.md),
         Text(
           message,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.textMutedLight),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedFor(context)),
           textAlign: TextAlign.center,
         ),
       ],
@@ -547,8 +546,8 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.md),
         Text(
           'You completed $completedCount of ${_steps.length} setup steps. '
-          "Your POS is ready to use! You can always adjust settings later.",
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.textMutedLight),
+          'Your POS is ready to use! You can always adjust settings later.',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedFor(context)),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.xxxl),
@@ -565,14 +564,14 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.base, vertical: AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(AppSpacing.sm),
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textMutedLight)),
+          Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context))),
           Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),
@@ -588,7 +587,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.xl),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: const Offset(0, -2))],
       ),
       child: Row(
@@ -626,14 +625,14 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     return InputDecoration(
       hintText: hint,
       filled: true,
-      fillColor: AppColors.surfaceLight,
+      fillColor: Theme.of(context).colorScheme.surface,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.sm),
-        borderSide: BorderSide(color: AppColors.borderLight),
+        borderSide: BorderSide(color: Theme.of(context).dividerColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.sm),
-        borderSide: BorderSide(color: AppColors.borderLight),
+        borderSide: BorderSide(color: Theme.of(context).dividerColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.sm),

@@ -1,8 +1,4 @@
 class BundleProduct {
-  final String id;
-  final String promotionId;
-  final String productId;
-  final int? quantity;
 
   const BundleProduct({
     required this.id,
@@ -19,6 +15,10 @@ class BundleProduct {
       quantity: (json['quantity'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String promotionId;
+  final String productId;
+  final int? quantity;
 
   Map<String, dynamic> toJson() {
     return {

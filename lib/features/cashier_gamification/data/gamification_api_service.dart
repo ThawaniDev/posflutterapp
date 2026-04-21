@@ -15,9 +15,9 @@ final gamificationApiServiceProvider = Provider<GamificationApiService>((ref) {
 });
 
 class GamificationApiService {
-  final Dio _dio;
 
   GamificationApiService(this._dio);
+  final Dio _dio;
 
   // ─── Leaderboard ──────────────────────────────────────────────
 
@@ -25,9 +25,9 @@ class GamificationApiService {
     final response = await _dio.get(
       ApiEndpoints.gamificationLeaderboard,
       queryParameters: {
-        if (date != null) 'date': date,
-        if (periodType != null) 'period_type': periodType,
-        if (sortBy != null) 'sort_by': sortBy,
+        'date': ?date,
+        'period_type': ?periodType,
+        'sort_by': ?sortBy,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -38,7 +38,7 @@ class GamificationApiService {
   Future<List<CashierPerformanceSnapshot>> getCashierHistory(String cashierId, {String? dateFrom, String? dateTo}) async {
     final response = await _dio.get(
       ApiEndpoints.gamificationCashierHistory(cashierId),
-      queryParameters: {if (dateFrom != null) 'date_from': dateFrom, if (dateTo != null) 'date_to': dateTo},
+      queryParameters: {'date_from': ?dateFrom, 'date_to': ?dateTo},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -46,7 +46,7 @@ class GamificationApiService {
   }
 
   Future<void> generateSnapshot({String? posSessionId}) async {
-    await _dio.post(ApiEndpoints.gamificationGenerateSnapshot, data: {if (posSessionId != null) 'pos_session_id': posSessionId});
+    await _dio.post(ApiEndpoints.gamificationGenerateSnapshot, data: {'pos_session_id': ?posSessionId});
   }
 
   // ─── Badges ───────────────────────────────────────────────────
@@ -83,7 +83,7 @@ class GamificationApiService {
   Future<List<CashierBadgeAward>> getBadgeAwards({String? cashierId}) async {
     final response = await _dio.get(
       ApiEndpoints.gamificationBadgeAwards,
-      queryParameters: {if (cashierId != null) 'cashier_id': cashierId},
+      queryParameters: {'cashier_id': ?cashierId},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -95,7 +95,7 @@ class GamificationApiService {
   Future<List<CashierAnomaly>> getAnomalies({String? severity, String? cashierId}) async {
     final response = await _dio.get(
       ApiEndpoints.gamificationAnomalies,
-      queryParameters: {if (severity != null) 'severity': severity, if (cashierId != null) 'cashier_id': cashierId},
+      queryParameters: {'severity': ?severity, 'cashier_id': ?cashierId},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -117,9 +117,9 @@ class GamificationApiService {
     final response = await _dio.get(
       ApiEndpoints.gamificationShiftReports,
       queryParameters: {
-        if (cashierId != null) 'cashier_id': cashierId,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
+        'cashier_id': ?cashierId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

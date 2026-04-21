@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 class Payment {
-  final String id;
-  final String transactionId;
-  final PaymentMethodKey method;
-  final double amount;
-  final double? cashTendered;
-  final double? changeGiven;
-  final double? tipAmount;
-  final String? cardBrand;
-  final String? cardLastFour;
-  final String? cardAuthCode;
-  final String? cardReference;
-  final String? giftCardCode;
-  final String? couponCode;
-  final int? loyaltyPointsUsed;
-  final DateTime? createdAt;
 
   const Payment({
     required this.id,
@@ -54,6 +39,21 @@ class Payment {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String transactionId;
+  final PaymentMethodKey method;
+  final double amount;
+  final double? cashTendered;
+  final double? changeGiven;
+  final double? tipAmount;
+  final String? cardBrand;
+  final String? cardLastFour;
+  final String? cardAuthCode;
+  final String? cardReference;
+  final String? giftCardCode;
+  final String? couponCode;
+  final int? loyaltyPointsUsed;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

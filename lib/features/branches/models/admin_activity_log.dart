@@ -1,13 +1,4 @@
 class AdminActivityLog {
-  final String id;
-  final String? adminUserId;
-  final String action;
-  final String? entityType;
-  final String? entityId;
-  final Map<String, dynamic>? details;
-  final String ipAddress;
-  final String? userAgent;
-  final DateTime? createdAt;
 
   const AdminActivityLog({
     required this.id,
@@ -34,6 +25,15 @@ class AdminActivityLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? adminUserId;
+  final String action;
+  final String? entityType;
+  final String? entityId;
+  final Map<String, dynamic>? details;
+  final String ipAddress;
+  final String? userAgent;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

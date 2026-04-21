@@ -414,7 +414,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final log = DeliveryWebhookLog(
+      const log = DeliveryWebhookLog(
         id: 'whl-uuid-1',
         platform: 'marsool',
         eventType: 'order.cancelled',
@@ -533,7 +533,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final log = DeliveryStatusPushLog(
+      const log = DeliveryStatusPushLog(
         id: 'spl-uuid-1',
         deliveryOrderMappingId: 'dom-uuid-1',
         statusPushed: 'ready',
@@ -646,7 +646,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      DeliveryWebhookLogsState state = const DeliveryWebhookLogsLoading();
+      const DeliveryWebhookLogsState state = DeliveryWebhookLogsLoading();
       final result = switch (state) {
         DeliveryWebhookLogsInitial() => 'initial',
         DeliveryWebhookLogsLoading() => 'loading',
@@ -683,7 +683,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      DeliveryStatusPushLogsState state = const DeliveryStatusPushLogsInitial();
+      const DeliveryStatusPushLogsState state = DeliveryStatusPushLogsInitial();
       final result = switch (state) {
         DeliveryStatusPushLogsInitial() => 'initial',
         DeliveryStatusPushLogsLoading() => 'loading',

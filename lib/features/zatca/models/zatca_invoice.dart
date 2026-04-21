@@ -2,23 +2,6 @@ import 'package:wameedpos/features/zatca/enums/zatca_invoice_type.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_submission_status.dart';
 
 class ZatcaInvoice {
-  final String id;
-  final String storeId;
-  final String orderId;
-  final String invoiceNumber;
-  final ZatcaInvoiceType invoiceType;
-  final String invoiceXml;
-  final String invoiceHash;
-  final String previousInvoiceHash;
-  final String digitalSignature;
-  final String qrCodeData;
-  final double totalAmount;
-  final double vatAmount;
-  final ZatcaSubmissionStatus? submissionStatus;
-  final String? zatcaResponseCode;
-  final String? zatcaResponseMessage;
-  final DateTime? submittedAt;
-  final DateTime? createdAt;
 
   const ZatcaInvoice({
     required this.id,
@@ -61,6 +44,23 @@ class ZatcaInvoice {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String orderId;
+  final String invoiceNumber;
+  final ZatcaInvoiceType invoiceType;
+  final String invoiceXml;
+  final String invoiceHash;
+  final String previousInvoiceHash;
+  final String digitalSignature;
+  final String qrCodeData;
+  final double totalAmount;
+  final double vatAmount;
+  final ZatcaSubmissionStatus? submissionStatus;
+  final String? zatcaResponseCode;
+  final String? zatcaResponseMessage;
+  final DateTime? submittedAt;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

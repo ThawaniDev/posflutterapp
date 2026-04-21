@@ -20,11 +20,6 @@ class StaffListLoading extends StaffListState {
 }
 
 class StaffListLoaded extends StaffListState {
-  final List<StaffUser> staff;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final bool hasMore;
 
   const StaffListLoaded({
     required this.staff,
@@ -33,6 +28,11 @@ class StaffListLoaded extends StaffListState {
     required this.lastPage,
     this.hasMore = false,
   });
+  final List<StaffUser> staff;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final bool hasMore;
 
   StaffListLoaded copyWith({List<StaffUser>? staff, int? total, int? currentPage, int? lastPage, bool? hasMore}) =>
       StaffListLoaded(
@@ -45,9 +45,9 @@ class StaffListLoaded extends StaffListState {
 }
 
 class StaffListError extends StaffListState {
-  final String message;
 
   const StaffListError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -67,9 +67,9 @@ class StaffDetailLoading extends StaffDetailState {
 }
 
 class StaffDetailLoaded extends StaffDetailState {
-  final StaffUser staff;
 
   const StaffDetailLoaded({required this.staff});
+  final StaffUser staff;
 }
 
 class StaffDetailSaving extends StaffDetailState {
@@ -77,15 +77,15 @@ class StaffDetailSaving extends StaffDetailState {
 }
 
 class StaffDetailSaved extends StaffDetailState {
-  final StaffUser staff;
 
   const StaffDetailSaved({required this.staff});
+  final StaffUser staff;
 }
 
 class StaffDetailError extends StaffDetailState {
-  final String message;
 
   const StaffDetailError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -105,11 +105,6 @@ class AttendanceLoading extends AttendanceState {
 }
 
 class AttendanceLoaded extends AttendanceState {
-  final List<AttendanceRecord> records;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final bool hasMore;
 
   const AttendanceLoaded({
     required this.records,
@@ -118,6 +113,11 @@ class AttendanceLoaded extends AttendanceState {
     required this.lastPage,
     this.hasMore = false,
   });
+  final List<AttendanceRecord> records;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final bool hasMore;
 
   AttendanceLoaded copyWith({List<AttendanceRecord>? records, int? total, int? currentPage, int? lastPage, bool? hasMore}) =>
       AttendanceLoaded(
@@ -130,9 +130,9 @@ class AttendanceLoaded extends AttendanceState {
 }
 
 class AttendanceError extends AttendanceState {
-  final String message;
 
   const AttendanceError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -152,16 +152,16 @@ class ClockActionLoading extends ClockActionState {
 }
 
 class ClockActionSuccess extends ClockActionState {
-  final AttendanceRecord record;
-  final String message;
 
   const ClockActionSuccess({required this.record, required this.message});
+  final AttendanceRecord record;
+  final String message;
 }
 
 class ClockActionError extends ClockActionState {
-  final String message;
 
   const ClockActionError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -181,12 +181,6 @@ class ShiftLoading extends ShiftState {
 }
 
 class ShiftLoaded extends ShiftState {
-  final List<ShiftSchedule> shifts;
-  final List<ShiftTemplate> templates;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final bool hasMore;
 
   const ShiftLoaded({
     required this.shifts,
@@ -196,6 +190,12 @@ class ShiftLoaded extends ShiftState {
     required this.lastPage,
     this.hasMore = false,
   });
+  final List<ShiftSchedule> shifts;
+  final List<ShiftTemplate> templates;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final bool hasMore;
 
   ShiftLoaded copyWith({
     List<ShiftSchedule>? shifts,
@@ -215,9 +215,9 @@ class ShiftLoaded extends ShiftState {
 }
 
 class ShiftError extends ShiftState {
-  final String message;
 
   const ShiftError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -237,15 +237,84 @@ class CommissionLoading extends CommissionState {
 }
 
 class CommissionLoaded extends CommissionState {
-  final Map<String, dynamic> summary;
 
   const CommissionLoaded({required this.summary});
+  final Map<String, dynamic> summary;
 }
 
 class CommissionError extends CommissionState {
-  final String message;
 
   const CommissionError({required this.message});
+  final String message;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Attendance Summary State
+// ═══════════════════════════════════════════════════════════════
+
+class AttendanceSummary {
+
+  const AttendanceSummary({
+    this.totalRecords = 0,
+    this.completedRecords = 0,
+    this.currentlyClockedIn = 0,
+    this.totalWorkHours = 0,
+    this.totalBreakHours = 0,
+    this.totalOvertimeHours = 0,
+    this.avgWorkHours = 0,
+    this.onTimeCount = 0,
+    this.lateCount = 0,
+    this.earlyDepartureCount = 0,
+  });
+
+  factory AttendanceSummary.fromJson(Map<String, dynamic> json) {
+    return AttendanceSummary(
+      totalRecords: (json['total_records'] as num?)?.toInt() ?? 0,
+      completedRecords: (json['completed_records'] as num?)?.toInt() ?? 0,
+      currentlyClockedIn: (json['currently_clocked_in'] as num?)?.toInt() ?? 0,
+      totalWorkHours: (json['total_work_hours'] as num?)?.toDouble() ?? 0,
+      totalBreakHours: (json['total_break_hours'] as num?)?.toDouble() ?? 0,
+      totalOvertimeHours: (json['total_overtime_hours'] as num?)?.toDouble() ?? 0,
+      avgWorkHours: (json['avg_work_hours'] as num?)?.toDouble() ?? 0,
+      onTimeCount: (json['on_time_count'] as num?)?.toInt() ?? 0,
+      lateCount: (json['late_count'] as num?)?.toInt() ?? 0,
+      earlyDepartureCount: (json['early_departure_count'] as num?)?.toInt() ?? 0,
+    );
+  }
+  final int totalRecords;
+  final int completedRecords;
+  final int currentlyClockedIn;
+  final double totalWorkHours;
+  final double totalBreakHours;
+  final double totalOvertimeHours;
+  final double avgWorkHours;
+  final int onTimeCount;
+  final int lateCount;
+  final int earlyDepartureCount;
+}
+
+sealed class AttendanceSummaryState {
+  const AttendanceSummaryState();
+}
+
+class AttendanceSummaryInitial extends AttendanceSummaryState {
+  const AttendanceSummaryInitial();
+}
+
+class AttendanceSummaryLoading extends AttendanceSummaryState {
+  const AttendanceSummaryLoading();
+}
+
+class AttendanceSummaryLoaded extends AttendanceSummaryState {
+
+  const AttendanceSummaryLoaded({required this.summary});
+  final AttendanceSummary summary;
+}
+
+class AttendanceSummaryError extends AttendanceSummaryState {
+
+  const AttendanceSummaryError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -265,12 +334,6 @@ class StaffStatsLoading extends StaffStatsState {
 }
 
 class StaffStatsLoaded extends StaffStatsState {
-  final int totalStaff;
-  final int activeStaff;
-  final int inactiveStaff;
-  final int onLeaveStaff;
-  final int clockedInNow;
-  final int todayAttendance;
 
   const StaffStatsLoaded({
     required this.totalStaff,
@@ -280,12 +343,18 @@ class StaffStatsLoaded extends StaffStatsState {
     required this.clockedInNow,
     required this.todayAttendance,
   });
+  final int totalStaff;
+  final int activeStaff;
+  final int inactiveStaff;
+  final int onLeaveStaff;
+  final int clockedInNow;
+  final int todayAttendance;
 }
 
 class StaffStatsError extends StaffStatsState {
-  final String message;
 
   const StaffStatsError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -305,13 +374,13 @@ class StaffFormSaving extends StaffFormState {
 }
 
 class StaffFormSuccess extends StaffFormState {
-  final StaffUser staff;
 
   const StaffFormSuccess({required this.staff});
+  final StaffUser staff;
 }
 
 class StaffFormError extends StaffFormState {
-  final String message;
 
   const StaffFormError({required this.message});
+  final String message;
 }

@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
 
 class NotificationTemplate {
-  final String id;
-  final String eventKey;
-  final NotificationChannel channel;
-  final String title;
-  final String titleAr;
-  final String body;
-  final String bodyAr;
-  final Map<String, dynamic> availableVariables;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const NotificationTemplate({
     required this.id,
@@ -42,6 +31,17 @@ class NotificationTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String eventKey;
+  final NotificationChannel channel;
+  final String title;
+  final String titleAr;
+  final String body;
+  final String bodyAr;
+  final Map<String, dynamic> availableVariables;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

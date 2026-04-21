@@ -6,7 +6,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/wameed_ai/enums/ai_feature_category.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_definition.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
-import 'package:wameedpos/features/wameed_ai/models/ai_suggestion.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_usage.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
@@ -82,7 +81,7 @@ Widget _wrap(Widget child, {List<Override> overrides = const []}) {
 // ─── Test Data ──────────────────────────────────────────────
 
 final _testFeatures = [
-  AIFeatureDefinition(
+  const AIFeatureDefinition(
     id: 'f1',
     slug: 'smart_reorder',
     name: 'Smart Reorder',
@@ -91,7 +90,7 @@ final _testFeatures = [
     category: AIFeatureCategory.inventory,
     isActive: true,
   ),
-  AIFeatureDefinition(
+  const AIFeatureDefinition(
     id: 'f2',
     slug: 'daily_summary',
     name: 'Daily Summary',
@@ -101,7 +100,7 @@ final _testFeatures = [
     isActive: true,
     isPremium: true,
   ),
-  AIFeatureDefinition(
+  const AIFeatureDefinition(
     id: 'f3',
     slug: 'customer_segmentation',
     name: 'Customer Segmentation',

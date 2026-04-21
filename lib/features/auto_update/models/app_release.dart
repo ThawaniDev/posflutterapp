@@ -1,19 +1,4 @@
 class AppRelease {
-  final String id;
-  final String versionNumber;
-  final String platform;
-  final String channel;
-  final String? downloadUrl;
-  final String? storeUrl;
-  final int? buildNumber;
-  final String? submissionStatus;
-  final String? releaseNotes;
-  final String? releaseNotesAr;
-  final bool isForceUpdate;
-  final String? minSupportedVersion;
-  final int rolloutPercentage;
-  final bool isActive;
-  final DateTime? releasedAt;
 
   const AppRelease({
     required this.id,
@@ -52,6 +37,21 @@ class AppRelease {
       releasedAt: json['released_at'] != null ? DateTime.parse(json['released_at'] as String) : null,
     );
   }
+  final String id;
+  final String versionNumber;
+  final String platform;
+  final String channel;
+  final String? downloadUrl;
+  final String? storeUrl;
+  final int? buildNumber;
+  final String? submissionStatus;
+  final String? releaseNotes;
+  final String? releaseNotesAr;
+  final bool isForceUpdate;
+  final String? minSupportedVersion;
+  final int rolloutPercentage;
+  final bool isActive;
+  final DateTime? releasedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -152,7 +152,7 @@ class _TopCustomersTab extends ConsumerWidget {
 
                         return Column(
                           children: [
-                            if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                            if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                             ReportRankedItem(
                               rank: i + 1,
                               title: c['name'] as String? ?? '',

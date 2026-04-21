@@ -4,10 +4,10 @@ import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
-import '../l10n/app_localizations.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 /// A navigation item definition for [PosSidebar].
 class PosSidebarItem {
@@ -19,6 +19,8 @@ class PosSidebarItem {
     this.badge,
     this.children,
     this.permission,
+    this.featureKey,
+    this.isLocked = false,
   });
 
   final String label;
@@ -28,6 +30,12 @@ class PosSidebarItem {
 
   /// The permission code required to see this item. Null = always visible.
   final String? permission;
+
+  /// Subscription feature key that gates this item. Null = no feature gate.
+  final String? featureKey;
+
+  /// Whether this item is locked due to subscription plan restrictions.
+  final bool isLocked;
 
   /// Optional badge count (e.g. pending orders).
   final int? badge;
@@ -54,6 +62,7 @@ class PosSidebar extends StatefulWidget {
     this.groups,
     this.currentRoute,
     this.onItemTap,
+    this.onLockedItemTap,
     this.isCollapsed = false,
     this.onToggleCollapse,
     this.headerWidget,
@@ -68,6 +77,9 @@ class PosSidebar extends StatefulWidget {
 
   /// Callback when a nav item is tapped — passes the route string.
   final ValueChanged<String>? onItemTap;
+
+  /// Callback when a locked nav item is tapped — passes the item for upgrade prompt.
+  final ValueChanged<PosSidebarItem>? onLockedItemTap;
 
   /// Collapsed (icon-only) mode for smaller screens.
   final bool isCollapsed;
@@ -103,6 +115,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.point_of_sale_rounded,
           route: '/pos',
           permission: Permissions.posSell,
+          featureKey: 'pos',
           children: [
             PosSidebarItem(
               label: l10n.sidebarTerminals,
@@ -123,18 +136,21 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.receipt_long_rounded,
           route: '/orders',
           permission: Permissions.ordersView,
+          featureKey: 'pos',
         ),
         PosSidebarItem(
           label: l10n.sidebarTransactions,
           icon: Icons.swap_horiz_rounded,
           route: '/transactions',
           permission: Permissions.transactionsView,
+          featureKey: 'pos',
         ),
         PosSidebarItem(
           label: l10n.sidebarPayments,
           icon: Icons.payments_rounded,
           route: '/cash-management',
           permission: Permissions.cashManage,
+          featureKey: 'cash_drawer',
         ),
       ],
     ),
@@ -149,30 +165,35 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.inventory_2_rounded,
           route: '/products',
           permission: Permissions.productsView,
+          featureKey: 'inventory',
         ),
         PosSidebarItem(
           label: l10n.sidebarCategories,
           icon: Icons.category_rounded,
           route: '/categories',
           permission: Permissions.productsManageCategories,
+          featureKey: 'inventory',
         ),
         PosSidebarItem(
           label: l10n.sidebarSuppliers,
           icon: Icons.people_alt_rounded,
           route: '/suppliers',
           permission: Permissions.productsManageSuppliers,
+          featureKey: 'inventory',
         ),
         PosSidebarItem(
           label: l10n.sidebarInventory,
           icon: Icons.warehouse_rounded,
           route: '/inventory',
           permission: Permissions.inventoryView,
+          featureKey: 'inventory',
         ),
         PosSidebarItem(
           label: l10n.sidebarLabels,
           icon: Icons.label_rounded,
           route: '/labels',
           permission: Permissions.labelsView,
+          featureKey: 'inventory',
         ),
         PosSidebarItem(
           label: l10n.sidebarPredefinedCatalog,
@@ -231,12 +252,14 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.store_rounded,
           route: '/branches',
           permission: Permissions.branchesView,
+          featureKey: 'multi_branch',
         ),
         PosSidebarItem(
           label: l10n.sidebarAccounting,
           icon: Icons.account_balance_rounded,
           route: '/accounting',
           permission: Permissions.accountingViewHistory,
+          featureKey: 'accounting',
         ),
         PosSidebarItem(
           label: l10n.sidebarDebits,
@@ -255,12 +278,14 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.local_offer_rounded,
           route: '/promotions',
           permission: Permissions.promotionsManage,
+          featureKey: 'customer_loyalty',
         ),
         PosSidebarItem(
           label: l10n.sidebarInstallments,
           icon: Icons.calendar_month_rounded,
           route: Routes.settingsInstallments,
           permission: Permissions.installmentsConfigure,
+          featureKey: 'installments',
         ),
       ],
     ),
@@ -275,6 +300,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.bar_chart_rounded,
           route: '/reports',
           permission: Permissions.reportsView,
+          featureKey: 'reports_basic',
         ),
         PosSidebarItem(
           label: l10n.sidebarSalesSummary,
@@ -311,24 +337,28 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.people_rounded,
           route: '/reports/staff-performance',
           permission: Permissions.reportsStaff,
+          featureKey: 'reports_advanced',
         ),
         PosSidebarItem(
           label: l10n.sidebarInventoryReports,
           icon: Icons.warehouse_rounded,
           route: '/reports/inventory',
           permission: Permissions.reportsInventory,
+          featureKey: 'reports_advanced',
         ),
         PosSidebarItem(
           label: l10n.sidebarFinancialReports,
           icon: Icons.account_balance_wallet_rounded,
           route: '/reports/financial',
           permission: Permissions.reportsViewFinancial,
+          featureKey: 'reports_advanced',
         ),
         PosSidebarItem(
           label: l10n.sidebarCustomerReports,
           icon: Icons.group_rounded,
           route: '/reports/customers',
           permission: Permissions.reportsCustomers,
+          featureKey: 'reports_advanced',
         ),
       ],
     ),
@@ -343,18 +373,21 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.delivery_dining_sharp,
           route: '/thawani-integration',
           permission: Permissions.thawaniViewDashboard,
+          featureKey: 'custom_integrations',
         ),
         PosSidebarItem(
           label: l10n.sidebarDelivery,
           icon: Icons.local_shipping_rounded,
           route: '/delivery',
           permission: Permissions.deliveryViewDashboard,
+          featureKey: 'delivery_integration',
         ),
         PosSidebarItem(
           label: l10n.sidebarZatca,
           icon: Icons.verified_rounded,
           route: '/zatca',
           permission: Permissions.zatcaView,
+          featureKey: 'zatca_phase2',
         ),
       ],
     ),
@@ -390,36 +423,42 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.restaurant_rounded,
           route: '/industry/restaurant',
           permission: Permissions.restaurantView,
+          featureKey: 'industry_restaurant',
         ),
         PosSidebarItem(
           label: l10n.sidebarBakery,
           icon: Icons.cake_rounded,
           route: '/industry/bakery',
           permission: Permissions.bakeryView,
+          featureKey: 'industry_bakery',
         ),
         PosSidebarItem(
           label: l10n.sidebarPharmacy,
           icon: Icons.local_pharmacy_rounded,
           route: '/industry/pharmacy',
           permission: Permissions.pharmacyView,
+          featureKey: 'industry_pharmacy',
         ),
         PosSidebarItem(
           label: l10n.sidebarElectronics,
           icon: Icons.devices_rounded,
           route: '/industry/electronics',
           permission: Permissions.mobileView,
+          featureKey: 'industry_electronics',
         ),
         PosSidebarItem(
           label: l10n.sidebarFlorist,
           icon: Icons.local_florist_rounded,
           route: '/industry/florist',
           permission: Permissions.flowersView,
+          featureKey: 'industry_florist',
         ),
         PosSidebarItem(
           label: l10n.sidebarJewelry,
           icon: Icons.diamond_rounded,
           route: '/industry/jewelry',
           permission: Permissions.jewelryView,
+          featureKey: 'industry_jewelry',
         ),
       ],
     ),
@@ -434,6 +473,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.auto_awesome_rounded,
           route: '/wameed-ai',
           permission: Permissions.wameedAiView,
+          featureKey: 'wameed_ai',
           children: [
             PosSidebarItem(
               label: l10n.wameedAISuggestions,
@@ -466,6 +506,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.emoji_events_rounded,
           route: '/cashier-gamification',
           permission: Permissions.cashierPerformanceViewLeaderboard,
+          featureKey: 'cashier_gamification',
           children: [
             PosSidebarItem(
               label: l10n.gamificationBadges,
@@ -498,6 +539,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.tune_rounded,
           route: '/customization',
           permission: Permissions.posCustomizationView,
+          featureKey: 'pos_customization',
           children: [
             PosSidebarItem(
               label: l10n.sidebarLayoutBuilder,
@@ -536,6 +578,7 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.phone_android_rounded,
           route: '/companion',
           permission: Permissions.companionView,
+          featureKey: 'companion_app',
         ),
         PosSidebarItem(
           label: l10n.sidebarNiceToHave,
@@ -688,10 +731,12 @@ class _PosSidebarState extends State<PosSidebar> {
       itemCount: allItems.length,
       itemBuilder: (_, i) => _NavItemTile(
         item: allItems[i],
-        isActive: widget.currentRoute == allItems[i].route,
+        isActive: !allItems[i].isLocked && widget.currentRoute == allItems[i].route,
         isCollapsed: true,
         onTap: () {
-          if (allItems[i].route != null) {
+          if (allItems[i].isLocked) {
+            widget.onLockedItemTap?.call(allItems[i]);
+          } else if (allItems[i].route != null) {
             widget.onItemTap?.call(allItems[i].route!);
           }
         },
@@ -719,6 +764,7 @@ class _PosSidebarState extends State<PosSidebar> {
           },
           currentRoute: widget.currentRoute,
           onItemTap: widget.onItemTap,
+          onLockedItemTap: widget.onLockedItemTap,
           isItemExpanded: (itemIndex, item) => _isItemExpanded(groupIndex, itemIndex, item),
           onToggleItem: (itemIndex, item) {
             setState(() {
@@ -842,6 +888,7 @@ class _SidebarGroupSection extends StatelessWidget {
     required this.onItemTap,
     required this.isItemExpanded,
     required this.onToggleItem,
+    this.onLockedItemTap,
   });
 
   final PosSidebarGroup group;
@@ -850,6 +897,7 @@ class _SidebarGroupSection extends StatelessWidget {
   final VoidCallback onToggleGroup;
   final String? currentRoute;
   final ValueChanged<String>? onItemTap;
+  final ValueChanged<PosSidebarItem>? onLockedItemTap;
   final bool Function(int itemIndex, PosSidebarItem item) isItemExpanded;
   final void Function(int itemIndex, PosSidebarItem item) onToggleItem;
 
@@ -898,18 +946,20 @@ class _SidebarGroupSection extends StatelessWidget {
               for (int i = 0; i < group.items.length; i++) ...[
                 _NavItemTile(
                   item: group.items[i],
-                  isActive: currentRoute == group.items[i].route,
+                  isActive: !group.items[i].isLocked && currentRoute == group.items[i].route,
                   isCollapsed: false,
-                  isExpanded: isItemExpanded(i, group.items[i]),
+                  isExpanded: !group.items[i].isLocked && isItemExpanded(i, group.items[i]),
                   onTap: () {
-                    if (group.items[i].children != null && group.items[i].children!.isNotEmpty) {
+                    if (group.items[i].isLocked) {
+                      onLockedItemTap?.call(group.items[i]);
+                    } else if (group.items[i].children != null && group.items[i].children!.isNotEmpty) {
                       onToggleItem(i, group.items[i]);
                     } else if (group.items[i].route != null) {
                       onItemTap?.call(group.items[i].route!);
                     }
                   },
                 ),
-                if (group.items[i].children != null && isItemExpanded(i, group.items[i]))
+                if (!group.items[i].isLocked && group.items[i].children != null && isItemExpanded(i, group.items[i]))
                   for (final child in group.items[i].children!)
                     _SubNavItemTile(
                       item: child,
@@ -952,12 +1002,14 @@ class _NavItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final hasChildren = item.children != null && item.children!.isNotEmpty;
+    final isItemLocked = item.isLocked;
 
     final activeBg = AppColors.primary10;
-    final activeFg = AppColors.primary;
+    const activeFg = AppColors.primary;
     final inactiveFg = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final lockedFg = (isDark ? AppColors.textMutedDark : AppColors.textMutedLight).withValues(alpha: 0.5);
 
-    final fg = isActive ? activeFg : inactiveFg;
+    final fg = isItemLocked ? lockedFg : (isActive ? activeFg : inactiveFg);
 
     Widget content = Material(
       color: isActive ? activeBg : Colors.transparent,
@@ -983,21 +1035,25 @@ class _NavItemTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (item.badge != null && item.badge! > 0)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(color: AppColors.badge, borderRadius: AppRadius.borderFull),
-                    child: Text(
-                      item.badge! > 99 ? '99+' : '${item.badge}',
-                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.white),
+                if (isItemLocked)
+                  Icon(Icons.lock_outline, size: 14, color: lockedFg)
+                else ...[
+                  if (item.badge != null && item.badge! > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(color: AppColors.badge, borderRadius: AppRadius.borderFull),
+                      child: Text(
+                        item.badge! > 99 ? '99+' : '${item.badge}',
+                        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.white),
+                      ),
                     ),
-                  ),
-                if (hasChildren)
-                  AnimatedRotation(
-                    turns: isExpanded ? 0.5 : 0.0,
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(Icons.expand_more_rounded, size: 18, color: fg),
-                  ),
+                  if (hasChildren)
+                    AnimatedRotation(
+                      turns: isExpanded ? 0.5 : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(Icons.expand_more_rounded, size: 18, color: fg),
+                    ),
+                ],
               ],
             ],
           ),
@@ -1006,7 +1062,11 @@ class _NavItemTile extends StatelessWidget {
     );
 
     if (isCollapsed) {
-      content = Tooltip(message: item.label, waitDuration: const Duration(milliseconds: 500), child: content);
+      content = Tooltip(
+        message: isItemLocked ? '🔒 ${item.label}' : item.label,
+        waitDuration: const Duration(milliseconds: 500),
+        child: content,
+      );
     }
 
     return Padding(padding: const EdgeInsets.symmetric(vertical: 1), child: content);
@@ -1025,7 +1085,7 @@ class _SubNavItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final activeFg = AppColors.primary;
+    const activeFg = AppColors.primary;
     final inactiveFg = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     final fg = isActive ? activeFg : inactiveFg;
 

@@ -5,23 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datawedge/flutter_datawedge.dart';
 
 /// Barcode scan result
-class BarcodeScanResult {
-  final String barcode;
-  final DateTime scannedAt;
-  final String source; // 'keyboard_wedge', 'serial', 'bluetooth'
+class BarcodeScanResult { // 'keyboard_wedge', 'serial', 'bluetooth'
 
   const BarcodeScanResult({required this.barcode, required this.scannedAt, this.source = 'keyboard_wedge'});
+  final String barcode;
+  final DateTime scannedAt;
+  final String source;
 }
 
 /// Scanner configuration
-class ScannerConfig {
-  final String connectionType; // usb, serial, bluetooth
-  final int scannerTimeout; // ms to wait for complete barcode
-  final int minBarcodeLength;
-  final int maxBarcodeLength;
-  final String? prefix; // character(s) prepended by scanner
-  final String? suffix; // character(s) appended by scanner (typically \n)
-  final String? comPort; // for serial connection
+class ScannerConfig { // for serial connection
 
   const ScannerConfig({
     this.connectionType = 'usb',
@@ -44,6 +37,13 @@ class ScannerConfig {
       comPort: json['com_port'] as String?,
     );
   }
+  final String connectionType; // usb, serial, bluetooth
+  final int scannerTimeout; // ms to wait for complete barcode
+  final int minBarcodeLength;
+  final int maxBarcodeLength;
+  final String? prefix; // character(s) prepended by scanner
+  final String? suffix; // character(s) appended by scanner (typically \n)
+  final String? comPort;
 
   Map<String, dynamic> toJson() => {
     'connection_type': connectionType,
@@ -157,7 +157,7 @@ class BarcodeScannerService {
     if (event.logicalKey == LogicalKeyboardKey.enter || event.logicalKey == LogicalKeyboardKey.numpadEnter) {
       final hadBuffer = _buffer.isNotEmpty;
       if (hadBuffer) {
-        debugPrint('BarcodeScannerService: Enter received, processing buffer "${_buffer}"');
+        debugPrint('BarcodeScannerService: Enter received, processing buffer "$_buffer"');
       }
       _processBuffer();
       return hadBuffer; // consume the event only if we had a buffer

@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/industry_restaurant/enums/table_reservation_status.dart';
 
 class TableReservation {
-  final String id;
-  final String storeId;
-  final String? tableId;
-  final String customerName;
-  final String? customerPhone;
-  final int partySize;
-  final DateTime reservationDate;
-  final String reservationTime;
-  final int? durationMinutes;
-  final TableReservationStatus? status;
-  final String? notes;
-  final DateTime? createdAt;
 
   const TableReservation({
     required this.id,
@@ -45,6 +33,18 @@ class TableReservation {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? tableId;
+  final String customerName;
+  final String? customerPhone;
+  final int partySize;
+  final DateTime reservationDate;
+  final String reservationTime;
+  final int? durationMinutes;
+  final TableReservationStatus? status;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

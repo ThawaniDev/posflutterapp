@@ -84,7 +84,7 @@ void main() {
     });
 
     test('toJson round-trip preserves data', () {
-      final config = HardwareConfiguration(
+      const config = HardwareConfiguration(
         id: 'hw-002',
         storeId: 'store-002',
         terminalId: 'term-002',
@@ -104,7 +104,7 @@ void main() {
     });
 
     test('copyWith creates modified copy', () {
-      final config = HardwareConfiguration(
+      const config = HardwareConfiguration(
         id: 'hw-003',
         storeId: 'store-003',
         terminalId: 'term-003',
@@ -121,7 +121,7 @@ void main() {
     });
 
     test('equality by id', () {
-      final a = HardwareConfiguration(
+      const a = HardwareConfiguration(
         id: 'hw-same',
         storeId: 's',
         terminalId: 't',
@@ -129,7 +129,7 @@ void main() {
         connectionType: ConnectionType.usb,
         configJson: {},
       );
-      final b = HardwareConfiguration(
+      const b = HardwareConfiguration(
         id: 'hw-same',
         storeId: 's2',
         terminalId: 't2',
@@ -166,7 +166,7 @@ void main() {
     });
 
     test('toJson round-trip preserves data', () {
-      final log = HardwareEventLog(
+      const log = HardwareEventLog(
         id: 'evt-002',
         storeId: 'store-002',
         terminalId: 'term-002',
@@ -182,7 +182,7 @@ void main() {
     });
 
     test('copyWith works', () {
-      final log = HardwareEventLog(
+      const log = HardwareEventLog(
         id: 'evt-003',
         storeId: 's',
         terminalId: 't',
@@ -212,7 +212,7 @@ void main() {
 
     test('loaded state with configs', () {
       final configs = [
-        HardwareConfiguration(
+        const HardwareConfiguration(
           id: 'c1',
           storeId: 's1',
           terminalId: 't1',
@@ -242,7 +242,7 @@ void main() {
     });
 
     test('loaded with models', () {
-      final state = SupportedModelsLoaded(
+      const state = SupportedModelsLoaded(
         models: [
           {'brand': 'Epson', 'model': 'TM-T88V', 'device_type': 'receipt_printer'},
         ],
@@ -296,7 +296,7 @@ void main() {
 
     test('loaded with pagination', () {
       final logs = [
-        HardwareEventLog(
+        const HardwareEventLog(
           id: 'l1',
           storeId: 's1',
           terminalId: 't1',

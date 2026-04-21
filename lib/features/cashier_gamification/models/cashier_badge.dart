@@ -1,20 +1,4 @@
 class CashierBadge {
-  final String id;
-  final String storeId;
-  final String slug;
-  final String nameEn;
-  final String nameAr;
-  final String? descriptionEn;
-  final String? descriptionAr;
-  final String icon;
-  final String color;
-  final String triggerType;
-  final double triggerThreshold;
-  final String period;
-  final bool isActive;
-  final int sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const CashierBadge({
     required this.id,
@@ -55,6 +39,22 @@ class CashierBadge {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String slug;
+  final String nameEn;
+  final String nameAr;
+  final String? descriptionEn;
+  final String? descriptionAr;
+  final String icon;
+  final String color;
+  final String triggerType;
+  final double triggerThreshold;
+  final String period;
+  final bool isActive;
+  final int sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

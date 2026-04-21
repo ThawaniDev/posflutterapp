@@ -13,9 +13,9 @@ final subscriptionApiServiceProvider = Provider<SubscriptionApiService>((ref) {
 
 /// Remote API service for subscription endpoints.
 class SubscriptionApiService {
-  final Dio _dio;
 
   SubscriptionApiService(this._dio);
+  final Dio _dio;
 
   // ─── Plans ─────────────────────────────────────────────────────
 

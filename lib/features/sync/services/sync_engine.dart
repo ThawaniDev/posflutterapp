@@ -199,12 +199,12 @@ class SyncEngine {
 enum SyncEngineStatus { idle, syncing, offline, error }
 
 class SyncResult {
+
+  const SyncResult({required this.pushed, required this.pulled, this.skipped = false, this.error});
   final int pushed;
   final int pulled;
   final bool skipped;
   final String? error;
-
-  const SyncResult({required this.pushed, required this.pulled, this.skipped = false, this.error});
 
   bool get hasError => error != null;
 }

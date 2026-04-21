@@ -1,4 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/features/auth/enums/auth_method.dart';
+import 'package:wameedpos/features/staff/models/attendance_record.dart';
+import 'package:wameedpos/features/staff/models/shift_template.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
@@ -12,9 +15,9 @@ final staffListProvider = StateNotifierProvider<StaffListNotifier, StaffListStat
 });
 
 class StaffListNotifier extends StateNotifier<StaffListState> {
-  final StaffRepository _repo;
 
   StaffListNotifier(this._repo) : super(const StaffListInitial());
+  final StaffRepository _repo;
 
   Future<void> load({String? search, String? status, String? employmentType, String? storeId}) async {
     state = const StaffListLoading();
@@ -79,10 +82,10 @@ final staffDetailProvider = StateNotifierProvider.family<StaffDetailNotifier, St
 });
 
 class StaffDetailNotifier extends StateNotifier<StaffDetailState> {
-  final StaffRepository _repo;
-  final String _staffId;
 
   StaffDetailNotifier(this._repo, this._staffId) : super(const StaffDetailInitial());
+  final StaffRepository _repo;
+  final String _staffId;
 
   Future<void> load() async {
     state = const StaffDetailLoading();
@@ -114,14 +117,14 @@ final attendanceProvider = StateNotifierProvider<AttendanceNotifier, AttendanceS
 });
 
 class AttendanceNotifier extends StateNotifier<AttendanceState> {
-  final StaffRepository _repo;
 
   AttendanceNotifier(this._repo) : super(const AttendanceInitial());
+  final StaffRepository _repo;
 
-  Future<void> load({String? staffUserId, String? dateFrom, String? dateTo}) async {
+  Future<void> load({String? staffUserId, String? dateFrom, String? dateTo, int page = 1}) async {
     state = const AttendanceLoading();
     try {
-      final result = await _repo.listAttendance(staffUserId: staffUserId, dateFrom: dateFrom, dateTo: dateTo);
+      final result = await _repo.listAttendance(staffUserId: staffUserId, dateFrom: dateFrom, dateTo: dateTo, page: page);
       state = AttendanceLoaded(
         records: result.items,
         total: result.total,
@@ -132,6 +135,27 @@ class AttendanceNotifier extends StateNotifier<AttendanceState> {
     } catch (e) {
       state = AttendanceError(message: e.toString());
     }
+  }
+
+  Future<void> loadMore({String? staffUserId, String? dateFrom, String? dateTo}) async {
+    final current = state;
+    if (current is! AttendanceLoaded || !current.hasMore) return;
+
+    try {
+      final result = await _repo.listAttendance(
+        staffUserId: staffUserId,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        page: current.currentPage + 1,
+      );
+      state = current.copyWith(
+        records: [...current.records, ...result.items],
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+        hasMore: result.currentPage < result.lastPage,
+        total: result.total,
+      );
+    } catch (_) {}
   }
 }
 
@@ -144,9 +168,9 @@ final clockActionProvider = StateNotifierProvider<ClockActionNotifier, ClockActi
 });
 
 class ClockActionNotifier extends StateNotifier<ClockActionState> {
-  final StaffRepository _repo;
 
   ClockActionNotifier(this._repo) : super(const ClockActionIdle());
+  final StaffRepository _repo;
 
   Future<void> clockIn({required String staffUserId, required String storeId, String? notes}) async {
     state = const ClockActionLoading();
@@ -172,8 +196,16 @@ class ClockActionNotifier extends StateNotifier<ClockActionState> {
     state = const ClockActionLoading();
     try {
       await _repo.startBreak(attendanceRecordId: attendanceRecordId);
-      // Return idle since break actions don't return a full record
-      state = const ClockActionIdle();
+      state = ClockActionSuccess(
+        record: AttendanceRecord(
+          id: attendanceRecordId,
+          staffUserId: '',
+          storeId: '',
+          clockInAt: DateTime.now(),
+          authMethod: AuthMethod.fromValue('pin'),
+        ),
+        message: 'Break started',
+      );
     } catch (e) {
       state = ClockActionError(message: e.toString());
     }
@@ -183,7 +215,16 @@ class ClockActionNotifier extends StateNotifier<ClockActionState> {
     state = const ClockActionLoading();
     try {
       await _repo.endBreak(attendanceRecordId: attendanceRecordId);
-      state = const ClockActionIdle();
+      state = ClockActionSuccess(
+        record: AttendanceRecord(
+          id: attendanceRecordId,
+          staffUserId: '',
+          storeId: '',
+          clockInAt: DateTime.now(),
+          authMethod: AuthMethod.fromValue('pin'),
+        ),
+        message: 'Break ended',
+      );
     } catch (e) {
       state = ClockActionError(message: e.toString());
     }
@@ -201,9 +242,9 @@ final shiftProvider = StateNotifierProvider<ShiftNotifier, ShiftState>((ref) {
 });
 
 class ShiftNotifier extends StateNotifier<ShiftState> {
-  final StaffRepository _repo;
 
   ShiftNotifier(this._repo) : super(const ShiftInitial());
+  final StaffRepository _repo;
 
   Future<void> load({String? staffUserId, String? dateFrom, String? dateTo, String? status}) async {
     state = const ShiftLoading();
@@ -232,7 +273,24 @@ class ShiftNotifier extends StateNotifier<ShiftState> {
   Future<void> createShift(Map<String, dynamic> data) async {
     try {
       await _repo.createShift(data);
-      // Reload to reflect changes
+      await load();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateShift(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateShift(id, data);
+      await load();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> bulkCreateShifts(Map<String, dynamic> data) async {
+    try {
+      await _repo.bulkCreateShifts(data);
       await load();
     } catch (e) {
       rethrow;
@@ -253,6 +311,103 @@ class ShiftNotifier extends StateNotifier<ShiftState> {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// Attendance Summary Provider
+// ═══════════════════════════════════════════════════════════════
+
+final attendanceSummaryProvider = StateNotifierProvider<AttendanceSummaryNotifier, AttendanceSummaryState>((ref) {
+  return AttendanceSummaryNotifier(ref.watch(staffRepositoryProvider));
+});
+
+class AttendanceSummaryNotifier extends StateNotifier<AttendanceSummaryState> {
+
+  AttendanceSummaryNotifier(this._repo) : super(const AttendanceSummaryInitial());
+  final StaffRepository _repo;
+
+  Future<void> load({String? staffUserId, String? dateFrom, String? dateTo}) async {
+    state = const AttendanceSummaryLoading();
+    try {
+      final data = await _repo.getAttendanceSummary(staffUserId: staffUserId, dateFrom: dateFrom, dateTo: dateTo);
+      state = AttendanceSummaryLoaded(summary: AttendanceSummary.fromJson(data));
+    } catch (e) {
+      state = AttendanceSummaryError(message: e.toString());
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Shift Template Provider
+// ═══════════════════════════════════════════════════════════════
+
+final shiftTemplateProvider = StateNotifierProvider<ShiftTemplateNotifier, ShiftTemplateState>((ref) {
+  return ShiftTemplateNotifier(ref.watch(staffRepositoryProvider));
+});
+
+sealed class ShiftTemplateState {
+  const ShiftTemplateState();
+}
+
+class ShiftTemplateInitial extends ShiftTemplateState {
+  const ShiftTemplateInitial();
+}
+
+class ShiftTemplateLoading extends ShiftTemplateState {
+  const ShiftTemplateLoading();
+}
+
+class ShiftTemplateLoaded extends ShiftTemplateState {
+  const ShiftTemplateLoaded({required this.templates});
+  final List<ShiftTemplate> templates;
+}
+
+class ShiftTemplateError extends ShiftTemplateState {
+  const ShiftTemplateError({required this.message});
+  final String message;
+}
+
+class ShiftTemplateNotifier extends StateNotifier<ShiftTemplateState> {
+
+  ShiftTemplateNotifier(this._repo) : super(const ShiftTemplateInitial());
+  final StaffRepository _repo;
+
+  Future<void> load() async {
+    state = const ShiftTemplateLoading();
+    try {
+      final templates = await _repo.listShiftTemplates();
+      state = ShiftTemplateLoaded(templates: templates);
+    } catch (e) {
+      state = ShiftTemplateError(message: e.toString());
+    }
+  }
+
+  Future<void> create(Map<String, dynamic> data) async {
+    try {
+      await _repo.createShiftTemplate(data);
+      await load();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateShiftTemplate(id, data);
+      await load();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> delete(String id) async {
+    try {
+      await _repo.deleteShiftTemplate(id);
+      await load();
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // Commission Provider (by staff ID)
 // ═══════════════════════════════════════════════════════════════
 
@@ -261,10 +416,10 @@ final commissionProvider = StateNotifierProvider.family<CommissionNotifier, Comm
 });
 
 class CommissionNotifier extends StateNotifier<CommissionState> {
-  final StaffRepository _repo;
-  final String _staffId;
 
   CommissionNotifier(this._repo, this._staffId) : super(const CommissionInitial());
+  final StaffRepository _repo;
+  final String _staffId;
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
     state = const CommissionLoading();
@@ -286,9 +441,9 @@ final staffStatsProvider = StateNotifierProvider<StaffStatsNotifier, StaffStatsS
 });
 
 class StaffStatsNotifier extends StateNotifier<StaffStatsState> {
-  final StaffRepository _repo;
 
   StaffStatsNotifier(this._repo) : super(const StaffStatsInitial());
+  final StaffRepository _repo;
 
   Future<void> load() async {
     state = const StaffStatsLoading();
@@ -317,9 +472,9 @@ final staffFormProvider = StateNotifierProvider<StaffFormNotifier, StaffFormStat
 });
 
 class StaffFormNotifier extends StateNotifier<StaffFormState> {
-  final StaffRepository _repo;
 
   StaffFormNotifier(this._repo) : super(const StaffFormIdle());
+  final StaffRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const StaffFormSaving();

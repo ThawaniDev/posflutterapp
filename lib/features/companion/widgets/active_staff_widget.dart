@@ -52,7 +52,7 @@ class _ActiveStaffWidgetState extends ConsumerState<ActiveStaffWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.people_outline, size: 48, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    Icon(Icons.people_outline, size: 48, color: AppColors.mutedFor(context)),
                     AppSpacing.gapH8,
                     Text(l10n.companionNoActiveStaff, style: theme.textTheme.titleMedium),
                   ],
@@ -102,7 +102,7 @@ class _StaffCard extends StatelessWidget {
           backgroundColor: AppColors.primary.withValues(alpha: 0.15),
           child: Text(
             (member['name'] as String? ?? '?').substring(0, 1).toUpperCase(),
-            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
           ),
         ),
         title: Text(member['name'] as String? ?? '-', style: theme.textTheme.titleSmall),
@@ -112,12 +112,12 @@ class _StaffCard extends StatelessWidget {
             if (role.isNotEmpty)
               Text(
                 role,
-                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
               ),
             if (clockedInAt != null)
               Text(
                 '${l10n.companionClockedIn}: $clockedInAt',
-                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
               ),
           ],
         ),

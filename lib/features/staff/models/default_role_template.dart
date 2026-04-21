@@ -1,12 +1,4 @@
 class DefaultRoleTemplate {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String slug;
-  final String? description;
-  final String? descriptionAr;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const DefaultRoleTemplate({
     required this.id,
@@ -31,6 +23,14 @@ class DefaultRoleTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String slug;
+  final String? description;
+  final String? descriptionAr;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

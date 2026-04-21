@@ -85,7 +85,7 @@ class _LabelTemplatesBrowsePageState extends ConsumerState<LabelTemplatesBrowseP
                         Text(
                           '${template.labelWidthMm}×${template.labelHeightMm}mm',
                           style: AppTypography.labelSmall.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                       ],
@@ -104,7 +104,7 @@ class _LabelTemplatesBrowsePageState extends ConsumerState<LabelTemplatesBrowseP
                     AppSpacing.gapH4,
                     Text(
                       template.slug,
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                     ),
                     const Spacer(),
                     Wrap(

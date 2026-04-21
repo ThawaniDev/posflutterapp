@@ -1,32 +1,6 @@
 import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
 
 class Promotion {
-  final String id;
-  final String organizationId;
-  final String name;
-  final String? description;
-  final PromotionType type;
-  final double? discountValue;
-  final int? buyQuantity;
-  final int? getQuantity;
-  final double? getDiscountPercent;
-  final double? bundlePrice;
-  final double? minOrderTotal;
-  final int? minItemQuantity;
-  final DateTime? validFrom;
-  final DateTime? validTo;
-  final List<String> activeDays;
-  final String? activeTimeFrom;
-  final String? activeTimeTo;
-  final int? maxUses;
-  final int? maxUsesPerCustomer;
-  final bool? isStackable;
-  final bool? isActive;
-  final bool? isCoupon;
-  final int? usageCount;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Promotion({
     required this.id,
@@ -89,6 +63,32 @@ class Promotion {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final String? description;
+  final PromotionType type;
+  final double? discountValue;
+  final int? buyQuantity;
+  final int? getQuantity;
+  final double? getDiscountPercent;
+  final double? bundlePrice;
+  final double? minOrderTotal;
+  final int? minItemQuantity;
+  final DateTime? validFrom;
+  final DateTime? validTo;
+  final List<String> activeDays;
+  final String? activeTimeFrom;
+  final String? activeTimeTo;
+  final int? maxUses;
+  final int? maxUsesPerCustomer;
+  final bool? isStackable;
+  final bool? isActive;
+  final bool? isCoupon;
+  final int? usageCount;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

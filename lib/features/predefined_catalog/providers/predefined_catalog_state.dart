@@ -16,12 +16,6 @@ class PredefinedCategoriesLoading extends PredefinedCategoriesState {
 }
 
 class PredefinedCategoriesLoaded extends PredefinedCategoriesState {
-  final List<PredefinedCategory> categories;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? selectedBusinessTypeId;
 
   const PredefinedCategoriesLoaded({
     required this.categories,
@@ -31,6 +25,12 @@ class PredefinedCategoriesLoaded extends PredefinedCategoriesState {
     required this.perPage,
     this.selectedBusinessTypeId,
   });
+  final List<PredefinedCategory> categories;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? selectedBusinessTypeId;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -54,9 +54,9 @@ class PredefinedCategoriesLoaded extends PredefinedCategoriesState {
 }
 
 class PredefinedCategoriesError extends PredefinedCategoriesState {
-  final String message;
 
   const PredefinedCategoriesError({required this.message});
+  final String message;
 }
 
 // ─── Category Tree State ─────────────────────────────────────
@@ -74,15 +74,15 @@ class PredefinedCategoryTreeLoading extends PredefinedCategoryTreeState {
 }
 
 class PredefinedCategoryTreeLoaded extends PredefinedCategoryTreeState {
-  final List<PredefinedCategory> tree;
 
   const PredefinedCategoryTreeLoaded({required this.tree});
+  final List<PredefinedCategory> tree;
 }
 
 class PredefinedCategoryTreeError extends PredefinedCategoryTreeState {
-  final String message;
 
   const PredefinedCategoryTreeError({required this.message});
+  final String message;
 }
 
 // ─── Predefined Products State ───────────────────────────────
@@ -100,13 +100,6 @@ class PredefinedProductsLoading extends PredefinedProductsState {
 }
 
 class PredefinedProductsLoaded extends PredefinedProductsState {
-  final List<PredefinedProduct> products;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? selectedCategoryId;
-  final String? searchQuery;
 
   const PredefinedProductsLoaded({
     required this.products,
@@ -117,6 +110,13 @@ class PredefinedProductsLoaded extends PredefinedProductsState {
     this.selectedCategoryId,
     this.searchQuery,
   });
+  final List<PredefinedProduct> products;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? selectedCategoryId;
+  final String? searchQuery;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -142,9 +142,9 @@ class PredefinedProductsLoaded extends PredefinedProductsState {
 }
 
 class PredefinedProductsError extends PredefinedProductsState {
-  final String message;
 
   const PredefinedProductsError({required this.message});
+  final String message;
 }
 
 // ─── Clone State ─────────────────────────────────────────────
@@ -162,14 +162,14 @@ class CloneInProgress extends CloneState {
 }
 
 class CloneSuccess extends CloneState {
-  final String message;
-  final Map<String, dynamic> result;
 
   const CloneSuccess({required this.message, required this.result});
+  final String message;
+  final Map<String, dynamic> result;
 }
 
 class CloneError extends CloneState {
-  final String message;
 
   const CloneError({required this.message});
+  final String message;
 }

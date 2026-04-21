@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Hub page for inventory management, listing all sub-sections.
@@ -88,12 +87,12 @@ class InventoryPage extends ConsumerWidget {
 }
 
 class _InventoryTile extends StatelessWidget {
+
+  const _InventoryTile({required this.icon, required this.title, required this.subtitle, required this.onTap});
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-
-  const _InventoryTile({required this.icon, required this.title, required this.subtitle, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

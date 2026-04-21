@@ -97,7 +97,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                         Text(
                           AppLocalizations.of(context)!.posOpenShiftDescription,
                           style: AppTypography.bodySmall.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                       ],

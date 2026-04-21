@@ -24,12 +24,6 @@ class StockLevelsLoading extends StockLevelsState {
 }
 
 class StockLevelsLoaded extends StockLevelsState {
-  final List<StockLevel> levels;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final bool lowStockOnly;
-  final String? search;
 
   const StockLevelsLoaded({
     required this.levels,
@@ -39,13 +33,19 @@ class StockLevelsLoaded extends StockLevelsState {
     this.lowStockOnly = false,
     this.search,
   });
+  final List<StockLevel> levels;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final bool lowStockOnly;
+  final String? search;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class StockLevelsError extends StockLevelsState {
-  final String message;
   const StockLevelsError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -65,19 +65,19 @@ class StockMovementsLoading extends StockMovementsState {
 }
 
 class StockMovementsLoaded extends StockMovementsState {
+
+  const StockMovementsLoaded({required this.movements, this.total = 0, this.currentPage = 1, this.lastPage = 1});
   final List<StockMovement> movements;
   final int total;
   final int currentPage;
   final int lastPage;
 
-  const StockMovementsLoaded({required this.movements, this.total = 0, this.currentPage = 1, this.lastPage = 1});
-
   bool get hasMore => currentPage < lastPage;
 }
 
 class StockMovementsError extends StockMovementsState {
-  final String message;
   const StockMovementsError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -97,17 +97,17 @@ class GoodsReceiptsLoading extends GoodsReceiptsState {
 }
 
 class GoodsReceiptsLoaded extends GoodsReceiptsState {
+
+  const GoodsReceiptsLoaded({required this.receipts, this.total = 0, this.currentPage = 1, this.lastPage = 1});
   final List<GoodsReceipt> receipts;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const GoodsReceiptsLoaded({required this.receipts, this.total = 0, this.currentPage = 1, this.lastPage = 1});
 }
 
 class GoodsReceiptsError extends GoodsReceiptsState {
-  final String message;
   const GoodsReceiptsError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -127,14 +127,14 @@ class StockAdjustmentsLoading extends StockAdjustmentsState {
 }
 
 class StockAdjustmentsLoaded extends StockAdjustmentsState {
+  const StockAdjustmentsLoaded({required this.adjustments, this.total = 0});
   final List<StockAdjustment> adjustments;
   final int total;
-  const StockAdjustmentsLoaded({required this.adjustments, this.total = 0});
 }
 
 class StockAdjustmentsError extends StockAdjustmentsState {
-  final String message;
   const StockAdjustmentsError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -154,14 +154,14 @@ class StockTransfersLoading extends StockTransfersState {
 }
 
 class StockTransfersLoaded extends StockTransfersState {
+  const StockTransfersLoaded({required this.transfers, this.total = 0});
   final List<StockTransfer> transfers;
   final int total;
-  const StockTransfersLoaded({required this.transfers, this.total = 0});
 }
 
 class StockTransfersError extends StockTransfersState {
-  final String message;
   const StockTransfersError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -181,14 +181,14 @@ class PurchaseOrdersLoading extends PurchaseOrdersState {
 }
 
 class PurchaseOrdersLoaded extends PurchaseOrdersState {
+  const PurchaseOrdersLoaded({required this.orders, this.total = 0});
   final List<PurchaseOrder> orders;
   final int total;
-  const PurchaseOrdersLoaded({required this.orders, this.total = 0});
 }
 
 class PurchaseOrdersError extends PurchaseOrdersState {
-  final String message;
   const PurchaseOrdersError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -208,14 +208,14 @@ class RecipesLoading extends RecipesState {
 }
 
 class RecipesLoaded extends RecipesState {
+  const RecipesLoaded({required this.recipes, this.total = 0});
   final List<Recipe> recipes;
   final int total;
-  const RecipesLoaded({required this.recipes, this.total = 0});
 }
 
 class RecipesError extends RecipesState {
-  final String message;
   const RecipesError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -235,11 +235,6 @@ class SupplierReturnsLoading extends SupplierReturnsState {
 }
 
 class SupplierReturnsLoaded extends SupplierReturnsState {
-  final List<SupplierReturn> returns;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const SupplierReturnsLoaded({
     required this.returns,
@@ -248,9 +243,14 @@ class SupplierReturnsLoaded extends SupplierReturnsState {
     this.lastPage = 1,
     this.perPage = 25,
   });
+  final List<SupplierReturn> returns;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 }
 
 class SupplierReturnsError extends SupplierReturnsState {
-  final String message;
   const SupplierReturnsError({required this.message});
+  final String message;
 }

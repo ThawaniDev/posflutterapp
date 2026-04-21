@@ -1,22 +1,6 @@
 import 'package:wameedpos/features/auth/enums/user_role.dart';
 
 class User {
-  final String id;
-  final String? storeId;
-  final String? organizationId;
-  final String name;
-  final String? email;
-  final String? phone;
-  final UserRole? role;
-  final String? locale;
-  final bool isActive;
-  final DateTime? emailVerifiedAt;
-  final DateTime? lastLoginAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final UserStore? store;
-  final UserOrganization? organization;
-  final List<String>? permissions;
 
   const User({
     required this.id,
@@ -57,6 +41,22 @@ class User {
       permissions: (json['permissions'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
   }
+  final String id;
+  final String? storeId;
+  final String? organizationId;
+  final String name;
+  final String? email;
+  final String? phone;
+  final UserRole? role;
+  final String? locale;
+  final bool isActive;
+  final DateTime? emailVerifiedAt;
+  final DateTime? lastLoginAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final UserStore? store;
+  final UserOrganization? organization;
+  final List<String>? permissions;
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'email': email, 'phone': phone, 'role': role?.value, 'locale': locale, 'is_active': isActive};
@@ -115,14 +115,6 @@ class User {
 
 /// Nested store info returned with auth responses.
 class UserStore {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String? slug;
-  final String? currency;
-  final String? locale;
-  final String? businessType;
-  final bool isMainBranch;
 
   const UserStore({
     required this.id,
@@ -147,6 +139,14 @@ class UserStore {
       isMainBranch: json['is_main_branch'] as bool? ?? false,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? slug;
+  final String? currency;
+  final String? locale;
+  final String? businessType;
+  final bool isMainBranch;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -162,11 +162,6 @@ class UserStore {
 
 /// Nested organization info returned with auth responses.
 class UserOrganization {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String? slug;
-  final String? country;
 
   const UserOrganization({required this.id, required this.name, this.nameAr, this.slug, this.country});
 
@@ -179,6 +174,11 @@ class UserOrganization {
       country: json['country'] as String?,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? slug;
+  final String? country;
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'name_ar': nameAr, 'slug': slug, 'country': country};
 }

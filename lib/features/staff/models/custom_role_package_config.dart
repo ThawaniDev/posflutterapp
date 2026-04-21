@@ -1,8 +1,4 @@
 class CustomRolePackageConfig {
-  final String id;
-  final String subscriptionPlanId;
-  final bool? isCustomRolesEnabled;
-  final int maxCustomRoles;
 
   const CustomRolePackageConfig({
     required this.id,
@@ -19,6 +15,10 @@ class CustomRolePackageConfig {
       maxCustomRoles: (json['max_custom_roles'] as num).toInt(),
     );
   }
+  final String id;
+  final String subscriptionPlanId;
+  final bool? isCustomRolesEnabled;
+  final int maxCustomRoles;
 
   Map<String, dynamic> toJson() {
     return {

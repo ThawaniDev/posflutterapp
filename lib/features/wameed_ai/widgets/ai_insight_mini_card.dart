@@ -4,12 +4,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AIInsightMiniCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-  final Color? color;
-  final String? trend;
-  final VoidCallback? onTap;
 
   const AIInsightMiniCard({
     super.key,
@@ -20,6 +14,12 @@ class AIInsightMiniCard extends StatelessWidget {
     this.trend,
     this.onTap,
   });
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color? color;
+  final String? trend;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

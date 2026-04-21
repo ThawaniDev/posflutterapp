@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
-import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIModelSelector extends StatelessWidget {
+
+  const AIModelSelector({super.key, required this.models, this.selectedModel, required this.onSelected});
   final List<LlmModel> models;
   final LlmModel? selectedModel;
   final ValueChanged<LlmModel> onSelected;
-
-  const AIModelSelector({super.key, required this.models, this.selectedModel, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {

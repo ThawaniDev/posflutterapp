@@ -1,9 +1,4 @@
 class PaymentRetryRule {
-  final String id;
-  final int maxRetries;
-  final int retryIntervalHours;
-  final int gracePeriodAfterFailureDays;
-  final DateTime? updatedAt;
 
   const PaymentRetryRule({
     required this.id,
@@ -22,6 +17,11 @@ class PaymentRetryRule {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final int maxRetries;
+  final int retryIntervalHours;
+  final int gracePeriodAfterFailureDays;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

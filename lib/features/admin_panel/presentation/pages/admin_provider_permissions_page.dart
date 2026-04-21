@@ -113,7 +113,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
               child: Text(
                 entry.key.toUpperCase(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary, letterSpacing: 1),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary, letterSpacing: 1),
               ),
             ),
             ...entry.value.map((item) {

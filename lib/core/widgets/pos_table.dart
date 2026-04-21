@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_searchable_dropdown.dart';
 
 // ═════════════════════════════════════════════════════════════
@@ -49,7 +49,7 @@ class PosTableColumn {
   /// Cell content alignment override.
   final Alignment alignment;
 
-  /// Freeze this column to the leading edge (not yet implemented — reserved).
+  /// Freeze this column to the leading edge (reserved for future use).
   final bool frozen;
 
   /// Whether to render this column. Allows toggling columns without removing
@@ -429,7 +429,7 @@ class PosDataTable<T> extends StatelessWidget {
 
   int? _sortColumnIndex(List<PosTableColumn> visibleCols) {
     if (sortColumnKey == null) return null;
-    int offset = selectable ? 0 : 0; // DataTable adds checkbox col internally
+    final int offset = selectable ? 0 : 0; // DataTable adds checkbox col internally
     for (int i = 0; i < visibleCols.length; i++) {
       if (visibleCols[i].resolvedKey == sortColumnKey) return i + offset;
     }
@@ -812,7 +812,7 @@ class _ErrorState extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
+        const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
         const SizedBox(height: AppSpacing.md),
         Text(message, style: AppTypography.bodyMedium, textAlign: TextAlign.center),
         if (onRetry != null) ...[

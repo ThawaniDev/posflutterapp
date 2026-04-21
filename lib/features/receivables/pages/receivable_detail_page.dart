@@ -5,16 +5,15 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/receivables/enums/receivable_enums.dart';
 import 'package:wameedpos/features/receivables/models/receivable.dart';
 import 'package:wameedpos/features/receivables/repositories/receivable_repository.dart';
 
 class ReceivableDetailPage extends ConsumerStatefulWidget {
-  final String receivableId;
 
   const ReceivableDetailPage({super.key, required this.receivableId});
+  final String receivableId;
 
   @override
   ConsumerState<ReceivableDetailPage> createState() => _ReceivableDetailPageState();
@@ -38,17 +37,19 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
     });
     try {
       final receivable = await ref.read(receivableRepositoryProvider).getReceivable(widget.receivableId);
-      if (mounted)
+      if (mounted) {
         setState(() {
           _receivable = receivable;
           _isLoading = false;
         });
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _error = e.toString();
           _isLoading = false;
         });
+      }
     }
   }
 
@@ -163,9 +164,9 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
         children: [
@@ -174,7 +175,7 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (receivable.referenceNumber != null)
-                  Text(receivable.referenceNumber!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(receivable.referenceNumber!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 AppSpacing.gapH4,
                 PosBadge(
                   label: _statusLabel(ReceivableStatus.fromValue(receivable.status), l10n),
@@ -190,19 +191,19 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
                 l10n.receivablesAmount,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  color: AppColors.mutedFor(context),
                 ),
               ),
               Text(
                 receivable.amount.toStringAsFixed(2),
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
               ),
               AppSpacing.gapH4,
               Text(
                 '${l10n.receivablesRemainingBalance}: ${receivable.remainingBalance.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 13,
-                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  color: AppColors.mutedFor(context),
                 ),
               ),
             ],
@@ -216,9 +217,9 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,14 +258,14 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
             child: Text(
               label,
               style: TextStyle(
-                color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                color: AppColors.mutedFor(context),
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
           Expanded(
             flex: 3,
-            child: Text(value, style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -275,14 +276,14 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.receivablesCustomer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(l10n.receivablesCustomer, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           _infoRow(l10n.customers, customer.name),
           if (customer.phone != null) _infoRow(l10n.settings, customer.phone!),
@@ -296,14 +297,14 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.receivablesPayments, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(l10n.receivablesPayments, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           if (receivable.payments.isEmpty)
             Center(
@@ -312,7 +313,7 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
                 child: Text(
                   l10n.receivablesNoPayments,
                   style: TextStyle(
-                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    color: AppColors.mutedFor(context),
                   ),
                 ),
               ),
@@ -343,14 +344,14 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
               children: [
                 Text(
                   '${l10n.receivablesOrderNumber}: ${payment.orderNumber ?? payment.orderId}',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 if (payment.notes != null)
                   Text(
                     payment.notes!,
                     style: TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                      color: AppColors.mutedFor(context),
                     ),
                   ),
                 if (payment.settledByName != null)
@@ -358,7 +359,7 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
                     '${l10n.receivablesSettledBy}: ${payment.settledByName!}',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                      color: AppColors.mutedFor(context),
                     ),
                   ),
               ],
@@ -369,14 +370,14 @@ class _ReceivableDetailPageState extends ConsumerState<ReceivableDetailPage> {
             children: [
               Text(
                 payment.amount.toStringAsFixed(2),
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
+                style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
               ),
               if (payment.settledAt != null)
                 Text(
                   '${payment.settledAt!.day}/${payment.settledAt!.month}/${payment.settledAt!.year}',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    color: AppColors.mutedFor(context),
                   ),
                 ),
             ],

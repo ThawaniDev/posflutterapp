@@ -2,13 +2,6 @@ import 'package:wameedpos/features/hardware/enums/implementation_fee_status.dart
 import 'package:wameedpos/features/hardware/enums/implementation_fee_type.dart';
 
 class ImplementationFee {
-  final String id;
-  final String storeId;
-  final ImplementationFeeType feeType;
-  final double amount;
-  final ImplementationFeeStatus status;
-  final String? notes;
-  final DateTime? createdAt;
 
   const ImplementationFee({
     required this.id,
@@ -31,6 +24,13 @@ class ImplementationFee {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final ImplementationFeeType feeType;
+  final double amount;
+  final ImplementationFeeStatus status;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

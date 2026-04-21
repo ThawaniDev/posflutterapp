@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/support/data/remote/support_api_service.dart';
 
 class SupportRepository {
-  final SupportApiService _apiService;
 
   SupportRepository(this._apiService);
+  final SupportApiService _apiService;
 
   Future<Map<String, dynamic>> getStats() => _apiService.getStats();
 

@@ -1,23 +1,6 @@
 import 'package:wameedpos/features/industry_electronics/enums/repair_job_status.dart';
 
 class RepairJob {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final String deviceDescription;
-  final String? imei;
-  final String issueDescription;
-  final RepairJobStatus? status;
-  final String? diagnosisNotes;
-  final String? repairNotes;
-  final double? estimatedCost;
-  final double? finalCost;
-  final Map<String, dynamic>? partsUsed;
-  final String staffUserId;
-  final DateTime? receivedAt;
-  final DateTime? estimatedReadyAt;
-  final DateTime? completedAt;
-  final DateTime? collectedAt;
 
   const RepairJob({
     required this.id,
@@ -60,6 +43,23 @@ class RepairJob {
       collectedAt: json['collected_at'] != null ? DateTime.parse(json['collected_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final String deviceDescription;
+  final String? imei;
+  final String issueDescription;
+  final RepairJobStatus? status;
+  final String? diagnosisNotes;
+  final String? repairNotes;
+  final double? estimatedCost;
+  final double? finalCost;
+  final Map<String, dynamic>? partsUsed;
+  final String staffUserId;
+  final DateTime? receivedAt;
+  final DateTime? estimatedReadyAt;
+  final DateTime? completedAt;
+  final DateTime? collectedAt;
 
   Map<String, dynamic> toJson() {
     return {

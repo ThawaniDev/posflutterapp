@@ -1,15 +1,4 @@
 class HeldCart {
-  final String id;
-  final String storeId;
-  final String registerId;
-  final String cashierId;
-  final String? customerId;
-  final Map<String, dynamic> cartData;
-  final String? label;
-  final DateTime? heldAt;
-  final DateTime? recalledAt;
-  final String? recalledBy;
-  final DateTime? createdAt;
 
   const HeldCart({
     required this.id,
@@ -40,6 +29,17 @@ class HeldCart {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String registerId;
+  final String cashierId;
+  final String? customerId;
+  final Map<String, dynamic> cartData;
+  final String? label;
+  final DateTime? heldAt;
+  final DateTime? recalledAt;
+  final String? recalledBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

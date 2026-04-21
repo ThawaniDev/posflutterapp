@@ -11,8 +11,8 @@ import 'package:wameedpos/features/pos_customization/models/receipt_layout_templ
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
 class ReceiptTemplateDetailPage extends ConsumerStatefulWidget {
-  final String slug;
   const ReceiptTemplateDetailPage({super.key, required this.slug});
+  final String slug;
 
   @override
   ConsumerState<ReceiptTemplateDetailPage> createState() => _ReceiptTemplateDetailPageState();
@@ -91,7 +91,7 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
                           Text(
                             template.slug,
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],
@@ -169,7 +169,7 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
           if (config.isEmpty)
             Text(
               'No configuration',
-              style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
             )
           else
             ...config.entries.map(
@@ -183,7 +183,7 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
                       child: Text(
                         _formatKey(entry.key),
                         style: AppTypography.labelSmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     ),

@@ -9,9 +9,9 @@ final onboardingApiServiceProvider = Provider<OnboardingApiService>((ref) {
 });
 
 class OnboardingApiService {
-  final Dio _dio;
 
   OnboardingApiService(this._dio);
+  final Dio _dio;
 
   /// GET /core/onboarding/steps
   Future<List<Map<String, dynamic>>> getSteps() async {
@@ -22,7 +22,7 @@ class OnboardingApiService {
 
   /// GET /core/onboarding/progress?store_id=xxx
   Future<OnboardingProgress> getProgress({String? storeId}) async {
-    final response = await _dio.get(ApiEndpoints.onboardingProgress, queryParameters: {if (storeId != null) 'store_id': storeId});
+    final response = await _dio.get(ApiEndpoints.onboardingProgress, queryParameters: {'store_id': ?storeId});
     return OnboardingProgress.fromJson(response.data['data'] as Map<String, dynamic>);
   }
 

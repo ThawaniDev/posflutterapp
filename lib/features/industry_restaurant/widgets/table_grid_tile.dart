@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../models/restaurant_table.dart';
-import '../enums/restaurant_table_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/restaurant_table_status.dart';
 
 class TableGridTile extends StatelessWidget {
-  final RestaurantTable table;
-  final VoidCallback? onTap;
 
   const TableGridTile({super.key, required this.table, this.onTap});
+  final RestaurantTable table;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

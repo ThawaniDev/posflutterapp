@@ -10,9 +10,9 @@ final ordersProvider = StateNotifierProvider<OrdersNotifier, OrdersState>((ref) 
 });
 
 class OrdersNotifier extends StateNotifier<OrdersState> {
-  final OrderRepository _repo;
 
   OrdersNotifier(this._repo) : super(const OrdersInitial());
+  final OrderRepository _repo;
 
   String? _statusFilter;
   String? _searchQuery;
@@ -71,6 +71,8 @@ class OrdersNotifier extends StateNotifier<OrdersState> {
       await load();
     } on DioException catch (e) {
       state = OrdersError(message: _extractError(e));
+    } catch (e) {
+      state = OrdersError(message: e.toString());
     }
   }
 
@@ -80,6 +82,8 @@ class OrdersNotifier extends StateNotifier<OrdersState> {
       await load();
     } on DioException catch (e) {
       state = OrdersError(message: _extractError(e));
+    } catch (e) {
+      state = OrdersError(message: e.toString());
     }
   }
 }
@@ -91,9 +95,9 @@ final returnsProvider = StateNotifierProvider<ReturnsNotifier, ReturnsState>((re
 });
 
 class ReturnsNotifier extends StateNotifier<ReturnsState> {
-  final OrderRepository _repo;
 
   ReturnsNotifier(this._repo) : super(const ReturnsInitial());
+  final OrderRepository _repo;
 
   Future<void> load({int page = 1}) async {
     state = const ReturnsLoading();
@@ -119,6 +123,8 @@ class ReturnsNotifier extends StateNotifier<ReturnsState> {
       await load();
     } on DioException catch (e) {
       state = ReturnsError(message: _extractError(e));
+    } catch (e) {
+      state = ReturnsError(message: e.toString());
     }
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/pos_badge.dart';
-import '../models/zatca_invoice.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class InvoiceListWidget extends StatelessWidget {
-  final List<ZatcaInvoice> invoices;
-  final void Function(ZatcaInvoice)? onTap;
 
   const InvoiceListWidget({super.key, required this.invoices, this.onTap});
+  final List<ZatcaInvoice> invoices;
+  final void Function(ZatcaInvoice)? onTap;
 
   @override
   Widget build(BuildContext context) {

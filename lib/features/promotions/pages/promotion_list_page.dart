@@ -104,7 +104,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                     children: [
                       Icon(Icons.local_offer_outlined, size: 64, color: theme.colorScheme.outline),
                       const SizedBox(height: 12),
-                      Text('No promotions found', style: theme.textTheme.bodyLarge),
+                      Text(AppLocalizations.of(context)!.promoNoFound, style: theme.textTheme.bodyLarge),
                     ],
                   ),
                 )
@@ -181,8 +181,8 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
 // ─── Promotion Card Widget ──────────────────────────────────────
 
 class _PromotionCard extends ConsumerWidget {
-  final Promotion promotion;
   const _PromotionCard({required this.promotion});
+  final Promotion promotion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -294,18 +294,18 @@ class _PromotionCard extends ConsumerWidget {
           children: [
             PosTextField(
               controller: countController,
-              decoration: InputDecoration(labelText: l10n.count, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.count, border: const OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 12),
             PosTextField(
               controller: prefixController,
-              decoration: InputDecoration(labelText: l10n.prefixOptional, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.prefixOptional, border: const OutlineInputBorder()),
             ),
             const SizedBox(height: 12),
             PosTextField(
               controller: maxUsesController,
-              decoration: InputDecoration(labelText: l10n.maxUsesPerCouponOptional, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.maxUsesPerCouponOptional, border: const OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -348,8 +348,8 @@ class _PromotionCard extends ConsumerWidget {
 // ─── Promotion Form Page ────────────────────────────────────────
 
 class PromotionFormPage extends ConsumerStatefulWidget {
-  final String? promotionId;
   const PromotionFormPage({super.key, this.promotionId});
+  final String? promotionId;
 
   @override
   ConsumerState<PromotionFormPage> createState() => _PromotionFormPageState();
@@ -441,13 +441,13 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
           children: [
             PosTextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: l10n.promotionName, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.promotionName, border: const OutlineInputBorder()),
               validator: (v) => (v == null || v.isEmpty) ? 'Name is required' : null,
             ),
             const SizedBox(height: 14),
             PosTextField(
               controller: _descriptionController,
-              decoration: InputDecoration(labelText: l10n.description, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.description, border: const OutlineInputBorder()),
               maxLines: 2,
             ),
             const SizedBox(height: 14),
@@ -477,33 +477,33 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
             if (_selectedType == PromotionType.bogo) ...[
               PosTextField(
                 controller: _buyQtyController,
-                decoration: InputDecoration(labelText: l10n.buyQuantity, border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.buyQuantity, border: const OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
               PosTextField(
                 controller: _getQtyController,
-                decoration: InputDecoration(labelText: l10n.getQuantity, border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.getQuantity, border: const OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
               PosTextField(
                 controller: _getDiscountController,
-                decoration: InputDecoration(labelText: l10n.getDiscount, border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.getDiscount, border: const OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
             ],
             if (_selectedType == PromotionType.bundle)
               PosTextField(
                 controller: _bundlePriceController,
-                decoration: InputDecoration(labelText: l10n.bundlePrice, border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.bundlePrice, border: const OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
 
             const SizedBox(height: 14),
             PosTextField(
               controller: _minOrderTotalController,
-              decoration: InputDecoration(labelText: l10n.minOrderTotal, border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.minOrderTotal, border: const OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 14),
@@ -512,7 +512,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _maxUsesController,
-                    decoration: InputDecoration(labelText: l10n.maxUses, border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: l10n.maxUses, border: const OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -520,7 +520,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _maxUsesPerCustomerController,
-                    decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: const OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -561,8 +561,9 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
     if (_getDiscountController.text.isNotEmpty) data['get_discount_percent'] = double.tryParse(_getDiscountController.text);
     if (_bundlePriceController.text.isNotEmpty) data['bundle_price'] = double.tryParse(_bundlePriceController.text);
     if (_maxUsesController.text.isNotEmpty) data['max_uses'] = int.tryParse(_maxUsesController.text);
-    if (_maxUsesPerCustomerController.text.isNotEmpty)
+    if (_maxUsesPerCustomerController.text.isNotEmpty) {
       data['max_uses_per_customer'] = int.tryParse(_maxUsesPerCustomerController.text);
+    }
     if (_minOrderTotalController.text.isNotEmpty) data['min_order_total'] = double.tryParse(_minOrderTotalController.text);
 
     ref.read(promotionDetailProvider(widget.promotionId).notifier).save(data).then((_) {

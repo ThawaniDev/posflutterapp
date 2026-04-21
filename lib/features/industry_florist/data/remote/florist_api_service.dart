@@ -12,8 +12,8 @@ final floristApiServiceProvider = Provider<FloristApiService>((ref) {
 });
 
 class FloristApiService {
-  final Dio _dio;
   FloristApiService(this._dio);
+  final Dio _dio;
 
   Future<List<FlowerArrangement>> listArrangements({String? search, int perPage = 20}) async {
     final response = await _dio.get(
@@ -44,7 +44,7 @@ class FloristApiService {
   Future<List<FlowerFreshnessLog>> listFreshnessLogs({String? status, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.floristFreshnessLogs,
-      queryParameters: {'per_page': perPage, if (status != null) 'status': status},
+      queryParameters: {'per_page': perPage, 'status': ?status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,13 +35,6 @@ const Map<String, ShortcutBinding> kDefaultShortcuts = {
 const Set<String> kReservedShortcuts = {'Ctrl+C', 'Ctrl+V', 'Ctrl+X', 'Ctrl+A', 'Ctrl+S', 'Alt+F4', 'Ctrl+Alt+Delete'};
 
 class ShortcutBinding {
-  final String label;
-  final LogicalKeyboardKey key;
-  final String description;
-  final String context;
-  final bool ctrl;
-  final bool shift;
-  final bool alt;
 
   const ShortcutBinding(
     this.label,
@@ -53,6 +45,13 @@ class ShortcutBinding {
     this.shift = false,
     this.alt = false,
   });
+  final String label;
+  final LogicalKeyboardKey key;
+  final String description;
+  final String context;
+  final bool ctrl;
+  final bool shift;
+  final bool alt;
 
   /// Check if a keyboard event matches this shortcut.
   bool matches(KeyEvent event) {
@@ -152,7 +151,7 @@ class KeyboardShortcutService {
     final alt = label.contains('Alt+');
 
     // Extract the key part
-    var keyPart = label.replaceAll('Ctrl+', '').replaceAll('Shift+', '').replaceAll('Alt+', '');
+    final keyPart = label.replaceAll('Ctrl+', '').replaceAll('Shift+', '').replaceAll('Alt+', '');
 
     final keyMap = <String, LogicalKeyboardKey>{
       'F1': LogicalKeyboardKey.f1,

@@ -1,26 +1,6 @@
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class PosSession {
-  final String id;
-  final String storeId;
-  final String registerId;
-  final String cashierId;
-  final SessionStatus status;
-  final double openingCash;
-  final double? closingCash;
-  final double? expectedCash;
-  final double? cashDifference;
-  final double? totalCashSales;
-  final double? totalCardSales;
-  final double? totalOtherSales;
-  final double? totalRefunds;
-  final double? totalVoids;
-  final int? transactionCount;
-  final DateTime? openedAt;
-  final DateTime? closedAt;
-  final bool? zReportPrinted;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PosSession({
     required this.id,
@@ -69,6 +49,26 @@ class PosSession {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String registerId;
+  final String cashierId;
+  final SessionStatus status;
+  final double openingCash;
+  final double? closingCash;
+  final double? expectedCash;
+  final double? cashDifference;
+  final double? totalCashSales;
+  final double? totalCardSales;
+  final double? totalOtherSales;
+  final double? totalRefunds;
+  final double? totalVoids;
+  final int? transactionCount;
+  final DateTime? openedAt;
+  final DateTime? closedAt;
+  final bool? zReportPrinted;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

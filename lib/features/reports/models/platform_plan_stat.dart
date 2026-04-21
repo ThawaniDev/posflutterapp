@@ -1,11 +1,4 @@
 class PlatformPlanStat {
-  final String id;
-  final String subscriptionPlanId;
-  final DateTime date;
-  final int activeCount;
-  final int trialCount;
-  final int churnedCount;
-  final double mrr;
 
   const PlatformPlanStat({
     required this.id,
@@ -28,6 +21,13 @@ class PlatformPlanStat {
       mrr: double.tryParse(json['mrr'].toString()) ?? 0.0,
     );
   }
+  final String id;
+  final String subscriptionPlanId;
+  final DateTime date;
+  final int activeCount;
+  final int trialCount;
+  final int churnedCount;
+  final double mrr;
 
   Map<String, dynamic> toJson() {
     return {

@@ -11,9 +11,9 @@ final receivablesProvider = StateNotifierProvider<ReceivablesNotifier, Receivabl
 });
 
 class ReceivablesNotifier extends StateNotifier<ReceivablesState> {
-  final ReceivableRepository _repo;
 
   ReceivablesNotifier(this._repo) : super(const ReceivablesInitial());
+  final ReceivableRepository _repo;
 
   String? _statusFilter;
   String? _receivableTypeFilter;

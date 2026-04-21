@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 import 'package:wameedpos/features/payments/providers/payment_providers.dart';
@@ -222,7 +220,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '${entry.value.toStringAsFixed(2)}',
+                            entry.value.toStringAsFixed(2),
                             style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           Text(

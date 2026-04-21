@@ -15,9 +15,9 @@ final wameedAIApiServiceProvider = Provider<WameedAIApiService>((ref) {
 });
 
 class WameedAIApiService {
-  final Dio _dio;
 
   WameedAIApiService(this._dio);
+  final Dio _dio;
 
   // ─── Features & Config ────────────────────────────────────────
 
@@ -54,8 +54,8 @@ class WameedAIApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (featureSlug != null) 'feature': featureSlug,
-        if (status != null) 'status': status,
+        'feature': ?featureSlug,
+        'status': ?status,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -96,9 +96,9 @@ class WameedAIApiService {
     final response = await _dio.get(
       '${ApiEndpoints.wameedAIUsage}/history',
       queryParameters: {
-        if (featureSlug != null) 'feature': featureSlug,
-        if (from != null) 'from': from,
-        if (to != null) 'to': to,
+        'feature': ?featureSlug,
+        'from': ?from,
+        'to': ?to,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -159,7 +159,7 @@ class WameedAIApiService {
       invokeFeature(ApiEndpoints.wameedAIMarketingGenerator, data: {'type': type, 'context': context});
   Future<AIFeatureResult> socialContent(String platform, String topic, {List<String>? productIds}) => invokeFeature(
     ApiEndpoints.wameedAISocialContent,
-    data: {'platform': platform, 'topic': topic, if (productIds != null) 'product_ids': productIds},
+    data: {'platform': platform, 'topic': topic, 'product_ids': ?productIds},
   );
   Future<AIFeatureResult> translate(List<String> texts, {String from = 'ar', String to = 'en'}) =>
       invokeFeature(ApiEndpoints.wameedAITranslation, data: {'texts': texts, 'from': from, 'to': to});

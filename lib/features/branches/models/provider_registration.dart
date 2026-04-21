@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/branches/enums/provider_registration_status.dart';
 
 class ProviderRegistration {
-  final String id;
-  final String organizationName;
-  final String? organizationNameAr;
-  final String ownerName;
-  final String ownerEmail;
-  final String ownerPhone;
-  final String? crNumber;
-  final String? vatNumber;
-  final String? businessTypeId;
-  final ProviderRegistrationStatus status;
-  final String? reviewedBy;
-  final DateTime? reviewedAt;
-  final String? rejectionReason;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ProviderRegistration({
     required this.id,
@@ -54,6 +39,21 @@ class ProviderRegistration {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationName;
+  final String? organizationNameAr;
+  final String ownerName;
+  final String ownerEmail;
+  final String ownerPhone;
+  final String? crNumber;
+  final String? vatNumber;
+  final String? businessTypeId;
+  final ProviderRegistrationStatus status;
+  final String? reviewedBy;
+  final DateTime? reviewedAt;
+  final String? rejectionReason;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

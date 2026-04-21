@@ -7,9 +7,9 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
 });
 
 class ReportRepository {
-  final ReportApiService _api;
 
   ReportRepository(this._api);
+  final ReportApiService _api;
 
   Future<Map<String, dynamic>> getSalesSummary({ReportFilters filters = const ReportFilters()}) =>
       _api.getSalesSummary(filters: filters);

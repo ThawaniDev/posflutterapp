@@ -1,11 +1,4 @@
 class QuickAccessConfig {
-  final String id;
-  final String storeId;
-  final int? gridRows;
-  final int? gridCols;
-  final Map<String, dynamic> buttonsJson;
-  final int? syncVersion;
-  final DateTime? updatedAt;
 
   const QuickAccessConfig({
     required this.id,
@@ -28,6 +21,13 @@ class QuickAccessConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final int? gridRows;
+  final int? gridCols;
+  final Map<String, dynamic> buttonsJson;
+  final int? syncVersion;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

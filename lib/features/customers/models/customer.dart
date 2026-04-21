@@ -1,24 +1,4 @@
 class Customer {
-  final String id;
-  final String organizationId;
-  final String name;
-  final String phone;
-  final String? email;
-  final String? address;
-  final DateTime? dateOfBirth;
-  final String? loyaltyCode;
-  final int? loyaltyPoints;
-  final double? storeCreditBalance;
-  final String? groupId;
-  final String? taxRegistrationNumber;
-  final String? notes;
-  final double? totalSpend;
-  final int? visitCount;
-  final DateTime? lastVisitAt;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final DateTime? deletedAt;
 
   const Customer({
     required this.id,
@@ -67,6 +47,26 @@ class Customer {
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final String phone;
+  final String? email;
+  final String? address;
+  final DateTime? dateOfBirth;
+  final String? loyaltyCode;
+  final int? loyaltyPoints;
+  final double? storeCreditBalance;
+  final String? groupId;
+  final String? taxRegistrationNumber;
+  final String? notes;
+  final double? totalSpend;
+  final int? visitCount;
+  final DateTime? lastVisitAt;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final DateTime? deletedAt;
 
   Map<String, dynamic> toJson() {
     return {

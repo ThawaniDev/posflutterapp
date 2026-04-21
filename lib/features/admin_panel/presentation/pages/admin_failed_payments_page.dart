@@ -129,7 +129,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                     color: AppColors.error.withValues(alpha: 0.15),
                     borderRadius: AppRadius.borderLg,
                   ),
-                  child: Text(
+                  child: const Text(
                     'FAILED',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.errorDark),
                   ),

@@ -1,11 +1,6 @@
 import 'package:wameedpos/features/orders/enums/cancellation_reason_category.dart';
 
 class CancellationReason {
-  final String id;
-  final String storeSubscriptionId;
-  final CancellationReasonCategory reasonCategory;
-  final String? reasonText;
-  final DateTime? cancelledAt;
 
   const CancellationReason({
     required this.id,
@@ -24,6 +19,11 @@ class CancellationReason {
       cancelledAt: json['cancelled_at'] != null ? DateTime.parse(json['cancelled_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeSubscriptionId;
+  final CancellationReasonCategory reasonCategory;
+  final String? reasonText;
+  final DateTime? cancelledAt;
 
   Map<String, dynamic> toJson() {
     return {

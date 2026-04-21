@@ -4,8 +4,8 @@ import 'package:wameedpos/features/thawani_integration/providers/thawani_state.d
 
 // ─── Thawani Stats Provider ─────────────────────────────
 class ThawaniStatsNotifier extends StateNotifier<ThawaniStatsState> {
-  final ThawaniRepository _repository;
   ThawaniStatsNotifier(this._repository) : super(const ThawaniStatsInitial());
+  final ThawaniRepository _repository;
 
   Future<void> load() async {
     if (state is! ThawaniStatsLoaded) state = const ThawaniStatsLoading();
@@ -36,8 +36,8 @@ final thawaniStatsProvider = StateNotifierProvider<ThawaniStatsNotifier, Thawani
 
 // ─── Thawani Config Provider ────────────────────────────
 class ThawaniConfigNotifier extends StateNotifier<ThawaniConfigState> {
-  final ThawaniRepository _repository;
   ThawaniConfigNotifier(this._repository) : super(const ThawaniConfigInitial());
+  final ThawaniRepository _repository;
 
   Future<void> load() async {
     if (state is! ThawaniConfigLoaded) state = const ThawaniConfigLoading();
@@ -57,8 +57,8 @@ final thawaniConfigProvider = StateNotifierProvider<ThawaniConfigNotifier, Thawa
 
 // ─── Thawani Action Provider ────────────────────────────
 class ThawaniActionNotifier extends StateNotifier<ThawaniActionState> {
-  final ThawaniRepository _repository;
   ThawaniActionNotifier(this._repository) : super(const ThawaniActionInitial());
+  final ThawaniRepository _repository;
 
   Future<void> saveConfig(Map<String, dynamic> data) async {
     state = const ThawaniActionLoading();
@@ -89,8 +89,8 @@ final thawaniActionProvider = StateNotifierProvider<ThawaniActionNotifier, Thawa
 
 // ─── Thawani Sync Provider ──────────────────────────────
 class ThawaniSyncNotifier extends StateNotifier<ThawaniSyncState> {
-  final ThawaniRepository _repository;
   ThawaniSyncNotifier(this._repository) : super(const ThawaniSyncInitial());
+  final ThawaniRepository _repository;
 
   Future<void> testConnection() async {
     state = const ThawaniSyncLoading('test-connection');
@@ -163,8 +163,8 @@ final thawaniSyncProvider = StateNotifierProvider<ThawaniSyncNotifier, ThawaniSy
 
 // ─── Thawani Category Mappings Provider ─────────────────
 class ThawaniCategoryMappingsNotifier extends StateNotifier<ThawaniCategoryMappingsState> {
-  final ThawaniRepository _repository;
   ThawaniCategoryMappingsNotifier(this._repository) : super(const ThawaniCategoryMappingsInitial());
+  final ThawaniRepository _repository;
 
   Future<void> load() async {
     if (state is! ThawaniCategoryMappingsLoaded) state = const ThawaniCategoryMappingsLoading();
@@ -187,8 +187,8 @@ final thawaniCategoryMappingsProvider = StateNotifierProvider<ThawaniCategoryMap
 
 // ─── Thawani Sync Logs Provider ─────────────────────────
 class ThawaniSyncLogsNotifier extends StateNotifier<ThawaniSyncLogsState> {
-  final ThawaniRepository _repository;
   ThawaniSyncLogsNotifier(this._repository) : super(const ThawaniSyncLogsInitial());
+  final ThawaniRepository _repository;
 
   Future<void> load({String? entityType, String? status, int? perPage}) async {
     if (state is! ThawaniSyncLogsLoaded) state = const ThawaniSyncLogsLoading();
@@ -218,8 +218,8 @@ final thawaniSyncLogsProvider = StateNotifierProvider<ThawaniSyncLogsNotifier, T
 
 // ─── Thawani Queue Stats Provider ───────────────────────
 class ThawaniQueueStatsNotifier extends StateNotifier<ThawaniQueueStatsState> {
-  final ThawaniRepository _repository;
   ThawaniQueueStatsNotifier(this._repository) : super(const ThawaniQueueStatsInitial());
+  final ThawaniRepository _repository;
 
   Future<void> load() async {
     if (state is! ThawaniQueueStatsLoaded) state = const ThawaniQueueStatsLoading();

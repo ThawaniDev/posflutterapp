@@ -8,8 +8,8 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminRoleDetailPage extends ConsumerStatefulWidget {
-  final String roleId;
   const AdminRoleDetailPage({super.key, required this.roleId});
+  final String roleId;
 
   @override
   ConsumerState<AdminRoleDetailPage> createState() => _AdminRoleDetailPageState();
@@ -70,7 +70,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
                       Chip(
                         label: Text(l10n.adminSystemRole),
                         backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                        labelStyle: TextStyle(color: AppColors.primary),
+                        labelStyle: const TextStyle(color: AppColors.primary),
                       ),
                   ],
                 ),
@@ -95,7 +95,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
         AppSpacing.gapH8,
         if (permissions.isEmpty)
           PosCard(
-            child: Padding(padding: EdgeInsets.all(16), child: Text(l10n.noPermissionsAssigned)),
+            child: Padding(padding: const EdgeInsets.all(16), child: Text(l10n.noPermissionsAssigned)),
           )
         else
           ...permissions.map((p) {

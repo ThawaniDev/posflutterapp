@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/onboarding/enums/signage_template_type.dart';
 
 class SignageTemplate {
-  final String id;
-  final String name;
-  final String nameAr;
-  final String slug;
-  final SignageTemplateType templateType;
-  final Map<String, dynamic> layoutConfig;
-  final Map<String, dynamic>? placeholderContent;
-  final String? backgroundColor;
-  final String? textColor;
-  final String? fontFamily;
-  final String? transitionStyle;
-  final String? previewImageUrl;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SignageTemplate({
     required this.id,
@@ -56,6 +41,21 @@ class SignageTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String nameAr;
+  final String slug;
+  final SignageTemplateType templateType;
+  final Map<String, dynamic> layoutConfig;
+  final Map<String, dynamic>? placeholderContent;
+  final String? backgroundColor;
+  final String? textColor;
+  final String? fontFamily;
+  final String? transitionStyle;
+  final String? previewImageUrl;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

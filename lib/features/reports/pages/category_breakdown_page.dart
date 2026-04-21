@@ -58,9 +58,9 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
 }
 
 class _CategoryList extends StatelessWidget {
-  final List<Map<String, dynamic>> categories;
 
   const _CategoryList({required this.categories});
+  final List<Map<String, dynamic>> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ class _CategoryList extends StatelessWidget {
 
               return Column(
                 children: [
-                  if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Column(
@@ -139,7 +139,7 @@ class _CategoryList extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   '${i + 1}',
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primary),
+                                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primary),
                                 ),
                               ),
                             ),
@@ -156,7 +156,7 @@ class _CategoryList extends StatelessWidget {
                                     Text(
                                       c['category_name_ar'] as String,
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                       ),
                                     ),
                                 ],
@@ -172,7 +172,7 @@ class _CategoryList extends StatelessWidget {
                                 Text(
                                   formatPercent(pct * 100),
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    color: AppColors.mutedFor(context),
                                   ),
                                 ),
                               ],

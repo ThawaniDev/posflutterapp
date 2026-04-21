@@ -1,9 +1,4 @@
 class PlanLimit {
-  final String id;
-  final String subscriptionPlanId;
-  final String limitKey;
-  final int limitValue;
-  final double? pricePerExtraUnit;
 
   const PlanLimit({
     required this.id,
@@ -22,6 +17,11 @@ class PlanLimit {
       pricePerExtraUnit: (json['price_per_extra_unit'] != null ? double.tryParse(json['price_per_extra_unit'].toString()) : null),
     );
   }
+  final String id;
+  final String subscriptionPlanId;
+  final String limitKey;
+  final int limitValue;
+  final double? pricePerExtraUnit;
 
   Map<String, dynamic> toJson() {
     return {

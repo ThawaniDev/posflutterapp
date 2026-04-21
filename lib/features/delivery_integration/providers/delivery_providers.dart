@@ -4,8 +4,8 @@ import 'package:wameedpos/features/delivery_integration/providers/delivery_state
 
 // ─── Delivery Stats Provider ────────────────────────────
 class DeliveryStatsNotifier extends StateNotifier<DeliveryStatsState> {
-  final DeliveryRepository _repository;
   DeliveryStatsNotifier(this._repository) : super(const DeliveryStatsInitial());
+  final DeliveryRepository _repository;
 
   Future<void> load() async {
     if (state is! DeliveryStatsLoaded) state = const DeliveryStatsLoading();
@@ -37,8 +37,8 @@ final deliveryStatsProvider = StateNotifierProvider<DeliveryStatsNotifier, Deliv
 
 // ─── Delivery Configs Provider ──────────────────────────
 class DeliveryConfigsNotifier extends StateNotifier<DeliveryConfigsState> {
-  final DeliveryRepository _repository;
   DeliveryConfigsNotifier(this._repository) : super(const DeliveryConfigsInitial());
+  final DeliveryRepository _repository;
 
   Future<void> load() async {
     if (state is! DeliveryConfigsLoaded) state = const DeliveryConfigsLoading();
@@ -87,8 +87,8 @@ final deliveryConfigsProvider = StateNotifierProvider<DeliveryConfigsNotifier, D
 
 // ─── Delivery Orders Provider ───────────────────────────
 class DeliveryOrdersNotifier extends StateNotifier<DeliveryOrdersState> {
-  final DeliveryRepository _repository;
   DeliveryOrdersNotifier(this._repository) : super(const DeliveryOrdersInitial());
+  final DeliveryRepository _repository;
 
   String? _platformFilter;
   String? _statusFilter;
@@ -150,8 +150,8 @@ final deliveryOrdersProvider = StateNotifierProvider<DeliveryOrdersNotifier, Del
 
 // ─── Delivery Order Detail Provider ─────────────────────
 class DeliveryOrderDetailNotifier extends StateNotifier<DeliveryOrderDetailState> {
-  final DeliveryRepository _repository;
   DeliveryOrderDetailNotifier(this._repository) : super(const DeliveryOrderDetailInitial());
+  final DeliveryRepository _repository;
 
   Future<void> load(String id) async {
     state = const DeliveryOrderDetailLoading();
@@ -181,8 +181,8 @@ final deliveryOrderDetailProvider = StateNotifierProvider<DeliveryOrderDetailNot
 
 // ─── Delivery Platforms Provider ────────────────────────
 class DeliveryPlatformsNotifier extends StateNotifier<DeliveryPlatformsState> {
-  final DeliveryRepository _repository;
   DeliveryPlatformsNotifier(this._repository) : super(const DeliveryPlatformsInitial());
+  final DeliveryRepository _repository;
 
   Future<void> load() async {
     if (state is! DeliveryPlatformsLoaded) state = const DeliveryPlatformsLoading();
@@ -202,8 +202,8 @@ final deliveryPlatformsProvider = StateNotifierProvider<DeliveryPlatformsNotifie
 
 // ─── Connection Test Provider ───────────────────────────
 class DeliveryConnectionTestNotifier extends StateNotifier<DeliveryConnectionTestState> {
-  final DeliveryRepository _repository;
   DeliveryConnectionTestNotifier(this._repository) : super(const DeliveryConnectionTestIdle());
+  final DeliveryRepository _repository;
 
   Future<void> test(String configId) async {
     state = const DeliveryConnectionTestLoading();
@@ -229,8 +229,8 @@ final deliveryConnectionTestProvider = StateNotifierProvider<DeliveryConnectionT
 
 // ─── Menu Sync Provider ─────────────────────────────────
 class DeliveryMenuSyncNotifier extends StateNotifier<DeliveryMenuSyncState> {
-  final DeliveryRepository _repository;
   DeliveryMenuSyncNotifier(this._repository) : super(const DeliveryMenuSyncIdle());
+  final DeliveryRepository _repository;
 
   Future<void> sync({String? platform, required List<Map<String, dynamic>> products}) async {
     state = const DeliveryMenuSyncLoading();
@@ -251,8 +251,8 @@ final deliveryMenuSyncProvider = StateNotifierProvider<DeliveryMenuSyncNotifier,
 
 // ─── Webhook Logs Provider ──────────────────────────────
 class DeliveryWebhookLogsNotifier extends StateNotifier<DeliveryWebhookLogsState> {
-  final DeliveryRepository _repository;
   DeliveryWebhookLogsNotifier(this._repository) : super(const DeliveryWebhookLogsInitial());
+  final DeliveryRepository _repository;
 
   String? _platformFilter;
   String? get platformFilter => _platformFilter;
@@ -283,8 +283,8 @@ final deliveryWebhookLogsProvider = StateNotifierProvider<DeliveryWebhookLogsNot
 
 // ─── Status Push Logs Provider ──────────────────────────
 class DeliveryStatusPushLogsNotifier extends StateNotifier<DeliveryStatusPushLogsState> {
-  final DeliveryRepository _repository;
   DeliveryStatusPushLogsNotifier(this._repository) : super(const DeliveryStatusPushLogsInitial());
+  final DeliveryRepository _repository;
 
   String? _platformFilter;
   String? get platformFilter => _platformFilter;

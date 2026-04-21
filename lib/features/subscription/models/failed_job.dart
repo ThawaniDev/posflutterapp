@@ -1,11 +1,4 @@
 class FailedJob {
-  final int id;
-  final String uuid;
-  final String connection;
-  final String queue;
-  final String payload;
-  final String exception;
-  final DateTime? failedAt;
 
   const FailedJob({
     required this.id,
@@ -28,6 +21,13 @@ class FailedJob {
       failedAt: json['failed_at'] != null ? DateTime.parse(json['failed_at'] as String) : null,
     );
   }
+  final int id;
+  final String uuid;
+  final String connection;
+  final String queue;
+  final String payload;
+  final String exception;
+  final DateTime? failedAt;
 
   Map<String, dynamic> toJson() {
     return {

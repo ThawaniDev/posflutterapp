@@ -1,13 +1,4 @@
 class PlatformDailyStat {
-  final String id;
-  final DateTime date;
-  final int totalActiveStores;
-  final int newRegistrations;
-  final int totalOrders;
-  final double totalGmv;
-  final double totalMrr;
-  final int churnCount;
-  final DateTime? createdAt;
 
   const PlatformDailyStat({
     required this.id,
@@ -34,6 +25,15 @@ class PlatformDailyStat {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final DateTime date;
+  final int totalActiveStores;
+  final int newRegistrations;
+  final int totalOrders;
+  final double totalGmv;
+  final double totalMrr;
+  final int churnCount;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -107,14 +107,14 @@ class UpdateInstallerService {
 }
 
 class UpdateInstallResult {
-  final bool success;
-  final String message;
-  final String? backupId;
-  final bool requiresRollback;
 
   const UpdateInstallResult({required this.success, required this.message, this.backupId, this.requiresRollback = false});
 
   factory UpdateInstallResult.failure(String message, {String? backupId}) {
     return UpdateInstallResult(success: false, message: message, backupId: backupId);
   }
+  final bool success;
+  final String message;
+  final String? backupId;
+  final bool requiresRollback;
 }

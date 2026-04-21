@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_shift_report.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ShiftReportCard extends StatelessWidget {
-  final CashierShiftReport report;
-  final VoidCallback? onTap;
 
   const ShiftReportCard({super.key, required this.report, this.onTap});
+  final CashierShiftReport report;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +81,9 @@ class ShiftReportCard extends StatelessWidget {
                 AppSpacing.gapH8,
                 Row(
                   children: [
-                    Icon(Icons.send_rounded, size: 12, color: AppColors.success),
+                    const Icon(Icons.send_rounded, size: 12, color: AppColors.success),
                     AppSpacing.gapW4,
-                    Text(l10n.notifLogSent, style: TextStyle(fontSize: 11, color: AppColors.success)),
+                    Text(l10n.notifLogSent, style: const TextStyle(fontSize: 11, color: AppColors.success)),
                   ],
                 ),
               ],
@@ -97,9 +96,9 @@ class ShiftReportCard extends StatelessWidget {
 }
 
 class _RiskLevelChip extends StatelessWidget {
+  const _RiskLevelChip({required this.level, required this.score});
   final String level;
   final double score;
-  const _RiskLevelChip({required this.level, required this.score});
 
   @override
   Widget build(BuildContext context) {
@@ -136,12 +135,12 @@ class _RiskLevelChip extends StatelessWidget {
 }
 
 class _StatItem extends StatelessWidget {
+
+  const _StatItem({required this.icon, required this.label, required this.value, this.color});
   final IconData icon;
   final String label;
   final String value;
   final Color? color;
-
-  const _StatItem({required this.icon, required this.label, required this.value, this.color});
 
   @override
   Widget build(BuildContext context) {

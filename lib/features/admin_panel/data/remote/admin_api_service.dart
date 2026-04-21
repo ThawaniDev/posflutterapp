@@ -8,9 +8,9 @@ final adminApiServiceProvider = Provider<AdminApiService>((ref) {
 });
 
 class AdminApiService {
-  final Dio _dio;
 
   AdminApiService(this._dio);
+  final Dio _dio;
 
   // ─── Stores ──────────────────────────────────────────────
 
@@ -67,10 +67,10 @@ class AdminApiService {
       data: {
         'organization_name': organizationName,
         'store_name': storeName,
-        if (organizationBusinessType != null) 'organization_business_type': organizationBusinessType,
-        if (organizationCountry != null) 'organization_country': organizationCountry,
-        if (storeBusinessType != null) 'store_business_type': storeBusinessType,
-        if (storeCurrency != null) 'store_currency': storeCurrency,
+        'organization_business_type': ?organizationBusinessType,
+        'organization_country': ?organizationCountry,
+        'store_business_type': ?storeBusinessType,
+        'store_currency': ?storeCurrency,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -79,7 +79,7 @@ class AdminApiService {
   Future<Map<String, dynamic>> exportStores({bool? isActive, String? businessType}) async {
     final response = await _dio.post(
       ApiEndpoints.adminStoresExport,
-      data: {if (isActive != null) 'is_active': isActive, if (businessType != null) 'business_type': businessType},
+      data: {'is_active': ?isActive, 'business_type': ?businessType},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -103,8 +103,8 @@ class AdminApiService {
       data: {
         'limit_key': limitKey,
         'override_value': overrideValue,
-        if (reason != null) 'reason': reason,
-        if (expiresAt != null) 'expires_at': expiresAt,
+        'reason': ?reason,
+        'expires_at': ?expiresAt,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -180,9 +180,9 @@ class AdminApiService {
       ApiEndpoints.adminRoles,
       data: {
         'name': name,
-        if (slug != null) 'slug': slug,
-        if (description != null) 'description': description,
-        if (permissionIds != null) 'permission_ids': permissionIds,
+        'slug': ?slug,
+        'description': ?description,
+        'permission_ids': ?permissionIds,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -192,9 +192,9 @@ class AdminApiService {
     final response = await _dio.put(
       ApiEndpoints.adminRoleById(roleId),
       data: {
-        if (name != null) 'name': name,
-        if (description != null) 'description': description,
-        if (permissionIds != null) 'permission_ids': permissionIds,
+        'name': ?name,
+        'description': ?description,
+        'permission_ids': ?permissionIds,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -252,9 +252,9 @@ class AdminApiService {
         'email': email,
         'password': password,
         'password_confirmation': password,
-        if (phone != null) 'phone': phone,
+        'phone': ?phone,
         'is_active': isActive,
-        if (roleIds != null) 'role_ids': roleIds,
+        'role_ids': ?roleIds,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -270,10 +270,10 @@ class AdminApiService {
     final response = await _dio.put(
       ApiEndpoints.adminTeamUserById(userId),
       data: {
-        if (name != null) 'name': name,
-        if (phone != null) 'phone': phone,
-        if (isActive != null) 'is_active': isActive,
-        if (roleIds != null) 'role_ids': roleIds,
+        'name': ?name,
+        'phone': ?phone,
+        'is_active': ?isActive,
+        'role_ids': ?roleIds,
       },
     );
     return response.data as Map<String, dynamic>;

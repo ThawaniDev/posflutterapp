@@ -1,18 +1,4 @@
 class DailySalesSummary {
-  final String id;
-  final String storeId;
-  final DateTime date;
-  final int? totalTransactions;
-  final double? totalRevenue;
-  final double? totalCost;
-  final double? totalDiscount;
-  final double? totalTax;
-  final double? totalRefunds;
-  final double? netRevenue;
-  final double? cashRevenue;
-  final double? cardRevenue;
-  final double? otherRevenue;
-  final double? avgBasketSize;
 
   const DailySalesSummary({
     required this.id,
@@ -49,6 +35,20 @@ class DailySalesSummary {
       avgBasketSize: (json['avg_basket_size'] != null ? double.tryParse(json['avg_basket_size'].toString()) : null),
     );
   }
+  final String id;
+  final String storeId;
+  final DateTime date;
+  final int? totalTransactions;
+  final double? totalRevenue;
+  final double? totalCost;
+  final double? totalDiscount;
+  final double? totalTax;
+  final double? totalRefunds;
+  final double? netRevenue;
+  final double? cashRevenue;
+  final double? cardRevenue;
+  final double? otherRevenue;
+  final double? avgBasketSize;
 
   Map<String, dynamic> toJson() {
     return {

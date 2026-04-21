@@ -2,16 +2,6 @@ import 'package:wameedpos/features/settings/enums/sync_direction.dart';
 import 'package:wameedpos/features/settings/enums/sync_log_status.dart';
 
 class SyncLog {
-  final String id;
-  final String storeId;
-  final String terminalId;
-  final SyncDirection direction;
-  final int recordsCount;
-  final int durationMs;
-  final SyncLogStatus status;
-  final String? errorMessage;
-  final DateTime startedAt;
-  final DateTime? completedAt;
 
   const SyncLog({
     required this.id,
@@ -40,6 +30,16 @@ class SyncLog {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String terminalId;
+  final SyncDirection direction;
+  final int recordsCount;
+  final int durationMs;
+  final SyncLogStatus status;
+  final String? errorMessage;
+  final DateTime startedAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

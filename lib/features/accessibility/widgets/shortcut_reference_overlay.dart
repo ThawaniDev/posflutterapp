@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
@@ -122,18 +121,18 @@ class ShortcutReferenceOverlay extends StatelessWidget {
 }
 
 class _ShortcutGroupData {
-  final String title;
-  final List<_ShortcutEntry> shortcuts;
 
   const _ShortcutGroupData({required this.title, required this.shortcuts});
+  final String title;
+  final List<_ShortcutEntry> shortcuts;
 }
 
 class _ShortcutEntry {
+
+  const _ShortcutEntry({required this.action, required this.label, required this.description});
   final String action;
   final String label;
   final String description;
-
-  const _ShortcutEntry({required this.action, required this.label, required this.description});
 }
 
 class _ShortcutGroup extends StatelessWidget {

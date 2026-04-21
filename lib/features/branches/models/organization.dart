@@ -1,22 +1,6 @@
 import 'package:wameedpos/features/branches/enums/business_type.dart';
 
 class Organization {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String slug;
-  final String? crNumber;
-  final String? vatNumber;
-  final BusinessType? businessType;
-  final String? logoUrl;
-  final String? country;
-  final String? city;
-  final String? address;
-  final String? phone;
-  final String? email;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Organization({
     required this.id,
@@ -57,6 +41,22 @@ class Organization {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String slug;
+  final String? crNumber;
+  final String? vatNumber;
+  final BusinessType? businessType;
+  final String? logoUrl;
+  final String? country;
+  final String? city;
+  final String? address;
+  final String? phone;
+  final String? email;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

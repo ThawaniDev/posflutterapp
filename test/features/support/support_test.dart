@@ -141,7 +141,7 @@ void main() {
 
   group('TicketListState', () {
     test('TicketListLoaded holds tickets', () {
-      final ticket = SupportTicket(
+      const ticket = SupportTicket(
         id: '1',
         ticketNumber: 'TK-001',
         organizationId: 'org-1',
@@ -151,7 +151,7 @@ void main() {
         subject: 'Test',
         description: 'Test description',
       );
-      final state = TicketListLoaded(tickets: [ticket], currentPage: 1, lastPage: 1, total: 1);
+      const state = TicketListLoaded(tickets: [ticket], currentPage: 1, lastPage: 1, total: 1);
       expect(state.tickets.length, 1);
       expect(state.tickets.first.subject, 'Test');
     });
@@ -164,7 +164,7 @@ void main() {
 
   group('TicketDetailState', () {
     test('TicketDetailLoaded holds ticket data', () {
-      final ticket = SupportTicket(
+      const ticket = SupportTicket(
         id: 'abc',
         ticketNumber: 'TK-002',
         organizationId: 'org-1',
@@ -174,7 +174,7 @@ void main() {
         subject: 'Help',
         description: 'Need help',
       );
-      final state = TicketDetailLoaded(ticket: ticket, messages: <SupportTicketMessage>[]);
+      const state = TicketDetailLoaded(ticket: ticket, messages: <SupportTicketMessage>[]);
       expect(state.ticket.id, 'abc');
     });
 

@@ -78,7 +78,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
                 child: Icon(
                   isEnabled ? Icons.volume_up_rounded : Icons.volume_off_rounded,
                   size: AppSizes.iconMd,
-                  color: isEnabled ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  color: isEnabled ? AppColors.primary : (AppColors.mutedFor(context)),
                 ),
               ),
               AppSpacing.gapW12,
@@ -89,7 +89,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
                     Text(_formatEventKey(config.eventKey), style: AppTypography.titleMedium),
                     Text(
                       config.soundFile,
-                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),
@@ -109,7 +109,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
             AppSpacing.gapH12,
             Row(
               children: [
-                Icon(Icons.volume_down_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                Icon(Icons.volume_down_rounded, size: 16, color: AppColors.mutedFor(context)),
                 Expanded(
                   child: SliderTheme(
                     data: SliderThemeData(
@@ -132,7 +132,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
                     ),
                   ),
                 ),
-                Icon(Icons.volume_up_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                Icon(Icons.volume_up_rounded, size: 16, color: AppColors.mutedFor(context)),
                 AppSpacing.gapW8,
                 SizedBox(
                   width: 40,

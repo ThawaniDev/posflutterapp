@@ -18,9 +18,9 @@ final leaderboardProvider = StateNotifierProvider<LeaderboardNotifier, Leaderboa
 });
 
 class LeaderboardNotifier extends StateNotifier<LeaderboardState> {
-  final GamificationRepository _repo;
 
   LeaderboardNotifier(this._repo) : super(const LeaderboardInitial());
+  final GamificationRepository _repo;
 
   Future<void> load({String? date, String? periodType, String? sortBy}) async {
     state = const LeaderboardLoading();
@@ -42,9 +42,9 @@ final cashierHistoryProvider = StateNotifierProvider<CashierHistoryNotifier, Cas
 });
 
 class CashierHistoryNotifier extends StateNotifier<CashierHistoryState> {
-  final GamificationRepository _repo;
 
   CashierHistoryNotifier(this._repo) : super(const CashierHistoryInitial());
+  final GamificationRepository _repo;
 
   Future<void> load(String cashierId, {String? dateFrom, String? dateTo}) async {
     state = const CashierHistoryLoading();
@@ -66,9 +66,9 @@ final badgesProvider = StateNotifierProvider<BadgesNotifier, BadgesState>((ref) 
 });
 
 class BadgesNotifier extends StateNotifier<BadgesState> {
-  final GamificationRepository _repo;
 
   BadgesNotifier(this._repo) : super(const BadgesInitial());
+  final GamificationRepository _repo;
 
   Future<void> load() async {
     state = const BadgesLoading();
@@ -126,9 +126,9 @@ final badgeAwardsProvider = StateNotifierProvider<BadgeAwardsNotifier, BadgeAwar
 });
 
 class BadgeAwardsNotifier extends StateNotifier<BadgeAwardsState> {
-  final GamificationRepository _repo;
 
   BadgeAwardsNotifier(this._repo) : super(const BadgeAwardsInitial());
+  final GamificationRepository _repo;
 
   Future<void> load({String? cashierId}) async {
     state = const BadgeAwardsLoading();
@@ -150,9 +150,9 @@ final anomaliesProvider = StateNotifierProvider<AnomaliesNotifier, AnomaliesStat
 });
 
 class AnomaliesNotifier extends StateNotifier<AnomaliesState> {
-  final GamificationRepository _repo;
 
   AnomaliesNotifier(this._repo) : super(const AnomaliesInitial());
+  final GamificationRepository _repo;
 
   Future<void> load({String? severity, String? cashierId}) async {
     state = const AnomaliesLoading();
@@ -189,9 +189,9 @@ final shiftReportsProvider = StateNotifierProvider<ShiftReportsNotifier, ShiftRe
 });
 
 class ShiftReportsNotifier extends StateNotifier<ShiftReportsState> {
-  final GamificationRepository _repo;
 
   ShiftReportsNotifier(this._repo) : super(const ShiftReportsInitial());
+  final GamificationRepository _repo;
 
   Future<void> load({String? cashierId, String? dateFrom, String? dateTo}) async {
     state = const ShiftReportsLoading();
@@ -222,9 +222,9 @@ final gamificationSettingsProvider = StateNotifierProvider<GamificationSettingsN
 });
 
 class GamificationSettingsNotifier extends StateNotifier<GamificationSettingsState> {
-  final GamificationRepository _repo;
 
   GamificationSettingsNotifier(this._repo) : super(const GamificationSettingsInitial());
+  final GamificationRepository _repo;
 
   Future<void> load() async {
     state = const GamificationSettingsLoading();

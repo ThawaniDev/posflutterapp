@@ -67,7 +67,7 @@ class _ActiveOrdersWidgetState extends ConsumerState<ActiveOrdersWidget> {
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Row(
                         children: [
-                          Icon(Icons.shopping_cart, size: 20, color: AppColors.primary),
+                          const Icon(Icons.shopping_cart, size: 20, color: AppColors.primary),
                           AppSpacing.gapW8,
                           Text('${l10n.companionActiveOrdersTitle} ($total)', style: theme.textTheme.titleMedium),
                         ],
@@ -97,7 +97,7 @@ class _OrderCard extends StatelessWidget {
       'pending' => AppColors.warning,
       'processing' => AppColors.info,
       'ready' => AppColors.success,
-      _ => isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
 
     return PosCard(
@@ -141,7 +141,7 @@ class _OrderCard extends StatelessWidget {
               AppSpacing.gapH4,
               Text(
                 order['created_at'] as String,
-                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
               ),
             ],
           ],

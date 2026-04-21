@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/constants/api_endpoints.dart';
-import '../../../../core/network/dio_client.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
 
 final zatcaApiServiceProvider = Provider<ZatcaApiService>((ref) {
   return ZatcaApiService(ref.watch(dioClientProvider));
 });
 
 class ZatcaApiService {
-  final Dio _dio;
 
   ZatcaApiService(this._dio);
+  final Dio _dio;
 
   Future<Map<String, dynamic>> enroll({
     required String otp,
@@ -47,9 +47,9 @@ class ZatcaApiService {
         'invoice_type': invoiceType,
         'total_amount': totalAmount,
         'vat_amount': vatAmount,
-        if (invoiceXml != null) 'invoice_xml': invoiceXml,
-        if (digitalSignature != null) 'digital_signature': digitalSignature,
-        if (qrCodeData != null) 'qr_code_data': qrCodeData,
+        'invoice_xml': ?invoiceXml,
+        'digital_signature': ?digitalSignature,
+        'qr_code_data': ?qrCodeData,
       },
     );
     return Map<String, dynamic>.from(response.data as Map);
@@ -75,11 +75,11 @@ class ZatcaApiService {
     final response = await _dio.get(
       ApiEndpoints.zatcaInvoices,
       queryParameters: {
-        if (status != null) 'status': status,
-        if (invoiceType != null) 'invoice_type': invoiceType,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
-        if (perPage != null) 'per_page': perPage,
+        'status': ?status,
+        'invoice_type': ?invoiceType,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+        'per_page': ?perPage,
       },
     );
     return Map<String, dynamic>.from(response.data as Map);
@@ -105,8 +105,8 @@ class ZatcaApiService {
     final response = await _dio.get(
       ApiEndpoints.zatcaVatReport,
       queryParameters: {
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
       },
     );
     return Map<String, dynamic>.from(response.data as Map);

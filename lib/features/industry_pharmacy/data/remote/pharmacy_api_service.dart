@@ -11,8 +11,8 @@ final pharmacyApiServiceProvider = Provider<PharmacyApiService>((ref) {
 });
 
 class PharmacyApiService {
-  final Dio _dio;
   PharmacyApiService(this._dio);
+  final Dio _dio;
 
   Future<List<Prescription>> listPrescriptions({String? search, int perPage = 20}) async {
     final response = await _dio.get(
@@ -41,8 +41,8 @@ class PharmacyApiService {
       ApiEndpoints.pharmacyDrugSchedules,
       queryParameters: {
         'per_page': perPage,
-        if (scheduleType != null) 'schedule_type': scheduleType,
-        if (productId != null) 'product_id': productId,
+        'schedule_type': ?scheduleType,
+        'product_id': ?productId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

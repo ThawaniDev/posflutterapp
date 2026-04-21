@@ -15,11 +15,11 @@ class JewelryLoading extends JewelryState {
 }
 
 class JewelryLoaded extends JewelryState {
+
+  const JewelryLoaded({required this.metalRates, required this.productDetails, required this.buybacks});
   final List<DailyMetalRate> metalRates;
   final List<JewelryProductDetail> productDetails;
   final List<BuybackTransaction> buybacks;
-
-  const JewelryLoaded({required this.metalRates, required this.productDetails, required this.buybacks});
 
   JewelryLoaded copyWith({
     List<DailyMetalRate>? metalRates,
@@ -33,6 +33,6 @@ class JewelryLoaded extends JewelryState {
 }
 
 class JewelryError extends JewelryState {
-  final String message;
   const JewelryError({required this.message});
+  final String message;
 }

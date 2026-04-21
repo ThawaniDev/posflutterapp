@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../providers/zatca_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class VatReportCard extends StatelessWidget {
-  final ZatcaVatReportLoaded data;
 
   const VatReportCard({super.key, required this.data});
+  final ZatcaVatReportLoaded data;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class VatReportCard extends StatelessWidget {
     return Container(
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: AppRadius.borderMd,
         border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
       ),
@@ -95,12 +95,6 @@ class VatReportCard extends StatelessWidget {
 }
 
 class _InvoiceBreakdownRow extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final int count;
-  final double amount;
-  final double vat;
 
   const _InvoiceBreakdownRow({
     required this.label,
@@ -110,6 +104,12 @@ class _InvoiceBreakdownRow extends StatelessWidget {
     required this.amount,
     required this.vat,
   });
+  final String label;
+  final IconData icon;
+  final Color color;
+  final int count;
+  final double amount;
+  final double vat;
 
   @override
   Widget build(BuildContext context) {

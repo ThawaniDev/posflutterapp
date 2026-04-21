@@ -291,7 +291,7 @@ void main() {
     });
 
     test('loaded state holds data', () {
-      final state = SyncStatusLoaded(
+      const state = SyncStatusLoaded(
         serverOnline: true,
         serverTimestamp: '2024-06-01T10:00:00Z',
         lastSync: {'synced_at': '2024-06-01T09:50:00Z', 'direction': 'push'},

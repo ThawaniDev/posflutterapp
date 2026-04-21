@@ -21,8 +21,8 @@ void main() {
 
     test('PlansLoaded holds plans list', () {
       final plans = [
-        SubscriptionPlan(id: 'p1', name: 'Free', monthlyPrice: 0.0, isActive: true),
-        SubscriptionPlan(id: 'p2', name: 'Pro', monthlyPrice: 29.99, isActive: true),
+        const SubscriptionPlan(id: 'p1', name: 'Free', monthlyPrice: 0.0, isActive: true),
+        const SubscriptionPlan(id: 'p2', name: 'Pro', monthlyPrice: 29.99, isActive: true),
       ];
 
       final state = PlansLoaded(plans: plans);
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      PlansState state = PlansLoaded(plans: []);
+      const PlansState state = PlansLoaded(plans: []);
 
       final result = switch (state) {
         PlansInitial() => 'initial',
@@ -65,7 +65,7 @@ void main() {
     });
 
     test('SubscriptionLoaded with subscription', () {
-      final sub = StoreSubscription(
+      const sub = StoreSubscription(
         id: 'sub-1',
         organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
@@ -73,7 +73,7 @@ void main() {
         billingCycle: BillingCycle.monthly,
       );
 
-      final state = SubscriptionLoaded(subscription: sub);
+      const state = SubscriptionLoaded(subscription: sub);
       expect(state.subscription, isNotNull);
       expect(state.subscription!.status, SubscriptionStatus.active);
     });
@@ -84,14 +84,14 @@ void main() {
     });
 
     test('SubscriptionActionSuccess carries message', () {
-      final sub = StoreSubscription(
+      const sub = StoreSubscription(
         id: 'sub-1',
         organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.active,
       );
 
-      final state = SubscriptionActionSuccess(subscription: sub, message: 'Subscribed successfully');
+      const state = SubscriptionActionSuccess(subscription: sub, message: 'Subscribed successfully');
       expect(state.subscription, isNotNull);
       expect(state.message, 'Subscribed successfully');
     });
@@ -102,7 +102,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      SubscriptionState state = SubscriptionError(message: 'test');
+      const SubscriptionState state = SubscriptionError(message: 'test');
 
       final result = switch (state) {
         SubscriptionInitial() => 'initial',
@@ -124,7 +124,7 @@ void main() {
     });
 
     test('InvoicesLoaded with invoices', () {
-      final invoices = [Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, total: 34.49)];
+      final invoices = [const Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, total: 34.49)];
 
       final state = InvoicesLoaded(invoices: invoices);
       expect(state.invoices, hasLength(1));

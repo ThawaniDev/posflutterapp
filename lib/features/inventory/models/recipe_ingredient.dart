@@ -1,10 +1,4 @@
 class RecipeIngredient {
-  final String id;
-  final String recipeId;
-  final String ingredientProductId;
-  final double quantity;
-  final String? unit;
-  final double? wastePercent;
 
   const RecipeIngredient({
     required this.id,
@@ -25,6 +19,12 @@ class RecipeIngredient {
       wastePercent: (json['waste_percent'] != null ? double.tryParse(json['waste_percent'].toString()) : null),
     );
   }
+  final String id;
+  final String recipeId;
+  final String ingredientProductId;
+  final double quantity;
+  final String? unit;
+  final double? wastePercent;
 
   Map<String, dynamic> toJson() {
     return {

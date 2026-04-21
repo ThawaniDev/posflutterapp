@@ -152,7 +152,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.deliveryQuickActions, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.deliveryQuickActions, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   ListTile(
                     leading: const Icon(Icons.sync),
@@ -185,7 +185,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           OutlinedButton.icon(
             onPressed: actionLoading ? null : _showDisconnectDialog,
             icon: const Icon(Icons.link_off, color: AppColors.error),
-            label: Text(l10n.accountingDisconnect, style: TextStyle(color: AppColors.error)),
+            label: Text(l10n.accountingDisconnect, style: const TextStyle(color: AppColors.error)),
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: AppColors.error),
               padding: AppSpacing.paddingV12,

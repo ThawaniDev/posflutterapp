@@ -10,10 +10,10 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Result object returned on successful PIN override authorization.
 class PinOverrideResult {
-  final String authorizedBy;
-  final String authorizedByName;
 
   const PinOverrideResult({required this.authorizedBy, required this.authorizedByName});
+  final String authorizedBy;
+  final String authorizedByName;
 }
 
 /// A modal dialog that requests a supervisor/manager PIN to authorize
@@ -30,10 +30,10 @@ class PinOverrideResult {
 /// if (result != null) { /* authorized */ }
 /// ```
 class PinOverrideDialog extends ConsumerStatefulWidget {
-  final String permissionCode;
-  final String actionDescription;
 
   const PinOverrideDialog({super.key, required this.permissionCode, required this.actionDescription});
+  final String permissionCode;
+  final String actionDescription;
 
   /// Static helper to show the dialog and return the result.
   static Future<PinOverrideResult?> show({
@@ -138,7 +138,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), shape: BoxShape.circle),
-                child: Icon(Icons.security, size: 28, color: AppColors.warning),
+                child: const Icon(Icons.security, size: 28, color: AppColors.warning),
               ),
               const SizedBox(height: AppSpacing.md),
 
@@ -156,7 +156,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
               const SizedBox(height: 4),
               Text(
                 'Enter a supervisor PIN to continue',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -173,7 +173,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: filled ? AppColors.primary : Colors.transparent,
-                      border: Border.all(color: filled ? AppColors.primary : AppColors.borderLight, width: 2),
+                      border: Border.all(color: filled ? AppColors.primary : AppColors.borderFor(context), width: 2),
                     ),
                   );
                 }),

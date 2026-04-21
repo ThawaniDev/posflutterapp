@@ -134,7 +134,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.floristFrequency, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(l10n.floristFrequency, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 AppSpacing.gapH12,
                 SegmentedButton<String>(
                   segments: [
@@ -255,15 +255,15 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.notifications, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(l10n.notifications, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 AppSpacing.gapH12,
                 TextField(
                   controller: _emailController,
                   onChanged: (_) => setState(() => _hasChanges = true),
                   decoration: InputDecoration(
                     labelText: l10n.accountingNotificationEmail,
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.email),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),

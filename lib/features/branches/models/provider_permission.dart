@@ -1,10 +1,4 @@
 class ProviderPermission {
-  final String id;
-  final String name;
-  final String? description;
-  final String? descriptionAr;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const ProviderPermission({
     required this.id,
@@ -25,6 +19,12 @@ class ProviderPermission {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? description;
+  final String? descriptionAr;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

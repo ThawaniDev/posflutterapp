@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/branches/enums/admin_role_slug.dart';
 
 class AdminRole {
-  final String id;
-  final String name;
-  final AdminRoleSlug slug;
-  final String? description;
-  final bool? isSystem;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AdminRole({
     required this.id,
@@ -30,6 +23,13 @@ class AdminRole {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final AdminRoleSlug slug;
+  final String? description;
+  final bool? isSystem;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/staff/models/permission.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
@@ -154,7 +153,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
             else if (permState is PermissionsLoaded)
               ..._buildPermissionModules(permState.grouped)
             else if (permState is PermissionsError)
-              Text('Failed to load permissions: ${permState.message}', style: TextStyle(color: AppColors.error)),
+              Text('Failed to load permissions: ${permState.message}', style: const TextStyle(color: AppColors.error)),
           ],
         ),
       ),
@@ -174,16 +173,16 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
         borderRadius: AppRadius.borderMd,
 
-        border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
         child: ExpansionTile(
           leading: Icon(
             _moduleIcon(module),
-            color: selected.length == permissions.length ? AppColors.primary : AppColors.textMutedLight,
+            color: selected.length == permissions.length ? AppColors.primary : AppColors.mutedFor(context),
           ),
           title: Text(_formatModule(module), style: Theme.of(context).textTheme.titleSmall),
           subtitle: Text(
             '${selected.length}/${permissions.length}',
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
           ),
           trailing: Checkbox(
             value: selected.length == permissions.length ? true : (selected.isNotEmpty ? null : false),
@@ -220,7 +219,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
               subtitle: perm.requiresPin == true
                   ? Row(
                       children: [
-                        Icon(Icons.pin, size: 14, color: AppColors.warning),
+                        const Icon(Icons.pin, size: 14, color: AppColors.warning),
                         const SizedBox(width: 4),
                         Text(
                           'Requires PIN override',

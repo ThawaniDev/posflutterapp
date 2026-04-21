@@ -36,43 +36,27 @@ enum PaymentMethod {
     }
   }
 
+  /// Fallback English label (for non-UI contexts).
   String get label {
-    switch (this) {
-      case PaymentMethod.cash:
-        return 'Cash';
-      case PaymentMethod.card:
-        return 'Card';
-      case PaymentMethod.cardMada:
-        return 'Mada Card';
-      case PaymentMethod.cardVisa:
-        return 'Visa Card';
-      case PaymentMethod.cardMastercard:
-        return 'Mastercard';
-      case PaymentMethod.mada:
-        return 'Mada';
-      case PaymentMethod.applePay:
-        return 'Apple Pay';
-      case PaymentMethod.stcPay:
-        return 'STC Pay';
-      case PaymentMethod.storeCredit:
-        return 'Store Credit';
-      case PaymentMethod.giftCard:
-        return 'Gift Card';
-      case PaymentMethod.mobilePayment:
-        return 'Mobile Payment';
-      case PaymentMethod.loyaltyPoints:
-        return 'Loyalty Points';
-      case PaymentMethod.bankTransfer:
-        return 'Bank Transfer';
-      case PaymentMethod.tabby:
-        return 'Tabby';
-      case PaymentMethod.tamara:
-        return 'Tamara';
-      case PaymentMethod.mispay:
-        return 'MisPay';
-      case PaymentMethod.madfu:
-        return 'Madfu';
-    }
+    return switch (this) {
+      PaymentMethod.cash => 'Cash',
+      PaymentMethod.card => 'Card',
+      PaymentMethod.cardMada => 'Mada Card',
+      PaymentMethod.cardVisa => 'Visa Card',
+      PaymentMethod.cardMastercard => 'Mastercard',
+      PaymentMethod.mada => 'Mada',
+      PaymentMethod.applePay => 'Apple Pay',
+      PaymentMethod.stcPay => 'STC Pay',
+      PaymentMethod.storeCredit => 'Store Credit',
+      PaymentMethod.giftCard => 'Gift Card',
+      PaymentMethod.mobilePayment => 'Mobile Payment',
+      PaymentMethod.loyaltyPoints => 'Loyalty Points',
+      PaymentMethod.bankTransfer => 'Bank Transfer',
+      PaymentMethod.tabby => 'Tabby',
+      PaymentMethod.tamara => 'Tamara',
+      PaymentMethod.mispay => 'MisPay',
+      PaymentMethod.madfu => 'Madfu',
+    };
   }
 
   bool get isCardType =>

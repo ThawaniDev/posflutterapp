@@ -1,9 +1,4 @@
 class BusinessTypeIndustryConfig {
-  final String id;
-  final String businessTypeId;
-  final Map<String, dynamic> activeModules;
-  final Map<String, dynamic>? defaultSettings;
-  final Map<String, dynamic>? requiredProductFields;
 
   const BusinessTypeIndustryConfig({
     required this.id,
@@ -22,6 +17,11 @@ class BusinessTypeIndustryConfig {
       requiredProductFields: json['required_product_fields'] != null ? Map<String, dynamic>.from(json['required_product_fields'] as Map) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final Map<String, dynamic> activeModules;
+  final Map<String, dynamic>? defaultSettings;
+  final Map<String, dynamic>? requiredProductFields;
 
   Map<String, dynamic> toJson() {
     return {

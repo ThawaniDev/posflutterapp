@@ -19,9 +19,9 @@ final aiChatListProvider = StateNotifierProvider<AIChatListNotifier, AIChatListS
 });
 
 class AIChatListNotifier extends StateNotifier<AIChatListState> {
-  final AIChatRepository _repo;
 
   AIChatListNotifier(this._repo) : super(const AIChatListInitial());
+  final AIChatRepository _repo;
 
   Future<void> load() async {
     state = const AIChatListLoading();
@@ -64,9 +64,9 @@ final aiActiveChatProvider = StateNotifierProvider<AIChatNotifier, AIChatState>(
 });
 
 class AIChatNotifier extends StateNotifier<AIChatState> {
-  final AIChatRepository _repo;
 
   AIChatNotifier(this._repo) : super(const AIChatInitial());
+  final AIChatRepository _repo;
 
   Future<void> loadChat(String chatId) async {
     state = const AIChatLoading();
@@ -192,9 +192,9 @@ final aiModelsProvider = StateNotifierProvider<AIModelsNotifier, AIModelsState>(
 });
 
 class AIModelsNotifier extends StateNotifier<AIModelsState> {
-  final AIChatRepository _repo;
 
   AIModelsNotifier(this._repo) : super(const AIModelsInitial());
+  final AIChatRepository _repo;
 
   Future<void> load() async {
     state = const AIModelsLoading();
@@ -216,9 +216,9 @@ final aiFeatureCardsProvider = StateNotifierProvider<AIFeatureCardsNotifier, AIF
 });
 
 class AIFeatureCardsNotifier extends StateNotifier<AIFeatureCardsState> {
-  final AIChatRepository _repo;
 
   AIFeatureCardsNotifier(this._repo) : super(const AIFeatureCardsInitial());
+  final AIChatRepository _repo;
 
   Future<void> load() async {
     state = const AIFeatureCardsLoading();

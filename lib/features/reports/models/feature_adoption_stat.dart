@@ -1,9 +1,4 @@
 class FeatureAdoptionStat {
-  final String id;
-  final String featureKey;
-  final DateTime date;
-  final int storesUsingCount;
-  final int totalEvents;
 
   const FeatureAdoptionStat({
     required this.id,
@@ -22,6 +17,11 @@ class FeatureAdoptionStat {
       totalEvents: (json['total_events'] as num).toInt(),
     );
   }
+  final String id;
+  final String featureKey;
+  final DateTime date;
+  final int storesUsingCount;
+  final int totalEvents;
 
   Map<String, dynamic> toJson() {
     return {

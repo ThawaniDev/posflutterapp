@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../providers/zatca_providers.dart';
-import '../providers/zatca_state.dart';
-import '../widgets/compliance_status_card.dart';
-import '../widgets/enrollment_wizard.dart';
-import '../widgets/invoice_list_widget.dart';
-import '../widgets/vat_report_card.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_providers.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
+import 'package:wameedpos/features/zatca/widgets/compliance_status_card.dart';
+import 'package:wameedpos/features/zatca/widgets/enrollment_wizard.dart';
+import 'package:wameedpos/features/zatca/widgets/invoice_list_widget.dart';
+import 'package:wameedpos/features/zatca/widgets/vat_report_card.dart';
 
 class ZatcaDashboardPage extends ConsumerStatefulWidget {
   const ZatcaDashboardPage({super.key});
@@ -181,10 +181,10 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
 }
 
 class _ErrorCard extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
 
   const _ErrorCard({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {

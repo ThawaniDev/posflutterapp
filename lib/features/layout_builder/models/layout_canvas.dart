@@ -1,15 +1,4 @@
 class LayoutCanvas {
-  final String id;
-  final String storeId;
-  final String name;
-  final int gridColumns;
-  final int gridRows;
-  final Map<String, dynamic> themeOverrides;
-  final bool isActive;
-  final int version;
-  final List<Map<String, dynamic>> placements;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const LayoutCanvas({
     required this.id,
@@ -40,6 +29,17 @@ class LayoutCanvas {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String name;
+  final int gridColumns;
+  final int gridRows;
+  final Map<String, dynamic> themeOverrides;
+  final bool isActive;
+  final int version;
+  final List<Map<String, dynamic>> placements;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/branches/enums/register_platform.dart';
 
 class Register {
-  final String id;
-  final String storeId;
-  final String name;
-  final String deviceId;
-  final String? appVersion;
-  final RegisterPlatform? platform;
-  final DateTime? lastSyncAt;
-  final bool? isOnline;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Register({
     required this.id,
@@ -42,6 +31,17 @@ class Register {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String name;
+  final String deviceId;
+  final String? appVersion;
+  final RegisterPlatform? platform;
+  final DateTime? lastSyncAt;
+  final bool? isOnline;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

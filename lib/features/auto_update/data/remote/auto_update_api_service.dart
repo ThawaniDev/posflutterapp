@@ -7,8 +7,8 @@ final autoUpdateApiServiceProvider = Provider<AutoUpdateApiService>((ref) {
 });
 
 class AutoUpdateApiService {
-  final Ref _ref;
   AutoUpdateApiService(this._ref);
+  final Ref _ref;
 
   /// POST /auto-update/check
   Future<Map<String, dynamic>> checkForUpdate({required String currentVersion, required String platform, String? channel}) async {

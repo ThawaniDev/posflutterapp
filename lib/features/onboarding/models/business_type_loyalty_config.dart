@@ -1,20 +1,6 @@
 import 'package:wameedpos/features/customers/enums/loyalty_program_type.dart';
 
 class BusinessTypeLoyaltyConfig {
-  final String id;
-  final String businessTypeId;
-  final LoyaltyProgramType programType;
-  final double? earningRate;
-  final double? redemptionValue;
-  final int? minRedemptionPoints;
-  final int? stampsCardSize;
-  final double? cashbackPercentage;
-  final int? pointsExpiryDays;
-  final bool? enableTiers;
-  final Map<String, dynamic>? tierDefinitions;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const BusinessTypeLoyaltyConfig({
     required this.id,
@@ -51,6 +37,20 @@ class BusinessTypeLoyaltyConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final LoyaltyProgramType programType;
+  final double? earningRate;
+  final double? redemptionValue;
+  final int? minRedemptionPoints;
+  final int? stampsCardSize;
+  final double? cashbackPercentage;
+  final int? pointsExpiryDays;
+  final bool? enableTiers;
+  final Map<String, dynamic>? tierDefinitions;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

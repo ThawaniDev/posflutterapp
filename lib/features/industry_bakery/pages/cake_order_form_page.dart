@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/custom_cake_order.dart';
-import '../providers/bakery_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_bakery/models/custom_cake_order.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CakeOrderFormPage extends ConsumerStatefulWidget {
-  final CustomCakeOrder? order;
   const CakeOrderFormPage({super.key, this.order});
+  final CustomCakeOrder? order;
 
   @override
   ConsumerState<CakeOrderFormPage> createState() => _CakeOrderFormPageState();
@@ -108,7 +108,7 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _descriptionCtrl, label: l10n.description, hint: l10n.bakeryCakeDescription, maxLines: 3),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -120,14 +120,14 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _decorationCtrl,
               label: l10n.bakeryDecorationNotes,
               hint: l10n.bakeryDecorationHint,
               maxLines: 3,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(
@@ -139,9 +139,9 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _deliveryTimeCtrl, label: l10n.bakeryDeliveryTime, hint: 'e.g. 14:00'),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(

@@ -12,9 +12,9 @@ final predefinedCategoriesProvider = StateNotifierProvider<PredefinedCategoriesN
 });
 
 class PredefinedCategoriesNotifier extends StateNotifier<PredefinedCategoriesState> {
-  final PredefinedCatalogApiService _api;
 
   PredefinedCategoriesNotifier(this._api) : super(const PredefinedCategoriesInitial());
+  final PredefinedCatalogApiService _api;
 
   String? _businessTypeFilter;
 
@@ -72,9 +72,9 @@ final predefinedCategoryTreeProvider = StateNotifierProvider<PredefinedCategoryT
 });
 
 class PredefinedCategoryTreeNotifier extends StateNotifier<PredefinedCategoryTreeState> {
-  final PredefinedCatalogApiService _api;
 
   PredefinedCategoryTreeNotifier(this._api) : super(const PredefinedCategoryTreeInitial());
+  final PredefinedCatalogApiService _api;
 
   Future<void> load(String businessTypeId) async {
     state = const PredefinedCategoryTreeLoading();
@@ -100,9 +100,9 @@ final predefinedProductsProvider = StateNotifierProvider<PredefinedProductsNotif
 });
 
 class PredefinedProductsNotifier extends StateNotifier<PredefinedProductsState> {
-  final PredefinedCatalogApiService _api;
 
   PredefinedProductsNotifier(this._api) : super(const PredefinedProductsInitial());
+  final PredefinedCatalogApiService _api;
 
   String? _businessTypeId;
   String? _categoryFilter;
@@ -174,9 +174,9 @@ final cloneProvider = StateNotifierProvider<CloneNotifier, CloneState>((ref) {
 });
 
 class CloneNotifier extends StateNotifier<CloneState> {
-  final PredefinedCatalogApiService _api;
 
   CloneNotifier(this._api) : super(const CloneIdle());
+  final PredefinedCatalogApiService _api;
 
   Future<void> cloneCategory(String categoryId) async {
     state = const CloneInProgress();

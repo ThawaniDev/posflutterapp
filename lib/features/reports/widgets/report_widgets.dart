@@ -29,10 +29,6 @@ String formatPercent(num value) {
 // ─── Date Range Filter Bar ──────────────────────────────────
 
 class ReportDateBar extends StatelessWidget {
-  final DateTimeRange? dateRange;
-  final VoidCallback onPickDate;
-  final VoidCallback onClear;
-  final VoidCallback onRefresh;
 
   const ReportDateBar({
     super.key,
@@ -41,6 +37,10 @@ class ReportDateBar extends StatelessWidget {
     required this.onClear,
     required this.onRefresh,
   });
+  final DateTimeRange? dateRange;
+  final VoidCallback onPickDate;
+  final VoidCallback onClear;
+  final VoidCallback onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,8 @@ class ReportDateBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         children: [
@@ -64,11 +64,11 @@ class ReportDateBar extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.cardDark : AppColors.backgroundLight,
                   borderRadius: AppRadius.borderSm,
-                  border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  border: Border.all(color: AppColors.borderFor(context)),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.primary),
+                    const Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.primary),
                     AppSpacing.gapW8,
                     Text(
                       dateRange != null
@@ -83,7 +83,7 @@ class ReportDateBar extends StatelessWidget {
                         child: Icon(
                           Icons.close_rounded,
                           size: 16,
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     ],
@@ -111,12 +111,6 @@ class ReportDateBar extends StatelessWidget {
 // ─── KPI Metric Card ────────────────────────────────────────
 
 class ReportKpiCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-  final String? subtitle;
-  final bool compact;
 
   const ReportKpiCard({
     super.key,
@@ -127,6 +121,12 @@ class ReportKpiCard extends StatelessWidget {
     this.subtitle,
     this.compact = false,
   });
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  final String? subtitle;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +142,7 @@ class ReportKpiCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +165,7 @@ class ReportKpiCard extends StatelessWidget {
             label,
             style: Theme.of(
               context,
-            ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight, fontSize: 10),
+            ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 10),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -194,7 +194,7 @@ class ReportKpiCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +216,7 @@ class ReportKpiCard extends StatelessWidget {
             label,
             style: Theme.of(
               context,
-            ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
           ),
           if (subtitle != null) ...[
             AppSpacing.gapH2,
@@ -236,11 +236,11 @@ class ReportKpiCard extends StatelessWidget {
 // ─── Section Header ─────────────────────────────────────────
 
 class ReportSectionHeader extends StatelessWidget {
+
+  const ReportSectionHeader({super.key, required this.title, this.icon, this.trailing});
   final String title;
   final IconData? icon;
   final Widget? trailing;
-
-  const ReportSectionHeader({super.key, required this.title, this.icon, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -265,10 +265,10 @@ class ReportSectionHeader extends StatelessWidget {
 // ─── Data Table Card ────────────────────────────────────────
 
 class ReportDataCard extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry? padding;
 
   const ReportDataCard({super.key, required this.child, this.padding});
+  final Widget child;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +280,7 @@ class ReportDataCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: AppRadius.borderLg,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: child,
     );
@@ -290,13 +290,6 @@ class ReportDataCard extends StatelessWidget {
 // ─── Ranked List Item ───────────────────────────────────────
 
 class ReportRankedItem extends StatelessWidget {
-  final int rank;
-  final String title;
-  final String? subtitle;
-  final String trailingValue;
-  final String? trailingSubtitle;
-  final Color? trailingColor;
-  final List<Widget>? badges;
 
   const ReportRankedItem({
     super.key,
@@ -308,6 +301,13 @@ class ReportRankedItem extends StatelessWidget {
     this.trailingColor,
     this.badges,
   });
+  final int rank;
+  final String title;
+  final String? subtitle;
+  final String trailingValue;
+  final String? trailingSubtitle;
+  final Color? trailingColor;
+  final List<Widget>? badges;
 
   @override
   Widget build(BuildContext context) {
@@ -333,7 +333,7 @@ class ReportRankedItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: isTop3 ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  color: isTop3 ? AppColors.primary : (AppColors.mutedFor(context)),
                 ),
               ),
             ),
@@ -354,7 +354,7 @@ class ReportRankedItem extends StatelessWidget {
                     subtitle!,
                     style: Theme.of(
                       context,
-                    ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                   ),
                 if (badges != null && badges!.isNotEmpty) ...[AppSpacing.gapH4, Wrap(spacing: 6, children: badges!)],
               ],
@@ -375,7 +375,7 @@ class ReportRankedItem extends StatelessWidget {
                 Text(
                   trailingSubtitle!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    color: AppColors.mutedFor(context),
                     fontSize: 11,
                   ),
                 ),
@@ -390,10 +390,10 @@ class ReportRankedItem extends StatelessWidget {
 // ─── Small Badge/Tag ────────────────────────────────────────
 
 class ReportBadge extends StatelessWidget {
-  final String label;
-  final Color color;
 
   const ReportBadge({super.key, required this.label, required this.color});
+  final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -411,11 +411,11 @@ class ReportBadge extends StatelessWidget {
 // ─── Comparison Row ─────────────────────────────────────────
 
 class ReportComparisonRow extends StatelessWidget {
+
+  const ReportComparisonRow({super.key, required this.label, required this.todayVal, required this.yesterdayVal});
   final String label;
   final double todayVal;
   final double yesterdayVal;
-
-  const ReportComparisonRow({super.key, required this.label, required this.todayVal, required this.yesterdayVal});
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +438,7 @@ class ReportComparisonRow extends StatelessWidget {
                   l10n.reportTodayVsYesterday(formatCurrency(todayVal), formatCurrency(yesterdayVal)),
                   style: Theme.of(
                     context,
-                  ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),
@@ -467,12 +467,12 @@ class ReportComparisonRow extends StatelessWidget {
 // ─── Horizontal Bar ─────────────────────────────────────────
 
 class ReportBar extends StatelessWidget {
+
+  const ReportBar({super.key, required this.value, required this.maxValue, required this.color, this.height = 8});
   final double value;
   final double maxValue;
   final Color color;
   final double height;
-
-  const ReportBar({super.key, required this.value, required this.maxValue, required this.color, this.height = 8});
 
   @override
   Widget build(BuildContext context) {
@@ -499,11 +499,11 @@ class ReportBar extends StatelessWidget {
 // ─── Stat Row (label: value) ────────────────────────────────
 
 class ReportStatRow extends StatelessWidget {
+
+  const ReportStatRow({super.key, required this.label, required this.value, this.valueColor});
   final String label;
   final String value;
   final Color? valueColor;
-
-  const ReportStatRow({super.key, required this.label, required this.value, this.valueColor});
 
   @override
   Widget build(BuildContext context) {
@@ -533,14 +533,6 @@ class ReportStatRow extends StatelessWidget {
 // ─── Report Page Scaffold ───────────────────────────────────
 
 class ReportPageScaffold extends StatelessWidget {
-  final String title;
-  final Widget? filterPanel;
-  final DateTimeRange? dateRange;
-  final VoidCallback? onPickDate;
-  final VoidCallback? onClearDate;
-  final VoidCallback? onRefresh;
-  final Widget body;
-  final PreferredSizeWidget? bottom;
 
   const ReportPageScaffold({
     super.key,
@@ -553,6 +545,14 @@ class ReportPageScaffold extends StatelessWidget {
     required this.body,
     this.bottom,
   });
+  final String title;
+  final Widget? filterPanel;
+  final DateTimeRange? dateRange;
+  final VoidCallback? onPickDate;
+  final VoidCallback? onClearDate;
+  final VoidCallback? onRefresh;
+  final Widget body;
+  final PreferredSizeWidget? bottom;
 
   @override
   Widget build(BuildContext context) {
@@ -561,7 +561,7 @@ class ReportPageScaffold extends StatelessWidget {
       showSearch: false,
       child: Column(
         children: [
-          if (bottom != null) bottom!,
+          ?bottom,
           if (filterPanel != null)
             filterPanel!
           else if (onPickDate != null && onClearDate != null && onRefresh != null)
@@ -576,9 +576,9 @@ class ReportPageScaffold extends StatelessWidget {
 // ─── KPI Grid (responsive: squares on mobile) ─────────────
 
 class ReportKpiGrid extends StatelessWidget {
-  final List<ReportKpiCard> cards;
 
   const ReportKpiGrid({super.key, required this.cards});
+  final List<ReportKpiCard> cards;
 
   @override
   Widget build(BuildContext context) {

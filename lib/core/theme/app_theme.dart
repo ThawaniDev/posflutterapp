@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'app_colors.dart';
-import 'app_spacing.dart';
-import 'app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 /// Wameed POS Design System — ThemeData Builder
 ///
@@ -156,7 +156,7 @@ class AppTheme {
         labelStyle: AppTypography.labelMedium,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: AppRadius.borderFull),
-        side: BorderSide(color: AppColors.borderLight),
+        side: const BorderSide(color: AppColors.borderLight),
       ),
 
       // ─ Dialog ─
@@ -169,10 +169,10 @@ class AppTheme {
       ),
 
       // ─ Bottom Sheet ─
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: AppColors.surfaceLight,
         surfaceTintColor: Colors.transparent,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl))),
         showDragHandle: true,
         dragHandleColor: AppColors.borderLight,
       ),
@@ -186,19 +186,19 @@ class AppTheme {
       ),
 
       // ─ Tab Bar ─
-      tabBarTheme: TabBarThemeData(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.textMutedLight,
         labelStyle: AppTypography.titleMedium,
         unselectedLabelStyle: AppTypography.bodyMedium,
-        indicator: const UnderlineTabIndicator(borderSide: BorderSide(color: AppColors.primary, width: 2)),
+        indicator: UnderlineTabIndicator(borderSide: BorderSide(color: AppColors.primary, width: 2)),
       ),
 
       // ─ Navigation Rail (sidebar on narrow screens) ─
       navigationRailTheme: NavigationRailThemeData(
         backgroundColor: AppColors.surfaceLight,
         selectedIconTheme: const IconThemeData(color: AppColors.primary),
-        unselectedIconTheme: IconThemeData(color: AppColors.textMutedLight),
+        unselectedIconTheme: const IconThemeData(color: AppColors.textMutedLight),
         selectedLabelTextStyle: AppTypography.labelMedium.copyWith(color: AppColors.primary),
         unselectedLabelTextStyle: AppTypography.labelMedium.copyWith(color: AppColors.textMutedLight),
       ),
@@ -443,7 +443,7 @@ class AppTheme {
           if (states.contains(WidgetState.selected)) {
             return const IconThemeData(color: AppColors.primary, size: 22);
           }
-          return IconThemeData(color: AppColors.textMutedLight, size: 22);
+          return const IconThemeData(color: AppColors.textMutedLight, size: 22);
         }),
       ),
 
@@ -593,18 +593,18 @@ class AppTheme {
       ),
 
       // ─ Bottom Sheet ─
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: AppColors.cardDark,
         surfaceTintColor: Colors.transparent,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl))),
         showDragHandle: true,
         dragHandleColor: AppColors.borderDark,
       ),
 
       // ─ Snackbar ─
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.surfaceLight,
-        contentTextStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryLight),
+        backgroundColor: AppColors.surfaceDark,
+        contentTextStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
         shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
         behavior: SnackBarBehavior.floating,
       ),
@@ -829,7 +829,7 @@ class AppTheme {
           if (states.contains(WidgetState.selected)) {
             return const IconThemeData(color: AppColors.primary, size: 22);
           }
-          return IconThemeData(color: AppColors.textMutedDark, size: 22);
+          return const IconThemeData(color: AppColors.textMutedDark, size: 22);
         }),
       ),
 

@@ -79,11 +79,11 @@ class MenuSyncPage extends ConsumerWidget {
 }
 
 class _SyncTriggerSection extends StatefulWidget {
+
+  const _SyncTriggerSection({required this.syncState, required this.configsState, required this.onSync});
   final DeliveryMenuSyncState syncState;
   final DeliveryConfigsState configsState;
   final void Function(String? platform) onSync;
-
-  const _SyncTriggerSection({required this.syncState, required this.configsState, required this.onSync});
 
   @override
   State<_SyncTriggerSection> createState() => _SyncTriggerSectionState();
@@ -114,14 +114,14 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
           children: [
             Row(
               children: [
-                Icon(Icons.sync, color: AppColors.info),
+                const Icon(Icons.sync, color: AppColors.info),
                 AppSpacing.gapW12,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(l10n.deliveryTriggerSync, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text(l10n.deliveryTriggerSyncDesc, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                      Text(l10n.deliveryTriggerSyncDesc, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                     ],
                   ),
                 ),
@@ -164,12 +164,12 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
                 decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
-                    Icon(Icons.check_circle, color: AppColors.success, size: 18),
+                    const Icon(Icons.check_circle, color: AppColors.success, size: 18),
                     AppSpacing.gapW8,
                     Expanded(
                       child: Text(
                         (widget.syncState as DeliveryMenuSyncSuccess).message,
-                        style: TextStyle(fontSize: 12, color: AppColors.success),
+                        style: const TextStyle(fontSize: 12, color: AppColors.success),
                       ),
                     ),
                   ],
@@ -183,12 +183,12 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
                 decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
-                    Icon(Icons.error_outline, color: AppColors.error, size: 18),
+                    const Icon(Icons.error_outline, color: AppColors.error, size: 18),
                     AppSpacing.gapW8,
                     Expanded(
                       child: Text(
                         (widget.syncState as DeliveryMenuSyncError).message,
-                        style: TextStyle(fontSize: 12, color: AppColors.error),
+                        style: const TextStyle(fontSize: 12, color: AppColors.error),
                       ),
                     ),
                   ],
@@ -198,7 +198,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
 
             if (enabledPlatforms.isEmpty) ...[
               AppSpacing.gapH12,
-              Text(l10n.deliveryNoPlatformsForSync, style: TextStyle(fontSize: 12, color: AppColors.warning)),
+              Text(l10n.deliveryNoPlatformsForSync, style: const TextStyle(fontSize: 12, color: AppColors.warning)),
             ],
           ],
         ),

@@ -16,13 +16,6 @@ class OrdersLoading extends OrdersState {
 }
 
 class OrdersLoaded extends OrdersState {
-  final List<Order> orders;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? statusFilter;
-  final String? searchQuery;
 
   const OrdersLoaded({
     required this.orders,
@@ -33,6 +26,13 @@ class OrdersLoaded extends OrdersState {
     this.statusFilter,
     this.searchQuery,
   });
+  final List<Order> orders;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? statusFilter;
+  final String? searchQuery;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -56,8 +56,8 @@ class OrdersLoaded extends OrdersState {
 }
 
 class OrdersError extends OrdersState {
-  final String message;
   const OrdersError({required this.message});
+  final String message;
 }
 
 // ─── Returns State ──────────────────────────────────────────────
@@ -75,11 +75,6 @@ class ReturnsLoading extends ReturnsState {
 }
 
 class ReturnsLoaded extends ReturnsState {
-  final List<SaleReturn> returns;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const ReturnsLoaded({
     required this.returns,
@@ -88,6 +83,11 @@ class ReturnsLoaded extends ReturnsState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<SaleReturn> returns;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -101,6 +101,6 @@ class ReturnsLoaded extends ReturnsState {
 }
 
 class ReturnsError extends ReturnsState {
-  final String message;
   const ReturnsError({required this.message});
+  final String message;
 }

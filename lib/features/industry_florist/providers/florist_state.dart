@@ -15,11 +15,11 @@ class FloristLoading extends FloristState {
 }
 
 class FloristLoaded extends FloristState {
+
+  const FloristLoaded({required this.arrangements, required this.freshnessLogs, required this.subscriptions});
   final List<FlowerArrangement> arrangements;
   final List<FlowerFreshnessLog> freshnessLogs;
   final List<FlowerSubscription> subscriptions;
-
-  const FloristLoaded({required this.arrangements, required this.freshnessLogs, required this.subscriptions});
 
   FloristLoaded copyWith({
     List<FlowerArrangement>? arrangements,
@@ -33,6 +33,6 @@ class FloristLoaded extends FloristState {
 }
 
 class FloristError extends FloristState {
-  final String message;
   const FloristError({required this.message});
+  final String message;
 }

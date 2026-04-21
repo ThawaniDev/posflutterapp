@@ -227,7 +227,7 @@ void main() {
     });
 
     test('PromotionsLoaded holds data and pagination', () {
-      final promos = [Promotion(id: 'p1', organizationId: 'o1', name: 'Sale', type: PromotionType.percentage)];
+      final promos = [const Promotion(id: 'p1', organizationId: 'o1', name: 'Sale', type: PromotionType.percentage)];
       final state = PromotionsLoaded(promotions: promos, total: 10, currentPage: 1, lastPage: 2, perPage: 20);
       expect(state.promotions, hasLength(1));
       expect(state.total, 10);
@@ -235,12 +235,12 @@ void main() {
     });
 
     test('PromotionsLoaded hasMore false on last page', () {
-      final state = PromotionsLoaded(promotions: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = PromotionsLoaded(promotions: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
     });
 
     test('PromotionsLoaded copyWith', () {
-      final state = PromotionsLoaded(promotions: [], total: 100, currentPage: 1, lastPage: 5, perPage: 20, searchQuery: 'test');
+      const state = PromotionsLoaded(promotions: [], total: 100, currentPage: 1, lastPage: 5, perPage: 20, searchQuery: 'test');
       final updated = state.copyWith(currentPage: 3, total: 50);
       expect(updated.currentPage, 3);
       expect(updated.total, 50);
@@ -269,8 +269,8 @@ void main() {
     });
 
     test('loaded state holds promotion', () {
-      final promo = Promotion(id: 'p1', organizationId: 'o1', name: 'Deal', type: PromotionType.bogo);
-      final state = PromotionDetailLoaded(promotion: promo);
+      const promo = Promotion(id: 'p1', organizationId: 'o1', name: 'Deal', type: PromotionType.bogo);
+      const state = PromotionDetailLoaded(promotion: promo);
       expect(state.promotion.name, 'Deal');
       expect(state.promotion.type, PromotionType.bogo);
     });

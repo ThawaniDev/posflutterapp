@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 
 class AIScoreGauge extends StatelessWidget {
+
+  const AIScoreGauge({super.key, required this.score, this.maxScore = 100, this.label = '', this.size = 120});
   final double score;
   final double maxScore;
   final String label;
   final double size;
-
-  const AIScoreGauge({super.key, required this.score, this.maxScore = 100, this.label = '', this.size = 120});
 
   Color get _color {
     final pct = score / maxScore;

@@ -1,9 +1,4 @@
 class BusinessTypeCategoryTemplate {
-  final String id;
-  final String businessTypeId;
-  final String categoryName;
-  final String categoryNameAr;
-  final int? sortOrder;
 
   const BusinessTypeCategoryTemplate({
     required this.id,
@@ -22,6 +17,11 @@ class BusinessTypeCategoryTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String categoryName;
+  final String categoryNameAr;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

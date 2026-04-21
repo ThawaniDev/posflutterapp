@@ -1,13 +1,4 @@
 class ModifierOption {
-  final String id;
-  final String? modifierGroupId;
-  final String name;
-  final String? nameAr;
-  final double? priceAdjustment;
-  final bool? isDefault;
-  final int? sortOrder;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const ModifierOption({
     required this.id,
@@ -34,6 +25,15 @@ class ModifierOption {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? modifierGroupId;
+  final String name;
+  final String? nameAr;
+  final double? priceAdjustment;
+  final bool? isDefault;
+  final int? sortOrder;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

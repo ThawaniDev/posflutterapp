@@ -1,5 +1,5 @@
-import '../models/zatca_certificate.dart';
-import '../models/zatca_invoice.dart';
+import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
 
 // ─── Enrollment State ──────────────────────────────────────
 sealed class ZatcaEnrollmentState {
@@ -15,13 +15,13 @@ final class ZatcaEnrollmentLoading extends ZatcaEnrollmentState {
 }
 
 final class ZatcaEnrollmentSuccess extends ZatcaEnrollmentState {
-  final Map<String, dynamic> certificate;
   const ZatcaEnrollmentSuccess(this.certificate);
+  final Map<String, dynamic> certificate;
 }
 
 final class ZatcaEnrollmentError extends ZatcaEnrollmentState {
-  final String message;
   const ZatcaEnrollmentError(this.message);
+  final String message;
 }
 
 // ─── Invoice List State ────────────────────────────────────
@@ -38,21 +38,21 @@ final class ZatcaInvoiceListLoading extends ZatcaInvoiceListState {
 }
 
 final class ZatcaInvoiceListLoaded extends ZatcaInvoiceListState {
-  final List<ZatcaInvoice> invoices;
-  final int currentPage;
-  final int lastPage;
-  final int total;
   const ZatcaInvoiceListLoaded({
     required this.invoices,
     required this.currentPage,
     required this.lastPage,
     required this.total,
   });
+  final List<ZatcaInvoice> invoices;
+  final int currentPage;
+  final int lastPage;
+  final int total;
 }
 
 final class ZatcaInvoiceListError extends ZatcaInvoiceListState {
-  final String message;
   const ZatcaInvoiceListError(this.message);
+  final String message;
 }
 
 // ─── Compliance Summary State ──────────────────────────────
@@ -69,12 +69,6 @@ final class ZatcaComplianceSummaryLoading extends ZatcaComplianceSummaryState {
 }
 
 final class ZatcaComplianceSummaryLoaded extends ZatcaComplianceSummaryState {
-  final int totalInvoices;
-  final int accepted;
-  final int rejected;
-  final int pending;
-  final double successRate;
-  final ZatcaCertificate? certificate;
 
   const ZatcaComplianceSummaryLoaded({
     required this.totalInvoices,
@@ -84,11 +78,17 @@ final class ZatcaComplianceSummaryLoaded extends ZatcaComplianceSummaryState {
     required this.successRate,
     this.certificate,
   });
+  final int totalInvoices;
+  final int accepted;
+  final int rejected;
+  final int pending;
+  final double successRate;
+  final ZatcaCertificate? certificate;
 }
 
 final class ZatcaComplianceSummaryError extends ZatcaComplianceSummaryState {
-  final String message;
   const ZatcaComplianceSummaryError(this.message);
+  final String message;
 }
 
 // ─── VAT Report State ──────────────────────────────────────
@@ -105,10 +105,6 @@ final class ZatcaVatReportLoading extends ZatcaVatReportState {
 }
 
 final class ZatcaVatReportLoaded extends ZatcaVatReportState {
-  final Map<String, dynamic> standardInvoices;
-  final Map<String, dynamic> simplifiedInvoices;
-  final double totalVatCollected;
-  final double totalAmount;
 
   const ZatcaVatReportLoaded({
     required this.standardInvoices,
@@ -116,9 +112,13 @@ final class ZatcaVatReportLoaded extends ZatcaVatReportState {
     required this.totalVatCollected,
     required this.totalAmount,
   });
+  final Map<String, dynamic> standardInvoices;
+  final Map<String, dynamic> simplifiedInvoices;
+  final double totalVatCollected;
+  final double totalAmount;
 }
 
 final class ZatcaVatReportError extends ZatcaVatReportState {
-  final String message;
   const ZatcaVatReportError(this.message);
+  final String message;
 }

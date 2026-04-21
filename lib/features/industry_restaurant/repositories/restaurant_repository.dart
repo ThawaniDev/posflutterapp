@@ -10,8 +10,8 @@ final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
 });
 
 class RestaurantRepository {
-  final RestaurantApiService _apiService;
   RestaurantRepository({required RestaurantApiService apiService}) : _apiService = apiService;
+  final RestaurantApiService _apiService;
 
   Future<List<RestaurantTable>> listTables({int perPage = 50}) => _apiService.listTables(perPage: perPage);
   Future<RestaurantTable> createTable(Map<String, dynamic> data) => _apiService.createTable(data);

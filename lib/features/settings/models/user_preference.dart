@@ -3,12 +3,6 @@ import 'package:wameedpos/features/pos_customization/enums/handedness.dart';
 import 'package:wameedpos/features/auth/enums/user_theme.dart';
 
 class UserPreference {
-  final String id;
-  final String userId;
-  final Handedness? posHandedness;
-  final FontSize? fontSize;
-  final UserTheme? theme;
-  final String? posLayoutId;
 
   const UserPreference({required this.id, required this.userId, this.posHandedness, this.fontSize, this.theme, this.posLayoutId});
 
@@ -22,6 +16,12 @@ class UserPreference {
       posLayoutId: json['pos_layout_id'] as String?,
     );
   }
+  final String id;
+  final String userId;
+  final Handedness? posHandedness;
+  final FontSize? fontSize;
+  final UserTheme? theme;
+  final String? posLayoutId;
 
   Map<String, dynamic> toJson() {
     return {

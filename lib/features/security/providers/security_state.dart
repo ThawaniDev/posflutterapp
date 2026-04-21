@@ -20,13 +20,13 @@ final class SecurityPolicyLoading extends SecurityPolicyState {
 }
 
 final class SecurityPolicyLoaded extends SecurityPolicyState {
-  final SecurityPolicy policy;
   const SecurityPolicyLoaded(this.policy);
+  final SecurityPolicy policy;
 }
 
 final class SecurityPolicyError extends SecurityPolicyState {
-  final String message;
   const SecurityPolicyError(this.message);
+  final String message;
 }
 
 // ─── AuditLog List State ────────────────────────────────────
@@ -44,13 +44,13 @@ final class AuditLogListLoading extends AuditLogListState {
 }
 
 final class AuditLogListLoaded extends AuditLogListState {
-  final List<SecurityAuditLog> logs;
   const AuditLogListLoaded(this.logs);
+  final List<SecurityAuditLog> logs;
 }
 
 final class AuditLogListError extends AuditLogListState {
-  final String message;
   const AuditLogListError(this.message);
+  final String message;
 }
 
 // ─── Device List State ──────────────────────────────────────
@@ -68,13 +68,13 @@ final class DeviceListLoading extends DeviceListState {
 }
 
 final class DeviceListLoaded extends DeviceListState {
-  final List<DeviceRegistration> devices;
   const DeviceListLoaded(this.devices);
+  final List<DeviceRegistration> devices;
 }
 
 final class DeviceListError extends DeviceListState {
-  final String message;
   const DeviceListError(this.message);
+  final String message;
 }
 
 // ─── Login Attempts State ───────────────────────────────────
@@ -92,13 +92,13 @@ final class LoginAttemptsLoading extends LoginAttemptsState {
 }
 
 final class LoginAttemptsLoaded extends LoginAttemptsState {
-  final List<LoginAttempt> attempts;
   const LoginAttemptsLoaded(this.attempts);
+  final List<LoginAttempt> attempts;
 }
 
 final class LoginAttemptsError extends LoginAttemptsState {
-  final String message;
   const LoginAttemptsError(this.message);
+  final String message;
 }
 
 // ─── Security Overview State ────────────────────────────────
@@ -116,13 +116,13 @@ final class SecurityOverviewLoading extends SecurityOverviewState {
 }
 
 final class SecurityOverviewLoaded extends SecurityOverviewState {
-  final Map<String, dynamic> overview;
   const SecurityOverviewLoaded(this.overview);
+  final Map<String, dynamic> overview;
 }
 
 final class SecurityOverviewError extends SecurityOverviewState {
-  final String message;
   const SecurityOverviewError(this.message);
+  final String message;
 }
 
 // ─── Sessions State ─────────────────────────────────────────
@@ -140,13 +140,13 @@ final class SessionListLoading extends SessionListState {
 }
 
 final class SessionListLoaded extends SessionListState {
-  final List<SecuritySession> sessions;
   const SessionListLoaded(this.sessions);
+  final List<SecuritySession> sessions;
 }
 
 final class SessionListError extends SessionListState {
-  final String message;
   const SessionListError(this.message);
+  final String message;
 }
 
 // ─── Incidents State ────────────────────────────────────────
@@ -164,13 +164,13 @@ final class IncidentListLoading extends IncidentListState {
 }
 
 final class IncidentListLoaded extends IncidentListState {
-  final List<SecurityIncident> incidents;
   const IncidentListLoaded(this.incidents);
+  final List<SecurityIncident> incidents;
 }
 
 final class IncidentListError extends IncidentListState {
-  final String message;
   const IncidentListError(this.message);
+  final String message;
 }
 
 // ─── Security Action State ──────────────────────────────────
@@ -188,11 +188,11 @@ final class SecurityActionLoading extends SecurityActionState {
 }
 
 final class SecurityActionSuccess extends SecurityActionState {
-  final String message;
   const SecurityActionSuccess(this.message);
+  final String message;
 }
 
 final class SecurityActionError extends SecurityActionState {
-  final String message;
   const SecurityActionError(this.message);
+  final String message;
 }

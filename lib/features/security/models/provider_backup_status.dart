@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/branches/enums/provider_backup_status_enum.dart';
 
 class ProviderBackupStatus {
-  final String id;
-  final String storeId;
-  final String terminalId;
-  final DateTime? lastSuccessfulSync;
-  final DateTime? lastCloudBackup;
-  final int? storageUsedBytes;
-  final ProviderBackupStatusEnum? status;
-  final DateTime? updatedAt;
 
   const ProviderBackupStatus({
     required this.id,
@@ -33,6 +25,14 @@ class ProviderBackupStatus {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String terminalId;
+  final DateTime? lastSuccessfulSync;
+  final DateTime? lastCloudBackup;
+  final int? storageUsedBytes;
+  final ProviderBackupStatusEnum? status;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

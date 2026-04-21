@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/production_schedule.dart';
-import '../providers/bakery_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_bakery/models/production_schedule.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductionScheduleFormPage extends ConsumerStatefulWidget {
-  final ProductionSchedule? schedule;
   const ProductionScheduleFormPage({super.key, this.schedule});
+  final ProductionSchedule? schedule;
 
   @override
   ConsumerState<ProductionScheduleFormPage> createState() => _ProductionScheduleFormPageState();
 }
 
 class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -91,20 +90,22 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
   @override
   Widget build(BuildContext context) {
     return PosFormPage(
-      title: _isEditing ? 'Edit Schedule' : 'New Production Schedule',
+      title: _isEditing ? AppLocalizations.of(context)!.bakeryEditSchedule : AppLocalizations.of(context)!.bakeryNewSchedule,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Schedule' : 'Create Schedule',
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing
+            ? AppLocalizations.of(context)!.bakeryUpdateSchedule
+            : AppLocalizations.of(context)!.bakeryCreateSchedule,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _recipeIdCtrl, label: l10n.bakeryRecipeId, hint: l10n.bakerySelectRecipe),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(
@@ -116,7 +117,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -139,7 +140,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
               ],
             ),
             if (_isEditing) ...[
-              SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -162,7 +163,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                 ],
               ),
             ],
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: l10n.posNotes, hint: l10n.bakeryAdditionalNotes, maxLines: 3),
           ],
         ),

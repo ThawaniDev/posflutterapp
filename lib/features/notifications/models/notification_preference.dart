@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
 
 class NotificationPreference {
-  final String id;
-  final String userId;
-  final String eventKey;
-  final NotificationChannel channel;
-  final bool? isEnabled;
-  final Map<String, List<String>>? perCategoryChannels;
-  final bool? soundEnabled;
-  final String? emailDigest;
-  final String? quietHoursStart;
-  final String? quietHoursEnd;
-  final Map<String, dynamic>? preferences;
 
   const NotificationPreference({
     required this.id,
@@ -48,6 +37,17 @@ class NotificationPreference {
       preferences: json['preferences'] != null ? Map<String, dynamic>.from(json['preferences'] as Map) : null,
     );
   }
+  final String id;
+  final String userId;
+  final String eventKey;
+  final NotificationChannel channel;
+  final bool? isEnabled;
+  final Map<String, List<String>>? perCategoryChannels;
+  final bool? soundEnabled;
+  final String? emailDigest;
+  final String? quietHoursStart;
+  final String? quietHoursEnd;
+  final Map<String, dynamic>? preferences;
 
   Map<String, dynamic> toJson() {
     return {

@@ -59,7 +59,7 @@ void main() {
     });
 
     test('toJson serializes back to JSON including permissions', () {
-      final role = Role(
+      const role = Role(
         id: 3,
         name: 'manager',
         displayName: 'Branch Manager',
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('toJson round-trip preserves data', () {
-      final original = Role(
+      const original = Role(
         id: 7,
         name: 'test_role',
         displayName: 'Test Role',
@@ -128,7 +128,7 @@ void main() {
     });
 
     test('toJson serializes correctly', () {
-      final perm = Permission(id: 10, name: 'catalog.edit', displayName: 'Edit Catalog', module: 'catalog', requiresPin: false);
+      const perm = Permission(id: 10, name: 'catalog.edit', displayName: 'Edit Catalog', module: 'catalog', requiresPin: false);
 
       final json = perm.toJson();
       expect(json['id'], 10);

@@ -15,13 +15,6 @@ class AccountingConnectionLoading extends AccountingConnectionState {
 }
 
 class AccountingConnectionLoaded extends AccountingConnectionState {
-  final bool connected;
-  final String? provider;
-  final String? companyName;
-  final String? connectedAt;
-  final String? lastSyncAt;
-  final String? tokenExpiresAt;
-  final String health;
 
   const AccountingConnectionLoaded({
     required this.connected,
@@ -32,11 +25,18 @@ class AccountingConnectionLoaded extends AccountingConnectionState {
     this.tokenExpiresAt,
     required this.health,
   });
+  final bool connected;
+  final String? provider;
+  final String? companyName;
+  final String? connectedAt;
+  final String? lastSyncAt;
+  final String? tokenExpiresAt;
+  final String health;
 }
 
 class AccountingConnectionError extends AccountingConnectionState {
-  final String message;
   const AccountingConnectionError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -56,14 +56,14 @@ class AccountingActionLoading extends AccountingActionState {
 }
 
 class AccountingActionSuccess extends AccountingActionState {
+  const AccountingActionSuccess(this.message, {this.data});
   final String message;
   final Map<String, dynamic>? data;
-  const AccountingActionSuccess(this.message, {this.data});
 }
 
 class AccountingActionError extends AccountingActionState {
-  final String message;
   const AccountingActionError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -83,15 +83,15 @@ class AccountMappingLoading extends AccountMappingState {
 }
 
 class AccountMappingLoaded extends AccountMappingState {
-  final List<Map<String, dynamic>> mappings;
-  final Map<String, dynamic> posAccountKeys;
 
   const AccountMappingLoaded({required this.mappings, required this.posAccountKeys});
+  final List<Map<String, dynamic>> mappings;
+  final Map<String, dynamic> posAccountKeys;
 }
 
 class AccountMappingError extends AccountMappingState {
-  final String message;
   const AccountMappingError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -111,14 +111,14 @@ class AccountingExportsLoading extends AccountingExportsState {
 }
 
 class AccountingExportsLoaded extends AccountingExportsState {
-  final List<Map<String, dynamic>> exports;
 
   const AccountingExportsLoaded(this.exports);
+  final List<Map<String, dynamic>> exports;
 }
 
 class AccountingExportsError extends AccountingExportsState {
-  final String message;
   const AccountingExportsError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -138,16 +138,6 @@ class AutoExportConfigLoading extends AutoExportConfigState {
 }
 
 class AutoExportConfigLoaded extends AutoExportConfigState {
-  final bool enabled;
-  final String frequency;
-  final int? dayOfWeek;
-  final int? dayOfMonth;
-  final String time;
-  final List<dynamic> exportTypes;
-  final String? notifyEmail;
-  final bool retryOnFailure;
-  final String? lastRunAt;
-  final String? nextRunAt;
 
   const AutoExportConfigLoaded({
     required this.enabled,
@@ -161,9 +151,19 @@ class AutoExportConfigLoaded extends AutoExportConfigState {
     this.lastRunAt,
     this.nextRunAt,
   });
+  final bool enabled;
+  final String frequency;
+  final int? dayOfWeek;
+  final int? dayOfMonth;
+  final String time;
+  final List<dynamic> exportTypes;
+  final String? notifyEmail;
+  final bool retryOnFailure;
+  final String? lastRunAt;
+  final String? nextRunAt;
 }
 
 class AutoExportConfigError extends AutoExportConfigState {
-  final String message;
   const AutoExportConfigError(this.message);
+  final String message;
 }

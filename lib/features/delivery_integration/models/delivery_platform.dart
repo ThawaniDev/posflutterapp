@@ -1,23 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_auth_method.dart';
 
 class DeliveryPlatform {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String slug;
-  final String? logoUrl;
-  final String? description;
-  final String? descriptionAr;
-  final DeliveryAuthMethod authMethod;
-  final String? apiType;
-  final String? baseUrl;
-  final String? documentationUrl;
-  final List<String>? supportedCountries;
-  final double? defaultCommissionPercent;
-  final bool isActive;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const DeliveryPlatform({
     required this.id,
@@ -62,6 +45,23 @@ class DeliveryPlatform {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String slug;
+  final String? logoUrl;
+  final String? description;
+  final String? descriptionAr;
+  final DeliveryAuthMethod authMethod;
+  final String? apiType;
+  final String? baseUrl;
+  final String? documentationUrl;
+  final List<String>? supportedCountries;
+  final double? defaultCommissionPercent;
+  final bool isActive;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -10,9 +10,9 @@ import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderNotesPage extends ConsumerStatefulWidget {
-  final String organizationId;
 
   const ProviderNotesPage({super.key, required this.organizationId});
+  final String organizationId;
 
   @override
   ConsumerState<ProviderNotesPage> createState() => _ProviderNotesPageState();
@@ -68,8 +68,8 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
           Container(
             padding: AppSpacing.paddingAll16,
             decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              border: Border(bottom: BorderSide(color: AppColors.borderLight)),
+              color: AppColors.surfaceFor(context),
+              border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -125,7 +125,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
       elevation: 0,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -138,7 +138,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
                   backgroundColor: AppColors.primary10,
                   child: Text(
                     adminName.isNotEmpty ? adminName[0].toUpperCase() : 'A',
-                    style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 12),
+                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ),
                 AppSpacing.gapW8,
@@ -146,7 +146,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
                   child: Text(adminName, style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
                 ),
                 if (createdAt.isNotEmpty)
-                  Text(createdAt, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight, fontSize: 11)),
+                  Text(createdAt, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11)),
               ],
             ),
             AppSpacing.gapH12,

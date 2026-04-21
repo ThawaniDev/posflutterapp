@@ -22,13 +22,6 @@ enum ConflictResolutionStrategy {
 
 /// A detected sync conflict between local and cloud data.
 class SyncConflict {
-  final String id;
-  final String table;
-  final String recordId;
-  final Map<String, dynamic> localData;
-  final Map<String, dynamic> cloudData;
-  final DateTime detectedAt;
-  final ConflictResolutionStrategy? suggestedStrategy;
 
   const SyncConflict({
     required this.id,
@@ -50,15 +43,17 @@ class SyncConflict {
       detectedAt: json['detected_at'] != null ? DateTime.parse(json['detected_at'] as String) : DateTime.now(),
     );
   }
+  final String id;
+  final String table;
+  final String recordId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> cloudData;
+  final DateTime detectedAt;
+  final ConflictResolutionStrategy? suggestedStrategy;
 }
 
 /// Result of a conflict resolution attempt.
 class ConflictResolution {
-  final String conflictId;
-  final bool resolved;
-  final ConflictResolutionStrategy strategy;
-  final Map<String, dynamic>? mergedData;
-  final String? error;
 
   const ConflictResolution({
     required this.conflictId,
@@ -67,6 +62,11 @@ class ConflictResolution {
     this.mergedData,
     this.error,
   });
+  final String conflictId;
+  final bool resolved;
+  final ConflictResolutionStrategy strategy;
+  final Map<String, dynamic>? mergedData;
+  final String? error;
 }
 
 /// Handles sync conflict detection and resolution.

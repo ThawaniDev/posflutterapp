@@ -187,10 +187,10 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
 }
 
 class _ErrorCard extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
 
   const _ErrorCard({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {

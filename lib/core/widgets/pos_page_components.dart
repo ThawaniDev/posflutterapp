@@ -385,7 +385,7 @@ class PosFormCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (action != null) action!,
+                  ?action,
                 ],
               ),
             ),
@@ -452,7 +452,7 @@ class _PosTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedColor = AppColors.primary;
+    const selectedColor = AppColors.primary;
     final unselectedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     final color = isSelected ? selectedColor : unselectedColor;
 

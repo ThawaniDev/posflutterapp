@@ -20,16 +20,16 @@ class LeaderboardLoading extends LeaderboardState {
 }
 
 class LeaderboardLoaded extends LeaderboardState {
+  const LeaderboardLoaded({required this.snapshots, this.selectedDate, this.periodType, this.sortBy});
   final List<CashierPerformanceSnapshot> snapshots;
   final String? selectedDate;
   final String? periodType;
   final String? sortBy;
-  const LeaderboardLoaded({required this.snapshots, this.selectedDate, this.periodType, this.sortBy});
 }
 
 class LeaderboardError extends LeaderboardState {
-  final String message;
   const LeaderboardError({required this.message});
+  final String message;
 }
 
 // ─── Cashier History State ──────────────────────────────────────
@@ -47,14 +47,14 @@ class CashierHistoryLoading extends CashierHistoryState {
 }
 
 class CashierHistoryLoaded extends CashierHistoryState {
+  const CashierHistoryLoaded({required this.history, required this.cashierId});
   final List<CashierPerformanceSnapshot> history;
   final String cashierId;
-  const CashierHistoryLoaded({required this.history, required this.cashierId});
 }
 
 class CashierHistoryError extends CashierHistoryState {
-  final String message;
   const CashierHistoryError({required this.message});
+  final String message;
 }
 
 // ─── Badges State ───────────────────────────────────────────────
@@ -72,13 +72,13 @@ class BadgesLoading extends BadgesState {
 }
 
 class BadgesLoaded extends BadgesState {
-  final List<CashierBadge> badges;
   const BadgesLoaded({required this.badges});
+  final List<CashierBadge> badges;
 }
 
 class BadgesError extends BadgesState {
-  final String message;
   const BadgesError({required this.message});
+  final String message;
 }
 
 // ─── Badge Awards State ─────────────────────────────────────────
@@ -96,13 +96,13 @@ class BadgeAwardsLoading extends BadgeAwardsState {
 }
 
 class BadgeAwardsLoaded extends BadgeAwardsState {
-  final List<CashierBadgeAward> awards;
   const BadgeAwardsLoaded({required this.awards});
+  final List<CashierBadgeAward> awards;
 }
 
 class BadgeAwardsError extends BadgeAwardsState {
-  final String message;
   const BadgeAwardsError({required this.message});
+  final String message;
 }
 
 // ─── Anomalies State ────────────────────────────────────────────
@@ -120,15 +120,15 @@ class AnomaliesLoading extends AnomaliesState {
 }
 
 class AnomaliesLoaded extends AnomaliesState {
+  const AnomaliesLoaded({required this.anomalies, this.severityFilter, this.cashierFilter});
   final List<CashierAnomaly> anomalies;
   final String? severityFilter;
   final String? cashierFilter;
-  const AnomaliesLoaded({required this.anomalies, this.severityFilter, this.cashierFilter});
 }
 
 class AnomaliesError extends AnomaliesState {
-  final String message;
   const AnomaliesError({required this.message});
+  final String message;
 }
 
 // ─── Shift Reports State ────────────────────────────────────────
@@ -146,13 +146,13 @@ class ShiftReportsLoading extends ShiftReportsState {
 }
 
 class ShiftReportsLoaded extends ShiftReportsState {
-  final List<CashierShiftReport> reports;
   const ShiftReportsLoaded({required this.reports});
+  final List<CashierShiftReport> reports;
 }
 
 class ShiftReportsError extends ShiftReportsState {
-  final String message;
   const ShiftReportsError({required this.message});
+  final String message;
 }
 
 // ─── Settings State ─────────────────────────────────────────────
@@ -170,11 +170,11 @@ class GamificationSettingsLoading extends GamificationSettingsState {
 }
 
 class GamificationSettingsLoaded extends GamificationSettingsState {
-  final GamificationSettings settings;
   const GamificationSettingsLoaded({required this.settings});
+  final GamificationSettings settings;
 }
 
 class GamificationSettingsError extends GamificationSettingsState {
-  final String message;
   const GamificationSettingsError({required this.message});
+  final String message;
 }

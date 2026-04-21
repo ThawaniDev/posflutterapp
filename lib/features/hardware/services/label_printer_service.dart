@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 
 /// Label size in millimeters and dots
 class LabelSize {
+
+  const LabelSize({required this.widthMm, required this.heightMm, this.dpi = 203});
   final double widthMm;
   final double heightMm;
   final int dpi;
-
-  const LabelSize({required this.widthMm, required this.heightMm, this.dpi = 203});
 
   int get widthDots => (widthMm * dpi / 25.4).round();
   int get heightDots => (heightMm * dpi / 25.4).round();
@@ -21,18 +21,7 @@ class LabelSize {
 }
 
 /// Label printer configuration
-class LabelPrinterConfig {
-  final String connectionType; // usb, network
-  final String? ipAddress;
-  final int port;
-  final String? usbDevicePath;
-  final String language; // zpl, tspl, escpos
-  final int dpi;
-  final double labelWidthMm;
-  final double labelHeightMm;
-  final double gapMm;
-  final int darkness; // 1-15 for ZPL, 1-15 for TSPL
-  final int speed; // print speed 1-14
+class LabelPrinterConfig { // print speed 1-14
 
   const LabelPrinterConfig({
     this.connectionType = 'network',
@@ -63,6 +52,17 @@ class LabelPrinterConfig {
       speed: json['speed'] as int? ?? 4,
     );
   }
+  final String connectionType; // usb, network
+  final String? ipAddress;
+  final int port;
+  final String? usbDevicePath;
+  final String language; // zpl, tspl, escpos
+  final int dpi;
+  final double labelWidthMm;
+  final double labelHeightMm;
+  final double gapMm;
+  final int darkness; // 1-15 for ZPL, 1-15 for TSPL
+  final int speed;
 
   Map<String, dynamic> toJson() => {
     'connection_type': connectionType,
@@ -83,15 +83,6 @@ class LabelPrinterConfig {
 
 /// Label data for a product label
 class ProductLabelData {
-  final String nameAr;
-  final String nameEn;
-  final String barcode;
-  final double price;
-  final String currency;
-  final double? originalPrice;
-  final String? sku;
-  final String? expiryDate;
-  final String? weight;
 
   const ProductLabelData({
     required this.nameAr,
@@ -104,6 +95,15 @@ class ProductLabelData {
     this.expiryDate,
     this.weight,
   });
+  final String nameAr;
+  final String nameEn;
+  final String barcode;
+  final double price;
+  final String currency;
+  final double? originalPrice;
+  final String? sku;
+  final String? expiryDate;
+  final String? weight;
 }
 
 /// Label printer service — generates ZPL/TSPL/ESC/POS label commands and prints
@@ -235,7 +235,7 @@ class LabelPrinterService {
 
   /// Print a test label
   Future<bool> printTestLabel() async {
-    final testData = ProductLabelData(
+    const testData = ProductLabelData(
       nameAr: 'اختبار ملصق',
       nameEn: 'Test Label',
       barcode: '1234567890128',

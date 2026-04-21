@@ -5,7 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
@@ -176,12 +175,43 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   void _handleBarcodeScan(String barcode) async {
     final product = await ref.read(posProductsProvider.notifier).findByBarcode(barcode);
     if (product != null) {
-      ref.read(cartProvider.notifier).addProduct(product);
+      await _addProductToCart(product);
       _searchController.clear();
-      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
     } else {
       if (mounted) showPosErrorSnackbar(context, AppLocalizations.of(context)!.posProductNotFound);
     }
+  }
+
+  Future<void> _addProductToCart(Product product) async {
+    if (product.ageRestricted == true) {
+      final confirmed = await showPosConfirmDialog(
+        context,
+        title: AppLocalizations.of(context)!.catalogAgeRestricted,
+        message: AppLocalizations.of(context)!.catalogAgeRestriction,
+        confirmLabel: AppLocalizations.of(context)!.commonConfirm,
+        cancelLabel: AppLocalizations.of(context)!.commonCancel,
+      );
+      if (confirmed != true) return;
+    }
+
+    double qty = 1;
+    if (product.isWeighable == true) {
+      final weight = await showPosWeightDialog(
+        context,
+        title: AppLocalizations.of(context)!.posEnterWeight,
+        message: product.tareWeight != null && product.tareWeight! > 0
+            ? AppLocalizations.of(context)!.posTareWeightNote(product.tareWeight!.toStringAsFixed(3))
+            : null,
+        confirmLabel: AppLocalizations.of(context)!.commonConfirm,
+        cancelLabel: AppLocalizations.of(context)!.commonCancel,
+        hintText: AppLocalizations.of(context)!.posWeightHint,
+      );
+      if (weight == null) return;
+      qty = weight;
+    }
+
+    ref.read(cartProvider.notifier).addProduct(product, qty: qty);
+    if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
   }
 
   Future<void> _handleDiscount() async {
@@ -203,7 +233,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 AppSpacing.gapH8,
                 Text(
                   AppLocalizations.of(ctx)!.posSubtotalAmount(cart.subtotal.toStringAsFixed(2)),
-                  style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                 ),
                 AppSpacing.gapH16,
                 PosTextField(
@@ -404,7 +434,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         children: [
@@ -416,10 +446,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleSmall),
                 Text(
                   AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
-                  style: AppTypography.bodySmall.copyWith(
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                    fontSize: 11,
-                  ),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
                 ),
               ],
             ),
@@ -519,7 +546,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: isDark ? AppColors.cardDark : AppColors.cardLight,
-          border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+          border: Border(top: BorderSide(color: AppColors.borderFor(context))),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 8, offset: const Offset(0, -2))],
         ),
         child: SafeArea(
@@ -556,17 +583,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                       cart.isEmpty
                           ? AppLocalizations.of(context)!.posNoItems
                           : AppLocalizations.of(context)!.amountWithSar(cart.totalAmount.toStringAsFixed(2)),
-                      style: AppTypography.titleMedium.copyWith(
-                        color: cart.isEmpty ? (isDark ? AppColors.textMutedDark : AppColors.textMutedLight) : null,
-                      ),
+                      style: AppTypography.titleMedium.copyWith(color: cart.isEmpty ? (AppColors.mutedFor(context)) : null),
                     ),
                     if (cart.isNotEmpty)
                       Text(
                         '${cart.itemCount} ${AppLocalizations.of(context)!.posItems} • Tap to view cart',
-                        style: AppTypography.bodySmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                          fontSize: 11,
-                        ),
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
                       ),
                   ],
                 ),
@@ -606,10 +628,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 margin: const EdgeInsets.only(top: 8, bottom: 4),
                 width: 40,
                 height: 4,
-                decoration: BoxDecoration(
-                  color: isDark ? AppColors.borderDark : AppColors.borderLight,
-                  borderRadius: BorderRadius.circular(2),
-                ),
+                decoration: BoxDecoration(color: AppColors.borderFor(context), borderRadius: BorderRadius.circular(2)),
               ),
             ),
             // Cart header
@@ -679,7 +698,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 AppSpacing.gapH8,
                 Text(
                   AppLocalizations.of(context)!.posOpenShiftDescription,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                   textAlign: TextAlign.center,
                 ),
                 AppSpacing.gapH24,
@@ -739,7 +758,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         children: [
@@ -751,7 +770,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleMedium),
               Text(
                 AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
               ),
             ],
           ),
@@ -780,8 +799,16 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             size: PosButtonSize.md,
             onPressed: cart.isNotEmpty ? _handleVoidLastItem : null,
           ),
+          AppSpacing.gapW8,
+          PosButton(
+            label: AppLocalizations.of(context)!.posTaxExempt,
+            icon: Icons.receipt_long_outlined,
+            variant: cart.taxExempt ? PosButtonVariant.primary : PosButtonVariant.outline,
+            size: PosButtonSize.md,
+            onPressed: cart.isNotEmpty ? () => ref.read(cartProvider.notifier).toggleTaxExempt() : null,
+          ),
           AppSpacing.gapW12,
-          Container(width: 1, height: 32, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+          Container(width: 1, height: 32, color: AppColors.borderFor(context)),
           AppSpacing.gapW12,
           PosButton(
             label: AppLocalizations.of(context)!.posReturn,
@@ -871,12 +898,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             AppSpacing.gapH8,
             Text(
               AppLocalizations.of(context)!.posNoProductsFound,
-              style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
             ),
             AppSpacing.gapH4,
             Text(
               AppLocalizations.of(context)!.posNoProductsSubtitle,
-              style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ),
@@ -894,7 +921,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         ),
         itemCount: products.length,
         itemBuilder: (context, index) =>
-            _ProductGridTile(product: products[index], onTap: () => ref.read(cartProvider.notifier).addProduct(products[index])),
+            _ProductGridTile(product: products[index], onTap: () => _addProductToCart(products[index])),
       ),
     );
   }
@@ -908,7 +935,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
-        border: Border(left: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border(left: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Column(
         children: [
@@ -916,7 +943,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.base),
             decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+              border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: Row(
               children: [
@@ -927,11 +954,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 if (cart.notes != null && cart.notes!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
-                    child: Icon(
-                      Icons.note_alt_outlined,
-                      size: 16,
-                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                    ),
+                    child: Icon(Icons.note_alt_outlined, size: 16, color: AppColors.mutedFor(context)),
                   ),
                 if (cart.isNotEmpty) PosBadge(label: '${cart.itemCount}', variant: PosBadgeVariant.primary),
               ],
@@ -956,9 +979,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                         AppSpacing.gapH8,
                         Text(
                           AppLocalizations.of(context)!.posNoItems,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                          ),
+                          style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                         ),
                         AppSpacing.gapH4,
                         Text(
@@ -996,7 +1017,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         ),
         child: Row(
           children: [
-            Icon(Icons.person_outline, size: 20, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            Icon(Icons.person_outline, size: 20, color: AppColors.mutedFor(context)),
             AppSpacing.gapW8,
             Expanded(
               child: Text(
@@ -1004,7 +1025,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 style: AppTypography.bodyMedium.copyWith(
                   color: cart.customer != null
                       ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)
-                      : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      : (AppColors.mutedFor(context)),
                 ),
               ),
             ),
@@ -1014,7 +1035,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 child: const Icon(Icons.close, size: 18, color: AppColors.textDisabledLight),
               )
             else
-              Icon(Icons.chevron_right, size: 18, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              Icon(Icons.chevron_right, size: 18, color: AppColors.mutedFor(context)),
           ],
         ),
       ),
@@ -1025,8 +1046,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(top: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1037,7 +1058,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             _buildTotalRow(AppLocalizations.of(context)!.posDiscount, -cart.discountTotal, isDark, color: AppColors.error),
           _buildTotalRow(AppLocalizations.of(context)!.posTax15, cart.taxAmount, isDark),
           AppSpacing.gapH12,
-          Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+          Divider(height: 1, color: AppColors.borderFor(context)),
           AppSpacing.gapH12,
           // Total
           Row(
@@ -1108,10 +1129,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: AppTypography.titleSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-          ),
+          Text(label, style: AppTypography.titleSmall.copyWith(color: AppColors.mutedFor(context))),
           Text(
             '${amount < 0 ? '-' : ''}${AppLocalizations.of(context)!.amountWithSar(amount.abs().toStringAsFixed(2))}',
             style: AppTypography.titleSmall.copyWith(color: color),
@@ -1193,7 +1211,7 @@ class _ProductGridTile extends StatelessWidget {
                     ),
                     AppSpacing.gapW4,
                     Text(
-                      '${product.sellPrice.toStringAsFixed(2)}',
+                      product.sellPrice.toStringAsFixed(2),
                       style: AppTypography.bodySmall.copyWith(
                         decoration: TextDecoration.lineThrough,
                         color: AppColors.textDisabledLight,
@@ -1249,7 +1267,7 @@ class _CartItemTile extends ConsumerWidget {
                   AppSpacing.gapH4,
                   Text(
                     '\u0081 ${item.unitPrice.toStringAsFixed(2)} x ${item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2)}',
-                    style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                   ),
                   if (item.discountAmount != null && item.discountAmount! > 0)
                     Text(
@@ -1313,7 +1331,7 @@ class _QtyButton extends StatelessWidget {
         height: 44,
         decoration: BoxDecoration(
           borderRadius: AppRadius.borderMd,
-          border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+          border: Border.all(color: AppColors.borderFor(context)),
         ),
         child: Icon(icon, size: 22),
       ),

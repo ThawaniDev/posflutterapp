@@ -11,8 +11,8 @@ import 'package:wameedpos/features/pos_customization/models/label_layout_templat
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
 class LabelTemplateDetailPage extends ConsumerStatefulWidget {
-  final String slug;
   const LabelTemplateDetailPage({super.key, required this.slug});
+  final String slug;
 
   @override
   ConsumerState<LabelTemplateDetailPage> createState() => _LabelTemplateDetailPageState();
@@ -91,7 +91,7 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
                           Text(
                             template.slug,
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],
@@ -194,7 +194,7 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
                     child: Text(
                       entry.key,
                       style: AppTypography.labelSmall.copyWith(
-                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        color: AppColors.mutedFor(context),
                       ),
                     ),
                   ),
@@ -223,7 +223,7 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
             const Spacer(),
             Text(
               l10n.labelLayoutTemplateNoFields,
-              style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ),

@@ -18,11 +18,6 @@ class PaymentsLoading extends PaymentsState {
 }
 
 class PaymentsLoaded extends PaymentsState {
-  final List<Payment> payments;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const PaymentsLoaded({
     required this.payments,
@@ -31,13 +26,18 @@ class PaymentsLoaded extends PaymentsState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<Payment> payments;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class PaymentsError extends PaymentsState {
-  final String message;
   const PaymentsError({required this.message});
+  final String message;
 }
 
 // ─── Cash Sessions State ────────────────────────────────────────
@@ -55,11 +55,6 @@ class CashSessionsLoading extends CashSessionsState {
 }
 
 class CashSessionsLoaded extends CashSessionsState {
-  final List<CashSession> sessions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const CashSessionsLoaded({
     required this.sessions,
@@ -68,13 +63,18 @@ class CashSessionsLoaded extends CashSessionsState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<CashSession> sessions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class CashSessionsError extends CashSessionsState {
-  final String message;
   const CashSessionsError({required this.message});
+  final String message;
 }
 
 // ─── Expenses State ─────────────────────────────────────────────
@@ -92,11 +92,6 @@ class ExpensesLoading extends ExpensesState {
 }
 
 class ExpensesLoaded extends ExpensesState {
-  final List<Expense> expenses;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const ExpensesLoaded({
     required this.expenses,
@@ -105,13 +100,18 @@ class ExpensesLoaded extends ExpensesState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<Expense> expenses;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class ExpensesError extends ExpensesState {
-  final String message;
   const ExpensesError({required this.message});
+  final String message;
 }
 
 // ─── Gift Card State ────────────────────────────────────────────
@@ -129,13 +129,13 @@ class GiftCardLoading extends GiftCardState {
 }
 
 class GiftCardReady extends GiftCardState {
-  final GiftCard? lastIssued;
-  final Map<String, dynamic>? lastBalance;
 
   const GiftCardReady({this.lastIssued, this.lastBalance});
+  final GiftCard? lastIssued;
+  final Map<String, dynamic>? lastBalance;
 }
 
 class GiftCardError extends GiftCardState {
-  final String message;
   const GiftCardError({required this.message});
+  final String message;
 }

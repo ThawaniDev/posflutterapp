@@ -7,11 +7,11 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Card widget displaying a single subscription plan.
 class PlanCard extends StatelessWidget {
+
+  const PlanCard({super.key, required this.plan, required this.isAnnual, required this.onSelect});
   final SubscriptionPlan plan;
   final bool isAnnual;
   final VoidCallback onSelect;
-
-  const PlanCard({super.key, required this.plan, required this.isAnnual, required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PlanCard extends StatelessWidget {
                     decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderXxl),
                     child: Text(
                       l10n.subscriptionPopular,
-                      style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
               ],
@@ -70,7 +70,7 @@ class PlanCard extends StatelessWidget {
               AppSpacing.verticalXs,
               Text(
                 l10n.subFreeTrialDays(plan.trialDays!),
-                style: TextStyle(color: AppColors.successDark, fontSize: 13, fontWeight: FontWeight.w500),
+                style: const TextStyle(color: AppColors.successDark, fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ],
 

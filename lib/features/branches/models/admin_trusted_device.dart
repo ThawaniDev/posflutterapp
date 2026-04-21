@@ -1,11 +1,4 @@
 class AdminTrustedDevice {
-  final String id;
-  final String adminUserId;
-  final String deviceFingerprint;
-  final String? deviceName;
-  final String? userAgent;
-  final DateTime? trustedAt;
-  final DateTime? lastUsedAt;
 
   const AdminTrustedDevice({
     required this.id,
@@ -28,6 +21,13 @@ class AdminTrustedDevice {
       lastUsedAt: json['last_used_at'] != null ? DateTime.parse(json['last_used_at'] as String) : null,
     );
   }
+  final String id;
+  final String adminUserId;
+  final String deviceFingerprint;
+  final String? deviceName;
+  final String? userAgent;
+  final DateTime? trustedAt;
+  final DateTime? lastUsedAt;
 
   Map<String, dynamic> toJson() {
     return {

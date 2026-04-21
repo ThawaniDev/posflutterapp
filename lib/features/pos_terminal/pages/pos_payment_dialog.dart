@@ -14,12 +14,11 @@ import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart
 
 /// A payment entry: method + amount. Supports split payments.
 class _PaymentLeg {
+  _PaymentLeg({required this.method, required this.amount})
+    : controller = TextEditingController(text: amount > 0 ? amount.toStringAsFixed(2) : '');
   PaymentMethod method;
   double amount;
   final TextEditingController controller;
-
-  _PaymentLeg({required this.method, required this.amount})
-    : controller = TextEditingController(text: amount > 0 ? amount.toStringAsFixed(2) : '');
 
   void dispose() => controller.dispose();
 }
@@ -38,10 +37,13 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   late final List<_PaymentLeg> _legs;
   double _cashTendered = 0;
   final _cashTenderedController = TextEditingController();
+  double _tipAmount = 0;
+  final _tipController = TextEditingController();
   String? _error;
 
+  double get _totalWithTip => widget.totalAmount + _tipAmount;
   double get _totalPaid => _legs.fold(0.0, (s, l) => s + l.amount);
-  double get _remaining => widget.totalAmount - _totalPaid;
+  double get _remaining => _totalWithTip - _totalPaid;
   bool get _isFullyPaid => _remaining <= 0.005;
 
   @override
@@ -58,6 +60,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       l.dispose();
     }
     _cashTenderedController.dispose();
+    _tipController.dispose();
     super.dispose();
   }
 
@@ -93,7 +96,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
   double get _changeGiven {
     if (_legs.length == 1 && _legs.first.method == PaymentMethod.cash) {
-      return (_cashTendered - widget.totalAmount).clamp(0, double.infinity);
+      return (_cashTendered - _totalWithTip).clamp(0, double.infinity);
     }
     return 0;
   }
@@ -102,7 +105,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final result = await showDialog<InstallmentPayment>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => InstallmentPaymentDialog(amount: widget.totalAmount, currency: 'SAR'),
+      builder: (_) => InstallmentPaymentDialog(amount: widget.totalAmount, currency: ''),
     );
 
     if (result != null && mounted) {
@@ -138,10 +141,15 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         map['cash_tendered'] = _cashTendered;
         map['change_given'] = _changeGiven;
       }
+      if (_tipAmount > 0 && l == _legs.first) {
+        map['tip_amount'] = _tipAmount;
+      }
       return map;
     }).toList();
 
-    await ref.read(saleProvider.notifier).completeSale(sessionId: widget.sessionId, cart: cart, payments: payments);
+    await ref
+        .read(saleProvider.notifier)
+        .completeSale(sessionId: widget.sessionId, cart: cart, payments: payments, tipAmount: _tipAmount);
 
     final saleState = ref.read(saleProvider);
     if (saleState is SaleCompleted) {
@@ -177,7 +185,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                 AppSpacing.gapH8,
                 Text(
                   AppLocalizations.of(context)!.posTransactionNumber(state.transactionNumber),
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
                 AppSpacing.gapH8,
                 Text(
@@ -213,7 +221,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final saleState = ref.watch(saleProvider);
     final isProcessing = saleState is SaleProcessing;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -282,6 +290,57 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   ),
                 ),
 
+                AppSpacing.gapH16,
+
+                // Tip entry
+                Text(
+                  AppLocalizations.of(context)!.posTipAmount,
+                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
+                AppSpacing.gapH4,
+                PosTextField(
+                  controller: _tipController,
+                  hint: '0.00',
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  prefixIcon: Icons.volunteer_activism_rounded,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+                  textAlign: TextAlign.end,
+                  onChanged: (v) {
+                    final tip = double.tryParse(v) ?? 0;
+                    setState(() {
+                      _tipAmount = tip;
+                      // Auto-update the first leg amount to cover total + tip
+                      if (_legs.length == 1) {
+                        _legs.first.amount = _totalWithTip;
+                        _legs.first.controller.text = _totalWithTip.toStringAsFixed(2);
+                        if (_legs.first.method == PaymentMethod.cash) {
+                          _cashTendered = _totalWithTip;
+                          _cashTenderedController.text = _totalWithTip.toStringAsFixed(2);
+                        }
+                      }
+                    });
+                  },
+                ),
+                if (_tipAmount > 0) ...[
+                  AppSpacing.gapH8,
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.posTotalWithTip,
+                          style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.amountWithSar(_totalWithTip.toStringAsFixed(2)),
+                          style: AppTypography.labelMedium.copyWith(color: AppColors.info, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
                 AppSpacing.gapH16,
 
                 // Cash tendered (only if any leg is cash)

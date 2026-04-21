@@ -1,8 +1,4 @@
 class AdminPermission {
-  final String id;
-  final String name;
-  final String? description;
-  final DateTime? createdAt;
 
   const AdminPermission({
     required this.id,
@@ -19,6 +15,10 @@ class AdminPermission {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? description;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

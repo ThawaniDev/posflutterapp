@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/industry_pharmacy/enums/drug_schedule_type.dart';
 
 class DrugSchedule {
-  final String id;
-  final String productId;
-  final DrugScheduleType scheduleType;
-  final String? activeIngredient;
-  final String? dosageForm;
-  final String? strength;
-  final String? manufacturer;
-  final bool? requiresPrescription;
 
   const DrugSchedule({
     required this.id,
@@ -33,6 +25,14 @@ class DrugSchedule {
       requiresPrescription: json['requires_prescription'] as bool?,
     );
   }
+  final String id;
+  final String productId;
+  final DrugScheduleType scheduleType;
+  final String? activeIngredient;
+  final String? dosageForm;
+  final String? strength;
+  final String? manufacturer;
+  final bool? requiresPrescription;
 
   Map<String, dynamic> toJson() {
     return {

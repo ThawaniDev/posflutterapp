@@ -148,7 +148,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                       color: AppColors.error.withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderXs,
                     ),
-                    child: Text(l10n.inactive, style: TextStyle(fontSize: 10, color: AppColors.error)),
+                    child: Text(l10n.inactive, style: const TextStyle(fontSize: 10, color: AppColors.error)),
                   ),
                 for (final r in roles)
                   Container(

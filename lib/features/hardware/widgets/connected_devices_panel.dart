@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/hardware/enums/connection_type.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
@@ -322,14 +321,14 @@ class _DeviceRow extends StatelessWidget {
 
     final statusColor = isConnected
         ? AppColors.success
-        : (hasError ? AppColors.error : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight));
+        : (hasError ? AppColors.error : (AppColors.mutedFor(context)));
     final statusText = isConnected ? 'Connected' : (hasError ? 'Error' : 'Offline');
     final statusIcon = isConnected ? Icons.circle : (hasError ? Icons.warning_amber_rounded : Icons.circle_outlined);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: (isDark ? AppColors.borderDark : AppColors.borderLight).withValues(alpha: 0.5))),
+        border: Border(bottom: BorderSide(color: (AppColors.borderFor(context)).withValues(alpha: 0.5))),
       ),
       child: Row(
         children: [
@@ -575,13 +574,13 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                     Icon(
                       isListening ? Icons.circle : Icons.circle_outlined,
                       size: isListening ? 8 : 12,
-                      color: isListening ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      color: isListening ? AppColors.success : (AppColors.mutedFor(context)),
                     ),
                     AppSpacing.gapW4,
                     Text(
                       isListening ? 'Listening' : 'Inactive',
                       style: AppTypography.micro.copyWith(
-                        color: isListening ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        color: isListening ? AppColors.success : (AppColors.mutedFor(context)),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -598,8 +597,8 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
 
 // ─── Internal data class ───────────────────────────────────
 class _DeviceInfo {
-  final HardwareConfiguration config;
-  final PeripheralStatus? status;
 
   const _DeviceInfo({required this.config, this.status});
+  final HardwareConfiguration config;
+  final PeripheralStatus? status;
 }

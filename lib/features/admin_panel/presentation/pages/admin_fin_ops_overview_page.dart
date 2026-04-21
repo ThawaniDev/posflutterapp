@@ -155,7 +155,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondaryLight)),
+                  child: Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryLight)),
                 ),
               ],
             ),
@@ -169,7 +169,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
             ),
             Padding(
               padding: const EdgeInsets.only(left: 12),
-              child: Text(subtitle, style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight)),
+              child: Text(subtitle, style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context))),
             ),
           ],
         ),
@@ -238,8 +238,8 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
 }
 
 class _NavItem {
+  const _NavItem(this.label, this.icon, this.onTap);
   final String label;
   final IconData icon;
   final VoidCallback onTap;
-  const _NavItem(this.label, this.icon, this.onTap);
 }

@@ -18,6 +18,8 @@ final featureGateServiceProvider = Provider<FeatureGateService>((ref) {
 /// - Caches softPOS threshold info and feature-route mapping.
 /// - Falls back to local cache when offline.
 class FeatureGateService {
+
+  FeatureGateService(this._apiService);
   final SubscriptionApiService _apiService;
 
   /// In-memory feature cache: featureKey → isEnabled
@@ -43,8 +45,6 @@ class FeatureGateService {
 
   /// How long the cache is considered valid (30 days for offline)
   static const _maxCacheAge = Duration(days: 30);
-
-  FeatureGateService(this._apiService);
 
   /// Initialize : load from local storage
   Future<void> initialize() async {

@@ -1,10 +1,4 @@
 class ComboProductItem {
-  final String id;
-  final String comboProductId;
-  final String productId;
-  final double quantity;
-  final bool? isOptional;
-  final DateTime? createdAt;
 
   const ComboProductItem({
     required this.id,
@@ -25,6 +19,12 @@ class ComboProductItem {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String comboProductId;
+  final String productId;
+  final double quantity;
+  final bool? isOptional;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

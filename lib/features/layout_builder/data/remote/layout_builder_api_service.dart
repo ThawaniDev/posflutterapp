@@ -14,9 +14,9 @@ final layoutBuilderApiServiceProvider = Provider<LayoutBuilderApiService>((ref) 
 });
 
 class LayoutBuilderApiService {
-  final Dio _dio;
 
   LayoutBuilderApiService(this._dio);
+  final Dio _dio;
 
   // ── Layout Templates ──────────────────────────────────────
 

@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/industry_restaurant/enums/restaurant_table_status.dart';
 
 class RestaurantTable {
-  final String id;
-  final String storeId;
-  final String tableNumber;
-  final String? displayName;
-  final int seats;
-  final String? zone;
-  final int? positionX;
-  final int? positionY;
-  final RestaurantTableStatus? status;
-  final String? currentOrderId;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const RestaurantTable({
     required this.id,
@@ -45,6 +33,18 @@ class RestaurantTable {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String tableNumber;
+  final String? displayName;
+  final int seats;
+  final String? zone;
+  final int? positionX;
+  final int? positionY;
+  final RestaurantTableStatus? status;
+  final String? currentOrderId;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

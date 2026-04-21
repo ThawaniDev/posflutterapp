@@ -1,9 +1,4 @@
 class NotificationReadReceipt {
-  final String id;
-  final String notificationId;
-  final String userId;
-  final String readVia;
-  final DateTime? readAt;
 
   const NotificationReadReceipt({
     required this.id,
@@ -22,6 +17,11 @@ class NotificationReadReceipt {
       readAt: json['read_at'] != null ? DateTime.parse(json['read_at'] as String) : null,
     );
   }
+  final String id;
+  final String notificationId;
+  final String userId;
+  final String readVia;
+  final DateTime? readAt;
 
   Map<String, dynamic> toJson() {
     return {

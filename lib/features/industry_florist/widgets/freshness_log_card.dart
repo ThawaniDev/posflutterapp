@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/flower_freshness_log.dart';
-import '../enums/flower_freshness_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/enums/flower_freshness_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FreshnessLogCard extends StatelessWidget {
-  final FlowerFreshnessLog log;
-  final VoidCallback? onTap;
 
   const FreshnessLogCard({super.key, required this.log, this.onTap});
+  final FlowerFreshnessLog log;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class FreshnessLogCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,

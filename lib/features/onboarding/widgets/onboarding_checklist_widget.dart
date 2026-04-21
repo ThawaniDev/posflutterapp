@@ -10,10 +10,10 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 /// is completed. Displays 5 actionable tasks the merchant should accomplish
 /// to fully set up their store (e.g. add first product, invite staff).
 class OnboardingChecklistWidget extends ConsumerWidget {
-  final String? storeId;
-  final VoidCallback? onTaskTap;
 
   const OnboardingChecklistWidget({super.key, this.storeId, this.onTaskTap});
+  final String? storeId;
+  final VoidCallback? onTaskTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +37,7 @@ class OnboardingChecklistWidget extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.all(AppSpacing.base),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: BorderRadius.circular(AppSpacing.md),
         border: Border.all(color: AppColors.primary20),
         boxShadow: [BoxShadow(color: AppColors.primary.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4))],
@@ -75,14 +75,14 @@ class OnboardingChecklistWidget extends ConsumerWidget {
                       const SizedBox(height: 2),
                       Text(
                         allDone ? 'You\'re all set. Dismiss this card.' : '$completedCount of $totalCount tasks done',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                       ),
                     ],
                   ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 18),
-                  color: AppColors.textMutedLight,
+                  color: AppColors.mutedFor(context),
                   onPressed: () {
                     ref.read(onboardingProvider.notifier).dismissChecklist(storeId: storeId);
                   },
@@ -99,7 +99,7 @@ class OnboardingChecklistWidget extends ConsumerWidget {
               child: LinearProgressIndicator(
                 value: totalCount > 0 ? completedCount / totalCount : 0,
                 minHeight: 6,
-                backgroundColor: AppColors.borderLight,
+                backgroundColor: AppColors.borderFor(context),
                 valueColor: AlwaysStoppedAnimation<Color>(allDone ? AppColors.success : AppColors.primary),
               ),
             ),
@@ -117,12 +117,12 @@ class OnboardingChecklistWidget extends ConsumerWidget {
 }
 
 class _ChecklistItem extends ConsumerWidget {
+
+  const _ChecklistItem({required this.itemKey, required this.completed, this.storeId, this.onTaskTap});
   final String itemKey;
   final bool completed;
   final String? storeId;
   final VoidCallback? onTaskTap;
-
-  const _ChecklistItem({required this.itemKey, required this.completed, this.storeId, this.onTaskTap});
 
   static const _itemLabels = <String, String>{
     'add_first_product': 'Add your first product',
@@ -166,24 +166,24 @@ class _ChecklistItem extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: completed ? AppColors.success : Colors.transparent,
                   borderRadius: AppRadius.borderSm,
-                  border: Border.all(color: completed ? AppColors.success : AppColors.borderLight, width: 2),
+                  border: Border.all(color: completed ? AppColors.success : AppColors.borderFor(context), width: 2),
                 ),
                 child: completed ? const Icon(Icons.check, size: 14, color: Colors.white) : null,
               ),
             ),
             const SizedBox(width: AppSpacing.md),
-            Icon(icon, size: 18, color: completed ? AppColors.textMutedLight : AppColors.textPrimaryLight),
+            Icon(icon, size: 18, color: completed ? AppColors.mutedFor(context) : AppColors.textPrimaryLight),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
                 label,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   decoration: completed ? TextDecoration.lineThrough : null,
-                  color: completed ? AppColors.textMutedLight : null,
+                  color: completed ? AppColors.mutedFor(context) : null,
                 ),
               ),
             ),
-            if (!completed) Icon(Icons.chevron_right, size: 18, color: AppColors.textMutedLight),
+            if (!completed) Icon(Icons.chevron_right, size: 18, color: AppColors.mutedFor(context)),
           ],
         ),
       ),

@@ -10,9 +10,9 @@ final layoutTemplatesProvider = StateNotifierProvider<LayoutTemplatesNotifier, L
 });
 
 class LayoutTemplatesNotifier extends StateNotifier<LayoutTemplatesState> {
-  final LayoutBuilderRepository _repo;
 
   LayoutTemplatesNotifier(this._repo) : super(const LayoutTemplatesInitial());
+  final LayoutBuilderRepository _repo;
 
   Future<void> load() async {
     state = const LayoutTemplatesLoading();
@@ -34,9 +34,9 @@ final canvasBuilderProvider = StateNotifierProvider<CanvasBuilderNotifier, Canva
 });
 
 class CanvasBuilderNotifier extends StateNotifier<CanvasBuilderState> {
-  final LayoutBuilderRepository _repo;
 
   CanvasBuilderNotifier(this._repo) : super(const CanvasBuilderInitial());
+  final LayoutBuilderRepository _repo;
 
   Future<void> load() async {
     state = const CanvasBuilderLoading();
@@ -130,9 +130,9 @@ final widgetCatalogProvider = StateNotifierProvider<WidgetCatalogNotifier, Widge
 });
 
 class WidgetCatalogNotifier extends StateNotifier<WidgetCatalogState> {
-  final LayoutBuilderRepository _repo;
 
   WidgetCatalogNotifier(this._repo) : super(const WidgetCatalogInitial());
+  final LayoutBuilderRepository _repo;
 
   Future<void> load({String? category}) async {
     state = const WidgetCatalogLoading();

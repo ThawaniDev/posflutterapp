@@ -6,9 +6,9 @@ final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
 });
 
 class DashboardRepository {
-  final DashboardApiService _api;
 
   DashboardRepository(this._api);
+  final DashboardApiService _api;
 
   Future<Map<String, dynamic>> getStats({int? days}) => _api.getStats(days: days);
 

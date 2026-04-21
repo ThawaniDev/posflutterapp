@@ -8,9 +8,9 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class InitialSyncScreen extends ConsumerStatefulWidget {
-  final VoidCallback onComplete;
 
   const InitialSyncScreen({super.key, required this.onComplete});
+  final VoidCallback onComplete;
 
   @override
   ConsumerState<InitialSyncScreen> createState() => _InitialSyncScreenState();

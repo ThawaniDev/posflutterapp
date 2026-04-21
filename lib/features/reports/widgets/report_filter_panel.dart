@@ -10,23 +10,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 /// Comprehensive filter panel with date presets, branch selector,
 /// and advanced filter options. Responsive: collapsible on mobile.
 class ReportFilterPanel extends ConsumerStatefulWidget {
-  final ReportFilters filters;
-  final ValueChanged<ReportFilters> onFiltersChanged;
-  final VoidCallback onRefresh;
-
-  /// Which filter sections to show — varies per report type.
-  final bool showStaffFilter;
-  final bool showCategoryFilter;
-  final bool showPaymentMethodFilter;
-  final bool showAmountRange;
-  final bool showOrderStatus;
-  final bool showGranularity;
-  final bool showSortOptions;
-  final bool showCompare;
-
-  /// Available options for dropdowns (passed from page-level data).
-  final List<DropdownOption> staffOptions;
-  final List<DropdownOption> categoryOptions;
 
   const ReportFilterPanel({
     super.key,
@@ -44,6 +27,23 @@ class ReportFilterPanel extends ConsumerStatefulWidget {
     this.staffOptions = const [],
     this.categoryOptions = const [],
   });
+  final ReportFilters filters;
+  final ValueChanged<ReportFilters> onFiltersChanged;
+  final VoidCallback onRefresh;
+
+  /// Which filter sections to show — varies per report type.
+  final bool showStaffFilter;
+  final bool showCategoryFilter;
+  final bool showPaymentMethodFilter;
+  final bool showAmountRange;
+  final bool showOrderStatus;
+  final bool showGranularity;
+  final bool showSortOptions;
+  final bool showCompare;
+
+  /// Available options for dropdowns (passed from page-level data).
+  final List<DropdownOption> staffOptions;
+  final List<DropdownOption> categoryOptions;
 
   @override
   ConsumerState<ReportFilterPanel> createState() => _ReportFilterPanelState();
@@ -90,8 +90,8 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -104,7 +104,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
           // ── Advanced filter section (collapsible) ──
           if (_hasAdvancedFilters && _expanded) ...[
-            Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+            Divider(height: 1, color: AppColors.borderFor(context)),
             Padding(
               padding: const EdgeInsets.all(16),
               child: isWide ? _buildWideAdvanced(isDark) : _buildCompactAdvanced(isDark),
@@ -175,7 +175,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
           return Padding(
             padding: const EdgeInsetsDirectional.only(end: 6),
             child: ChoiceChip(
-              label: Text(preset.localizedLabel(l10n), style: TextStyle(fontSize: 12)),
+              label: Text(preset.localizedLabel(l10n), style: const TextStyle(fontSize: 12)),
               selected: isActive,
               onSelected: (_) => _selectPreset(preset),
               selectedColor: AppColors.primary.withValues(alpha: 0.15),
@@ -186,7 +186,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
               side: BorderSide(
                 color: isActive
                     ? AppColors.primary.withValues(alpha: 0.3)
-                    : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                    : (AppColors.borderFor(context)),
               ),
               visualDensity: VisualDensity.compact,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -256,7 +256,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
           color: _expanded ? AppColors.primary.withValues(alpha: 0.1) : (isDark ? AppColors.cardDark : AppColors.backgroundLight),
           borderRadius: AppRadius.borderSm,
           border: Border.all(
-            color: _expanded ? AppColors.primary.withValues(alpha: 0.3) : (isDark ? AppColors.borderDark : AppColors.borderLight),
+            color: _expanded ? AppColors.primary.withValues(alpha: 0.3) : (AppColors.borderFor(context)),
           ),
         ),
         child: Row(
@@ -265,7 +265,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             Icon(
               Icons.tune_rounded,
               size: 16,
-              color: _expanded ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              color: _expanded ? AppColors.primary : (AppColors.mutedFor(context)),
             ),
             const SizedBox(width: 6),
             Text(
@@ -291,7 +291,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             Icon(
               _expanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
               size: 16,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: AppColors.mutedFor(context),
             ),
           ],
         ),
@@ -303,7 +303,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
   Widget _buildCompareToggle(bool isDark) {
     return FilterChip(
-      label: Text(l10n.subscriptionCompare, style: TextStyle(fontSize: 12)),
+      label: Text(l10n.subscriptionCompare, style: const TextStyle(fontSize: 12)),
       selected: widget.filters.compare,
       onSelected: (val) => _update(widget.filters.copyWith(compare: val)),
       selectedColor: AppColors.info.withValues(alpha: 0.15),
@@ -311,7 +311,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
       side: BorderSide(
         color: widget.filters.compare
             ? AppColors.info.withValues(alpha: 0.3)
-            : (isDark ? AppColors.borderDark : AppColors.borderLight),
+            : (AppColors.borderFor(context)),
       ),
       visualDensity: VisualDensity.compact,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -442,14 +442,14 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         return Padding(
           padding: const EdgeInsetsDirectional.only(end: 4),
           child: ChoiceChip(
-            label: Text(label, style: TextStyle(fontSize: 12)),
+            label: Text(label, style: const TextStyle(fontSize: 12)),
             selected: isActive,
             onSelected: (_) => _update(widget.filters.copyWith(granularity: () => g)),
             selectedColor: AppColors.primary.withValues(alpha: 0.15),
             side: BorderSide(
               color: isActive
                   ? AppColors.primary.withValues(alpha: 0.3)
-                  : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                  : (AppColors.borderFor(context)),
             ),
             visualDensity: VisualDensity.compact,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -564,8 +564,8 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
 /// Simple dropdown option model.
 class DropdownOption {
-  final String value;
-  final String label;
 
   const DropdownOption({required this.value, required this.label});
+  final String value;
+  final String label;
 }

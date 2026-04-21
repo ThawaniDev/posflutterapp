@@ -2,13 +2,6 @@ import 'package:wameedpos/features/customers/enums/digital_receipt_channel.dart'
 import 'package:wameedpos/features/customers/enums/digital_receipt_status.dart';
 
 class DigitalReceiptLog {
-  final String id;
-  final String orderId;
-  final String customerId;
-  final DigitalReceiptChannel channel;
-  final String destination;
-  final DigitalReceiptStatus? status;
-  final DateTime? sentAt;
 
   const DigitalReceiptLog({
     required this.id,
@@ -31,6 +24,13 @@ class DigitalReceiptLog {
       sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
     );
   }
+  final String id;
+  final String orderId;
+  final String customerId;
+  final DigitalReceiptChannel channel;
+  final String destination;
+  final DigitalReceiptStatus? status;
+  final DateTime? sentAt;
 
   Map<String, dynamic> toJson() {
     return {

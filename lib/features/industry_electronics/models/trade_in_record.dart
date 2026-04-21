@@ -1,14 +1,4 @@
 class TradeInRecord {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final String deviceDescription;
-  final String? imei;
-  final String conditionGrade;
-  final double assessedValue;
-  final String? appliedToOrderId;
-  final String staffUserId;
-  final DateTime? createdAt;
 
   const TradeInRecord({
     required this.id,
@@ -37,6 +27,16 @@ class TradeInRecord {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final String deviceDescription;
+  final String? imei;
+  final String conditionGrade;
+  final double assessedValue;
+  final String? appliedToOrderId;
+  final String staffUserId;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

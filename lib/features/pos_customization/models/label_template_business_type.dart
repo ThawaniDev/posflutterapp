@@ -1,6 +1,4 @@
 class LabelTemplateBusinessType {
-  final String labelLayoutTemplateId;
-  final String businessTypeId;
 
   const LabelTemplateBusinessType({
     required this.labelLayoutTemplateId,
@@ -13,6 +11,8 @@ class LabelTemplateBusinessType {
       businessTypeId: json['business_type_id'] as String,
     );
   }
+  final String labelLayoutTemplateId;
+  final String businessTypeId;
 
   Map<String, dynamic> toJson() {
     return {

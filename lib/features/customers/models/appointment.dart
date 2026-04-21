@@ -1,19 +1,6 @@
 import 'package:wameedpos/features/customers/enums/appointment_status.dart';
 
 class Appointment {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final String? staffId;
-  final String serviceProductId;
-  final DateTime appointmentDate;
-  final String startTime;
-  final String endTime;
-  final AppointmentStatus? status;
-  final String? notes;
-  final bool? reminderSent;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Appointment({
     required this.id,
@@ -48,6 +35,19 @@ class Appointment {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final String? staffId;
+  final String serviceProductId;
+  final DateTime appointmentDate;
+  final String startTime;
+  final String endTime;
+  final AppointmentStatus? status;
+  final String? notes;
+  final bool? reminderSent;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

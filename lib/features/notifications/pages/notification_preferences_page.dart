@@ -195,7 +195,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                         Text(
                           l10n.notificationsEmailDigestSubtitle,
                           style: AppTypography.bodySmall.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                       ],
@@ -253,7 +253,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.base),
-                    child: Icon(Icons.arrow_forward_rounded, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    child: Icon(Icons.arrow_forward_rounded, color: AppColors.mutedFor(context)),
                   ),
                   Expanded(
                     child: _buildTimePicker(
@@ -325,7 +325,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                       Text(
                         subtitle,
                         style: AppTypography.bodySmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     ],
@@ -396,7 +396,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         child: Text(
           value != null ? value.format(context) : l10n.notificationsNotSet,
           style: AppTypography.bodyMedium.copyWith(
-            color: value != null ? null : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            color: value != null ? null : (AppColors.mutedFor(context)),
           ),
         ),
       ),

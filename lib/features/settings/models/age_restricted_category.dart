@@ -1,8 +1,4 @@
 class AgeRestrictedCategory {
-  final String id;
-  final String categorySlug;
-  final int minAge;
-  final bool? isActive;
 
   const AgeRestrictedCategory({
     required this.id,
@@ -19,6 +15,10 @@ class AgeRestrictedCategory {
       isActive: json['is_active'] as bool?,
     );
   }
+  final String id;
+  final String categorySlug;
+  final int minAge;
+  final bool? isActive;
 
   Map<String, dynamic> toJson() {
     return {

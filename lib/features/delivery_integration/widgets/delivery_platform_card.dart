@@ -6,12 +6,12 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeliveryPlatformCard extends StatelessWidget {
+
+  const DeliveryPlatformCard({super.key, required this.config, this.onToggle, this.onTap, this.onTestConnection});
   final Map<String, dynamic> config;
   final VoidCallback? onToggle;
   final VoidCallback? onTap;
   final VoidCallback? onTestConnection;
-
-  const DeliveryPlatformCard({super.key, required this.config, this.onToggle, this.onTap, this.onTestConnection});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class DeliveryPlatformCard extends StatelessWidget {
     final status = config['status'] as String? ?? 'inactive';
     final lastOrderAt = config['last_order_received_at'] as String?;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     final platformColor = platform?.color ?? mutedColor;
     final platformIcon = platform?.icon ?? Icons.delivery_dining;
@@ -74,7 +74,7 @@ class DeliveryPlatformCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Switch(value: isEnabled, onChanged: onToggle != null ? (_) => onToggle!() : null, activeColor: platformColor),
+                  Switch(value: isEnabled, onChanged: onToggle != null ? (_) => onToggle!() : null, activeThumbColor: platformColor),
                 ],
               ),
               if (isEnabled) ...[
@@ -120,13 +120,13 @@ class DeliveryPlatformCard extends StatelessWidget {
 }
 
 class _StatusDot extends StatelessWidget {
-  final bool isActive;
   const _StatusDot({required this.isActive});
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     return Container(
       width: 8,
       height: 8,
@@ -136,14 +136,14 @@ class _StatusDot extends StatelessWidget {
 }
 
 class _InfoChip extends StatelessWidget {
+  const _InfoChip({required this.label, required this.value});
   final String label;
   final String value;
-  const _InfoChip({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -170,13 +170,13 @@ class WebSocketService {
 }
 
 class SyncEvent {
+
+  const SyncEvent({required this.type, this.table, this.recordId, this.data, this.timestamp});
   final String type;
   final String? table;
   final String? recordId;
   final Map<String, dynamic>? data;
   final DateTime? timestamp;
-
-  const SyncEvent({required this.type, this.table, this.recordId, this.data, this.timestamp});
 }
 
 enum WebSocketConnectionState { disconnected, connecting, connected, reconnecting, error }

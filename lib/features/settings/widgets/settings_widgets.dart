@@ -5,12 +5,12 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Consistent section card used across all settings sub-pages.
 class SettingsSectionCard extends StatelessWidget {
+
+  const SettingsSectionCard({super.key, required this.title, this.subtitle, this.icon, required this.children});
   final String title;
   final String? subtitle;
   final IconData? icon;
   final List<Widget> children;
-
-  const SettingsSectionCard({super.key, required this.title, this.subtitle, this.icon, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +50,6 @@ class SettingsSectionCard extends StatelessWidget {
 
 /// A toggle switch row within a settings section.
 class SettingsToggleRow extends StatelessWidget {
-  final String label;
-  final String? description;
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final bool enabled;
 
   const SettingsToggleRow({
     super.key,
@@ -64,6 +59,11 @@ class SettingsToggleRow extends StatelessWidget {
     required this.onChanged,
     this.enabled = true,
   });
+  final String label;
+  final String? description;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +91,6 @@ class SettingsToggleRow extends StatelessWidget {
 
 /// Dropdown selector row within a settings section.
 class SettingsDropdownRow<T> extends StatelessWidget {
-  final String label;
-  final String? description;
-  final T value;
-  final List<PosDropdownItem<T>> items;
-  final ValueChanged<T?> onChanged;
 
   const SettingsDropdownRow({
     super.key,
@@ -105,6 +100,11 @@ class SettingsDropdownRow<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
   });
+  final String label;
+  final String? description;
+  final T value;
+  final List<PosDropdownItem<T>> items;
+  final ValueChanged<T?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -141,13 +141,6 @@ class SettingsDropdownRow<T> extends StatelessWidget {
 
 /// Numeric stepper row within a settings section.
 class SettingsNumberRow extends StatelessWidget {
-  final String label;
-  final String? description;
-  final String? suffix;
-  final int value;
-  final int min;
-  final int max;
-  final ValueChanged<int> onChanged;
 
   const SettingsNumberRow({
     super.key,
@@ -159,6 +152,13 @@ class SettingsNumberRow extends StatelessWidget {
     this.max = 999,
     required this.onChanged,
   });
+  final String label;
+  final String? description;
+  final String? suffix;
+  final int value;
+  final int min;
+  final int max;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {

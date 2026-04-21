@@ -13,9 +13,9 @@ final customerApiServiceProvider = Provider<CustomerApiService>((ref) {
 });
 
 class CustomerApiService {
-  final Dio _dio;
 
   CustomerApiService(this._dio);
+  final Dio _dio;
 
   // ─── Customers ────────────────────────────────────────────────
 
@@ -26,7 +26,7 @@ class CustomerApiService {
         'page': page,
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
-        if (groupId != null) 'group_id': groupId,
+        'group_id': ?groupId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

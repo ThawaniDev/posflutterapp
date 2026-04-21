@@ -141,7 +141,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                             todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
                             yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
                           ),
-                          Divider(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                          Divider(color: AppColors.borderFor(context)),
                           ReportComparisonRow(
                             label: l10n.transactions,
                             todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
@@ -157,7 +157,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     if (topProducts.isEmpty)
                       ReportDataCard(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24),
+                          padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Center(child: Text(l10n.noSalesDataYetToday)),
                         ),
                       )
@@ -178,7 +178,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                         child: Column(
                           children: [
                             for (int i = 0; i < topProducts.length; i++) ...[
-                              if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                              if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                               ReportRankedItem(
                                 rank: i + 1,
                                 title: topProducts[i]['product_name'] as String? ?? '',
@@ -204,8 +204,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 }
 
 class _ReportNavGrid extends StatelessWidget {
-  final bool isDark;
   const _ReportNavGrid({required this.isDark});
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +239,7 @@ class _ReportNavGrid extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: AppRadius.borderLg,
-                border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                border: Border.all(color: AppColors.borderFor(context)),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -262,9 +262,9 @@ class _ReportNavGrid extends StatelessWidget {
 }
 
 class _NavItem {
+  const _NavItem(this.label, this.icon, this.color, this.route);
   final String label;
   final IconData icon;
   final Color color;
   final String route;
-  const _NavItem(this.label, this.icon, this.color, this.route);
 }

@@ -19,13 +19,13 @@ class LayoutTemplatesLoading extends LayoutTemplatesState {
 }
 
 class LayoutTemplatesLoaded extends LayoutTemplatesState {
-  final List<PosLayoutTemplate> templates;
   const LayoutTemplatesLoaded({required this.templates});
+  final List<PosLayoutTemplate> templates;
 }
 
 class LayoutTemplatesError extends LayoutTemplatesState {
-  final String message;
   const LayoutTemplatesError({required this.message});
+  final String message;
 }
 
 // ─── Canvas Builder State ──────────────────────────────────
@@ -43,10 +43,6 @@ class CanvasBuilderLoading extends CanvasBuilderState {
 }
 
 class CanvasBuilderLoaded extends CanvasBuilderState {
-  final LayoutCanvas canvas;
-  final List<WidgetPlacement> placements;
-  final List<LayoutWidget> availableWidgets;
-  final List<TemplateVersion> versions;
 
   const CanvasBuilderLoaded({
     required this.canvas,
@@ -54,6 +50,10 @@ class CanvasBuilderLoaded extends CanvasBuilderState {
     this.availableWidgets = const [],
     this.versions = const [],
   });
+  final LayoutCanvas canvas;
+  final List<WidgetPlacement> placements;
+  final List<LayoutWidget> availableWidgets;
+  final List<TemplateVersion> versions;
 
   CanvasBuilderLoaded copyWith({
     LayoutCanvas? canvas,
@@ -75,8 +75,8 @@ class CanvasBuilderSaving extends CanvasBuilderState {
 }
 
 class CanvasBuilderError extends CanvasBuilderState {
-  final String message;
   const CanvasBuilderError({required this.message});
+  final String message;
 }
 
 // ─── Widget Catalog State ──────────────────────────────────
@@ -94,10 +94,10 @@ class WidgetCatalogLoading extends WidgetCatalogState {
 }
 
 class WidgetCatalogLoaded extends WidgetCatalogState {
-  final List<LayoutWidget> widgets;
-  final String? selectedCategory;
 
   const WidgetCatalogLoaded({required this.widgets, this.selectedCategory});
+  final List<LayoutWidget> widgets;
+  final String? selectedCategory;
 
   WidgetCatalogLoaded copyWith({List<LayoutWidget>? widgets, String? selectedCategory}) {
     return WidgetCatalogLoaded(widgets: widgets ?? this.widgets, selectedCategory: selectedCategory ?? this.selectedCategory);
@@ -105,6 +105,6 @@ class WidgetCatalogLoaded extends WidgetCatalogState {
 }
 
 class WidgetCatalogError extends WidgetCatalogState {
-  final String message;
   const WidgetCatalogError({required this.message});
+  final String message;
 }

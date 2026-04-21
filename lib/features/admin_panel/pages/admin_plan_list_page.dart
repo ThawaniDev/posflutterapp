@@ -75,8 +75,8 @@ class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
 }
 
 class _PlanCard extends StatelessWidget {
-  final Map<String, dynamic> plan;
   const _PlanCard({required this.plan});
+  final Map<String, dynamic> plan;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _PlanCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       borderRadius: AppRadius.borderLg,
       border: Border.fromBorderSide(
-        isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderLight),
+        isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderFor(context)),
       ),
       child: Padding(
         padding: AppSpacing.paddingAll16,

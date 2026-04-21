@@ -1,8 +1,4 @@
 class BreakRecord {
-  final String id;
-  final String attendanceRecordId;
-  final DateTime breakStart;
-  final DateTime? breakEnd;
 
   const BreakRecord({
     required this.id,
@@ -19,6 +15,10 @@ class BreakRecord {
       breakEnd: json['break_end'] != null ? DateTime.parse(json['break_end'] as String) : null,
     );
   }
+  final String id;
+  final String attendanceRecordId;
+  final DateTime breakStart;
+  final DateTime? breakEnd;
 
   Map<String, dynamic> toJson() {
     return {

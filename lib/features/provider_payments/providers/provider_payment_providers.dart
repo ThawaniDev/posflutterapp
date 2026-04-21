@@ -8,9 +8,9 @@ final providerPaymentsListProvider = StateNotifierProvider<ProviderPaymentsListN
 });
 
 class ProviderPaymentsListNotifier extends StateNotifier<ProviderPaymentsListState> {
-  final ProviderPaymentRepository _repository;
 
   ProviderPaymentsListNotifier(this._repository) : super(const ProviderPaymentsListInitial());
+  final ProviderPaymentRepository _repository;
 
   Future<void> loadPayments({String? status, String? purpose}) async {
     state = const ProviderPaymentsListLoading();
@@ -43,9 +43,9 @@ final providerPaymentDetailProvider = StateNotifierProvider<ProviderPaymentDetai
 });
 
 class ProviderPaymentDetailNotifier extends StateNotifier<ProviderPaymentDetailState> {
-  final ProviderPaymentRepository _repository;
 
   ProviderPaymentDetailNotifier(this._repository) : super(const ProviderPaymentDetailInitial());
+  final ProviderPaymentRepository _repository;
 
   Future<void> loadPayment(String id) async {
     state = const ProviderPaymentDetailLoading();
@@ -69,9 +69,9 @@ final providerPaymentActionProvider = StateNotifierProvider<ProviderPaymentActio
 });
 
 class ProviderPaymentActionNotifier extends StateNotifier<ProviderPaymentActionState> {
-  final ProviderPaymentRepository _repository;
 
   ProviderPaymentActionNotifier(this._repository) : super(const ProviderPaymentActionIdle());
+  final ProviderPaymentRepository _repository;
 
   Future<void> initiatePayment({
     required String purpose,
@@ -129,9 +129,9 @@ final paymentStatisticsProvider = StateNotifierProvider<PaymentStatisticsNotifie
 });
 
 class PaymentStatisticsNotifier extends StateNotifier<PaymentStatisticsState> {
-  final ProviderPaymentRepository _repository;
 
   PaymentStatisticsNotifier(this._repository) : super(const PaymentStatisticsInitial());
+  final ProviderPaymentRepository _repository;
 
   Future<void> loadStatistics() async {
     state = const PaymentStatisticsLoading();

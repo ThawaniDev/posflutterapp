@@ -6,9 +6,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SecurityOverviewWidget extends StatelessWidget {
-  final Map<String, dynamic> data;
 
   const SecurityOverviewWidget({super.key, required this.data});
+  final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {

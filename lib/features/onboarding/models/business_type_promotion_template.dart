@@ -2,19 +2,6 @@ import 'package:wameedpos/features/catalog/enums/business_promotion_type.dart';
 import 'package:wameedpos/features/promotions/enums/promotion_applies_to.dart';
 
 class BusinessTypePromotionTemplate {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final String? description;
-  final BusinessPromotionType promotionType;
-  final double? discountValue;
-  final PromotionAppliesTo? appliesTo;
-  final String? timeStart;
-  final String? timeEnd;
-  final Map<String, dynamic>? activeDays;
-  final double? minimumOrder;
-  final int? sortOrder;
 
   const BusinessTypePromotionTemplate({
     required this.id,
@@ -49,6 +36,19 @@ class BusinessTypePromotionTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final String? description;
+  final BusinessPromotionType promotionType;
+  final double? discountValue;
+  final PromotionAppliesTo? appliesTo;
+  final String? timeStart;
+  final String? timeEnd;
+  final Map<String, dynamic>? activeDays;
+  final double? minimumOrder;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

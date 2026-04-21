@@ -1,32 +1,4 @@
 class Supplier {
-  final String id;
-  final String organizationId;
-  final String name;
-  final String? phone;
-  final String? email;
-  final String? website;
-  final String? address;
-  final String? city;
-  final String? country;
-  final String? postalCode;
-  final String? notes;
-  final String? contactPerson;
-  final String? taxNumber;
-  final String? paymentTerms;
-  final String? bankName;
-  final String? bankAccount;
-  final String? iban;
-  final double? creditLimit;
-  final double? outstandingBalance;
-  final int? rating;
-  final String? category;
-  final bool? isActive;
-  final int? productsCount;
-  final int? returnsCount;
-  final int? purchaseOrdersCount;
-  final int? goodsReceiptsCount;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Supplier({
     required this.id,
@@ -91,6 +63,34 @@ class Supplier {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final String? phone;
+  final String? email;
+  final String? website;
+  final String? address;
+  final String? city;
+  final String? country;
+  final String? postalCode;
+  final String? notes;
+  final String? contactPerson;
+  final String? taxNumber;
+  final String? paymentTerms;
+  final String? bankName;
+  final String? bankAccount;
+  final String? iban;
+  final double? creditLimit;
+  final double? outstandingBalance;
+  final int? rating;
+  final String? category;
+  final bool? isActive;
+  final int? productsCount;
+  final int? returnsCount;
+  final int? purchaseOrdersCount;
+  final int? goodsReceiptsCount;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

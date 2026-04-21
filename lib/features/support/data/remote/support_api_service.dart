@@ -4,9 +4,9 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class SupportApiService {
-  final Dio _dio;
 
   SupportApiService(this._dio);
+  final Dio _dio;
 
   /// GET /support/stats
   Future<Map<String, dynamic>> getStats() async {
@@ -50,7 +50,7 @@ class SupportApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.supportTickets,
-      data: {'category': category, 'subject': subject, 'description': description, if (priority != null) 'priority': priority},
+      data: {'category': category, 'subject': subject, 'description': description, 'priority': ?priority},
     );
     return response.data as Map<String, dynamic>;
   }

@@ -3,13 +3,6 @@ import 'package:wameedpos/features/staff/enums/salary_type.dart';
 import 'package:wameedpos/features/staff/enums/staff_status.dart';
 
 class BranchAssignment {
-  final String id;
-  final String staffUserId;
-  final String branchId;
-  final int? roleId;
-  final bool isPrimary;
-  final String? branchName;
-  final String? roleName;
 
   const BranchAssignment({
     required this.id,
@@ -32,6 +25,13 @@ class BranchAssignment {
       roleName: json['role_name'] as String?,
     );
   }
+  final String id;
+  final String staffUserId;
+  final String branchId;
+  final int? roleId;
+  final bool isPrimary;
+  final String? branchName;
+  final String? roleName;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -45,43 +45,20 @@ class BranchAssignment {
 }
 
 class LinkedUser {
-  final String id;
-  final String name;
-  final String email;
 
   const LinkedUser({required this.id, required this.name, required this.email});
 
   factory LinkedUser.fromJson(Map<String, dynamic> json) {
     return LinkedUser(id: json['id'] as String, name: json['name'] as String, email: json['email'] as String);
   }
+  final String id;
+  final String name;
+  final String email;
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'email': email};
 }
 
 class StaffUser {
-  final String id;
-  final String storeId;
-  final String? userId;
-  final String firstName;
-  final String lastName;
-  final String? email;
-  final String? phone;
-  final String? photoUrl;
-  final String? nationalId;
-  final String? pinHash;
-  final String? nfcBadgeUid;
-  final bool? biometricEnabled;
-  final EmploymentType employmentType;
-  final SalaryType salaryType;
-  final double? hourlyRate;
-  final DateTime hireDate;
-  final DateTime? terminationDate;
-  final StaffStatus? status;
-  final String? languagePreference;
-  final List<BranchAssignment> branchAssignments;
-  final LinkedUser? linkedUser;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StaffUser({
     required this.id,
@@ -138,6 +115,29 @@ class StaffUser {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? userId;
+  final String firstName;
+  final String lastName;
+  final String? email;
+  final String? phone;
+  final String? photoUrl;
+  final String? nationalId;
+  final String? pinHash;
+  final String? nfcBadgeUid;
+  final bool? biometricEnabled;
+  final EmploymentType employmentType;
+  final SalaryType salaryType;
+  final double? hourlyRate;
+  final DateTime hireDate;
+  final DateTime? terminationDate;
+  final StaffStatus? status;
+  final String? languagePreference;
+  final List<BranchAssignment> branchAssignments;
+  final LinkedUser? linkedUser;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

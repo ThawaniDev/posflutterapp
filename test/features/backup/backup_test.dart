@@ -41,7 +41,7 @@ void main() {
     });
 
     test('toJson round-trips', () {
-      final model = BackupHistory(
+      const model = BackupHistory(
         id: 'bh-2',
         storeId: 'store-2',
         backupType: 'auto',
@@ -60,7 +60,7 @@ void main() {
     });
 
     test('copyWith changes only specified field', () {
-      final model = BackupHistory(id: 'bh-3', storeId: 'store-3', backupType: 'manual', status: 'completed');
+      const model = BackupHistory(id: 'bh-3', storeId: 'store-3', backupType: 'manual', status: 'completed');
 
       final updated = model.copyWith(status: 'failed');
 
@@ -70,22 +70,22 @@ void main() {
     });
 
     test('equality by id', () {
-      final a = BackupHistory(id: 'bh-x', storeId: 's', backupType: 'auto', status: 'completed');
-      final b = BackupHistory(id: 'bh-x', storeId: 's2', backupType: 'manual', status: 'failed');
+      const a = BackupHistory(id: 'bh-x', storeId: 's', backupType: 'auto', status: 'completed');
+      const b = BackupHistory(id: 'bh-x', storeId: 's2', backupType: 'manual', status: 'failed');
 
       expect(a, equals(b));
       expect(a.hashCode, b.hashCode);
     });
 
     test('inequality', () {
-      final a = BackupHistory(id: 'bh-a', storeId: 's', backupType: 'auto', status: 'completed');
-      final b = BackupHistory(id: 'bh-b', storeId: 's', backupType: 'auto', status: 'completed');
+      const a = BackupHistory(id: 'bh-a', storeId: 's', backupType: 'auto', status: 'completed');
+      const b = BackupHistory(id: 'bh-b', storeId: 's', backupType: 'auto', status: 'completed');
 
       expect(a, isNot(equals(b)));
     });
 
     test('defaults for optional fields', () {
-      final model = BackupHistory(id: 'bh-d', storeId: 'store-d', backupType: 'manual', status: 'completed');
+      const model = BackupHistory(id: 'bh-d', storeId: 'store-d', backupType: 'manual', status: 'completed');
 
       expect(model.fileSizeBytes, 0);
       expect(model.recordsCount, 0);
@@ -255,7 +255,7 @@ void main() {
 
   group('Cross-cutting', () {
     test('BackupHistory encrypted flag', () {
-      final model = BackupHistory(
+      const model = BackupHistory(
         id: 'enc-1',
         storeId: 'store-enc',
         backupType: 'manual',

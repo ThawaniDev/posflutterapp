@@ -1,12 +1,4 @@
 class MarketplaceCategory {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? iconUrl;
-  final int listingCount;
-  final int sortOrder;
-  final DateTime? createdAt;
 
   const MarketplaceCategory({
     required this.id,
@@ -31,6 +23,14 @@ class MarketplaceCategory {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? iconUrl;
+  final int listingCount;
+  final int sortOrder;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

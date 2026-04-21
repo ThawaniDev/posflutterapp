@@ -8,8 +8,8 @@ final niceToHaveApiServiceProvider = Provider<NiceToHaveApiService>((ref) {
 });
 
 class NiceToHaveApiService {
-  final Dio _dio;
   NiceToHaveApiService(this._dio);
+  final Dio _dio;
 
   // ─── Wishlist ───────────────────────────────────────────
   Future<Response> getWishlist(String customerId) =>

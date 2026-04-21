@@ -10,8 +10,8 @@ import 'package:wameedpos/features/delivery_integration/providers/delivery_provi
 import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
 class DeliveryConfigPage extends ConsumerStatefulWidget {
-  final String? configId;
   const DeliveryConfigPage({super.key, this.configId});
+  final String? configId;
 
   @override
   ConsumerState<DeliveryConfigPage> createState() => _DeliveryConfigPageState();
@@ -196,7 +196,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
     return switch (platformsState) {
       DeliveryPlatformsLoading() || DeliveryPlatformsInitial() => const PosLoading(),
-      DeliveryPlatformsError(:final message) => Text(message, style: TextStyle(color: AppColors.error)),
+      DeliveryPlatformsError(:final message) => Text(message, style: const TextStyle(color: AppColors.error)),
       DeliveryPlatformsLoaded(:final platforms) => Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -250,10 +250,10 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         ),
         child: Row(
           children: [
-            Icon(Icons.check_circle, color: AppColors.success, size: 20),
+            const Icon(Icons.check_circle, color: AppColors.success, size: 20),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(message, style: TextStyle(color: AppColors.success)),
+              child: Text(message, style: const TextStyle(color: AppColors.success)),
             ),
           ],
         ),
@@ -268,10 +268,10 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         ),
         child: Row(
           children: [
-            Icon(Icons.error_outline, color: AppColors.error, size: 20),
+            const Icon(Icons.error_outline, color: AppColors.error, size: 20),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(message, style: TextStyle(color: AppColors.error)),
+              child: Text(message, style: const TextStyle(color: AppColors.error)),
             ),
           ],
         ),

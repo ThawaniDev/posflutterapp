@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/flower_arrangement.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ArrangementCard extends StatelessWidget {
+
+  const ArrangementCard({super.key, required this.arrangement, this.onTap, this.onEdit, this.onDelete});
   final FlowerArrangement arrangement;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
-
-  const ArrangementCard({super.key, required this.arrangement, this.onTap, this.onEdit, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class ArrangementCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,
@@ -63,7 +62,7 @@ class ArrangementCard extends StatelessWidget {
                     ),
                   if (onDelete != null)
                     IconButton(
-                      icon: Icon(Icons.delete_outline, size: 20, color: AppColors.error),
+                      icon: const Icon(Icons.delete_outline, size: 20, color: AppColors.error),
                       onPressed: onDelete,
                       visualDensity: VisualDensity.compact,
                     ),

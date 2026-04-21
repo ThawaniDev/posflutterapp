@@ -1,19 +1,6 @@
 import 'package:wameedpos/features/thawani_integration/enums/thawani_connection_status.dart';
 
 class ThawaniMarketplaceConfig {
-  final String id;
-  final String clientIdEncrypted;
-  final String clientSecretEncrypted;
-  final String redirectUrl;
-  final String apiBaseUrl;
-  final String? apiVersion;
-  final String webhookUrl;
-  final String webhookSecretEncrypted;
-  final int? syncIntervalMinutes;
-  final bool? isActive;
-  final DateTime? lastConnectionAt;
-  final ThawaniConnectionStatus? connectionStatus;
-  final DateTime? updatedAt;
 
   const ThawaniMarketplaceConfig({
     required this.id,
@@ -48,6 +35,19 @@ class ThawaniMarketplaceConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String clientIdEncrypted;
+  final String clientSecretEncrypted;
+  final String redirectUrl;
+  final String apiBaseUrl;
+  final String? apiVersion;
+  final String webhookUrl;
+  final String webhookSecretEncrypted;
+  final int? syncIntervalMinutes;
+  final bool? isActive;
+  final DateTime? lastConnectionAt;
+  final ThawaniConnectionStatus? connectionStatus;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

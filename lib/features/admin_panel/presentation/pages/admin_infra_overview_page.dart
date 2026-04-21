@@ -190,7 +190,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
     return ListView(
       controller: scrollController,
       children: [
-        Text(l10n.adminInfraServerMetrics, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(l10n.adminInfraServerMetrics, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const Divider(),
         ...data.entries.map(
           (e) => ListTile(
@@ -208,12 +208,12 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
 }
 
 class _NavTile extends StatelessWidget {
+
+  const _NavTile(this.title, this.icon, this.subtitle, this.onTap);
   final String title;
   final IconData icon;
   final String subtitle;
   final VoidCallback onTap;
-
-  const _NavTile(this.title, this.icon, this.subtitle, this.onTap);
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../repositories/auto_update_repository.dart';
+import 'package:wameedpos/features/auto_update/repositories/auto_update_repository.dart';
 
 /// Periodically checks for available updates against the update server.
 /// Default interval: every 6 hours.

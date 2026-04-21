@@ -2,13 +2,6 @@ import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class CartItem {
-  final Product product;
-  final double quantity;
-  final double unitPrice;
-  final double? discountAmount;
-  final DiscountType? discountType;
-  final double? discountValue;
-  final String? notes;
 
   const CartItem({
     required this.product,
@@ -19,6 +12,13 @@ class CartItem {
     this.discountValue,
     this.notes,
   });
+  final Product product;
+  final double quantity;
+  final double unitPrice;
+  final double? discountAmount;
+  final DiscountType? discountType;
+  final double? discountValue;
+  final String? notes;
 
   /// Raw tax rate as stored in DB (e.g. 15 for 15%).
   double get rawTaxRate => product.taxRate ?? 15.0;

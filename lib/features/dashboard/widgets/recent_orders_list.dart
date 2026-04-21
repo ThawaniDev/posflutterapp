@@ -3,15 +3,12 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class RecentOrdersList extends StatelessWidget {
-  final List<Map<String, dynamic>> orders;
 
   const RecentOrdersList({super.key, required this.orders});
+  final List<Map<String, dynamic>> orders;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,7 @@ class RecentOrdersList extends StatelessWidget {
               child: Center(
                 child: Text(
                   l10n.dashboardNoOrders,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             )
@@ -43,10 +40,10 @@ class RecentOrdersList extends StatelessWidget {
 }
 
 class _OrderRow extends StatelessWidget {
-  final Map<String, dynamic> order;
-  final bool isDark;
 
   const _OrderRow({required this.order, required this.isDark});
+  final Map<String, dynamic> order;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +62,7 @@ class _OrderRow extends StatelessWidget {
                 Text('#${order['order_number'] ?? '-'}', style: AppTypography.titleSmall),
                 Text(
                   order['created_at'] as String? ?? '',
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),

@@ -1,10 +1,4 @@
 class AIFeatureResult {
-  final bool success;
-  final String? message;
-  final Map<String, dynamic>? data;
-  final bool cached;
-  final int? tokensUsed;
-  final double? cost;
 
   const AIFeatureResult({required this.success, this.message, this.data, this.cached = false, this.tokensUsed, this.cost});
 
@@ -24,4 +18,10 @@ class AIFeatureResult {
   factory AIFeatureResult.error(String message) {
     return AIFeatureResult(success: false, message: message);
   }
+  final bool success;
+  final String? message;
+  final Map<String, dynamic>? data;
+  final bool cached;
+  final int? tokensUsed;
+  final double? cost;
 }

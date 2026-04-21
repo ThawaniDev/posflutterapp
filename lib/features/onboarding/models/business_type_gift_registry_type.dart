@@ -1,16 +1,4 @@
 class BusinessTypeGiftRegistryType {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final String? description;
-  final String? icon;
-  final int? defaultExpiryDays;
-  final bool? allowPublicSharing;
-  final bool? allowPartialFulfilment;
-  final bool? requireMinimumItems;
-  final int? minimumItemsCount;
-  final int? sortOrder;
 
   const BusinessTypeGiftRegistryType({
     required this.id,
@@ -43,6 +31,18 @@ class BusinessTypeGiftRegistryType {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final String? description;
+  final String? icon;
+  final int? defaultExpiryDays;
+  final bool? allowPublicSharing;
+  final bool? allowPartialFulfilment;
+  final bool? requireMinimumItems;
+  final int? minimumItemsCount;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

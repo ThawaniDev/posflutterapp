@@ -253,7 +253,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             ),
             Text(
               _fmtDate(lastMsg.isNotEmpty ? lastMsg : createdAt),
-              style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ),
@@ -306,16 +306,16 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             constraints: const BoxConstraints(maxWidth: 500),
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
-              color: isUser ? AppColors.primary.withValues(alpha: 0.1) : AppColors.surfaceLight,
+              color: isUser ? AppColors.primary.withValues(alpha: 0.1) : AppColors.surfaceFor(context),
               borderRadius: AppRadius.borderLg,
-              border: Border.all(color: isUser ? AppColors.primary.withValues(alpha: 0.3) : AppColors.borderLight),
+              border: Border.all(color: isUser ? AppColors.primary.withValues(alpha: 0.3) : AppColors.borderFor(context)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   role.toUpperCase(),
-                  style: AppTypography.micro.copyWith(color: AppColors.textMutedLight, fontWeight: FontWeight.bold),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context), fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 SelectableText(content, style: AppTypography.bodySmall),

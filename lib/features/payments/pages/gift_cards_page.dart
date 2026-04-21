@@ -67,8 +67,8 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
 // ─── Issue Tab ──────────────────────────────────────────────────
 
 class _IssueTab extends ConsumerStatefulWidget {
-  final ThemeData theme;
   const _IssueTab({required this.theme});
+  final ThemeData theme;
 
   @override
   ConsumerState<_IssueTab> createState() => _IssueTabState();
@@ -165,10 +165,10 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
                 padding: AppSpacing.paddingAll16,
                 child: Row(
                   children: [
-                    Icon(Icons.error_outline, color: AppColors.error),
+                    const Icon(Icons.error_outline, color: AppColors.error),
                     AppSpacing.gapW8,
                     Expanded(
-                      child: Text(state.message, style: TextStyle(color: AppColors.error)),
+                      child: Text(state.message, style: const TextStyle(color: AppColors.error)),
                     ),
                   ],
                 ),
@@ -184,8 +184,8 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
 // ─── Check Balance Tab ──────────────────────────────────────────
 
 class _CheckBalanceTab extends ConsumerStatefulWidget {
-  final ThemeData theme;
   const _CheckBalanceTab({required this.theme});
+  final ThemeData theme;
 
   @override
   ConsumerState<_CheckBalanceTab> createState() => _CheckBalanceTabState();
@@ -245,7 +245,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                 padding: AppSpacing.paddingAll24,
                 child: Column(
                   children: [
-                    Icon(Icons.account_balance_wallet, size: 48, color: AppColors.primary),
+                    const Icon(Icons.account_balance_wallet, size: 48, color: AppColors.primary),
                     AppSpacing.gapH12,
                     Text(
                       '${(state.lastBalance!['balance'] as num?)?.toStringAsFixed(2) ?? '0.00'} \u0081',
@@ -276,10 +276,10 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                 padding: AppSpacing.paddingAll16,
                 child: Row(
                   children: [
-                    Icon(Icons.error_outline, color: AppColors.error),
+                    const Icon(Icons.error_outline, color: AppColors.error),
                     AppSpacing.gapW8,
                     Expanded(
-                      child: Text(state.message, style: TextStyle(color: AppColors.error)),
+                      child: Text(state.message, style: const TextStyle(color: AppColors.error)),
                     ),
                   ],
                 ),
@@ -295,8 +295,8 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
 // ─── Redeem Tab ─────────────────────────────────────────────────
 
 class _RedeemTab extends ConsumerStatefulWidget {
-  final ThemeData theme;
   const _RedeemTab({required this.theme});
+  final ThemeData theme;
 
   @override
   ConsumerState<_RedeemTab> createState() => _RedeemTabState();
@@ -359,10 +359,10 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
                 padding: AppSpacing.paddingAll16,
                 child: Row(
                   children: [
-                    Icon(Icons.error_outline, color: AppColors.error),
+                    const Icon(Icons.error_outline, color: AppColors.error),
                     AppSpacing.gapW8,
                     Expanded(
-                      child: Text(state.message, style: TextStyle(color: AppColors.error)),
+                      child: Text(state.message, style: const TextStyle(color: AppColors.error)),
                     ),
                   ],
                 ),
@@ -378,10 +378,10 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
 // ─── Shared Widgets ─────────────────────────────────────────────
 
 class _GiftCardResultCard extends StatelessWidget {
-  final dynamic card;
-  final ThemeData theme;
 
   const _GiftCardResultCard({required this.card, required this.theme});
+  final dynamic card;
+  final ThemeData theme;
 
   @override
   Widget build(BuildContext context) {

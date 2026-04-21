@@ -5,7 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_billing.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
@@ -102,12 +101,12 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
 }
 
 class _MobileInvoiceList extends ConsumerWidget {
+
+  const _MobileInvoiceList({required this.invoices, required this.currentPage, required this.lastPage, required this.total});
   final List<AIBillingInvoicePreview> invoices;
   final int currentPage;
   final int lastPage;
   final int total;
-
-  const _MobileInvoiceList({required this.invoices, required this.currentPage, required this.lastPage, required this.total});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

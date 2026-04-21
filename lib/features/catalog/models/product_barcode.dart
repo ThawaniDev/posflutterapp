@@ -1,9 +1,4 @@
 class ProductBarcode {
-  final String id;
-  final String? productId;
-  final String barcode;
-  final bool? isPrimary;
-  final DateTime? createdAt;
 
   const ProductBarcode({required this.id, this.productId, required this.barcode, this.isPrimary, this.createdAt});
 
@@ -16,6 +11,11 @@ class ProductBarcode {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? productId;
+  final String barcode;
+  final bool? isPrimary;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

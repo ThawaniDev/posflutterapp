@@ -131,7 +131,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
               subtitle: Text(category[0].toUpperCase() + category.substring(1), style: const TextStyle(fontSize: 12)),
               trailing: Text(
                 item['expense_date']?.toString() ?? item['created_at']?.toString().substring(0, 10) ?? '',
-                style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight),
+                style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
               ),
             ),
           );

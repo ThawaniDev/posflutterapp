@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/inventory/enums/goods_receipt_status.dart';
 
 class GoodsReceipt {
-  final String id;
-  final String storeId;
-  final String? supplierId;
-  final String? supplierName;
-  final String? purchaseOrderId;
-  final String? referenceNumber;
-  final GoodsReceiptStatus? status;
-  final double? totalCost;
-  final String? notes;
-  final String receivedBy;
-  final DateTime? receivedAt;
-  final DateTime? confirmedAt;
 
   const GoodsReceipt({
     required this.id,
@@ -45,6 +33,18 @@ class GoodsReceipt {
       confirmedAt: json['confirmed_at'] != null ? DateTime.parse(json['confirmed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? supplierId;
+  final String? supplierName;
+  final String? purchaseOrderId;
+  final String? referenceNumber;
+  final GoodsReceiptStatus? status;
+  final double? totalCost;
+  final String? notes;
+  final String receivedBy;
+  final DateTime? receivedAt;
+  final DateTime? confirmedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -244,7 +244,7 @@ import 'package:wameedpos/features/accounting/pages/auto_export_settings_page.da
 import 'package:wameedpos/features/promotions/pages/promotion_list_page.dart';
 import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
 // Notifications
-import 'package:wameedpos/features/notifications/pages/notifications_list_page.dart';
+import 'package:wameedpos/features/notifications/pages/notification_centre_page.dart';
 import 'package:wameedpos/features/notifications/pages/notification_preferences_page.dart';
 import 'package:wameedpos/features/notifications/pages/notification_delivery_logs_page.dart';
 import 'package:wameedpos/features/notifications/pages/notification_schedules_page.dart';
@@ -299,9 +299,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   ref.listen<AuthState>(authProvider, (previous, next) {
     if (next is AuthAuthenticated) {
       ref.read(userPermissionsProvider.notifier).load();
-      // Set initial branch context for Dio
-      ref.read(activeBranchStoreIdProvider.notifier).state = next.user.storeId;
-      ref.read(activeBranchIdProvider.notifier).state = next.user.storeId;
+      // Initial branch: null means "all stores" for org-scoped users.
+      // Will be corrected once permissions load via activeBranchIdProvider's default.
+      ref.read(activeBranchStoreIdProvider.notifier).state = null;
+      ref.read(activeBranchIdProvider.notifier).state = null;
     } else if (next is AuthUnauthenticated) {
       ref.read(userPermissionsProvider.notifier).clear();
       ref.read(activeBranchStoreIdProvider.notifier).state = null;
@@ -309,12 +310,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     }
   });
 
-  // Keep Dio's branch header in sync whenever the active branch changes
+  // Keep Dio's branch header in sync whenever the active branch changes.
+  // null means "all stores" — Dio will omit the X-Store-Id header.
+  // fireImmediately ensures branch-scoped users get their store_id set on session recovery.
   ref.listen<String?>(activeBranchIdProvider, (previous, next) {
-    if (next != null) {
-      ref.read(activeBranchStoreIdProvider.notifier).state = next;
-    }
-  });
+    ref.read(activeBranchStoreIdProvider.notifier).state = next;
+  }, fireImmediately: true);
 
   // Also load on initial session recovery (provider created while already authenticated)
   if (authState is AuthAuthenticated) {
@@ -324,8 +325,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     }
     // Ensure branch context is set on session recovery
     if (ref.read(activeBranchStoreIdProvider) == null) {
-      ref.read(activeBranchStoreIdProvider.notifier).state = authState.user.storeId;
-      ref.read(activeBranchIdProvider.notifier).state = authState.user.storeId;
+      // Leave as null — "all stores" is the default for org-scoped users.
+      // Branch-scoped users will be resolved server-side to their own store.
     }
   }
 
@@ -1375,7 +1376,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
 
           // ─── Notifications ───
-          GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationsListPage()),
+          GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationCentrePage()),
           GoRoute(
             path: Routes.notificationPreferences,
             name: 'notificationPreferences',

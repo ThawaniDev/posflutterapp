@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
-import '../theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 enum PosStatusBadgeVariant { success, warning, error, info, neutral }
 
 class PosStatusBadge extends StatelessWidget {
-  final String label;
-  final PosStatusBadgeVariant variant;
-  final IconData? icon;
 
   const PosStatusBadge({
     super.key,
@@ -16,6 +13,9 @@ class PosStatusBadge extends StatelessWidget {
     this.variant = PosStatusBadgeVariant.neutral,
     this.icon,
   });
+  final String label;
+  final PosStatusBadgeVariant variant;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {

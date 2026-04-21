@@ -8,9 +8,9 @@ final settingsApiServiceProvider = Provider<SettingsApiService>((ref) {
 });
 
 class SettingsApiService {
-  final Dio _dio;
 
   SettingsApiService(this._dio);
+  final Dio _dio;
 
   // ─── Store Settings ─────────────────────────────────────────
 

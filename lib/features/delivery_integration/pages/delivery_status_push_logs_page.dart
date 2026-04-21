@@ -113,8 +113,8 @@ class _DeliveryStatusPushLogsPageState extends ConsumerState<DeliveryStatusPushL
 }
 
 class _StatusPushLogCard extends StatelessWidget {
-  final Map<String, dynamic> log;
   const _StatusPushLogCard({required this.log});
+  final Map<String, dynamic> log;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class _StatusPushLogCard extends StatelessWidget {
 
     final enumPlatform = DeliveryConfigPlatform.tryFromValue(platform);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     final platformColor = enumPlatform?.color ?? mutedColor;
     final platformLabel = enumPlatform?.label ?? platform;
 
@@ -204,16 +204,16 @@ class _StatusPushLogCard extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
+
+  const _DetailRow({required this.label, required this.value, this.valueColor});
   final String label;
   final String value;
   final Color? valueColor;
 
-  const _DetailRow({required this.label, required this.value, this.valueColor});
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
@@ -234,16 +234,16 @@ class _DetailRow extends StatelessWidget {
 }
 
 class _JsonSection extends StatelessWidget {
-  final String label;
-  final dynamic data;
 
   const _JsonSection({required this.label, required this.data});
+  final String label;
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
     final jsonStr = data is Map || data is List ? _prettyJson(data) : '$data';
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +276,7 @@ class _JsonSection extends StatelessWidget {
           ),
           child: SelectableText(
             jsonStr,
-            style: TextStyle(fontSize: 11, fontFamily: 'monospace', color: AppColors.textPrimaryLight),
+            style: const TextStyle(fontSize: 11, fontFamily: 'monospace', color: AppColors.textPrimaryLight),
           ),
         ),
       ],
@@ -294,18 +294,18 @@ class _JsonSection extends StatelessWidget {
 }
 
 class _PaginationBar extends StatelessWidget {
+
+  const _PaginationBar({required this.currentPage, required this.lastPage, required this.total, required this.onPageChanged});
   final int currentPage;
   final int lastPage;
   final int total;
   final ValueChanged<int> onPageChanged;
 
-  const _PaginationBar({required this.currentPage, required this.lastPage, required this.total, required this.onPageChanged});
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

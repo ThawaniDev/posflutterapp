@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -11,9 +10,9 @@ import 'package:wameedpos/features/subscription/providers/subscription_state.dar
 
 /// Page that shows full invoice details with line items, totals, and PDF download.
 class InvoiceDetailPage extends ConsumerStatefulWidget {
-  final String invoiceId;
 
   const InvoiceDetailPage({super.key, required this.invoiceId});
+  final String invoiceId;
 
   @override
   ConsumerState<InvoiceDetailPage> createState() => _InvoiceDetailPageState();
@@ -130,14 +129,14 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                                     children: [
                                       Text(
                                         '${l10n.subQty}: ${item.quantity ?? 1}',
-                                        style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
+                                        style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
                                       ),
                                       Text(
                                         '${l10n.subUnit}: ${item.unitPrice.toStringAsFixed(2)}',
-                                        style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
+                                        style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
                                       ),
                                       Text(
-                                        '${item.total.toStringAsFixed(2)}',
+                                        item.total.toStringAsFixed(2),
                                         style: const TextStyle(fontWeight: FontWeight.w600),
                                       ),
                                     ],
@@ -159,7 +158,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             flex: 4,
                             child: Text(
                               l10n.description,
-                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
@@ -167,7 +166,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.wameedAIQty,
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
@@ -175,7 +174,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.subscriptionUnitPrice,
                               textAlign: TextAlign.end,
-                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
@@ -183,7 +182,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.posTotal,
                               textAlign: TextAlign.end,
-                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                         ],
@@ -196,11 +195,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             children: [
                               Expanded(flex: 4, child: Text(item.description)),
                               Expanded(flex: 1, child: Text('${item.quantity ?? 1}', textAlign: TextAlign.center)),
-                              Expanded(flex: 2, child: Text('${item.unitPrice.toStringAsFixed(2)}', textAlign: TextAlign.end)),
+                              Expanded(flex: 2, child: Text(item.unitPrice.toStringAsFixed(2), textAlign: TextAlign.end)),
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${item.total.toStringAsFixed(2)}',
+                                  item.total.toStringAsFixed(2),
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(fontWeight: FontWeight.w500),
                                 ),
@@ -268,7 +267,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: AppColors.textSecondaryLight)),
+          Text(label, style: const TextStyle(color: AppColors.textSecondaryLight)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),

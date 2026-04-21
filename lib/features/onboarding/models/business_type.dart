@@ -1,13 +1,4 @@
 class BusinessType {
-  final String id;
-  final String name;
-  final String nameAr;
-  final String slug;
-  final String? icon;
-  final bool? isActive;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const BusinessType({
     required this.id,
@@ -34,6 +25,15 @@ class BusinessType {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String nameAr;
+  final String slug;
+  final String? icon;
+  final bool? isActive;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

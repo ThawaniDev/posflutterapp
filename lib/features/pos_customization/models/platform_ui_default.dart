@@ -1,6 +1,4 @@
 class PlatformUiDefault {
-  final String? key;
-  final String value;
 
   const PlatformUiDefault({
     this.key,
@@ -13,6 +11,8 @@ class PlatformUiDefault {
       value: json['value'] as String,
     );
   }
+  final String? key;
+  final String value;
 
   Map<String, dynamic> toJson() {
     return {

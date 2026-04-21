@@ -4,7 +4,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A single node in the category tree.
 /// Renders with indentation based on [depth] and shows expand/collapse
@@ -39,7 +38,7 @@ class CategoryTreeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     final indent = depth * 28.0;
 
     return Material(
@@ -80,10 +79,10 @@ class CategoryTreeTile extends StatelessWidget {
                         child: Image.network(
                           category.imageUrl!,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Icon(Icons.category, size: 18, color: AppColors.primary),
+                          errorBuilder: (_, __, ___) => const Icon(Icons.category, size: 18, color: AppColors.primary),
                         ),
                       )
-                    : Icon(Icons.category, size: 18, color: AppColors.primary),
+                    : const Icon(Icons.category, size: 18, color: AppColors.primary),
               ),
               const SizedBox(width: AppSpacing.sm),
 
@@ -146,10 +145,10 @@ class CategoryTreeTile extends StatelessWidget {
                 ),
 
               // Actions
-              IconButton(icon: Icon(Icons.add, size: 18), tooltip: l10n.addSubcategory, onPressed: onAddChild),
-              IconButton(icon: Icon(Icons.edit_outlined, size: 18), tooltip: l10n.edit, onPressed: onEdit),
+              IconButton(icon: const Icon(Icons.add, size: 18), tooltip: l10n.addSubcategory, onPressed: onAddChild),
+              IconButton(icon: const Icon(Icons.edit_outlined, size: 18), tooltip: l10n.edit, onPressed: onEdit),
               IconButton(
-                icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
                 tooltip: l10n.delete,
                 onPressed: onDelete,
               ),

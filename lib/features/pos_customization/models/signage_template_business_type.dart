@@ -1,6 +1,4 @@
 class SignageTemplateBusinessType {
-  final String signageTemplateId;
-  final String businessTypeId;
 
   const SignageTemplateBusinessType({
     required this.signageTemplateId,
@@ -13,6 +11,8 @@ class SignageTemplateBusinessType {
       businessTypeId: json['business_type_id'] as String,
     );
   }
+  final String signageTemplateId;
+  final String businessTypeId;
 
   Map<String, dynamic> toJson() {
     return {

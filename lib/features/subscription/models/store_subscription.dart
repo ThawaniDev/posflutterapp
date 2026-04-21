@@ -4,20 +4,6 @@ import 'package:wameedpos/features/subscription/enums/subscription_status.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 
 class StoreSubscription {
-  final String id;
-  final String organizationId;
-  final String subscriptionPlanId;
-  final SubscriptionStatus status;
-  final BillingCycle? billingCycle;
-  final DateTime? currentPeriodStart;
-  final DateTime? currentPeriodEnd;
-  final DateTime? trialEndsAt;
-  final SubscriptionPaymentMethod? paymentMethod;
-  final DateTime? cancelledAt;
-  final DateTime? gracePeriodEndsAt;
-  final SubscriptionPlan? plan;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StoreSubscription({
     required this.id,
@@ -54,6 +40,20 @@ class StoreSubscription {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String subscriptionPlanId;
+  final SubscriptionStatus status;
+  final BillingCycle? billingCycle;
+  final DateTime? currentPeriodStart;
+  final DateTime? currentPeriodEnd;
+  final DateTime? trialEndsAt;
+  final SubscriptionPaymentMethod? paymentMethod;
+  final DateTime? cancelledAt;
+  final DateTime? gracePeriodEndsAt;
+  final SubscriptionPlan? plan;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

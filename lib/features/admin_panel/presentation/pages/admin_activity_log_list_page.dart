@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/widgets.dart';
-import '../../providers/admin_providers.dart';
-import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
@@ -146,7 +145,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              child: Icon(Icons.history, color: AppColors.primary),
+              child: const Icon(Icons.history, color: AppColors.primary),
             ),
             title: Text(log['action']?.toString() ?? 'Unknown', style: const TextStyle(fontWeight: FontWeight.w600)),
             subtitle: Text('${log['entity_type'] ?? ''} • ${log['ip_address'] ?? ''}\n${log['created_at'] ?? ''}'),

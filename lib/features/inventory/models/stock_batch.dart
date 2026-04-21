@@ -1,13 +1,4 @@
 class StockBatch {
-  final String id;
-  final String storeId;
-  final String productId;
-  final String? batchNumber;
-  final DateTime? expiryDate;
-  final double quantity;
-  final double? unitCost;
-  final String? goodsReceiptId;
-  final DateTime? createdAt;
 
   const StockBatch({
     required this.id,
@@ -34,6 +25,15 @@ class StockBatch {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String productId;
+  final String? batchNumber;
+  final DateTime? expiryDate;
+  final double quantity;
+  final double? unitCost;
+  final String? goodsReceiptId;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

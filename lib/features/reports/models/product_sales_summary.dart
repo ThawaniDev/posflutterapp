@@ -1,15 +1,4 @@
 class ProductSalesSummary {
-  final String id;
-  final String storeId;
-  final String productId;
-  final DateTime date;
-  final double? quantitySold;
-  final double? revenue;
-  final double? cost;
-  final double? discountAmount;
-  final double? taxAmount;
-  final double? returnQuantity;
-  final double? returnAmount;
 
   const ProductSalesSummary({
     required this.id,
@@ -40,6 +29,17 @@ class ProductSalesSummary {
       returnAmount: (json['return_amount'] != null ? double.tryParse(json['return_amount'].toString()) : null),
     );
   }
+  final String id;
+  final String storeId;
+  final String productId;
+  final DateTime date;
+  final double? quantitySold;
+  final double? revenue;
+  final double? cost;
+  final double? discountAmount;
+  final double? taxAmount;
+  final double? returnQuantity;
+  final double? returnAmount;
 
   Map<String, dynamic> toJson() {
     return {

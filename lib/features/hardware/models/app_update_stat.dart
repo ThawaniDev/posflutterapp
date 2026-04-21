@@ -1,12 +1,6 @@
 import 'package:wameedpos/features/hardware/enums/app_update_status.dart';
 
 class AppUpdateStat {
-  final String id;
-  final String storeId;
-  final String appReleaseId;
-  final AppUpdateStatus status;
-  final String? errorMessage;
-  final DateTime? updatedAt;
 
   const AppUpdateStat({
     required this.id,
@@ -27,6 +21,12 @@ class AppUpdateStat {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String appReleaseId;
+  final AppUpdateStatus status;
+  final String? errorMessage;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

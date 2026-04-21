@@ -8,8 +8,8 @@ final electronicsProvider = StateNotifierProvider<ElectronicsNotifier, Electroni
 });
 
 class ElectronicsNotifier extends StateNotifier<ElectronicsState> {
-  final ElectronicsRepository _repo;
   ElectronicsNotifier(this._repo) : super(const ElectronicsInitial());
+  final ElectronicsRepository _repo;
 
   Future<void> load() async {
     state = const ElectronicsLoading();

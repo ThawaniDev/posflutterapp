@@ -3,9 +3,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/inventory/enums/supplier_return_status.dart';
 import 'package:wameedpos/features/inventory/models/supplier_return.dart';
@@ -13,8 +10,8 @@ import 'package:wameedpos/features/inventory/providers/inventory_providers.dart'
 import 'package:wameedpos/features/inventory/repositories/inventory_repository.dart';
 
 class SupplierReturnDetailPage extends ConsumerStatefulWidget {
-  final String returnId;
   const SupplierReturnDetailPage({super.key, required this.returnId});
+  final String returnId;
 
   @override
   ConsumerState<SupplierReturnDetailPage> createState() => _SupplierReturnDetailPageState();
@@ -38,17 +35,19 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
     });
     try {
       final data = await ref.read(inventoryRepositoryProvider).getSupplierReturn(widget.returnId);
-      if (mounted)
+      if (mounted) {
         setState(() {
           _returnData = data;
           _isLoading = false;
         });
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _error = e.toString();
           _isLoading = false;
         });
+      }
     }
   }
 

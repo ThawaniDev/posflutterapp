@@ -448,7 +448,7 @@ void main() {
 
     test('sealed states are exhaustive', () {
       // SecurityPolicyState
-      SecurityPolicyState s = const SecurityPolicyInitial();
+      const SecurityPolicyState s = SecurityPolicyInitial();
       final label = switch (s) {
         SecurityPolicyInitial() => 'init',
         SecurityPolicyLoading() => 'load',
@@ -458,7 +458,7 @@ void main() {
       expect(label, 'init');
 
       // AuditLogListState
-      AuditLogListState als = const AuditLogListInitial();
+      const AuditLogListState als = AuditLogListInitial();
       final alLabel = switch (als) {
         AuditLogListInitial() => 'init',
         AuditLogListLoading() => 'load',
@@ -468,7 +468,7 @@ void main() {
       expect(alLabel, 'init');
 
       // DeviceListState
-      DeviceListState dls = const DeviceListInitial();
+      const DeviceListState dls = DeviceListInitial();
       final dlLabel = switch (dls) {
         DeviceListInitial() => 'init',
         DeviceListLoading() => 'load',
@@ -478,7 +478,7 @@ void main() {
       expect(dlLabel, 'init');
 
       // LoginAttemptsState
-      LoginAttemptsState las = const LoginAttemptsInitial();
+      const LoginAttemptsState las = LoginAttemptsInitial();
       final laLabel = switch (las) {
         LoginAttemptsInitial() => 'init',
         LoginAttemptsLoading() => 'load',

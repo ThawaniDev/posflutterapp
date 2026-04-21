@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../enums/metal_type.dart';
-import '../models/daily_metal_rate.dart';
-import '../providers/jewelry_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/models/daily_metal_rate.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class MetalRateFormPage extends ConsumerStatefulWidget {
-  final DailyMetalRate? rate;
   const MetalRateFormPage({super.key, this.rate});
+  final DailyMetalRate? rate;
 
   @override
   ConsumerState<MetalRateFormPage> createState() => _MetalRateFormPageState();
@@ -97,9 +97,9 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: l10n.jewelryKaratOptional, hint: l10n.jewelryKaratHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -121,7 +121,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(

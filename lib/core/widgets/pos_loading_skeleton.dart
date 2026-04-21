@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PosLoadingSkeleton extends StatefulWidget {
-  final double width;
-  final double height;
-  final double borderRadius;
 
   const PosLoadingSkeleton({super.key, this.width = double.infinity, required this.height, this.borderRadius = 8});
 
@@ -12,6 +9,9 @@ class PosLoadingSkeleton extends StatefulWidget {
   factory PosLoadingSkeleton.list({Key? key, int count = 5}) {
     return _PosListSkeleton(key: key, count: count);
   }
+  final double width;
+  final double height;
+  final double borderRadius;
 
   @override
   State<PosLoadingSkeleton> createState() => _PosLoadingSkeletonState();
@@ -56,9 +56,9 @@ class _PosLoadingSkeletonState extends State<PosLoadingSkeleton> with SingleTick
 }
 
 class _PosListSkeleton extends PosLoadingSkeleton {
-  final int count;
 
   const _PosListSkeleton({super.key, required this.count}) : super(height: 0);
+  final int count;
 
   @override
   State<PosLoadingSkeleton> createState() => _PosListSkeletonState();

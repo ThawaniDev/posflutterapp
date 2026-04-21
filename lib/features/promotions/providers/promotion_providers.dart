@@ -10,9 +10,9 @@ final promotionsProvider = StateNotifierProvider<PromotionsNotifier, PromotionsS
 });
 
 class PromotionsNotifier extends StateNotifier<PromotionsState> {
-  final PromotionRepository _repo;
 
   PromotionsNotifier(this._repo) : super(const PromotionsInitial());
+  final PromotionRepository _repo;
 
   Future<void> load({int page = 1, String? search, bool? isActive, String? type, bool? isCoupon}) async {
     if (state is! PromotionsLoaded) state = const PromotionsLoading();
@@ -74,10 +74,10 @@ final promotionDetailProvider = StateNotifierProvider.family<PromotionDetailNoti
 });
 
 class PromotionDetailNotifier extends StateNotifier<PromotionDetailState> {
-  final PromotionRepository _repo;
-  final String? _promotionId;
 
   PromotionDetailNotifier(this._repo, this._promotionId) : super(const PromotionDetailInitial());
+  final PromotionRepository _repo;
+  final String? _promotionId;
 
   Future<void> load() async {
     if (_promotionId == null) return;
@@ -114,9 +114,9 @@ final couponValidationProvider = StateNotifierProvider<CouponValidationNotifier,
 });
 
 class CouponValidationNotifier extends StateNotifier<CouponValidationState> {
-  final PromotionRepository _repo;
 
   CouponValidationNotifier(this._repo) : super(const CouponValidationInitial());
+  final PromotionRepository _repo;
 
   Future<void> validate({required String code, String? customerId, double? orderTotal}) async {
     state = const CouponValidationLoading();
@@ -168,10 +168,10 @@ final promotionAnalyticsProvider = StateNotifierProvider.family<PromotionAnalyti
 });
 
 class PromotionAnalyticsNotifier extends StateNotifier<PromotionAnalyticsState> {
-  final PromotionRepository _repo;
-  final String _promotionId;
 
   PromotionAnalyticsNotifier(this._repo, this._promotionId) : super(const PromotionAnalyticsInitial());
+  final PromotionRepository _repo;
+  final String _promotionId;
 
   Future<void> load() async {
     if (state is! PromotionAnalyticsLoaded) state = const PromotionAnalyticsLoading();

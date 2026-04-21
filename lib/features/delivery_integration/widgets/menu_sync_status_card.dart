@@ -6,9 +6,9 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class MenuSyncStatusCard extends StatelessWidget {
-  final Map<String, dynamic> syncLog;
 
   const MenuSyncStatusCard({super.key, required this.syncLog});
+  final Map<String, dynamic> syncLog;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MenuSyncStatusCard extends StatelessWidget {
     final createdAt = syncLog['created_at'] as String?;
     final errorMessage = syncLog['error_message'] as String?;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     final (statusColor, statusIcon, statusVariant) = switch (status) {
       'success' => (AppColors.success, Icons.check_circle, PosStatusBadgeVariant.success),
@@ -86,7 +86,7 @@ class MenuSyncStatusCard extends StatelessWidget {
                   color: AppColors.error.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: Text(errorMessage, style: TextStyle(fontSize: 11, color: AppColors.error)),
+                child: Text(errorMessage, style: const TextStyle(fontSize: 11, color: AppColors.error)),
               ),
             ],
           ],
@@ -110,16 +110,16 @@ class MenuSyncStatusCard extends StatelessWidget {
 }
 
 class _MetricChip extends StatelessWidget {
+
+  const _MetricChip({required this.label, required this.value, required this.color});
   final String label;
   final String value;
   final Color color;
 
-  const _MetricChip({required this.label, required this.value, required this.color});
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

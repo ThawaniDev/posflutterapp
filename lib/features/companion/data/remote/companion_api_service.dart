@@ -8,9 +8,9 @@ final companionApiServiceProvider = Provider<CompanionApiService>((ref) {
 });
 
 class CompanionApiService {
-  final Dio _dio;
 
   CompanionApiService(this._dio);
+  final Dio _dio;
 
   Future<Map<String, dynamic>> quickStats() async {
     final res = await _dio.get(ApiEndpoints.companionQuickStats);
@@ -67,7 +67,7 @@ class CompanionApiService {
   Future<Map<String, dynamic>> logEvent({required String eventType, Map<String, dynamic>? eventData}) async {
     final res = await _dio.post(
       ApiEndpoints.companionEvents,
-      data: {'event_type': eventType, if (eventData != null) 'event_data': eventData},
+      data: {'event_type': eventType, 'event_data': ?eventData},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -87,26 +87,26 @@ class CompanionApiService {
   Future<Map<String, dynamic>> getSalesSummary({String? period, String? storeId}) async {
     final res = await _dio.get(
       ApiEndpoints.companionSalesSummary,
-      queryParameters: {if (period != null) 'period': period, if (storeId != null) 'store_id': storeId},
+      queryParameters: {'period': ?period, 'store_id': ?storeId},
     );
     return res.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getActiveOrders({String? storeId}) async {
-    final res = await _dio.get(ApiEndpoints.companionActiveOrders, queryParameters: {if (storeId != null) 'store_id': storeId});
+    final res = await _dio.get(ApiEndpoints.companionActiveOrders, queryParameters: {'store_id': ?storeId});
     return res.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getInventoryAlerts({String? storeId}) async {
     final res = await _dio.get(
       ApiEndpoints.companionInventoryAlerts,
-      queryParameters: {if (storeId != null) 'store_id': storeId},
+      queryParameters: {'store_id': ?storeId},
     );
     return res.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getActiveStaff({String? storeId}) async {
-    final res = await _dio.get(ApiEndpoints.companionActiveStaff, queryParameters: {if (storeId != null) 'store_id': storeId});
+    final res = await _dio.get(ApiEndpoints.companionActiveStaff, queryParameters: {'store_id': ?storeId});
     return res.data as Map<String, dynamic>;
   }
 

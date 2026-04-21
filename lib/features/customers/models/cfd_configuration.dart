@@ -1,12 +1,4 @@
 class CfdConfiguration {
-  final String id;
-  final String storeId;
-  final bool? isEnabled;
-  final int? targetMonitor;
-  final Map<String, dynamic>? themeConfig;
-  final Map<String, dynamic>? idleContent;
-  final int? idleRotationSeconds;
-  final DateTime? updatedAt;
 
   const CfdConfiguration({
     required this.id,
@@ -31,6 +23,14 @@ class CfdConfiguration {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final bool? isEnabled;
+  final int? targetMonitor;
+  final Map<String, dynamic>? themeConfig;
+  final Map<String, dynamic>? idleContent;
+  final int? idleRotationSeconds;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -87,9 +87,9 @@ Color _colorForMethod(String method) {
 }
 
 class _PaymentList extends StatelessWidget {
-  final List<Map<String, dynamic>> methods;
 
   const _PaymentList({required this.methods});
+  final List<Map<String, dynamic>> methods;
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +180,7 @@ class _PaymentList extends StatelessWidget {
                               '${l10n.reportNTransactions(txCount.toString())} · ${l10n.reportAvgAmount(formatCurrency(avg))}',
                               style: Theme.of(
                                 context,
-                              ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                              ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                             ),
                           ],
                         ),

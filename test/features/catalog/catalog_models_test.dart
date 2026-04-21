@@ -86,7 +86,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final product = Product(
+      const product = Product(
         id: 'prod-uuid-1',
         organizationId: 'org-uuid-1',
         name: 'Test',
@@ -105,7 +105,7 @@ void main() {
     });
 
     test('copyWith replaces specified fields', () {
-      final original = Product(id: 'p1', organizationId: 'o1', name: 'Original', sellPrice: 1.0, isActive: true);
+      const original = Product(id: 'p1', organizationId: 'o1', name: 'Original', sellPrice: 1.0, isActive: true);
 
       final updated = original.copyWith(name: 'Updated', sellPrice: 2.5);
       expect(updated.id, 'p1');
@@ -115,9 +115,9 @@ void main() {
     });
 
     test('equality is based on id', () {
-      final p1 = Product(id: 'same-id', organizationId: 'o1', name: 'A', sellPrice: 1.0);
-      final p2 = Product(id: 'same-id', organizationId: 'o1', name: 'B', sellPrice: 2.0);
-      final p3 = Product(id: 'diff-id', organizationId: 'o1', name: 'A', sellPrice: 1.0);
+      const p1 = Product(id: 'same-id', organizationId: 'o1', name: 'A', sellPrice: 1.0);
+      const p2 = Product(id: 'same-id', organizationId: 'o1', name: 'B', sellPrice: 2.0);
+      const p3 = Product(id: 'diff-id', organizationId: 'o1', name: 'A', sellPrice: 1.0);
 
       expect(p1, equals(p2));
       expect(p1, isNot(equals(p3)));
@@ -212,7 +212,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final category = Category(id: 'cat-1', organizationId: 'org-1', name: 'Food', isActive: true, sortOrder: 2);
+      const category = Category(id: 'cat-1', organizationId: 'org-1', name: 'Food', isActive: true, sortOrder: 2);
 
       final json = category.toJson();
       expect(json['id'], 'cat-1');
@@ -222,7 +222,7 @@ void main() {
     });
 
     test('copyWith replaces specified fields', () {
-      final original = Category(id: 'c1', organizationId: 'o1', name: 'Original', isActive: true);
+      const original = Category(id: 'c1', organizationId: 'o1', name: 'Original', isActive: true);
 
       final updated = original.copyWith(name: 'Updated', isActive: false);
       expect(updated.id, 'c1');
@@ -231,8 +231,8 @@ void main() {
     });
 
     test('equality is based on id', () {
-      final c1 = Category(id: 'same', organizationId: 'o1', name: 'A');
-      final c2 = Category(id: 'same', organizationId: 'o1', name: 'B');
+      const c1 = Category(id: 'same', organizationId: 'o1', name: 'A');
+      const c2 = Category(id: 'same', organizationId: 'o1', name: 'B');
       expect(c1, equals(c2));
     });
   });
@@ -281,7 +281,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final supplier = Supplier(
+      const supplier = Supplier(
         id: 'sup-1',
         organizationId: 'org-1',
         name: 'Test Supplier',
@@ -297,7 +297,7 @@ void main() {
     });
 
     test('copyWith replaces specified fields', () {
-      final original = Supplier(id: 's1', organizationId: 'o1', name: 'Original');
+      const original = Supplier(id: 's1', organizationId: 'o1', name: 'Original');
       final updated = original.copyWith(name: 'Updated', phone: '999');
 
       expect(updated.id, 's1');
@@ -306,9 +306,9 @@ void main() {
     });
 
     test('equality is based on id', () {
-      final s1 = Supplier(id: 'same', organizationId: 'o1', name: 'A');
-      final s2 = Supplier(id: 'same', organizationId: 'o1', name: 'B');
-      final s3 = Supplier(id: 'diff', organizationId: 'o1', name: 'A');
+      const s1 = Supplier(id: 'same', organizationId: 'o1', name: 'A');
+      const s2 = Supplier(id: 'same', organizationId: 'o1', name: 'B');
+      const s3 = Supplier(id: 'diff', organizationId: 'o1', name: 'A');
 
       expect(s1, equals(s2));
       expect(s1, isNot(equals(s3)));

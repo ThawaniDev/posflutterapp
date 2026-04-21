@@ -9,9 +9,9 @@ final ownerDashboardProvider = StateNotifierProvider<OwnerDashboardNotifier, Own
 });
 
 class OwnerDashboardNotifier extends StateNotifier<OwnerDashboardState> {
-  final DashboardRepository _repo;
 
   OwnerDashboardNotifier(this._repo) : super(const OwnerDashboardInitial());
+  final DashboardRepository _repo;
 
   Future<void> load({int? days}) async {
     if (state is! OwnerDashboardLoaded) state = const OwnerDashboardLoading();
@@ -53,9 +53,9 @@ final financialSummaryProvider = StateNotifierProvider<FinancialSummaryNotifier,
 });
 
 class FinancialSummaryNotifier extends StateNotifier<FinancialSummaryState> {
-  final DashboardRepository _repo;
 
   FinancialSummaryNotifier(this._repo) : super(const FinancialSummaryInitial());
+  final DashboardRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo, int? days}) async {
     if (state is! FinancialSummaryLoaded) state = const FinancialSummaryLoading();
@@ -75,9 +75,9 @@ final staffPerformanceDashboardProvider = StateNotifierProvider<StaffPerformance
 });
 
 class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
-  final DashboardRepository _repo;
 
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
+  final DashboardRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo, int? days}) async {
     if (state is! StaffPerformanceLoaded) state = const StaffPerformanceLoading();
@@ -97,9 +97,9 @@ final branchOverviewProvider = StateNotifierProvider<BranchOverviewNotifier, Bra
 });
 
 class BranchOverviewNotifier extends StateNotifier<BranchOverviewState> {
-  final DashboardRepository _repo;
 
   BranchOverviewNotifier(this._repo) : super(const BranchOverviewInitial());
+  final DashboardRepository _repo;
 
   Future<void> load() async {
     if (state is! BranchOverviewLoaded) state = const BranchOverviewLoading();

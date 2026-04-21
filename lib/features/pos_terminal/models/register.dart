@@ -1,53 +1,4 @@
 class Register {
-  final String id;
-  final String storeId;
-  final Map<String, dynamic>? store;
-  final String name;
-  final String? deviceId;
-  final String? appVersion;
-  final String? platform;
-  final DateTime? lastSyncAt;
-  final bool isOnline;
-  final bool isActive;
-
-  // SoftPOS
-  final bool softposEnabled;
-  final String? nearpayTid;
-  final String? nearpayMid;
-
-  // Acquirer
-  final String? acquirerSource;
-  final String? acquirerName;
-  final String? acquirerReference;
-
-  // Device hardware
-  final String? deviceModel;
-  final String? osVersion;
-  final bool nfcCapable;
-  final String? serialNumber;
-
-  // Fee config
-  final String? feeProfile;
-  final double feeMadaPercentage;
-  final double feeVisaMcPercentage;
-  final double feeFlatPerTxn;
-  final double wameedMarginPercentage;
-  final String? feeDescription;
-
-  // Settlement
-  final String? settlementCycle;
-  final String? settlementBankName;
-  final String? settlementIban;
-
-  // Status
-  final String? softposStatus;
-  final DateTime? softposActivatedAt;
-  final DateTime? lastTransactionAt;
-  final bool? isSoftposReady;
-  final String? adminNotes;
-
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Register({
     required this.id,
@@ -134,6 +85,55 @@ class Register {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final Map<String, dynamic>? store;
+  final String name;
+  final String? deviceId;
+  final String? appVersion;
+  final String? platform;
+  final DateTime? lastSyncAt;
+  final bool isOnline;
+  final bool isActive;
+
+  // SoftPOS
+  final bool softposEnabled;
+  final String? nearpayTid;
+  final String? nearpayMid;
+
+  // Acquirer
+  final String? acquirerSource;
+  final String? acquirerName;
+  final String? acquirerReference;
+
+  // Device hardware
+  final String? deviceModel;
+  final String? osVersion;
+  final bool nfcCapable;
+  final String? serialNumber;
+
+  // Fee config
+  final String? feeProfile;
+  final double feeMadaPercentage;
+  final double feeVisaMcPercentage;
+  final double feeFlatPerTxn;
+  final double wameedMarginPercentage;
+  final String? feeDescription;
+
+  // Settlement
+  final String? settlementCycle;
+  final String? settlementBankName;
+  final String? settlementIban;
+
+  // Status
+  final String? softposStatus;
+  final DateTime? softposActivatedAt;
+  final DateTime? lastTransactionAt;
+  final bool? isSoftposReady;
+  final String? adminNotes;
+
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -7,7 +7,6 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminArticleListPage extends ConsumerStatefulWidget {
   const AdminArticleListPage({super.key});
@@ -78,8 +77,8 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: l10n.supportSearchArticles,
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.search),
+                      border: const OutlineInputBorder(),
                     ),
                     onSubmitted: (_) => _search(),
                   ),
@@ -133,7 +132,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                                       label: Text(article['is_published'] == true ? 'Published' : 'Draft'),
                                       backgroundColor: article['is_published'] == true
                                           ? AppColors.success.withValues(alpha: 0.15)
-                                          : AppColors.borderLight,
+                                          : AppColors.borderFor(context),
                                     ),
                                   ),
                                 );

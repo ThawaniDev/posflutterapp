@@ -5,11 +5,11 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class TranslationStringCard extends StatelessWidget {
+
+  const TranslationStringCard({super.key, required this.translation, this.overrideValue, this.onEdit});
   final MasterTranslationString translation;
   final String? overrideValue;
   final VoidCallback? onEdit;
-
-  const TranslationStringCard({super.key, required this.translation, this.overrideValue, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TranslationStringCard extends StatelessWidget {
                   labelStyle: const TextStyle(fontSize: 10),
                   visualDensity: VisualDensity.compact,
                 ),
-                if (onEdit != null) IconButton(icon: Icon(Icons.edit, size: 18), onPressed: onEdit, tooltip: l10n.edit),
+                if (onEdit != null) IconButton(icon: const Icon(Icons.edit, size: 18), onPressed: onEdit, tooltip: l10n.edit),
               ],
             ),
             AppSpacing.gapH8,

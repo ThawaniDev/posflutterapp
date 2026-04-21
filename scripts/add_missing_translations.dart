@@ -5,7 +5,7 @@ import 'dart:io';
 /// This script adds all missing translation keys to all 4 ARB files.
 /// It includes English values and professional translations for AR, BN, UR.
 void main() {
-  final arbDir = 'lib/core/l10n/arb';
+  const arbDir = 'lib/core/l10n/arb';
 
   // All missing keys with translations in 4 languages
   final missingKeys = <String, Map<String, String>>{
@@ -969,10 +969,10 @@ void main() {
     'terminalsDeactivate': {'en': 'Deactivate', 'ar': 'إلغاء التفعيل', 'bn': 'নিষ্ক্রিয় করুন', 'ur': 'غیر فعال کریں'},
     'terminalsDeactivatedLower': {'en': 'deactivated', 'ar': 'معطل', 'bn': 'নিষ্ক্রিয়', 'ur': 'غیر فعال'},
     'terminalsDeleted': {
-      'en': 'Terminal \"{name}\" deleted.',
-      'ar': 'تم حذف الطرفية \"{name}\".',
-      'bn': 'টার্মিনাল \"{name}\" মুছে ফেলা হয়েছে।',
-      'ur': 'ٹرمینل \"{name}\" حذف ہو گیا۔',
+      'en': 'Terminal "{name}" deleted.',
+      'ar': 'تم حذف الطرفية "{name}".',
+      'bn': 'টার্মিনাল "{name}" মুছে ফেলা হয়েছে।',
+      'ur': 'ٹرمینل "{name}" حذف ہو گیا۔',
     },
     'terminalsDeleteFailed': {
       'en': 'Failed to delete terminal.',
@@ -981,10 +981,10 @@ void main() {
       'ur': 'ٹرمینل حذف کرنے میں ناکامی۔',
     },
     'terminalsDeleteMessage': {
-      'en': 'Deleting \"{name}\" will remove all its data. This cannot be undone.',
-      'ar': 'حذف \"{name}\" سيزيل جميع بياناتها. لا يمكن التراجع عن هذا.',
-      'bn': '\"{name}\" মোছা হলে এর সব ডেটা মুছে যাবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।',
-      'ur': '\"{name}\" حذف کرنے سے اس کا تمام ڈیٹا ختم ہو جائے گا۔ یہ واپس نہیں ہو سکتا۔',
+      'en': 'Deleting "{name}" will remove all its data. This cannot be undone.',
+      'ar': 'حذف "{name}" سيزيل جميع بياناتها. لا يمكن التراجع عن هذا.',
+      'bn': '"{name}" মোছা হলে এর সব ডেটা মুছে যাবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।',
+      'ur': '"{name}" حذف کرنے سے اس کا تمام ڈیٹا ختم ہو جائے گا۔ یہ واپس نہیں ہو سکتا۔',
     },
     'terminalsDeleteTitle': {'en': 'Delete Terminal?', 'ar': 'حذف الطرفية؟', 'bn': 'টার্মিনাল মুছবেন?', 'ur': 'ٹرمینل حذف کریں؟'},
     'terminalsEdit': {'en': 'Edit', 'ar': 'تعديل', 'bn': 'সম্পাদনা', 'ur': 'ترمیم'},
@@ -1018,10 +1018,10 @@ void main() {
     },
     'terminalsTitle': {'en': 'Terminals', 'ar': 'الطرفيات', 'bn': 'টার্মিনাল', 'ur': 'ٹرمینلز'},
     'terminalsToggled': {
-      'en': 'Terminal \"{name}\" {actionPast}.',
-      'ar': 'تم {actionPast} الطرفية \"{name}\".',
-      'bn': 'টার্মিনাল \"{name}\" {actionPast}।',
-      'ur': 'ٹرمینل \"{name}\" {actionPast}۔',
+      'en': 'Terminal "{name}" {actionPast}.',
+      'ar': 'تم {actionPast} الطرفية "{name}".',
+      'bn': 'টার্মিনাল "{name}" {actionPast}।',
+      'ur': 'ٹرمینل "{name}" {actionPast}۔',
     },
     'terminalsToggleFailed': {
       'en': 'Failed to update terminal status.',
@@ -1030,10 +1030,10 @@ void main() {
       'ur': 'ٹرمینل حالت اپ ڈیٹ ناکام۔',
     },
     'terminalsToggleMessage': {
-      'en': '{action} terminal \"{name}\"?',
-      'ar': '{action} الطرفية \"{name}\"؟',
-      'bn': 'টার্মিনাল \"{name}\" {action}?',
-      'ur': 'ٹرمینل \"{name}\" {action}؟',
+      'en': '{action} terminal "{name}"?',
+      'ar': '{action} الطرفية "{name}"؟',
+      'bn': 'টার্মিনাল "{name}" {action}?',
+      'ur': 'ٹرمینل "{name}" {action}؟',
     },
     'terminalsToggleStatus': {'en': 'Toggle Status', 'ar': 'تبديل الحالة', 'bn': 'অবস্থা পরিবর্তন', 'ur': 'حالت تبدیل کریں'},
     'terminalsToggleTitle': {
@@ -1172,8 +1172,8 @@ void main() {
     }
 
     // Write back with nice formatting
-    final encoder = JsonEncoder.withIndent('  ');
-    file.writeAsStringSync(encoder.convert(arb) + '\n');
+    const encoder = JsonEncoder.withIndent('  ');
+    file.writeAsStringSync('${encoder.convert(arb)}\n');
     print('[$locale] Added $addedCount keys (total: ${arb.length} entries)');
   }
 

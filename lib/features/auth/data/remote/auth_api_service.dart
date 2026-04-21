@@ -12,9 +12,9 @@ final authApiServiceProvider = Provider<AuthApiService>((ref) {
 
 /// Remote API service for auth endpoints.
 class AuthApiService {
-  final Dio _dio;
 
   AuthApiService(this._dio);
+  final Dio _dio;
 
   // ─── Registration ──────────────────────────────────────────────
 
@@ -28,7 +28,7 @@ class AuthApiService {
     String? storeName,
     String? storeNameAr,
     String country = 'OM',
-    String currency = 'SAR',
+    String currency = '',
     String locale = 'ar',
     String? businessType,
   }) async {

@@ -6,10 +6,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/security/models/security_session.dart';
 
 class SessionListWidget extends StatelessWidget {
-  final List<SecuritySession> sessions;
-  final ValueChanged<String>? onEndSession;
-  final VoidCallback? onEndAllSessions;
-  final bool isActionLoading;
 
   const SessionListWidget({
     super.key,
@@ -18,6 +14,10 @@ class SessionListWidget extends StatelessWidget {
     this.onEndAllSessions,
     this.isActionLoading = false,
   });
+  final List<SecuritySession> sessions;
+  final ValueChanged<String>? onEndSession;
+  final VoidCallback? onEndAllSessions;
+  final bool isActionLoading;
 
   @override
   Widget build(BuildContext context) {

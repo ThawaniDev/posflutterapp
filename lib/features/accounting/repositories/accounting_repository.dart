@@ -6,9 +6,9 @@ final accountingRepositoryProvider = Provider<AccountingRepository>((ref) {
 });
 
 class AccountingRepository {
-  final AccountingApiService _apiService;
 
   AccountingRepository(this._apiService);
+  final AccountingApiService _apiService;
 
   Future<Map<String, dynamic>> getStatus() => _apiService.getStatus();
 

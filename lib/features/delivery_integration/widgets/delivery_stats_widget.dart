@@ -4,13 +4,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeliveryStatsWidget extends StatelessWidget {
-  final int todayOrders;
-  final double todayRevenue;
-  final int activeOrders;
-  final int pendingOrders;
-  final int completedOrders;
-  final int activePlatforms;
-  final int totalPlatforms;
 
   const DeliveryStatsWidget({
     super.key,
@@ -22,12 +15,19 @@ class DeliveryStatsWidget extends StatelessWidget {
     required this.activePlatforms,
     required this.totalPlatforms,
   });
+  final int todayOrders;
+  final double todayRevenue;
+  final int activeOrders;
+  final int pendingOrders;
+  final int completedOrders;
+  final int activePlatforms;
+  final int totalPlatforms;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return PosStatsGrid(
       children: [

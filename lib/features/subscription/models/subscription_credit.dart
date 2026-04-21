@@ -1,10 +1,4 @@
 class SubscriptionCredit {
-  final String id;
-  final String storeSubscriptionId;
-  final String appliedBy;
-  final double amount;
-  final String reason;
-  final DateTime? appliedAt;
 
   const SubscriptionCredit({
     required this.id,
@@ -25,6 +19,12 @@ class SubscriptionCredit {
       appliedAt: json['applied_at'] != null ? DateTime.parse(json['applied_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeSubscriptionId;
+  final String appliedBy;
+  final double amount;
+  final String reason;
+  final DateTime? appliedAt;
 
   Map<String, dynamic> toJson() {
     return {

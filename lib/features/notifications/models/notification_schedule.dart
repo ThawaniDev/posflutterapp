@@ -1,18 +1,4 @@
 class NotificationSchedule {
-  final String id;
-  final String storeId;
-  final String? userId;
-  final String category;
-  final String title;
-  final String message;
-  final String? channel;
-  final String? priority;
-  final DateTime scheduledAt;
-  final String? recurrenceRule;
-  final String? scheduleType;
-  final bool isActive;
-  final DateTime? lastSentAt;
-  final DateTime? createdAt;
 
   const NotificationSchedule({
     required this.id,
@@ -30,9 +16,6 @@ class NotificationSchedule {
     this.lastSentAt,
     this.createdAt,
   });
-
-  bool get isCancelled => !isActive;
-  bool get isSent => lastSentAt != null;
 
   factory NotificationSchedule.fromJson(Map<String, dynamic> json) {
     return NotificationSchedule(
@@ -52,6 +35,23 @@ class NotificationSchedule {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? userId;
+  final String category;
+  final String title;
+  final String message;
+  final String? channel;
+  final String? priority;
+  final DateTime scheduledAt;
+  final String? recurrenceRule;
+  final String? scheduleType;
+  final bool isActive;
+  final DateTime? lastSentAt;
+  final DateTime? createdAt;
+
+  bool get isCancelled => !isActive;
+  bool get isSent => lastSentAt != null;
 
   Map<String, dynamic> toJson() {
     return {

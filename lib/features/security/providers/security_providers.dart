@@ -15,9 +15,9 @@ final securityOverviewProvider = StateNotifierProvider<SecurityOverviewNotifier,
 );
 
 class SecurityOverviewNotifier extends StateNotifier<SecurityOverviewState> {
-  final SecurityRepository _repo;
 
   SecurityOverviewNotifier(this._repo) : super(const SecurityOverviewInitial());
+  final SecurityRepository _repo;
 
   Future<void> load(String storeId) async {
     state = const SecurityOverviewLoading();
@@ -38,9 +38,9 @@ final securityPolicyProvider = StateNotifierProvider<SecurityPolicyNotifier, Sec
 );
 
 class SecurityPolicyNotifier extends StateNotifier<SecurityPolicyState> {
-  final SecurityRepository _repo;
 
   SecurityPolicyNotifier(this._repo) : super(const SecurityPolicyInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadPolicy(String storeId) async {
     state = const SecurityPolicyLoading();
@@ -72,9 +72,9 @@ final auditLogListProvider = StateNotifierProvider<AuditLogListNotifier, AuditLo
 );
 
 class AuditLogListNotifier extends StateNotifier<AuditLogListState> {
-  final SecurityRepository _repo;
 
   AuditLogListNotifier(this._repo) : super(const AuditLogListInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadLogs(String storeId, {String? action, String? severity}) async {
     state = const AuditLogListLoading();
@@ -96,9 +96,9 @@ final deviceListProvider = StateNotifierProvider<DeviceListNotifier, DeviceListS
 );
 
 class DeviceListNotifier extends StateNotifier<DeviceListState> {
-  final SecurityRepository _repo;
 
   DeviceListNotifier(this._repo) : super(const DeviceListInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadDevices(String storeId, {bool? activeOnly}) async {
     state = const DeviceListLoading();
@@ -119,9 +119,9 @@ final loginAttemptsProvider = StateNotifierProvider<LoginAttemptsNotifier, Login
 );
 
 class LoginAttemptsNotifier extends StateNotifier<LoginAttemptsState> {
-  final SecurityRepository _repo;
 
   LoginAttemptsNotifier(this._repo) : super(const LoginAttemptsInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadAttempts(String storeId, {String? attemptType}) async {
     state = const LoginAttemptsLoading();
@@ -143,9 +143,9 @@ final sessionListProvider = StateNotifierProvider<SessionListNotifier, SessionLi
 );
 
 class SessionListNotifier extends StateNotifier<SessionListState> {
-  final SecurityRepository _repo;
 
   SessionListNotifier(this._repo) : super(const SessionListInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadSessions(String storeId, {String? status}) async {
     state = const SessionListLoading();
@@ -166,9 +166,9 @@ final incidentListProvider = StateNotifierProvider<IncidentListNotifier, Inciden
 );
 
 class IncidentListNotifier extends StateNotifier<IncidentListState> {
-  final SecurityRepository _repo;
 
   IncidentListNotifier(this._repo) : super(const IncidentListInitial());
+  final SecurityRepository _repo;
 
   Future<void> loadIncidents(String storeId, {String? severity, bool? isResolved}) async {
     state = const IncidentListLoading();
@@ -190,9 +190,9 @@ final securityActionProvider = StateNotifierProvider<SecurityActionNotifier, Sec
 );
 
 class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
-  final SecurityRepository _repo;
 
   SecurityActionNotifier(this._repo) : super(const SecurityActionInitial());
+  final SecurityRepository _repo;
 
   Future<void> deactivateDevice(String deviceId) async {
     state = const SecurityActionLoading();

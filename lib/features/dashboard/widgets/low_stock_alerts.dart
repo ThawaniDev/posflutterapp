@@ -7,9 +7,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class LowStockAlerts extends StatelessWidget {
-  final List<Map<String, dynamic>> items;
 
   const LowStockAlerts({super.key, required this.items});
+  final List<Map<String, dynamic>> items;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class LowStockAlerts extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 20),
+              const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardLowStockAlerts, style: AppTypography.headlineSmall),
               const Spacer(),
@@ -41,7 +41,7 @@ class LowStockAlerts extends StatelessWidget {
               child: Center(
                 child: Text(
                   l10n.dashboardAllWellStocked,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             )
@@ -54,10 +54,10 @@ class LowStockAlerts extends StatelessWidget {
 }
 
 class _LowStockRow extends StatelessWidget {
-  final Map<String, dynamic> item;
-  final bool isDark;
 
   const _LowStockRow({required this.item, required this.isDark});
+  final Map<String, dynamic> item;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {

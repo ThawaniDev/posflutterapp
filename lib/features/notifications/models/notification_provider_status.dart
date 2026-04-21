@@ -2,19 +2,6 @@ import 'package:wameedpos/features/notifications/enums/notification_channel.dart
 import 'package:wameedpos/features/notifications/enums/notification_provider.dart';
 
 class NotificationProviderStatus {
-  final String id;
-  final NotificationProvider provider;
-  final NotificationChannel channel;
-  final bool? isEnabled;
-  final int? priority;
-  final bool? isHealthy;
-  final DateTime? lastSuccessAt;
-  final DateTime? lastFailureAt;
-  final int? failureCount24h;
-  final int? successCount24h;
-  final int? avgLatencyMs;
-  final String? disabledReason;
-  final DateTime? updatedAt;
 
   const NotificationProviderStatus({
     required this.id,
@@ -49,6 +36,19 @@ class NotificationProviderStatus {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final NotificationProvider provider;
+  final NotificationChannel channel;
+  final bool? isEnabled;
+  final int? priority;
+  final bool? isHealthy;
+  final DateTime? lastSuccessAt;
+  final DateTime? lastFailureAt;
+  final int? failureCount24h;
+  final int? successCount24h;
+  final int? avgLatencyMs;
+  final String? disabledReason;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

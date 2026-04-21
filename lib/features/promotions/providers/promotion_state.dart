@@ -15,15 +15,6 @@ class PromotionsLoading extends PromotionsState {
 }
 
 class PromotionsLoaded extends PromotionsState {
-  final List<Promotion> promotions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? searchQuery;
-  final bool? activeFilter;
-  final String? typeFilter;
-  final bool? couponFilter;
 
   const PromotionsLoaded({
     required this.promotions,
@@ -36,6 +27,15 @@ class PromotionsLoaded extends PromotionsState {
     this.typeFilter,
     this.couponFilter,
   });
+  final List<Promotion> promotions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? searchQuery;
+  final bool? activeFilter;
+  final String? typeFilter;
+  final bool? couponFilter;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -63,8 +63,8 @@ class PromotionsLoaded extends PromotionsState {
 }
 
 class PromotionsError extends PromotionsState {
-  final String message;
   const PromotionsError({required this.message});
+  final String message;
 }
 
 // ─── Promotion Detail State ─────────────────────────────────────
@@ -82,13 +82,13 @@ class PromotionDetailLoading extends PromotionDetailState {
 }
 
 class PromotionDetailLoaded extends PromotionDetailState {
-  final Promotion promotion;
   const PromotionDetailLoaded({required this.promotion});
+  final Promotion promotion;
 }
 
 class PromotionDetailError extends PromotionDetailState {
-  final String message;
   const PromotionDetailError({required this.message});
+  final String message;
 }
 
 // ─── Coupon Validation State ────────────────────────────────────
@@ -106,11 +106,6 @@ class CouponValidationLoading extends CouponValidationState {
 }
 
 class CouponValidationValid extends CouponValidationState {
-  final String promotionId;
-  final String couponCodeId;
-  final String promotionName;
-  final String type;
-  final double discountAmount;
 
   const CouponValidationValid({
     required this.promotionId,
@@ -119,17 +114,22 @@ class CouponValidationValid extends CouponValidationState {
     required this.type,
     required this.discountAmount,
   });
+  final String promotionId;
+  final String couponCodeId;
+  final String promotionName;
+  final String type;
+  final double discountAmount;
 }
 
 class CouponValidationInvalid extends CouponValidationState {
+  const CouponValidationInvalid({required this.error, required this.message});
   final String error;
   final String message;
-  const CouponValidationInvalid({required this.error, required this.message});
 }
 
 class CouponValidationError extends CouponValidationState {
-  final String message;
   const CouponValidationError({required this.message});
+  final String message;
 }
 
 // ─── Promotion Analytics State ──────────────────────────────────
@@ -147,11 +147,11 @@ class PromotionAnalyticsLoading extends PromotionAnalyticsState {
 }
 
 class PromotionAnalyticsLoaded extends PromotionAnalyticsState {
-  final Map<String, dynamic> analytics;
   const PromotionAnalyticsLoaded({required this.analytics});
+  final Map<String, dynamic> analytics;
 }
 
 class PromotionAnalyticsError extends PromotionAnalyticsState {
-  final String message;
   const PromotionAnalyticsError({required this.message});
+  final String message;
 }

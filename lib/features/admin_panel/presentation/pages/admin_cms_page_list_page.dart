@@ -7,7 +7,6 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminCmsPageListPage extends ConsumerStatefulWidget {
   const AdminCmsPageListPage({super.key});
@@ -129,7 +128,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                                     label: Text(page['is_published'] == true ? 'Published' : 'Draft'),
                                     backgroundColor: page['is_published'] == true
                                         ? AppColors.success.withValues(alpha: 0.15)
-                                        : AppColors.borderLight,
+                                        : AppColors.borderFor(context),
                                   ),
                                   const SizedBox(width: 8),
                                   Text('$total total'),

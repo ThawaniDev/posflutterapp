@@ -1,18 +1,11 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
 
 /// Cash drawer configuration
 class CashDrawerConfig {
-  final String triggerMethod; // 'printer_kick', 'direct_usb'
-  final int pin; // 0 = pin 2, 1 = pin 5
-  final int pulseOnMs;
-  final int pulseOffMs;
-  final String? printerIp; // if trigger_method is printer_kick
-  final int printerPort;
 
   const CashDrawerConfig({
     this.triggerMethod = 'printer_kick',
@@ -33,6 +26,12 @@ class CashDrawerConfig {
       printerPort: json['printer_port'] as int? ?? json['port'] as int? ?? 9100,
     );
   }
+  final String triggerMethod; // 'printer_kick', 'direct_usb'
+  final int pin; // 0 = pin 2, 1 = pin 5
+  final int pulseOnMs;
+  final int pulseOffMs;
+  final String? printerIp; // if trigger_method is printer_kick
+  final int printerPort;
 
   Map<String, dynamic> toJson() => {
     'trigger_method': triggerMethod,

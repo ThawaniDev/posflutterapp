@@ -1,12 +1,6 @@
 import 'package:wameedpos/features/notifications/enums/fcm_device_type.dart';
 
 class FcmToken {
-  final String id;
-  final String userId;
-  final String token;
-  final FcmDeviceType deviceType;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const FcmToken({
     required this.id,
@@ -27,6 +21,12 @@ class FcmToken {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String userId;
+  final String token;
+  final FcmDeviceType deviceType;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

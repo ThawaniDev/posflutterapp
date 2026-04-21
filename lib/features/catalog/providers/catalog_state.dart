@@ -17,14 +17,6 @@ class ProductsLoading extends ProductsState {
 }
 
 class ProductsLoaded extends ProductsState {
-  final List<Product> products;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? selectedCategoryId;
-  final String? searchQuery;
-  final Set<String> selectedIds;
 
   const ProductsLoaded({
     required this.products,
@@ -36,6 +28,14 @@ class ProductsLoaded extends ProductsState {
     this.searchQuery,
     this.selectedIds = const {},
   });
+  final List<Product> products;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? selectedCategoryId;
+  final String? searchQuery;
+  final Set<String> selectedIds;
 
   bool get hasMore => currentPage < lastPage;
   bool get hasSelection => selectedIds.isNotEmpty;
@@ -65,9 +65,9 @@ class ProductsLoaded extends ProductsState {
 }
 
 class ProductsError extends ProductsState {
-  final String message;
 
   const ProductsError({required this.message});
+  final String message;
 }
 
 // ─── Product Detail / Form State ───────────────────────────────
@@ -85,9 +85,9 @@ class ProductDetailLoading extends ProductDetailState {
 }
 
 class ProductDetailLoaded extends ProductDetailState {
-  final Product product;
 
   const ProductDetailLoaded({required this.product});
+  final Product product;
 }
 
 class ProductDetailSaving extends ProductDetailState {
@@ -95,15 +95,15 @@ class ProductDetailSaving extends ProductDetailState {
 }
 
 class ProductDetailSaved extends ProductDetailState {
-  final Product product;
 
   const ProductDetailSaved({required this.product});
+  final Product product;
 }
 
 class ProductDetailError extends ProductDetailState {
-  final String message;
 
   const ProductDetailError({required this.message});
+  final String message;
 }
 
 // ─── Categories State ──────────────────────────────────────────
@@ -121,10 +121,10 @@ class CategoriesLoading extends CategoriesState {
 }
 
 class CategoriesLoaded extends CategoriesState {
-  final List<Category> categories;
-  final Set<String> expandedIds;
 
   const CategoriesLoaded({required this.categories, this.expandedIds = const {}});
+  final List<Category> categories;
+  final Set<String> expandedIds;
 
   /// Returns root categories (no parent).
   List<Category> get roots =>
@@ -141,9 +141,9 @@ class CategoriesLoaded extends CategoriesState {
 }
 
 class CategoriesError extends CategoriesState {
-  final String message;
 
   const CategoriesError({required this.message});
+  final String message;
 }
 
 // ─── Suppliers State ───────────────────────────────────────────
@@ -161,11 +161,6 @@ class SuppliersLoading extends SuppliersState {
 }
 
 class SuppliersLoaded extends SuppliersState {
-  final List<Supplier> suppliers;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const SuppliersLoaded({
     required this.suppliers,
@@ -174,6 +169,11 @@ class SuppliersLoaded extends SuppliersState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<Supplier> suppliers;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -189,7 +189,7 @@ class SuppliersLoaded extends SuppliersState {
 }
 
 class SuppliersError extends SuppliersState {
-  final String message;
 
   const SuppliersError({required this.message});
+  final String message;
 }

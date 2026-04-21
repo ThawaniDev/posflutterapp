@@ -7,37 +7,6 @@ import 'package:wameedpos/features/payments/models/payment.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_compliance_status.dart';
 
 class Transaction {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String registerId;
-  final String posSessionId;
-  final String cashierId;
-  final String? customerId;
-  final String transactionNumber;
-  final TransactionType type;
-  final TransactionStatus status;
-  final double subtotal;
-  final double? discountAmount;
-  final double taxAmount;
-  final double? tipAmount;
-  final double totalAmount;
-  final bool? isTaxExempt;
-  final String? returnTransactionId;
-  final ExternalOrderType? externalType;
-  final String? externalId;
-  final String? notes;
-  final String? zatcaUuid;
-  final String? zatcaHash;
-  final String? zatcaQrCode;
-  final ZatcaComplianceStatus? zatcaStatus;
-  final SyncStatus? syncStatus;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final List<TransactionItem>? items;
-  final List<Payment>? payments;
-  final DateTime? deletedAt;
 
   const Transaction({
     required this.id,
@@ -112,6 +81,37 @@ class Transaction {
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String registerId;
+  final String posSessionId;
+  final String cashierId;
+  final String? customerId;
+  final String transactionNumber;
+  final TransactionType type;
+  final TransactionStatus status;
+  final double subtotal;
+  final double? discountAmount;
+  final double taxAmount;
+  final double? tipAmount;
+  final double totalAmount;
+  final bool? isTaxExempt;
+  final String? returnTransactionId;
+  final ExternalOrderType? externalType;
+  final String? externalId;
+  final String? notes;
+  final String? zatcaUuid;
+  final String? zatcaHash;
+  final String? zatcaQrCode;
+  final ZatcaComplianceStatus? zatcaStatus;
+  final SyncStatus? syncStatus;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<TransactionItem>? items;
+  final List<Payment>? payments;
+  final DateTime? deletedAt;
 
   Map<String, dynamic> toJson() {
     return {

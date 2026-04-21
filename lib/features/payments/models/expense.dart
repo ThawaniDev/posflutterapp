@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/payments/enums/expense_category.dart';
 
 class Expense {
-  final String id;
-  final String storeId;
-  final String? cashSessionId;
-  final double amount;
-  final ExpenseCategory category;
-  final String? description;
-  final String? receiptImageUrl;
-  final String recordedBy;
-  final DateTime expenseDate;
-  final DateTime? createdAt;
 
   const Expense({
     required this.id,
@@ -39,6 +29,16 @@ class Expense {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? cashSessionId;
+  final double amount;
+  final ExpenseCategory category;
+  final String? description;
+  final String? receiptImageUrl;
+  final String recordedBy;
+  final DateTime expenseDate;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -6,12 +6,12 @@ import 'package:wameedpos/features/security/models/device_registration.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeviceListWidget extends StatelessWidget {
+
+  const DeviceListWidget({super.key, required this.devices, this.onDeactivate, this.onRemoteWipe, this.isActionLoading = false});
   final List<DeviceRegistration> devices;
   final ValueChanged<String>? onDeactivate;
   final ValueChanged<String>? onRemoteWipe;
   final bool isActionLoading;
-
-  const DeviceListWidget({super.key, required this.devices, this.onDeactivate, this.onRemoteWipe, this.isActionLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,12 @@ class DeviceListWidget extends StatelessWidget {
 }
 
 class _DeviceTile extends StatelessWidget {
+
+  const _DeviceTile({required this.device, this.onDeactivate, this.onRemoteWipe, this.isActionLoading = false});
   final DeviceRegistration device;
   final ValueChanged<String>? onDeactivate;
   final ValueChanged<String>? onRemoteWipe;
   final bool isActionLoading;
-
-  const _DeviceTile({required this.device, this.onDeactivate, this.onRemoteWipe, this.isActionLoading = false});
 
   @override
   Widget build(BuildContext context) {

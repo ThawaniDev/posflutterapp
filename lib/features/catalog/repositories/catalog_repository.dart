@@ -16,9 +16,9 @@ final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
 /// Repository that orchestrates catalog API calls.
 /// Resolves the current store/org context from auth session.
 class CatalogRepository {
-  final CatalogApiService _apiService;
 
   CatalogRepository({required CatalogApiService apiService}) : _apiService = apiService;
+  final CatalogApiService _apiService;
 
   // ─── Products ─────────────────────────────────────────────────
 

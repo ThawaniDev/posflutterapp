@@ -1,20 +1,6 @@
 import 'package:wameedpos/features/orders/enums/cancellation_fee_type.dart';
 
 class BusinessTypeAppointmentConfig {
-  final String id;
-  final String businessTypeId;
-  final int? defaultSlotDurationMinutes;
-  final int? minAdvanceBookingHours;
-  final int? maxAdvanceBookingDays;
-  final int? cancellationWindowHours;
-  final CancellationFeeType? cancellationFeeType;
-  final double? cancellationFeeValue;
-  final bool? allowWalkins;
-  final double? overbookingBufferPercentage;
-  final bool? requireDeposit;
-  final double? depositPercentage;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const BusinessTypeAppointmentConfig({
     required this.id,
@@ -55,6 +41,20 @@ class BusinessTypeAppointmentConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final int? defaultSlotDurationMinutes;
+  final int? minAdvanceBookingHours;
+  final int? maxAdvanceBookingDays;
+  final int? cancellationWindowHours;
+  final CancellationFeeType? cancellationFeeType;
+  final double? cancellationFeeValue;
+  final bool? allowWalkins;
+  final double? overbookingBufferPercentage;
+  final bool? requireDeposit;
+  final double? depositPercentage;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

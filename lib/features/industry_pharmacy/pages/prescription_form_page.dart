@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/prescription.dart';
-import '../providers/pharmacy_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/prescription.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PrescriptionFormPage extends ConsumerStatefulWidget {
-  final Prescription? prescription;
   const PrescriptionFormPage({super.key, this.prescription});
+  final Prescription? prescription;
 
   @override
   ConsumerState<PrescriptionFormPage> createState() => _PrescriptionFormPageState();
@@ -99,13 +99,13 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _prescriptionNumberCtrl, label: l10n.pharmacyPrescriptionNumber, hint: l10n.pharmacyPrescriptionNumberHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _patientNameCtrl, label: l10n.pharmacyPatientName, hint: l10n.pharmacyFullNameHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _patientIdCtrl, label: l10n.pharmacyPatientIdOptional, hint: l10n.pharmacyPatientIdHint),
-            SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             Text(l10n.pharmacyDoctorInfo, style: Theme.of(context).textTheme.titleMedium),
-            SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
                 Expanded(
@@ -117,18 +117,18 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             Text(l10n.pharmacyInsurance, style: Theme.of(context).textTheme.titleMedium),
-            SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             PosTextField(controller: _insuranceProviderCtrl, label: l10n.pharmacyInsuranceProvider, hint: l10n.pharmacyInsuranceHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _insuranceClaimCtrl,
               label: l10n.pharmacyClaimAmount,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.bakeryAdditionalNotes, maxLines: 3),
           ],
         ),

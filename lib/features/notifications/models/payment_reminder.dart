@@ -2,11 +2,6 @@ import 'package:wameedpos/features/notifications/enums/reminder_channel.dart';
 import 'package:wameedpos/features/notifications/enums/reminder_type.dart';
 
 class PaymentReminder {
-  final String id;
-  final String storeSubscriptionId;
-  final ReminderType reminderType;
-  final ReminderChannel channel;
-  final DateTime? sentAt;
 
   const PaymentReminder({
     required this.id,
@@ -25,6 +20,11 @@ class PaymentReminder {
       sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeSubscriptionId;
+  final ReminderType reminderType;
+  final ReminderChannel channel;
+  final DateTime? sentAt;
 
   Map<String, dynamic> toJson() {
     return {

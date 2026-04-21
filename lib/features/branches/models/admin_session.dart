@@ -1,14 +1,4 @@
 class AdminSession {
-  final String id;
-  final String adminUserId;
-  final String sessionTokenHash;
-  final String ipAddress;
-  final String? userAgent;
-  final bool? twoFaVerified;
-  final DateTime? createdAt;
-  final DateTime? lastActivityAt;
-  final DateTime expiresAt;
-  final DateTime? revokedAt;
 
   const AdminSession({
     required this.id,
@@ -37,6 +27,16 @@ class AdminSession {
       revokedAt: json['revoked_at'] != null ? DateTime.parse(json['revoked_at'] as String) : null,
     );
   }
+  final String id;
+  final String adminUserId;
+  final String sessionTokenHash;
+  final String ipAddress;
+  final String? userAgent;
+  final bool? twoFaVerified;
+  final DateTime? createdAt;
+  final DateTime? lastActivityAt;
+  final DateTime expiresAt;
+  final DateTime? revokedAt;
 
   Map<String, dynamic> toJson() {
     return {

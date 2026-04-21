@@ -9,9 +9,9 @@ final orderRepositoryProvider = Provider<OrderRepository>((ref) {
 });
 
 class OrderRepository {
-  final OrderApiService _apiService;
 
   OrderRepository({required OrderApiService apiService}) : _apiService = apiService;
+  final OrderApiService _apiService;
 
   // Orders
   Future<PaginatedResult<Order>> listOrders({int page = 1, int perPage = 20, String? status, String? source, String? search}) =>

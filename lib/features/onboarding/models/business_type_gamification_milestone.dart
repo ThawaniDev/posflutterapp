@@ -2,15 +2,6 @@ import 'package:wameedpos/features/customers/enums/milestone_reward_type.dart';
 import 'package:wameedpos/features/customers/enums/milestone_type.dart';
 
 class BusinessTypeGamificationMilestone {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final MilestoneType milestoneType;
-  final double thresholdValue;
-  final MilestoneRewardType rewardType;
-  final String rewardValue;
-  final int? sortOrder;
 
   const BusinessTypeGamificationMilestone({
     required this.id,
@@ -37,6 +28,15 @@ class BusinessTypeGamificationMilestone {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final MilestoneType milestoneType;
+  final double thresholdValue;
+  final MilestoneRewardType rewardType;
+  final String rewardValue;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,14 +1,4 @@
 class PaymentEmailLog {
-  final String id;
-  final String? providerPaymentId;
-  final String? invoiceId;
-  final String? emailType;
-  final String? recipientEmail;
-  final String? subject;
-  final String? status;
-  final String? errorMessage;
-  final String? mailtrapMessageId;
-  final DateTime? createdAt;
 
   const PaymentEmailLog({
     required this.id,
@@ -37,6 +27,16 @@ class PaymentEmailLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? providerPaymentId;
+  final String? invoiceId;
+  final String? emailType;
+  final String? recipientEmail;
+  final String? subject;
+  final String? status;
+  final String? errorMessage;
+  final String? mailtrapMessageId;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

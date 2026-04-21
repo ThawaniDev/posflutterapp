@@ -59,7 +59,7 @@ class WameedPosApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en'), Locale('ar')],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 

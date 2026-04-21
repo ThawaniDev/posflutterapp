@@ -147,7 +147,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                                     AppSpacing.gapW8,
                                     Icon(
                                       Icons.chevron_right_rounded,
-                                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                      color: AppColors.mutedFor(context),
                                     ),
                                   ],
                                 ),

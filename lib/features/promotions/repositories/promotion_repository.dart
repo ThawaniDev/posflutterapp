@@ -9,9 +9,9 @@ final promotionRepositoryProvider = Provider<PromotionRepository>((ref) {
 });
 
 class PromotionRepository {
-  final PromotionApiService _apiService;
 
   PromotionRepository({required PromotionApiService apiService}) : _apiService = apiService;
+  final PromotionApiService _apiService;
 
   // Promotions
   Future<PaginatedResult<Promotion>> listPromotions({

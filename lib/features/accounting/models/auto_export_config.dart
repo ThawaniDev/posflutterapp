@@ -1,19 +1,6 @@
 import 'package:wameedpos/features/accounting/enums/export_frequency.dart';
 
 class AutoExportConfig {
-  final String id;
-  final String storeId;
-  final bool? enabled;
-  final ExportFrequency frequency;
-  final int? dayOfWeek;
-  final int? dayOfMonth;
-  final Map<String, dynamic> exportTypes;
-  final String? notifyEmail;
-  final bool? retryOnFailure;
-  final DateTime? lastRunAt;
-  final DateTime? nextRunAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AutoExportConfig({
     required this.id,
@@ -48,6 +35,19 @@ class AutoExportConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final bool? enabled;
+  final ExportFrequency frequency;
+  final int? dayOfWeek;
+  final int? dayOfMonth;
+  final Map<String, dynamic> exportTypes;
+  final String? notifyEmail;
+  final bool? retryOnFailure;
+  final DateTime? lastRunAt;
+  final DateTime? nextRunAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

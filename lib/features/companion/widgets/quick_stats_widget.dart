@@ -63,7 +63,7 @@ class QuickStatsWidget extends ConsumerWidget {
                   icon: Icons.inventory_2,
                   label: l10n.reportsLowStock,
                   value: '$lowStockItems',
-                  color: lowStockItems > 0 ? AppColors.error : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  color: lowStockItems > 0 ? AppColors.error : (AppColors.mutedFor(context)),
                 ),
               ]),
             ],
@@ -99,10 +99,10 @@ class QuickStatsWidget extends ConsumerWidget {
 }
 
 class _StatTile {
+
+  const _StatTile({required this.icon, required this.label, required this.value, required this.color});
   final IconData icon;
   final String label;
   final String value;
   final Color color;
-
-  const _StatTile({required this.icon, required this.label, required this.value, required this.color});
 }

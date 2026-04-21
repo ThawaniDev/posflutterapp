@@ -2,17 +2,6 @@ import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dar
 import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 
 class CashierBadgeAward {
-  final String id;
-  final String storeId;
-  final String cashierId;
-  final CashierInfo? cashier;
-  final String badgeId;
-  final CashierBadge? badge;
-  final String? snapshotId;
-  final String earnedDate;
-  final String period;
-  final double metricValue;
-  final DateTime? createdAt;
 
   const CashierBadgeAward({
     required this.id,
@@ -43,6 +32,17 @@ class CashierBadgeAward {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String cashierId;
+  final CashierInfo? cashier;
+  final String badgeId;
+  final CashierBadge? badge;
+  final String? snapshotId;
+  final String earnedDate;
+  final String period;
+  final double metricValue;
+  final DateTime? createdAt;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CashierBadgeAward && other.id == id;

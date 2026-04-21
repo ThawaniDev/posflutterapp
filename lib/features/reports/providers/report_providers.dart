@@ -10,9 +10,9 @@ final salesSummaryProvider = StateNotifierProvider<SalesSummaryNotifier, SalesSu
 });
 
 class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
-  final ReportRepository _repo;
 
   SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! SalesSummaryLoaded) state = const SalesSummaryLoading();
@@ -35,9 +35,9 @@ final productPerformanceProvider = StateNotifierProvider<ProductPerformanceNotif
 });
 
 class ProductPerformanceNotifier extends StateNotifier<ProductPerformanceState> {
-  final ReportRepository _repo;
 
   ProductPerformanceNotifier(this._repo) : super(const ProductPerformanceInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! ProductPerformanceLoaded) state = const ProductPerformanceLoading();
@@ -57,9 +57,9 @@ final categoryBreakdownProvider = StateNotifierProvider<CategoryBreakdownNotifie
 });
 
 class CategoryBreakdownNotifier extends StateNotifier<CategoryBreakdownState> {
-  final ReportRepository _repo;
 
   CategoryBreakdownNotifier(this._repo) : super(const CategoryBreakdownInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CategoryBreakdownLoaded) state = const CategoryBreakdownLoading();
@@ -79,9 +79,9 @@ final staffPerformanceProvider = StateNotifierProvider<StaffPerformanceNotifier,
 });
 
 class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
-  final ReportRepository _repo;
 
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! StaffPerformanceLoaded) state = const StaffPerformanceLoading();
@@ -101,9 +101,9 @@ final hourlySalesProvider = StateNotifierProvider<HourlySalesNotifier, HourlySal
 });
 
 class HourlySalesNotifier extends StateNotifier<HourlySalesState> {
-  final ReportRepository _repo;
 
   HourlySalesNotifier(this._repo) : super(const HourlySalesInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! HourlySalesLoaded) state = const HourlySalesLoading();
@@ -123,9 +123,9 @@ final paymentMethodsProvider = StateNotifierProvider<PaymentMethodsNotifier, Pay
 });
 
 class PaymentMethodsNotifier extends StateNotifier<PaymentMethodsState> {
-  final ReportRepository _repo;
 
   PaymentMethodsNotifier(this._repo) : super(const PaymentMethodsInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! PaymentMethodsLoaded) state = const PaymentMethodsLoading();
@@ -145,9 +145,9 @@ final dashboardProvider = StateNotifierProvider<DashboardNotifier, DashboardStat
 });
 
 class DashboardNotifier extends StateNotifier<DashboardState> {
-  final ReportRepository _repo;
 
   DashboardNotifier(this._repo) : super(const DashboardInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! DashboardLoaded) state = const DashboardLoading();
@@ -171,9 +171,9 @@ final inventoryValuationProvider = StateNotifierProvider<InventoryValuationNotif
 });
 
 class InventoryValuationNotifier extends StateNotifier<InventoryValuationState> {
-  final ReportRepository _repo;
 
   InventoryValuationNotifier(this._repo) : super(const InventoryValuationInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryValuationLoaded) state = const InventoryValuationLoading();
@@ -193,9 +193,9 @@ final inventoryTurnoverProvider = StateNotifierProvider<InventoryTurnoverNotifie
 });
 
 class InventoryTurnoverNotifier extends StateNotifier<InventoryTurnoverState> {
-  final ReportRepository _repo;
 
   InventoryTurnoverNotifier(this._repo) : super(const InventoryTurnoverInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryTurnoverLoaded) state = const InventoryTurnoverLoading();
@@ -215,9 +215,9 @@ final inventoryShrinkageProvider = StateNotifierProvider<InventoryShrinkageNotif
 });
 
 class InventoryShrinkageNotifier extends StateNotifier<InventoryShrinkageState> {
-  final ReportRepository _repo;
 
   InventoryShrinkageNotifier(this._repo) : super(const InventoryShrinkageInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryShrinkageLoaded) state = const InventoryShrinkageLoading();
@@ -237,9 +237,9 @@ final inventoryLowStockProvider = StateNotifierProvider<InventoryLowStockNotifie
 });
 
 class InventoryLowStockNotifier extends StateNotifier<InventoryLowStockState> {
-  final ReportRepository _repo;
 
   InventoryLowStockNotifier(this._repo) : super(const InventoryLowStockInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryLowStockLoaded) state = const InventoryLowStockLoading();
@@ -259,9 +259,9 @@ final financialDailyPlProvider = StateNotifierProvider<FinancialDailyPlNotifier,
 });
 
 class FinancialDailyPlNotifier extends StateNotifier<FinancialDailyPlState> {
-  final ReportRepository _repo;
 
   FinancialDailyPlNotifier(this._repo) : super(const FinancialDailyPlInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! FinancialDailyPlLoaded) state = const FinancialDailyPlLoading();
@@ -284,9 +284,9 @@ final financialExpensesProvider = StateNotifierProvider<FinancialExpensesNotifie
 });
 
 class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
-  final ReportRepository _repo;
 
   FinancialExpensesNotifier(this._repo) : super(const FinancialExpensesInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! FinancialExpensesLoaded) state = const FinancialExpensesLoading();
@@ -309,9 +309,9 @@ final cashVarianceProvider = StateNotifierProvider<CashVarianceNotifier, CashVar
 });
 
 class CashVarianceNotifier extends StateNotifier<CashVarianceState> {
-  final ReportRepository _repo;
 
   CashVarianceNotifier(this._repo) : super(const CashVarianceInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CashVarianceLoaded) state = const CashVarianceLoading();
@@ -331,9 +331,9 @@ final topCustomersProvider = StateNotifierProvider<TopCustomersNotifier, TopCust
 });
 
 class TopCustomersNotifier extends StateNotifier<TopCustomersState> {
-  final ReportRepository _repo;
 
   TopCustomersNotifier(this._repo) : super(const TopCustomersInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! TopCustomersLoaded) state = const TopCustomersLoading();
@@ -353,9 +353,9 @@ final customerRetentionProvider = StateNotifierProvider<CustomerRetentionNotifie
 });
 
 class CustomerRetentionNotifier extends StateNotifier<CustomerRetentionState> {
-  final ReportRepository _repo;
 
   CustomerRetentionNotifier(this._repo) : super(const CustomerRetentionInitial());
+  final ReportRepository _repo;
 
   Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CustomerRetentionLoaded) state = const CustomerRetentionLoading();

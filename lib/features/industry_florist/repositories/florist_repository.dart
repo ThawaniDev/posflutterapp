@@ -9,8 +9,8 @@ final floristRepositoryProvider = Provider<FloristRepository>((ref) {
 });
 
 class FloristRepository {
-  final FloristApiService _apiService;
   FloristRepository({required FloristApiService apiService}) : _apiService = apiService;
+  final FloristApiService _apiService;
 
   Future<List<FlowerArrangement>> listArrangements({String? search, int perPage = 20}) =>
       _apiService.listArrangements(search: search, perPage: perPage);

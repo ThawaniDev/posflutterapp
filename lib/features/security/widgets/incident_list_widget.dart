@@ -6,11 +6,11 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/security/models/security_incident.dart';
 
 class IncidentListWidget extends StatelessWidget {
+
+  const IncidentListWidget({super.key, required this.incidents, this.onResolve, this.isActionLoading = false});
   final List<SecurityIncident> incidents;
   final void Function(String id, String notes)? onResolve;
   final bool isActionLoading;
-
-  const IncidentListWidget({super.key, required this.incidents, this.onResolve, this.isActionLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class IncidentListWidget extends StatelessWidget {
   Widget _buildIncidentCard(BuildContext context, SecurityIncident incident) {
     final l10n = AppLocalizations.of(context)!;
     final isResolved = incident.isResolved;
-    final severityColor = _severityColor(incident.severity);
+    final severityColor = _severityColor(context, incident.severity);
     final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
@@ -134,13 +134,13 @@ class IncidentListWidget extends StatelessWidget {
     );
   }
 
-  Color _severityColor(String? severity) {
+  Color _severityColor(BuildContext context, String? severity) {
     return switch (severity) {
       'critical' => AppColors.error,
       'high' => AppColors.warning,
       'medium' => AppColors.info,
-      'low' => AppColors.textMutedLight,
-      _ => AppColors.textMutedLight,
+      'low' => AppColors.mutedFor(context),
+      _ => AppColors.mutedFor(context),
     };
   }
 }

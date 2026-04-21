@@ -15,18 +15,18 @@ class LabelTemplatesLoading extends LabelTemplatesState {
 }
 
 class LabelTemplatesLoaded extends LabelTemplatesState {
-  final List<LabelTemplate> templates;
-  final List<LabelTemplate> presets;
 
   const LabelTemplatesLoaded({required this.templates, this.presets = const []});
+  final List<LabelTemplate> templates;
+  final List<LabelTemplate> presets;
 
   LabelTemplatesLoaded copyWith({List<LabelTemplate>? templates, List<LabelTemplate>? presets}) =>
       LabelTemplatesLoaded(templates: templates ?? this.templates, presets: presets ?? this.presets);
 }
 
 class LabelTemplatesError extends LabelTemplatesState {
-  final String message;
   const LabelTemplatesError({required this.message});
+  final String message;
 }
 
 // ─── Label Detail State ─────────────────────────────────────────
@@ -44,8 +44,8 @@ class LabelDetailLoading extends LabelDetailState {
 }
 
 class LabelDetailLoaded extends LabelDetailState {
-  final LabelTemplate template;
   const LabelDetailLoaded({required this.template});
+  final LabelTemplate template;
 }
 
 class LabelDetailSaving extends LabelDetailState {
@@ -53,11 +53,11 @@ class LabelDetailSaving extends LabelDetailState {
 }
 
 class LabelDetailSaved extends LabelDetailState {
-  final LabelTemplate template;
   const LabelDetailSaved({required this.template});
+  final LabelTemplate template;
 }
 
 class LabelDetailError extends LabelDetailState {
-  final String message;
   const LabelDetailError({required this.message});
+  final String message;
 }

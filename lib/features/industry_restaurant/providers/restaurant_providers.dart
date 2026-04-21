@@ -8,8 +8,8 @@ final restaurantProvider = StateNotifierProvider<RestaurantNotifier, RestaurantS
 });
 
 class RestaurantNotifier extends StateNotifier<RestaurantState> {
-  final RestaurantRepository _repo;
   RestaurantNotifier(this._repo) : super(const RestaurantInitial());
+  final RestaurantRepository _repo;
 
   Future<void> load() async {
     state = const RestaurantLoading();

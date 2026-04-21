@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 /// Wameed POS Button — unified button component
 ///
@@ -178,7 +178,7 @@ class PosButton extends StatelessWidget {
     final fg = _enabled ? _fg(context) : (isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight);
     final border = _enabled ? _border(context) : null;
 
-    Widget child = Row(
+    final Widget child = Row(
       mainAxisSize: isFullWidth ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -188,13 +188,13 @@ class PosButton extends StatelessWidget {
             height: _iconSize,
             child: CircularProgressIndicator(strokeWidth: 2, color: fg),
           ),
-          SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
         ] else if (icon != null) ...[
           Icon(icon, size: _iconSize),
-          SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
         ],
         Flexible(child: Text(label, overflow: TextOverflow.ellipsis, maxLines: 1)),
-        if (trailingIcon != null) ...[SizedBox(width: AppSpacing.sm), Icon(trailingIcon, size: _iconSize)],
+        if (trailingIcon != null) ...[const SizedBox(width: AppSpacing.sm), Icon(trailingIcon, size: _iconSize)],
       ],
     );
 
@@ -245,12 +245,12 @@ class _PosIconButton extends PosButton {
   const _PosIconButton({
     super.key,
     required IconData icon,
-    VoidCallback? onPressed,
-    PosButtonVariant variant = PosButtonVariant.primary,
+    super.onPressed,
+    super.variant,
     this.iconSize = 24,
     this.tooltip,
   }) : _iconData = icon,
-       super(label: '', onPressed: onPressed, variant: variant);
+       super(label: '');
 
   final IconData _iconData;
   final double iconSize;
@@ -289,8 +289,8 @@ class _PosIconButton extends PosButton {
 // ─── Category Pill Button ────────────────────────────────────
 
 class _PosPillButton extends PosButton {
-  const _PosPillButton({super.key, required super.label, super.onPressed, this.isSelected = false, IconData? icon})
-    : super(icon: icon, variant: PosButtonVariant.soft);
+  const _PosPillButton({super.key, required super.label, super.onPressed, this.isSelected = false, super.icon})
+    : super(variant: PosButtonVariant.soft);
 
   final bool isSelected;
 

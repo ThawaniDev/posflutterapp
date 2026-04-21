@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/staff/enums/commission_rule_type.dart';
 
 class CommissionRule {
-  final String id;
-  final String storeId;
-  final String? staffUserId;
-  final CommissionRuleType type;
-  final double? percentage;
-  final Map<String, dynamic>? tiersJson;
-  final String? productCategoryId;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const CommissionRule({
     required this.id,
@@ -39,6 +29,16 @@ class CommissionRule {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? staffUserId;
+  final CommissionRuleType type;
+  final double? percentage;
+  final Map<String, dynamic>? tiersJson;
+  final String? productCategoryId;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

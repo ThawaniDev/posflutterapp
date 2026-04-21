@@ -3,8 +3,8 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import '../nice_to_have_providers.dart';
-import '../nice_to_have_state.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_providers.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class GamificationWidget extends ConsumerWidget {

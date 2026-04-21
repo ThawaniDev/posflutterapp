@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../providers/restaurant_providers.dart';
-import '../models/restaurant_table.dart';
-import '../providers/restaurant_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_providers.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_state.dart';
 import 'package:wameedpos/features/orders/models/order.dart';
 import 'package:wameedpos/features/orders/providers/order_providers.dart';
 import 'package:wameedpos/features/orders/providers/order_state.dart';
@@ -74,7 +74,7 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: l10n.restaurantTabOwnerHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectOrder,
               label: l10n.wameedAIOrder,
@@ -83,7 +83,7 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
               onChanged: (v) => setState(() => _selectedOrderId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectTable,
               label: l10n.tableOptional,

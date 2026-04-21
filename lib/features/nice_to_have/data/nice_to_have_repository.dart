@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'nice_to_have_api_service.dart';
+import 'package:wameedpos/features/nice_to_have/data/nice_to_have_api_service.dart';
 
 final niceToHaveRepositoryProvider = Provider<NiceToHaveRepository>((ref) {
   return NiceToHaveRepository(ref.watch(niceToHaveApiServiceProvider));
 });
 
 class NiceToHaveRepository {
-  final NiceToHaveApiService _api;
   NiceToHaveRepository(this._api);
+  final NiceToHaveApiService _api;
 
   // Wishlist
   Future<Response> getWishlist(String customerId) => _api.getWishlist(customerId);

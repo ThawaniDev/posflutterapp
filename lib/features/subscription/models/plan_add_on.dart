@@ -1,13 +1,4 @@
 class PlanAddOn {
-  final String id;
-  final String name;
-  final String nameAr;
-  final String slug;
-  final double monthlyPrice;
-  final String? description;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PlanAddOn({
     required this.id,
@@ -34,6 +25,15 @@ class PlanAddOn {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String nameAr;
+  final String slug;
+  final double monthlyPrice;
+  final String? description;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

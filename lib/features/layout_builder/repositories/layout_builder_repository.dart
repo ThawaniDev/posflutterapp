@@ -11,9 +11,9 @@ final layoutBuilderRepositoryProvider = Provider<LayoutBuilderRepository>((ref) 
 });
 
 class LayoutBuilderRepository {
-  final LayoutBuilderApiService _apiService;
 
   LayoutBuilderRepository({required LayoutBuilderApiService apiService}) : _apiService = apiService;
+  final LayoutBuilderApiService _apiService;
 
   Future<List<PosLayoutTemplate>> listLayouts() => _apiService.listLayouts();
   Future<List<LayoutWidget>> listWidgets({String? category}) => _apiService.listWidgets(category: category);

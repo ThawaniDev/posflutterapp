@@ -111,7 +111,7 @@ class MessageBubble extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
                 child: Text(
                   '$dateStr, $timeStr',
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
           ],

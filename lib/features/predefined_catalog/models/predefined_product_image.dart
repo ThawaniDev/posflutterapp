@@ -1,7 +1,4 @@
 class PredefinedProductImage {
-  final String id;
-  final String imageUrl;
-  final int? sortOrder;
 
   const PredefinedProductImage({required this.id, required this.imageUrl, this.sortOrder});
 
@@ -12,6 +9,9 @@ class PredefinedProductImage {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String imageUrl;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'image_url': imageUrl, 'sort_order': sortOrder};

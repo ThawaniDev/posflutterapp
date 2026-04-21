@@ -22,8 +22,8 @@ void main() {
 
     test('ProductsLoaded holds products and pagination info', () {
       final products = [
-        Product(id: 'p1', organizationId: 'o1', name: 'Product 1', sellPrice: 1.0),
-        Product(id: 'p2', organizationId: 'o1', name: 'Product 2', sellPrice: 2.0),
+        const Product(id: 'p1', organizationId: 'o1', name: 'Product 1', sellPrice: 1.0),
+        const Product(id: 'p2', organizationId: 'o1', name: 'Product 2', sellPrice: 2.0),
       ];
 
       final state = ProductsLoaded(products: products, total: 50, currentPage: 1, lastPage: 3, perPage: 25);
@@ -38,12 +38,12 @@ void main() {
     });
 
     test('ProductsLoaded hasMore is false on last page', () {
-      final state = ProductsLoaded(products: [], total: 10, currentPage: 1, lastPage: 1, perPage: 25);
+      const state = ProductsLoaded(products: [], total: 10, currentPage: 1, lastPage: 1, perPage: 25);
       expect(state.hasMore, false);
     });
 
     test('ProductsLoaded copyWith replaces fields', () {
-      final state = ProductsLoaded(
+      const state = ProductsLoaded(
         products: [Product(id: 'p1', organizationId: 'o1', name: 'A', sellPrice: 1.0)],
         total: 10,
         currentPage: 1,
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      ProductsState state = const ProductsLoading();
+      const ProductsState state = ProductsLoading();
 
       final result = switch (state) {
         ProductsInitial() => 'initial',
@@ -87,13 +87,13 @@ void main() {
       expect(const ProductDetailLoading(), isA<ProductDetailState>());
       expect(const ProductDetailSaving(), isA<ProductDetailState>());
       expect(
-        ProductDetailLoaded(
+        const ProductDetailLoaded(
           product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0),
         ),
         isA<ProductDetailState>(),
       );
       expect(
-        ProductDetailSaved(
+        const ProductDetailSaved(
           product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0),
         ),
         isA<ProductDetailState>(),
@@ -102,14 +102,14 @@ void main() {
     });
 
     test('ProductDetailLoaded holds product', () {
-      final product = Product(id: 'p1', organizationId: 'o1', name: 'Coca Cola', sellPrice: 0.250);
-      final state = ProductDetailLoaded(product: product);
+      const product = Product(id: 'p1', organizationId: 'o1', name: 'Coca Cola', sellPrice: 0.250);
+      const state = ProductDetailLoaded(product: product);
       expect(state.product.name, 'Coca Cola');
     });
 
     test('ProductDetailSaved holds saved product', () {
-      final product = Product(id: 'p1', organizationId: 'o1', name: 'Updated', sellPrice: 0.300);
-      final state = ProductDetailSaved(product: product);
+      const product = Product(id: 'p1', organizationId: 'o1', name: 'Updated', sellPrice: 0.300);
+      const state = ProductDetailSaved(product: product);
       expect(state.product.name, 'Updated');
       expect(state.product.sellPrice, 0.300);
     });
@@ -127,8 +127,8 @@ void main() {
 
     test('CategoriesLoaded holds categories list', () {
       final categories = [
-        Category(id: 'c1', organizationId: 'o1', name: 'Beverages'),
-        Category(id: 'c2', organizationId: 'o1', name: 'Snacks'),
+        const Category(id: 'c1', organizationId: 'o1', name: 'Beverages'),
+        const Category(id: 'c2', organizationId: 'o1', name: 'Snacks'),
       ];
 
       final state = CategoriesLoaded(categories: categories);
@@ -137,14 +137,14 @@ void main() {
     });
 
     test('CategoriesLoaded copyWith replaces categories', () {
-      final state = CategoriesLoaded(
+      const state = CategoriesLoaded(
         categories: [Category(id: 'c1', organizationId: 'o1', name: 'A')],
       );
 
       final updated = state.copyWith(
         categories: [
-          Category(id: 'c1', organizationId: 'o1', name: 'A'),
-          Category(id: 'c2', organizationId: 'o1', name: 'B'),
+          const Category(id: 'c1', organizationId: 'o1', name: 'A'),
+          const Category(id: 'c2', organizationId: 'o1', name: 'B'),
         ],
       );
 
@@ -157,7 +157,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      CategoriesState state = const CategoriesLoading();
+      const CategoriesState state = CategoriesLoading();
 
       final result = switch (state) {
         CategoriesInitial() => 'initial',
@@ -181,7 +181,7 @@ void main() {
     });
 
     test('SuppliersLoaded holds suppliers and pagination', () {
-      final suppliers = [Supplier(id: 's1', organizationId: 'o1', name: 'Supplier A')];
+      final suppliers = [const Supplier(id: 's1', organizationId: 'o1', name: 'Supplier A')];
 
       final state = SuppliersLoaded(suppliers: suppliers, total: 25, currentPage: 1, lastPage: 2, perPage: 25);
 
@@ -191,12 +191,12 @@ void main() {
     });
 
     test('SuppliersLoaded hasMore is false on last page', () {
-      final state = SuppliersLoaded(suppliers: [], total: 5, currentPage: 1, lastPage: 1, perPage: 25);
+      const state = SuppliersLoaded(suppliers: [], total: 5, currentPage: 1, lastPage: 1, perPage: 25);
       expect(state.hasMore, false);
     });
 
     test('SuppliersLoaded copyWith', () {
-      final state = SuppliersLoaded(
+      const state = SuppliersLoaded(
         suppliers: [Supplier(id: 's1', organizationId: 'o1', name: 'A')],
         total: 10,
         currentPage: 1,
@@ -216,7 +216,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      SuppliersState state = const SuppliersError(message: 'fail');
+      const SuppliersState state = SuppliersError(message: 'fail');
 
       final result = switch (state) {
         SuppliersInitial() => 'initial',

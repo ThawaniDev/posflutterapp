@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/prescription.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/prescription.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PrescriptionCard extends StatelessWidget {
-  final Prescription prescription;
-  final VoidCallback? onTap;
 
   const PrescriptionCard({super.key, required this.prescription, this.onTap});
+  final Prescription prescription;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class PrescriptionCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,
@@ -59,7 +58,7 @@ class PrescriptionCard extends StatelessWidget {
               AppSpacing.gapH8,
               Row(
                 children: [
-                  Icon(Icons.local_hospital, size: 14, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  Icon(Icons.local_hospital, size: 14, color: AppColors.mutedFor(context)),
                   AppSpacing.gapW4,
                   Expanded(
                     child: Text(

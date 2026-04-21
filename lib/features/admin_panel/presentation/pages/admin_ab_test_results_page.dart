@@ -5,11 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminABTestResultsPage extends ConsumerStatefulWidget {
-  final String testId;
   const AdminABTestResultsPage({super.key, required this.testId});
+  final String testId;
 
   @override
   ConsumerState<AdminABTestResultsPage> createState() => _AdminABTestResultsPageState();

@@ -1,15 +1,4 @@
 class Notification {
-  final String id;
-  final String? userId;
-  final String? storeId;
-  final String? category;
-  final String? title;
-  final String? message;
-  final String? actionUrl;
-  final String? referenceType;
-  final String? referenceId;
-  final bool isRead;
-  final DateTime? createdAt;
 
   const Notification({
     required this.id,
@@ -40,6 +29,17 @@ class Notification {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? userId;
+  final String? storeId;
+  final String? category;
+  final String? title;
+  final String? message;
+  final String? actionUrl;
+  final String? referenceType;
+  final String? referenceId;
+  final bool isRead;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

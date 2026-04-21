@@ -17,18 +17,18 @@ final transactionExplorerApiProvider = Provider<TransactionExplorerApiService>((
 });
 
 class TransactionExplorerApiService {
-  final Dio _dio;
 
   TransactionExplorerApiService(this._dio);
+  final Dio _dio;
 
   Future<Map<String, dynamic>> getTransactionStats({String? branchId, String? dateFrom, String? dateTo, int? days}) async {
     final response = await _dio.get(
-      '${ApiEndpoints.ownerDashboardFinancialSummary}',
+      ApiEndpoints.ownerDashboardFinancialSummary,
       queryParameters: {
-        if (branchId != null) 'branch_id': branchId,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
-        if (days != null) 'days': days,
+        'branch_id': ?branchId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+        'days': ?days,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -36,13 +36,13 @@ class TransactionExplorerApiService {
   }
 
   Future<Map<String, dynamic>> getDashboardStats({int? days}) async {
-    final response = await _dio.get(ApiEndpoints.ownerDashboardStats, queryParameters: {if (days != null) 'days': days});
+    final response = await _dio.get(ApiEndpoints.ownerDashboardStats, queryParameters: {'days': ?days});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
 
   Future<List<dynamic>> getHourlySales({String? date}) async {
-    final response = await _dio.get(ApiEndpoints.ownerDashboardHourlySales, queryParameters: {if (date != null) 'date': date});
+    final response = await _dio.get(ApiEndpoints.ownerDashboardHourlySales, queryParameters: {'date': ?date});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data is List ? apiResponse.data as List : [];
   }
@@ -51,9 +51,9 @@ class TransactionExplorerApiService {
     final response = await _dio.get(
       ApiEndpoints.ownerDashboardSalesTrend,
       queryParameters: {
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
-        if (days != null) 'days': days,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+        'days': ?days,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

@@ -18,23 +18,23 @@ class StoreSettingsLoading extends StoreSettingsState {
 }
 
 class StoreSettingsLoaded extends StoreSettingsState {
-  final StoreSettings settings;
   const StoreSettingsLoaded(this.settings);
+  final StoreSettings settings;
 }
 
 class StoreSettingsError extends StoreSettingsState {
-  final String message;
   const StoreSettingsError(this.message);
+  final String message;
 }
 
 class StoreSettingsSaving extends StoreSettingsState {
-  final StoreSettings settings;
   const StoreSettingsSaving(this.settings);
+  final StoreSettings settings;
 }
 
 class StoreSettingsSaved extends StoreSettingsState {
-  final StoreSettings settings;
   const StoreSettingsSaved(this.settings);
+  final StoreSettings settings;
 }
 
 // ─── Working Hours States ────────────────────────────────────
@@ -52,23 +52,23 @@ class WorkingHoursLoading extends WorkingHoursState {
 }
 
 class WorkingHoursLoaded extends WorkingHoursState {
-  final List<WorkingHour> hours;
   const WorkingHoursLoaded(this.hours);
+  final List<WorkingHour> hours;
 }
 
 class WorkingHoursError extends WorkingHoursState {
-  final String message;
   const WorkingHoursError(this.message);
+  final String message;
 }
 
 class WorkingHoursSaving extends WorkingHoursState {
-  final List<WorkingHour> hours;
   const WorkingHoursSaving(this.hours);
+  final List<WorkingHour> hours;
 }
 
 class WorkingHoursSaved extends WorkingHoursState {
-  final List<WorkingHour> hours;
   const WorkingHoursSaved(this.hours);
+  final List<WorkingHour> hours;
 }
 
 // ─── Store Settings Notifier ─────────────────────────────────
@@ -78,9 +78,9 @@ final storeSettingsProvider = StateNotifierProvider<StoreSettingsNotifier, Store
 );
 
 class StoreSettingsNotifier extends StateNotifier<StoreSettingsState> {
-  final SettingsRepository _repo;
 
   StoreSettingsNotifier(this._repo) : super(const StoreSettingsInitial());
+  final SettingsRepository _repo;
 
   Future<void> load(String storeId) async {
     state = const StoreSettingsLoading();
@@ -123,9 +123,9 @@ final workingHoursProvider = StateNotifierProvider<WorkingHoursNotifier, Working
 );
 
 class WorkingHoursNotifier extends StateNotifier<WorkingHoursState> {
-  final SettingsRepository _repo;
 
   WorkingHoursNotifier(this._repo) : super(const WorkingHoursInitial());
+  final SettingsRepository _repo;
 
   Future<void> load(String storeId) async {
     state = const WorkingHoursLoading();

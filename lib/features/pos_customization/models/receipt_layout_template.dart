@@ -1,20 +1,6 @@
 import 'package:wameedpos/features/zatca/enums/zatca_qr_position.dart';
 
 class ReceiptLayoutTemplate {
-  final String id;
-  final String name;
-  final String nameAr;
-  final String slug;
-  final int paperWidth;
-  final Map<String, dynamic> headerConfig;
-  final Map<String, dynamic> bodyConfig;
-  final Map<String, dynamic> footerConfig;
-  final ZatcaQrPosition? zatcaQrPosition;
-  final bool? showBilingual;
-  final bool? isActive;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ReceiptLayoutTemplate({
     required this.id,
@@ -51,6 +37,20 @@ class ReceiptLayoutTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String nameAr;
+  final String slug;
+  final int paperWidth;
+  final Map<String, dynamic> headerConfig;
+  final Map<String, dynamic> bodyConfig;
+  final Map<String, dynamic> footerConfig;
+  final ZatcaQrPosition? zatcaQrPosition;
+  final bool? showBilingual;
+  final bool? isActive;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

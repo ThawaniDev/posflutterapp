@@ -2,19 +2,6 @@ import 'package:wameedpos/features/payments/enums/payment_method_category.dart';
 import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 class PaymentMethod {
-  final String id;
-  final PaymentMethodKey methodKey;
-  final String name;
-  final String nameAr;
-  final String? icon;
-  final PaymentMethodCategory category;
-  final bool? requiresTerminal;
-  final bool? requiresCustomerProfile;
-  final Map<String, dynamic>? providerConfigSchema;
-  final bool? isActive;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PaymentMethod({
     required this.id,
@@ -51,6 +38,19 @@ class PaymentMethod {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final PaymentMethodKey methodKey;
+  final String name;
+  final String nameAr;
+  final String? icon;
+  final PaymentMethodCategory category;
+  final bool? requiresTerminal;
+  final bool? requiresCustomerProfile;
+  final Map<String, dynamic>? providerConfigSchema;
+  final bool? isActive;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

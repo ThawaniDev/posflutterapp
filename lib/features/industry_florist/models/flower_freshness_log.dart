@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/industry_florist/enums/flower_freshness_status.dart';
 
 class FlowerFreshnessLog {
-  final String id;
-  final String productId;
-  final String storeId;
-  final DateTime receivedDate;
-  final int expectedVaseLifeDays;
-  final DateTime? markdownDate;
-  final DateTime? disposeDate;
-  final int quantity;
-  final FlowerFreshnessStatus? status;
 
   const FlowerFreshnessLog({
     required this.id,
@@ -36,6 +27,15 @@ class FlowerFreshnessLog {
       status: FlowerFreshnessStatus.tryFromValue(json['status'] as String?),
     );
   }
+  final String id;
+  final String productId;
+  final String storeId;
+  final DateTime receivedDate;
+  final int expectedVaseLifeDays;
+  final DateTime? markdownDate;
+  final DateTime? disposeDate;
+  final int quantity;
+  final FlowerFreshnessStatus? status;
 
   Map<String, dynamic> toJson() {
     return {

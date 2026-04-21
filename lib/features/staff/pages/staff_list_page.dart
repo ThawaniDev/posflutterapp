@@ -285,7 +285,7 @@ class _StaffNameCell extends StatelessWidget {
                 if (staff.email != null)
                   Text(
                     staff.email!,
-                    style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

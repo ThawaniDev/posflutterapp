@@ -1,13 +1,5 @@
 /// Single day entry in the store working-hours schedule.
 class WorkingHour {
-  final String id;
-  final String? storeId;
-  final int dayOfWeek; // 0=Sunday … 6=Saturday
-  final bool isOpen;
-  final String? openTime; // "HH:mm:ss"
-  final String? closeTime;
-  final String? breakStart;
-  final String? breakEnd;
 
   const WorkingHour({
     required this.id,
@@ -32,6 +24,14 @@ class WorkingHour {
       breakEnd: json['break_end'] as String?,
     );
   }
+  final String id;
+  final String? storeId;
+  final int dayOfWeek; // 0=Sunday … 6=Saturday
+  final bool isOpen;
+  final String? openTime; // "HH:mm:ss"
+  final String? closeTime;
+  final String? breakStart;
+  final String? breakEnd;
 
   Map<String, dynamic> toJson() {
     return {

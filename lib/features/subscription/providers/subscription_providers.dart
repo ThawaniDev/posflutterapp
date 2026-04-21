@@ -9,9 +9,9 @@ final plansProvider = StateNotifierProvider<PlansNotifier, PlansState>((ref) {
 });
 
 class PlansNotifier extends StateNotifier<PlansState> {
-  final SubscriptionRepository _repository;
 
   PlansNotifier(this._repository) : super(const PlansInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadPlans({bool activeOnly = true}) async {
     state = const PlansLoading();
@@ -31,9 +31,9 @@ final subscriptionProvider = StateNotifierProvider<SubscriptionNotifier, Subscri
 });
 
 class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
-  final SubscriptionRepository _repository;
 
   SubscriptionNotifier(this._repository) : super(const SubscriptionInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadCurrent() async {
     state = const SubscriptionLoading();
@@ -93,9 +93,9 @@ final invoicesProvider = StateNotifierProvider<InvoicesNotifier, InvoicesState>(
 });
 
 class InvoicesNotifier extends StateNotifier<InvoicesState> {
-  final SubscriptionRepository _repository;
 
   InvoicesNotifier(this._repository) : super(const InvoicesInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadInvoices({int page = 1}) async {
     state = const InvoicesLoading();
@@ -115,10 +115,10 @@ final invoiceDetailProvider = StateNotifierProvider.family<InvoiceDetailNotifier
 });
 
 class InvoiceDetailNotifier extends StateNotifier<InvoiceDetailState> {
-  final SubscriptionRepository _repository;
-  final String _invoiceId;
 
   InvoiceDetailNotifier(this._repository, this._invoiceId) : super(const InvoiceDetailInitial());
+  final SubscriptionRepository _repository;
+  final String _invoiceId;
 
   Future<void> loadInvoice() async {
     state = const InvoiceDetailLoading();
@@ -146,9 +146,9 @@ final usageProvider = StateNotifierProvider<UsageNotifier, UsageState>((ref) {
 });
 
 class UsageNotifier extends StateNotifier<UsageState> {
-  final SubscriptionRepository _repository;
 
   UsageNotifier(this._repository) : super(const UsageInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadUsage() async {
     state = const UsageLoading();
@@ -168,9 +168,9 @@ final addOnsProvider = StateNotifierProvider<AddOnsNotifier, AddOnsState>((ref) 
 });
 
 class AddOnsNotifier extends StateNotifier<AddOnsState> {
-  final SubscriptionRepository _repository;
 
   AddOnsNotifier(this._repository) : super(const AddOnsInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadAddOns() async {
     state = const AddOnsLoading();
@@ -190,9 +190,9 @@ final planComparisonProvider = StateNotifierProvider<PlanComparisonNotifier, Pla
 });
 
 class PlanComparisonNotifier extends StateNotifier<PlanComparisonState> {
-  final SubscriptionRepository _repository;
 
   PlanComparisonNotifier(this._repository) : super(const PlanComparisonInitial());
+  final SubscriptionRepository _repository;
 
   Future<void> loadComparison(List<String> planIds) async {
     state = const PlanComparisonLoading();

@@ -7,8 +7,8 @@ import 'package:wameedpos/features/support/providers/support_state.dart';
 
 // ─── Support Stats Provider ─────────────────────────────
 class SupportStatsNotifier extends StateNotifier<SupportStatsState> {
-  final SupportRepository _repository;
   SupportStatsNotifier(this._repository) : super(const SupportStatsInitial());
+  final SupportRepository _repository;
 
   Future<void> load() async {
     if (state is! SupportStatsLoaded) state = const SupportStatsLoading();
@@ -34,8 +34,8 @@ final supportStatsProvider = StateNotifierProvider<SupportStatsNotifier, Support
 
 // ─── Ticket List Provider ───────────────────────────────
 class TicketListNotifier extends StateNotifier<TicketListState> {
-  final SupportRepository _repository;
   TicketListNotifier(this._repository) : super(const TicketListInitial());
+  final SupportRepository _repository;
 
   String? _status;
   String? _category;
@@ -91,8 +91,8 @@ final ticketListProvider = StateNotifierProvider<TicketListNotifier, TicketListS
 
 // ─── Ticket Detail Provider ─────────────────────────────
 class TicketDetailNotifier extends StateNotifier<TicketDetailState> {
-  final SupportRepository _repository;
   TicketDetailNotifier(this._repository) : super(const TicketDetailInitial());
+  final SupportRepository _repository;
 
   Future<void> load(String id) async {
     if (state is! TicketDetailLoaded) state = const TicketDetailLoading();
@@ -115,8 +115,8 @@ final ticketDetailProvider = StateNotifierProvider<TicketDetailNotifier, TicketD
 
 // ─── Ticket Action Provider ─────────────────────────────
 class TicketActionNotifier extends StateNotifier<TicketActionState> {
-  final SupportRepository _repository;
   TicketActionNotifier(this._repository) : super(const TicketActionInitial());
+  final SupportRepository _repository;
 
   Future<void> createTicket({
     required String category,
@@ -162,8 +162,8 @@ final ticketActionProvider = StateNotifierProvider<TicketActionNotifier, TicketA
 
 // ─── Knowledge Base List Provider ───────────────────────
 class KbListNotifier extends StateNotifier<KbListState> {
-  final SupportRepository _repository;
   KbListNotifier(this._repository) : super(const KbListInitial());
+  final SupportRepository _repository;
 
   Future<void> load({String? category, String? search}) async {
     if (state is! KbListLoaded) state = const KbListLoading();
@@ -184,8 +184,8 @@ final kbListProvider = StateNotifierProvider<KbListNotifier, KbListState>((ref) 
 
 // ─── Knowledge Base Article Detail Provider ─────────────
 class KbArticleNotifier extends StateNotifier<KbArticleState> {
-  final SupportRepository _repository;
   KbArticleNotifier(this._repository) : super(const KbArticleInitial());
+  final SupportRepository _repository;
 
   Future<void> load(String slug) async {
     if (state is! KbArticleLoaded) state = const KbArticleLoading();

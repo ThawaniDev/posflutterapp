@@ -18,9 +18,9 @@ final upgradePromptServiceProvider = Provider<UpgradePromptService>((ref) {
 /// Service that shows upgrade dialogs when users hit plan limits or try to
 /// access gated features.
 class UpgradePromptService {
-  final FeatureGateService _featureGateService;
 
   UpgradePromptService(this._featureGateService);
+  final FeatureGateService _featureGateService;
 
   /// Show a feature gate prompt dialog when a feature is not enabled.
   ///
@@ -104,11 +104,6 @@ class UpgradePromptService {
 // ─── Feature Gate Dialog ─────────────────────────────────────────
 
 class _FeatureGateDialog extends ConsumerWidget {
-  final String featureName;
-  final String featureKey;
-  final String? currentPlanName;
-  final String? requiredPlanName;
-  final VoidCallback? onUpgrade;
 
   const _FeatureGateDialog({
     required this.featureName,
@@ -117,6 +112,11 @@ class _FeatureGateDialog extends ConsumerWidget {
     this.requiredPlanName,
     this.onUpgrade,
   });
+  final String featureName;
+  final String featureKey;
+  final String? currentPlanName;
+  final String? requiredPlanName;
+  final VoidCallback? onUpgrade;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -145,9 +145,9 @@ class _FeatureGateDialog extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Feature Locked', style: AppTypography.titleMedium),
+                const Text('Feature Locked', style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
-                Text(featureName, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                Text(featureName, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
               ],
             ),
           ),
@@ -173,7 +173,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                   if (currentPlanName != null)
                     Row(
                       children: [
-                        Text('Current: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textMutedLight)),
+                        Text('Current: ', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
                         Text(currentPlanName!, style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700)),
                       ],
                     ),
@@ -181,7 +181,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                     AppSpacing.gapH4,
                     Row(
                       children: [
-                        Text('Required: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textMutedLight)),
+                        Text('Required: ', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
                         Text(
                           requiredPlanName!,
                           style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
@@ -196,7 +196,7 @@ class _FeatureGateDialog extends ConsumerWidget {
           // Mini plan comparison if plans are loaded
           if (plans.length >= 2) ...[
             AppSpacing.gapH16,
-            Text('Available Plans', style: AppTypography.labelMedium),
+            const Text('Available Plans', style: AppTypography.labelMedium),
             AppSpacing.gapH8,
             ...plans
                 .take(3)
@@ -208,7 +208,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                         Icon(
                           plan.isHighlighted ? Icons.star : Icons.circle,
                           size: 12,
-                          color: plan.isHighlighted ? AppColors.primary : AppColors.textMutedLight,
+                          color: plan.isHighlighted ? AppColors.primary : AppColors.mutedFor(context),
                         ),
                         AppSpacing.gapW8,
                         Expanded(child: Text(plan.name, style: AppTypography.bodySmall)),
@@ -241,12 +241,12 @@ class _FeatureGateDialog extends ConsumerWidget {
 // ─── Limit Reached Dialog ────────────────────────────────────────
 
 class _LimitReachedDialog extends StatelessWidget {
+
+  const _LimitReachedDialog({required this.resourceName, required this.currentUsage, required this.planLimit, this.onUpgrade});
   final String resourceName;
   final int currentUsage;
   final int planLimit;
   final VoidCallback? onUpgrade;
-
-  const _LimitReachedDialog({required this.resourceName, required this.currentUsage, required this.planLimit, this.onUpgrade});
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +273,7 @@ class _LimitReachedDialog extends StatelessWidget {
               children: [
                 Text(l10n.subscriptionLimitReached, style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
-                Text(resourceName, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                Text(resourceName, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
               ],
             ),
           ),
@@ -310,7 +310,7 @@ class _LimitReachedDialog extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: (percentage / 100).clamp(0.0, 1.0),
                     minHeight: 8,
-                    backgroundColor: AppColors.borderLight,
+                    backgroundColor: AppColors.borderFor(context),
                     valueColor: const AlwaysStoppedAnimation(AppColors.error),
                   ),
                 ),
@@ -320,7 +320,7 @@ class _LimitReachedDialog extends StatelessWidget {
           AppSpacing.gapH12,
           Text(
             'Upgrade your plan to increase your $resourceName limit.',
-            style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+            style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
           ),
         ],
       ),

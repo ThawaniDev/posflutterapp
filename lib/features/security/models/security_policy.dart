@@ -1,29 +1,4 @@
 class SecurityPolicy {
-  final String id;
-  final String storeId;
-  final int? pinMinLength;
-  final int? pinMaxLength;
-  final int? autoLockSeconds;
-  final int? maxFailedAttempts;
-  final int? lockoutDurationMinutes;
-  final bool? require2faOwner;
-  final int? sessionMaxHours;
-  final bool? requirePinOverrideVoid;
-  final bool? requirePinOverrideReturn;
-  final bool? requirePinOverrideDiscount;
-  final double? discountOverrideThreshold;
-  final bool? biometricEnabled;
-  final int? pinExpiryDays;
-  final bool? requireUniquePins;
-  final int? maxDevices;
-  final int? auditRetentionDays;
-  final bool? forceLogoutOnRoleChange;
-  final int? passwordExpiryDays;
-  final bool? requireStrongPassword;
-  final bool? ipRestrictionEnabled;
-  final List<String>? allowedIpRanges;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SecurityPolicy({
     required this.id,
@@ -84,6 +59,31 @@ class SecurityPolicy {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final int? pinMinLength;
+  final int? pinMaxLength;
+  final int? autoLockSeconds;
+  final int? maxFailedAttempts;
+  final int? lockoutDurationMinutes;
+  final bool? require2faOwner;
+  final int? sessionMaxHours;
+  final bool? requirePinOverrideVoid;
+  final bool? requirePinOverrideReturn;
+  final bool? requirePinOverrideDiscount;
+  final double? discountOverrideThreshold;
+  final bool? biometricEnabled;
+  final int? pinExpiryDays;
+  final bool? requireUniquePins;
+  final int? maxDevices;
+  final int? auditRetentionDays;
+  final bool? forceLogoutOnRoleChange;
+  final int? passwordExpiryDays;
+  final bool? requireStrongPassword;
+  final bool? ipRestrictionEnabled;
+  final List<String>? allowedIpRanges;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

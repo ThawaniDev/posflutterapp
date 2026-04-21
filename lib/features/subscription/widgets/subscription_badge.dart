@@ -5,9 +5,9 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// A colored badge indicating subscription status.
 class SubscriptionBadge extends StatelessWidget {
-  final String status;
 
   const SubscriptionBadge({super.key, required this.status});
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +66,9 @@ class SubscriptionBadge extends StatelessWidget {
 }
 
 class _BadgeConfig {
+
+  const _BadgeConfig({required this.label, required this.backgroundColor, required this.textColor});
   final String label;
   final Color backgroundColor;
   final Color textColor;
-
-  const _BadgeConfig({required this.label, required this.backgroundColor, required this.textColor});
 }

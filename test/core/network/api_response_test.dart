@@ -102,11 +102,11 @@ void main() {
 
 /// Simple mock for testing generic parsing
 class _MockToken {
-  final String token;
-  final String tokenType;
 
   _MockToken({required this.token, required this.tokenType});
 
   factory _MockToken.fromJson(Map<String, dynamic> json) =>
       _MockToken(token: json['token'] as String, tokenType: json['token_type'] as String? ?? 'Bearer');
+  final String token;
+  final String tokenType;
 }

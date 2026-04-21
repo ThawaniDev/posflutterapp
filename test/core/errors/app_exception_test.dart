@@ -4,98 +4,98 @@ import 'package:wameedpos/core/errors/app_exception.dart';
 void main() {
   group('AppException', () {
     test('creates with message', () {
-      final ex = AppException(message: 'Something went wrong');
+      const ex = AppException(message: 'Something went wrong');
       expect(ex.message, 'Something went wrong');
       expect(ex.code, isNull);
       expect(ex.originalError, isNull);
     });
 
     test('creates with code and original error', () {
-      final original = FormatException('bad format');
-      final ex = AppException(message: 'Parse error', code: 'PARSE', originalError: original);
+      const original = FormatException('bad format');
+      const ex = AppException(message: 'Parse error', code: 'PARSE', originalError: original);
       expect(ex.message, 'Parse error');
       expect(ex.code, 'PARSE');
       expect(ex.originalError, original);
     });
 
     test('toString includes message', () {
-      final ex = AppException(message: 'Test error');
+      const ex = AppException(message: 'Test error');
       expect(ex.toString(), contains('Test error'));
     });
   });
 
   group('NetworkException', () {
     test('creates with status code', () {
-      final ex = NetworkException(message: 'Not found', statusCode: 404);
+      const ex = NetworkException(message: 'Not found', statusCode: 404);
       expect(ex.message, 'Not found');
       expect(ex.statusCode, 404);
     });
 
     test('inherits from AppException', () {
-      final ex = NetworkException(message: 'Server error', statusCode: 500);
+      const ex = NetworkException(message: 'Server error', statusCode: 500);
       expect(ex, isA<AppException>());
     });
 
     test('toString includes status code', () {
-      final ex = NetworkException(message: 'Unauthorized', statusCode: 401);
+      const ex = NetworkException(message: 'Unauthorized', statusCode: 401);
       final str = ex.toString();
       expect(str, contains('401'));
     });
 
     test('common HTTP status codes', () {
-      final badRequest = NetworkException(message: 'Bad request', statusCode: 400);
+      const badRequest = NetworkException(message: 'Bad request', statusCode: 400);
       expect(badRequest.statusCode, 400);
 
-      final forbidden = NetworkException(message: 'Forbidden', statusCode: 403);
+      const forbidden = NetworkException(message: 'Forbidden', statusCode: 403);
       expect(forbidden.statusCode, 403);
 
-      final serverError = NetworkException(message: 'Internal error', statusCode: 500);
+      const serverError = NetworkException(message: 'Internal error', statusCode: 500);
       expect(serverError.statusCode, 500);
 
-      final timeout = NetworkException(message: 'Gateway timeout', statusCode: 504);
+      const timeout = NetworkException(message: 'Gateway timeout', statusCode: 504);
       expect(timeout.statusCode, 504);
     });
   });
 
   group('AuthException', () {
     test('creates correctly', () {
-      final ex = AuthException(message: 'Token expired');
+      const ex = AuthException(message: 'Token expired');
       expect(ex.message, 'Token expired');
     });
 
     test('inherits from AppException', () {
-      final ex = AuthException(message: 'Unauthorized');
+      const ex = AuthException(message: 'Unauthorized');
       expect(ex, isA<AppException>());
     });
 
     test('common auth scenarios', () {
-      final expired = AuthException(message: 'Session expired');
+      const expired = AuthException(message: 'Session expired');
       expect(expired.message, 'Session expired');
 
-      final invalid = AuthException(message: 'Invalid credentials');
+      const invalid = AuthException(message: 'Invalid credentials');
       expect(invalid.message, 'Invalid credentials');
 
-      final pinRequired = AuthException(message: 'PIN verification required');
+      const pinRequired = AuthException(message: 'PIN verification required');
       expect(pinRequired.message, contains('PIN'));
     });
   });
 
   group('SyncException', () {
     test('creates correctly', () {
-      final ex = SyncException(message: 'Sync failed');
+      const ex = SyncException(message: 'Sync failed');
       expect(ex.message, 'Sync failed');
     });
 
     test('inherits from AppException', () {
-      final ex = SyncException(message: 'Conflict detected');
+      const ex = SyncException(message: 'Conflict detected');
       expect(ex, isA<AppException>());
     });
 
     test('common sync scenarios', () {
-      final conflict = SyncException(message: 'Data conflict during sync');
+      const conflict = SyncException(message: 'Data conflict during sync');
       expect(conflict.message, contains('conflict'));
 
-      final offline = SyncException(message: 'Cannot sync while offline');
+      const offline = SyncException(message: 'Cannot sync while offline');
       expect(offline.message, contains('offline'));
     });
   });
@@ -103,10 +103,10 @@ void main() {
   group('Exception hierarchy', () {
     test('all exceptions are AppException', () {
       final exceptions = <AppException>[
-        AppException(message: 'base'),
-        NetworkException(message: 'network', statusCode: 500),
-        AuthException(message: 'auth'),
-        SyncException(message: 'sync'),
+        const AppException(message: 'base'),
+        const NetworkException(message: 'network', statusCode: 500),
+        const AuthException(message: 'auth'),
+        const SyncException(message: 'sync'),
       ];
 
       for (final ex in exceptions) {
@@ -119,7 +119,7 @@ void main() {
       AppException? caught;
 
       try {
-        throw NetworkException(message: 'test', statusCode: 404);
+        throw const NetworkException(message: 'test', statusCode: 404);
       } on AppException catch (e) {
         caught = e;
       }

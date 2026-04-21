@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/onboarding/models/store_working_hour.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
@@ -11,9 +10,9 @@ import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.d
 
 /// Working hours editor — toggles and time pickers for each day of the week.
 class WorkingHoursPage extends ConsumerStatefulWidget {
-  final String storeId;
 
   const WorkingHoursPage({super.key, required this.storeId});
+  final String storeId;
 
   @override
   ConsumerState<WorkingHoursPage> createState() => _WorkingHoursPageState();
@@ -162,9 +161,9 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: BorderRadius.circular(AppSpacing.md),
-        border: Border.all(color: day.isOpen ? AppColors.primary20 : AppColors.borderLight),
+        border: Border.all(color: day.isOpen ? AppColors.primary20 : AppColors.borderFor(context)),
       ),
       child: Column(
         children: [
@@ -186,7 +185,7 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
-                        color: day.isOpen ? AppColors.primary : AppColors.textMutedLight,
+                        color: day.isOpen ? AppColors.primary : AppColors.mutedFor(context),
                       ),
                     ),
                   ),
@@ -197,13 +196,13 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
                     dayLabel,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: day.isOpen ? null : AppColors.textMutedLight,
+                      color: day.isOpen ? null : AppColors.mutedFor(context),
                     ),
                   ),
                 ),
                 Switch(
                   value: day.isOpen,
-                  activeColor: AppColors.primary,
+                  activeThumbColor: AppColors.primary,
                   onChanged: (v) {
                     setState(() {
                       _days[index] = day.copyWith(
@@ -226,7 +225,7 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
                 children: [
                   Expanded(child: _timeButton('Open', day.openTime, () => _pickTime(index, true))),
                   const SizedBox(width: AppSpacing.md),
-                  const Icon(Icons.arrow_forward, size: 16, color: AppColors.textMutedLight),
+                  Icon(Icons.arrow_forward, size: 16, color: AppColors.mutedFor(context)),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(child: _timeButton('Close', day.closeTime, () => _pickTime(index, false))),
                 ],
@@ -247,11 +246,11 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
         decoration: BoxDecoration(
           color: AppColors.backgroundLight,
           borderRadius: BorderRadius.circular(AppSpacing.sm),
-          border: Border.all(color: AppColors.borderLight),
+          border: Border.all(color: AppColors.borderFor(context)),
         ),
         child: Column(
           children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight, fontSize: 11)),
+            Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11)),
             const SizedBox(height: 2),
             Text(
               time != null ? _formatTime(time) : '--:--',
@@ -266,14 +265,14 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
 
 /// Internal editable model for a single day of the week.
 class _DayEntry {
+
+  const _DayEntry({required this.dayOfWeek, this.isOpen = true, this.openTime, this.closeTime, this.breakStart, this.breakEnd});
   final int dayOfWeek;
   final bool isOpen;
   final TimeOfDay? openTime;
   final TimeOfDay? closeTime;
   final TimeOfDay? breakStart;
   final TimeOfDay? breakEnd;
-
-  const _DayEntry({required this.dayOfWeek, this.isOpen = true, this.openTime, this.closeTime, this.breakStart, this.breakEnd});
 
   _DayEntry copyWith({
     int? dayOfWeek,

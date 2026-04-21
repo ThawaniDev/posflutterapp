@@ -363,8 +363,8 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> {
 // ─── Supporting Widgets ─────────────────────────────────
 
 class _PlatformBreakdownTile extends StatelessWidget {
-  final Map<String, dynamic> data;
   const _PlatformBreakdownTile({required this.data});
+  final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +373,7 @@ class _PlatformBreakdownTile extends StatelessWidget {
     final revenue = (data['revenue'] != null ? double.tryParse(data['revenue'].toString()) : null) ?? 0.0;
     final isActive = data['is_active'] == true;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -404,12 +404,12 @@ class _PlatformBreakdownTile extends StatelessWidget {
 }
 
 class _ActionCard extends StatelessWidget {
+
+  const _ActionCard({required this.icon, required this.label, required this.color, required this.onTap});
   final IconData icon;
   final String label;
   final Color color;
   final VoidCallback onTap;
-
-  const _ActionCard({required this.icon, required this.label, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -442,18 +442,18 @@ class _ActionCard extends StatelessWidget {
 }
 
 class _FilterChip extends StatelessWidget {
+
+  const _FilterChip({required this.label, required this.isSelected, required this.onTap, this.color});
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
   final Color? color;
 
-  const _FilterChip({required this.label, required this.isSelected, required this.onTap, this.color});
-
   @override
   Widget build(BuildContext context) {
     final chipColor = color ?? AppColors.primary;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(

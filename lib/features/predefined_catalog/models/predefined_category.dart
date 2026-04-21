@@ -1,19 +1,4 @@
 class PredefinedCategory {
-  final String id;
-  final String businessTypeId;
-  final String? parentId;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? descriptionAr;
-  final String? imageUrl;
-  final int? sortOrder;
-  final bool isActive;
-  final List<PredefinedCategory> children;
-  final int? productsCount;
-  final Map<String, dynamic>? businessType;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PredefinedCategory({
     required this.id,
@@ -54,6 +39,21 @@ class PredefinedCategory {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String? parentId;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
+  final String? imageUrl;
+  final int? sortOrder;
+  final bool isActive;
+  final List<PredefinedCategory> children;
+  final int? productsCount;
+  final Map<String, dynamic>? businessType;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

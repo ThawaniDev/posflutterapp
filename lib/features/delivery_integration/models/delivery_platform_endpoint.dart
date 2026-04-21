@@ -2,12 +2,6 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_endpoint_
 import 'package:wameedpos/features/delivery_integration/enums/http_method.dart';
 
 class DeliveryPlatformEndpoint {
-  final String id;
-  final String deliveryPlatformId;
-  final DeliveryEndpointOperation operation;
-  final String urlTemplate;
-  final HttpMethod httpMethod;
-  final Map<String, dynamic>? requestMapping;
 
   const DeliveryPlatformEndpoint({
     required this.id,
@@ -28,6 +22,12 @@ class DeliveryPlatformEndpoint {
       requestMapping: json['request_mapping'] != null ? Map<String, dynamic>.from(json['request_mapping'] as Map) : null,
     );
   }
+  final String id;
+  final String deliveryPlatformId;
+  final DeliveryEndpointOperation operation;
+  final String urlTemplate;
+  final HttpMethod httpMethod;
+  final Map<String, dynamic>? requestMapping;
 
   Map<String, dynamic> toJson() {
     return {

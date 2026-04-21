@@ -3,25 +3,6 @@ import 'package:wameedpos/features/orders/enums/order_status.dart';
 import 'package:wameedpos/features/orders/models/order_item.dart';
 
 class Order {
-  final String id;
-  final String storeId;
-  final String? transactionId;
-  final String? customerId;
-  final String orderNumber;
-  final OrderSource source;
-  final OrderStatus status;
-  final double subtotal;
-  final double taxAmount;
-  final double? discountAmount;
-  final double total;
-  final String? notes;
-  final String? customerNotes;
-  final String? externalOrderId;
-  final String? deliveryAddress;
-  final String? createdBy;
-  final List<OrderItem>? items;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Order({
     required this.id,
@@ -70,6 +51,25 @@ class Order {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? transactionId;
+  final String? customerId;
+  final String orderNumber;
+  final OrderSource source;
+  final OrderStatus status;
+  final double subtotal;
+  final double taxAmount;
+  final double? discountAmount;
+  final double total;
+  final String? notes;
+  final String? customerNotes;
+  final String? externalOrderId;
+  final String? deliveryAddress;
+  final String? createdBy;
+  final List<OrderItem>? items;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -19,13 +19,13 @@ class AIFeaturesLoading extends AIFeaturesState {
 }
 
 class AIFeaturesLoaded extends AIFeaturesState {
-  final List<AIFeatureDefinition> features;
   const AIFeaturesLoaded({required this.features});
+  final List<AIFeatureDefinition> features;
 }
 
 class AIFeaturesError extends AIFeaturesState {
-  final String message;
   const AIFeaturesError({required this.message});
+  final String message;
 }
 
 // ─── Feature Result State ───────────────────────────────────────
@@ -43,13 +43,13 @@ class AIFeatureResultLoading extends AIFeatureResultState {
 }
 
 class AIFeatureResultLoaded extends AIFeatureResultState {
-  final AIFeatureResult result;
   const AIFeatureResultLoaded({required this.result});
+  final AIFeatureResult result;
 }
 
 class AIFeatureResultError extends AIFeatureResultState {
-  final String message;
   const AIFeatureResultError({required this.message});
+  final String message;
 }
 
 // ─── Suggestions State ──────────────────────────────────────────
@@ -67,12 +67,6 @@ class AISuggestionsLoading extends AISuggestionsState {
 }
 
 class AISuggestionsLoaded extends AISuggestionsState {
-  final List<AISuggestion> suggestions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? featureFilter;
 
   const AISuggestionsLoaded({
     required this.suggestions,
@@ -82,13 +76,19 @@ class AISuggestionsLoaded extends AISuggestionsState {
     required this.perPage,
     this.featureFilter,
   });
+  final List<AISuggestion> suggestions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? featureFilter;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class AISuggestionsError extends AISuggestionsState {
-  final String message;
   const AISuggestionsError({required this.message});
+  final String message;
 }
 
 // ─── Usage State ────────────────────────────────────────────────
@@ -106,13 +106,13 @@ class AIUsageLoading extends AIUsageState {
 }
 
 class AIUsageLoaded extends AIUsageState {
-  final AIUsageSummary summary;
   const AIUsageLoaded({required this.summary});
+  final AIUsageSummary summary;
 }
 
 class AIUsageError extends AIUsageState {
-  final String message;
   const AIUsageError({required this.message});
+  final String message;
 }
 
 // ─── Smart Search State ─────────────────────────────────────────
@@ -130,14 +130,14 @@ class AISmartSearchLoading extends AISmartSearchState {
 }
 
 class AISmartSearchLoaded extends AISmartSearchState {
+  const AISmartSearchLoaded({required this.result, required this.query});
   final AIFeatureResult result;
   final String query;
-  const AISmartSearchLoaded({required this.result, required this.query});
 }
 
 class AISmartSearchError extends AISmartSearchState {
-  final String message;
   const AISmartSearchError({required this.message});
+  final String message;
 }
 
 // ─── Billing Summary State ──────────────────────────────────────
@@ -155,13 +155,13 @@ class AIBillingSummaryLoading extends AIBillingSummaryState {
 }
 
 class AIBillingSummaryLoaded extends AIBillingSummaryState {
-  final AIBillingSummary summary;
   const AIBillingSummaryLoaded({required this.summary});
+  final AIBillingSummary summary;
 }
 
 class AIBillingSummaryError extends AIBillingSummaryState {
-  final String message;
   const AIBillingSummaryError({required this.message});
+  final String message;
 }
 
 // ─── Billing Invoices State ─────────────────────────────────────
@@ -179,11 +179,6 @@ class AIBillingInvoicesLoading extends AIBillingInvoicesState {
 }
 
 class AIBillingInvoicesLoaded extends AIBillingInvoicesState {
-  final List<AIBillingInvoicePreview> invoices;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const AIBillingInvoicesLoaded({
     required this.invoices,
@@ -192,13 +187,18 @@ class AIBillingInvoicesLoaded extends AIBillingInvoicesState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<AIBillingInvoicePreview> invoices;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class AIBillingInvoicesError extends AIBillingInvoicesState {
-  final String message;
   const AIBillingInvoicesError({required this.message});
+  final String message;
 }
 
 // ─── Billing Invoice Detail State ───────────────────────────────
@@ -216,11 +216,11 @@ class AIBillingInvoiceDetailLoading extends AIBillingInvoiceDetailState {
 }
 
 class AIBillingInvoiceDetailLoaded extends AIBillingInvoiceDetailState {
-  final AIBillingInvoiceDetail invoice;
   const AIBillingInvoiceDetailLoaded({required this.invoice});
+  final AIBillingInvoiceDetail invoice;
 }
 
 class AIBillingInvoiceDetailError extends AIBillingInvoiceDetailState {
-  final String message;
   const AIBillingInvoiceDetailError({required this.message});
+  final String message;
 }

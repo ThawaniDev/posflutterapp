@@ -5,9 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/layout_builder/providers/layout_builder_providers.dart';
 import 'package:wameedpos/features/layout_builder/providers/layout_builder_state.dart';
@@ -119,7 +116,7 @@ class _LayoutTemplateListPageState extends ConsumerState<LayoutTemplateListPage>
                             Text(
                               template.layoutKey.replaceAll('_', ' '),
                               style: AppTypography.micro.copyWith(
-                                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                color: AppColors.mutedFor(context),
                               ),
                             ),
                             const Spacer(),
@@ -145,11 +142,11 @@ class _LayoutTemplateListPageState extends ConsumerState<LayoutTemplateListPage>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.grid_view_rounded, size: 40, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(Icons.grid_view_rounded, size: 40, color: AppColors.mutedFor(context)),
           AppSpacing.gapH4,
           Text(
             'Layout Preview',
-            style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
           ),
         ],
       ),

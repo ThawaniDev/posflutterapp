@@ -10,9 +10,8 @@ final roleApiServiceProvider = Provider<RoleApiService>((ref) {
 });
 
 class RoleApiService {
-  final Dio _dio;
-
   RoleApiService(this._dio);
+  final Dio _dio;
 
   /// GET /staff/roles?store_id=xxx
   Future<List<Role>> listRoles(String storeId) async {
@@ -41,8 +40,8 @@ class RoleApiService {
         'store_id': storeId,
         'name': name,
         'display_name': displayName,
-        if (description != null) 'description': description,
-        if (permissionIds != null) 'permission_ids': permissionIds,
+        'description': ?description,
+        'permission_ids': ?permissionIds,
       },
     );
     return Role.fromJson(response.data['data'] as Map<String, dynamic>);
@@ -70,30 +69,36 @@ class RoleApiService {
   }
 
   /// GET /staff/roles/user-permissions?store_id=xxx
-  /// Returns permissions, branch_scope, accessible_store_ids, and branch_roles.
-  Future<Map<String, dynamic>> getUserPermissionsWithScope(String storeId) async {
-    final response = await _dio.get(ApiEndpoints.userPermissions, queryParameters: {'store_id': storeId});
+  /// `storeId` may be null — backend resolves a default for org-scoped users
+  /// and returns it in the response as `store_id`.
+  /// Returns permissions, branch_scope, accessible_store_ids, branch_roles, store_id.
+  Future<Map<String, dynamic>> getUserPermissionsWithScope(String? storeId) async {
+    final response = await _dio.get(
+      ApiEndpoints.userPermissions,
+      queryParameters: storeId == null ? null : {'store_id': storeId},
+    );
     final data = response.data['data'] as Map<String, dynamic>;
-    final List perms = data['permissions'] as List;
+    final List perms = (data['permissions'] as List?) ?? [];
     final String branchScope = (data['branch_scope'] as String?) ?? 'branch';
     final List accessibleIds = (data['accessible_store_ids'] as List?) ?? [];
 
     // Parse per-branch role map: { storeId: { role_name, display_name, display_name_ar, scope } }
-    final Map<String, dynamic> rawBranchRoles = (data['branch_roles'] as Map<String, dynamic>?) ?? {};
-    final Map<String, BranchRoleInfo> branchRoles = rawBranchRoles.map(
-      (storeId, info) => MapEntry(storeId, BranchRoleInfo.fromJson(info as Map<String, dynamic>)),
-    );
+    final rawBranchRoles = data['branch_roles'];
+    final Map<String, BranchRoleInfo> branchRoles = (rawBranchRoles is Map<String, dynamic>)
+        ? rawBranchRoles.map((storeId, info) => MapEntry(storeId, BranchRoleInfo.fromJson(info as Map<String, dynamic>)))
+        : <String, BranchRoleInfo>{};
 
     return {
       'permissions': perms.cast<String>(),
       'branch_scope': branchScope,
       'accessible_store_ids': accessibleIds.cast<String>(),
       'branch_roles': branchRoles,
+      'store_id': data['store_id'] as String?,
     };
   }
 
   /// Legacy: returns only the permissions list.
-  Future<List<String>> getUserPermissions(String storeId) async {
+  Future<List<String>> getUserPermissions(String? storeId) async {
     final result = await getUserPermissionsWithScope(storeId);
     return result['permissions'] as List<String>;
   }
@@ -137,7 +142,7 @@ class RoleApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.pinOverride,
-      data: {'store_id': storeId, 'pin': pin, 'permission_code': permissionCode, if (context != null) 'context': context},
+      data: {'store_id': storeId, 'pin': pin, 'permission_code': permissionCode, 'context': ?context},
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -151,11 +156,6 @@ class RoleApiService {
 
 /// Per-branch role information returned by the user-permissions API.
 class BranchRoleInfo {
-  final String roleName;
-  final String displayName;
-  final String? displayNameAr;
-  final String scope;
-
   const BranchRoleInfo({required this.roleName, required this.displayName, this.displayNameAr, required this.scope});
 
   factory BranchRoleInfo.fromJson(Map<String, dynamic> json) {
@@ -166,4 +166,8 @@ class BranchRoleInfo {
       scope: json['scope'] as String,
     );
   }
+  final String roleName;
+  final String displayName;
+  final String? displayNameAr;
+  final String scope;
 }

@@ -7,7 +7,6 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
   const AdminNotificationTemplateListPage({super.key});
@@ -87,8 +86,8 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: l10n.marketplaceSearch,
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.search),
+                      border: const OutlineInputBorder(),
                     ),
                     onSubmitted: (_) => _search(),
                   ),

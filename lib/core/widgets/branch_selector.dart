@@ -75,27 +75,32 @@ class _BranchSelectorState extends ConsumerState<BranchSelector> {
       return const SizedBox.shrink();
     }
 
-    final selectedBranch = branches.where((b) => b.id == activeBranchId).firstOrNull;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: PosSearchableDropdown<String>(
+      child: PosSearchableDropdown<String?>(
         hint: AppLocalizations.of(context)!.selectBranch,
-        items: branches.map((store) {
-          final roleInfo = permsState.roleForBranch(store.id);
-          final roleName = roleInfo != null
-              ? (locale == 'ar' ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
-              : null;
-          return PosDropdownItem<String>(
-            value: store.id,
-            label: store.name,
-            subtitle: roleName,
-            icon: store.isMainBranch ? Icons.star_rounded : null,
-          );
-        }).toList(),
-        selectedValue: selectedBranch?.id ?? activeBranchId,
+        items: [
+          PosDropdownItem<String?>(
+            value: null,
+            label: AppLocalizations.of(context)!.commonAllBranches,
+            icon: Icons.business_rounded,
+          ),
+          ...branches.map((store) {
+            final roleInfo = permsState.roleForBranch(store.id);
+            final roleName = roleInfo != null
+                ? (locale == 'ar' ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
+                : null;
+            return PosDropdownItem<String?>(
+              value: store.id,
+              label: store.name,
+              subtitle: roleName,
+              icon: store.isMainBranch ? Icons.star_rounded : null,
+            );
+          }),
+        ],
+        selectedValue: activeBranchId,
         onChanged: (newId) {
-          if (newId != null && newId != activeBranchId) {
+          if (newId != activeBranchId) {
             ref.read(activeBranchIdProvider.notifier).state = newId;
           }
         },

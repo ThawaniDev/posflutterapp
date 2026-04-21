@@ -186,7 +186,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
               padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: Row(
                 children: [
-                  Icon(Icons.refresh_rounded, size: 14, color: AppColors.warning),
+                  const Icon(Icons.refresh_rounded, size: 14, color: AppColors.warning),
                   AppSpacing.gapW4,
                   Text(
                     '${l10n.notifDeliveryLogsRetries}: ${log.retryCount}',
@@ -199,7 +199,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
             AppSpacing.gapH4,
             Text(
               _formatDateTime(log.createdAt!),
-              style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ],

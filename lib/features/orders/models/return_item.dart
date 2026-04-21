@@ -1,12 +1,4 @@
 class ReturnItem {
-  final String id;
-  final String returnId;
-  final String orderItemId;
-  final String productId;
-  final double quantity;
-  final double unitPrice;
-  final double refundAmount;
-  final bool? restoreStock;
 
   const ReturnItem({
     required this.id,
@@ -31,6 +23,14 @@ class ReturnItem {
       restoreStock: json['restore_stock'] as bool?,
     );
   }
+  final String id;
+  final String returnId;
+  final String orderItemId;
+  final String productId;
+  final double quantity;
+  final double unitPrice;
+  final double refundAmount;
+  final bool? restoreStock;
 
   Map<String, dynamic> toJson() {
     return {

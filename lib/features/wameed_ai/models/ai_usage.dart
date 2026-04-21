@@ -3,9 +3,6 @@ int _toInt(dynamic v) => v == null ? 0 : (v is num ? v.toInt() : int.tryParse(v.
 double _toDouble(dynamic v) => v == null ? 0 : (v is num ? v.toDouble() : double.tryParse(v.toString()) ?? 0);
 
 class AIUsageSummary {
-  final AIUsageToday today;
-  final AIUsageMonthly monthly;
-  final List<AIUsageByFeature> byFeature;
 
   const AIUsageSummary({required this.today, required this.monthly, this.byFeature = const []});
 
@@ -18,12 +15,12 @@ class AIUsageSummary {
           : const [],
     );
   }
+  final AIUsageToday today;
+  final AIUsageMonthly monthly;
+  final List<AIUsageByFeature> byFeature;
 }
 
 class AIUsageToday {
-  final int requestCount;
-  final double totalCost;
-  final int totalTokens;
 
   const AIUsageToday({this.requestCount = 0, this.totalCost = 0, this.totalTokens = 0});
 
@@ -34,12 +31,12 @@ class AIUsageToday {
       totalTokens: _toInt(json['total_tokens']),
     );
   }
-}
-
-class AIUsageMonthly {
   final int requestCount;
   final double totalCost;
   final int totalTokens;
+}
+
+class AIUsageMonthly {
 
   const AIUsageMonthly({this.requestCount = 0, this.totalCost = 0, this.totalTokens = 0});
 
@@ -50,12 +47,12 @@ class AIUsageMonthly {
       totalTokens: _toInt(json['total_tokens']) + _toInt(json['total_input_tokens']) + _toInt(json['total_output_tokens']),
     );
   }
+  final int requestCount;
+  final double totalCost;
+  final int totalTokens;
 }
 
 class AIUsageByFeature {
-  final String featureSlug;
-  final int requestCount;
-  final double totalCost;
 
   const AIUsageByFeature({required this.featureSlug, this.requestCount = 0, this.totalCost = 0});
 
@@ -66,17 +63,12 @@ class AIUsageByFeature {
       totalCost: _toDouble(json['total_cost']),
     );
   }
+  final String featureSlug;
+  final int requestCount;
+  final double totalCost;
 }
 
 class AIDailyUsage {
-  final String date;
-  final String featureSlug;
-  final int requestCount;
-  final int cachedCount;
-  final int errorCount;
-  final int totalTokens;
-  final double totalCost;
-  final int avgResponseMs;
 
   const AIDailyUsage({
     required this.date,
@@ -101,4 +93,12 @@ class AIDailyUsage {
       avgResponseMs: _toInt(json['avg_response_ms']),
     );
   }
+  final String date;
+  final String featureSlug;
+  final int requestCount;
+  final int cachedCount;
+  final int errorCount;
+  final int totalTokens;
+  final double totalCost;
+  final int avgResponseMs;
 }

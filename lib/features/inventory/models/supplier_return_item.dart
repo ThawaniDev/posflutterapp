@@ -1,13 +1,4 @@
 class SupplierReturnItem {
-  final String id;
-  final String supplierReturnId;
-  final String productId;
-  final String? productName;
-  final String? productSku;
-  final double quantity;
-  final double unitCost;
-  final String? reason;
-  final String? batchNumber;
 
   const SupplierReturnItem({
     required this.id,
@@ -36,6 +27,15 @@ class SupplierReturnItem {
       batchNumber: json['batch_number'] as String?,
     );
   }
+  final String id;
+  final String supplierReturnId;
+  final String productId;
+  final String? productName;
+  final String? productSku;
+  final double quantity;
+  final double unitCost;
+  final String? reason;
+  final String? batchNumber;
 
   Map<String, dynamic> toJson() {
     return {

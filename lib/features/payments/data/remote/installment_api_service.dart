@@ -12,8 +12,8 @@ final installmentApiServiceProvider = Provider<InstallmentApiService>((ref) {
 });
 
 class InstallmentApiService {
-  final Dio _dio;
   InstallmentApiService(this._dio);
+  final Dio _dio;
 
   // ═══════════════════════════════════════════════════════════════
   // Platform Admin — Provider Management
@@ -100,7 +100,7 @@ class InstallmentApiService {
   // POS Checkout — Installment Payments
   // ═══════════════════════════════════════════════════════════════
 
-  Future<List<CheckoutProviderOption>> getCheckoutProviders({required double amount, String currency = 'SAR'}) async {
+  Future<List<CheckoutProviderOption>> getCheckoutProviders({required double amount, String currency = ''}) async {
     final response = await _dio.get('/installments/providers', queryParameters: {'amount': amount, 'currency': currency});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List<dynamic>;
@@ -120,10 +120,7 @@ class InstallmentApiService {
   }
 
   Future<InstallmentPayment> confirmPayment(String id, {Map<String, dynamic>? providerData}) async {
-    final response = await _dio.post(
-      '/installments/$id/confirm',
-      data: {if (providerData != null) 'provider_data': providerData},
-    );
+    final response = await _dio.post('/installments/$id/confirm', data: {'provider_data': ?providerData});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return InstallmentPayment.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -135,10 +132,7 @@ class InstallmentApiService {
   }
 
   Future<InstallmentPayment> failPayment(String id, {String? errorCode, String? errorMessage}) async {
-    final response = await _dio.post(
-      '/installments/$id/fail',
-      data: {if (errorCode != null) 'error_code': errorCode, if (errorMessage != null) 'error_message': errorMessage},
-    );
+    final response = await _dio.post('/installments/$id/fail', data: {'error_code': ?errorCode, 'error_message': ?errorMessage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return InstallmentPayment.fromJson(apiResponse.data as Map<String, dynamic>);
   }

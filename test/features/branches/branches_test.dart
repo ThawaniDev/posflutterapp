@@ -82,7 +82,7 @@ void main() {
     });
 
     test('BranchListLoaded holds branches', () {
-      final state = BranchListLoaded([
+      const state = BranchListLoaded([
         Store(id: '1', organizationId: 'org1', name: 'Main Branch', slug: 'main-branch', isMainBranch: true),
         Store(id: '2', organizationId: 'org1', name: 'Branch 2', slug: 'branch-2', isMainBranch: false),
       ]);

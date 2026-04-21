@@ -2,21 +2,6 @@ import 'package:wameedpos/features/hardware/enums/driver_protocol.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class CertifiedHardware {
-  final String id;
-  final HardwareDeviceType deviceType;
-  final String brand;
-  final String model;
-  final DriverProtocol driverProtocol;
-  final Map<String, dynamic>? connectionTypes;
-  final String? firmwareVersionMin;
-  final Map<String, dynamic>? paperWidths;
-  final String? setupInstructions;
-  final String? setupInstructionsAr;
-  final bool? isCertified;
-  final bool? isActive;
-  final String? notes;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const CertifiedHardware({
     required this.id,
@@ -55,6 +40,21 @@ class CertifiedHardware {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final HardwareDeviceType deviceType;
+  final String brand;
+  final String model;
+  final DriverProtocol driverProtocol;
+  final Map<String, dynamic>? connectionTypes;
+  final String? firmwareVersionMin;
+  final Map<String, dynamic>? paperWidths;
+  final String? setupInstructions;
+  final String? setupInstructionsAr;
+  final bool? isCertified;
+  final bool? isActive;
+  final String? notes;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -6,8 +6,8 @@ import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 // ─── Branch List ───
 class BranchListNotifier extends StateNotifier<BranchListState> {
-  final BranchRepository _repository;
   BranchListNotifier(this._repository) : super(const BranchListInitial());
+  final BranchRepository _repository;
 
   String? _search;
   String? _city;
@@ -88,8 +88,8 @@ final branchListProvider = StateNotifierProvider<BranchListNotifier, BranchListS
 
 // ─── Branch Detail ───
 class BranchDetailNotifier extends StateNotifier<BranchDetailState> {
-  final BranchRepository _repository;
   BranchDetailNotifier(this._repository) : super(const BranchDetailInitial());
+  final BranchRepository _repository;
 
   Future<void> load(String id) async {
     state = const BranchDetailLoading();
@@ -111,8 +111,8 @@ final branchDetailProvider = StateNotifierProvider.family<BranchDetailNotifier, 
 
 // ─── Branch Form (Create/Update) ───
 class BranchFormNotifier extends StateNotifier<BranchFormState> {
-  final BranchRepository _repository;
   BranchFormNotifier(this._repository) : super(const BranchFormIdle());
+  final BranchRepository _repository;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const BranchFormSaving();

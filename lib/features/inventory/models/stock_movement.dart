@@ -2,17 +2,6 @@ import 'package:wameedpos/features/inventory/enums/stock_movement_type.dart';
 import 'package:wameedpos/features/inventory/enums/stock_reference_type.dart';
 
 class StockMovement {
-  final String id;
-  final String storeId;
-  final String productId;
-  final StockMovementType type;
-  final double quantity;
-  final double? unitCost;
-  final StockReferenceType? referenceType;
-  final String? referenceId;
-  final String? reason;
-  final String? performedBy;
-  final DateTime? createdAt;
 
   const StockMovement({
     required this.id,
@@ -43,6 +32,17 @@ class StockMovement {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String productId;
+  final StockMovementType type;
+  final double quantity;
+  final double? unitCost;
+  final StockReferenceType? referenceType;
+  final String? referenceId;
+  final String? reason;
+  final String? performedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

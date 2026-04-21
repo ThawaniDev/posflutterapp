@@ -59,7 +59,7 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cartsState = ref.watch(heldCartsProvider);
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),

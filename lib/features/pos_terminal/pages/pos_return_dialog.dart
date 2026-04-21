@@ -130,7 +130,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -194,7 +194,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     shrinkWrap: true,
                     itemCount: _transaction!.items!.length,
                     separatorBuilder: (_, __) =>
-                        Divider(height: 1, color: isDark ? AppColors.borderLight : AppColors.borderLight),
+                        Divider(height: 1, color: AppColors.borderFor(context)),
                     itemBuilder: (context, index) => _ReturnItemRow(
                       item: _transaction!.items![index],
                       returnQty: _returnQuantities[index] ?? 0,
@@ -392,7 +392,7 @@ class _MiniButton extends StatelessWidget {
         height: 26,
         decoration: BoxDecoration(
           borderRadius: AppRadius.borderSm,
-          border: Border.all(color: onTap != null ? AppColors.borderLight : AppColors.borderSubtleLight),
+          border: Border.all(color: onTap != null ? AppColors.borderFor(context) : AppColors.borderSubtleLight),
         ),
         child: Icon(icon, size: 14, color: onTap != null ? null : AppColors.textDisabledLight),
       ),

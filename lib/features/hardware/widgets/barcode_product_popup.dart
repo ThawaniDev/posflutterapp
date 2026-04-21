@@ -3,8 +3,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/utils/formatters.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -58,7 +56,7 @@ class _BarcodeProductContent extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadius.borderXl,
       child: Scaffold(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        backgroundColor: AppColors.surfaceFor(context),
         body: product != null ? _buildProductFound(context, product!, isDark) : _buildProductNotFound(context, isDark),
       ),
     );
@@ -81,7 +79,7 @@ class _BarcodeProductContent extends StatelessWidget {
             child: Container(
               width: 40,
               height: 4,
-              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+              decoration: BoxDecoration(color: AppColors.mutedFor(context), borderRadius: BorderRadius.circular(2)),
             ),
           ),
           AppSpacing.gapH12,
@@ -111,7 +109,7 @@ class _BarcodeProductContent extends StatelessWidget {
                   Text(product.name, style: AppTypography.headlineSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
                   if (product.nameAr != null && product.nameAr!.isNotEmpty) ...[
                     AppSpacing.gapH2,
-                    Text(product.nameAr!, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                    Text(product.nameAr!, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
                   ],
                   AppSpacing.gapH4,
                   Row(
@@ -138,7 +136,7 @@ class _BarcodeProductContent extends StatelessWidget {
           decoration: BoxDecoration(
             color: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
             borderRadius: AppRadius.borderSm,
-            border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+            border: Border.all(color: AppColors.borderFor(context)),
           ),
           child: Row(
             children: [
@@ -148,7 +146,7 @@ class _BarcodeProductContent extends StatelessWidget {
                 child: Text(barcode, style: AppTypography.bodySmall.copyWith(fontFamily: 'monospace')),
               ),
               if (product.sku != null) ...[
-                Container(width: 1, height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                Container(width: 1, height: 16, color: AppColors.borderFor(context)),
                 AppSpacing.gapW8,
                 Text('SKU: ${product.sku}', style: AppTypography.micro),
               ],
@@ -175,7 +173,7 @@ class _BarcodeProductContent extends StatelessWidget {
                   Text(
                     Formatters.currency(product.sellPrice),
                     style: AppTypography.headlineSmall.copyWith(
-                      color: hasOffer ? AppColors.textMutedLight : AppColors.primary,
+                      color: hasOffer ? AppColors.mutedFor(context) : AppColors.primary,
                       decoration: hasOffer ? TextDecoration.lineThrough : null,
                     ),
                   ),
@@ -205,7 +203,7 @@ class _BarcodeProductContent extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(l10n.costPrice, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                    Text(l10n.costPrice, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
                     Text(Formatters.currency(product.costPrice!), style: AppTypography.bodySmall),
                   ],
                 ),
@@ -214,7 +212,7 @@ class _BarcodeProductContent extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(l10n.wameedAIBillingMargin, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                      Text(l10n.wameedAIBillingMargin, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
                       Text(
                         '${(((product.sellPrice - product.costPrice!) / product.sellPrice) * 100).toStringAsFixed(1)}%',
                         style: AppTypography.labelSmall.copyWith(color: AppColors.success),
@@ -236,7 +234,7 @@ class _BarcodeProductContent extends StatelessWidget {
           if (product.categoryId != null) _DetailItem('Category', product.categoryId!),
           if (product.minOrderQty != null) _DetailItem('Min Qty', '${product.minOrderQty}'),
           if (product.maxOrderQty != null) _DetailItem('Max Qty', '${product.maxOrderQty}'),
-          if (product.ageRestricted == true) _DetailItem('Age Restricted', 'Yes'),
+          if (product.ageRestricted == true) const _DetailItem('Age Restricted', 'Yes'),
         ]),
 
         if (product.description != null && product.description!.isNotEmpty) ...[
@@ -286,7 +284,7 @@ class _BarcodeProductContent extends StatelessWidget {
             child: Container(
               width: 40,
               height: 4,
-              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+              decoration: BoxDecoration(color: AppColors.mutedFor(context), borderRadius: BorderRadius.circular(2)),
             ),
           ),
           AppSpacing.gapH16,
@@ -319,7 +317,7 @@ class _BarcodeProductContent extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
               borderRadius: AppRadius.borderSm,
-              border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+              border: Border.all(color: AppColors.borderFor(context)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -381,7 +379,7 @@ class _BarcodeProductContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(item.label, style: AppTypography.micro.copyWith(color: AppColors.textMutedLight)),
+              Text(item.label, style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
               AppSpacing.gapH2,
               Text(item.value, style: AppTypography.labelSmall),
             ],
@@ -393,7 +391,7 @@ class _BarcodeProductContent extends StatelessWidget {
 }
 
 class _DetailItem {
+  const _DetailItem(this.label, this.value);
   final String label;
   final String value;
-  const _DetailItem(this.label, this.value);
 }

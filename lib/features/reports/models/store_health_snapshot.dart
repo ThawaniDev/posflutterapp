@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/reports/enums/store_health_sync_status.dart';
 
 class StoreHealthSnapshot {
-  final String id;
-  final String storeId;
-  final DateTime date;
-  final StoreHealthSyncStatus? syncStatus;
-  final bool? zatcaCompliance;
-  final int? errorCount;
-  final DateTime? lastActivityAt;
 
   const StoreHealthSnapshot({
     required this.id,
@@ -30,6 +23,13 @@ class StoreHealthSnapshot {
       lastActivityAt: json['last_activity_at'] != null ? DateTime.parse(json['last_activity_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final DateTime date;
+  final StoreHealthSyncStatus? syncStatus;
+  final bool? zatcaCompliance;
+  final int? errorCount;
+  final DateTime? lastActivityAt;
 
   Map<String, dynamic> toJson() {
     return {

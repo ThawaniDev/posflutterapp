@@ -83,7 +83,7 @@ void main() {
     });
 
     test('toJson serializes correctly', () {
-      final plan = SubscriptionPlan(
+      const plan = SubscriptionPlan(
         id: 'plan-1',
         name: 'Pro',
         nameAr: 'برو',
@@ -106,7 +106,7 @@ void main() {
     });
 
     test('annualSavings calculates correctly', () {
-      final plan = SubscriptionPlan(id: 'plan-1', name: 'Pro', monthlyPrice: 100.0, annualPrice: 1000.0, isActive: true);
+      const plan = SubscriptionPlan(id: 'plan-1', name: 'Pro', monthlyPrice: 100.0, annualPrice: 1000.0, isActive: true);
 
       // Annual vs 12 months: 1200 - 1000 = 200 savings
       if (plan.annualPrice != null) {
@@ -199,7 +199,7 @@ void main() {
     });
 
     test('isActive checks status correctly', () {
-      final activeSub = StoreSubscription(
+      const activeSub = StoreSubscription(
         id: '1',
         organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
@@ -207,7 +207,7 @@ void main() {
       );
       expect(activeSub.isActive, true);
 
-      final trialSub = StoreSubscription(
+      const trialSub = StoreSubscription(
         id: '2',
         organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
@@ -215,7 +215,7 @@ void main() {
       );
       expect(trialSub.isActive, true); // trial is considered active
 
-      final cancelledSub = StoreSubscription(
+      const cancelledSub = StoreSubscription(
         id: '3',
         organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',

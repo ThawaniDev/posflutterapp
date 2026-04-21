@@ -122,8 +122,8 @@ final retryStreamProvider = StreamProvider<RetryAttempt>((ref) {
 
 // ─── Sync Status Provider ──────────────────────────────────
 class SyncStatusNotifier extends StateNotifier<SyncStatusState> {
-  final SyncRepository _repo;
   SyncStatusNotifier(this._repo) : super(const SyncStatusInitial());
+  final SyncRepository _repo;
 
   Future<void> load() async {
     if (state is! SyncStatusLoaded) state = const SyncStatusLoading();
@@ -149,8 +149,8 @@ final syncStatusProvider = StateNotifierProvider<SyncStatusNotifier, SyncStatusS
 
 // ─── Sync Operation Provider ───────────────────────────────
 class SyncOperationNotifier extends StateNotifier<SyncOperationState> {
-  final SyncRepository _repo;
   SyncOperationNotifier(this._repo) : super(const SyncOperationIdle());
+  final SyncRepository _repo;
 
   Future<void> push({required String terminalId, required List<Map<String, dynamic>> changes, String? syncToken}) async {
     state = const SyncOperationRunning('push');
@@ -191,8 +191,8 @@ final syncOperationProvider = StateNotifierProvider<SyncOperationNotifier, SyncO
 
 // ─── Conflict List Provider ───────────────────────────────
 class SyncConflictListNotifier extends StateNotifier<SyncConflictListState> {
-  final SyncRepository _repo;
   SyncConflictListNotifier(this._repo) : super(const SyncConflictListInitial());
+  final SyncRepository _repo;
 
   Future<void> load({String? status, String? tableName}) async {
     if (state is! SyncConflictListLoaded) state = const SyncConflictListLoading();

@@ -9,8 +9,8 @@ final electronicsRepositoryProvider = Provider<ElectronicsRepository>((ref) {
 });
 
 class ElectronicsRepository {
-  final ElectronicsApiService _apiService;
   ElectronicsRepository({required ElectronicsApiService apiService}) : _apiService = apiService;
+  final ElectronicsApiService _apiService;
 
   Future<List<DeviceImeiRecord>> listImeiRecords({String? status, String? search, int perPage = 20}) =>
       _apiService.listImeiRecords(status: status, search: search, perPage: perPage);

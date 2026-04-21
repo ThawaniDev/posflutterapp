@@ -19,11 +19,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 /// Shows relevant fields (text, number, date, image, dropdowns, etc.) and
 /// a send button. Dismissable via a close button.
 class AIFeatureInputPanel extends ConsumerStatefulWidget {
-  final String featureSlug;
-  final String featureName;
-  final FeatureInputConfig config;
-  final void Function(Map<String, dynamic> params, String prompt, String? imageBase64) onSubmit;
-  final VoidCallback onDismiss;
 
   const AIFeatureInputPanel({
     super.key,
@@ -33,6 +28,11 @@ class AIFeatureInputPanel extends ConsumerStatefulWidget {
     required this.onSubmit,
     required this.onDismiss,
   });
+  final String featureSlug;
+  final String featureName;
+  final FeatureInputConfig config;
+  final void Function(Map<String, dynamic> params, String prompt, String? imageBase64) onSubmit;
+  final VoidCallback onDismiss;
 
   @override
   ConsumerState<AIFeatureInputPanel> createState() => _AIFeatureInputPanelState();
@@ -534,11 +534,11 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 // ─── Product Search Dialog ───────────────────────────────────────
 
 class _ProductSearchDialog extends StatefulWidget {
+
+  const _ProductSearchDialog({required this.title, required this.catalogApi, required this.onSelected});
   final String title;
   final CatalogApiService catalogApi;
   final void Function(Product product) onSelected;
-
-  const _ProductSearchDialog({required this.title, required this.catalogApi, required this.onSelected});
 
   @override
   State<_ProductSearchDialog> createState() => _ProductSearchDialogState();
@@ -653,11 +653,11 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
 // ─── Category Search Dialog ──────────────────────────────────────
 
 class _CategorySearchDialog extends StatefulWidget {
+
+  const _CategorySearchDialog({required this.title, required this.catalogApi, required this.onSelected});
   final String title;
   final CatalogApiService catalogApi;
   final void Function(Category category) onSelected;
-
-  const _CategorySearchDialog({required this.title, required this.catalogApi, required this.onSelected});
 
   @override
   State<_CategorySearchDialog> createState() => _CategorySearchDialogState();

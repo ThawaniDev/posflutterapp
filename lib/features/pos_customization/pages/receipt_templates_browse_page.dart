@@ -85,7 +85,7 @@ class _ReceiptTemplatesBrowsePageState extends ConsumerState<ReceiptTemplatesBro
                         Text(
                           '${template.paperWidth}mm',
                           style: AppTypography.labelSmall.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                       ],
@@ -104,7 +104,7 @@ class _ReceiptTemplatesBrowsePageState extends ConsumerState<ReceiptTemplatesBro
                     AppSpacing.gapH4,
                     Text(
                       template.slug,
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                     ),
                     const Spacer(),
                     // Badges

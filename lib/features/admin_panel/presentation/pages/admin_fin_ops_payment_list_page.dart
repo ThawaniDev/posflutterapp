@@ -147,7 +147,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
         subtitle: Text(method.replaceAll('_', ' ').toUpperCase(), style: const TextStyle(fontSize: 12)),
         trailing: Text(
           item['created_at']?.toString().substring(0, 10) ?? '',
-          style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight),
+          style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
         ),
         onTap: () {
           final id = item['id']?.toString();

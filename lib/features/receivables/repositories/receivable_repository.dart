@@ -8,9 +8,9 @@ final receivableRepositoryProvider = Provider<ReceivableRepository>((ref) {
 });
 
 class ReceivableRepository {
-  final ReceivablesApiService _apiService;
 
   ReceivableRepository({required ReceivablesApiService apiService}) : _apiService = apiService;
+  final ReceivablesApiService _apiService;
 
   Future<PaginatedResult<Receivable>> listReceivables({
     int page = 1,

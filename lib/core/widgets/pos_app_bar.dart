@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 /// Wameed POS App Bar — sticky top bar with logo area, title,
 /// optional search, notification badge, and user avatar.

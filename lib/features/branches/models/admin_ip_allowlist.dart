@@ -1,9 +1,4 @@
 class AdminIpAllowlist {
-  final String id;
-  final String ipAddress;
-  final String? label;
-  final String addedBy;
-  final DateTime? createdAt;
 
   const AdminIpAllowlist({
     required this.id,
@@ -22,6 +17,11 @@ class AdminIpAllowlist {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String ipAddress;
+  final String? label;
+  final String addedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/table_reservation.dart';
-import '../providers/restaurant_providers.dart';
-import '../models/restaurant_table.dart';
-import '../providers/restaurant_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_restaurant/models/table_reservation.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_providers.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ReservationFormPage extends ConsumerStatefulWidget {
-  final TableReservation? reservation;
   const ReservationFormPage({super.key, this.reservation});
+  final TableReservation? reservation;
 
   @override
   ConsumerState<ReservationFormPage> createState() => _ReservationFormPageState();
@@ -122,16 +122,16 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: l10n.pharmacyFullNameHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _customerPhoneCtrl,
               label: l10n.authPhoneOptional,
               hint: l10n.restaurantPhoneHint,
               keyboardType: TextInputType.phone,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _partySizeCtrl, label: l10n.restaurantPartySize, hint: '2', keyboardType: TextInputType.number),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(
@@ -145,7 +145,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickTime,
               child: AbsorbPointer(
@@ -158,9 +158,9 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _durationCtrl, label: l10n.durationMinutes, hint: '60', keyboardType: TextInputType.number),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectTable,
               label: l10n.tableOptional,
@@ -169,7 +169,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               onChanged: (v) => setState(() => _selectedTableId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.restaurantSpecialRequestsHint, maxLines: 3),
           ],
         ),

@@ -1,14 +1,8 @@
 class InvoiceLineItem {
-  final String id;
-  final String invoiceId;
-  final String description;
-  final int? quantity;
-  final double unitPrice;
-  final double total;
 
   const InvoiceLineItem({
     required this.id,
-    required this.invoiceId,
+    this.invoiceId,
     required this.description,
     this.quantity,
     required this.unitPrice,
@@ -18,13 +12,19 @@ class InvoiceLineItem {
   factory InvoiceLineItem.fromJson(Map<String, dynamic> json) {
     return InvoiceLineItem(
       id: json['id'] as String,
-      invoiceId: json['invoice_id'] as String,
+      invoiceId: json['invoice_id'] as String?,
       description: json['description'] as String,
       quantity: (json['quantity'] as num?)?.toInt(),
       unitPrice: double.tryParse(json['unit_price'].toString()) ?? 0.0,
       total: double.tryParse(json['total'].toString()) ?? 0.0,
     );
   }
+  final String id;
+  final String? invoiceId;
+  final String description;
+  final int? quantity;
+  final double unitPrice;
+  final double total;
 
   Map<String, dynamic> toJson() {
     return {
@@ -56,13 +56,12 @@ class InvoiceLineItem {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is InvoiceLineItem && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is InvoiceLineItem && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'InvoiceLineItem(id: $id, invoiceId: $invoiceId, description: $description, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
+  String toString() =>
+      'InvoiceLineItem(id: $id, invoiceId: $invoiceId, description: $description, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
 }

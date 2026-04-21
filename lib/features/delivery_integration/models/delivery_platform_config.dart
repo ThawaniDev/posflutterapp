@@ -1,27 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
 
 class DeliveryPlatformConfig {
-  final String id;
-  final String storeId;
-  final DeliveryConfigPlatform platform;
-  final String apiKey;
-  final String? merchantId;
-  final String? webhookSecret;
-  final String? branchIdOnPlatform;
-  final bool isEnabled;
-  final bool autoAccept;
-  final int? throttleLimit;
-  final int? maxDailyOrders;
-  final int dailyOrderCount;
-  final bool syncMenuOnProductChange;
-  final int? menuSyncIntervalHours;
-  final bool operatingHoursSynced;
-  final String? webhookUrl;
-  final String status;
-  final DateTime? lastMenuSyncAt;
-  final DateTime? lastOrderReceivedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const DeliveryPlatformConfig({
     required this.id,
@@ -74,6 +53,27 @@ class DeliveryPlatformConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final DeliveryConfigPlatform platform;
+  final String apiKey;
+  final String? merchantId;
+  final String? webhookSecret;
+  final String? branchIdOnPlatform;
+  final bool isEnabled;
+  final bool autoAccept;
+  final int? throttleLimit;
+  final int? maxDailyOrders;
+  final int dailyOrderCount;
+  final bool syncMenuOnProductChange;
+  final int? menuSyncIntervalHours;
+  final bool operatingHoursSynced;
+  final String? webhookUrl;
+  final String status;
+  final DateTime? lastMenuSyncAt;
+  final DateTime? lastOrderReceivedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

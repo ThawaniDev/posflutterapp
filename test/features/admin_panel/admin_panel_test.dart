@@ -558,7 +558,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      AdminStoreListState state = const AdminStoreListLoading();
+      const AdminStoreListState state = AdminStoreListLoading();
       final result = switch (state) {
         AdminStoreListInitial() => 'initial',
         AdminStoreListLoading() => 'loading',
@@ -596,7 +596,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      AdminStoreDetailState state = const AdminStoreDetailError('oops');
+      const AdminStoreDetailState state = AdminStoreDetailError('oops');
       final result = switch (state) {
         AdminStoreDetailInitial() => 'initial',
         AdminStoreDetailLoading() => 'loading',
@@ -641,7 +641,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      AdminActionState state = const AdminActionSuccess('Done');
+      const AdminActionState state = AdminActionSuccess('Done');
       final result = switch (state) {
         AdminActionInitial() => 'initial',
         AdminActionLoading() => 'loading',
@@ -688,7 +688,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      RegistrationListState state = const RegistrationListInitial();
+      const RegistrationListState state = RegistrationListInitial();
       final result = switch (state) {
         RegistrationListInitial() => 'initial',
         RegistrationListLoading() => 'loading',
@@ -734,7 +734,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      LimitOverrideListState state = const LimitOverrideListLoaded([]);
+      const LimitOverrideListState state = LimitOverrideListLoaded([]);
       final result = switch (state) {
         LimitOverrideListInitial() => 'initial',
         LimitOverrideListLoading() => 'loading',
@@ -780,7 +780,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      ProviderNotesState state = const ProviderNotesLoading();
+      const ProviderNotesState state = ProviderNotesLoading();
       final result = switch (state) {
         ProviderNotesInitial() => 'initial',
         ProviderNotesLoading() => 'loading',

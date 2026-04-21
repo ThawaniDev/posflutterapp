@@ -76,13 +76,13 @@ class RollbackService {
 }
 
 class RollbackResult {
-  final bool success;
-  final String message;
-  final String? rolledBackToVersion;
 
   const RollbackResult({required this.success, required this.message, this.rolledBackToVersion});
 
   factory RollbackResult.failure(String message) {
     return RollbackResult(success: false, message: message);
   }
+  final bool success;
+  final String message;
+  final String? rolledBackToVersion;
 }

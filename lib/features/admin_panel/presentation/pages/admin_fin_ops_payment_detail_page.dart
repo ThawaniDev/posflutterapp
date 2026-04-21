@@ -8,8 +8,8 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsPaymentDetailPage extends ConsumerStatefulWidget {
-  final String id;
   const AdminFinOpsPaymentDetailPage({super.key, required this.id});
+  final String id;
 
   @override
   ConsumerState<AdminFinOpsPaymentDetailPage> createState() => _State();

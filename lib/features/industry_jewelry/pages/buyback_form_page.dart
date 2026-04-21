@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../enums/buyback_payment_method.dart';
-import '../enums/metal_type.dart';
-import '../providers/jewelry_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/buyback_payment_method.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
@@ -103,9 +103,9 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: l10n.jewelryKaratHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -129,7 +129,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Text(
@@ -137,7 +137,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<BuybackPaymentMethod>(
               hint: l10n.selectPaymentMethod,
               label: l10n.paymentMethod,
@@ -149,7 +149,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectStaffMember,
               label: l10n.staffMember,
@@ -158,7 +158,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.jewelryDetailsHint, maxLines: 3),
           ],
         ),

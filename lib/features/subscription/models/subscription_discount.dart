@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class SubscriptionDiscount {
-  final String id;
-  final String code;
-  final DiscountType type;
-  final double value;
-  final int? maxUses;
-  final int? timesUsed;
-  final DateTime? validFrom;
-  final DateTime? validTo;
-  final Map<String, dynamic>? applicablePlanIds;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SubscriptionDiscount({
     required this.id,
@@ -44,6 +33,17 @@ class SubscriptionDiscount {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String code;
+  final DiscountType type;
+  final double value;
+  final int? maxUses;
+  final int? timesUsed;
+  final DateTime? validFrom;
+  final DateTime? validTo;
+  final Map<String, dynamic>? applicablePlanIds;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

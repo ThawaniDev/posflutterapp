@@ -1,10 +1,4 @@
 class PricingPageContent {
-  final String id;
-  final String subscriptionPlanId;
-  final Map<String, dynamic> featureBulletList;
-  final Map<String, dynamic> faq;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PricingPageContent({
     required this.id,
@@ -25,6 +19,12 @@ class PricingPageContent {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String subscriptionPlanId;
+  final Map<String, dynamic> featureBulletList;
+  final Map<String, dynamic> faq;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

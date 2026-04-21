@@ -2,19 +2,6 @@ import 'package:wameedpos/features/industry_jewelry/enums/making_charges_type.da
 import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class JewelryProductDetail {
-  final String id;
-  final String productId;
-  final MetalType metalType;
-  final String? karat;
-  final double grossWeightG;
-  final double netWeightG;
-  final MakingChargesType? makingChargesType;
-  final double makingChargesValue;
-  final String? stoneType;
-  final double? stoneWeightCarat;
-  final int? stoneCount;
-  final String? certificateNumber;
-  final String? certificateUrl;
 
   const JewelryProductDetail({
     required this.id,
@@ -49,6 +36,19 @@ class JewelryProductDetail {
       certificateUrl: json['certificate_url'] as String?,
     );
   }
+  final String id;
+  final String productId;
+  final MetalType metalType;
+  final String? karat;
+  final double grossWeightG;
+  final double netWeightG;
+  final MakingChargesType? makingChargesType;
+  final double makingChargesValue;
+  final String? stoneType;
+  final double? stoneWeightCarat;
+  final int? stoneCount;
+  final String? certificateNumber;
+  final String? certificateUrl;
 
   Map<String, dynamic> toJson() {
     return {

@@ -80,13 +80,13 @@ class DeviceConfigCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: (isDark ? AppColors.textMutedDark : AppColors.textMutedLight).withValues(alpha: 0.1),
+                      color: (AppColors.mutedFor(context)).withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderSm,
                     ),
                     child: Text(
                       l10n.inactive,
                       style: theme.textTheme.labelSmall?.copyWith(
-                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        color: AppColors.mutedFor(context),
                       ),
                     ),
                   ),

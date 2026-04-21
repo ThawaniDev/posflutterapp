@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/industry_restaurant/enums/kitchen_ticket_status.dart';
 
 class KitchenTicket {
-  final String id;
-  final String storeId;
-  final String orderId;
-  final String? tableId;
-  final int ticketNumber;
-  final Map<String, dynamic> itemsJson;
-  final String? station;
-  final KitchenTicketStatus? status;
-  final int? courseNumber;
-  final DateTime? fireAt;
-  final DateTime? createdAt;
-  final DateTime? completedAt;
 
   const KitchenTicket({
     required this.id,
@@ -45,6 +33,18 @@ class KitchenTicket {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String orderId;
+  final String? tableId;
+  final int ticketNumber;
+  final Map<String, dynamic> itemsJson;
+  final String? station;
+  final KitchenTicketStatus? status;
+  final int? courseNumber;
+  final DateTime? fireAt;
+  final DateTime? createdAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

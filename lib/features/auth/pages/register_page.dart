@@ -3,7 +3,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
-import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/utils/validators.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -55,7 +54,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           organizationName: _orgNameController.text.trim().isNotEmpty ? _orgNameController.text.trim() : null,
           storeName: _storeNameController.text.trim().isNotEmpty ? _storeNameController.text.trim() : null,
           country: _selectedCountry,
-          currency: 'SAR',
+          currency: '',
         );
   }
 
@@ -74,9 +73,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     });
 
     return PosListPage(
-  title: l10n.authCreateAccount,
-  showSearch: false,
-    child: SafeArea(
+      title: l10n.authCreateAccount,
+      showSearch: false,
+      child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.xl),
@@ -260,6 +259,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           ),
         ),
       ),
-);
+    );
   }
 }

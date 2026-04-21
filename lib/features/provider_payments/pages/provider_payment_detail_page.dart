@@ -12,9 +12,8 @@ import 'package:wameedpos/features/provider_payments/providers/provider_payment_
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderPaymentDetailPage extends ConsumerStatefulWidget {
-  final String paymentId;
-
   const ProviderPaymentDetailPage({super.key, required this.paymentId});
+  final String paymentId;
 
   @override
   ConsumerState<ProviderPaymentDetailPage> createState() => _ProviderPaymentDetailPageState();
@@ -60,9 +59,8 @@ class _ProviderPaymentDetailPageState extends ConsumerState<ProviderPaymentDetai
 }
 
 class _PaymentDetailContent extends ConsumerWidget {
-  final ProviderPayment payment;
-
   const _PaymentDetailContent({required this.payment});
+  final ProviderPayment payment;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -119,9 +117,9 @@ class _PaymentDetailContent extends ConsumerWidget {
           _SectionCard(
             title: l10n.providerPaymentAmountBreakdown,
             children: [
-              _DetailRow('Amount', '${payment.amount.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
-              _DetailRow('Tax', '${payment.taxAmount.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
-              _DetailRow('Total', '${payment.totalAmount.toStringAsFixed(2)} ${payment.currency ?? "SAR"}', bold: true),
+              _DetailRow('Amount', '${payment.amount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
+              _DetailRow('Tax', '${payment.taxAmount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
+              _DetailRow('Total', '${payment.totalAmount.toStringAsFixed(2)} ${payment.currency ?? ""}', bold: true),
             ],
           ),
           AppSpacing.verticalMd,
@@ -174,7 +172,7 @@ class _PaymentDetailContent extends ConsumerWidget {
             _SectionCard(
               title: l10n.providerPaymentRefundInfo,
               children: [
-                _DetailRow('Refund Amount', '${payment.refundAmount!.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
+                _DetailRow('Refund Amount', '${payment.refundAmount!.toStringAsFixed(2)} ${payment.currency ?? ""}'),
                 if (payment.refundTranRef != null) _DetailRow('Refund Txn Ref', payment.refundTranRef!, copyable: true),
                 if (payment.refundReason != null) _DetailRow('Reason', payment.refundReason!),
                 if (payment.refundedAt != null) _DetailRow('Refunded At', dateFormat.format(payment.refundedAt!)),
@@ -213,9 +211,8 @@ class _PaymentDetailContent extends ConsumerWidget {
 }
 
 class _StatusIcon extends StatelessWidget {
-  final ProviderPaymentStatus status;
-
   const _StatusIcon({required this.status});
+  final ProviderPaymentStatus status;
 
   @override
   Widget build(BuildContext context) {
@@ -238,10 +235,9 @@ class _StatusIcon extends StatelessWidget {
 }
 
 class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.title, required this.children});
   final String title;
   final List<Widget> children;
-
-  const _SectionCard({required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -263,14 +259,13 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
+  const _DetailRow(this.label, this.value, {this.bold = false, this.copyable = false, this.valueColor, this.trailing});
   final String label;
   final String value;
   final bool bold;
   final bool copyable;
   final Color? valueColor;
   final Widget? trailing;
-
-  const _DetailRow(this.label, this.value, {this.bold = false, this.copyable = false, this.valueColor, this.trailing});
 
   @override
   Widget build(BuildContext context) {

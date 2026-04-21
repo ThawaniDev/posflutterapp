@@ -2,32 +2,6 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
 
 class DeliveryOrderMapping {
-  final String id;
-  final String orderId;
-  final String? storeId;
-  final DeliveryConfigPlatform platform;
-  final String externalOrderId;
-  final String? externalStatus;
-  final DeliveryOrderStatus? deliveryStatus;
-  final String? customerName;
-  final String? customerPhone;
-  final String? deliveryAddress;
-  final double? deliveryFee;
-  final double? subtotal;
-  final double? totalAmount;
-  final int? itemsCount;
-  final double? commissionAmount;
-  final double? commissionPercent;
-  final String? rejectionReason;
-  final String? notes;
-  final int? estimatedPrepMinutes;
-  final Map<String, dynamic>? rawPayload;
-  final DateTime? acceptedAt;
-  final DateTime? readyAt;
-  final DateTime? dispatchedAt;
-  final DateTime? deliveredAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const DeliveryOrderMapping({
     required this.id,
@@ -88,6 +62,32 @@ class DeliveryOrderMapping {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String orderId;
+  final String? storeId;
+  final DeliveryConfigPlatform platform;
+  final String externalOrderId;
+  final String? externalStatus;
+  final DeliveryOrderStatus? deliveryStatus;
+  final String? customerName;
+  final String? customerPhone;
+  final String? deliveryAddress;
+  final double? deliveryFee;
+  final double? subtotal;
+  final double? totalAmount;
+  final int? itemsCount;
+  final double? commissionAmount;
+  final double? commissionPercent;
+  final String? rejectionReason;
+  final String? notes;
+  final int? estimatedPrepMinutes;
+  final Map<String, dynamic>? rawPayload;
+  final DateTime? acceptedAt;
+  final DateTime? readyAt;
+  final DateTime? dispatchedAt;
+  final DateTime? deliveredAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

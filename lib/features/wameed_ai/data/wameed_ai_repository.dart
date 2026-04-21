@@ -12,9 +12,9 @@ final wameedAIRepositoryProvider = Provider<WameedAIRepository>((ref) {
 });
 
 class WameedAIRepository {
-  final WameedAIApiService _api;
 
   WameedAIRepository(this._api);
+  final WameedAIApiService _api;
 
   // ─── Features & Config ────────────────────────────────────────
   Future<List<AIFeatureDefinition>> getFeatures() => _api.getFeatures();

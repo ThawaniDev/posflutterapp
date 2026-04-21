@@ -1,6 +1,4 @@
 class ThemePackageVisibility {
-  final String themeId;
-  final String subscriptionPlanId;
 
   const ThemePackageVisibility({
     required this.themeId,
@@ -13,6 +11,8 @@ class ThemePackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String themeId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

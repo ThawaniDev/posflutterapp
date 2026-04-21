@@ -1,17 +1,4 @@
 class Category {
-  final String id;
-  final String organizationId;
-  final String? parentId;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? descriptionAr;
-  final String? imageUrl;
-  final int? sortOrder;
-  final bool? isActive;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Category({
     required this.id,
@@ -46,6 +33,19 @@ class Category {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String? parentId;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
+  final String? imageUrl;
+  final int? sortOrder;
+  final bool? isActive;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

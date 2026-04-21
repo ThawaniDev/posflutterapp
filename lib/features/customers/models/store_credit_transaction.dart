@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/customers/enums/store_credit_transaction_type.dart';
 
 class StoreCreditTransaction {
-  final String id;
-  final String customerId;
-  final StoreCreditTransactionType type;
-  final double amount;
-  final double balanceAfter;
-  final String? orderId;
-  final String? paymentId;
-  final String? notes;
-  final String? performedBy;
-  final DateTime? createdAt;
 
   const StoreCreditTransaction({
     required this.id,
@@ -39,6 +29,16 @@ class StoreCreditTransaction {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String customerId;
+  final StoreCreditTransactionType type;
+  final double amount;
+  final double balanceAfter;
+  final String? orderId;
+  final String? paymentId;
+  final String? notes;
+  final String? performedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

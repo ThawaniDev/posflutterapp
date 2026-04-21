@@ -13,9 +13,9 @@ final posTerminalRepositoryProvider = Provider<PosTerminalRepository>((ref) {
 });
 
 class PosTerminalRepository {
-  final PosTerminalApiService _apiService;
 
   PosTerminalRepository({required PosTerminalApiService apiService}) : _apiService = apiService;
+  final PosTerminalApiService _apiService;
 
   // Sessions
   Future<PaginatedResult<PosSession>> listSessions({int page = 1, int perPage = 20}) =>

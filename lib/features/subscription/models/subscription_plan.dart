@@ -1,21 +1,4 @@
 class SubscriptionPlan {
-  final String id;
-  final String name;
-  final String? nameAr;
-  final String? slug;
-  final String? description;
-  final String? descriptionAr;
-  final double monthlyPrice;
-  final double? annualPrice;
-  final int? trialDays;
-  final int? gracePeriodDays;
-  final bool isActive;
-  final bool isHighlighted;
-  final int? sortOrder;
-  final List<Map<String, dynamic>>? features;
-  final List<Map<String, dynamic>>? limits;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SubscriptionPlan({
     required this.id,
@@ -31,6 +14,10 @@ class SubscriptionPlan {
     this.isActive = true,
     this.isHighlighted = false,
     this.sortOrder,
+    this.businessType,
+    this.softposFreeEligible = false,
+    this.softposFreeThreshold,
+    this.softposFreeThresholdPeriod,
     this.features,
     this.limits,
     this.createdAt,
@@ -52,6 +39,10 @@ class SubscriptionPlan {
       isActive: json['is_active'] as bool? ?? true,
       isHighlighted: json['is_highlighted'] as bool? ?? false,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
+      businessType: json['business_type'] as String?,
+      softposFreeEligible: json['softpos_free_eligible'] as bool? ?? false,
+      softposFreeThreshold: (json['softpos_free_threshold'] as num?)?.toInt(),
+      softposFreeThresholdPeriod: json['softpos_free_threshold_period'] as String?,
       features: json['features'] != null
           ? (json['features'] as List).map((e) => Map<String, dynamic>.from(e as Map)).toList()
           : null,
@@ -59,6 +50,43 @@ class SubscriptionPlan {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
+  }
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? slug;
+  final String? description;
+  final String? descriptionAr;
+  final double monthlyPrice;
+  final double? annualPrice;
+  final int? trialDays;
+  final int? gracePeriodDays;
+  final bool isActive;
+  final bool isHighlighted;
+  final int? sortOrder;
+  final String? businessType;
+  final bool softposFreeEligible;
+  final int? softposFreeThreshold;
+  final String? softposFreeThresholdPeriod;
+  final List<Map<String, dynamic>>? features;
+  final List<Map<String, dynamic>>? limits;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  /// Get localized plan name based on language code.
+  String localizedName(String languageCode) => (languageCode == 'ar' && nameAr != null && nameAr!.isNotEmpty) ? nameAr! : name;
+
+  /// Get localized plan description based on language code.
+  String? localizedDescription(String languageCode) =>
+      (languageCode == 'ar' && descriptionAr != null && descriptionAr!.isNotEmpty) ? descriptionAr : description;
+
+  /// Get localized feature name from a feature map.
+  static String featureName(Map<String, dynamic> feature, String languageCode) {
+    if (languageCode == 'ar') {
+      final nameAr = feature['name_ar'] as String?;
+      if (nameAr != null && nameAr.isNotEmpty) return nameAr;
+    }
+    return feature['name'] as String? ?? feature['feature_key'] as String? ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +104,10 @@ class SubscriptionPlan {
       'is_active': isActive,
       'is_highlighted': isHighlighted,
       'sort_order': sortOrder,
+      'business_type': businessType,
+      'softpos_free_eligible': softposFreeEligible,
+      'softpos_free_threshold': softposFreeThreshold,
+      'softpos_free_threshold_period': softposFreeThresholdPeriod,
       'features': features,
       'limits': limits,
       'created_at': createdAt?.toIso8601String(),
@@ -97,6 +129,10 @@ class SubscriptionPlan {
     bool? isActive,
     bool? isHighlighted,
     int? sortOrder,
+    String? businessType,
+    bool? softposFreeEligible,
+    int? softposFreeThreshold,
+    String? softposFreeThresholdPeriod,
     List<Map<String, dynamic>>? features,
     List<Map<String, dynamic>>? limits,
     DateTime? createdAt,
@@ -116,6 +152,10 @@ class SubscriptionPlan {
       isActive: isActive ?? this.isActive,
       isHighlighted: isHighlighted ?? this.isHighlighted,
       sortOrder: sortOrder ?? this.sortOrder,
+      businessType: businessType ?? this.businessType,
+      softposFreeEligible: softposFreeEligible ?? this.softposFreeEligible,
+      softposFreeThreshold: softposFreeThreshold ?? this.softposFreeThreshold,
+      softposFreeThresholdPeriod: softposFreeThresholdPeriod ?? this.softposFreeThresholdPeriod,
       features: features ?? this.features,
       limits: limits ?? this.limits,
       createdAt: createdAt ?? this.createdAt,

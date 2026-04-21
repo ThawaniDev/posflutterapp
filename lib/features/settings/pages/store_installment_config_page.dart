@@ -12,11 +12,11 @@ import 'package:wameedpos/features/payments/providers/installment_state.dart';
 
 // ─── Brand colors for each provider ────────────────────────────
 class _ProviderBrand {
+
+  const _ProviderBrand({required this.primary, required this.light, required this.asset});
   final Color primary;
   final Color light;
   final String asset;
-
-  const _ProviderBrand({required this.primary, required this.light, required this.asset});
 }
 
 const _brandMap = <String, _ProviderBrand>{
@@ -134,7 +134,7 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
                       Text(
                         l10n.installmentCredentialsNote,
                         style: AppTypography.bodySmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     ],
@@ -203,7 +203,7 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: brand.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(AppRadius.lg),
                       topRight: Radius.circular(AppRadius.lg),
                     ),
@@ -227,7 +227,7 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
                             const SizedBox(height: 2),
                             Text(
                               l10n.installmentCredentialsNote,
-                              style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+                              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                             ),
                           ],
                         ),
@@ -395,13 +395,6 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
 // ═════════════════════════════════════════════════════════════════
 
 class _ProviderCard extends StatelessWidget {
-  final Map<String, dynamic> data;
-  final AppLocalizations l10n;
-  final bool isDark;
-  final ValueChanged<String> onToggle;
-  final void Function(String providerValue, Map<String, dynamic> data) onSetup;
-  final void Function(String providerValue, String name) onDelete;
-  final ValueChanged<String> onTest;
 
   const _ProviderCard({
     required this.data,
@@ -412,6 +405,13 @@ class _ProviderCard extends StatelessWidget {
     required this.onDelete,
     required this.onTest,
   });
+  final Map<String, dynamic> data;
+  final AppLocalizations l10n;
+  final bool isDark;
+  final ValueChanged<String> onToggle;
+  final void Function(String providerValue, Map<String, dynamic> data) onSetup;
+  final void Function(String providerValue, String name) onDelete;
+  final ValueChanged<String> onTest;
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +438,7 @@ class _ProviderCard extends StatelessWidget {
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: AppRadius.borderLg,
         border: Border.all(
-          color: isStoreEnabled ? brand.primary.withValues(alpha: 0.4) : (isDark ? Colors.white10 : AppColors.borderLight),
+          color: isStoreEnabled ? brand.primary.withValues(alpha: 0.4) : (isDark ? Colors.white10 : Theme.of(context).dividerColor),
           width: isStoreEnabled ? 1.5 : 1,
         ),
         boxShadow: [
@@ -456,7 +456,7 @@ class _ProviderCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
             decoration: BoxDecoration(
               color: brand.primary.withValues(alpha: isDark ? 0.08 : 0.05),
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(AppRadius.lg), topRight: Radius.circular(AppRadius.lg)),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppRadius.lg), topRight: Radius.circular(AppRadius.lg)),
             ),
             child: Row(
               children: [
@@ -499,7 +499,7 @@ class _ProviderCard extends StatelessWidget {
                           else
                             _StatusPill(
                               label: isConfigured ? l10n.configured : l10n.notConfigured,
-                              color: isConfigured ? AppColors.info : AppColors.textMutedLight,
+                              color: isConfigured ? AppColors.info : AppColors.mutedFor(context),
                               icon: isConfigured ? Icons.settings_rounded : Icons.radio_button_unchecked,
                             ),
                         ],
@@ -525,7 +525,7 @@ class _ProviderCard extends StatelessWidget {
                 if (description.toString().isNotEmpty) ...[
                   Text(
                     description.toString(),
-                    style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -603,11 +603,11 @@ class _ProviderCard extends StatelessWidget {
 // ═════════════════════════════════════════════════════════════════
 
 class _StatChip extends StatelessWidget {
+
+  const _StatChip({required this.value, required this.label, required this.color});
   final String value;
   final String label;
   final Color color;
-
-  const _StatChip({required this.value, required this.label, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -628,11 +628,11 @@ class _StatChip extends StatelessWidget {
 }
 
 class _StatusPill extends StatelessWidget {
+
+  const _StatusPill({required this.label, required this.color, required this.icon});
   final String label;
   final Color color;
   final IconData icon;
-
-  const _StatusPill({required this.label, required this.color, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -655,10 +655,10 @@ class _StatusPill extends StatelessWidget {
 }
 
 class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
 
   const _InfoChip({required this.icon, required this.label});
+  final IconData icon;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -672,7 +672,7 @@ class _InfoChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 13, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(icon, size: 13, color: AppColors.mutedFor(context)),
           const SizedBox(width: 4),
           Text(
             label,
@@ -685,13 +685,13 @@ class _InfoChip extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
+
+  const _ActionButton({required this.label, required this.icon, required this.color, required this.isDark, this.onPressed});
   final String label;
   final IconData icon;
   final Color color;
   final bool isDark;
   final VoidCallback? onPressed;
-
-  const _ActionButton({required this.label, required this.icon, required this.color, required this.isDark, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -728,13 +728,13 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _EnvChip extends StatelessWidget {
+
+  const _EnvChip({required this.label, required this.icon, required this.selected, required this.color, required this.onTap});
   final String label;
   final IconData icon;
   final bool selected;
   final Color color;
   final VoidCallback onTap;
-
-  const _EnvChip({required this.label, required this.icon, required this.selected, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -750,17 +750,17 @@ class _EnvChip extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               borderRadius: AppRadius.borderMd,
-              border: Border.all(color: selected ? color : AppColors.borderLight, width: selected ? 1.5 : 1),
+              border: Border.all(color: selected ? color : Theme.of(context).dividerColor, width: selected ? 1.5 : 1),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 16, color: selected ? color : AppColors.textMutedLight),
+                Icon(icon, size: 16, color: selected ? color : AppColors.mutedFor(context)),
                 const SizedBox(width: 6),
                 Text(
                   label,
                   style: AppTypography.labelMedium.copyWith(
-                    color: selected ? color : AppColors.textMutedLight,
+                    color: selected ? color : AppColors.mutedFor(context),
                     fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                   ),
                 ),
@@ -778,12 +778,12 @@ class _EnvChip extends StatelessWidget {
 // ═════════════════════════════════════════════════════════════════
 
 class _TestConnectionDialog extends StatefulWidget {
+
+  const _TestConnectionDialog({required this.providerValue, required this.brand, required this.l10n, required this.onTest});
   final String providerValue;
   final _ProviderBrand brand;
   final AppLocalizations l10n;
   final Future<Map<String, dynamic>> Function() onTest;
-
-  const _TestConnectionDialog({required this.providerValue, required this.brand, required this.l10n, required this.onTest});
 
   @override
   State<_TestConnectionDialog> createState() => _TestConnectionDialogState();
@@ -871,7 +871,7 @@ class _TestConnectionDialogState extends State<_TestConnectionDialog> {
               if (!_loading && message.isNotEmpty)
                 Text(
                   message,
-                  style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                   textAlign: TextAlign.center,
                 ),
 

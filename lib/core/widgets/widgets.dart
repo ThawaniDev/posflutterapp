@@ -16,6 +16,7 @@ export 'pos_color_picker.dart';
 export 'pos_date_range_picker.dart';
 export 'pos_dialog.dart';
 export 'pos_error_state.dart';
+export 'pos_app_error_widget.dart';
 export 'pos_input.dart';
 export 'pos_loading_skeleton.dart';
 export 'pos_mobile_data_list.dart';

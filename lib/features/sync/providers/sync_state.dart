@@ -14,12 +14,6 @@ final class SyncStatusLoading extends SyncStatusState {
 }
 
 final class SyncStatusLoaded extends SyncStatusState {
-  final bool serverOnline;
-  final String serverTimestamp;
-  final Map<String, dynamic>? lastSync;
-  final int pendingConflicts;
-  final int failedSyncs24h;
-  final List<Map<String, dynamic>> recentLogs;
 
   const SyncStatusLoaded({
     required this.serverOnline,
@@ -29,11 +23,17 @@ final class SyncStatusLoaded extends SyncStatusState {
     required this.failedSyncs24h,
     required this.recentLogs,
   });
+  final bool serverOnline;
+  final String serverTimestamp;
+  final Map<String, dynamic>? lastSync;
+  final int pendingConflicts;
+  final int failedSyncs24h;
+  final List<Map<String, dynamic>> recentLogs;
 }
 
 final class SyncStatusError extends SyncStatusState {
-  final String message;
   const SyncStatusError(this.message);
+  final String message;
 }
 
 // ─── Sync Operation State ──────────────────────────────────
@@ -46,19 +46,19 @@ final class SyncOperationIdle extends SyncOperationState {
 }
 
 final class SyncOperationRunning extends SyncOperationState {
-  final String operation;
   const SyncOperationRunning(this.operation);
+  final String operation;
 }
 
 final class SyncOperationSuccess extends SyncOperationState {
+  const SyncOperationSuccess({required this.recordsSynced, required this.syncToken});
   final int recordsSynced;
   final String syncToken;
-  const SyncOperationSuccess({required this.recordsSynced, required this.syncToken});
 }
 
 final class SyncOperationError extends SyncOperationState {
-  final String message;
   const SyncOperationError(this.message);
+  final String message;
 }
 
 // ─── Conflict List State ───────────────────────────────────
@@ -75,15 +75,15 @@ final class SyncConflictListLoading extends SyncConflictListState {
 }
 
 final class SyncConflictListLoaded extends SyncConflictListState {
+
+  const SyncConflictListLoaded({required this.conflicts, required this.currentPage, required this.lastPage, required this.total});
   final List<SyncConflict> conflicts;
   final int currentPage;
   final int lastPage;
   final int total;
-
-  const SyncConflictListLoaded({required this.conflicts, required this.currentPage, required this.lastPage, required this.total});
 }
 
 final class SyncConflictListError extends SyncConflictListState {
-  final String message;
   const SyncConflictListError(this.message);
+  final String message;
 }

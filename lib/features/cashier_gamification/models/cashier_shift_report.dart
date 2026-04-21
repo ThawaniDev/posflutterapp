@@ -1,39 +1,6 @@
 import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 
 class CashierShiftReport {
-  final String id;
-  final String storeId;
-  final String cashierId;
-  final CashierInfo? cashier;
-  final String? posSessionId;
-  final String reportDate;
-  final String? shiftStart;
-  final String? shiftEnd;
-  final int totalTransactions;
-  final double totalRevenue;
-  final int totalItems;
-  final double itemsPerMinute;
-  final double avgBasketSize;
-  final int voidCount;
-  final double voidAmount;
-  final int returnCount;
-  final double returnAmount;
-  final int discountCount;
-  final double discountAmount;
-  final int noSaleCount;
-  final int priceOverrideCount;
-  final double cashVariance;
-  final int upsellCount;
-  final double upsellRate;
-  final double riskScore;
-  final String riskLevel;
-  final int anomalyCount;
-  final List<String> badgesEarned;
-  final String? summaryEn;
-  final String? summaryAr;
-  final bool sentToOwner;
-  final DateTime? sentAt;
-  final DateTime? createdAt;
 
   const CashierShiftReport({
     required this.id,
@@ -108,6 +75,39 @@ class CashierShiftReport {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String cashierId;
+  final CashierInfo? cashier;
+  final String? posSessionId;
+  final String reportDate;
+  final String? shiftStart;
+  final String? shiftEnd;
+  final int totalTransactions;
+  final double totalRevenue;
+  final int totalItems;
+  final double itemsPerMinute;
+  final double avgBasketSize;
+  final int voidCount;
+  final double voidAmount;
+  final int returnCount;
+  final double returnAmount;
+  final int discountCount;
+  final double discountAmount;
+  final int noSaleCount;
+  final int priceOverrideCount;
+  final double cashVariance;
+  final int upsellCount;
+  final double upsellRate;
+  final double riskScore;
+  final String riskLevel;
+  final int anomalyCount;
+  final List<String> badgesEarned;
+  final String? summaryEn;
+  final String? summaryAr;
+  final bool sentToOwner;
+  final DateTime? sentAt;
+  final DateTime? createdAt;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CashierShiftReport && other.id == id;

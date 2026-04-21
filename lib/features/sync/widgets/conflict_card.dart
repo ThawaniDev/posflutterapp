@@ -6,10 +6,10 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ConflictCard extends StatelessWidget {
-  final SyncConflict conflict;
-  final void Function(String resolution)? onResolve;
 
   const ConflictCard({super.key, required this.conflict, this.onResolve});
+  final SyncConflict conflict;
+  final void Function(String resolution)? onResolve;
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +84,11 @@ class ConflictCard extends StatelessWidget {
 }
 
 class _DataColumn extends StatelessWidget {
+
+  const _DataColumn({required this.title, required this.data, required this.color});
   final String title;
   final Map<String, dynamic> data;
   final Color color;
-
-  const _DataColumn({required this.title, required this.data, required this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/industry_bakery/enums/production_schedule_status.dart';
 
 class ProductionSchedule {
-  final String id;
-  final String storeId;
-  final String recipeId;
-  final DateTime scheduleDate;
-  final int plannedBatches;
-  final int? actualBatches;
-  final int plannedYield;
-  final int? actualYield;
-  final ProductionScheduleStatus? status;
-  final String? notes;
-  final DateTime? createdAt;
 
   const ProductionSchedule({
     required this.id,
@@ -42,6 +31,17 @@ class ProductionSchedule {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String recipeId;
+  final DateTime scheduleDate;
+  final int plannedBatches;
+  final int? actualBatches;
+  final int plannedYield;
+  final int? actualYield;
+  final ProductionScheduleStatus? status;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

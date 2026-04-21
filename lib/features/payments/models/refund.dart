@@ -2,15 +2,6 @@ import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 import 'package:wameedpos/features/payments/enums/refund_status.dart';
 
 class Refund {
-  final String id;
-  final String returnId;
-  final String? paymentId;
-  final PaymentMethodKey method;
-  final double amount;
-  final String? referenceNumber;
-  final RefundStatus? status;
-  final String processedBy;
-  final DateTime? createdAt;
 
   const Refund({
     required this.id,
@@ -37,6 +28,15 @@ class Refund {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String returnId;
+  final String? paymentId;
+  final PaymentMethodKey method;
+  final double amount;
+  final String? referenceNumber;
+  final RefundStatus? status;
+  final String processedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -67,7 +67,7 @@ class MockUsageNotifier extends StateNotifier<UsageState> implements UsageNotifi
 // --- Test Data ---
 
 final _testPlans = [
-  SubscriptionPlan(
+  const SubscriptionPlan(
     id: 'plan-free',
     name: 'Free',
     nameAr: 'مجاني',
@@ -79,7 +79,7 @@ final _testPlans = [
     isHighlighted: false,
     sortOrder: 1,
   ),
-  SubscriptionPlan(
+  const SubscriptionPlan(
     id: 'plan-pro',
     name: 'Professional',
     nameAr: 'احترافي',
@@ -105,8 +105,8 @@ final _testSubscription = StoreSubscription(
 );
 
 final _testInvoices = [
-  Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, tax: 4.50, total: 34.49),
-  Invoice(id: 'inv-2', invoiceNumber: 'INV-002', amount: 29.99, tax: 4.50, total: 34.49),
+  const Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, tax: 4.50, total: 34.49),
+  const Invoice(id: 'inv-2', invoiceNumber: 'INV-002', amount: 29.99, tax: 4.50, total: 34.49),
 ];
 
 void main() {

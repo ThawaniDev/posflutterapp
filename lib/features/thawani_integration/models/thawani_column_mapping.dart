@@ -1,11 +1,4 @@
 class ThawaniColumnMapping {
-  final String id;
-  final String entityType;
-  final String thawaniField;
-  final String wameedField;
-  final String transformType;
-  final Map<String, dynamic>? transformConfig;
-  final bool isActive;
 
   const ThawaniColumnMapping({
     required this.id,
@@ -28,4 +21,11 @@ class ThawaniColumnMapping {
       isActive: json['is_active'] as bool? ?? true,
     );
   }
+  final String id;
+  final String entityType;
+  final String thawaniField;
+  final String wameedField;
+  final String transformType;
+  final Map<String, dynamic>? transformConfig;
+  final bool isActive;
 }

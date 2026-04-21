@@ -1,10 +1,4 @@
 class BranchStats {
-  final int totalBranches;
-  final int activeBranches;
-  final int inactiveBranches;
-  final int warehouses;
-  final int totalStaff;
-  final int totalRegisters;
 
   const BranchStats({
     this.totalBranches = 0,
@@ -25,4 +19,10 @@ class BranchStats {
       totalRegisters: (json['total_registers'] as num?)?.toInt() ?? 0,
     );
   }
+  final int totalBranches;
+  final int activeBranches;
+  final int inactiveBranches;
+  final int warehouses;
+  final int totalStaff;
+  final int totalRegisters;
 }

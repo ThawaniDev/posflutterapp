@@ -71,7 +71,7 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
                       Text(
                         customer.email ?? customer.phone,
                         style: AppTypography.bodySmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     ],

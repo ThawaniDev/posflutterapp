@@ -2,19 +2,6 @@ import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_priority.dart';
 import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_status.dart';
 
 class AISuggestion {
-  final String id;
-  final String storeId;
-  final String featureSlug;
-  final String? suggestionType;
-  final String? title;
-  final String? titleAr;
-  final Map<String, dynamic>? contentJson;
-  final AISuggestionPriority priority;
-  final AISuggestionStatus status;
-  final DateTime? acceptedAt;
-  final DateTime? dismissedAt;
-  final DateTime? expiresAt;
-  final DateTime? createdAt;
 
   const AISuggestion({
     required this.id,
@@ -49,6 +36,19 @@ class AISuggestion {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String featureSlug;
+  final String? suggestionType;
+  final String? title;
+  final String? titleAr;
+  final Map<String, dynamic>? contentJson;
+  final AISuggestionPriority priority;
+  final AISuggestionStatus status;
+  final DateTime? acceptedAt;
+  final DateTime? dismissedAt;
+  final DateTime? expiresAt;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -104,14 +104,6 @@ class AISuggestion {
 }
 
 class AIFeedback {
-  final String id;
-  final String aiUsageLogId;
-  final String storeId;
-  final String? userId;
-  final int rating;
-  final String? feedbackText;
-  final bool? isHelpful;
-  final DateTime? createdAt;
 
   const AIFeedback({
     required this.id,
@@ -136,6 +128,14 @@ class AIFeedback {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String aiUsageLogId;
+  final String storeId;
+  final String? userId;
+  final int rating;
+  final String? feedbackText;
+  final bool? isHelpful;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {'ai_usage_log_id': aiUsageLogId, 'rating': rating, 'feedback_text': feedbackText, 'is_helpful': isHelpful};

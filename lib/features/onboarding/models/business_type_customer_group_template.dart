@@ -1,14 +1,4 @@
 class BusinessTypeCustomerGroupTemplate {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final String? description;
-  final double? discountPercentage;
-  final double? creditLimit;
-  final int? paymentTermsDays;
-  final bool? isDefaultGroup;
-  final int? sortOrder;
 
   const BusinessTypeCustomerGroupTemplate({
     required this.id,
@@ -37,6 +27,16 @@ class BusinessTypeCustomerGroupTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final String? description;
+  final double? discountPercentage;
+  final double? creditLimit;
+  final int? paymentTermsDays;
+  final bool? isDefaultGroup;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1412,6 +1412,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsStoreProfile => 'ملف المتجر';
 
   @override
+  String get settingsBusinessType => 'نوع النشاط';
+
+  @override
   String get settingsStoreProfileDesc => 'اسم المتجر والعنوان ومعلومات الاتصال';
 
   @override
@@ -1725,7 +1728,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsProfileCurrencyCode => 'رمز العملة';
 
   @override
-  String get settingsProfileCurrencyCodeHint => 'مثال: OMR, , USD';
+  String get settingsProfileCurrencyCodeHint => 'مثال: , , USD';
 
   @override
   String get settingsProfileCurrencySymbol => 'رمز العملة';
@@ -2377,6 +2380,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bakeryNewRecipe => 'وصفة جديدة';
 
   @override
+  String get bakeryEditSchedule => 'تعديل الجدول';
+
+  @override
+  String get bakeryNewSchedule => 'جدول إنتاج جديد';
+
+  @override
+  String get bakeryUpdateSchedule => 'تحديث الجدول';
+
+  @override
+  String get bakeryCreateSchedule => 'إنشاء الجدول';
+
+  @override
   String get bakeryIngredients => 'المكونات';
 
   @override
@@ -2939,6 +2954,168 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get staffDeleteShiftConfirm =>
       'حذف هذه الوردية؟ لا يمكن التراجع عن هذا.';
+
+  @override
+  String get staffShiftsTab => 'الورديات';
+
+  @override
+  String get staffTemplatesTab => 'القوالب';
+
+  @override
+  String get staffShiftTemplates => 'قوالب الورديات';
+
+  @override
+  String get staffCreateTemplate => 'إنشاء قالب';
+
+  @override
+  String get staffEditTemplate => 'تعديل القالب';
+
+  @override
+  String get staffDeleteTemplate => 'حذف القالب';
+
+  @override
+  String get staffDeleteTemplateConfirm =>
+      'حذف هذا القالب؟ لا يمكن التراجع عن هذا.';
+
+  @override
+  String get staffTemplateCreated => 'تم إنشاء القالب';
+
+  @override
+  String get staffTemplateUpdated => 'تم تحديث القالب';
+
+  @override
+  String get staffTemplateDeleted => 'تم حذف القالب';
+
+  @override
+  String get staffNoTemplates => 'لا توجد قوالب';
+
+  @override
+  String get staffNoShifts => 'لا توجد ورديات';
+
+  @override
+  String get staffStatusScheduled => 'مجدولة';
+
+  @override
+  String get staffStatusCompleted => 'مكتملة';
+
+  @override
+  String get staffStatusMissed => 'فائتة';
+
+  @override
+  String get staffStatusSwapped => 'مبدّلة';
+
+  @override
+  String get staffStatusUnknown => 'غير معروف';
+
+  @override
+  String get staffMarkComplete => 'تحديد كمكتملة';
+
+  @override
+  String get staffMarkMissed => 'تحديد كفائتة';
+
+  @override
+  String get staffActual => 'الفعلي';
+
+  @override
+  String get staffUnknown => 'غير معروف';
+
+  @override
+  String get staffBulkAssignShifts => 'تعيين ورديات جماعي';
+
+  @override
+  String get staffSingle => 'فردي';
+
+  @override
+  String get staffBulk => 'جماعي';
+
+  @override
+  String get staffSelectMembers => 'اختر الأعضاء';
+
+  @override
+  String get staffSelectDates => 'اختر التواريخ';
+
+  @override
+  String get staffAddDate => 'إضافة تاريخ';
+
+  @override
+  String get staffPeriod => 'الفترة';
+
+  @override
+  String get staffShiftsCreated => 'تم إنشاء الورديات';
+
+  @override
+  String get staffShiftUpdated => 'تم تحديث الوردية';
+
+  @override
+  String get staffEditShift => 'تعديل الوردية';
+
+  @override
+  String staffBreakMinutes(int count) {
+    return '$count دقيقة استراحة';
+  }
+
+  @override
+  String get staffBreakDuration => 'مدة الاستراحة';
+
+  @override
+  String get staffMinutes => 'دقيقة';
+
+  @override
+  String get staffStartTime => 'وقت البداية';
+
+  @override
+  String get staffEndTime => 'وقت النهاية';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get staffOnBreak => 'في استراحة';
+
+  @override
+  String get staffOngoing => 'جارية';
+
+  @override
+  String get staffNetWorked => 'الصافي';
+
+  @override
+  String get staffAbsent => 'غائب';
+
+  @override
+  String get staffCompleted => 'مكتمل';
+
+  @override
+  String get staffOnTime => 'في الموعد';
+
+  @override
+  String get staffLate => 'متأخر';
+
+  @override
+  String get staffEarlyDeparture => 'مغادرة مبكرة';
+
+  @override
+  String get staffActiveSession => 'نشط';
+
+  @override
+  String get staffTotalHours => 'إجمالي الساعات';
+
+  @override
+  String get staffAvgHours => 'متوسط الساعات';
+
+  @override
+  String get staffLateArrivals => 'التأخيرات';
+
+  @override
+  String get staffOnTimeRate => 'نسبة الالتزام';
+
+  @override
+  String get staffOvertimeHours => 'الإضافي';
+
+  @override
+  String get staffBreakDetails => 'تفاصيل الاستراحات';
+
+  @override
+  String get staffExportAttendance => 'تصدير';
 
   @override
   String get staffCommissions => 'العمولات';
@@ -4189,13 +4366,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentCash => 'نقدي';
 
   @override
+  String get paymentCard => 'بطاقة';
+
+  @override
   String get paymentMada => 'مدى';
+
+  @override
+  String get paymentCardMada => 'بطاقة مدى';
 
   @override
   String get paymentVisa => 'فيزا';
 
   @override
+  String get paymentCardVisa => 'بطاقة فيزا';
+
+  @override
   String get paymentMastercard => 'ماستركارد';
+
+  @override
+  String get paymentApplePay => 'Apple Pay';
+
+  @override
+  String get paymentStcPay => 'STC Pay';
 
   @override
   String get paymentStoreCredit => 'رصيد المتجر';
@@ -4205,6 +4397,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get paymentMobilePayment => 'دفع عبر الجوال';
+
+  @override
+  String get paymentLoyaltyPoints => 'نقاط الولاء';
+
+  @override
+  String get paymentBankTransfer => 'تحويل بنكي';
 
   @override
   String get offlineChangesSynced =>
@@ -4613,6 +4811,17 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get posEnterWeight => 'أدخل الوزن';
+
+  @override
+  String posTareWeightNote(Object weight) {
+    return 'وزن العبوة: $weight كجم سيتم خصمه تلقائياً';
+  }
+
+  @override
+  String get posWeightHint => 'أدخل الوزن بالكيلوجرام';
+
+  @override
   String get posProductNotFound => 'المنتج غير موجود';
 
   @override
@@ -4657,6 +4866,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posCashTendered => 'المبلغ المدفوع';
+
+  @override
+  String get posTipAmount => 'مبلغ البقشيش';
+
+  @override
+  String get posTotalWithTip => 'الإجمالي مع البقشيش';
+
+  @override
+  String get posPaymentTotalInsufficient =>
+      'إجمالي المدفوعات لا يغطي المبلغ المطلوب';
+
+  @override
+  String posReturnQtyExceedsOriginal(String product, String max) {
+    return 'كمية الإرجاع تتجاوز الأصلية للمنتج $product (الحد الأقصى: $max)';
+  }
 
   @override
   String get posChange => 'الباقي';
@@ -4810,6 +5034,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posTax15 => 'الضريبة (15%)';
+
+  @override
+  String get posTaxExempt => 'معفى من الضريبة';
 
   @override
   String get posClearCartMessage => 'سيتم إزالة جميع الأصناف.';
@@ -5596,6 +5823,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonInvalid => 'غير صالح';
 
   @override
+  String get commonError => 'حدث خطأ';
+
+  @override
   String get commonNo => 'لا';
 
   @override
@@ -5818,6 +6048,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryPOSent => 'تم إرسال أمر الشراء';
 
   @override
+  String get inventoryPOReceived => 'تم استلام أمر الشراء';
+
+  @override
+  String get inventoryReceivePOTitle => 'استلام أمر الشراء';
+
+  @override
+  String get inventoryOrdered => 'مطلوب';
+
+  @override
   String get inventoryPartiallyReceived => 'مستلم جزئياً';
 
   @override
@@ -5850,6 +6089,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inventoryRecipeDeleted => 'تم حذف الوصفة';
+
+  @override
+  String get inventoryRecipeUpdated => 'تم تحديث الوصفة';
 
   @override
   String get inventoryRecipes => 'الوصفات';
@@ -7066,6 +7308,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appBarLanguage => 'اللغة';
 
   @override
+  String get appBarMore => 'المزيد';
+
+  @override
   String get quickNavTitle => 'التنقل السريع';
 
   @override
@@ -7422,6 +7667,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cfdThemesTitle => 'سمات شاشة العرض للعميل';
+
+  @override
+  String get cfdEnabled => 'شاشة العرض مفعلة';
+
+  @override
+  String get cfdTargetMonitor => 'الشاشة المستهدفة';
+
+  @override
+  String get cfdIdleRotation => 'دورة الخمول (ثواني)';
 
   @override
   String get cfdThemesEmpty => 'لا توجد سمات';
@@ -15435,5 +15689,262 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String staffPermissionsActiveCount(int active, int total) {
     return '$active/$total نشط';
+  }
+
+  @override
+  String get subThisAddOn => 'هذه الإضافة';
+
+  @override
+  String get subBillingCycleMonthly => 'شهري';
+
+  @override
+  String get subBillingCycleYearly => 'سنوي';
+
+  @override
+  String get subUnableToIdentifyAddOn => 'تعذر تحديد الإضافة';
+
+  @override
+  String get softPosFreeTier => 'الباقة المجانية';
+
+  @override
+  String get softPosFreeActive => 'الباقة المجانية نشطة';
+
+  @override
+  String get softPosTransactions => 'المعاملات';
+
+  @override
+  String get softPosRemaining => 'المتبقي';
+
+  @override
+  String subAddOnConfirmMessage(
+    String name,
+    String price,
+    String currency,
+    String cycle,
+  ) {
+    return 'إضافة $name مقابل $price $currency/$cycle؟';
+  }
+
+  @override
+  String subAddOnRemovedSuccess(String name) {
+    return 'تم إزالة $name';
+  }
+
+  @override
+  String subAddOnRemoveFailed(String error) {
+    return 'فشل إزالة الإضافة: $error';
+  }
+
+  @override
+  String subConfirmSubscriptionMessage(
+    String planName,
+    String billingCycle,
+    String price,
+    String currency,
+  ) {
+    return 'الاشتراك في $planName ($billingCycle) مقابل $price $currency؟';
+  }
+
+  @override
+  String subBillingLabel(String cycle) {
+    return 'الفوترة: $cycle';
+  }
+
+  @override
+  String subPeriodLabel(String start, String end) {
+    return 'الفترة: $start – $end';
+  }
+
+  @override
+  String subTrialEnds(String date) {
+    return 'تنتهي الفترة التجريبية: $date';
+  }
+
+  @override
+  String subGracePeriodEnds(String date) {
+    return 'تنتهي فترة السماح: $date';
+  }
+
+  @override
+  String softPosSaving(String amount) {
+    return 'توفير $amount ريال';
+  }
+
+  @override
+  String softPosReachThreshold(int threshold) {
+    return 'أكمل $threshold معاملة لفتح الميزات المدفوعة';
+  }
+
+  @override
+  String get subDaysRemaining => 'الأيام المتبقية';
+
+  @override
+  String get subNextPayment => 'الدفعة القادمة';
+
+  @override
+  String get subPaymentMethod => 'طريقة الدفع';
+
+  @override
+  String get subQuickActions => 'إجراءات سريعة';
+
+  @override
+  String get subViewPayments => 'عرض المدفوعات';
+
+  @override
+  String get subIncludedFeatures => 'الميزات المشمولة';
+
+  @override
+  String get subSubscriptionOverview => 'نظرة عامة على الاشتراك';
+
+  @override
+  String get subPlanDetails => 'تفاصيل الخطة';
+
+  @override
+  String get subNextBillingDate => 'تاريخ الفوترة التالي';
+
+  @override
+  String subNDaysLeft(int days) {
+    return '$days يوم متبقي';
+  }
+
+  @override
+  String get subCurrentPlanBadge => 'الحالية';
+
+  @override
+  String get subBestValue => 'أفضل قيمة';
+
+  @override
+  String subFeaturesIncluded(int count) {
+    return '$count ميزة مشمولة';
+  }
+
+  @override
+  String subLimitsIncluded(int count) {
+    return '$count حدود';
+  }
+
+  @override
+  String get subNotAvailable => 'غير متوفر';
+
+  @override
+  String get subEnabled => 'مفعّل';
+
+  @override
+  String get subDisabled => 'معطّل';
+
+  @override
+  String subSoftPosFreeAfter(int threshold) {
+    return 'مجاني بعد $threshold معاملة SoftPOS';
+  }
+
+  @override
+  String subSoftPosFreeExplainer(int threshold, String period) {
+    return 'استخدم SoftPOS لقبول $threshold دفعة بطاقة خلال $period وسيصبح اشتراكك مجانياً!';
+  }
+
+  @override
+  String get subSoftPosFreeEligible => 'مؤهل لـ SoftPOS المجاني';
+
+  @override
+  String subSoftPosOrPay(String price, String period) {
+    return 'وإلا: $price ريال$period';
+  }
+
+  @override
+  String get notifCentreTitle => 'مركز الإشعارات';
+
+  @override
+  String get notifCentreSubtitle => 'جميع التنبيهات في مكان واحد';
+
+  @override
+  String get notifTabInbox => 'الوارد';
+
+  @override
+  String get notifTabAnnouncements => 'الإعلانات';
+
+  @override
+  String get notifTabPaymentReminders => 'تذكيرات الدفع';
+
+  @override
+  String get notifTabAppUpdates => 'تحديثات التطبيق';
+
+  @override
+  String get notifBellTooltip => 'الإشعارات';
+
+  @override
+  String get notifViewAll => 'عرض الكل';
+
+  @override
+  String get notifNoRecent => 'لا توجد إشعارات حديثة';
+
+  @override
+  String get notifMaintenanceBannerTitle => 'صيانة مجدولة';
+
+  @override
+  String notifMaintenanceUntil(String endAt) {
+    return 'النهاية المتوقعة: $endAt';
+  }
+
+  @override
+  String get announcementsEmpty => 'لا توجد إعلانات حاليًا';
+
+  @override
+  String get announcementsDismiss => 'إخفاء';
+
+  @override
+  String get announcementsDismissed => 'تم إخفاء الإعلان';
+
+  @override
+  String get paymentReminderDue => 'تاريخ الاستحقاق';
+
+  @override
+  String get paymentRemindersEmpty => 'لا توجد تذكيرات دفع';
+
+  @override
+  String get paymentRemindersUpcoming => 'قادمة';
+
+  @override
+  String get paymentRemindersOverdue => 'متأخرة';
+
+  @override
+  String get paymentRemindersChannel => 'القناة';
+
+  @override
+  String get paymentRemindersSentAt => 'وقت الإرسال';
+
+  @override
+  String paymentRemindersSummary(int total, int upcoming, int overdue) {
+    return '$total المجموع · $upcoming قادمة · $overdue متأخرة';
+  }
+
+  @override
+  String get appReleasesEmpty => 'لا توجد إصدارات متاحة';
+
+  @override
+  String get appReleaseLatest => 'أحدث إصدار';
+
+  @override
+  String appReleaseVersion(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get appReleaseForceUpdate => 'تحديث إلزامي';
+
+  @override
+  String get appReleaseChangelog => 'الجديد';
+
+  @override
+  String get appReleaseDownload => 'تنزيل';
+
+  @override
+  String get appReleasePlatform => 'المنصة';
+
+  @override
+  String get appReleaseChannel => 'القناة';
+
+  @override
+  String appReleaseReleasedAt(String date) {
+    return 'صدر بتاريخ $date';
   }
 }

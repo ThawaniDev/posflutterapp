@@ -1,16 +1,4 @@
 class ProductVariant {
-  final String id;
-  final String? productId;
-  final String variantGroupId;
-  final String variantValue;
-  final String? variantValueAr;
-  final String? sku;
-  final String? barcode;
-  final double? priceAdjustment;
-  final String? imageUrl;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ProductVariant({
     required this.id,
@@ -43,6 +31,18 @@ class ProductVariant {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String? productId;
+  final String variantGroupId;
+  final String variantValue;
+  final String? variantValueAr;
+  final String? sku;
+  final String? barcode;
+  final double? priceAdjustment;
+  final String? imageUrl;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

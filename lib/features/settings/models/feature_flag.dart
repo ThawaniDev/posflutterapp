@@ -1,12 +1,4 @@
 class FeatureFlag {
-  final String id;
-  final String flagKey;
-  final bool? isEnabled;
-  final int? rolloutPercentage;
-  final Map<String, dynamic>? targetPlanIds;
-  final Map<String, dynamic>? targetStoreIds;
-  final String? description;
-  final DateTime? updatedAt;
 
   const FeatureFlag({
     required this.id,
@@ -31,6 +23,14 @@ class FeatureFlag {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String flagKey;
+  final bool? isEnabled;
+  final int? rolloutPercentage;
+  final Map<String, dynamic>? targetPlanIds;
+  final Map<String, dynamic>? targetStoreIds;
+  final String? description;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

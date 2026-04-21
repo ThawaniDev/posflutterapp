@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/inventory/enums/stock_transfer_status.dart';
 
 class StockTransfer {
-  final String id;
-  final String organizationId;
-  final String fromStoreId;
-  final String toStoreId;
-  final String? fromStoreName;
-  final String? toStoreName;
-  final StockTransferStatus? status;
-  final String? referenceNumber;
-  final String? notes;
-  final String createdBy;
-  final String? approvedBy;
-  final String? receivedBy;
-  final DateTime? createdAt;
-  final DateTime? approvedAt;
-  final DateTime? receivedAt;
 
   const StockTransfer({
     required this.id,
@@ -54,6 +39,21 @@ class StockTransfer {
       receivedAt: json['received_at'] != null ? DateTime.parse(json['received_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String fromStoreId;
+  final String toStoreId;
+  final String? fromStoreName;
+  final String? toStoreName;
+  final StockTransferStatus? status;
+  final String? referenceNumber;
+  final String? notes;
+  final String createdBy;
+  final String? approvedBy;
+  final String? receivedBy;
+  final DateTime? createdAt;
+  final DateTime? approvedAt;
+  final DateTime? receivedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,18 +1,18 @@
 class AppException implements Exception {
+
+  const AppException({required this.message, this.code, this.originalError});
   final String message;
   final String? code;
   final dynamic originalError;
-
-  const AppException({required this.message, this.code, this.originalError});
 
   @override
   String toString() => 'AppException($code): $message';
 }
 
 class NetworkException extends AppException {
-  final int? statusCode;
 
   const NetworkException({required super.message, this.statusCode, super.code, super.originalError});
+  final int? statusCode;
 
   @override
   String toString() => 'NetworkException($statusCode): $message';

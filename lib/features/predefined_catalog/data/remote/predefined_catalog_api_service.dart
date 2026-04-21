@@ -13,9 +13,9 @@ final predefinedCatalogApiServiceProvider = Provider<PredefinedCatalogApiService
 
 /// Remote API service for browsing and cloning predefined products & categories.
 class PredefinedCatalogApiService {
-  final Dio _dio;
 
   PredefinedCatalogApiService(this._dio);
+  final Dio _dio;
 
   // ─── Categories ───────────────────────────────────────────
 
@@ -32,7 +32,7 @@ class PredefinedCatalogApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (businessTypeId != null) 'business_type_id': businessTypeId,
+        'business_type_id': ?businessTypeId,
         if (search != null && search.isNotEmpty) 'search': search,
         if (isActive != null) 'is_active': isActive ? 1 : 0,
       },
@@ -92,12 +92,12 @@ class PredefinedCatalogApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (businessTypeId != null) 'business_type_id': businessTypeId,
-        if (predefinedCategoryId != null) 'predefined_category_id': predefinedCategoryId,
+        'business_type_id': ?businessTypeId,
+        'predefined_category_id': ?predefinedCategoryId,
         if (search != null && search.isNotEmpty) 'search': search,
         if (isActive != null) 'is_active': isActive ? 1 : 0,
-        if (sortBy != null) 'sort_by': sortBy,
-        if (sortDir != null) 'sort_dir': sortDir,
+        'sort_by': ?sortBy,
+        'sort_dir': ?sortDir,
       },
     );
 
@@ -125,7 +125,7 @@ class PredefinedCatalogApiService {
   Future<Map<String, dynamic>> cloneProduct(String productId, {String? categoryId}) async {
     final response = await _dio.post(
       ApiEndpoints.predefinedProductClone(productId),
-      data: {if (categoryId != null) 'category_id': categoryId},
+      data: {'category_id': ?categoryId},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;

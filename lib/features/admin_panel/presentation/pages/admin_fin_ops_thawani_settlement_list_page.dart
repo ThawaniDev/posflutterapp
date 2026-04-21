@@ -115,7 +115,7 @@ class _SettlementsTab extends ConsumerWidget {
           final amount = num.tryParse(item['total_amount']?.toString() ?? '') ?? 0;
           final status = (item['status'] ?? '').toString();
           return PosCard(
-            borderRadius: BorderRadius.circular(10,),
+            borderRadius: BorderRadius.circular(10),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: const Color(0xFF059669).withValues(alpha: 0.1),
@@ -126,7 +126,7 @@ class _SettlementsTab extends ConsumerWidget {
                 'Date: ${item['settlement_date'] ?? item['created_at'] ?? ''}',
                 style: const TextStyle(fontSize: 12),
               ),
-              trailing: _statusChip(status),
+              trailing: _statusChip(context, status),
             ),
           );
         },
@@ -134,12 +134,12 @@ class _SettlementsTab extends ConsumerWidget {
     );
   }
 
-  Widget _statusChip(String status) {
+  Widget _statusChip(BuildContext context, String status) {
     final color = switch (status) {
       'settled' || 'completed' => AppColors.success,
       'pending' => AppColors.warning,
       'failed' => AppColors.error,
-      _ => AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -180,7 +180,7 @@ class _OrdersTab extends ConsumerWidget {
         final item = items[i];
         final amount = num.tryParse(item['amount']?.toString() ?? '') ?? 0;
         return PosCard(
-          borderRadius: BorderRadius.circular(10,),
+          borderRadius: BorderRadius.circular(10),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
@@ -229,7 +229,7 @@ class _StoreConfigsTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         return PosCard(
-          borderRadius: BorderRadius.circular(10,),
+          borderRadius: BorderRadius.circular(10),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFFF59E0B).withValues(alpha: 0.1),

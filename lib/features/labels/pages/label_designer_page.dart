@@ -4,10 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_app_bar.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
@@ -20,10 +16,10 @@ import 'package:wameedpos/features/labels/providers/label_state.dart';
 /// - Preview the label in real-time
 /// - Save as new template or update existing
 class LabelDesignerPage extends ConsumerStatefulWidget {
-  final String? templateId;
-  final String? duplicateId;
 
   const LabelDesignerPage({super.key, this.templateId, this.duplicateId});
+  final String? templateId;
+  final String? duplicateId;
 
   // Available element types (static so inner widgets can access)
   static const _availableElements = [
@@ -127,7 +123,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
 
     final canvasWidth = double.tryParse(_widthController.text) ?? 50;
     final canvasHeight = double.tryParse(_heightController.text) ?? 30;
-    final scale = 4.0; // 1mm = 4px on screen
+    const scale = 4.0; // 1mm = 4px on screen
 
     return Scaffold(
       appBar: PosAppBar(
@@ -329,13 +325,13 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                                 Icon(
                                   Icons.touch_app_rounded,
                                   size: 48,
-                                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                  color: AppColors.mutedFor(context),
                                 ),
                                 const SizedBox(height: AppSpacing.md),
                                 Text(
                                   l10n.labelSelectElement,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    color: AppColors.mutedFor(context),
                                   ),
                                 ),
                               ],
@@ -454,8 +450,8 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
-            color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-            border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+            color: AppColors.surfaceFor(context),
+            border: Border(top: BorderSide(color: AppColors.borderFor(context))),
           ),
           child: SafeArea(
             top: false,
@@ -602,19 +598,13 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
 // ─── Data classes ──────────────────────────────────────────────
 
 class _ElementType {
+  const _ElementType(this.key, this.icon, this.label);
   final String key;
   final IconData icon;
   final String label;
-  const _ElementType(this.key, this.icon, this.label);
 }
 
 class _LabelElement {
-  final String type;
-  final double x;
-  final double y;
-  final double width;
-  final double height;
-  final Map<String, dynamic> config;
 
   const _LabelElement({
     required this.type,
@@ -624,6 +614,12 @@ class _LabelElement {
     required this.height,
     this.config = const {},
   });
+  final String type;
+  final double x;
+  final double y;
+  final double width;
+  final double height;
+  final Map<String, dynamic> config;
 
   _LabelElement copyWith({String? type, double? x, double? y, double? width, double? height, Map<String, dynamic>? config}) {
     return _LabelElement(
@@ -640,10 +636,10 @@ class _LabelElement {
 // ─── Widgets ───────────────────────────────────────────────────
 
 class _ElementPaletteItem extends StatelessWidget {
-  final _ElementType elementType;
-  final VoidCallback onTap;
 
   const _ElementPaletteItem({required this.elementType, required this.onTap});
+  final _ElementType elementType;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -671,11 +667,11 @@ class _ElementPaletteItem extends StatelessWidget {
 }
 
 class _CanvasElement extends StatelessWidget {
+
+  const _CanvasElement({required this.element, required this.scale, required this.isSelected});
   final _LabelElement element;
   final double scale;
   final bool isSelected;
-
-  const _CanvasElement({required this.element, required this.scale, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -716,12 +712,12 @@ class _CanvasElement extends StatelessWidget {
 }
 
 class _ElementPropertiesPanel extends StatelessWidget {
+
+  const _ElementPropertiesPanel({required this.element, required this.onUpdate, required this.onDelete, required this.l10n});
   final _LabelElement element;
   final ValueChanged<_LabelElement> onUpdate;
   final VoidCallback onDelete;
   final AppLocalizations l10n;
-
-  const _ElementPropertiesPanel({required this.element, required this.onUpdate, required this.onDelete, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -884,9 +880,9 @@ class _ElementPropertiesPanel extends StatelessWidget {
 // ─── Grid Painter ──────────────────────────────────────────────
 
 class _GridPainter extends CustomPainter {
-  final double scale;
 
   _GridPainter({required this.scale});
+  final double scale;
 
   @override
   void paint(Canvas canvas, Size size) {

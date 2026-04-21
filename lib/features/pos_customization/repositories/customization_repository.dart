@@ -9,9 +9,9 @@ final customizationRepositoryProvider = Provider<CustomizationRepository>((ref) 
 });
 
 class CustomizationRepository {
-  final CustomizationApiService _api;
 
   CustomizationRepository(this._api);
+  final CustomizationApiService _api;
 
   Future<Map<String, dynamic>> getSettings() => _api.getSettings();
   Future<Map<String, dynamic>> updateSettings(Map<String, dynamic> data) => _api.updateSettings(data);

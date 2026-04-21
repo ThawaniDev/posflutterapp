@@ -8,9 +8,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FinancialSummaryCard extends StatelessWidget {
-  final Map<String, dynamic> data;
 
   const FinancialSummaryCard({super.key, required this.data});
+  final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class FinancialSummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_balance_rounded, color: AppColors.primary, size: 20),
+              const Icon(Icons.account_balance_rounded, color: AppColors.primary, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardFinancialSummary, style: AppTypography.headlineSmall),
             ],
@@ -78,12 +78,6 @@ class FinancialSummaryCard extends StatelessWidget {
 }
 
 class _SummaryRow extends StatelessWidget {
-  final String label;
-  final double value;
-  final Color color;
-  final bool isDark;
-  final bool negative;
-  final bool bold;
 
   const _SummaryRow({
     required this.label,
@@ -93,6 +87,12 @@ class _SummaryRow extends StatelessWidget {
     this.negative = false,
     this.bold = false,
   });
+  final String label;
+  final double value;
+  final Color color;
+  final bool isDark;
+  final bool negative;
+  final bool bold;
 
   @override
   Widget build(BuildContext context) {
@@ -123,10 +123,10 @@ const _pieColors = [
 ];
 
 class _PaymentPieChart extends StatelessWidget {
-  final Map<String, dynamic> methods;
-  final bool isDark;
 
   const _PaymentPieChart({required this.methods, required this.isDark});
+  final Map<String, dynamic> methods;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {

@@ -8,8 +8,8 @@ final updateCheckProvider = StateNotifierProvider<UpdateCheckNotifier, UpdateChe
 );
 
 class UpdateCheckNotifier extends StateNotifier<UpdateCheckState> {
-  final AutoUpdateRepository _repo;
   UpdateCheckNotifier(this._repo) : super(const UpdateCheckInitial());
+  final AutoUpdateRepository _repo;
 
   Future<void> check({required String currentVersion, required String platform, String? channel}) async {
     if (state is! UpdateCheckLoaded) state = const UpdateCheckLoading();
@@ -39,8 +39,8 @@ final changelogProvider = StateNotifierProvider<ChangelogNotifier, ChangelogStat
 );
 
 class ChangelogNotifier extends StateNotifier<ChangelogState> {
-  final AutoUpdateRepository _repo;
   ChangelogNotifier(this._repo) : super(const ChangelogInitial());
+  final AutoUpdateRepository _repo;
 
   Future<void> load({String? platform, String? channel}) async {
     if (state is! ChangelogLoaded) state = const ChangelogLoading();
@@ -61,8 +61,8 @@ final updateHistoryProvider = StateNotifierProvider<UpdateHistoryNotifier, Updat
 );
 
 class UpdateHistoryNotifier extends StateNotifier<UpdateHistoryState> {
-  final AutoUpdateRepository _repo;
   UpdateHistoryNotifier(this._repo) : super(const HistoryInitial());
+  final AutoUpdateRepository _repo;
 
   Future<void> load() async {
     if (state is! HistoryLoaded) state = const HistoryLoading();
@@ -83,8 +83,8 @@ final updateOperationProvider = StateNotifierProvider<UpdateOperationNotifier, U
 );
 
 class UpdateOperationNotifier extends StateNotifier<UpdateOperationState> {
-  final AutoUpdateRepository _repo;
   UpdateOperationNotifier(this._repo) : super(const UpdateOperationIdle());
+  final AutoUpdateRepository _repo;
 
   Future<void> reportStatus({required String releaseId, required String status, String? errorMessage}) async {
     state = const UpdateOperationRunning('report_status');

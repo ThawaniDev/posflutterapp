@@ -5,11 +5,10 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminCmsPageDetailPage extends ConsumerStatefulWidget {
-  final String pageId;
   const AdminCmsPageDetailPage({super.key, required this.pageId});
+  final String pageId;
 
   @override
   ConsumerState<AdminCmsPageDetailPage> createState() => _AdminCmsPageDetailPageState();
@@ -53,7 +52,7 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
                             label: Text(page['is_published'] == true ? 'Published' : 'Draft'),
                             backgroundColor: page['is_published'] == true
                                 ? AppColors.success.withValues(alpha: 0.15)
-                                : AppColors.borderLight,
+                                : AppColors.borderFor(context),
                           ),
                         ],
                       ),

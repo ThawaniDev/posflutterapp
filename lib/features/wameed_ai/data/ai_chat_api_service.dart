@@ -10,9 +10,9 @@ final aiChatApiServiceProvider = Provider<AIChatApiService>((ref) {
 });
 
 class AIChatApiService {
-  final Dio _dio;
 
   AIChatApiService(this._dio);
+  final Dio _dio;
 
   // ─── LLM Models ─────────────────────────────────────────────
 
@@ -44,7 +44,7 @@ class AIChatApiService {
   Future<AIChat> createChat({String? llmModelId, String? title}) async {
     final response = await _dio.post(
       ApiEndpoints.wameedAIChats,
-      data: {if (llmModelId != null) 'llm_model_id': llmModelId, if (title != null) 'title': title},
+      data: {'llm_model_id': ?llmModelId, 'title': ?title},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AIChat.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -73,9 +73,9 @@ class AIChatApiService {
       ApiEndpoints.wameedAIChatMessages(chatId),
       data: {
         'message': message,
-        if (featureSlug != null) 'feature_slug': featureSlug,
-        if (featureData != null) 'feature_data': featureData,
-        if (imageBase64 != null) 'image': imageBase64,
+        'feature_slug': ?featureSlug,
+        'feature_data': ?featureData,
+        'image': ?imageBase64,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -93,7 +93,7 @@ class AIChatApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.wameedAIChatFeature(chatId),
-      data: {'feature_slug': featureSlug, if (params != null) 'params': params},
+      data: {'feature_slug': featureSlug, 'params': ?params},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final data = apiResponse.data as Map<String, dynamic>;

@@ -9,7 +9,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
@@ -30,9 +29,9 @@ import 'package:wameedpos/features/wameed_ai/widgets/ai_model_selector.dart';
 ///     history grouped by date; main pane with breadcrumb, Upgrade pill,
 ///     and full-width pill input.
 class AIChatPage extends ConsumerStatefulWidget {
-  final String? chatId;
 
   const AIChatPage({super.key, this.chatId});
+  final String? chatId;
 
   @override
   ConsumerState<AIChatPage> createState() => _AIChatPageState();
@@ -1023,11 +1022,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
 // ─────────────────────────────────────────────────────────────────
 
 class _CircleIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onPressed;
-  final Color backgroundColor;
-  final Color? iconColor;
-  final double size;
 
   const _CircleIconButton({
     required this.icon,
@@ -1036,6 +1030,11 @@ class _CircleIconButton extends StatelessWidget {
     this.iconColor,
     this.size = 44,
   });
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final Color backgroundColor;
+  final Color? iconColor;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -1056,13 +1055,13 @@ class _CircleIconButton extends StatelessWidget {
 }
 
 class _SidebarTile extends StatelessWidget {
+
+  const _SidebarTile({required this.icon, required this.label, required this.onTap, this.trailing, this.selected = false});
   final IconData icon;
   final String label;
   final Widget? trailing;
   final bool selected;
   final VoidCallback onTap;
-
-  const _SidebarTile({required this.icon, required this.label, required this.onTap, this.trailing, this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -1082,7 +1081,7 @@ class _SidebarTile extends StatelessWidget {
                 style: theme.textTheme.bodyMedium?.copyWith(fontWeight: selected ? FontWeight.w600 : FontWeight.w500),
               ),
             ),
-            if (trailing != null) trailing!,
+            ?trailing,
           ],
         ),
       ),
@@ -1091,11 +1090,11 @@ class _SidebarTile extends StatelessWidget {
 }
 
 class _AttachmentTile extends StatelessWidget {
+
+  const _AttachmentTile({required this.icon, required this.label, required this.onTap});
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-
-  const _AttachmentTile({required this.icon, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -1120,13 +1119,13 @@ class _AttachmentTile extends StatelessWidget {
 }
 
 class _ActionRow extends StatelessWidget {
+
+  const _ActionRow({required this.icon, required this.title, required this.subtitle, required this.onTap, this.trailing});
   final IconData icon;
   final String title;
   final String subtitle;
   final Widget? trailing;
   final VoidCallback onTap;
-
-  const _ActionRow({required this.icon, required this.title, required this.subtitle, required this.onTap, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -1149,7 +1148,7 @@ class _ActionRow extends StatelessWidget {
                 ],
               ),
             ),
-            if (trailing != null) trailing!,
+            ?trailing,
           ],
         ),
       ),
@@ -1158,10 +1157,10 @@ class _ActionRow extends StatelessWidget {
 }
 
 class _Suggestion {
+  const _Suggestion({required this.title, required this.subtitle, required this.fullPrompt});
   final String title;
   final String subtitle;
   final String fullPrompt;
-  const _Suggestion({required this.title, required this.subtitle, required this.fullPrompt});
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -1169,9 +1168,9 @@ class _Suggestion {
 // ─────────────────────────────────────────────────────────────────
 
 class _FeaturesBottomSheet extends ConsumerWidget {
-  final void Function(String slug, String displayName) onFeatureSelected;
 
   const _FeaturesBottomSheet({required this.onFeatureSelected});
+  final void Function(String slug, String displayName) onFeatureSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

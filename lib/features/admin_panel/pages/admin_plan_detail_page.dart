@@ -8,8 +8,8 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminPlanDetailPage extends ConsumerStatefulWidget {
-  final String planId;
   const AdminPlanDetailPage({super.key, required this.planId});
+  final String planId;
 
   @override
   ConsumerState<AdminPlanDetailPage> createState() => _AdminPlanDetailPageState();
@@ -54,8 +54,8 @@ class _AdminPlanDetailPageState extends ConsumerState<AdminPlanDetailPage> {
 }
 
 class _PlanDetailBody extends StatelessWidget {
-  final Map<String, dynamic> plan;
   const _PlanDetailBody({required this.plan});
+  final Map<String, dynamic> plan;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class _PlanDetailBody extends StatelessWidget {
 
         // Features
         if (features.isNotEmpty) ...[
-          Text(l10n.subscriptionFeatures, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          Text(l10n.subscriptionFeatures, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           AppSpacing.gapH8,
           ...features.map(
             (f) => ListTile(
@@ -113,7 +113,7 @@ class _PlanDetailBody extends StatelessWidget {
 
         // Limits
         if (limits.isNotEmpty) ...[
-          Text(l10n.settingsPosLimits, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          Text(l10n.settingsPosLimits, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           AppSpacing.gapH8,
           ...limits.map(
             (l) => ListTile(
@@ -131,9 +131,9 @@ class _PlanDetailBody extends StatelessWidget {
 }
 
 class _PriceChip extends StatelessWidget {
+  const _PriceChip({required this.label, required this.price});
   final String label;
   final String price;
-  const _PriceChip({required this.label, required this.price});
 
   @override
   Widget build(BuildContext context) {

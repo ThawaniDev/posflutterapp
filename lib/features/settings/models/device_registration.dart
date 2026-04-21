@@ -1,14 +1,4 @@
 class DeviceRegistration {
-  final String id;
-  final String storeId;
-  final String deviceName;
-  final String hardwareId;
-  final String? osInfo;
-  final String? appVersion;
-  final DateTime? lastActiveAt;
-  final bool? isActive;
-  final bool? remoteWipeRequested;
-  final DateTime? registeredAt;
 
   const DeviceRegistration({
     required this.id,
@@ -37,6 +27,16 @@ class DeviceRegistration {
       registeredAt: json['registered_at'] != null ? DateTime.parse(json['registered_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String deviceName;
+  final String hardwareId;
+  final String? osInfo;
+  final String? appVersion;
+  final DateTime? lastActiveAt;
+  final bool? isActive;
+  final bool? remoteWipeRequested;
+  final DateTime? registeredAt;
 
   Map<String, dynamic> toJson() {
     return {

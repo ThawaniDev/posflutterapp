@@ -58,12 +58,12 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'default', label: 'default'),
-                PosDropdownItem(value: 'high', label: 'high'),
-                PosDropdownItem(value: 'notifications', label: 'notifications'),
-                PosDropdownItem(value: 'billing', label: 'billing'),
-                PosDropdownItem(value: 'sync', label: 'sync'),
-                PosDropdownItem(value: 'reports', label: 'reports'),
+                const PosDropdownItem(value: 'default', label: 'default'),
+                const PosDropdownItem(value: 'high', label: 'high'),
+                const PosDropdownItem(value: 'notifications', label: 'notifications'),
+                const PosDropdownItem(value: 'billing', label: 'billing'),
+                const PosDropdownItem(value: 'sync', label: 'sync'),
+                const PosDropdownItem(value: 'reports', label: 'reports'),
               ],
               selectedValue: _queueFilter,
               onChanged: (v) {

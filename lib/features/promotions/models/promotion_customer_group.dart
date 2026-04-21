@@ -1,7 +1,4 @@
 class PromotionCustomerGroup {
-  final String id;
-  final String promotionId;
-  final String customerGroupId;
 
   const PromotionCustomerGroup({
     required this.id,
@@ -16,6 +13,9 @@ class PromotionCustomerGroup {
       customerGroupId: json['customer_group_id'] as String,
     );
   }
+  final String id;
+  final String promotionId;
+  final String customerGroupId;
 
   Map<String, dynamic> toJson() {
     return {

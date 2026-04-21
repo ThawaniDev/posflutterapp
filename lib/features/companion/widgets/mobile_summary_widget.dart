@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -95,7 +94,7 @@ class MobileSummaryWidget extends ConsumerWidget {
                   icon: Icons.sync,
                   label: l10n.companionLastSync,
                   value: lastSync ?? '-',
-                  iconColor: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  iconColor: AppColors.mutedFor(context),
                 ),
               ],
             ),

@@ -6,9 +6,9 @@ final adminRepositoryProvider = Provider<AdminRepository>((ref) {
 });
 
 class AdminRepository {
-  final AdminApiService _apiService;
 
   AdminRepository(this._apiService);
+  final AdminApiService _apiService;
 
   // ─── Stores ───────────────────────────────────────────
   Future<Map<String, dynamic>> listStores({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
-import 'pos_dialog.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/pos_dialog.dart';
 
 /// A single step in a feature guide.
 class FeatureGuideStep {
@@ -67,7 +67,7 @@ class _FeatureInfoContent extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.info_outline_rounded, color: AppColors.info, size: 20),
+                    const Icon(Icons.info_outline_rounded, color: AppColors.info, size: 20),
                     AppSpacing.gapW12,
                     Expanded(
                       child: Text(
@@ -100,7 +100,7 @@ class _FeatureInfoContent extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.lightbulb_outline_rounded, color: AppColors.warning, size: 18),
+                          const Icon(Icons.lightbulb_outline_rounded, color: AppColors.warning, size: 18),
                           AppSpacing.gapW8,
                           Text(
                             'Tips',
@@ -115,7 +115,7 @@ class _FeatureInfoContent extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('• ', style: AppTypography.bodySmall),
+                              const Text('• ', style: AppTypography.bodySmall),
                               Expanded(child: Text(tip, style: AppTypography.bodySmall)),
                             ],
                           ),

@@ -1,6 +1,4 @@
 class LayoutPackageVisibility {
-  final String posLayoutTemplateId;
-  final String subscriptionPlanId;
 
   const LayoutPackageVisibility({
     required this.posLayoutTemplateId,
@@ -13,6 +11,8 @@ class LayoutPackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String posLayoutTemplateId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

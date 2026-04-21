@@ -1,14 +1,4 @@
 class ModifierGroup {
-  final String id;
-  final String? productId;
-  final String name;
-  final String? nameAr;
-  final bool? isRequired;
-  final int? minSelect;
-  final int? maxSelect;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ModifierGroup({
     required this.id,
@@ -37,6 +27,16 @@ class ModifierGroup {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String? productId;
+  final String name;
+  final String? nameAr;
+  final bool? isRequired;
+  final int? minSelect;
+  final int? maxSelect;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/custom_cake_order.dart';
-import '../enums/custom_cake_order_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_bakery/models/custom_cake_order.dart';
+import 'package:wameedpos/features/industry_bakery/enums/custom_cake_order_status.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CakeOrderCard extends StatelessWidget {
+
+  const CakeOrderCard({super.key, required this.order, this.onTap, this.onStatusChange});
   final CustomCakeOrder order;
   final VoidCallback? onTap;
   final ValueChanged<CustomCakeOrderStatus>? onStatusChange;
-
-  const CakeOrderCard({super.key, required this.order, this.onTap, this.onStatusChange});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class CakeOrderCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,
@@ -51,7 +50,7 @@ class CakeOrderCard extends StatelessWidget {
               AppSpacing.gapH4,
               Row(
                 children: [
-                  Icon(Icons.calendar_today, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  Icon(Icons.calendar_today, size: 16, color: AppColors.mutedFor(context)),
                   AppSpacing.gapW4,
                   Text(l10n.bakeryDeliveryDateWithValue(order.deliveryDate.toString()), style: AppTypography.bodySmall),
                   const Spacer(),

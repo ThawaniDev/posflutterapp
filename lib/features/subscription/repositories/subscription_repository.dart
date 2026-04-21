@@ -12,9 +12,9 @@ final subscriptionRepositoryProvider = Provider<SubscriptionRepository>((ref) {
 
 /// Repository that orchestrates subscription API calls with error mapping.
 class SubscriptionRepository {
-  final SubscriptionApiService _apiService;
 
   SubscriptionRepository(this._apiService);
+  final SubscriptionApiService _apiService;
 
   // ─── Plans ─────────────────────────────────────────────────────
 
@@ -199,9 +199,9 @@ class SubscriptionRepository {
 
 /// Custom exception for subscription-related errors.
 class SubscriptionException extends AppException {
-  final int? statusCode;
 
   const SubscriptionException({required super.message, this.statusCode, super.originalError});
+  final int? statusCode;
 
   @override
   String toString() => 'SubscriptionException: $message (status: $statusCode)';

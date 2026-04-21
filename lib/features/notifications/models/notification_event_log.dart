@@ -2,12 +2,6 @@ import 'package:wameedpos/features/notifications/enums/notification_channel.dart
 import 'package:wameedpos/features/notifications/enums/notification_delivery_status.dart';
 
 class NotificationEventLog {
-  final String id;
-  final String notificationId;
-  final NotificationChannel channel;
-  final NotificationDeliveryStatus status;
-  final String? errorMessage;
-  final DateTime? sentAt;
 
   const NotificationEventLog({
     required this.id,
@@ -28,6 +22,12 @@ class NotificationEventLog {
       sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
     );
   }
+  final String id;
+  final String notificationId;
+  final NotificationChannel channel;
+  final NotificationDeliveryStatus status;
+  final String? errorMessage;
+  final DateTime? sentAt;
 
   Map<String, dynamic> toJson() {
     return {

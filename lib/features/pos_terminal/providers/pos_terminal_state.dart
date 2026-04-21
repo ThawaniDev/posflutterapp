@@ -18,11 +18,6 @@ class PosSessionsLoading extends PosSessionsState {
 }
 
 class PosSessionsLoaded extends PosSessionsState {
-  final List<PosSession> sessions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const PosSessionsLoaded({
     required this.sessions,
@@ -31,6 +26,11 @@ class PosSessionsLoaded extends PosSessionsState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<PosSession> sessions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -45,8 +45,8 @@ class PosSessionsLoaded extends PosSessionsState {
 }
 
 class PosSessionsError extends PosSessionsState {
-  final String message;
   const PosSessionsError({required this.message});
+  final String message;
 }
 
 // ─── Transactions State ─────────────────────────────────────────
@@ -64,11 +64,6 @@ class TransactionsLoading extends TransactionsState {
 }
 
 class TransactionsLoaded extends TransactionsState {
-  final List<Transaction> transactions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const TransactionsLoaded({
     required this.transactions,
@@ -77,6 +72,11 @@ class TransactionsLoaded extends TransactionsState {
     required this.lastPage,
     required this.perPage,
   });
+  final List<Transaction> transactions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -91,8 +91,8 @@ class TransactionsLoaded extends TransactionsState {
 }
 
 class TransactionsError extends TransactionsState {
-  final String message;
   const TransactionsError({required this.message});
+  final String message;
 }
 
 // ─── Held Carts State ───────────────────────────────────────────
@@ -110,15 +110,15 @@ class HeldCartsLoading extends HeldCartsState {
 }
 
 class HeldCartsLoaded extends HeldCartsState {
-  final List<HeldCart> carts;
   const HeldCartsLoaded({required this.carts});
+  final List<HeldCart> carts;
 
   HeldCartsLoaded copyWith({List<HeldCart>? carts}) => HeldCartsLoaded(carts: carts ?? this.carts);
 }
 
 class HeldCartsError extends HeldCartsState {
-  final String message;
   const HeldCartsError({required this.message});
+  final String message;
 }
 
 // ─── Terminals (Registers) State ────────────────────────────────
@@ -136,12 +136,6 @@ class TerminalsLoading extends TerminalsState {
 }
 
 class TerminalsLoaded extends TerminalsState {
-  final List<Register> terminals;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? search;
 
   const TerminalsLoaded({
     required this.terminals,
@@ -151,6 +145,12 @@ class TerminalsLoaded extends TerminalsState {
     required this.perPage,
     this.search,
   });
+  final List<Register> terminals;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? search;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -172,6 +172,6 @@ class TerminalsLoaded extends TerminalsState {
 }
 
 class TerminalsError extends TerminalsState {
-  final String message;
   const TerminalsError({required this.message});
+  final String message;
 }

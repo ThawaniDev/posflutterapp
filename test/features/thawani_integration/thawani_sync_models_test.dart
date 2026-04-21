@@ -84,7 +84,7 @@ void main() {
     });
 
     test('toJson round-trips correctly', () {
-      final original = ThawaniCategoryMapping(
+      const original = ThawaniCategoryMapping(
         id: '1',
         storeId: '2',
         categoryId: 'c-3',

@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'accessibility_service.dart';
+import 'package:wameedpos/features/accessibility/services/accessibility_service.dart';
 
 /// Plays audio feedback sounds for POS actions when audio feedback is enabled.
 class AudioFeedbackService {

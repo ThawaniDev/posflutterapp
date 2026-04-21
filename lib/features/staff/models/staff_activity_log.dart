@@ -1,15 +1,6 @@
 import 'package:wameedpos/core/enums/activity_entity_type.dart';
 
 class StaffActivityLog {
-  final String id;
-  final String staffUserId;
-  final String storeId;
-  final String action;
-  final ActivityEntityType? entityType;
-  final String? entityId;
-  final Map<String, dynamic>? details;
-  final String? ipAddress;
-  final DateTime? createdAt;
 
   const StaffActivityLog({
     required this.id,
@@ -36,6 +27,15 @@ class StaffActivityLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String staffUserId;
+  final String storeId;
+  final String action;
+  final ActivityEntityType? entityType;
+  final String? entityId;
+  final Map<String, dynamic>? details;
+  final String? ipAddress;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_sync_status.dart';
 
 class StoreDeliveryPlatform {
-  final String id;
-  final String storeId;
-  final String deliveryPlatformId;
-  final Map<String, dynamic> credentials;
-  final String? inboundApiKey;
-  final bool? isEnabled;
-  final DeliverySyncStatus? syncStatus;
-  final DateTime? lastSyncAt;
-  final String? lastError;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StoreDeliveryPlatform({
     required this.id,
@@ -42,6 +31,17 @@ class StoreDeliveryPlatform {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String deliveryPlatformId;
+  final Map<String, dynamic> credentials;
+  final String? inboundApiKey;
+  final bool? isEnabled;
+  final DeliverySyncStatus? syncStatus;
+  final DateTime? lastSyncAt;
+  final String? lastError;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

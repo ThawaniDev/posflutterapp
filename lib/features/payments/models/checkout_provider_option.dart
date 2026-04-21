@@ -1,13 +1,5 @@
 /// Represents a provider option available at POS checkout.
 class CheckoutProviderOption {
-  final String provider;
-  final String name;
-  final String? nameAr;
-  final String? logoUrl;
-  final String? description;
-  final String? descriptionAr;
-  final List<int> installmentCounts;
-  final double installmentAmount;
 
   const CheckoutProviderOption({
     required this.provider,
@@ -34,4 +26,12 @@ class CheckoutProviderOption {
       installmentAmount: double.tryParse(json['installment_amount']?.toString() ?? '0') ?? 0.0,
     );
   }
+  final String provider;
+  final String name;
+  final String? nameAr;
+  final String? logoUrl;
+  final String? description;
+  final String? descriptionAr;
+  final List<int> installmentCounts;
+  final double installmentAmount;
 }

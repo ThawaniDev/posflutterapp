@@ -71,7 +71,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
               children: [
                 Text(l10n.subscriptionMonthly),
                 AppSpacing.horizontalSm,
-                Switch(value: _isAnnual, activeColor: AppColors.primary, onChanged: (v) => setState(() => _isAnnual = v)),
+                Switch(value: _isAnnual, activeThumbColor: AppColors.primary, onChanged: (v) => setState(() => _isAnnual = v)),
                 AppSpacing.horizontalSm,
                 Text(
                   l10n.subscriptionAnnual,
@@ -87,7 +87,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
                     decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                     child: Text(
                       l10n.subscriptionSavePercent,
-                      style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
                     ),
                   ),
               ],
@@ -120,7 +120,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.subSubscribeToPlan(plan.name),
-      message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), 'SAR'),
+      message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), ''),
       confirmLabel: l10n.subProceedToPayment,
       cancelLabel: l10n.commonCancel,
     );

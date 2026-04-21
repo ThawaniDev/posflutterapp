@@ -1,34 +1,6 @@
 import 'package:wameedpos/features/catalog/enums/product_unit.dart';
 
 class Product {
-  final String id;
-  final String organizationId;
-  final String? categoryId;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? descriptionAr;
-  final String? sku;
-  final String? barcode;
-  final double sellPrice;
-  final double? costPrice;
-  final ProductUnit? unit;
-  final double? taxRate;
-  final bool? isWeighable;
-  final double? tareWeight;
-  final bool? isActive;
-  final bool? isCombo;
-  final bool? ageRestricted;
-  final double? offerPrice;
-  final DateTime? offerStart;
-  final DateTime? offerEnd;
-  final int? minOrderQty;
-  final int? maxOrderQty;
-  final String? imageUrl;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final DateTime? deletedAt;
 
   const Product({
     required this.id,
@@ -93,6 +65,34 @@ class Product {
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String? categoryId;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
+  final String? sku;
+  final String? barcode;
+  final double sellPrice;
+  final double? costPrice;
+  final ProductUnit? unit;
+  final double? taxRate;
+  final bool? isWeighable;
+  final double? tareWeight;
+  final bool? isActive;
+  final bool? isCombo;
+  final bool? ageRestricted;
+  final double? offerPrice;
+  final DateTime? offerStart;
+  final DateTime? offerEnd;
+  final int? minOrderQty;
+  final int? maxOrderQty;
+  final String? imageUrl;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final DateTime? deletedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -61,7 +61,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                     const SizedBox(height: AppSpacing.lg),
 
                     // Recent Activity
-                    Text(l10n.securityRecentActivity, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(l10n.securityRecentActivity, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     ...activity.map(
                       (a) => PosCard(
@@ -154,9 +154,9 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
 }
 
 class _KpiItem {
+  const _KpiItem(this.label, this.value, this.icon, this.color);
   final String label;
   final String value;
   final IconData icon;
   final Color color;
-  const _KpiItem(this.label, this.value, this.icon, this.color);
 }

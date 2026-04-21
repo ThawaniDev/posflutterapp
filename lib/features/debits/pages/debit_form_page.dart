@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
@@ -14,9 +13,9 @@ import 'package:wameedpos/features/debits/providers/debits_providers.dart';
 import 'package:wameedpos/features/debits/repositories/debit_repository.dart';
 
 class DebitFormPage extends ConsumerStatefulWidget {
-  final String? debitId;
 
   const DebitFormPage({super.key, this.debitId});
+  final String? debitId;
 
   @override
   ConsumerState<DebitFormPage> createState() => _DebitFormPageState();

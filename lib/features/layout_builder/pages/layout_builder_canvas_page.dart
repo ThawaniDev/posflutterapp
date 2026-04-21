@@ -4,10 +4,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/layout_builder/models/layout_widget.dart';
 import 'package:wameedpos/features/layout_builder/models/widget_placement.dart';
@@ -133,8 +129,8 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-              border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+              color: AppColors.surfaceFor(context),
+              border: Border(top: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: SafeArea(
               top: false,
@@ -183,7 +179,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
               margin: const EdgeInsets.only(top: 8),
               width: 40,
               height: 4,
-              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+              decoration: BoxDecoration(color: AppColors.mutedFor(context), borderRadius: BorderRadius.circular(2)),
             ),
             Expanded(child: _buildWidgetCatalog(catalogState, l10n, isDark)),
           ],
@@ -213,7 +209,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
               margin: const EdgeInsets.only(top: 8),
               width: 40,
               height: 4,
-              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+              decoration: BoxDecoration(color: AppColors.mutedFor(context), borderRadius: BorderRadius.circular(2)),
             ),
             Expanded(child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark)),
           ],
@@ -227,8 +223,8 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
   Widget _buildWidgetCatalog(WidgetCatalogState catalogState, AppLocalizations l10n, bool isDark) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(right: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(right: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,12 +330,12 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                   Text(widget.name, style: AppTypography.labelSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
                   Text(
                     '${widget.minWidth}×${widget.minHeight} – ${widget.maxWidth}×${widget.maxHeight}',
-                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.drag_indicator_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            Icon(Icons.drag_indicator_rounded, size: 16, color: AppColors.mutedFor(context)),
           ],
         ),
       ),
@@ -370,18 +366,18 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                 height: 40,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-                  border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+                  color: AppColors.surfaceFor(context),
+                  border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.grid_on_rounded, size: 16, color: AppColors.primary),
+                    const Icon(Icons.grid_on_rounded, size: 16, color: AppColors.primary),
                     AppSpacing.gapW8,
-                    Text('${l10n.layoutGrid}: ${columns}×$rows', style: AppTypography.labelSmall),
+                    Text('${l10n.layoutGrid}: $columns×$rows', style: AppTypography.labelSmall),
                     const Spacer(),
                     Text(
                       '${placements.length} ${l10n.layoutWidgetsPlaced}',
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),
@@ -414,7 +410,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                             rows: rows,
                             color: isDark
                                 ? AppColors.borderDark.withValues(alpha: 0.3)
-                                : AppColors.borderLight.withValues(alpha: 0.5),
+                                : AppColors.borderFor(context).withValues(alpha: 0.5),
                           ),
                         ),
                         // Hover overlay
@@ -437,12 +433,12 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                               child: Container(
                                 margin: const EdgeInsets.all(2),
                                 decoration: BoxDecoration(
-                                  color: (isDark ? AppColors.surfaceDark : AppColors.surfaceLight).withValues(alpha: 0.95),
+                                  color: (AppColors.surfaceFor(context)).withValues(alpha: 0.95),
                                   borderRadius: AppRadius.borderSm,
                                   border: Border.all(
                                     color: isSelected
                                         ? AppColors.primary
-                                        : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                                        : (AppColors.borderFor(context)),
                                     width: isSelected ? 2 : 1,
                                   ),
                                   boxShadow: isSelected ? AppShadows.primarySm : AppShadows.sm,
@@ -462,7 +458,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                                     Text(
                                       '${p.gridWidth}×${p.gridHeight}',
                                       style: AppTypography.micro.copyWith(
-                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                         fontSize: 10,
                                       ),
                                     ),
@@ -497,8 +493,8 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
 
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(left: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(left: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: DefaultTabController(
         length: 2,
@@ -522,7 +518,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                           child: Text(
                             l10n.layoutSelectWidget,
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -622,7 +618,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
       return Center(
         child: Text(
           l10n.layoutNoVersions,
-          style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
         ),
       );
     }
@@ -657,7 +653,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                     if (version.createdAt != null)
                       Text(
                         _formatDate(version.createdAt!),
-                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                       ),
                   ],
                 ),

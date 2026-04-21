@@ -12,9 +12,9 @@ final promotionApiServiceProvider = Provider<PromotionApiService>((ref) {
 });
 
 class PromotionApiService {
-  final Dio _dio;
 
   PromotionApiService(this._dio);
+  final Dio _dio;
 
   // ─── Promotions CRUD ──────────────────────────────────────────
 
@@ -33,7 +33,7 @@ class PromotionApiService {
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
         if (isActive != null) 'is_active': isActive.toString(),
-        if (type != null) 'type': type,
+        'type': ?type,
         if (isCoupon != null) 'is_coupon': isCoupon.toString(),
       },
     );
@@ -82,7 +82,7 @@ class PromotionApiService {
   Future<Map<String, dynamic>> validateCoupon({required String code, String? customerId, double? orderTotal}) async {
     final response = await _dio.post(
       ApiEndpoints.couponValidate,
-      data: {'code': code, if (customerId != null) 'customer_id': customerId, if (orderTotal != null) 'order_total': orderTotal},
+      data: {'code': code, 'customer_id': ?customerId, 'order_total': ?orderTotal},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -99,7 +99,7 @@ class PromotionApiService {
       data: {
         'coupon_code_id': couponCodeId,
         'order_id': orderId,
-        if (customerId != null) 'customer_id': customerId,
+        'customer_id': ?customerId,
         'discount_amount': discountAmount,
       },
     );
@@ -110,7 +110,7 @@ class PromotionApiService {
   Future<List<CouponCode>> generateCoupons(String promotionId, {required int count, int? maxUses, String? prefix}) async {
     final response = await _dio.post(
       ApiEndpoints.promotionGenerateCoupons(promotionId),
-      data: {'count': count, if (maxUses != null) 'max_uses': maxUses, if (prefix != null) 'prefix': prefix},
+      data: {'count': count, 'max_uses': ?maxUses, 'prefix': ?prefix},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;

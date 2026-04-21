@@ -165,11 +165,11 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
 }
 
 class _DataPanel extends StatelessWidget {
+
+  const _DataPanel({required this.title, required this.data, required this.color});
   final String title;
   final Map<String, dynamic> data;
   final Color color;
-
-  const _DataPanel({required this.title, required this.data, required this.color});
 
   @override
   Widget build(BuildContext context) {

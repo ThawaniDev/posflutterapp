@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/onboarding/models/store_settings.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
@@ -11,9 +10,9 @@ import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.d
 
 /// Full store settings page — tax, receipt, currency, POS behaviour, alerts.
 class StoreSettingsPage extends ConsumerStatefulWidget {
-  final String storeId;
 
   const StoreSettingsPage({super.key, required this.storeId});
+  final String storeId;
 
   @override
   ConsumerState<StoreSettingsPage> createState() => _StoreSettingsPageState();
@@ -233,9 +232,9 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
   Widget _buildSection(String title, IconData icon, List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: BorderRadius.circular(AppSpacing.md),
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,7 +273,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
         children: [
           Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.textMutedLight),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.mutedFor(context)),
           ),
           const SizedBox(height: AppSpacing.xs),
           PosTextField(
@@ -287,11 +286,11 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
               fillColor: AppColors.backgroundLight,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -312,7 +311,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
       child: SwitchListTile(
         title: Text(label, style: Theme.of(context).textTheme.bodyMedium),
         value: value,
-        activeColor: AppColors.primary,
+        activeThumbColor: AppColors.primary,
         contentPadding: EdgeInsets.zero,
         dense: true,
         onChanged: onChanged,

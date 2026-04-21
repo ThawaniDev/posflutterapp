@@ -1,11 +1,4 @@
 class CommissionEarning {
-  final String id;
-  final String staffUserId;
-  final String orderId;
-  final String commissionRuleId;
-  final double orderTotal;
-  final double commissionAmount;
-  final DateTime? createdAt;
 
   const CommissionEarning({
     required this.id,
@@ -28,6 +21,13 @@ class CommissionEarning {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String staffUserId;
+  final String orderId;
+  final String commissionRuleId;
+  final double orderTotal;
+  final double commissionAmount;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

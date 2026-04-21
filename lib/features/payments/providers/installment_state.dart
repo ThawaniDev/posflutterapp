@@ -20,13 +20,13 @@ class InstallmentAdminLoading extends InstallmentAdminState {
 }
 
 class InstallmentAdminLoaded extends InstallmentAdminState {
-  final List<InstallmentProviderConfig> providers;
   const InstallmentAdminLoaded({required this.providers});
+  final List<InstallmentProviderConfig> providers;
 }
 
 class InstallmentAdminError extends InstallmentAdminState {
-  final String message;
   const InstallmentAdminError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -46,14 +46,14 @@ class StoreInstallmentConfigLoading extends StoreInstallmentConfigState {
 }
 
 class StoreInstallmentConfigLoaded extends StoreInstallmentConfigState {
+  const StoreInstallmentConfigLoaded({required this.configs, required this.availableProviders});
   final List<StoreInstallmentConfig> configs;
   final List<Map<String, dynamic>> availableProviders;
-  const StoreInstallmentConfigLoaded({required this.configs, required this.availableProviders});
 }
 
 class StoreInstallmentConfigError extends StoreInstallmentConfigState {
-  final String message;
   const StoreInstallmentConfigError({required this.message});
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -73,18 +73,18 @@ class InstallmentCheckoutLoading extends InstallmentCheckoutState {
 }
 
 class InstallmentCheckoutProvidersLoaded extends InstallmentCheckoutState {
-  final List<CheckoutProviderOption> providers;
   const InstallmentCheckoutProvidersLoaded({required this.providers});
+  final List<CheckoutProviderOption> providers;
 }
 
 class InstallmentCheckoutCreated extends InstallmentCheckoutState {
-  final InstallmentPayment payment;
   const InstallmentCheckoutCreated({required this.payment});
+  final InstallmentPayment payment;
 }
 
 class InstallmentCheckoutCompleted extends InstallmentCheckoutState {
-  final InstallmentPayment payment;
   const InstallmentCheckoutCompleted({required this.payment});
+  final InstallmentPayment payment;
 }
 
 class InstallmentCheckoutCancelled extends InstallmentCheckoutState {
@@ -92,11 +92,11 @@ class InstallmentCheckoutCancelled extends InstallmentCheckoutState {
 }
 
 class InstallmentCheckoutFailed extends InstallmentCheckoutState {
-  final String message;
   const InstallmentCheckoutFailed({required this.message});
+  final String message;
 }
 
 class InstallmentCheckoutError extends InstallmentCheckoutState {
-  final String message;
   const InstallmentCheckoutError({required this.message});
+  final String message;
 }

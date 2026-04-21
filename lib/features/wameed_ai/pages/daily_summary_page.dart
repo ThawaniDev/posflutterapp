@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
@@ -160,7 +159,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             children: [
               AIInsightMiniCard(
                 title: l10n.wameedAITotalRevenue,
-                value: '${revenue.toStringAsFixed(2)}',
+                value: revenue.toStringAsFixed(2),
                 icon: Icons.attach_money,
                 color: AppColors.success,
                 trend: revenueChange,
@@ -174,7 +173,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               ),
               AIInsightMiniCard(
                 title: l10n.wameedAIAvgBasket,
-                value: '${avgBasket.toStringAsFixed(2)}',
+                value: avgBasket.toStringAsFixed(2),
                 icon: Icons.shopping_basket,
                 color: AppColors.primary,
               ),

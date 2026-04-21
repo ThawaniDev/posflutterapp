@@ -8,9 +8,9 @@ final accountingApiServiceProvider = Provider<AccountingApiService>((ref) {
 });
 
 class AccountingApiService {
-  final Dio _dio;
 
   AccountingApiService(this._dio);
+  final Dio _dio;
 
   // ─── Connection ──────────────────────────────────────
 
@@ -35,9 +35,9 @@ class AccountingApiService {
         'access_token': accessToken,
         'refresh_token': refreshToken,
         'token_expires_at': tokenExpiresAt,
-        if (realmId != null) 'realm_id': realmId,
-        if (tenantId != null) 'tenant_id': tenantId,
-        if (companyName != null) 'company_name': companyName,
+        'realm_id': ?realmId,
+        'tenant_id': ?tenantId,
+        'company_name': ?companyName,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -57,7 +57,7 @@ class AccountingApiService {
       ApiEndpoints.accountingRefreshToken,
       data: {
         'access_token': accessToken,
-        if (refreshTokenValue != null) 'refresh_token': refreshTokenValue,
+        'refresh_token': ?refreshTokenValue,
         'token_expires_at': tokenExpiresAt,
       },
     );
@@ -97,7 +97,7 @@ class AccountingApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.accountingExports,
-      data: {'start_date': startDate, 'end_date': endDate, if (exportTypes != null) 'export_types': exportTypes},
+      data: {'start_date': startDate, 'end_date': endDate, 'export_types': ?exportTypes},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -105,7 +105,7 @@ class AccountingApiService {
   Future<Map<String, dynamic>> listExports({String? status, int? limit}) async {
     final response = await _dio.get(
       ApiEndpoints.accountingExports,
-      queryParameters: {if (status != null) 'status': status, if (limit != null) 'limit': limit},
+      queryParameters: {'status': ?status, 'limit': ?limit},
     );
     return response.data as Map<String, dynamic>;
   }

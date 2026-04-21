@@ -11,9 +11,9 @@ final labelApiServiceProvider = Provider<LabelApiService>((ref) {
 });
 
 class LabelApiService {
-  final Dio _dio;
 
   LabelApiService(this._dio);
+  final Dio _dio;
 
   Future<List<LabelTemplate>> listTemplates() async {
     final response = await _dio.get(ApiEndpoints.labelTemplates);

@@ -1,6 +1,4 @@
 class SignageTemplatePackageVisibility {
-  final String signageTemplateId;
-  final String subscriptionPlanId;
 
   const SignageTemplatePackageVisibility({
     required this.signageTemplateId,
@@ -13,6 +11,8 @@ class SignageTemplatePackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String signageTemplateId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

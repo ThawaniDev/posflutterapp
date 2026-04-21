@@ -2,18 +2,6 @@ import 'package:wameedpos/features/zatca/enums/invoice_status.dart';
 import 'package:wameedpos/features/subscription/models/invoice_line_item.dart';
 
 class Invoice {
-  final String id;
-  final String? invoiceNumber;
-  final double amount;
-  final double? tax;
-  final double total;
-  final InvoiceStatus? status;
-  final DateTime? dueDate;
-  final DateTime? paidAt;
-  final String? pdfUrl;
-  final List<InvoiceLineItem>? lineItems;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Invoice({
     required this.id,
@@ -48,6 +36,18 @@ class Invoice {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String? invoiceNumber;
+  final double amount;
+  final double? tax;
+  final double total;
+  final InvoiceStatus? status;
+  final DateTime? dueDate;
+  final DateTime? paidAt;
+  final String? pdfUrl;
+  final List<InvoiceLineItem>? lineItems;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

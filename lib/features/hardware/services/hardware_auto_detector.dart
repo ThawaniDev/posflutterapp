@@ -6,12 +6,6 @@ import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 /// Detected device info
 class DetectedDevice {
-  final HardwareDeviceType type;
-  final String name;
-  final String connectionType; // usb, network
-  final String? address; // IP address for network, device path for USB
-  final int? port;
-  final Map<String, dynamic> metadata;
 
   const DetectedDevice({
     required this.type,
@@ -21,6 +15,12 @@ class DetectedDevice {
     this.port,
     this.metadata = const {},
   });
+  final HardwareDeviceType type;
+  final String name;
+  final String connectionType; // usb, network
+  final String? address; // IP address for network, device path for USB
+  final int? port;
+  final Map<String, dynamic> metadata;
 }
 
 /// Auto-detector for POS peripherals

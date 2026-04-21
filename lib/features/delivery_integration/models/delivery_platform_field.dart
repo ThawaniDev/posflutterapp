@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_field_type.dart';
 
 class DeliveryPlatformField {
-  final String id;
-  final String deliveryPlatformId;
-  final String fieldLabel;
-  final String fieldKey;
-  final DeliveryFieldType fieldType;
-  final bool? isRequired;
-  final int? sortOrder;
 
   const DeliveryPlatformField({
     required this.id,
@@ -30,6 +23,13 @@ class DeliveryPlatformField {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String deliveryPlatformId;
+  final String fieldLabel;
+  final String fieldKey;
+  final DeliveryFieldType fieldType;
+  final bool? isRequired;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

@@ -89,7 +89,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                                 const SizedBox(height: 8),
                                 LinearProgressIndicator(
                                   value: adoption / 100,
-                                  backgroundColor: AppColors.borderLight,
+                                  backgroundColor: AppColors.borderFor(context),
                                   color: adoption > 50 ? AppColors.success : AppColors.warning,
                                 ),
                                 const SizedBox(height: 4),

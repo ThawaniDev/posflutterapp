@@ -385,7 +385,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                   child: Icon(
                     _categoryIcon(category),
                     size: AppSizes.iconMd,
-                    color: isRead ? (isDark ? AppColors.textMutedDark : AppColors.textMutedLight) : _categoryColor(category),
+                    color: isRead ? (AppColors.mutedFor(context)) : _categoryColor(category),
                   ),
                 ),
               Expanded(
@@ -433,7 +433,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                           Text(
                             _formatTime(createdAt),
                             style: AppTypography.micro.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         const Spacer(),

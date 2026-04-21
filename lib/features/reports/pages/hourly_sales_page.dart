@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -191,11 +190,6 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
 }
 
 class _HourRow extends StatelessWidget {
-  final String hour;
-  final double revenue;
-  final int orders;
-  final double maxRevenue;
-  final bool isDark;
 
   const _HourRow({
     required this.hour,
@@ -204,6 +198,11 @@ class _HourRow extends StatelessWidget {
     required this.maxRevenue,
     required this.isDark,
   });
+  final String hour;
+  final double revenue;
+  final int orders;
+  final double maxRevenue;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +232,7 @@ class _HourRow extends StatelessWidget {
                 l10n.reportNOrders(orders.toString()),
                 style: Theme.of(
                   context,
-                ).textTheme.bodySmall?.copyWith(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ).textTheme.bodySmall?.copyWith(fontSize: 10, color: AppColors.mutedFor(context)),
               ),
             ],
           ),

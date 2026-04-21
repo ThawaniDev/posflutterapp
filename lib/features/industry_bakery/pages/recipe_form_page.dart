@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/bakery_recipe.dart';
-import '../providers/bakery_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_bakery/models/bakery_recipe.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RecipeFormPage extends ConsumerStatefulWidget {
-  final BakeryRecipe? recipe;
   const RecipeFormPage({super.key, this.recipe});
+  final BakeryRecipe? recipe;
 
   @override
   ConsumerState<RecipeFormPage> createState() => _RecipeFormPageState();
@@ -101,7 +101,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _nameCtrl, label: l10n.recipeName, hint: l10n.bakeryRecipeNameHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
@@ -110,14 +110,14 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
               onChanged: (v) => setState(() => _selectedProductId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _expectedYieldCtrl,
               label: l10n.expectedYield,
               hint: l10n.bakeryNumberOfUnits,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -139,14 +139,14 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _bakeTempCtrl,
               label: l10n.bakeTempC,
               hint: l10n.bakeryTemperature,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _instructionsCtrl,
               label: l10n.instructions,

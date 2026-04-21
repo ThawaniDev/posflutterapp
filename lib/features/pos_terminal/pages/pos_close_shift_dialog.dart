@@ -71,7 +71,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
     try {
       await ref.read(activeSessionProvider.notifier).closeSession(closingCash: closingCash);
       if (mounted) {
-        showPosSuccessSnackbar(context, 'Shift closed successfully');
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posShiftClosedSuccess);
         Navigator.pop(context);
       }
     } catch (e) {
@@ -84,7 +84,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -130,7 +130,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.surfaceDark : AppColors.inputBgLight,
                     borderRadius: AppRadius.borderMd,
-                    border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                    border: Border.all(color: AppColors.borderFor(context)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +152,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                       _summaryRow(AppLocalizations.of(context)!.posCashSales, _session.totalCashSales ?? 0, mutedColor),
                       _summaryRow(AppLocalizations.of(context)!.posCardSales, _session.totalCardSales ?? 0, mutedColor),
                       _summaryRow(AppLocalizations.of(context)!.posOtherSales, _session.totalOtherSales ?? 0, mutedColor),
-                      Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                      Divider(height: 16, color: AppColors.borderFor(context)),
                       _summaryRow(
                         AppLocalizations.of(context)!.posRefunds,
                         -(_session.totalRefunds ?? 0),
@@ -165,7 +165,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                         mutedColor,
                         color: AppColors.error,
                       ),
-                      Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                      Divider(height: 16, color: AppColors.borderFor(context)),
                       _summaryRow(
                         AppLocalizations.of(context)!.posExpectedCash,
                         _session.openingCash + (_session.totalCashSales ?? 0) - (_session.totalRefunds ?? 0),

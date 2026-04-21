@@ -50,7 +50,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      StockLevelsState state = const StockLevelsLoading();
+      const StockLevelsState state = StockLevelsLoading();
       final result = switch (state) {
         StockLevelsInitial() => 'initial',
         StockLevelsLoading() => 'loading',

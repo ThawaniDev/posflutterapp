@@ -15,17 +15,17 @@ class AdminStoreListLoading extends AdminStoreListState {
 }
 
 class AdminStoreListLoaded extends AdminStoreListState {
+
+  const AdminStoreListLoaded({required this.stores, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> stores;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const AdminStoreListLoaded({required this.stores, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class AdminStoreListError extends AdminStoreListState {
-  final String message;
   const AdminStoreListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -45,14 +45,14 @@ class AdminStoreDetailLoading extends AdminStoreDetailState {
 }
 
 class AdminStoreDetailLoaded extends AdminStoreDetailState {
-  final Map<String, dynamic> store;
 
   const AdminStoreDetailLoaded(this.store);
+  final Map<String, dynamic> store;
 }
 
 class AdminStoreDetailError extends AdminStoreDetailState {
-  final String message;
   const AdminStoreDetailError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -72,14 +72,14 @@ class AdminActionLoading extends AdminActionState {
 }
 
 class AdminActionSuccess extends AdminActionState {
+  const AdminActionSuccess(this.message, {this.data});
   final String message;
   final Map<String, dynamic>? data;
-  const AdminActionSuccess(this.message, {this.data});
 }
 
 class AdminActionError extends AdminActionState {
-  final String message;
   const AdminActionError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -99,10 +99,6 @@ class RegistrationListLoading extends RegistrationListState {
 }
 
 class RegistrationListLoaded extends RegistrationListState {
-  final List<Map<String, dynamic>> registrations;
-  final int total;
-  final int currentPage;
-  final int lastPage;
 
   const RegistrationListLoaded({
     required this.registrations,
@@ -110,11 +106,15 @@ class RegistrationListLoaded extends RegistrationListState {
     required this.currentPage,
     required this.lastPage,
   });
+  final List<Map<String, dynamic>> registrations;
+  final int total;
+  final int currentPage;
+  final int lastPage;
 }
 
 class RegistrationListError extends RegistrationListState {
-  final String message;
   const RegistrationListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -134,14 +134,14 @@ class LimitOverrideListLoading extends LimitOverrideListState {
 }
 
 class LimitOverrideListLoaded extends LimitOverrideListState {
-  final List<Map<String, dynamic>> overrides;
 
   const LimitOverrideListLoaded(this.overrides);
+  final List<Map<String, dynamic>> overrides;
 }
 
 class LimitOverrideListError extends LimitOverrideListState {
-  final String message;
   const LimitOverrideListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -161,14 +161,14 @@ class ProviderNotesLoading extends ProviderNotesState {
 }
 
 class ProviderNotesLoaded extends ProviderNotesState {
-  final List<Map<String, dynamic>> notes;
 
   const ProviderNotesLoaded(this.notes);
+  final List<Map<String, dynamic>> notes;
 }
 
 class ProviderNotesError extends ProviderNotesState {
-  final String message;
   const ProviderNotesError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -188,14 +188,14 @@ class AdminRoleListLoading extends AdminRoleListState {
 }
 
 class AdminRoleListLoaded extends AdminRoleListState {
-  final List<Map<String, dynamic>> roles;
 
   const AdminRoleListLoaded(this.roles);
+  final List<Map<String, dynamic>> roles;
 }
 
 class AdminRoleListError extends AdminRoleListState {
-  final String message;
   const AdminRoleListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -215,14 +215,14 @@ class AdminRoleDetailLoading extends AdminRoleDetailState {
 }
 
 class AdminRoleDetailLoaded extends AdminRoleDetailState {
-  final Map<String, dynamic> role;
 
   const AdminRoleDetailLoaded(this.role);
+  final Map<String, dynamic> role;
 }
 
 class AdminRoleDetailError extends AdminRoleDetailState {
-  final String message;
   const AdminRoleDetailError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -242,14 +242,14 @@ class PermissionListLoading extends PermissionListState {
 }
 
 class PermissionListLoaded extends PermissionListState {
-  final Map<String, List<Map<String, dynamic>>> groupedPermissions;
 
   const PermissionListLoaded(this.groupedPermissions);
+  final Map<String, List<Map<String, dynamic>>> groupedPermissions;
 }
 
 class PermissionListError extends PermissionListState {
-  final String message;
   const PermissionListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -269,17 +269,17 @@ class AdminTeamListLoading extends AdminTeamListState {
 }
 
 class AdminTeamListLoaded extends AdminTeamListState {
+
+  const AdminTeamListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> users;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const AdminTeamListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class AdminTeamListError extends AdminTeamListState {
-  final String message;
   const AdminTeamListError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -299,14 +299,14 @@ class AdminTeamUserDetailLoading extends AdminTeamUserDetailState {
 }
 
 class AdminTeamUserDetailLoaded extends AdminTeamUserDetailState {
-  final Map<String, dynamic> user;
 
   const AdminTeamUserDetailLoaded(this.user);
+  final Map<String, dynamic> user;
 }
 
 class AdminTeamUserDetailError extends AdminTeamUserDetailState {
-  final String message;
   const AdminTeamUserDetailError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -326,14 +326,14 @@ class AdminProfileLoading extends AdminProfileState {
 }
 
 class AdminProfileLoaded extends AdminProfileState {
-  final Map<String, dynamic> profile;
 
   const AdminProfileLoaded(this.profile);
+  final Map<String, dynamic> profile;
 }
 
 class AdminProfileError extends AdminProfileState {
-  final String message;
   const AdminProfileError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -353,17 +353,17 @@ class ActivityLogLoading extends ActivityLogState {
 }
 
 class ActivityLogLoaded extends ActivityLogState {
+
+  const ActivityLogLoaded({required this.logs, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> logs;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const ActivityLogLoaded({required this.logs, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class ActivityLogError extends ActivityLogState {
-  final String message;
   const ActivityLogError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -383,13 +383,13 @@ class PlanListLoading extends PlanListState {
 }
 
 class PlanListLoaded extends PlanListState {
-  final List<Map<String, dynamic>> plans;
   const PlanListLoaded(this.plans);
+  final List<Map<String, dynamic>> plans;
 }
 
 class PlanListError extends PlanListState {
-  final String message;
   const PlanListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -409,13 +409,13 @@ class PlanDetailLoading extends PlanDetailState {
 }
 
 class PlanDetailLoaded extends PlanDetailState {
-  final Map<String, dynamic> plan;
   const PlanDetailLoaded(this.plan);
+  final Map<String, dynamic> plan;
 }
 
 class PlanDetailError extends PlanDetailState {
-  final String message;
   const PlanDetailError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -435,13 +435,13 @@ class AddOnListLoading extends AddOnListState {
 }
 
 class AddOnListLoaded extends AddOnListState {
-  final List<Map<String, dynamic>> addOns;
   const AddOnListLoaded(this.addOns);
+  final List<Map<String, dynamic>> addOns;
 }
 
 class AddOnListError extends AddOnListState {
-  final String message;
   const AddOnListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -461,17 +461,17 @@ class DiscountListLoading extends DiscountListState {
 }
 
 class DiscountListLoaded extends DiscountListState {
+
+  const DiscountListLoaded({required this.discounts, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> discounts;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const DiscountListLoaded({required this.discounts, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class DiscountListError extends DiscountListState {
-  final String message;
   const DiscountListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -491,10 +491,6 @@ class SubscriptionListLoading extends SubscriptionListState {
 }
 
 class SubscriptionListLoaded extends SubscriptionListState {
-  final List<Map<String, dynamic>> subscriptions;
-  final int total;
-  final int currentPage;
-  final int lastPage;
 
   const SubscriptionListLoaded({
     required this.subscriptions,
@@ -502,11 +498,15 @@ class SubscriptionListLoaded extends SubscriptionListState {
     required this.currentPage,
     required this.lastPage,
   });
+  final List<Map<String, dynamic>> subscriptions;
+  final int total;
+  final int currentPage;
+  final int lastPage;
 }
 
 class SubscriptionListError extends SubscriptionListState {
-  final String message;
   const SubscriptionListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -526,17 +526,17 @@ class InvoiceListLoading extends InvoiceListState {
 }
 
 class InvoiceListLoaded extends InvoiceListState {
+
+  const InvoiceListLoaded({required this.invoices, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> invoices;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const InvoiceListLoaded({required this.invoices, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class InvoiceListError extends InvoiceListState {
-  final String message;
   const InvoiceListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -562,17 +562,17 @@ class ProviderUserListLoading extends ProviderUserListState {
 }
 
 class ProviderUserListLoaded extends ProviderUserListState {
+
+  const ProviderUserListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> users;
   final int total;
   final int currentPage;
   final int lastPage;
-
-  const ProviderUserListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class ProviderUserListError extends ProviderUserListState {
-  final String message;
   const ProviderUserListError(this.message);
+  final String message;
 }
 
 // ─── Provider User Detail ───────────────────────────────────
@@ -590,13 +590,13 @@ class ProviderUserDetailLoading extends ProviderUserDetailState {
 }
 
 class ProviderUserDetailLoaded extends ProviderUserDetailState {
-  final Map<String, dynamic> user;
   const ProviderUserDetailLoaded(this.user);
+  final Map<String, dynamic> user;
 }
 
 class ProviderUserDetailError extends ProviderUserDetailState {
-  final String message;
   const ProviderUserDetailError(this.message);
+  final String message;
 }
 
 // ─── Admin User List ────────────────────────────────────────
@@ -614,13 +614,13 @@ class AdminUserListLoading extends AdminUserListState {
 }
 
 class AdminUserListLoaded extends AdminUserListState {
-  final List<Map<String, dynamic>> admins;
   const AdminUserListLoaded(this.admins);
+  final List<Map<String, dynamic>> admins;
 }
 
 class AdminUserListError extends AdminUserListState {
-  final String message;
   const AdminUserListError(this.message);
+  final String message;
 }
 
 // ─── Admin User Detail ──────────────────────────────────────
@@ -638,13 +638,13 @@ class AdminUserDetailLoading extends AdminUserDetailState {
 }
 
 class AdminUserDetailLoaded extends AdminUserDetailState {
-  final Map<String, dynamic> admin;
   const AdminUserDetailLoaded(this.admin);
+  final Map<String, dynamic> admin;
 }
 
 class AdminUserDetailError extends AdminUserDetailState {
-  final String message;
   const AdminUserDetailError(this.message);
+  final String message;
 }
 
 // ─── User Activity Log ──────────────────────────────────────
@@ -662,13 +662,13 @@ class UserActivityLoading extends UserActivityState {
 }
 
 class UserActivityLoaded extends UserActivityState {
-  final List<Map<String, dynamic>> logs;
   const UserActivityLoaded(this.logs);
+  final List<Map<String, dynamic>> logs;
 }
 
 class UserActivityError extends UserActivityState {
-  final String message;
   const UserActivityError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -689,14 +689,14 @@ class BillingInvoiceListLoading extends BillingInvoiceListState {
 }
 
 class BillingInvoiceListLoaded extends BillingInvoiceListState {
+  const BillingInvoiceListLoaded(this.invoices, this.pagination);
   final List<Map<String, dynamic>> invoices;
   final Map<String, dynamic> pagination;
-  const BillingInvoiceListLoaded(this.invoices, this.pagination);
 }
 
 class BillingInvoiceListError extends BillingInvoiceListState {
-  final String message;
   const BillingInvoiceListError(this.message);
+  final String message;
 }
 
 // ─── Billing Invoice Detail ────────────────────────────────────
@@ -713,13 +713,13 @@ class BillingInvoiceDetailLoading extends BillingInvoiceDetailState {
 }
 
 class BillingInvoiceDetailLoaded extends BillingInvoiceDetailState {
-  final Map<String, dynamic> invoice;
   const BillingInvoiceDetailLoaded(this.invoice);
+  final Map<String, dynamic> invoice;
 }
 
 class BillingInvoiceDetailError extends BillingInvoiceDetailState {
-  final String message;
   const BillingInvoiceDetailError(this.message);
+  final String message;
 }
 
 // ─── Revenue Dashboard ─────────────────────────────────────────
@@ -736,15 +736,6 @@ class RevenueDashboardLoading extends RevenueDashboardState {
 }
 
 class RevenueDashboardLoaded extends RevenueDashboardState {
-  final double mrr;
-  final double arr;
-  final List<Map<String, dynamic>> revenueByStatus;
-  final int upcomingRenewals;
-  final double hardwareRevenue;
-  final double implementationRevenue;
-  final int totalInvoices;
-  final int paidInvoices;
-  final int failedInvoices;
   const RevenueDashboardLoaded({
     required this.mrr,
     required this.arr,
@@ -756,11 +747,20 @@ class RevenueDashboardLoaded extends RevenueDashboardState {
     required this.paidInvoices,
     required this.failedInvoices,
   });
+  final double mrr;
+  final double arr;
+  final List<Map<String, dynamic>> revenueByStatus;
+  final int upcomingRenewals;
+  final double hardwareRevenue;
+  final double implementationRevenue;
+  final int totalInvoices;
+  final int paidInvoices;
+  final int failedInvoices;
 }
 
 class RevenueDashboardError extends RevenueDashboardState {
-  final String message;
   const RevenueDashboardError(this.message);
+  final String message;
 }
 
 // ─── Payment Gateway List ──────────────────────────────────────
@@ -777,13 +777,13 @@ class GatewayListLoading extends GatewayListState {
 }
 
 class GatewayListLoaded extends GatewayListState {
-  final List<Map<String, dynamic>> gateways;
   const GatewayListLoaded(this.gateways);
+  final List<Map<String, dynamic>> gateways;
 }
 
 class GatewayListError extends GatewayListState {
-  final String message;
   const GatewayListError(this.message);
+  final String message;
 }
 
 // ─── Hardware Sales List ───────────────────────────────────────
@@ -800,14 +800,14 @@ class HardwareSaleListLoading extends HardwareSaleListState {
 }
 
 class HardwareSaleListLoaded extends HardwareSaleListState {
+  const HardwareSaleListLoaded(this.sales, this.pagination);
   final List<Map<String, dynamic>> sales;
   final Map<String, dynamic> pagination;
-  const HardwareSaleListLoaded(this.sales, this.pagination);
 }
 
 class HardwareSaleListError extends HardwareSaleListState {
-  final String message;
   const HardwareSaleListError(this.message);
+  final String message;
 }
 
 // ─── Implementation Fee List ───────────────────────────────────
@@ -824,14 +824,14 @@ class ImplementationFeeListLoading extends ImplementationFeeListState {
 }
 
 class ImplementationFeeListLoaded extends ImplementationFeeListState {
+  const ImplementationFeeListLoaded(this.fees, this.pagination);
   final List<Map<String, dynamic>> fees;
   final Map<String, dynamic> pagination;
-  const ImplementationFeeListLoaded(this.fees, this.pagination);
 }
 
 class ImplementationFeeListError extends ImplementationFeeListState {
-  final String message;
   const ImplementationFeeListError(this.message);
+  final String message;
 }
 
 // ─── Retry Rules ───────────────────────────────────────────────
@@ -848,15 +848,15 @@ class RetryRulesLoading extends RetryRulesState {
 }
 
 class RetryRulesLoaded extends RetryRulesState {
+  const RetryRulesLoaded({required this.maxRetries, required this.retryIntervalHours, required this.gracePeriodDays});
   final int maxRetries;
   final int retryIntervalHours;
   final int gracePeriodDays;
-  const RetryRulesLoaded({required this.maxRetries, required this.retryIntervalHours, required this.gracePeriodDays});
 }
 
 class RetryRulesError extends RetryRulesState {
-  final String message;
   const RetryRulesError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -876,14 +876,14 @@ class AnalyticsDashboardLoading extends AnalyticsDashboardState {
 }
 
 class AnalyticsDashboardLoaded extends AnalyticsDashboardState {
+  const AnalyticsDashboardLoaded({required this.kpi, required this.recentActivity});
   final Map<String, dynamic> kpi;
   final List<Map<String, dynamic>> recentActivity;
-  const AnalyticsDashboardLoaded({required this.kpi, required this.recentActivity});
 }
 
 class AnalyticsDashboardError extends AnalyticsDashboardState {
-  final String message;
   const AnalyticsDashboardError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -903,12 +903,6 @@ class AnalyticsRevenueLoading extends AnalyticsRevenueState {
 }
 
 class AnalyticsRevenueLoaded extends AnalyticsRevenueState {
-  final double mrr;
-  final double arr;
-  final List<Map<String, dynamic>> revenueTrend;
-  final List<Map<String, dynamic>> revenueByPlan;
-  final int failedPaymentsCount;
-  final int upcomingRenewals;
   const AnalyticsRevenueLoaded({
     required this.mrr,
     required this.arr,
@@ -917,11 +911,17 @@ class AnalyticsRevenueLoaded extends AnalyticsRevenueState {
     required this.failedPaymentsCount,
     required this.upcomingRenewals,
   });
+  final double mrr;
+  final double arr;
+  final List<Map<String, dynamic>> revenueTrend;
+  final List<Map<String, dynamic>> revenueByPlan;
+  final int failedPaymentsCount;
+  final int upcomingRenewals;
 }
 
 class AnalyticsRevenueError extends AnalyticsRevenueState {
-  final String message;
   const AnalyticsRevenueError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -941,11 +941,6 @@ class AnalyticsSubscriptionsLoading extends AnalyticsSubscriptionsState {
 }
 
 class AnalyticsSubscriptionsLoaded extends AnalyticsSubscriptionsState {
-  final Map<String, dynamic> statusCounts;
-  final List<Map<String, dynamic>> lifecycleTrend;
-  final double averageSubscriptionAgeDays;
-  final int totalChurnInPeriod;
-  final double trialToPaidConversionRate;
   const AnalyticsSubscriptionsLoaded({
     required this.statusCounts,
     required this.lifecycleTrend,
@@ -953,11 +948,16 @@ class AnalyticsSubscriptionsLoaded extends AnalyticsSubscriptionsState {
     required this.totalChurnInPeriod,
     required this.trialToPaidConversionRate,
   });
+  final Map<String, dynamic> statusCounts;
+  final List<Map<String, dynamic>> lifecycleTrend;
+  final double averageSubscriptionAgeDays;
+  final int totalChurnInPeriod;
+  final double trialToPaidConversionRate;
 }
 
 class AnalyticsSubscriptionsError extends AnalyticsSubscriptionsState {
-  final String message;
   const AnalyticsSubscriptionsError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -977,21 +977,21 @@ class AnalyticsStoresLoading extends AnalyticsStoresState {
 }
 
 class AnalyticsStoresLoaded extends AnalyticsStoresState {
-  final int totalStores;
-  final int activeStores;
-  final List<Map<String, dynamic>> topStores;
-  final Map<String, dynamic> healthSummary;
   const AnalyticsStoresLoaded({
     required this.totalStores,
     required this.activeStores,
     required this.topStores,
     required this.healthSummary,
   });
+  final int totalStores;
+  final int activeStores;
+  final List<Map<String, dynamic>> topStores;
+  final Map<String, dynamic> healthSummary;
 }
 
 class AnalyticsStoresError extends AnalyticsStoresState {
-  final String message;
   const AnalyticsStoresError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -1011,14 +1011,14 @@ class AnalyticsFeaturesLoading extends AnalyticsFeaturesState {
 }
 
 class AnalyticsFeaturesLoaded extends AnalyticsFeaturesState {
+  const AnalyticsFeaturesLoaded({required this.features, required this.trend});
   final List<Map<String, dynamic>> features;
   final List<Map<String, dynamic>> trend;
-  const AnalyticsFeaturesLoaded({required this.features, required this.trend});
 }
 
 class AnalyticsFeaturesError extends AnalyticsFeaturesState {
-  final String message;
   const AnalyticsFeaturesError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -1038,21 +1038,21 @@ class AnalyticsSystemHealthLoading extends AnalyticsSystemHealthState {
 }
 
 class AnalyticsSystemHealthLoaded extends AnalyticsSystemHealthState {
-  final int storesMonitored;
-  final int storesWithErrors;
-  final int totalErrorsToday;
-  final Map<String, dynamic> syncStatusBreakdown;
   const AnalyticsSystemHealthLoaded({
     required this.storesMonitored,
     required this.storesWithErrors,
     required this.totalErrorsToday,
     required this.syncStatusBreakdown,
   });
+  final int storesMonitored;
+  final int storesWithErrors;
+  final int totalErrorsToday;
+  final Map<String, dynamic> syncStatusBreakdown;
 }
 
 class AnalyticsSystemHealthError extends AnalyticsSystemHealthState {
-  final String message;
   const AnalyticsSystemHealthError(this.message);
+  final String message;
 }
 
 // ════════════════════════════════════════════════════════
@@ -1072,16 +1072,16 @@ class AnalyticsExportLoading extends AnalyticsExportState {
 }
 
 class AnalyticsExportSuccess extends AnalyticsExportState {
+  const AnalyticsExportSuccess({required this.exportType, required this.format, required this.recordCount, this.downloadUrl});
   final String exportType;
   final String format;
   final int recordCount;
   final String? downloadUrl;
-  const AnalyticsExportSuccess({required this.exportType, required this.format, required this.recordCount, this.downloadUrl});
 }
 
 class AnalyticsExportError extends AnalyticsExportState {
-  final String message;
   const AnalyticsExportError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -1102,14 +1102,14 @@ class FeatureFlagListLoading extends FeatureFlagListState {
 }
 
 class FeatureFlagListLoaded extends FeatureFlagListState {
+  const FeatureFlagListLoaded({required this.flags, required this.total});
   final List<Map<String, dynamic>> flags;
   final int total;
-  const FeatureFlagListLoaded({required this.flags, required this.total});
 }
 
 class FeatureFlagListError extends FeatureFlagListState {
-  final String message;
   const FeatureFlagListError(this.message);
+  final String message;
 }
 
 // ─── Feature Flag Detail ─────────────────────────────────────────
@@ -1126,14 +1126,14 @@ class FeatureFlagDetailLoading extends FeatureFlagDetailState {
 }
 
 class FeatureFlagDetailLoaded extends FeatureFlagDetailState {
+  const FeatureFlagDetailLoaded({required this.flag, required this.abTests});
   final Map<String, dynamic> flag;
   final List<Map<String, dynamic>> abTests;
-  const FeatureFlagDetailLoaded({required this.flag, required this.abTests});
 }
 
 class FeatureFlagDetailError extends FeatureFlagDetailState {
-  final String message;
   const FeatureFlagDetailError(this.message);
+  final String message;
 }
 
 // ─── Feature Flag Action ─────────────────────────────────────────
@@ -1150,13 +1150,13 @@ class FeatureFlagActionLoading extends FeatureFlagActionState {
 }
 
 class FeatureFlagActionSuccess extends FeatureFlagActionState {
-  final String message;
   const FeatureFlagActionSuccess(this.message);
+  final String message;
 }
 
 class FeatureFlagActionError extends FeatureFlagActionState {
-  final String message;
   const FeatureFlagActionError(this.message);
+  final String message;
 }
 
 // ─── A/B Test List ───────────────────────────────────────────────
@@ -1173,16 +1173,16 @@ class ABTestListLoading extends ABTestListState {
 }
 
 class ABTestListLoaded extends ABTestListState {
+  const ABTestListLoaded({required this.tests, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> tests;
   final int total;
   final int currentPage;
   final int lastPage;
-  const ABTestListLoaded({required this.tests, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class ABTestListError extends ABTestListState {
-  final String message;
   const ABTestListError(this.message);
+  final String message;
 }
 
 // ─── A/B Test Detail ─────────────────────────────────────────────
@@ -1199,14 +1199,14 @@ class ABTestDetailLoading extends ABTestDetailState {
 }
 
 class ABTestDetailLoaded extends ABTestDetailState {
+  const ABTestDetailLoaded({required this.test, required this.variants});
   final Map<String, dynamic> test;
   final List<Map<String, dynamic>> variants;
-  const ABTestDetailLoaded({required this.test, required this.variants});
 }
 
 class ABTestDetailError extends ABTestDetailState {
-  final String message;
   const ABTestDetailError(this.message);
+  final String message;
 }
 
 // ─── A/B Test Results ────────────────────────────────────────────
@@ -1223,16 +1223,16 @@ class ABTestResultsLoading extends ABTestResultsState {
 }
 
 class ABTestResultsLoaded extends ABTestResultsState {
+  const ABTestResultsLoaded({required this.test, required this.results, this.winner, required this.confidence});
   final Map<String, dynamic> test;
   final List<Map<String, dynamic>> results;
   final String? winner;
   final double confidence;
-  const ABTestResultsLoaded({required this.test, required this.results, this.winner, required this.confidence});
 }
 
 class ABTestResultsError extends ABTestResultsState {
-  final String message;
   const ABTestResultsError(this.message);
+  final String message;
 }
 
 // ─── A/B Test Action ─────────────────────────────────────────────
@@ -1249,13 +1249,13 @@ class ABTestActionLoading extends ABTestActionState {
 }
 
 class ABTestActionSuccess extends ABTestActionState {
-  final String message;
   const ABTestActionSuccess(this.message);
+  final String message;
 }
 
 class ABTestActionError extends ABTestActionState {
-  final String message;
   const ABTestActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1276,14 +1276,14 @@ class CmsPageListLoading extends CmsPageListState {
 }
 
 class CmsPageListLoaded extends CmsPageListState {
+  const CmsPageListLoaded({required this.pages, required this.total});
   final List<Map<String, dynamic>> pages;
   final int total;
-  const CmsPageListLoaded({required this.pages, required this.total});
 }
 
 class CmsPageListError extends CmsPageListState {
-  final String message;
   const CmsPageListError(this.message);
+  final String message;
 }
 
 // ─── CMS Page Detail ─────────────────────────────────────────
@@ -1300,13 +1300,13 @@ class CmsPageDetailLoading extends CmsPageDetailState {
 }
 
 class CmsPageDetailLoaded extends CmsPageDetailState {
-  final Map<String, dynamic> page;
   const CmsPageDetailLoaded({required this.page});
+  final Map<String, dynamic> page;
 }
 
 class CmsPageDetailError extends CmsPageDetailState {
-  final String message;
   const CmsPageDetailError(this.message);
+  final String message;
 }
 
 // ─── CMS Page Action ─────────────────────────────────────────
@@ -1323,13 +1323,13 @@ class CmsPageActionLoading extends CmsPageActionState {
 }
 
 class CmsPageActionSuccess extends CmsPageActionState {
-  final String message;
   const CmsPageActionSuccess(this.message);
+  final String message;
 }
 
 class CmsPageActionError extends CmsPageActionState {
-  final String message;
   const CmsPageActionError(this.message);
+  final String message;
 }
 
 // ─── Article List ────────────────────────────────────────────
@@ -1346,16 +1346,16 @@ class ArticleListLoading extends ArticleListState {
 }
 
 class ArticleListLoaded extends ArticleListState {
+  const ArticleListLoaded({required this.articles, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> articles;
   final int total;
   final int currentPage;
   final int lastPage;
-  const ArticleListLoaded({required this.articles, required this.total, required this.currentPage, required this.lastPage});
 }
 
 class ArticleListError extends ArticleListState {
-  final String message;
   const ArticleListError(this.message);
+  final String message;
 }
 
 // ─── Article Detail ──────────────────────────────────────────
@@ -1372,13 +1372,13 @@ class ArticleDetailLoading extends ArticleDetailState {
 }
 
 class ArticleDetailLoaded extends ArticleDetailState {
-  final Map<String, dynamic> article;
   const ArticleDetailLoaded({required this.article});
+  final Map<String, dynamic> article;
 }
 
 class ArticleDetailError extends ArticleDetailState {
-  final String message;
   const ArticleDetailError(this.message);
+  final String message;
 }
 
 // ─── Article Action ──────────────────────────────────────────
@@ -1395,13 +1395,13 @@ class ArticleActionLoading extends ArticleActionState {
 }
 
 class ArticleActionSuccess extends ArticleActionState {
-  final String message;
   const ArticleActionSuccess(this.message);
+  final String message;
 }
 
 class ArticleActionError extends ArticleActionState {
-  final String message;
   const ArticleActionError(this.message);
+  final String message;
 }
 
 // ─── Announcement List ───────────────────────────────────────
@@ -1418,21 +1418,21 @@ class AnnouncementListLoading extends AnnouncementListState {
 }
 
 class AnnouncementListLoaded extends AnnouncementListState {
-  final List<Map<String, dynamic>> announcements;
-  final int total;
-  final int currentPage;
-  final int lastPage;
   const AnnouncementListLoaded({
     required this.announcements,
     required this.total,
     required this.currentPage,
     required this.lastPage,
   });
+  final List<Map<String, dynamic>> announcements;
+  final int total;
+  final int currentPage;
+  final int lastPage;
 }
 
 class AnnouncementListError extends AnnouncementListState {
-  final String message;
   const AnnouncementListError(this.message);
+  final String message;
 }
 
 // ─── Announcement Detail ─────────────────────────────────────
@@ -1449,13 +1449,13 @@ class AnnouncementDetailLoading extends AnnouncementDetailState {
 }
 
 class AnnouncementDetailLoaded extends AnnouncementDetailState {
-  final Map<String, dynamic> announcement;
   const AnnouncementDetailLoaded({required this.announcement});
+  final Map<String, dynamic> announcement;
 }
 
 class AnnouncementDetailError extends AnnouncementDetailState {
-  final String message;
   const AnnouncementDetailError(this.message);
+  final String message;
 }
 
 // ─── Announcement Action ─────────────────────────────────────
@@ -1472,13 +1472,13 @@ class AnnouncementActionLoading extends AnnouncementActionState {
 }
 
 class AnnouncementActionSuccess extends AnnouncementActionState {
-  final String message;
   const AnnouncementActionSuccess(this.message);
+  final String message;
 }
 
 class AnnouncementActionError extends AnnouncementActionState {
-  final String message;
   const AnnouncementActionError(this.message);
+  final String message;
 }
 
 // ─── Notification Template List ──────────────────────────────
@@ -1495,14 +1495,14 @@ class NotificationTemplateListLoading extends NotificationTemplateListState {
 }
 
 class NotificationTemplateListLoaded extends NotificationTemplateListState {
+  const NotificationTemplateListLoaded({required this.templates, required this.total});
   final List<Map<String, dynamic>> templates;
   final int total;
-  const NotificationTemplateListLoaded({required this.templates, required this.total});
 }
 
 class NotificationTemplateListError extends NotificationTemplateListState {
-  final String message;
   const NotificationTemplateListError(this.message);
+  final String message;
 }
 
 // ─── Notification Template Detail ────────────────────────────
@@ -1519,13 +1519,13 @@ class NotificationTemplateDetailLoading extends NotificationTemplateDetailState 
 }
 
 class NotificationTemplateDetailLoaded extends NotificationTemplateDetailState {
-  final Map<String, dynamic> template;
   const NotificationTemplateDetailLoaded({required this.template});
+  final Map<String, dynamic> template;
 }
 
 class NotificationTemplateDetailError extends NotificationTemplateDetailState {
-  final String message;
   const NotificationTemplateDetailError(this.message);
+  final String message;
 }
 
 // ─── Notification Template Action ────────────────────────────
@@ -1542,13 +1542,13 @@ class NotificationTemplateActionLoading extends NotificationTemplateActionState 
 }
 
 class NotificationTemplateActionSuccess extends NotificationTemplateActionState {
-  final String message;
   const NotificationTemplateActionSuccess(this.message);
+  final String message;
 }
 
 class NotificationTemplateActionError extends NotificationTemplateActionState {
-  final String message;
   const NotificationTemplateActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1569,13 +1569,13 @@ class ActivityLogListLoading extends ActivityLogListState {
 }
 
 class ActivityLogListLoaded extends ActivityLogListState {
-  final Map<String, dynamic> data;
   const ActivityLogListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class ActivityLogListError extends ActivityLogListState {
-  final String message;
   const ActivityLogListError(this.message);
+  final String message;
 }
 
 // ─── Activity Log Detail ─────────────────────────────────────
@@ -1592,13 +1592,13 @@ class ActivityLogDetailLoading extends ActivityLogDetailState {
 }
 
 class ActivityLogDetailLoaded extends ActivityLogDetailState {
-  final Map<String, dynamic> data;
   const ActivityLogDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class ActivityLogDetailError extends ActivityLogDetailState {
-  final String message;
   const ActivityLogDetailError(this.message);
+  final String message;
 }
 
 // ─── Security Alert List ─────────────────────────────────────
@@ -1615,13 +1615,13 @@ class SecurityAlertListLoading extends SecurityAlertListState {
 }
 
 class SecurityAlertListLoaded extends SecurityAlertListState {
-  final Map<String, dynamic> data;
   const SecurityAlertListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityAlertListError extends SecurityAlertListState {
-  final String message;
   const SecurityAlertListError(this.message);
+  final String message;
 }
 
 // ─── Security Alert Detail ───────────────────────────────────
@@ -1638,13 +1638,13 @@ class SecurityAlertDetailLoading extends SecurityAlertDetailState {
 }
 
 class SecurityAlertDetailLoaded extends SecurityAlertDetailState {
-  final Map<String, dynamic> data;
   const SecurityAlertDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityAlertDetailError extends SecurityAlertDetailState {
-  final String message;
   const SecurityAlertDetailError(this.message);
+  final String message;
 }
 
 // ─── Security Alert Action ───────────────────────────────────
@@ -1661,13 +1661,13 @@ class SecurityAlertActionLoading extends SecurityAlertActionState {
 }
 
 class SecurityAlertActionSuccess extends SecurityAlertActionState {
-  final String message;
   const SecurityAlertActionSuccess(this.message);
+  final String message;
 }
 
 class SecurityAlertActionError extends SecurityAlertActionState {
-  final String message;
   const SecurityAlertActionError(this.message);
+  final String message;
 }
 
 // ─── Notification Log List ───────────────────────────────────
@@ -1684,13 +1684,13 @@ class NotificationLogListLoading extends NotificationLogListState {
 }
 
 class NotificationLogListLoaded extends NotificationLogListState {
-  final Map<String, dynamic> data;
   const NotificationLogListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class NotificationLogListError extends NotificationLogListState {
-  final String message;
   const NotificationLogListError(this.message);
+  final String message;
 }
 
 // ─── Platform Event List ─────────────────────────────────────
@@ -1707,13 +1707,13 @@ class PlatformEventListLoading extends PlatformEventListState {
 }
 
 class PlatformEventListLoaded extends PlatformEventListState {
-  final Map<String, dynamic> data;
   const PlatformEventListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class PlatformEventListError extends PlatformEventListState {
-  final String message;
   const PlatformEventListError(this.message);
+  final String message;
 }
 
 // ─── Platform Event Detail ───────────────────────────────────
@@ -1730,13 +1730,13 @@ class PlatformEventDetailLoading extends PlatformEventDetailState {
 }
 
 class PlatformEventDetailLoaded extends PlatformEventDetailState {
-  final Map<String, dynamic> data;
   const PlatformEventDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class PlatformEventDetailError extends PlatformEventDetailState {
-  final String message;
   const PlatformEventDetailError(this.message);
+  final String message;
 }
 
 // ─── Platform Event Action ───────────────────────────────────
@@ -1753,13 +1753,13 @@ class PlatformEventActionLoading extends PlatformEventActionState {
 }
 
 class PlatformEventActionSuccess extends PlatformEventActionState {
-  final String message;
   const PlatformEventActionSuccess(this.message);
+  final String message;
 }
 
 class PlatformEventActionError extends PlatformEventActionState {
-  final String message;
   const PlatformEventActionError(this.message);
+  final String message;
 }
 
 // ─── Health Dashboard ────────────────────────────────────────
@@ -1776,13 +1776,13 @@ class HealthDashboardLoading extends HealthDashboardState {
 }
 
 class HealthDashboardLoaded extends HealthDashboardState {
-  final Map<String, dynamic> data;
   const HealthDashboardLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class HealthDashboardError extends HealthDashboardState {
-  final String message;
   const HealthDashboardError(this.message);
+  final String message;
 }
 
 // ─── Health Check List ───────────────────────────────────────
@@ -1799,13 +1799,13 @@ class HealthCheckListLoading extends HealthCheckListState {
 }
 
 class HealthCheckListLoaded extends HealthCheckListState {
-  final Map<String, dynamic> data;
   const HealthCheckListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class HealthCheckListError extends HealthCheckListState {
-  final String message;
   const HealthCheckListError(this.message);
+  final String message;
 }
 
 // ─── Store Health List ───────────────────────────────────────
@@ -1822,13 +1822,13 @@ class StoreHealthListLoading extends StoreHealthListState {
 }
 
 class StoreHealthListLoaded extends StoreHealthListState {
-  final Map<String, dynamic> data;
   const StoreHealthListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class StoreHealthListError extends StoreHealthListState {
-  final String message;
   const StoreHealthListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1849,13 +1849,13 @@ class TicketListLoading extends TicketListState {
 }
 
 class TicketListLoaded extends TicketListState {
-  final Map<String, dynamic> data;
   const TicketListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class TicketListError extends TicketListState {
-  final String message;
   const TicketListError(this.message);
+  final String message;
 }
 
 // ─── Ticket Detail ───────────────────────────────────────────
@@ -1872,13 +1872,13 @@ class TicketDetailLoading extends TicketDetailState {
 }
 
 class TicketDetailLoaded extends TicketDetailState {
-  final Map<String, dynamic> data;
   const TicketDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class TicketDetailError extends TicketDetailState {
-  final String message;
   const TicketDetailError(this.message);
+  final String message;
 }
 
 // ─── Ticket Action ───────────────────────────────────────────
@@ -1895,13 +1895,13 @@ class TicketActionLoading extends TicketActionState {
 }
 
 class TicketActionSuccess extends TicketActionState {
-  final Map<String, dynamic> data;
   const TicketActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class TicketActionError extends TicketActionState {
-  final String message;
   const TicketActionError(this.message);
+  final String message;
 }
 
 // ─── Ticket Message List ─────────────────────────────────────
@@ -1918,13 +1918,13 @@ class TicketMessageListLoading extends TicketMessageListState {
 }
 
 class TicketMessageListLoaded extends TicketMessageListState {
-  final Map<String, dynamic> data;
   const TicketMessageListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class TicketMessageListError extends TicketMessageListState {
-  final String message;
   const TicketMessageListError(this.message);
+  final String message;
 }
 
 // ─── Ticket Message Action ───────────────────────────────────
@@ -1941,13 +1941,13 @@ class TicketMessageActionLoading extends TicketMessageActionState {
 }
 
 class TicketMessageActionSuccess extends TicketMessageActionState {
-  final Map<String, dynamic> data;
   const TicketMessageActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class TicketMessageActionError extends TicketMessageActionState {
-  final String message;
   const TicketMessageActionError(this.message);
+  final String message;
 }
 
 // ─── Canned Response List ────────────────────────────────────
@@ -1964,13 +1964,13 @@ class CannedResponseListLoading extends CannedResponseListState {
 }
 
 class CannedResponseListLoaded extends CannedResponseListState {
-  final Map<String, dynamic> data;
   const CannedResponseListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class CannedResponseListError extends CannedResponseListState {
-  final String message;
   const CannedResponseListError(this.message);
+  final String message;
 }
 
 // ─── Canned Response Detail ──────────────────────────────────
@@ -1987,13 +1987,13 @@ class CannedResponseDetailLoading extends CannedResponseDetailState {
 }
 
 class CannedResponseDetailLoaded extends CannedResponseDetailState {
-  final Map<String, dynamic> data;
   const CannedResponseDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class CannedResponseDetailError extends CannedResponseDetailState {
-  final String message;
   const CannedResponseDetailError(this.message);
+  final String message;
 }
 
 // ─── Canned Response Action ──────────────────────────────────
@@ -2010,13 +2010,13 @@ class CannedResponseActionLoading extends CannedResponseActionState {
 }
 
 class CannedResponseActionSuccess extends CannedResponseActionState {
-  final Map<String, dynamic> data;
   const CannedResponseActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class CannedResponseActionError extends CannedResponseActionState {
-  final String message;
   const CannedResponseActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -2037,13 +2037,13 @@ class MarketplaceStoreListLoading extends MarketplaceStoreListState {
 }
 
 class MarketplaceStoreListLoaded extends MarketplaceStoreListState {
-  final Map<String, dynamic> data;
   const MarketplaceStoreListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceStoreListError extends MarketplaceStoreListState {
-  final String message;
   const MarketplaceStoreListError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Store Detail ───────────────────────────────────
@@ -2060,13 +2060,13 @@ class MarketplaceStoreDetailLoading extends MarketplaceStoreDetailState {
 }
 
 class MarketplaceStoreDetailLoaded extends MarketplaceStoreDetailState {
-  final Map<String, dynamic> data;
   const MarketplaceStoreDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceStoreDetailError extends MarketplaceStoreDetailState {
-  final String message;
   const MarketplaceStoreDetailError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Store Action ───────────────────────────────────
@@ -2083,13 +2083,13 @@ class MarketplaceStoreActionLoading extends MarketplaceStoreActionState {
 }
 
 class MarketplaceStoreActionSuccess extends MarketplaceStoreActionState {
-  final Map<String, dynamic> data;
   const MarketplaceStoreActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceStoreActionError extends MarketplaceStoreActionState {
-  final String message;
   const MarketplaceStoreActionError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Product List ───────────────────────────────────
@@ -2106,13 +2106,13 @@ class MarketplaceProductListLoading extends MarketplaceProductListState {
 }
 
 class MarketplaceProductListLoaded extends MarketplaceProductListState {
-  final Map<String, dynamic> data;
   const MarketplaceProductListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceProductListError extends MarketplaceProductListState {
-  final String message;
   const MarketplaceProductListError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Product Action ─────────────────────────────────
@@ -2129,13 +2129,13 @@ class MarketplaceProductActionLoading extends MarketplaceProductActionState {
 }
 
 class MarketplaceProductActionSuccess extends MarketplaceProductActionState {
-  final Map<String, dynamic> data;
   const MarketplaceProductActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceProductActionError extends MarketplaceProductActionState {
-  final String message;
   const MarketplaceProductActionError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Order List ─────────────────────────────────────
@@ -2152,13 +2152,13 @@ class MarketplaceOrderListLoading extends MarketplaceOrderListState {
 }
 
 class MarketplaceOrderListLoaded extends MarketplaceOrderListState {
-  final Map<String, dynamic> data;
   const MarketplaceOrderListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceOrderListError extends MarketplaceOrderListState {
-  final String message;
   const MarketplaceOrderListError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Order Detail ───────────────────────────────────
@@ -2175,13 +2175,13 @@ class MarketplaceOrderDetailLoading extends MarketplaceOrderDetailState {
 }
 
 class MarketplaceOrderDetailLoaded extends MarketplaceOrderDetailState {
-  final Map<String, dynamic> data;
   const MarketplaceOrderDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceOrderDetailError extends MarketplaceOrderDetailState {
-  final String message;
   const MarketplaceOrderDetailError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Settlement List ────────────────────────────────
@@ -2198,13 +2198,13 @@ class MarketplaceSettlementListLoading extends MarketplaceSettlementListState {
 }
 
 class MarketplaceSettlementListLoaded extends MarketplaceSettlementListState {
-  final Map<String, dynamic> data;
   const MarketplaceSettlementListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceSettlementListError extends MarketplaceSettlementListState {
-  final String message;
   const MarketplaceSettlementListError(this.message);
+  final String message;
 }
 
 // ─── Marketplace Settlement Summary ─────────────────────────────
@@ -2221,13 +2221,13 @@ class MarketplaceSettlementSummaryLoading extends MarketplaceSettlementSummarySt
 }
 
 class MarketplaceSettlementSummaryLoaded extends MarketplaceSettlementSummaryState {
-  final Map<String, dynamic> data;
   const MarketplaceSettlementSummaryLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class MarketplaceSettlementSummaryError extends MarketplaceSettlementSummaryState {
-  final String message;
   const MarketplaceSettlementSummaryError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -2248,13 +2248,13 @@ class DeploymentOverviewLoading extends DeploymentOverviewState {
 }
 
 class DeploymentOverviewLoaded extends DeploymentOverviewState {
-  final Map<String, dynamic> data;
   const DeploymentOverviewLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentOverviewError extends DeploymentOverviewState {
-  final String message;
   const DeploymentOverviewError(this.message);
+  final String message;
 }
 
 // --- Deployment Release List ---
@@ -2271,13 +2271,13 @@ class DeploymentReleaseListLoading extends DeploymentReleaseListState {
 }
 
 class DeploymentReleaseListLoaded extends DeploymentReleaseListState {
-  final Map<String, dynamic> data;
   const DeploymentReleaseListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentReleaseListError extends DeploymentReleaseListState {
-  final String message;
   const DeploymentReleaseListError(this.message);
+  final String message;
 }
 
 // --- Deployment Release Detail ---
@@ -2294,13 +2294,13 @@ class DeploymentReleaseDetailLoading extends DeploymentReleaseDetailState {
 }
 
 class DeploymentReleaseDetailLoaded extends DeploymentReleaseDetailState {
-  final Map<String, dynamic> data;
   const DeploymentReleaseDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentReleaseDetailError extends DeploymentReleaseDetailState {
-  final String message;
   const DeploymentReleaseDetailError(this.message);
+  final String message;
 }
 
 // --- Deployment Release Action ---
@@ -2317,13 +2317,13 @@ class DeploymentReleaseActionLoading extends DeploymentReleaseActionState {
 }
 
 class DeploymentReleaseActionSuccess extends DeploymentReleaseActionState {
-  final Map<String, dynamic> data;
   const DeploymentReleaseActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentReleaseActionError extends DeploymentReleaseActionState {
-  final String message;
   const DeploymentReleaseActionError(this.message);
+  final String message;
 }
 
 // --- Deployment Stats List ---
@@ -2340,13 +2340,13 @@ class DeploymentStatsListLoading extends DeploymentStatsListState {
 }
 
 class DeploymentStatsListLoaded extends DeploymentStatsListState {
-  final Map<String, dynamic> data;
   const DeploymentStatsListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentStatsListError extends DeploymentStatsListState {
-  final String message;
   const DeploymentStatsListError(this.message);
+  final String message;
 }
 
 // --- Deployment Release Summary ---
@@ -2363,13 +2363,13 @@ class DeploymentReleaseSummaryLoading extends DeploymentReleaseSummaryState {
 }
 
 class DeploymentReleaseSummaryLoaded extends DeploymentReleaseSummaryState {
-  final Map<String, dynamic> data;
   const DeploymentReleaseSummaryLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DeploymentReleaseSummaryError extends DeploymentReleaseSummaryState {
-  final String message;
   const DeploymentReleaseSummaryError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -2389,13 +2389,13 @@ class DataManagementOverviewLoading extends DataManagementOverviewState {
 }
 
 class DataManagementOverviewLoaded extends DataManagementOverviewState {
-  final Map<String, dynamic> data;
   const DataManagementOverviewLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DataManagementOverviewError extends DataManagementOverviewState {
-  final String message;
   const DataManagementOverviewError(this.message);
+  final String message;
 }
 
 sealed class DatabaseBackupListState {
@@ -2411,13 +2411,13 @@ class DatabaseBackupListLoading extends DatabaseBackupListState {
 }
 
 class DatabaseBackupListLoaded extends DatabaseBackupListState {
-  final Map<String, dynamic> data;
   const DatabaseBackupListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DatabaseBackupListError extends DatabaseBackupListState {
-  final String message;
   const DatabaseBackupListError(this.message);
+  final String message;
 }
 
 sealed class DatabaseBackupActionState {
@@ -2433,13 +2433,13 @@ class DatabaseBackupActionLoading extends DatabaseBackupActionState {
 }
 
 class DatabaseBackupActionSuccess extends DatabaseBackupActionState {
-  final Map<String, dynamic> data;
   const DatabaseBackupActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class DatabaseBackupActionError extends DatabaseBackupActionState {
-  final String message;
   const DatabaseBackupActionError(this.message);
+  final String message;
 }
 
 sealed class BackupHistoryListState {
@@ -2455,13 +2455,13 @@ class BackupHistoryListLoading extends BackupHistoryListState {
 }
 
 class BackupHistoryListLoaded extends BackupHistoryListState {
-  final Map<String, dynamic> data;
   const BackupHistoryListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class BackupHistoryListError extends BackupHistoryListState {
-  final String message;
   const BackupHistoryListError(this.message);
+  final String message;
 }
 
 sealed class SyncLogListState {
@@ -2477,13 +2477,13 @@ class SyncLogListLoading extends SyncLogListState {
 }
 
 class SyncLogListLoaded extends SyncLogListState {
-  final Map<String, dynamic> data;
   const SyncLogListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SyncLogListError extends SyncLogListState {
-  final String message;
   const SyncLogListError(this.message);
+  final String message;
 }
 
 sealed class SyncLogSummaryState {
@@ -2499,13 +2499,13 @@ class SyncLogSummaryLoading extends SyncLogSummaryState {
 }
 
 class SyncLogSummaryLoaded extends SyncLogSummaryState {
-  final Map<String, dynamic> data;
   const SyncLogSummaryLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SyncLogSummaryError extends SyncLogSummaryState {
-  final String message;
   const SyncLogSummaryError(this.message);
+  final String message;
 }
 
 sealed class SyncConflictListState {
@@ -2521,13 +2521,13 @@ class SyncConflictListLoading extends SyncConflictListState {
 }
 
 class SyncConflictListLoaded extends SyncConflictListState {
-  final Map<String, dynamic> data;
   const SyncConflictListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SyncConflictListError extends SyncConflictListState {
-  final String message;
   const SyncConflictListError(this.message);
+  final String message;
 }
 
 sealed class SyncConflictActionState {
@@ -2543,13 +2543,13 @@ class SyncConflictActionLoading extends SyncConflictActionState {
 }
 
 class SyncConflictActionSuccess extends SyncConflictActionState {
-  final Map<String, dynamic> data;
   const SyncConflictActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SyncConflictActionError extends SyncConflictActionState {
-  final String message;
   const SyncConflictActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -2569,13 +2569,13 @@ class SecurityOverviewLoading extends SecurityOverviewState {
 }
 
 class SecurityOverviewLoaded extends SecurityOverviewState {
-  final Map<String, dynamic> data;
   const SecurityOverviewLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityOverviewError extends SecurityOverviewState {
-  final String message;
   const SecurityOverviewError(this.message);
+  final String message;
 }
 
 sealed class SecCenterAlertListState {
@@ -2591,13 +2591,13 @@ class SecCenterAlertListLoading extends SecCenterAlertListState {
 }
 
 class SecCenterAlertListLoaded extends SecCenterAlertListState {
-  final Map<String, dynamic> data;
   const SecCenterAlertListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecCenterAlertListError extends SecCenterAlertListState {
-  final String message;
   const SecCenterAlertListError(this.message);
+  final String message;
 }
 
 sealed class SecCenterAlertActionState {
@@ -2613,13 +2613,13 @@ class SecCenterAlertActionLoading extends SecCenterAlertActionState {
 }
 
 class SecCenterAlertActionSuccess extends SecCenterAlertActionState {
-  final Map<String, dynamic> data;
   const SecCenterAlertActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecCenterAlertActionError extends SecCenterAlertActionState {
-  final String message;
   const SecCenterAlertActionError(this.message);
+  final String message;
 }
 
 sealed class SecuritySessionListState {
@@ -2635,13 +2635,13 @@ class SecuritySessionListLoading extends SecuritySessionListState {
 }
 
 class SecuritySessionListLoaded extends SecuritySessionListState {
-  final Map<String, dynamic> data;
   const SecuritySessionListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecuritySessionListError extends SecuritySessionListState {
-  final String message;
   const SecuritySessionListError(this.message);
+  final String message;
 }
 
 sealed class SecurityDeviceListState {
@@ -2657,13 +2657,13 @@ class SecurityDeviceListLoading extends SecurityDeviceListState {
 }
 
 class SecurityDeviceListLoaded extends SecurityDeviceListState {
-  final Map<String, dynamic> data;
   const SecurityDeviceListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityDeviceListError extends SecurityDeviceListState {
-  final String message;
   const SecurityDeviceListError(this.message);
+  final String message;
 }
 
 sealed class SecurityPolicyListState {
@@ -2679,13 +2679,13 @@ class SecurityPolicyListLoading extends SecurityPolicyListState {
 }
 
 class SecurityPolicyListLoaded extends SecurityPolicyListState {
-  final Map<String, dynamic> data;
   const SecurityPolicyListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityPolicyListError extends SecurityPolicyListState {
-  final String message;
   const SecurityPolicyListError(this.message);
+  final String message;
 }
 
 sealed class SecurityPolicyActionState {
@@ -2701,13 +2701,13 @@ class SecurityPolicyActionLoading extends SecurityPolicyActionState {
 }
 
 class SecurityPolicyActionSuccess extends SecurityPolicyActionState {
-  final Map<String, dynamic> data;
   const SecurityPolicyActionSuccess(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityPolicyActionError extends SecurityPolicyActionState {
-  final String message;
   const SecurityPolicyActionError(this.message);
+  final String message;
 }
 
 sealed class SecurityIpListState {
@@ -2723,13 +2723,13 @@ class SecurityIpListLoading extends SecurityIpListState {
 }
 
 class SecurityIpListLoaded extends SecurityIpListState {
-  final Map<String, dynamic> data;
   const SecurityIpListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class SecurityIpListError extends SecurityIpListState {
-  final String message;
   const SecurityIpListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2749,13 +2749,13 @@ class FinOpsOverviewLoading extends FinOpsOverviewState {
 }
 
 class FinOpsOverviewLoaded extends FinOpsOverviewState {
-  final Map<String, dynamic> data;
   const FinOpsOverviewLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class FinOpsOverviewError extends FinOpsOverviewState {
-  final String message;
   const FinOpsOverviewError(this.message);
+  final String message;
 }
 
 sealed class FinOpsListState {
@@ -2771,13 +2771,13 @@ class FinOpsListLoading extends FinOpsListState {
 }
 
 class FinOpsListLoaded extends FinOpsListState {
-  final Map<String, dynamic> data;
   const FinOpsListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class FinOpsListError extends FinOpsListState {
-  final String message;
   const FinOpsListError(this.message);
+  final String message;
 }
 
 sealed class FinOpsDetailState {
@@ -2793,13 +2793,13 @@ class FinOpsDetailLoading extends FinOpsDetailState {
 }
 
 class FinOpsDetailLoaded extends FinOpsDetailState {
-  final Map<String, dynamic> data;
   const FinOpsDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class FinOpsDetailError extends FinOpsDetailState {
-  final String message;
   const FinOpsDetailError(this.message);
+  final String message;
 }
 
 sealed class FinOpsActionState {
@@ -2815,13 +2815,13 @@ class FinOpsActionLoading extends FinOpsActionState {
 }
 
 class FinOpsActionSuccess extends FinOpsActionState {
-  final Map<String, dynamic>? data;
   const FinOpsActionSuccess([this.data]);
+  final Map<String, dynamic>? data;
 }
 
 class FinOpsActionError extends FinOpsActionState {
-  final String message;
   const FinOpsActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2841,13 +2841,13 @@ class InfraOverviewLoading extends InfraOverviewState {
 }
 
 class InfraOverviewLoaded extends InfraOverviewState {
-  final Map<String, dynamic> data;
   const InfraOverviewLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class InfraOverviewError extends InfraOverviewState {
-  final String message;
   const InfraOverviewError(this.message);
+  final String message;
 }
 
 sealed class InfraListState {
@@ -2863,13 +2863,13 @@ class InfraListLoading extends InfraListState {
 }
 
 class InfraListLoaded extends InfraListState {
-  final Map<String, dynamic> data;
   const InfraListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class InfraListError extends InfraListState {
-  final String message;
   const InfraListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2889,13 +2889,13 @@ class ProviderRoleTemplateListLoading extends ProviderRoleTemplateListState {
 }
 
 class ProviderRoleTemplateListLoaded extends ProviderRoleTemplateListState {
-  final Map<String, dynamic> data;
   const ProviderRoleTemplateListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class ProviderRoleTemplateListError extends ProviderRoleTemplateListState {
-  final String message;
   const ProviderRoleTemplateListError(this.message);
+  final String message;
 }
 
 sealed class ProviderRoleTemplateDetailState {
@@ -2911,13 +2911,13 @@ class ProviderRoleTemplateDetailLoading extends ProviderRoleTemplateDetailState 
 }
 
 class ProviderRoleTemplateDetailLoaded extends ProviderRoleTemplateDetailState {
-  final Map<String, dynamic> data;
   const ProviderRoleTemplateDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class ProviderRoleTemplateDetailError extends ProviderRoleTemplateDetailState {
-  final String message;
   const ProviderRoleTemplateDetailError(this.message);
+  final String message;
 }
 
 sealed class ProviderPermissionListState {
@@ -2933,13 +2933,13 @@ class ProviderPermissionListLoading extends ProviderPermissionListState {
 }
 
 class ProviderPermissionListLoaded extends ProviderPermissionListState {
-  final Map<String, dynamic> data;
   const ProviderPermissionListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class ProviderPermissionListError extends ProviderPermissionListState {
-  final String message;
   const ProviderPermissionListError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2959,13 +2959,13 @@ class WameedAIAdminDashboardLoading extends WameedAIAdminDashboardState {
 }
 
 class WameedAIAdminDashboardLoaded extends WameedAIAdminDashboardState {
-  final Map<String, dynamic> data;
   const WameedAIAdminDashboardLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class WameedAIAdminDashboardError extends WameedAIAdminDashboardState {
-  final String message;
   const WameedAIAdminDashboardError(this.message);
+  final String message;
 }
 
 sealed class WameedAIAdminListState {
@@ -2981,13 +2981,13 @@ class WameedAIAdminListLoading extends WameedAIAdminListState {
 }
 
 class WameedAIAdminListLoaded extends WameedAIAdminListState {
-  final Map<String, dynamic> data;
   const WameedAIAdminListLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class WameedAIAdminListError extends WameedAIAdminListState {
-  final String message;
   const WameedAIAdminListError(this.message);
+  final String message;
 }
 
 sealed class WameedAIAdminDetailState {
@@ -3003,13 +3003,13 @@ class WameedAIAdminDetailLoading extends WameedAIAdminDetailState {
 }
 
 class WameedAIAdminDetailLoaded extends WameedAIAdminDetailState {
-  final Map<String, dynamic> data;
   const WameedAIAdminDetailLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class WameedAIAdminDetailError extends WameedAIAdminDetailState {
-  final String message;
   const WameedAIAdminDetailError(this.message);
+  final String message;
 }
 
 sealed class WameedAIAdminActionState {
@@ -3025,13 +3025,13 @@ class WameedAIAdminActionLoading extends WameedAIAdminActionState {
 }
 
 class WameedAIAdminActionSuccess extends WameedAIAdminActionState {
-  final Map<String, dynamic>? data;
   const WameedAIAdminActionSuccess([this.data]);
+  final Map<String, dynamic>? data;
 }
 
 class WameedAIAdminActionError extends WameedAIAdminActionState {
-  final String message;
   const WameedAIAdminActionError(this.message);
+  final String message;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -3051,11 +3051,11 @@ class AdminStatsLoading extends AdminStatsState {
 }
 
 class AdminStatsLoaded extends AdminStatsState {
-  final Map<String, dynamic> data;
   const AdminStatsLoaded(this.data);
+  final Map<String, dynamic> data;
 }
 
 class AdminStatsError extends AdminStatsState {
-  final String message;
   const AdminStatsError(this.message);
+  final String message;
 }

@@ -82,7 +82,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                       const SizedBox(height: AppSpacing.lg),
 
                       // Sync status breakdown
-                      Text(l10n.syncStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.syncStatus, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (syncStatus.isEmpty)
                         PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoSyncData)),

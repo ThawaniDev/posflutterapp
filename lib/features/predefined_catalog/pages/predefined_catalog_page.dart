@@ -184,11 +184,11 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 // ─── Category Card Widget ──────────────────────────────────────
 
 class _CategoryCard extends StatelessWidget {
+
+  const _CategoryCard({required this.category, required this.onTap, required this.onClone});
   final PredefinedCategory category;
   final VoidCallback onTap;
   final VoidCallback onClone;
-
-  const _CategoryCard({required this.category, required this.onTap, required this.onClone});
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +241,7 @@ class _CategoryCard extends StatelessWidget {
                           Flexible(
                             child: Text(
                               '${category.productsCount} products',
-                              style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                              style: theme.textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

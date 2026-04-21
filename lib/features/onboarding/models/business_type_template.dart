@@ -1,16 +1,4 @@
 class BusinessTypeTemplate {
-  final String id;
-  final String code;
-  final String nameAr;
-  final String nameEn;
-  final String? descriptionAr;
-  final String? descriptionEn;
-  final String icon;
-  final Map<String, dynamic> templateJson;
-  final Map<String, dynamic>? sampleProductsJson;
-  final bool? isActive;
-  final int? displayOrder;
-  final DateTime? createdAt;
 
   const BusinessTypeTemplate({
     required this.id,
@@ -43,6 +31,18 @@ class BusinessTypeTemplate {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String code;
+  final String nameAr;
+  final String nameEn;
+  final String? descriptionAr;
+  final String? descriptionEn;
+  final String icon;
+  final Map<String, dynamic> templateJson;
+  final Map<String, dynamic>? sampleProductsJson;
+  final bool? isActive;
+  final int? displayOrder;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

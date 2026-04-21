@@ -8,9 +8,9 @@ final debitRepositoryProvider = Provider<DebitRepository>((ref) {
 });
 
 class DebitRepository {
-  final DebitsApiService _apiService;
 
   DebitRepository({required DebitsApiService apiService}) : _apiService = apiService;
+  final DebitsApiService _apiService;
 
   // List
   Future<PaginatedResult<Debit>> listDebits({

@@ -1,8 +1,4 @@
 class StoreAddOn {
-  final String organizationId;
-  final String planAddOnId;
-  final DateTime? activatedAt;
-  final bool? isActive;
 
   const StoreAddOn({required this.organizationId, required this.planAddOnId, this.activatedAt, this.isActive});
 
@@ -14,6 +10,10 @@ class StoreAddOn {
       isActive: json['is_active'] as bool?,
     );
   }
+  final String organizationId;
+  final String planAddOnId;
+  final DateTime? activatedAt;
+  final bool? isActive;
 
   Map<String, dynamic> toJson() {
     return {

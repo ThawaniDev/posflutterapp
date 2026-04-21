@@ -1,10 +1,4 @@
 class TranslationOverride {
-  final String id;
-  final String storeId;
-  final String stringKey;
-  final String locale;
-  final String customValue;
-  final DateTime? updatedAt;
 
   const TranslationOverride({
     required this.id,
@@ -25,6 +19,12 @@ class TranslationOverride {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String stringKey;
+  final String locale;
+  final String customValue;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

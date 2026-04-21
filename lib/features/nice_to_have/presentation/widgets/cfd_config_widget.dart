@@ -3,8 +3,8 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import '../nice_to_have_providers.dart';
-import '../nice_to_have_state.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_providers.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_state.dart';
 
 class CfdConfigWidget extends ConsumerWidget {
   const CfdConfigWidget({super.key});
@@ -22,11 +22,18 @@ class CfdConfigWidget extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SwitchListTile(title: const Text('CFD Enabled'), value: config['is_enabled'] == true, onChanged: null),
+            SwitchListTile(
+              title: Text(AppLocalizations.of(context)!.cfdEnabled),
+              value: config['is_enabled'] == true,
+              onChanged: null,
+            ),
             AppSpacing.gapH12,
-            ListTile(title: const Text('Target Monitor'), subtitle: Text(config['target_monitor']?.toString() ?? 'secondary')),
             ListTile(
-              title: const Text('Idle Rotation (seconds)'),
+              title: Text(AppLocalizations.of(context)!.cfdTargetMonitor),
+              subtitle: Text(config['target_monitor']?.toString() ?? 'secondary'),
+            ),
+            ListTile(
+              title: Text(AppLocalizations.of(context)!.cfdIdleRotation),
               subtitle: Text(config['idle_rotation_seconds']?.toString() ?? '10'),
             ),
           ],

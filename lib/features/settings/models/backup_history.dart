@@ -2,21 +2,6 @@ import 'package:wameedpos/features/settings/enums/backup_history_status.dart';
 import 'package:wameedpos/features/settings/enums/backup_type.dart';
 
 class BackupHistory {
-  final String id;
-  final String storeId;
-  final String terminalId;
-  final BackupType backupType;
-  final String storageLocation;
-  final String? localPath;
-  final String? cloudKey;
-  final int fileSizeBytes;
-  final int dbVersion;
-  final int? recordsCount;
-  final bool? isVerified;
-  final bool? isEncrypted;
-  final BackupHistoryStatus? status;
-  final String? errorMessage;
-  final DateTime? createdAt;
 
   const BackupHistory({
     required this.id,
@@ -55,6 +40,21 @@ class BackupHistory {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String terminalId;
+  final BackupType backupType;
+  final String storageLocation;
+  final String? localPath;
+  final String? cloudKey;
+  final int fileSizeBytes;
+  final int dbVersion;
+  final int? recordsCount;
+  final bool? isVerified;
+  final bool? isEncrypted;
+  final BackupHistoryStatus? status;
+  final String? errorMessage;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,19 +1,4 @@
 class SecurityIncident {
-  final String id;
-  final String storeId;
-  final String type;
-  final String severity;
-  final String title;
-  final String? description;
-  final String? userId;
-  final String? deviceId;
-  final String? ipAddress;
-  final Map<String, dynamic>? details;
-  final bool isResolved;
-  final String? resolvedBy;
-  final DateTime? resolvedAt;
-  final String? resolutionNotes;
-  final DateTime? createdAt;
 
   const SecurityIncident({
     required this.id,
@@ -52,6 +37,21 @@ class SecurityIncident {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String type;
+  final String severity;
+  final String title;
+  final String? description;
+  final String? userId;
+  final String? deviceId;
+  final String? ipAddress;
+  final Map<String, dynamic>? details;
+  final bool isResolved;
+  final String? resolvedBy;
+  final DateTime? resolvedAt;
+  final String? resolutionNotes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

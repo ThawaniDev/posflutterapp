@@ -14,13 +14,13 @@ class ProviderPaymentsListLoading extends ProviderPaymentsListState {
 }
 
 class ProviderPaymentsListLoaded extends ProviderPaymentsListState {
-  final List<ProviderPayment> payments;
   const ProviderPaymentsListLoaded({required this.payments});
+  final List<ProviderPayment> payments;
 }
 
 class ProviderPaymentsListError extends ProviderPaymentsListState {
-  final String message;
   const ProviderPaymentsListError({required this.message});
+  final String message;
 }
 
 // ─── Payment Detail State ────────────────────────────────────
@@ -37,13 +37,13 @@ class ProviderPaymentDetailLoading extends ProviderPaymentDetailState {
 }
 
 class ProviderPaymentDetailLoaded extends ProviderPaymentDetailState {
-  final ProviderPayment payment;
   const ProviderPaymentDetailLoaded({required this.payment});
+  final ProviderPayment payment;
 }
 
 class ProviderPaymentDetailError extends ProviderPaymentDetailState {
-  final String message;
   const ProviderPaymentDetailError({required this.message});
+  final String message;
 }
 
 // ─── Payment Action State ────────────────────────────────────
@@ -60,14 +60,14 @@ class ProviderPaymentActionLoading extends ProviderPaymentActionState {
 }
 
 class ProviderPaymentActionSuccess extends ProviderPaymentActionState {
+  const ProviderPaymentActionSuccess({required this.message, this.payment});
   final String message;
   final ProviderPayment? payment;
-  const ProviderPaymentActionSuccess({required this.message, this.payment});
 }
 
 class ProviderPaymentActionError extends ProviderPaymentActionState {
-  final String message;
   const ProviderPaymentActionError({required this.message});
+  final String message;
 }
 
 // ─── Statistics State ────────────────────────────────────────
@@ -84,11 +84,11 @@ class PaymentStatisticsLoading extends PaymentStatisticsState {
 }
 
 class PaymentStatisticsLoaded extends PaymentStatisticsState {
-  final Map<String, dynamic> statistics;
   const PaymentStatisticsLoaded({required this.statistics});
+  final Map<String, dynamic> statistics;
 }
 
 class PaymentStatisticsError extends PaymentStatisticsState {
-  final String message;
   const PaymentStatisticsError({required this.message});
+  final String message;
 }

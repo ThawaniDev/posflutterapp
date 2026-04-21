@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/remote/zatca_api_service.dart';
+import 'package:wameedpos/features/zatca/data/remote/zatca_api_service.dart';
 
 final zatcaRepositoryProvider = Provider<ZatcaRepository>((ref) {
   return ZatcaRepository(ref.watch(zatcaApiServiceProvider));
 });
 
 class ZatcaRepository {
-  final ZatcaApiService _apiService;
 
   ZatcaRepository(this._apiService);
+  final ZatcaApiService _apiService;
 
   Future<Map<String, dynamic>> enroll({
     required String otp,

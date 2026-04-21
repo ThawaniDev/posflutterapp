@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/providers/branch_context_provider.dart';
-import '../../providers/admin_providers.dart';
-import '../../providers/admin_state.dart';
-import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminDataManagementOverviewPage extends ConsumerStatefulWidget {
   const AdminDataManagementOverviewPage({super.key});
@@ -95,11 +94,11 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
 }
 
 class _StatCard extends StatelessWidget {
+
+  const _StatCard({required this.title, required this.icon, required this.stats});
   final String title;
   final IconData icon;
   final Map<String, dynamic> stats;
-
-  const _StatCard({required this.title, required this.icon, required this.stats});
 
   @override
   Widget build(BuildContext context) {

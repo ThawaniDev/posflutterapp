@@ -32,7 +32,7 @@ class TicketCardWidget extends StatelessWidget {
             children: [
               Text(
                 '#${ticket.ticketNumber}',
-                style: AppTypography.labelSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
               ),
               const Spacer(),
               TicketStatusBadge(status: ticket.status, isSmall: true),
@@ -62,13 +62,13 @@ class TicketCardWidget extends StatelessWidget {
               AppSpacing.gapW8,
               Text(
                 ticket.category.value.replaceAll('_', ' '),
-                style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
               ),
               const Spacer(),
               if (dateStr.isNotEmpty)
                 Text(
                   dateStr,
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
             ],
           ),

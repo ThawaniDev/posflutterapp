@@ -6,6 +6,8 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/widgets/grace_period_banner.dart';
@@ -41,7 +43,6 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     ref.listen<SubscriptionState>(subscriptionProvider, (prev, next) {
       if (next is SubscriptionActionSuccess) {
         showPosSuccessSnackbar(context, next.message);
-        // Reload data
         ref.read(subscriptionProvider.notifier).loadCurrent();
         ref.read(usageProvider.notifier).loadUsage();
       } else if (next is SubscriptionError) {
@@ -83,23 +84,12 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
   }
 
   Widget _buildNoSubscription() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.card_membership, size: 64, color: AppColors.mutedFor(context)),
-          AppSpacing.verticalLg,
-          Text(l10n.subscriptionNoActiveSubscription, style: Theme.of(context).textTheme.titleLarge),
-          AppSpacing.verticalSm,
-          Text(l10n.subscriptionChoosePlan),
-          AppSpacing.verticalLg,
-          PosButton(
-            onPressed: () => context.go(Routes.planSelection),
-            icon: Icons.rocket_launch,
-            label: l10n.subscriptionBrowsePlans,
-          ),
-        ],
-      ),
+    return PosEmptyState(
+      icon: Icons.card_membership,
+      title: l10n.subscriptionNoActiveSubscription,
+      subtitle: l10n.subscriptionChoosePlan,
+      actionLabel: l10n.subscriptionBrowsePlans,
+      onAction: () => context.go(Routes.planSelection),
     );
   }
 
@@ -107,6 +97,10 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     final sub = subState.subscription!;
     final isGracePeriod = sub.status.name == 'grace' || sub.status.name == 'past_due';
     final isExpired = sub.status.name == 'expired';
+    final isTrial = sub.status.name == 'trial';
+
+    // Calculate days remaining in current period
+    final daysRemaining = sub.currentPeriodEnd != null ? sub.currentPeriodEnd!.difference(DateTime.now()).inDays : 0;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -114,7 +108,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
         ref.read(usageProvider.notifier).loadUsage();
       },
       child: ListView(
-        padding: AppSpacing.paddingAllMd,
+        padding: AppSpacing.paddingAll16,
         children: [
           // Grace period / expiry banner
           if (isGracePeriod && sub.gracePeriodEndsAt != null)
@@ -135,97 +129,39 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
               ),
             ),
 
-          // Status card
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAllMd,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.subscriptionCurrentPlan, style: Theme.of(context).textTheme.titleMedium),
-                      SubscriptionBadge(status: sub.status.name),
-                    ],
-                  ),
-                  AppSpacing.verticalSm,
-                  Text(
-                    sub.plan?.name ?? sub.subscriptionPlanId,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
-                  ),
-                  AppSpacing.verticalSm,
-                  Text(l10n.subBillingLabel(sub.billingCycle?.name ?? l10n.subBillingCycleMonthly)),
-                  if (sub.currentPeriodStart != null && sub.currentPeriodEnd != null)
-                    Text(l10n.subPeriodLabel(_formatDate(sub.currentPeriodStart!), _formatDate(sub.currentPeriodEnd!))),
-                  if (sub.trialEndsAt != null)
-                    Text(l10n.subTrialEnds(_formatDate(sub.trialEndsAt!)), style: TextStyle(color: AppColors.warning)),
-                  if (sub.gracePeriodEndsAt != null && isGracePeriod)
-                    Text(l10n.subGracePeriodEnds(_formatDate(sub.gracePeriodEndsAt!)), style: TextStyle(color: AppColors.error)),
-                ],
-              ),
-            ),
-          ),
+          // ── KPI Row: Plan, Status, Days Remaining, Billing ──
+          _buildKpiRow(sub, daysRemaining, isTrial),
 
-          AppSpacing.verticalMd,
+          AppSpacing.gapH16,
 
-          // Usage section
-          if (usageState is UsageLoaded && usageState.usageItems.isNotEmpty) ...[
-            Text(l10n.subscriptionPlanUsage, style: Theme.of(context).textTheme.titleMedium),
-            AppSpacing.verticalSm,
-            ...usageState.usageItems.map(
-              (item) => UsageProgress(
-                label: (item['limit_key'] as String?) ?? '',
-                current: (item['current'] as num?)?.toInt() ?? 0,
-                limit: (item['limit'] as num?)?.toInt(),
-                percentage: (item['percentage'] != null ? double.tryParse(item['percentage'].toString()) : null) ?? 0,
-              ),
-            ),
-          ],
+          // ── Plan Details Card ──
+          _buildPlanDetailsCard(sub, isTrial, isGracePeriod),
 
-          AppSpacing.verticalLg,
+          AppSpacing.gapH16,
 
-          // SoftPOS free tier progress
+          // ── Limits & Usage Section ──
+          _buildLimitsAndUsageCard(sub, usageState),
+          AppSpacing.gapH16,
+
+          // ── SoftPOS Progress ──
           _buildSoftPosProgress(),
 
-          // Actions
-          Text(l10n.actions, style: Theme.of(context).textTheme.titleMedium),
-          AppSpacing.verticalSm,
+          // ── Included Features ──
+          if (sub.plan?.features != null && sub.plan!.features!.isNotEmpty) ...[_buildFeaturesCard(sub), AppSpacing.gapH16],
 
-          ListTile(
-            leading: const Icon(Icons.swap_horiz),
-            title: Text(l10n.subscriptionChangePlan),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go(Routes.planSelection),
-          ),
-          ListTile(
-            leading: const Icon(Icons.compare_arrows),
-            title: Text(l10n.subscriptionComparePlans),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go(Routes.planComparison),
-          ),
-          ListTile(
-            leading: const Icon(Icons.extension),
-            title: Text(l10n.subscriptionAddOns),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go(Routes.subscriptionAddOns),
-          ),
-          ListTile(
-            leading: const Icon(Icons.receipt_long),
-            title: Text(l10n.subscriptionBillingHistory),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go(Routes.billingHistory),
-          ),
+          // ── Quick Actions Grid ──
+          _buildActionsSection(sub),
 
-          AppSpacing.verticalMd,
+          AppSpacing.gapH24,
 
+          // ── Cancel / Resume Button ──
           if (sub.status.name == 'cancelled' || sub.status.name == 'grace')
             PosButton(
               onPressed: () => ref.read(subscriptionProvider.notifier).resume(),
               icon: Icons.play_arrow,
               label: l10n.subscriptionResumeSubscription,
+              isFullWidth: true,
+              size: PosButtonSize.lg,
             )
           else
             PosButton(
@@ -233,8 +169,346 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
               icon: Icons.cancel,
               label: l10n.subscriptionCancelSubscription,
               variant: PosButtonVariant.danger,
+              isFullWidth: true,
+              size: PosButtonSize.lg,
             ),
+          AppSpacing.gapH16,
         ],
+      ),
+    );
+  }
+
+  Widget _buildKpiRow(StoreSubscription sub, int daysRemaining, bool isTrial) {
+    return Row(
+      children: [
+        Expanded(
+          child: PosKpiCard(
+            label: l10n.subscriptionCurrentPlan,
+            value: sub.plan?.localizedName(Localizations.localeOf(context).languageCode) ?? '—',
+            icon: Icons.workspace_premium,
+            iconColor: AppColors.primary,
+            iconBgColor: AppColors.primary.withValues(alpha: 0.10),
+          ),
+        ),
+        AppSpacing.gapW12,
+        Expanded(
+          child: PosKpiCard(
+            label: l10n.subDaysRemaining,
+            value: daysRemaining > 0 ? '$daysRemaining' : '—',
+            icon: Icons.calendar_today,
+            iconColor: daysRemaining <= 7
+                ? AppColors.error
+                : daysRemaining <= 14
+                ? AppColors.warning
+                : AppColors.info,
+            iconBgColor:
+                (daysRemaining <= 7
+                        ? AppColors.error
+                        : daysRemaining <= 14
+                        ? AppColors.warning
+                        : AppColors.info)
+                    .withValues(alpha: 0.10),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlanDetailsCard(StoreSubscription sub, bool isTrial, bool isGracePeriod) {
+    final price = sub.billingCycle?.name == 'yearly'
+        ? (sub.plan?.annualPrice ?? sub.plan?.monthlyPrice ?? 0.0)
+        : (sub.plan?.monthlyPrice ?? 0.0);
+    final period = sub.billingCycle?.name == 'yearly' ? l10n.subPerYear : l10n.subPerMonth;
+
+    return PosCard(
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header row
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.subPlanDetails,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SubscriptionBadge(status: sub.status.name),
+              ],
+            ),
+
+            AppSpacing.gapH16,
+            const PosDivider(),
+            AppSpacing.gapH16,
+
+            // Plan name + price
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: AppSpacing.paddingAll12,
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.10), borderRadius: AppRadius.borderLg),
+                  child: const Icon(Icons.workspace_premium, color: AppColors.primary, size: 28),
+                ),
+                AppSpacing.gapW12,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        sub.plan?.localizedName(Localizations.localeOf(context).languageCode) ?? sub.subscriptionPlanId,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      AppSpacing.gapH4,
+                      Row(
+                        children: [
+                          Text(
+                            '${price.toStringAsFixed(3)} ',
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleLarge?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            period,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            AppSpacing.gapH16,
+            const PosDivider(),
+            AppSpacing.gapH12,
+
+            // Detail rows
+            _buildDetailRow(Icons.sync, l10n.subBillingLabel(sub.billingCycle?.name ?? l10n.subBillingCycleMonthly)),
+            if (sub.currentPeriodStart != null && sub.currentPeriodEnd != null)
+              _buildDetailRow(
+                Icons.date_range,
+                l10n.subPeriodLabel(_formatDate(sub.currentPeriodStart!), _formatDate(sub.currentPeriodEnd!)),
+              ),
+            if (sub.currentPeriodEnd != null)
+              _buildDetailRow(Icons.event, '${l10n.subNextBillingDate}: ${_formatDate(sub.currentPeriodEnd!)}'),
+            if (sub.paymentMethod != null) _buildDetailRow(Icons.payment, '${l10n.subPaymentMethod}: ${sub.paymentMethod!.name}'),
+            if (isTrial && sub.trialEndsAt != null)
+              _buildDetailRow(Icons.hourglass_bottom, l10n.subTrialEnds(_formatDate(sub.trialEndsAt!)), color: AppColors.warning),
+            if (isGracePeriod && sub.gracePeriodEndsAt != null)
+              _buildDetailRow(
+                Icons.warning_amber,
+                l10n.subGracePeriodEnds(_formatDate(sub.gracePeriodEndsAt!)),
+                color: AppColors.error,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(IconData icon, String text, {Color? color}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: color ?? AppColors.mutedFor(context)),
+          AppSpacing.gapW8,
+          Expanded(
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLimitsAndUsageCard(StoreSubscription sub, UsageState usageState) {
+    final limits = sub.plan?.limits;
+    final usageItems = usageState is UsageLoaded ? usageState.usageItems : <Map<String, dynamic>>[];
+
+    // Build a map of usage by limit_key for quick lookup
+    final usageByKey = <String, Map<String, dynamic>>{};
+    for (final item in usageItems) {
+      final key = item['limit_key'] as String? ?? '';
+      if (key.isNotEmpty) usageByKey[key] = item;
+    }
+
+    // If we have neither plan limits nor usage data, hide the card
+    if ((limits == null || limits.isEmpty) && usageItems.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Merge: iterate plan limits first, then any usage keys not in plan limits
+    final mergedKeys = <String>[];
+    if (limits != null) {
+      for (final l in limits) {
+        final key = l['limit_key'] as String? ?? '';
+        if (key.isNotEmpty) mergedKeys.add(key);
+      }
+    }
+    for (final key in usageByKey.keys) {
+      if (!mergedKeys.contains(key)) mergedKeys.add(key);
+    }
+
+    return PosCard(
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.subscriptionPlanUsage,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            AppSpacing.gapH12,
+            ...mergedKeys.map((key) {
+              final usage = usageByKey[key];
+              final planLimit = limits?.firstWhere((l) => l['limit_key'] == key, orElse: () => <String, dynamic>{});
+
+              final current = (usage?['current'] as num?)?.toInt() ?? 0;
+              final limitVal = usage != null ? (usage['limit'] as num?)?.toInt() : (planLimit?['limit_value'] as num?)?.toInt();
+              final isUnlimited = (usage?['is_unlimited'] == true) || (limitVal != null && limitVal < 0);
+              final percentage = usage != null ? (double.tryParse(usage['percentage'].toString()) ?? 0) : 0.0;
+
+              return UsageProgress(label: key, current: current, limit: isUnlimited ? null : limitVal, percentage: percentage);
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeaturesCard(StoreSubscription sub) {
+    final features = sub.plan!.features as List<Map<String, dynamic>>;
+    final enabledFeatures = features.where((f) => f['is_enabled'] == true).toList();
+
+    return PosCard(
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.subIncludedFeatures,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                PosBadge(
+                  label: l10n.subFeaturesIncluded(enabledFeatures.length),
+                  variant: PosBadgeVariant.primary,
+                  isSmall: true,
+                ),
+              ],
+            ),
+            AppSpacing.gapH12,
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: enabledFeatures.map((f) {
+                final name = SubscriptionPlan.featureName(f, Localizations.localeOf(context).languageCode);
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.success.withValues(alpha: 0.08),
+                    borderRadius: AppRadius.borderMd,
+                    border: Border.all(color: AppColors.success.withValues(alpha: 0.2)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.check_circle, size: 14, color: AppColors.successDark),
+                      AppSpacing.gapW4,
+                      Text(
+                        name,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: AppColors.successDark, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionsSection(StoreSubscription sub) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.subQuickActions, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+        AppSpacing.gapH12,
+        // First row: 2 cards
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionCard(Icons.swap_horiz, l10n.subscriptionChangePlan, () => context.go(Routes.planSelection)),
+            ),
+            AppSpacing.gapW12,
+            Expanded(
+              child: _buildActionCard(
+                Icons.compare_arrows,
+                l10n.subscriptionComparePlans,
+                () => context.go(Routes.planComparison),
+              ),
+            ),
+          ],
+        ),
+        AppSpacing.gapH12,
+        // Second row: 2 cards
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionCard(Icons.extension, l10n.subscriptionAddOns, () => context.go(Routes.subscriptionAddOns)),
+            ),
+            AppSpacing.gapW12,
+            Expanded(
+              child: _buildActionCard(
+                Icons.receipt_long,
+                l10n.subscriptionBillingHistory,
+                () => context.go(Routes.billingHistory),
+              ),
+            ),
+          ],
+        ),
+        AppSpacing.gapH12,
+        // Third row: Provider Payments
+        _buildActionCard(Icons.payments, l10n.subViewPayments, () => context.go(Routes.providerPayments)),
+      ],
+    );
+  }
+
+  Widget _buildActionCard(IconData icon, String label, VoidCallback onTap) {
+    return PosCard(
+      onTap: onTap,
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          children: [
+            Container(
+              padding: AppSpacing.paddingAll8,
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.08), borderRadius: AppRadius.borderMd),
+              child: Icon(icon, color: AppColors.primary, size: 24),
+            ),
+            AppSpacing.gapH8,
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -243,7 +517,6 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     final featureGate = ref.read(featureGateServiceProvider);
     final softPosInfo = featureGate.softPosInfo;
 
-    // Don't show if SoftPOS data isn't available or not eligible
     if (softPosInfo == null || softPosInfo['is_eligible'] != true) {
       return const SizedBox.shrink();
     }
@@ -259,7 +532,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
       padding: const EdgeInsets.only(bottom: 16),
       child: PosCard(
         child: Padding(
-          padding: AppSpacing.paddingAllMd,
+          padding: AppSpacing.paddingAll16,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -270,24 +543,24 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                     color: isFree ? AppColors.success : AppColors.primary,
                     size: 24,
                   ),
-                  AppSpacing.horizontalSm,
+                  AppSpacing.gapW8,
                   Text(
                     l10n.softPosFreeTier,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              AppSpacing.verticalSm,
+              AppSpacing.gapH8,
               if (isFree) ...[
                 Text(
                   l10n.softPosFreeActive,
-                  style: TextStyle(color: AppColors.success, fontWeight: FontWeight.w600),
+                  style: const TextStyle(color: AppColors.success, fontWeight: FontWeight.w600),
                 ),
                 if (savingsAmount > 0)
-                  Text(l10n.softPosSaving(savingsAmount.toStringAsFixed(0)), style: TextStyle(color: AppColors.success)),
+                  Text(l10n.softPosSaving(savingsAmount.toStringAsFixed(0)), style: const TextStyle(color: AppColors.success)),
               ] else ...[
                 Text(l10n.softPosReachThreshold(threshold)),
-                AppSpacing.verticalSm,
+                AppSpacing.gapH8,
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: LinearProgressIndicator(
@@ -297,7 +570,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                     valueColor: AlwaysStoppedAnimation<Color>(percentage >= 80 ? AppColors.success : AppColors.primary),
                   ),
                 ),
-                AppSpacing.verticalXs,
+                AppSpacing.gapH4,
                 Text(
                   '$currentCount / $threshold ${l10n.softPosTransactions} ($remaining ${l10n.softPosRemaining})',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
@@ -321,7 +594,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(l10n.subscriptionCancelConfirmMessage),
-            AppSpacing.verticalMd,
+            AppSpacing.gapH12,
             PosTextField(controller: reasonController, label: l10n.subscriptionCancelReasonLabel, maxLines: 2),
           ],
         ),

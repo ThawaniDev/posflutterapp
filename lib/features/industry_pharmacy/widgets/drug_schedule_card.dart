@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/drug_schedule.dart';
-import '../enums/drug_schedule_type.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/drug_schedule.dart';
+import 'package:wameedpos/features/industry_pharmacy/enums/drug_schedule_type.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DrugScheduleCard extends StatelessWidget {
-  final DrugSchedule drug;
-  final VoidCallback? onTap;
 
   const DrugScheduleCard({super.key, required this.drug, this.onTap});
+  final DrugSchedule drug;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class DrugScheduleCard extends StatelessWidget {
                           Text(
                             drug.dosageForm!,
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         if (drug.strength != null) ...[
@@ -58,7 +57,7 @@ class DrugScheduleCard extends StatelessWidget {
                           Text(
                             '• ${drug.strength}',
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],
@@ -67,7 +66,7 @@ class DrugScheduleCard extends StatelessWidget {
                     if (drug.manufacturer != null)
                       Text(
                         drug.manufacturer!,
-                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                       ),
                   ],
                 ),

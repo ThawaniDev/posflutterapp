@@ -1,15 +1,4 @@
 class NotificationBatch {
-  final String id;
-  final String storeId;
-  final String category;
-  final String title;
-  final String message;
-  final String? priority;
-  final String? channel;
-  final int totalRecipients;
-  final int sentCount;
-  final int failedCount;
-  final DateTime? createdAt;
 
   const NotificationBatch({
     required this.id,
@@ -40,6 +29,17 @@ class NotificationBatch {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String category;
+  final String title;
+  final String message;
+  final String? priority;
+  final String? channel;
+  final int totalRecipients;
+  final int sentCount;
+  final int failedCount;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

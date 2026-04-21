@@ -272,7 +272,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
                         Icon(
                           log['response_cached'] == true ? Icons.check_circle : Icons.cancel,
                           size: 16,
-                          color: log['response_cached'] == true ? AppColors.success : AppColors.textMutedLight,
+                          color: log['response_cached'] == true ? AppColors.success : AppColors.mutedFor(context),
                         ),
                       ),
                       DataCell(Text(_fmtDate(log['created_at']))),

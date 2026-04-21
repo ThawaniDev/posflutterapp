@@ -25,7 +25,7 @@ void main() {
 
     test('OrdersLoaded holds orders and pagination info', () {
       final orders = [
-        Order(
+        const Order(
           id: 'o1',
           storeId: 's1',
           orderNumber: 'ORD-001',
@@ -35,7 +35,7 @@ void main() {
           taxAmount: 15.0,
           total: 115.0,
         ),
-        Order(
+        const Order(
           id: 'o2',
           storeId: 's1',
           orderNumber: 'ORD-002',
@@ -56,12 +56,12 @@ void main() {
     });
 
     test('OrdersLoaded hasMore is false on last page', () {
-      final state = OrdersLoaded(orders: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = OrdersLoaded(orders: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
     });
 
     test('OrdersLoaded copyWith replaces fields', () {
-      final state = OrdersLoaded(
+      const state = OrdersLoaded(
         orders: [
           Order(
             id: 'o1',
@@ -93,7 +93,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      OrdersState state = const OrdersLoading();
+      const OrdersState state = OrdersLoading();
       final result = switch (state) {
         OrdersInitial() => 'initial',
         OrdersLoading() => 'loading',
@@ -117,7 +117,7 @@ void main() {
 
     test('ReturnsLoaded holds returns and pagination', () {
       final returns = [
-        SaleReturn(
+        const SaleReturn(
           id: 'r1',
           storeId: 's1',
           orderId: 'o1',
@@ -140,7 +140,7 @@ void main() {
     });
 
     test('ReturnsLoaded copyWith', () {
-      final state = ReturnsLoaded(returns: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = ReturnsLoaded(returns: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20);
       final updated = state.copyWith(currentPage: 2, total: 30);
       expect(updated.currentPage, 2);
       expect(updated.total, 30);

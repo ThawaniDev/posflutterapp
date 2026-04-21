@@ -42,8 +42,8 @@ class BackupListWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.cloud_off, size: 48, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-            SizedBox(height: 8),
+            Icon(Icons.cloud_off, size: 48, color: AppColors.mutedFor(context)),
+            const SizedBox(height: 8),
             Text(l10n.noBackupsYet),
           ],
         ),

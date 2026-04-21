@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/industry_bakery/enums/custom_cake_order_status.dart';
 
 class CustomCakeOrder {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final String? orderId;
-  final String description;
-  final String? size;
-  final String? flavor;
-  final String? decorationNotes;
-  final DateTime deliveryDate;
-  final String? deliveryTime;
-  final double price;
-  final double? depositPaid;
-  final CustomCakeOrderStatus? status;
-  final String? referenceImageUrl;
-  final DateTime? createdAt;
 
   const CustomCakeOrder({
     required this.id,
@@ -54,6 +39,21 @@ class CustomCakeOrder {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final String? orderId;
+  final String description;
+  final String? size;
+  final String? flavor;
+  final String? decorationNotes;
+  final DateTime deliveryDate;
+  final String? deliveryTime;
+  final double price;
+  final double? depositPaid;
+  final CustomCakeOrderStatus? status;
+  final String? referenceImageUrl;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -15,15 +15,6 @@ class QuickStatsLoading extends QuickStatsState {
 }
 
 class QuickStatsLoaded extends QuickStatsState {
-  final double todayRevenue;
-  final int todayTransactions;
-  final int todayOrders;
-  final int pendingOrders;
-  final int activeStaff;
-  final int lowStockItems;
-  final String? lastSync;
-  final String currency;
-  final Map<String, dynamic> raw;
 
   const QuickStatsLoaded({
     required this.todayRevenue,
@@ -36,11 +27,20 @@ class QuickStatsLoaded extends QuickStatsState {
     required this.currency,
     required this.raw,
   });
+  final double todayRevenue;
+  final int todayTransactions;
+  final int todayOrders;
+  final int pendingOrders;
+  final int activeStaff;
+  final int lowStockItems;
+  final String? lastSync;
+  final String currency;
+  final Map<String, dynamic> raw;
 }
 
 class QuickStatsError extends QuickStatsState {
-  final String message;
   const QuickStatsError(this.message);
+  final String message;
 }
 
 // --- Preferences ---
@@ -58,14 +58,6 @@ class PreferencesLoading extends PreferencesState {
 }
 
 class PreferencesLoaded extends PreferencesState {
-  final String theme;
-  final String language;
-  final bool compactMode;
-  final bool notificationsEnabled;
-  final bool biometricLock;
-  final String defaultPage;
-  final String currencyDisplay;
-  final Map<String, dynamic> raw;
 
   const PreferencesLoaded({
     required this.theme,
@@ -77,11 +69,19 @@ class PreferencesLoaded extends PreferencesState {
     required this.currencyDisplay,
     required this.raw,
   });
+  final String theme;
+  final String language;
+  final bool compactMode;
+  final bool notificationsEnabled;
+  final bool biometricLock;
+  final String defaultPage;
+  final String currencyDisplay;
+  final Map<String, dynamic> raw;
 }
 
 class PreferencesError extends PreferencesState {
-  final String message;
   const PreferencesError(this.message);
+  final String message;
 }
 
 // --- Quick Actions ---
@@ -99,14 +99,14 @@ class QuickActionsLoading extends QuickActionsState {
 }
 
 class QuickActionsLoaded extends QuickActionsState {
-  final List<Map<String, dynamic>> actions;
 
   const QuickActionsLoaded({required this.actions});
+  final List<Map<String, dynamic>> actions;
 }
 
 class QuickActionsError extends QuickActionsState {
-  final String message;
   const QuickActionsError(this.message);
+  final String message;
 }
 
 // --- Companion Operation ---
@@ -120,19 +120,19 @@ class CompanionOperationIdle extends CompanionOperationState {
 }
 
 class CompanionOperationRunning extends CompanionOperationState {
-  final String operation;
   const CompanionOperationRunning(this.operation);
+  final String operation;
 }
 
 class CompanionOperationSuccess extends CompanionOperationState {
+  const CompanionOperationSuccess(this.message, {this.data});
   final String message;
   final Map<String, dynamic>? data;
-  const CompanionOperationSuccess(this.message, {this.data});
 }
 
 class CompanionOperationError extends CompanionOperationState {
-  final String message;
   const CompanionOperationError(this.message);
+  final String message;
 }
 
 // --- Companion Dashboard ---
@@ -150,16 +150,6 @@ class CompanionDashboardLoading extends CompanionDashboardState {
 }
 
 class CompanionDashboardLoaded extends CompanionDashboardState {
-  final double todayRevenue;
-  final double yesterdayRevenue;
-  final int todayOrders;
-  final int yesterdayOrders;
-  final int activeStaff;
-  final int lowStockItems;
-  final int pendingOrders;
-  final bool storeIsOpen;
-  final String currency;
-  final Map<String, dynamic> raw;
 
   const CompanionDashboardLoaded({
     required this.todayRevenue,
@@ -173,11 +163,21 @@ class CompanionDashboardLoaded extends CompanionDashboardState {
     required this.currency,
     required this.raw,
   });
+  final double todayRevenue;
+  final double yesterdayRevenue;
+  final int todayOrders;
+  final int yesterdayOrders;
+  final int activeStaff;
+  final int lowStockItems;
+  final int pendingOrders;
+  final bool storeIsOpen;
+  final String currency;
+  final Map<String, dynamic> raw;
 }
 
 class CompanionDashboardError extends CompanionDashboardState {
-  final String message;
   const CompanionDashboardError(this.message);
+  final String message;
 }
 
 // --- Sales Summary ---
@@ -195,12 +195,6 @@ class SalesSummaryLoading extends SalesSummaryState {
 }
 
 class SalesSummaryLoaded extends SalesSummaryState {
-  final Map<String, dynamic> period;
-  final double totalRevenue;
-  final int totalOrders;
-  final double averageOrderValue;
-  final List<Map<String, dynamic>> dailyBreakdown;
-  final Map<String, dynamic> raw;
 
   const SalesSummaryLoaded({
     required this.period,
@@ -210,11 +204,17 @@ class SalesSummaryLoaded extends SalesSummaryState {
     required this.dailyBreakdown,
     required this.raw,
   });
+  final Map<String, dynamic> period;
+  final double totalRevenue;
+  final int totalOrders;
+  final double averageOrderValue;
+  final List<Map<String, dynamic>> dailyBreakdown;
+  final Map<String, dynamic> raw;
 }
 
 class SalesSummaryError extends SalesSummaryState {
-  final String message;
   const SalesSummaryError(this.message);
+  final String message;
 }
 
 // --- Active Orders ---
@@ -232,15 +232,15 @@ class ActiveOrdersLoading extends ActiveOrdersState {
 }
 
 class ActiveOrdersLoaded extends ActiveOrdersState {
-  final List<Map<String, dynamic>> orders;
-  final int total;
 
   const ActiveOrdersLoaded({required this.orders, required this.total});
+  final List<Map<String, dynamic>> orders;
+  final int total;
 }
 
 class ActiveOrdersError extends ActiveOrdersState {
-  final String message;
   const ActiveOrdersError(this.message);
+  final String message;
 }
 
 // --- Inventory Alerts ---
@@ -258,16 +258,16 @@ class InventoryAlertsLoading extends InventoryAlertsState {
 }
 
 class InventoryAlertsLoaded extends InventoryAlertsState {
+
+  const InventoryAlertsLoaded({required this.alerts, required this.lowStockCount, required this.outOfStockCount});
   final List<Map<String, dynamic>> alerts;
   final int lowStockCount;
   final int outOfStockCount;
-
-  const InventoryAlertsLoaded({required this.alerts, required this.lowStockCount, required this.outOfStockCount});
 }
 
 class InventoryAlertsError extends InventoryAlertsState {
-  final String message;
   const InventoryAlertsError(this.message);
+  final String message;
 }
 
 // --- Active Staff ---
@@ -285,13 +285,13 @@ class ActiveStaffLoading extends ActiveStaffState {
 }
 
 class ActiveStaffLoaded extends ActiveStaffState {
-  final List<Map<String, dynamic>> staff;
-  final int totalActive;
 
   const ActiveStaffLoaded({required this.staff, required this.totalActive});
+  final List<Map<String, dynamic>> staff;
+  final int totalActive;
 }
 
 class ActiveStaffError extends ActiveStaffState {
-  final String message;
   const ActiveStaffError(this.message);
+  final String message;
 }

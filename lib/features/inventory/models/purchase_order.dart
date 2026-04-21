@@ -1,20 +1,7 @@
 import 'package:wameedpos/features/inventory/enums/purchase_order_status.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order_item.dart';
 
 class PurchaseOrder {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String supplierId;
-  final String? supplierName;
-  final String? referenceNumber;
-  final PurchaseOrderStatus? status;
-  final DateTime? expectedDate;
-  final double? totalCost;
-  final String? notes;
-  final String createdBy;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-
   const PurchaseOrder({
     required this.id,
     required this.organizationId,
@@ -29,6 +16,7 @@ class PurchaseOrder {
     required this.createdBy,
     this.createdAt,
     this.updatedAt,
+    this.items,
   });
 
   factory PurchaseOrder.fromJson(Map<String, dynamic> json) {
@@ -46,8 +34,25 @@ class PurchaseOrder {
       createdBy: json['created_by'] as String,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+      items: json['items'] != null
+          ? (json['items'] as List).map((e) => PurchaseOrderItem.fromJson(e as Map<String, dynamic>)).toList()
+          : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String supplierId;
+  final String? supplierName;
+  final String? referenceNumber;
+  final PurchaseOrderStatus? status;
+  final DateTime? expectedDate;
+  final double? totalCost;
+  final String? notes;
+  final String createdBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<PurchaseOrderItem>? items;
 
   Map<String, dynamic> toJson() {
     return {

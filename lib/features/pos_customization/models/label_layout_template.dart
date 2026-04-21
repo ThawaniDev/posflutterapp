@@ -4,26 +4,6 @@ import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
 import 'package:wameedpos/features/labels/enums/label_type.dart';
 
 class LabelLayoutTemplate {
-  final String id;
-  final String name;
-  final String nameAr;
-  final String slug;
-  final LabelType labelType;
-  final int labelWidthMm;
-  final int labelHeightMm;
-  final BarcodeType? barcodeType;
-  final Map<String, dynamic>? barcodePosition;
-  final bool? showBarcodeNumber;
-  final List<dynamic> fieldLayout;
-  final String? fontFamily;
-  final FontSize? defaultFontSize;
-  final bool? showBorder;
-  final BorderStyle? borderStyle;
-  final String? backgroundColor;
-  final String? previewImageUrl;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const LabelLayoutTemplate({
     required this.id,
@@ -72,6 +52,26 @@ class LabelLayoutTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String nameAr;
+  final String slug;
+  final LabelType labelType;
+  final int labelWidthMm;
+  final int labelHeightMm;
+  final BarcodeType? barcodeType;
+  final Map<String, dynamic>? barcodePosition;
+  final bool? showBarcodeNumber;
+  final List<dynamic> fieldLayout;
+  final String? fontFamily;
+  final FontSize? defaultFontSize;
+  final bool? showBorder;
+  final BorderStyle? borderStyle;
+  final String? backgroundColor;
+  final String? previewImageUrl;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

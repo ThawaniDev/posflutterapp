@@ -1,35 +1,4 @@
 class MarketplaceListing {
-  final String id;
-  final String title;
-  final String? titleAr;
-  final String? description;
-  final String? descriptionAr;
-  final String? shortDescription;
-  final String? shortDescriptionAr;
-  final String? categoryId;
-  final String? categoryName;
-  final String status;
-  final String pricingType;
-  final double? priceAmount;
-  final String? priceCurrency;
-  final String? subscriptionInterval;
-  final List<String> previewImages;
-  final String? demoVideoUrl;
-  final List<String> tags;
-  final String? version;
-  final double averageRating;
-  final int reviewCount;
-  final int downloadCount;
-  final bool isFeatured;
-  final bool isVerified;
-  final String? publisherName;
-  final String? publisherAvatarUrl;
-  final String? posLayoutTemplateId;
-  final String? themeId;
-  final int? syncVersion;
-  final DateTime? publishedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const MarketplaceListing({
     required this.id,
@@ -64,12 +33,6 @@ class MarketplaceListing {
     this.createdAt,
     this.updatedAt,
   });
-
-  bool get isFree => pricingType == 'free';
-  bool get isSubscription => pricingType == 'subscription';
-
-  /// First preview image URL, or null.
-  String? get previewImageUrl => previewImages.isNotEmpty ? previewImages.first : null;
 
   factory MarketplaceListing.fromJson(Map<String, dynamic> json) {
     // Return full demo data for now for all fei
@@ -112,6 +75,43 @@ class MarketplaceListing {
       updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at'].toString()) : null,
     );
   }
+  final String id;
+  final String title;
+  final String? titleAr;
+  final String? description;
+  final String? descriptionAr;
+  final String? shortDescription;
+  final String? shortDescriptionAr;
+  final String? categoryId;
+  final String? categoryName;
+  final String status;
+  final String pricingType;
+  final double? priceAmount;
+  final String? priceCurrency;
+  final String? subscriptionInterval;
+  final List<String> previewImages;
+  final String? demoVideoUrl;
+  final List<String> tags;
+  final String? version;
+  final double averageRating;
+  final int reviewCount;
+  final int downloadCount;
+  final bool isFeatured;
+  final bool isVerified;
+  final String? publisherName;
+  final String? publisherAvatarUrl;
+  final String? posLayoutTemplateId;
+  final String? themeId;
+  final int? syncVersion;
+  final DateTime? publishedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  bool get isFree => pricingType == 'free';
+  bool get isSubscription => pricingType == 'subscription';
+
+  /// First preview image URL, or null.
+  String? get previewImageUrl => previewImages.isNotEmpty ? previewImages.first : null;
 
   Map<String, dynamic> toJson() {
     return {

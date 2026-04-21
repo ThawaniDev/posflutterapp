@@ -1,11 +1,4 @@
 class TrainingSession {
-  final String id;
-  final String staffUserId;
-  final String storeId;
-  final DateTime startedAt;
-  final DateTime? endedAt;
-  final int? transactionsCount;
-  final String? notes;
 
   const TrainingSession({
     required this.id,
@@ -28,6 +21,13 @@ class TrainingSession {
       notes: json['notes'] as String?,
     );
   }
+  final String id;
+  final String staffUserId;
+  final String storeId;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  final int? transactionsCount;
+  final String? notes;
 
   Map<String, dynamic> toJson() {
     return {

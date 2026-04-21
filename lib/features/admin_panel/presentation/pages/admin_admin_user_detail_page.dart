@@ -8,8 +8,8 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAdminUserDetailPage extends ConsumerStatefulWidget {
-  final String userId;
   const AdminAdminUserDetailPage({super.key, required this.userId});
+  final String userId;
 
   @override
   ConsumerState<AdminAdminUserDetailPage> createState() => _AdminAdminUserDetailPageState();
@@ -103,7 +103,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                   Text(l10n.roles, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   if (roles.isEmpty)
-                    Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
+                    const Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
                   else
                     ...roles.map((r) {
                       final role = r as Map<String, dynamic>;
@@ -155,7 +155,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
             width: 120,
             child: Text(
               label,
-              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary),
             ),
           ),
           Expanded(child: Text(value)),

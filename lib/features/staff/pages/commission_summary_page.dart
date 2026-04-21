@@ -5,15 +5,14 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
 
 class CommissionSummaryPage extends ConsumerStatefulWidget {
-  final String staffId;
-  final String staffName;
 
   const CommissionSummaryPage({super.key, required this.staffId, required this.staffName});
+  final String staffId;
+  final String staffName;
 
   @override
   ConsumerState<CommissionSummaryPage> createState() => _CommissionSummaryPageState();
@@ -132,7 +131,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
           color: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: AppRadius.borderMd,
 
-          border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+          border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
           child: Padding(
             padding: AppSpacing.paddingAll24,
             child: totalOrders == 0
@@ -143,7 +142,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                         Icon(
                           Icons.analytics_outlined,
                           size: 48,
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                         AppSpacing.gapH16,
                         Text(
@@ -195,10 +194,10 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _MetricRow extends StatelessWidget {
-  final String label;
-  final String value;
 
   const _MetricRow({required this.label, required this.value});
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {

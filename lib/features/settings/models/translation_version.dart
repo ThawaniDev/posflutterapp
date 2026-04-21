@@ -1,9 +1,4 @@
 class TranslationVersion {
-  final String id;
-  final String versionHash;
-  final DateTime? publishedAt;
-  final String? publishedBy;
-  final String? notes;
 
   const TranslationVersion({
     required this.id,
@@ -22,6 +17,11 @@ class TranslationVersion {
       notes: json['notes'] as String?,
     );
   }
+  final String id;
+  final String versionHash;
+  final DateTime? publishedAt;
+  final String? publishedBy;
+  final String? notes;
 
   Map<String, dynamic> toJson() {
     return {

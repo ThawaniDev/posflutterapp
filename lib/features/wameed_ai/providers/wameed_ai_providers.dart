@@ -18,9 +18,9 @@ final aiFeaturesProvider = StateNotifierProvider<AIFeaturesNotifier, AIFeaturesS
 });
 
 class AIFeaturesNotifier extends StateNotifier<AIFeaturesState> {
-  final WameedAIRepository _repo;
 
   AIFeaturesNotifier(this._repo) : super(const AIFeaturesInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load() async {
     state = const AIFeaturesLoading();
@@ -51,9 +51,9 @@ final aiFeatureResultProvider = StateNotifierProvider<AIFeatureResultNotifier, A
 });
 
 class AIFeatureResultNotifier extends StateNotifier<AIFeatureResultState> {
-  final WameedAIRepository _repo;
 
   AIFeatureResultNotifier(this._repo) : super(const AIFeatureResultInitial());
+  final WameedAIRepository _repo;
 
   Future<void> invoke(String slug, {Map<String, dynamic>? params}) async {
     state = const AIFeatureResultLoading();
@@ -77,9 +77,9 @@ final aiSuggestionsProvider = StateNotifierProvider<AISuggestionsNotifier, AISug
 });
 
 class AISuggestionsNotifier extends StateNotifier<AISuggestionsState> {
-  final WameedAIRepository _repo;
 
   AISuggestionsNotifier(this._repo) : super(const AISuggestionsInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load({int page = 1, String? featureSlug, String? status}) async {
     state = const AISuggestionsLoading();
@@ -117,9 +117,9 @@ final aiUsageProvider = StateNotifierProvider<AIUsageNotifier, AIUsageState>((re
 });
 
 class AIUsageNotifier extends StateNotifier<AIUsageState> {
-  final WameedAIRepository _repo;
 
   AIUsageNotifier(this._repo) : super(const AIUsageInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load() async {
     state = const AIUsageLoading();
@@ -141,9 +141,9 @@ final aiSmartSearchProvider = StateNotifierProvider<AISmartSearchNotifier, AISma
 });
 
 class AISmartSearchNotifier extends StateNotifier<AISmartSearchState> {
-  final WameedAIRepository _repo;
 
   AISmartSearchNotifier(this._repo) : super(const AISmartSearchInitial());
+  final WameedAIRepository _repo;
 
   Future<void> search(String query) async {
     state = const AISmartSearchLoading();
@@ -167,9 +167,9 @@ final aiBillingSummaryProvider = StateNotifierProvider<AIBillingSummaryNotifier,
 });
 
 class AIBillingSummaryNotifier extends StateNotifier<AIBillingSummaryState> {
-  final WameedAIRepository _repo;
 
   AIBillingSummaryNotifier(this._repo) : super(const AIBillingSummaryInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load() async {
     state = const AIBillingSummaryLoading();
@@ -191,9 +191,9 @@ final aiBillingInvoicesProvider = StateNotifierProvider<AIBillingInvoicesNotifie
 });
 
 class AIBillingInvoicesNotifier extends StateNotifier<AIBillingInvoicesState> {
-  final WameedAIRepository _repo;
 
   AIBillingInvoicesNotifier(this._repo) : super(const AIBillingInvoicesInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load({int page = 1}) async {
     state = const AIBillingInvoicesLoading();
@@ -221,9 +221,9 @@ final aiBillingInvoiceDetailProvider = StateNotifierProvider<AIBillingInvoiceDet
 });
 
 class AIBillingInvoiceDetailNotifier extends StateNotifier<AIBillingInvoiceDetailState> {
-  final WameedAIRepository _repo;
 
   AIBillingInvoiceDetailNotifier(this._repo) : super(const AIBillingInvoiceDetailInitial());
+  final WameedAIRepository _repo;
 
   Future<void> load(String invoiceId) async {
     state = const AIBillingInvoiceDetailLoading();

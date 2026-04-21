@@ -10,9 +10,9 @@ final paymentsProvider = StateNotifierProvider<PaymentsNotifier, PaymentsState>(
 });
 
 class PaymentsNotifier extends StateNotifier<PaymentsState> {
-  final PaymentRepository _repo;
 
   PaymentsNotifier(this._repo) : super(const PaymentsInitial());
+  final PaymentRepository _repo;
 
   Future<void> load({int page = 1, String? method}) async {
     state = const PaymentsLoading();
@@ -49,9 +49,9 @@ final cashSessionsProvider = StateNotifierProvider<CashSessionsNotifier, CashSes
 });
 
 class CashSessionsNotifier extends StateNotifier<CashSessionsState> {
-  final PaymentRepository _repo;
 
   CashSessionsNotifier(this._repo) : super(const CashSessionsInitial());
+  final PaymentRepository _repo;
 
   Future<void> load({int page = 1}) async {
     state = const CashSessionsLoading();
@@ -106,9 +106,9 @@ final expensesProvider = StateNotifierProvider<ExpensesNotifier, ExpensesState>(
 });
 
 class ExpensesNotifier extends StateNotifier<ExpensesState> {
-  final PaymentRepository _repo;
 
   ExpensesNotifier(this._repo) : super(const ExpensesInitial());
+  final PaymentRepository _repo;
 
   Future<void> load({int page = 1}) async {
     state = const ExpensesLoading();
@@ -145,9 +145,9 @@ final giftCardProvider = StateNotifierProvider<GiftCardNotifier, GiftCardState>(
 });
 
 class GiftCardNotifier extends StateNotifier<GiftCardState> {
-  final PaymentRepository _repo;
 
   GiftCardNotifier(this._repo) : super(const GiftCardInitial());
+  final PaymentRepository _repo;
 
   Future<void> issueGiftCard(Map<String, dynamic> data) async {
     state = const GiftCardLoading();

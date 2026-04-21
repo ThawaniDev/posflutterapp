@@ -294,10 +294,10 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: (aiEnabled ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
+                      color: (aiEnabled ? AppColors.success : AppColors.mutedFor(context)).withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderLg,
                     ),
-                    child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.textMutedLight),
+                    child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.mutedFor(context)),
                   ),
                   title: Text(name.toString(), style: AppTypography.titleSmall),
                   subtitle: Text(
@@ -306,7 +306,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> {
                   ),
                   trailing: Switch(
                     value: aiEnabled,
-                    activeColor: AppColors.primary,
+                    activeThumbColor: AppColors.primary,
                     onChanged: (v) => ref
                         .read(wameedAIAdminActionProvider.notifier)
                         .toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),

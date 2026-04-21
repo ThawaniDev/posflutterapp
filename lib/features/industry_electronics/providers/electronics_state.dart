@@ -15,11 +15,11 @@ class ElectronicsLoading extends ElectronicsState {
 }
 
 class ElectronicsLoaded extends ElectronicsState {
+
+  const ElectronicsLoaded({required this.imeiRecords, required this.repairJobs, required this.tradeIns});
   final List<DeviceImeiRecord> imeiRecords;
   final List<RepairJob> repairJobs;
   final List<TradeInRecord> tradeIns;
-
-  const ElectronicsLoaded({required this.imeiRecords, required this.repairJobs, required this.tradeIns});
 
   ElectronicsLoaded copyWith({List<DeviceImeiRecord>? imeiRecords, List<RepairJob>? repairJobs, List<TradeInRecord>? tradeIns}) =>
       ElectronicsLoaded(
@@ -30,6 +30,6 @@ class ElectronicsLoaded extends ElectronicsState {
 }
 
 class ElectronicsError extends ElectronicsState {
-  final String message;
   const ElectronicsError({required this.message});
+  final String message;
 }

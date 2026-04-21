@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'nice_to_have_providers.dart';
-import 'widgets/wishlist_widget.dart';
-import 'widgets/appointments_widget.dart';
-import 'widgets/cfd_config_widget.dart';
-import 'widgets/gift_registry_widget.dart';
-import 'widgets/signage_widget.dart';
-import 'widgets/gamification_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_providers.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/wishlist_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/appointments_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/cfd_config_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/gift_registry_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/signage_widget.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/widgets/gamification_widget.dart';
 
 class NiceToHaveDashboardPage extends ConsumerStatefulWidget {
   const NiceToHaveDashboardPage({super.key});

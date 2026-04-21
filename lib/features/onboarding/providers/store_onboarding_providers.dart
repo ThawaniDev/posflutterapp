@@ -9,9 +9,8 @@ final myStoreProvider = StateNotifierProvider<MyStoreNotifier, StoreState>((ref)
 });
 
 class MyStoreNotifier extends StateNotifier<StoreState> {
-  final StoreRepository _repo;
-
   MyStoreNotifier(this._repo) : super(const StoreInitial());
+  final StoreRepository _repo;
 
   Future<void> load() async {
     state = const StoreLoading();
@@ -31,6 +30,15 @@ class MyStoreNotifier extends StateNotifier<StoreState> {
       state = StoreError(e.toString());
     }
   }
+
+  Future<void> applyBusinessType(String storeId, String code) async {
+    try {
+      final store = await _repo.applyBusinessType(storeId, code);
+      state = StoreLoaded(store);
+    } catch (e) {
+      state = StoreError(e.toString());
+    }
+  }
 }
 
 // ─── Store Settings Provider ─────────────────────────────────────
@@ -40,10 +48,9 @@ final storeSettingsProvider = StateNotifierProvider.family<StoreSettingsNotifier
 });
 
 class StoreSettingsNotifier extends StateNotifier<StoreSettingsState> {
+  StoreSettingsNotifier(this._repo, this._storeId) : super(const StoreSettingsInitial());
   final StoreRepository _repo;
   final String _storeId;
-
-  StoreSettingsNotifier(this._repo, this._storeId) : super(const StoreSettingsInitial());
 
   Future<void> load() async {
     state = const StoreSettingsLoading();
@@ -72,10 +79,9 @@ final workingHoursProvider = StateNotifierProvider.family<WorkingHoursNotifier, 
 });
 
 class WorkingHoursNotifier extends StateNotifier<WorkingHoursState> {
+  WorkingHoursNotifier(this._repo, this._storeId) : super(const WorkingHoursInitial());
   final StoreRepository _repo;
   final String _storeId;
-
-  WorkingHoursNotifier(this._repo, this._storeId) : super(const WorkingHoursInitial());
 
   Future<void> load() async {
     state = const WorkingHoursLoading();
@@ -104,9 +110,8 @@ final businessTypesProvider = StateNotifierProvider<BusinessTypesNotifier, Busin
 });
 
 class BusinessTypesNotifier extends StateNotifier<BusinessTypesState> {
-  final StoreRepository _repo;
-
   BusinessTypesNotifier(this._repo) : super(const BusinessTypesInitial());
+  final StoreRepository _repo;
 
   Future<void> load() async {
     state = const BusinessTypesLoading();
@@ -126,9 +131,8 @@ final onboardingProvider = StateNotifierProvider<OnboardingNotifier, OnboardingS
 });
 
 class OnboardingNotifier extends StateNotifier<OnboardingState> {
-  final StoreRepository _repo;
-
   OnboardingNotifier(this._repo) : super(const OnboardingInitial());
+  final StoreRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const OnboardingLoading();

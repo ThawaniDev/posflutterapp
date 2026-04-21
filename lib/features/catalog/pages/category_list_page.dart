@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
@@ -123,7 +121,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                     subtitle: Text(l10n.catalogVisibleInPosCatalog),
                     value: isActive,
                     onChanged: (v) => setDialogState(() => isActive = v),
-                    activeColor: AppColors.primary,
+                    activeThumbColor: AppColors.primary,
                     contentPadding: EdgeInsets.zero,
                   ),
                 ],
@@ -285,7 +283,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
             Text(state.message, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.lg),
@@ -332,15 +330,15 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surfaceContainerLow,
-              border: Border(bottom: BorderSide(color: AppColors.borderLight)),
+              border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: Row(
               children: [
-                Icon(Icons.account_tree_outlined, size: 16, color: AppColors.textMutedLight),
+                Icon(Icons.account_tree_outlined, size: 16, color: AppColors.mutedFor(context)),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   '$totalCount categories ($rootCount root)',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),

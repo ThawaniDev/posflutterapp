@@ -267,7 +267,7 @@ class _StatChip extends StatelessWidget {
                 ),
                 Text(
                   label,
-                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -320,7 +320,7 @@ class _BranchNameCell extends StatelessWidget {
                 if (branch.branchCode != null)
                   Text(
                     branch.branchCode!,
-                    style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

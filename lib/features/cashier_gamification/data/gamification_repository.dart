@@ -12,9 +12,9 @@ final gamificationRepositoryProvider = Provider<GamificationRepository>((ref) {
 });
 
 class GamificationRepository {
-  final GamificationApiService _api;
 
   GamificationRepository(this._api);
+  final GamificationApiService _api;
 
   // ─── Leaderboard ──────────────────────────────────────────────
   Future<List<CashierPerformanceSnapshot>> getLeaderboard({String? date, String? periodType, String? sortBy}) =>

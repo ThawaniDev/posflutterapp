@@ -1,16 +1,4 @@
 class OrderItem {
-  final String id;
-  final String orderId;
-  final String productId;
-  final String? variantId;
-  final String productName;
-  final String? productNameAr;
-  final double quantity;
-  final double unitPrice;
-  final double? discountAmount;
-  final double? taxAmount;
-  final double total;
-  final String? notes;
 
   const OrderItem({
     required this.id,
@@ -43,6 +31,18 @@ class OrderItem {
       notes: json['notes'] as String?,
     );
   }
+  final String id;
+  final String orderId;
+  final String productId;
+  final String? variantId;
+  final String productName;
+  final String? productNameAr;
+  final double quantity;
+  final double unitPrice;
+  final double? discountAmount;
+  final double? taxAmount;
+  final double total;
+  final String? notes;
 
   Map<String, dynamic> toJson() {
     return {

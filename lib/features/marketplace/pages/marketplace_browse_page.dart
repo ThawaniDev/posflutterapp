@@ -102,8 +102,8 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Column(
         children: [
@@ -163,7 +163,7 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
                 ),
                 if (categories.isNotEmpty) ...[
                   AppSpacing.gapW16,
-                  Container(width: 1, height: 24, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  Container(width: 1, height: 24, color: AppColors.borderFor(context)),
                   AppSpacing.gapW16,
                   // Category filters
                   ...categories.map(
@@ -217,8 +217,8 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-              border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+              color: AppColors.surfaceFor(context),
+              border: Border(top: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -274,13 +274,13 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
                     if (listing.categoryName != null)
                       Text(
                         listing.categoryName!,
-                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                       ),
                     const Spacer(),
                     // Rating + downloads
                     Row(
                       children: [
-                        Icon(Icons.star_rounded, size: 14, color: Colors.amber),
+                        const Icon(Icons.star_rounded, size: 14, color: Colors.amber),
                         AppSpacing.gapW4,
                         Text(
                           listing.averageRating.toStringAsFixed(1),
@@ -290,12 +290,12 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
                         Icon(
                           Icons.download_rounded,
                           size: 14,
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                         AppSpacing.gapW4,
                         Text(
                           '${listing.downloadCount}',
-                          style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                          style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                         ),
                       ],
                     ),

@@ -94,10 +94,10 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
 }
 
 class _PaymentListTile extends StatelessWidget {
-  final ProviderPayment payment;
-  final VoidCallback onTap;
 
   const _PaymentListTile({required this.payment, required this.onTap});
+  final ProviderPayment payment;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -151,13 +151,13 @@ class _PaymentListTile extends StatelessWidget {
                 Text(dateStr, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                 const Spacer(),
                 if (payment.confirmationEmailSent)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8),
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(start: 8),
                     child: Icon(Icons.email_outlined, size: 16, color: AppColors.success),
                   ),
                 if (payment.invoiceGenerated)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8),
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(start: 8),
                     child: Icon(Icons.receipt_long_outlined, size: 16, color: AppColors.success),
                   ),
               ],
@@ -170,9 +170,9 @@ class _PaymentListTile extends StatelessWidget {
 }
 
 class _StatusBadge extends StatelessWidget {
-  final ProviderPaymentStatus status;
 
   const _StatusBadge({required this.status});
+  final ProviderPaymentStatus status;
 
   @override
   Widget build(BuildContext context) {

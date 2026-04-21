@@ -6,9 +6,9 @@ final securityRepositoryProvider = Provider<SecurityRepository>((ref) {
 });
 
 class SecurityRepository {
-  final SecurityApiService _api;
 
   SecurityRepository(this._api);
+  final SecurityApiService _api;
 
   // Overview
   Future<Map<String, dynamic>> getOverview({required String storeId}) => _api.getOverview(storeId: storeId);

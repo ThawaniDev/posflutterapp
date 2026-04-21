@@ -168,7 +168,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
                         const SizedBox(width: AppSpacing.sm),
                         PosBadge(
                           label: isActive ? l10n.active : l10n.inactive,
-                          customColor: isActive ? AppColors.success : AppColors.textMutedLight,
+                          customColor: isActive ? AppColors.success : AppColors.mutedFor(context),
                         ),
                       ],
                     ),

@@ -5,10 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/receivables/enums/receivable_enums.dart';
 import 'package:wameedpos/features/receivables/models/receivable.dart';
@@ -89,7 +85,6 @@ class _ReceivableListPageState extends ConsumerState<ReceivableListPage> {
       searchController: _searchController,
       onSearchChanged: (value) => ref.read(receivablesProvider.notifier).search(value),
       actions: [
-        // Info button removed - not implemented for receivables
         PopupMenuButton<String?>(
           icon: const Icon(Icons.filter_list),
           tooltip: l10n.receivablesFilterByStatus,

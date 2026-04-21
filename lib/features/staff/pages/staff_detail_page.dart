@@ -14,9 +14,9 @@ import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 class StaffDetailPage extends ConsumerStatefulWidget {
-  final String staffId;
 
   const StaffDetailPage({super.key, required this.staffId});
+  final String staffId;
 
   @override
   ConsumerState<StaffDetailPage> createState() => _StaffDetailPageState();
@@ -113,11 +113,11 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _ProfileHeader extends StatelessWidget {
+
+  const _ProfileHeader({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _ProfileHeader({required this.staff, required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class _ProfileHeader extends StatelessWidget {
 
     return Container(
       padding: AppSpacing.paddingAll16,
-      color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+      color: AppColors.surfaceFor(context),
       child: Row(
         children: [
           CircleAvatar(
@@ -161,7 +161,7 @@ class _ProfileHeader extends StatelessWidget {
                       staff.employmentType.value.replaceAll('_', ' ').toUpperCase(),
                       style: Theme.of(
                         context,
-                      ).textTheme.labelSmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      ).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),
@@ -182,17 +182,17 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _StatusBadge extends StatelessWidget {
-  final StaffStatus? status;
 
   const _StatusBadge({this.status});
+  final StaffStatus? status;
 
   @override
   Widget build(BuildContext context) {
     final (color, label) = switch (status) {
       StaffStatus.active => (AppColors.success, 'Active'),
-      StaffStatus.inactive => (AppColors.textMutedLight, 'Inactive'),
+      StaffStatus.inactive => (AppColors.mutedFor(context), 'Inactive'),
       StaffStatus.onLeave => (AppColors.warning, 'On Leave'),
-      null => (AppColors.textMutedLight, 'Unknown'),
+      null => (AppColors.mutedFor(context), 'Unknown'),
     };
 
     return Container(
@@ -211,11 +211,11 @@ class _StatusBadge extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _OverviewTab extends StatelessWidget {
+
+  const _OverviewTab({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _OverviewTab({required this.staff, required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +237,7 @@ class _OverviewTab extends StatelessWidget {
                 padding: AppSpacing.paddingAll16,
                 child: Text(
                   l10n.staffNoContactInfo,
-                  style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(color: AppColors.mutedFor(context)),
                 ),
               ),
           ],
@@ -316,11 +316,11 @@ class _OverviewTab extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _BranchAssignmentsTab extends ConsumerWidget {
+
+  const _BranchAssignmentsTab({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _BranchAssignmentsTab({required this.staff, required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -344,7 +344,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
               margin: const EdgeInsets.only(bottom: 8),
               borderRadius: AppRadius.borderMd,
 
-              border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+              border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
               color: isDark ? AppColors.cardDark : AppColors.cardLight,
               child: ListTile(
                 leading: Container(
@@ -356,7 +356,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                   ),
                   child: Icon(
                     Icons.store,
-                    color: a.isPrimary ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    color: a.isPrimary ? AppColors.primary : (AppColors.mutedFor(context)),
                     size: 20,
                   ),
                 ),
@@ -369,7 +369,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                 ),
                 subtitle: Text(
                   a.roleName ?? l10n.staffNoRole,
-                  style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(color: AppColors.mutedFor(context)),
                 ),
                 trailing: a.isPrimary
                     ? Container(
@@ -395,11 +395,11 @@ class _BranchAssignmentsTab extends ConsumerWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _AttendanceTab extends ConsumerStatefulWidget {
+
+  const _AttendanceTab({required this.staffId, required this.isDark, required this.l10n});
   final String staffId;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _AttendanceTab({required this.staffId, required this.isDark, required this.l10n});
 
   @override
   ConsumerState<_AttendanceTab> createState() => _AttendanceTabState();
@@ -441,7 +441,7 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                     borderRadius: AppRadius.borderMd,
 
                     border: Border.fromBorderSide(
-                      BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight),
+                      BorderSide(color: AppColors.borderFor(context)),
                     ),
                     color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
                     child: Padding(
@@ -472,7 +472,7 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                                       'In: ${timeFormat.format(r.clockInAt)}',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                       ),
                                     ),
                                     if (r.clockOutAt != null) ...[
@@ -481,7 +481,7 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                                         'Out: ${timeFormat.format(r.clockOutAt!)}',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                          color: AppColors.mutedFor(context),
                                         ),
                                       ),
                                     ],
@@ -517,11 +517,11 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
 // ═══════════════════════════════════════════════════════════════
 
 class _ActivityTab extends ConsumerStatefulWidget {
+
+  const _ActivityTab({required this.staffId, required this.isDark, required this.l10n});
   final String staffId;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _ActivityTab({required this.staffId, required this.isDark, required this.l10n});
 
   @override
   ConsumerState<_ActivityTab> createState() => _ActivityTabState();
@@ -582,10 +582,10 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
           margin: const EdgeInsets.only(bottom: 8),
           borderRadius: AppRadius.borderMd,
 
-          border: Border.fromBorderSide(BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight)),
+          border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
           color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
           child: ListTile(
-            leading: Icon(Icons.history, color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            leading: Icon(Icons.history, color: AppColors.mutedFor(context)),
             title: Text(
               a['action'] as String? ?? '',
               style: TextStyle(
@@ -599,14 +599,14 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
                 if (a['details'] != null)
                   Text(
                     a['details'].toString(),
-                    style: TextStyle(color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(color: AppColors.mutedFor(context)),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 if (createdAt != null)
                   Text(
                     dateTimeFormat.format(createdAt),
-                    style: TextStyle(fontSize: 11, color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
                   ),
               ],
             ),
@@ -622,11 +622,11 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
 // ═══════════════════════════════════════════════════════════════
 
 class _LinkedUserSection extends ConsumerStatefulWidget {
+
+  const _LinkedUserSection({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _LinkedUserSection({required this.staff, required this.isDark, required this.l10n});
 
   @override
   ConsumerState<_LinkedUserSection> createState() => _LinkedUserSectionState();
@@ -745,11 +745,11 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
             padding: AppSpacing.paddingAll16,
             child: Column(
               children: [
-                Icon(Icons.person_off, size: 40, color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                Icon(Icons.person_off, size: 40, color: AppColors.mutedFor(context)),
                 AppSpacing.gapH8,
                 Text(
                   widget.l10n.staffLinkNone,
-                  style: TextStyle(color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(color: AppColors.mutedFor(context)),
                   textAlign: TextAlign.center,
                 ),
                 AppSpacing.gapH12,
@@ -773,11 +773,11 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
 // ═══════════════════════════════════════════════════════════════
 
 class _LinkableUsersDialog extends StatefulWidget {
+
+  const _LinkableUsersDialog({required this.users, required this.isDark, required this.l10n});
   final List<Map<String, dynamic>> users;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _LinkableUsersDialog({required this.users, required this.isDark, required this.l10n});
 
   @override
   State<_LinkableUsersDialog> createState() => _LinkableUsersDialogState();
@@ -844,12 +844,12 @@ class _LinkableUsersDialogState extends State<_LinkableUsersDialog> {
 // ═══════════════════════════════════════════════════════════════
 
 class _SectionCard extends StatelessWidget {
+
+  const _SectionCard({required this.isDark, required this.title, required this.icon, required this.children});
   final bool isDark;
   final String title;
   final IconData icon;
   final List<Widget> children;
-
-  const _SectionCard({required this.isDark, required this.title, required this.icon, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -857,7 +857,7 @@ class _SectionCard extends StatelessWidget {
       elevation: 0,
       borderRadius: AppRadius.borderMd,
 
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -887,11 +887,11 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
+
+  const _InfoRow({required this.icon, required this.label, required this.value});
   final IconData icon;
   final String label;
   final String value;
-
-  const _InfoRow({required this.icon, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -900,7 +900,7 @@ class _InfoRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(icon, size: 18, color: AppColors.mutedFor(context)),
           AppSpacing.gapW12,
           Text(label, style: TextStyle(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           const Spacer(),

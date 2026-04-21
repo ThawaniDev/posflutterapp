@@ -16,9 +16,9 @@ final staffApiServiceProvider = Provider<StaffApiService>((ref) {
 });
 
 class StaffApiService {
-  final Dio _dio;
 
   StaffApiService(this._dio);
+  final Dio _dio;
 
   /// Parses a paginated API response that may be a Map (with pagination meta) or a flat List.
   PaginatedResult<T> _parsePaginated<T>(
@@ -58,9 +58,9 @@ class StaffApiService {
         'page': page,
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
-        if (status != null) 'status': status,
-        if (employmentType != null) 'employment_type': employmentType,
-        if (storeId != null) 'store_id': storeId,
+        'status': ?status,
+        'employment_type': ?employmentType,
+        'store_id': ?storeId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -113,9 +113,9 @@ class StaffApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (staffUserId != null) 'staff_user_id': staffUserId,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
+        'staff_user_id': ?staffUserId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -125,7 +125,7 @@ class StaffApiService {
   Future<AttendanceRecord> clockIn({required String staffUserId, required String storeId, String? notes}) async {
     final response = await _dio.post(
       ApiEndpoints.attendanceClock,
-      data: {'action': 'clock_in', 'staff_user_id': staffUserId, 'store_id': storeId, if (notes != null) 'notes': notes},
+      data: {'action': 'clock_in', 'staff_user_id': staffUserId, 'store_id': storeId, 'notes': ?notes},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AttendanceRecord.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -134,7 +134,7 @@ class StaffApiService {
   Future<AttendanceRecord> clockOut({required String staffUserId, required String storeId, String? notes}) async {
     final response = await _dio.post(
       ApiEndpoints.attendanceClock,
-      data: {'action': 'clock_out', 'staff_user_id': staffUserId, 'store_id': storeId, if (notes != null) 'notes': notes},
+      data: {'action': 'clock_out', 'staff_user_id': staffUserId, 'store_id': storeId, 'notes': ?notes},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AttendanceRecord.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -163,10 +163,10 @@ class StaffApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (staffUserId != null) 'staff_user_id': staffUserId,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
-        if (status != null) 'status': status,
+        'staff_user_id': ?staffUserId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+        'status': ?status,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -204,12 +204,46 @@ class StaffApiService {
     return ShiftTemplate.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
+  Future<ShiftTemplate> updateShiftTemplate(String templateId, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.shiftTemplateById(templateId), data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return ShiftTemplate.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteShiftTemplate(String templateId) async {
+    await _dio.delete(ApiEndpoints.shiftTemplateById(templateId));
+  }
+
+  // ─── Attendance Summary ───────────────────────────────────
+
+  Future<Map<String, dynamic>> getAttendanceSummary({String? staffUserId, String? dateFrom, String? dateTo}) async {
+    final response = await _dio.get(
+      ApiEndpoints.attendanceSummary,
+      queryParameters: {
+        'staff_user_id': ?staffUserId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  // ─── Bulk Shifts ──────────────────────────────────────────
+
+  Future<List<ShiftSchedule>> bulkCreateShifts(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.shiftsBulk, data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.dataList;
+    return list.map((j) => ShiftSchedule.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
   // ─── Commissions ──────────────────────────────────────────
 
   Future<Map<String, dynamic>> getCommissionSummary(String staffId, {String? dateFrom, String? dateTo}) async {
     final response = await _dio.get(
       ApiEndpoints.staffMemberCommissions(staffId),
-      queryParameters: {if (dateFrom != null) 'date_from': dateFrom, if (dateTo != null) 'date_to': dateTo},
+      queryParameters: {'date_from': ?dateFrom, 'date_to': ?dateTo},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -265,9 +299,9 @@ class StaffApiService {
     final response = await _dio.get(
       ApiEndpoints.attendanceExport,
       queryParameters: {
-        if (staffUserId != null) 'staff_user_id': staffUserId,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
+        'staff_user_id': ?staffUserId,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

@@ -1,13 +1,4 @@
 class Permission {
-  final int id;
-  final String name;
-  final String displayName;
-  final String? displayNameAr;
-  final String module;
-  final String guardName;
-  final bool? requiresPin;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Permission({
     required this.id,
@@ -21,15 +12,6 @@ class Permission {
     this.updatedAt,
   });
 
-  /// Returns the localized display name based on the given locale.
-  /// Falls back to English [displayName] if Arabic is not available.
-  String localizedName(String locale) {
-    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
-      return displayNameAr!;
-    }
-    return displayName;
-  }
-
   factory Permission.fromJson(Map<String, dynamic> json) {
     return Permission(
       id: (json['id'] as num).toInt(),
@@ -42,6 +24,24 @@ class Permission {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
+  }
+  final int id;
+  final String name;
+  final String displayName;
+  final String? displayNameAr;
+  final String module;
+  final String guardName;
+  final bool? requiresPin;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  /// Returns the localized display name based on the given locale.
+  /// Falls back to English [displayName] if Arabic is not available.
+  String localizedName(String locale) {
+    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
+      return displayNameAr!;
+    }
+    return displayName;
   }
 
   Map<String, dynamic> toJson() {

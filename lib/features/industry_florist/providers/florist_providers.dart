@@ -8,8 +8,8 @@ final floristProvider = StateNotifierProvider<FloristNotifier, FloristState>((re
 });
 
 class FloristNotifier extends StateNotifier<FloristState> {
-  final FloristRepository _repo;
   FloristNotifier(this._repo) : super(const FloristInitial());
+  final FloristRepository _repo;
 
   Future<void> load() async {
     state = const FloristLoading();

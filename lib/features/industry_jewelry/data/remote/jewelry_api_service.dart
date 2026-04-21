@@ -12,13 +12,13 @@ final jewelryApiServiceProvider = Provider<JewelryApiService>((ref) {
 });
 
 class JewelryApiService {
-  final Dio _dio;
   JewelryApiService(this._dio);
+  final Dio _dio;
 
   Future<List<DailyMetalRate>> listMetalRates({String? metalType, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.jewelryMetalRates,
-      queryParameters: {'per_page': perPage, if (metalType != null) 'metal_type': metalType},
+      queryParameters: {'per_page': perPage, 'metal_type': ?metalType},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -36,8 +36,8 @@ class JewelryApiService {
       ApiEndpoints.jewelryProductDetails,
       queryParameters: {
         'per_page': perPage,
-        if (metalType != null) 'metal_type': metalType,
-        if (productId != null) 'product_id': productId,
+        'metal_type': ?metalType,
+        'product_id': ?productId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -62,8 +62,8 @@ class JewelryApiService {
       ApiEndpoints.jewelryBuybacks,
       queryParameters: {
         'per_page': perPage,
-        if (metalType != null) 'metal_type': metalType,
-        if (customerId != null) 'customer_id': customerId,
+        'metal_type': ?metalType,
+        'customer_id': ?customerId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

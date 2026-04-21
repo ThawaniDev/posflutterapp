@@ -1,18 +1,4 @@
 class DeviceRegistration {
-  final String id;
-  final String storeId;
-  final String deviceName;
-  final String hardwareId;
-  final String? osInfo;
-  final String? appVersion;
-  final DateTime? lastActiveAt;
-  final bool isActive;
-  final bool remoteWipeRequested;
-  final DateTime? registeredAt;
-  final String? ipAddress;
-  final String? screenResolution;
-  final Map<String, dynamic>? lastKnownLocation;
-  final String? deviceType;
 
   const DeviceRegistration({
     required this.id,
@@ -51,6 +37,20 @@ class DeviceRegistration {
       deviceType: json['device_type'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final String deviceName;
+  final String hardwareId;
+  final String? osInfo;
+  final String? appVersion;
+  final DateTime? lastActiveAt;
+  final bool isActive;
+  final bool remoteWipeRequested;
+  final DateTime? registeredAt;
+  final String? ipAddress;
+  final String? screenResolution;
+  final Map<String, dynamic>? lastKnownLocation;
+  final String? deviceType;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/sync/enums/sync_conflict_resolution.dart';
 
 class SyncConflict {
-  final String id;
-  final String storeId;
-  final String tableName;
-  final String recordId;
-  final Map<String, dynamic> localData;
-  final Map<String, dynamic> cloudData;
-  final SyncConflictResolution? resolution;
-  final String? resolvedBy;
-  final DateTime? detectedAt;
-  final DateTime? resolvedAt;
 
   const SyncConflict({
     required this.id,
@@ -39,6 +29,16 @@ class SyncConflict {
       resolvedAt: json['resolved_at'] != null ? DateTime.parse(json['resolved_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String tableName;
+  final String recordId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> cloudData;
+  final SyncConflictResolution? resolution;
+  final String? resolvedBy;
+  final DateTime? detectedAt;
+  final DateTime? resolvedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/gamification_settings.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
@@ -58,7 +57,7 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
             AppSpacing.gapH12,
@@ -200,12 +199,6 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
 }
 
 class _SliderSetting extends StatelessWidget {
-  final String label;
-  final double value;
-  final double min;
-  final double max;
-  final int divisions;
-  final ValueChanged<double> onChanged;
 
   const _SliderSetting({
     required this.label,
@@ -215,6 +208,12 @@ class _SliderSetting extends StatelessWidget {
     required this.divisions,
     required this.onChanged,
   });
+  final String label;
+  final double value;
+  final double min;
+  final double max;
+  final int divisions;
+  final ValueChanged<double> onChanged;
 
   @override
   Widget build(BuildContext context) {

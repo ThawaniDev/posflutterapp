@@ -1,18 +1,4 @@
 class GamificationSettings {
-  final String id;
-  final String storeId;
-  final bool leaderboardEnabled;
-  final bool badgesEnabled;
-  final bool anomalyDetectionEnabled;
-  final bool shiftReportsEnabled;
-  final bool autoGenerateOnSessionClose;
-  final double anomalyZScoreThreshold;
-  final double riskScoreVoidWeight;
-  final double riskScoreNoSaleWeight;
-  final double riskScoreDiscountWeight;
-  final double riskScorePriceOverrideWeight;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const GamificationSettings({
     required this.id,
@@ -49,6 +35,20 @@ class GamificationSettings {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final bool leaderboardEnabled;
+  final bool badgesEnabled;
+  final bool anomalyDetectionEnabled;
+  final bool shiftReportsEnabled;
+  final bool autoGenerateOnSessionClose;
+  final double anomalyZScoreThreshold;
+  final double riskScoreVoidWeight;
+  final double riskScoreNoSaleWeight;
+  final double riskScoreDiscountWeight;
+  final double riskScorePriceOverrideWeight;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/support/enums/ticket_category.dart';
 
 class CannedResponse {
-  final String id;
-  final String title;
-  final String? shortcut;
-  final String body;
-  final String bodyAr;
-  final TicketCategory? category;
-  final bool? isActive;
-  final String? createdBy;
-  final DateTime? createdAt;
 
   const CannedResponse({
     required this.id,
@@ -36,6 +27,15 @@ class CannedResponse {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String title;
+  final String? shortcut;
+  final String body;
+  final String bodyAr;
+  final TicketCategory? category;
+  final bool? isActive;
+  final String? createdBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

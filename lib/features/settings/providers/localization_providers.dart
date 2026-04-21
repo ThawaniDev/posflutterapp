@@ -13,8 +13,8 @@ final localeListProvider = StateNotifierProvider<LocaleListNotifier, LocaleListS
 });
 
 class LocaleListNotifier extends StateNotifier<LocaleListState> {
-  final LocalizationRepository _repo;
   LocaleListNotifier(this._repo) : super(const LocaleListInitial());
+  final LocalizationRepository _repo;
 
   Future<void> load({bool? activeOnly}) async {
     state = const LocaleListLoading();
@@ -35,8 +35,8 @@ final translationListProvider = StateNotifierProvider<TranslationListNotifier, T
 });
 
 class TranslationListNotifier extends StateNotifier<TranslationListState> {
-  final LocalizationRepository _repo;
   TranslationListNotifier(this._repo) : super(const TranslationListInitial());
+  final LocalizationRepository _repo;
 
   Future<void> load({required String locale, String? category, String? search, String? storeId, int? perPage}) async {
     state = const TranslationListLoading();
@@ -64,8 +64,8 @@ final overrideListProvider = StateNotifierProvider<OverrideListNotifier, Overrid
 });
 
 class OverrideListNotifier extends StateNotifier<OverrideListState> {
-  final LocalizationRepository _repo;
   OverrideListNotifier(this._repo) : super(const OverrideListInitial());
+  final LocalizationRepository _repo;
 
   Future<void> load({required String storeId, String? locale}) async {
     state = const OverrideListLoading();
@@ -86,8 +86,8 @@ final versionListProvider = StateNotifierProvider<VersionListNotifier, VersionLi
 });
 
 class VersionListNotifier extends StateNotifier<VersionListState> {
-  final LocalizationRepository _repo;
   VersionListNotifier(this._repo) : super(const VersionListInitial());
+  final LocalizationRepository _repo;
 
   Future<void> load({int? perPage}) async {
     state = const VersionListLoading();
@@ -109,8 +109,8 @@ final translationExportProvider = StateNotifierProvider<TranslationExportNotifie
 });
 
 class TranslationExportNotifier extends StateNotifier<TranslationExportState> {
-  final LocalizationRepository _repo;
   TranslationExportNotifier(this._repo) : super(const TranslationExportInitial());
+  final LocalizationRepository _repo;
 
   Future<void> load({required String locale, String? storeId}) async {
     state = const TranslationExportLoading();

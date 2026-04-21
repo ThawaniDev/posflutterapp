@@ -13,15 +13,6 @@ class ReceivablesLoading extends ReceivablesState {
 }
 
 class ReceivablesLoaded extends ReceivablesState {
-  final List<Receivable> receivables;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? statusFilter;
-  final String? receivableTypeFilter;
-  final String? searchQuery;
-  final ReceivableSummary? summary;
 
   const ReceivablesLoaded({
     required this.receivables,
@@ -34,6 +25,15 @@ class ReceivablesLoaded extends ReceivablesState {
     this.searchQuery,
     this.summary,
   });
+  final List<Receivable> receivables;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? statusFilter;
+  final String? receivableTypeFilter;
+  final String? searchQuery;
+  final ReceivableSummary? summary;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -63,6 +63,6 @@ class ReceivablesLoaded extends ReceivablesState {
 }
 
 class ReceivablesError extends ReceivablesState {
-  final String message;
   const ReceivablesError({required this.message});
+  final String message;
 }

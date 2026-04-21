@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/table_reservation.dart';
-import '../enums/table_reservation_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_restaurant/models/table_reservation.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/table_reservation_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ReservationCard extends StatelessWidget {
-  final TableReservation reservation;
-  final VoidCallback? onTap;
 
   const ReservationCard({super.key, required this.reservation, this.onTap});
+  final TableReservation reservation;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class ReservationCard extends StatelessWidget {
                           Text(
                             reservation.customerPhone!,
                             style: AppTypography.caption.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                       ],
@@ -73,14 +72,14 @@ class ReservationCard extends StatelessWidget {
                 AppSpacing.gapH4,
                 Text(
                   l10n.restaurantDurationMin(reservation.durationMinutes.toString()),
-                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
               if (reservation.notes != null && reservation.notes!.isNotEmpty) ...[
                 AppSpacing.gapH4,
                 Text(
                   reservation.notes!,
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -97,9 +96,9 @@ class ReservationCard extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+        Icon(icon, size: 12, color: AppColors.mutedFor(context)),
         const SizedBox(width: 3),
-        Text(text, style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+        Text(text, style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context))),
       ],
     );
   }

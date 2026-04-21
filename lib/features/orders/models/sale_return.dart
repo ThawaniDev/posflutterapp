@@ -2,19 +2,6 @@ import 'package:wameedpos/features/orders/enums/return_refund_method.dart';
 import 'package:wameedpos/features/orders/enums/return_type.dart';
 
 class SaleReturn {
-  final String id;
-  final String storeId;
-  final String orderId;
-  final String returnNumber;
-  final ReturnType type;
-  final String reasonCode;
-  final ReturnRefundMethod refundMethod;
-  final double subtotal;
-  final double taxAmount;
-  final double totalRefund;
-  final String? notes;
-  final String processedBy;
-  final DateTime? createdAt;
 
   const SaleReturn({
     required this.id,
@@ -49,6 +36,19 @@ class SaleReturn {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String orderId;
+  final String returnNumber;
+  final ReturnType type;
+  final String reasonCode;
+  final ReturnRefundMethod refundMethod;
+  final double subtotal;
+  final double taxAmount;
+  final double totalRefund;
+  final String? notes;
+  final String processedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/branches/enums/business_type.dart';
 import 'package:wameedpos/features/branches/models/store.dart';
@@ -12,8 +11,8 @@ import 'package:wameedpos/features/branches/providers/branch_providers.dart';
 import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 class BranchFormPage extends ConsumerStatefulWidget {
-  final Store? existingBranch;
   const BranchFormPage({super.key, this.existingBranch});
+  final Store? existingBranch;
 
   @override
   ConsumerState<BranchFormPage> createState() => _BranchFormPageState();
@@ -491,7 +490,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: AppColors.mutedFor(context),
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -506,11 +505,11 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
               fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -536,7 +535,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: AppColors.mutedFor(context),
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -551,11 +550,11 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
               suffixIcon: const Icon(Icons.calendar_today, size: 18),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.borderFor(context)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -590,7 +589,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
       child: SwitchListTile(
         title: Text(label, style: Theme.of(context).textTheme.bodyMedium),
         value: value,
-        activeColor: AppColors.primary,
+        activeThumbColor: AppColors.primary,
         contentPadding: EdgeInsets.zero,
         dense: true,
         onChanged: onChanged,

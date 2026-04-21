@@ -6,11 +6,11 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Banner widget shown when the subscription is in a grace period or about to expire.
 class GracePeriodBanner extends StatelessWidget {
+
+  const GracePeriodBanner({super.key, required this.gracePeriodEndsAt, this.onRenewPressed, this.isExpired = false});
   final DateTime gracePeriodEndsAt;
   final VoidCallback? onRenewPressed;
   final bool isExpired;
-
-  const GracePeriodBanner({super.key, required this.gracePeriodEndsAt, this.onRenewPressed, this.isExpired = false});
 
   @override
   Widget build(BuildContext context) {

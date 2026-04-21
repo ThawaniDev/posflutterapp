@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 import 'package:wameedpos/features/staff/widgets/pin_override_dialog.dart';
-import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A widget that conditionally renders its [child] based on whether
@@ -22,12 +21,12 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 /// )
 /// ```
 class PermissionGate extends ConsumerWidget {
+
+  const PermissionGate({super.key, required this.permission, required this.child, this.fallback, this.showDisabled = false});
   final String permission;
   final Widget child;
   final Widget? fallback;
   final bool showDisabled;
-
-  const PermissionGate({super.key, required this.permission, required this.child, this.fallback, this.showDisabled = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,10 +59,6 @@ class PermissionGate extends ConsumerWidget {
 /// )
 /// ```
 class ProtectedAction extends ConsumerWidget {
-  final String permission;
-  final String? actionDescription;
-  final void Function(PinOverrideResult? result) onAuthorized;
-  final Widget child;
 
   const ProtectedAction({
     super.key,
@@ -72,6 +67,10 @@ class ProtectedAction extends ConsumerWidget {
     required this.child,
     this.actionDescription,
   });
+  final String permission;
+  final String? actionDescription;
+  final void Function(PinOverrideResult? result) onAuthorized;
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,9 +111,9 @@ class ProtectedAction extends ConsumerWidget {
 /// Small indicator badge that shows a lock icon if the user doesn't
 /// have the given permission, or a PIN icon if PIN override is required.
 class PermissionBadge extends ConsumerWidget {
-  final String permission;
 
   const PermissionBadge({super.key, required this.permission});
+  final String permission;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -125,7 +124,7 @@ class PermissionBadge extends ConsumerWidget {
     if (!hasPermission) {
       return Tooltip(
         message: l10n.staffNoPermission,
-        child: Icon(Icons.lock, size: 16, color: AppColors.error),
+        child: const Icon(Icons.lock, size: 16, color: AppColors.error),
       );
     }
 
@@ -134,7 +133,7 @@ class PermissionBadge extends ConsumerWidget {
     if (requiresPin) {
       return Tooltip(
         message: l10n.staffRequiresPinOverride,
-        child: Icon(Icons.pin, size: 16, color: AppColors.warning),
+        child: const Icon(Icons.pin, size: 16, color: AppColors.warning),
       );
     }
 

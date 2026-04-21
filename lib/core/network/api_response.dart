@@ -1,8 +1,4 @@
 class ApiResponse<T> {
-  final bool success;
-  final String message;
-  final T? data;
-  final Map<String, dynamic>? errors;
 
   const ApiResponse({required this.success, required this.message, this.data, this.errors});
 
@@ -14,6 +10,10 @@ class ApiResponse<T> {
       errors: json['errors'] != null ? Map<String, dynamic>.from(json['errors'] as Map) : null,
     );
   }
+  final bool success;
+  final String message;
+  final T? data;
+  final Map<String, dynamic>? errors;
 
   /// Extract the items list from [data], handling both plain lists and
   /// Laravel paginated responses (`{"data": [...], "current_page": ...}`).

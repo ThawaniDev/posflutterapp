@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -207,7 +206,7 @@ class _ComparisonCard extends StatelessWidget {
                       Text(
                         todayLabel,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                       AppSpacing.gapH4,
@@ -225,7 +224,7 @@ class _ComparisonCard extends StatelessWidget {
                         Text(
                           yesterdayLabel,
                           style: theme.textTheme.bodySmall?.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                         AppSpacing.gapH4,

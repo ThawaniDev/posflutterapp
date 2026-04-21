@@ -9,11 +9,11 @@ import 'package:wameedpos/features/predefined_catalog/providers/predefined_catal
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
 
 class PredefinedProductsPage extends ConsumerStatefulWidget {
+
+  const PredefinedProductsPage({super.key, this.businessTypeId, this.categoryId, this.categoryName});
   final String? businessTypeId;
   final String? categoryId;
   final String? categoryName;
-
-  const PredefinedProductsPage({super.key, this.businessTypeId, this.categoryId, this.categoryName});
 
   @override
   ConsumerState<PredefinedProductsPage> createState() => _PredefinedProductsPageState();
@@ -122,7 +122,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
               children: [
                 Text(
                   '${state.total} products',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),
@@ -171,10 +171,10 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
 // ─── Product Card Widget ───────────────────────────────────────
 
 class _ProductCard extends StatelessWidget {
-  final PredefinedProduct product;
-  final VoidCallback onClone;
 
   const _ProductCard({required this.product, required this.onClone});
+  final PredefinedProduct product;
+  final VoidCallback onClone;
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +226,7 @@ class _ProductCard extends StatelessWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       if (product.sku != null)
-                        Text('SKU: ${product.sku}', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight)),
+                        Text('SKU: ${product.sku}', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context))),
                       if (product.unit != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -250,7 +250,7 @@ class _ProductCard extends StatelessWidget {
                 if (product.costPrice != null)
                   Text(
                     'Cost: ${product.costPrice!.toStringAsFixed(2)} \u0081',
-                    style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                    style: theme.textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                   ),
               ],
             ),

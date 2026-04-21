@@ -6,7 +6,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
 import 'package:wameedpos/features/support/widgets/ticket_card_widget.dart';
@@ -292,14 +291,14 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        border: Border(top: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             '${state.total} ${AppLocalizations.of(context)!.supportTicketsCount}',
-            style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
           ),
           Row(
             children: [

@@ -1,16 +1,4 @@
 class ReceiptTemplate {
-  final String id;
-  final String storeId;
-  final String? logoUrl;
-  final String? headerLine1;
-  final String? headerLine2;
-  final String? footerText;
-  final bool? showVatNumber;
-  final bool? showLoyaltyPoints;
-  final bool? showBarcode;
-  final int? paperWidthMm;
-  final int? syncVersion;
-  final DateTime? updatedAt;
 
   const ReceiptTemplate({
     required this.id,
@@ -43,6 +31,18 @@ class ReceiptTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? logoUrl;
+  final String? headerLine1;
+  final String? headerLine2;
+  final String? footerText;
+  final bool? showVatNumber;
+  final bool? showLoyaltyPoints;
+  final bool? showBarcode;
+  final int? paperWidthMm;
+  final int? syncVersion;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

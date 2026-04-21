@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../providers/admin_providers.dart';
-import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
   const AdminDeploymentOverviewPage({super.key});
@@ -106,7 +105,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                       ),
                       child: Text(
                         '${p['total_releases']} releases',
-                        style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+                        style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -118,9 +117,9 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                     'Active: v${activeRelease['version']}',
                     style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.success),
                   ),
-                  Text('Rollout: ${activeRelease['rollout_percentage']}%', style: TextStyle(color: AppColors.textSecondary)),
+                  Text('Rollout: ${activeRelease['rollout_percentage']}%', style: const TextStyle(color: AppColors.textSecondary)),
                 ] else
-                  Text('No active release', style: TextStyle(color: AppColors.textSecondary)),
+                  const Text('No active release', style: TextStyle(color: AppColors.textSecondary)),
               ],
             ),
           ),

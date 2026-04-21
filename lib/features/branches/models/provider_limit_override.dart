@@ -1,12 +1,4 @@
 class ProviderLimitOverride {
-  final String id;
-  final String storeId;
-  final String limitKey;
-  final int overrideValue;
-  final String? reason;
-  final String setBy;
-  final DateTime? expiresAt;
-  final DateTime? createdAt;
 
   const ProviderLimitOverride({
     required this.id,
@@ -31,6 +23,14 @@ class ProviderLimitOverride {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String limitKey;
+  final int overrideValue;
+  final String? reason;
+  final String setBy;
+  final DateTime? expiresAt;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

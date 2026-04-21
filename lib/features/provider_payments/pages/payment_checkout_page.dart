@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -10,16 +12,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Initiates a payment and shows a WebView to complete PayTabs checkout.
 class PaymentCheckoutPage extends ConsumerStatefulWidget {
-  final String purpose;
-  final String purposeLabel;
-  final double amount;
-  final double? taxAmount;
-  final String? subscriptionPlanId;
-  final String? addOnId;
-  final String? purposeReferenceId;
-  final String? currency;
-  final String? notes;
-  final String? onSuccessRoute;
 
   const PaymentCheckoutPage({
     super.key,
@@ -34,6 +26,16 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
     this.notes,
     this.onSuccessRoute,
   });
+  final String purpose;
+  final String purposeLabel;
+  final double amount;
+  final double? taxAmount;
+  final String? subscriptionPlanId;
+  final String? addOnId;
+  final String? purposeReferenceId;
+  final String? currency;
+  final String? notes;
+  final String? onSuccessRoute;
 
   @override
   ConsumerState<PaymentCheckoutPage> createState() => _PaymentCheckoutPageState();
@@ -45,6 +47,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
   bool _paymentInitiated = false;
   String? _redirectUrl;
   bool _webViewLoading = true;
+  bool _webLaunched = false;
 
   @override
   void initState() {
@@ -72,6 +75,13 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
   }
 
   void _setupWebView(String url) {
+    if (kIsWeb) {
+      // On web, open the payment URL in the same browser tab.
+      // The payment gateway will redirect back to the return URL.
+      _webLaunched = true;
+      launchUrl(Uri.parse(url), webOnlyWindowName: '_self');
+      return;
+    }
     _webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -121,7 +131,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [PosLoading(), SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
+          children: [const PosLoading(), const SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
         ),
       );
     }
@@ -133,6 +143,15 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
           _paymentInitiated = false;
           _initiatePayment();
         },
+      );
+    }
+
+    if (_redirectUrl != null && _webLaunched) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [const PosLoading(), const SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
+        ),
       );
     }
 

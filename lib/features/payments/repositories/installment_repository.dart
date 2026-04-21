@@ -10,9 +10,8 @@ final installmentRepositoryProvider = Provider<InstallmentRepository>((ref) {
 });
 
 class InstallmentRepository {
-  final InstallmentApiService _apiService;
-
   InstallmentRepository({required InstallmentApiService apiService}) : _apiService = apiService;
+  final InstallmentApiService _apiService;
 
   // ─── Platform Admin ────────────────────────────────────────────
   Future<List<InstallmentProviderConfig>> listProviders() => _apiService.listProviders();
@@ -31,7 +30,7 @@ class InstallmentRepository {
   Future<Map<String, dynamic>> testConnection(String provider) => _apiService.testConnection(provider);
 
   // ─── POS Checkout ──────────────────────────────────────────────
-  Future<List<CheckoutProviderOption>> getCheckoutProviders({required double amount, String currency = 'SAR'}) =>
+  Future<List<CheckoutProviderOption>> getCheckoutProviders({required double amount, String currency = ''}) =>
       _apiService.getCheckoutProviders(amount: amount, currency: currency);
   Future<Map<String, dynamic>> tamaraPreCheck(Map<String, dynamic> data) => _apiService.tamaraPreCheck(data);
   Future<InstallmentPayment> createCheckout(Map<String, dynamic> data) => _apiService.createCheckout(data);

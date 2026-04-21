@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/l10n/app_localizations.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class EnrollmentWizard extends StatefulWidget {
-  final Future<void> Function(String otp, String environment) onEnroll;
 
   const EnrollmentWizard({super.key, required this.onEnroll});
+  final Future<void> Function(String otp, String environment) onEnroll;
 
   @override
   State<EnrollmentWizard> createState() => _EnrollmentWizardState();
@@ -35,7 +35,7 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
     return Container(
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: AppRadius.borderMd,
         border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
       ),
@@ -61,8 +61,8 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
           AppSpacing.gapH4,
           SegmentedButton<String>(
             segments: [
-              ButtonSegment(value: 'simulation', label: Text(l10n.zatcaSimulation), icon: Icon(Icons.science_outlined)),
-              ButtonSegment(value: 'production', label: Text(l10n.production), icon: Icon(Icons.cloud_done_outlined)),
+              ButtonSegment(value: 'simulation', label: Text(l10n.zatcaSimulation), icon: const Icon(Icons.science_outlined)),
+              ButtonSegment(value: 'production', label: Text(l10n.production), icon: const Icon(Icons.cloud_done_outlined)),
             ],
             selected: {_environment},
             onSelectionChanged: (p0) => setState(() => _environment = p0.first),

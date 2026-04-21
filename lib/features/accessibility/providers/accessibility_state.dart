@@ -12,17 +12,6 @@ class PrefsLoading extends AccessibilityPrefsState {
 }
 
 class PrefsLoaded extends AccessibilityPrefsState {
-  final double fontScale;
-  final bool highContrast;
-  final String colorBlindMode;
-  final bool reducedMotion;
-  final bool audioFeedback;
-  final double audioVolume;
-  final bool largeTouchTargets;
-  final bool visibleFocus;
-  final bool screenReaderHints;
-  final Map<String, dynamic> customShortcuts;
-  final Map<String, dynamic> raw;
 
   const PrefsLoaded({
     required this.fontScale,
@@ -37,11 +26,22 @@ class PrefsLoaded extends AccessibilityPrefsState {
     required this.customShortcuts,
     required this.raw,
   });
+  final double fontScale;
+  final bool highContrast;
+  final String colorBlindMode;
+  final bool reducedMotion;
+  final bool audioFeedback;
+  final double audioVolume;
+  final bool largeTouchTargets;
+  final bool visibleFocus;
+  final bool screenReaderHints;
+  final Map<String, dynamic> customShortcuts;
+  final Map<String, dynamic> raw;
 }
 
 class PrefsError extends AccessibilityPrefsState {
-  final String message;
   const PrefsError(this.message);
+  final String message;
 }
 
 // ─── Shortcuts State ──────────────────────────────────
@@ -58,13 +58,13 @@ class ShortcutsLoading extends ShortcutsState {
 }
 
 class ShortcutsLoaded extends ShortcutsState {
-  final Map<String, dynamic> shortcuts;
   const ShortcutsLoaded({required this.shortcuts});
+  final Map<String, dynamic> shortcuts;
 }
 
 class ShortcutsError extends ShortcutsState {
-  final String message;
   const ShortcutsError(this.message);
+  final String message;
 }
 
 // ─── Accessibility Operation State ────────────────────
@@ -77,16 +77,16 @@ class AccessibilityOpIdle extends AccessibilityOperationState {
 }
 
 class AccessibilityOpRunning extends AccessibilityOperationState {
-  final String operation;
   const AccessibilityOpRunning(this.operation);
+  final String operation;
 }
 
 class AccessibilityOpSuccess extends AccessibilityOperationState {
-  final String message;
   const AccessibilityOpSuccess(this.message);
+  final String message;
 }
 
 class AccessibilityOpError extends AccessibilityOperationState {
-  final String message;
   const AccessibilityOpError(this.message);
+  final String message;
 }

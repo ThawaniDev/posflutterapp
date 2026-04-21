@@ -1,21 +1,6 @@
 import 'package:wameedpos/features/notifications/enums/announcement_type.dart';
 
 class PlatformAnnouncement {
-  final String id;
-  final AnnouncementType type;
-  final String title;
-  final String titleAr;
-  final String body;
-  final String bodyAr;
-  final Map<String, dynamic> targetFilter;
-  final DateTime displayStartAt;
-  final DateTime displayEndAt;
-  final bool? isBanner;
-  final bool? sendPush;
-  final bool? sendEmail;
-  final String createdBy;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PlatformAnnouncement({
     required this.id,
@@ -54,6 +39,21 @@ class PlatformAnnouncement {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final AnnouncementType type;
+  final String title;
+  final String titleAr;
+  final String body;
+  final String bodyAr;
+  final Map<String, dynamic> targetFilter;
+  final DateTime displayStartAt;
+  final DateTime displayEndAt;
+  final bool? isBanner;
+  final bool? sendPush;
+  final bool? sendEmail;
+  final String createdBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

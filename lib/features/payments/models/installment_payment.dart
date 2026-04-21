@@ -3,29 +3,6 @@ import 'package:wameedpos/features/payments/enums/installment_provider.dart';
 
 /// Tracks the lifecycle of a single installment payment.
 class InstallmentPayment {
-  final String id;
-  final String storeId;
-  final String? transactionId;
-  final String? paymentId;
-  final InstallmentProvider provider;
-  final InstallmentPaymentStatus status;
-  final double amount;
-  final String currency;
-  final int? installmentCount;
-  final String? checkoutUrl;
-  final String? providerOrderId;
-  final String? providerCheckoutId;
-  final String? providerPaymentId;
-  final String? customerName;
-  final String? customerPhone;
-  final String? customerEmail;
-  final String? errorCode;
-  final String? errorMessage;
-  final String? initiatedAt;
-  final String? completedAt;
-  final String? createdAt;
-  final String? updatedAt;
-
   const InstallmentPayment({
     required this.id,
     required this.storeId,
@@ -34,7 +11,7 @@ class InstallmentPayment {
     required this.amount,
     this.transactionId,
     this.paymentId,
-    this.currency = 'SAR',
+    this.currency = '',
     this.installmentCount,
     this.checkoutUrl,
     this.providerOrderId,
@@ -60,7 +37,7 @@ class InstallmentPayment {
       provider: InstallmentProvider.fromValue(json['provider'] as String),
       status: InstallmentPaymentStatus.fromValue(json['status'] as String),
       amount: double.tryParse(json['amount']?.toString() ?? '0') ?? 0.0,
-      currency: json['currency'] as String? ?? 'SAR',
+      currency: json['currency'] as String? ?? '',
       installmentCount: json['installment_count'] as int?,
       checkoutUrl: json['checkout_url'] as String?,
       providerOrderId: json['provider_order_id'] as String?,
@@ -77,6 +54,28 @@ class InstallmentPayment {
       updatedAt: json['updated_at'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final String? transactionId;
+  final String? paymentId;
+  final InstallmentProvider provider;
+  final InstallmentPaymentStatus status;
+  final double amount;
+  final String currency;
+  final int? installmentCount;
+  final String? checkoutUrl;
+  final String? providerOrderId;
+  final String? providerCheckoutId;
+  final String? providerPaymentId;
+  final String? customerName;
+  final String? customerPhone;
+  final String? customerEmail;
+  final String? errorCode;
+  final String? errorMessage;
+  final String? initiatedAt;
+  final String? completedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   Map<String, dynamic> toJson() => {
     'id': id,

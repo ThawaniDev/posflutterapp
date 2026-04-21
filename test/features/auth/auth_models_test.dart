@@ -95,7 +95,7 @@ void main() {
     });
 
     test('toJson serializes correctly', () {
-      final user = User(id: 'user-1', name: 'Test', email: 'test@test.com', role: UserRole.cashier, locale: 'en', isActive: true);
+      const user = User(id: 'user-1', name: 'Test', email: 'test@test.com', role: UserRole.cashier, locale: 'en', isActive: true);
 
       final json = user.toJson();
       expect(json['id'], 'user-1');
@@ -107,35 +107,35 @@ void main() {
     });
 
     test('isOwner returns true for owner role', () {
-      final owner = User(id: '1', name: 'Owner', role: UserRole.owner);
+      const owner = User(id: '1', name: 'Owner', role: UserRole.owner);
       expect(owner.isOwner, true);
 
-      final cashier = User(id: '2', name: 'Cashier', role: UserRole.cashier);
+      const cashier = User(id: '2', name: 'Cashier', role: UserRole.cashier);
       expect(cashier.isOwner, false);
     });
 
     test('isManager returns true for manager roles', () {
-      final branchMgr = User(id: '1', name: 'BM', role: UserRole.branchManager);
+      const branchMgr = User(id: '1', name: 'BM', role: UserRole.branchManager);
       expect(branchMgr.isManager, true);
 
-      final chainMgr = User(id: '2', name: 'CM', role: UserRole.chainManager);
+      const chainMgr = User(id: '2', name: 'CM', role: UserRole.chainManager);
       expect(chainMgr.isManager, true);
 
-      final cashier = User(id: '3', name: 'C', role: UserRole.cashier);
+      const cashier = User(id: '3', name: 'C', role: UserRole.cashier);
       expect(cashier.isManager, false);
     });
 
     test('equality is based on id', () {
-      final user1 = User(id: 'same-id', name: 'User 1');
-      final user2 = User(id: 'same-id', name: 'User 2');
-      final user3 = User(id: 'other-id', name: 'User 1');
+      const user1 = User(id: 'same-id', name: 'User 1');
+      const user2 = User(id: 'same-id', name: 'User 2');
+      const user3 = User(id: 'other-id', name: 'User 1');
 
       expect(user1, equals(user2));
       expect(user1, isNot(equals(user3)));
     });
 
     test('copyWith creates modified copy', () {
-      final user = User(id: '1', name: 'Original', email: 'a@b.com');
+      const user = User(id: '1', name: 'Original', email: 'a@b.com');
       final copy = user.copyWith(name: 'Modified');
 
       expect(copy.name, 'Modified');
@@ -157,7 +157,7 @@ void main() {
     });
 
     test('toJson round-trips', () {
-      final store = UserStore(id: 'store-1', name: 'Store', currency: 'SAR', isMainBranch: false);
+      const store = UserStore(id: 'store-1', name: 'Store', currency: 'SAR', isMainBranch: false);
 
       final json = store.toJson();
       final restored = UserStore.fromJson(json);
@@ -194,7 +194,7 @@ void main() {
     });
 
     test('headerValue formats correctly', () {
-      final token = AuthToken(token: 'mytoken123');
+      const token = AuthToken(token: 'mytoken123');
       expect(token.headerValue, 'Bearer mytoken123');
     });
   });

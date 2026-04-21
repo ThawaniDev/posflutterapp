@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 // ─────────────────────────────────────────────────────────────
 // POS DATE RANGE PICKER
@@ -117,7 +117,7 @@ class PosDateRangeChip extends StatelessWidget {
                 AppSpacing.gapW4,
                 GestureDetector(
                   onTap: () => onChanged(null),
-                  child: Icon(Icons.close_rounded, size: 14, color: AppColors.primary),
+                  child: const Icon(Icons.close_rounded, size: 14, color: AppColors.primary),
                 ),
               ],
             ],

@@ -15,14 +15,14 @@ class BranchListLoading extends BranchListState {
 }
 
 class BranchListLoaded extends BranchListState {
+  const BranchListLoaded(this.branches, {this.stats});
   final List<Store> branches;
   final BranchStats? stats;
-  const BranchListLoaded(this.branches, {this.stats});
 }
 
 class BranchListError extends BranchListState {
-  final String message;
   const BranchListError(this.message);
+  final String message;
 }
 
 // ─── Branch Detail ───
@@ -39,13 +39,13 @@ class BranchDetailLoading extends BranchDetailState {
 }
 
 class BranchDetailLoaded extends BranchDetailState {
-  final Store branch;
   const BranchDetailLoaded(this.branch);
+  final Store branch;
 }
 
 class BranchDetailError extends BranchDetailState {
-  final String message;
   const BranchDetailError(this.message);
+  final String message;
 }
 
 // ─── Branch Form (Create/Update) ───
@@ -62,12 +62,12 @@ class BranchFormSaving extends BranchFormState {
 }
 
 class BranchFormSuccess extends BranchFormState {
+  const BranchFormSuccess(this.branch, this.message);
   final Store branch;
   final String message;
-  const BranchFormSuccess(this.branch, this.message);
 }
 
 class BranchFormError extends BranchFormState {
-  final String message;
   const BranchFormError(this.message);
+  final String message;
 }

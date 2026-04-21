@@ -3,15 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/catalog/models/supplier.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 
 class SupplierListPage extends ConsumerStatefulWidget {
   const SupplierListPage({super.key});
@@ -452,7 +447,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
-                  child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
+                  child: const Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(supplier.name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),

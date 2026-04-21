@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/staff/models/permission.dart';
 
 class Role {
-  final int id;
-  final String storeId;
-  final String name;
-  final String displayName;
-  final String? displayNameAr;
-  final String guardName;
-  final bool? isPredefined;
-  final String? description;
-  final String? descriptionAr;
-  final List<Permission>? permissions;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Role({
     required this.id,
@@ -28,24 +16,6 @@ class Role {
     this.createdAt,
     this.updatedAt,
   });
-
-  /// Returns the localized display name based on the given locale.
-  /// Falls back to English [displayName] if Arabic is not available.
-  String localizedName(String locale) {
-    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
-      return displayNameAr!;
-    }
-    return displayName;
-  }
-
-  /// Returns the localized description based on the given locale.
-  /// Falls back to English [description] if Arabic is not available.
-  String? localizedDescription(String locale) {
-    if (locale == 'ar' && descriptionAr != null && descriptionAr!.isNotEmpty) {
-      return descriptionAr;
-    }
-    return description;
-  }
 
   factory Role.fromJson(Map<String, dynamic> json) {
     return Role(
@@ -64,6 +34,36 @@ class Role {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
+  }
+  final int id;
+  final String storeId;
+  final String name;
+  final String displayName;
+  final String? displayNameAr;
+  final String guardName;
+  final bool? isPredefined;
+  final String? description;
+  final String? descriptionAr;
+  final List<Permission>? permissions;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  /// Returns the localized display name based on the given locale.
+  /// Falls back to English [displayName] if Arabic is not available.
+  String localizedName(String locale) {
+    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
+      return displayNameAr!;
+    }
+    return displayName;
+  }
+
+  /// Returns the localized description based on the given locale.
+  /// Falls back to English [description] if Arabic is not available.
+  String? localizedDescription(String locale) {
+    if (locale == 'ar' && descriptionAr != null && descriptionAr!.isNotEmpty) {
+      return descriptionAr;
+    }
+    return description;
   }
 
   Map<String, dynamic> toJson() {

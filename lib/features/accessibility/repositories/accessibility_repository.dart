@@ -6,8 +6,8 @@ final accessibilityRepositoryProvider = Provider<AccessibilityRepository>((ref) 
 });
 
 class AccessibilityRepository {
-  final AccessibilityApiService _api;
   AccessibilityRepository(this._api);
+  final AccessibilityApiService _api;
 
   Future<Map<String, dynamic>> getPreferences() => _api.getPreferences();
 

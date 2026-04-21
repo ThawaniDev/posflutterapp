@@ -3,29 +3,6 @@ import 'package:wameedpos/features/predefined_catalog/models/predefined_category
 import 'package:wameedpos/features/predefined_catalog/models/predefined_product_image.dart';
 
 class PredefinedProduct {
-  final String id;
-  final String businessTypeId;
-  final String? predefinedCategoryId;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? descriptionAr;
-  final String? sku;
-  final String? barcode;
-  final double sellPrice;
-  final double? costPrice;
-  final ProductUnit? unit;
-  final double? taxRate;
-  final bool isWeighable;
-  final double? tareWeight;
-  final bool isActive;
-  final bool ageRestricted;
-  final String? imageUrl;
-  final PredefinedCategory? category;
-  final List<PredefinedProductImage> images;
-  final Map<String, dynamic>? businessType;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PredefinedProduct({
     required this.id,
@@ -82,6 +59,29 @@ class PredefinedProduct {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String? predefinedCategoryId;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
+  final String? sku;
+  final String? barcode;
+  final double sellPrice;
+  final double? costPrice;
+  final ProductUnit? unit;
+  final double? taxRate;
+  final bool isWeighable;
+  final double? tareWeight;
+  final bool isActive;
+  final bool ageRestricted;
+  final String? imageUrl;
+  final PredefinedCategory? category;
+  final List<PredefinedProductImage> images;
+  final Map<String, dynamic>? businessType;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

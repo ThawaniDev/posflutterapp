@@ -1,16 +1,4 @@
 class LabelTemplate {
-  final String id;
-  final String organizationId;
-  final String name;
-  final double labelWidthMm;
-  final double labelHeightMm;
-  final Map<String, dynamic> layoutJson;
-  final bool? isPreset;
-  final bool? isDefault;
-  final String? createdBy;
-  final int? syncVersion;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const LabelTemplate({
     required this.id,
@@ -43,6 +31,18 @@ class LabelTemplate {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final double labelWidthMm;
+  final double labelHeightMm;
+  final Map<String, dynamic> layoutJson;
+  final bool? isPreset;
+  final bool? isDefault;
+  final String? createdBy;
+  final int? syncVersion;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

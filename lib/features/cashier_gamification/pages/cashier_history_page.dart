@@ -3,15 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/risk_score_gauge.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CashierHistoryPage extends ConsumerStatefulWidget {
-  final String cashierId;
   const CashierHistoryPage({super.key, required this.cashierId});
+  final String cashierId;
 
   @override
   ConsumerState<CashierHistoryPage> createState() => _CashierHistoryPageState();
@@ -123,9 +122,9 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
 }
 
 class _Stat extends StatelessWidget {
+  const _Stat({required this.label, required this.value});
   final String label;
   final String value;
-  const _Stat({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

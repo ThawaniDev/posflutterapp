@@ -38,7 +38,7 @@ class CertifiedHardwareList extends StatelessWidget {
         return ListTile(
           leading: Icon(
             isCertified ? Icons.verified : Icons.device_unknown,
-            color: isCertified ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            color: isCertified ? AppColors.success : (AppColors.mutedFor(context)),
           ),
           title: Text('$brand $model'),
           subtitle: Text(deviceType, style: theme.textTheme.bodySmall),

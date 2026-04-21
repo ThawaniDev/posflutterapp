@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/settings/enums/translation_category.dart';
 
 class MasterTranslationString {
-  final String id;
-  final String stringKey;
-  final TranslationCategory category;
-  final String valueEn;
-  final String valueAr;
-  final String? description;
-  final bool? isOverridable;
-  final DateTime? updatedAt;
 
   const MasterTranslationString({
     required this.id,
@@ -33,6 +25,14 @@ class MasterTranslationString {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String stringKey;
+  final TranslationCategory category;
+  final String valueEn;
+  final String valueAr;
+  final String? description;
+  final bool? isOverridable;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

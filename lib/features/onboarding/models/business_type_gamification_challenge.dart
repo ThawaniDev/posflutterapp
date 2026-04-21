@@ -2,19 +2,6 @@ import 'package:wameedpos/features/customers/enums/gamification_challenge_type.d
 import 'package:wameedpos/features/customers/enums/gamification_reward_type.dart';
 
 class BusinessTypeGamificationChallenge {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final GamificationChallengeType challengeType;
-  final int targetValue;
-  final GamificationRewardType rewardType;
-  final String rewardValue;
-  final int? durationDays;
-  final bool? isRecurring;
-  final String? description;
-  final String? descriptionAr;
-  final int? sortOrder;
 
   const BusinessTypeGamificationChallenge({
     required this.id,
@@ -49,6 +36,19 @@ class BusinessTypeGamificationChallenge {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final GamificationChallengeType challengeType;
+  final int targetValue;
+  final GamificationRewardType rewardType;
+  final String rewardValue;
+  final int? durationDays;
+  final bool? isRecurring;
+  final String? description;
+  final String? descriptionAr;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

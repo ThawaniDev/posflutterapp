@@ -2,17 +2,6 @@ import 'package:wameedpos/features/settings/enums/calendar_system.dart';
 import 'package:wameedpos/features/settings/enums/locale_direction.dart';
 
 class SupportedLocale {
-  final String id;
-  final String localeCode;
-  final String languageName;
-  final String languageNameNative;
-  final LocaleDirection direction;
-  final String? dateFormat;
-  final String? numberFormat;
-  final CalendarSystem? calendarSystem;
-  final bool? isActive;
-  final bool? isDefault;
-  final DateTime? createdAt;
 
   const SupportedLocale({
     required this.id,
@@ -43,6 +32,17 @@ class SupportedLocale {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String localeCode;
+  final String languageName;
+  final String languageNameNative;
+  final LocaleDirection direction;
+  final String? dateFormat;
+  final String? numberFormat;
+  final CalendarSystem? calendarSystem;
+  final bool? isActive;
+  final bool? isDefault;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

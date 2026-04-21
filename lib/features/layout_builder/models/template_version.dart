@@ -1,11 +1,4 @@
 class TemplateVersion {
-  final String id;
-  final String canvasId;
-  final int versionNumber;
-  final String? label;
-  final Map<String, dynamic> snapshot;
-  final String? createdBy;
-  final DateTime? createdAt;
 
   const TemplateVersion({
     required this.id,
@@ -28,6 +21,13 @@ class TemplateVersion {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String canvasId;
+  final int versionNumber;
+  final String? label;
+  final Map<String, dynamic> snapshot;
+  final String? createdBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -13,15 +13,6 @@ class DebitsLoading extends DebitsState {
 }
 
 class DebitsLoaded extends DebitsState {
-  final List<Debit> debits;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
-  final String? statusFilter;
-  final String? debitTypeFilter;
-  final String? searchQuery;
-  final DebitSummary? summary;
 
   const DebitsLoaded({
     required this.debits,
@@ -34,6 +25,15 @@ class DebitsLoaded extends DebitsState {
     this.searchQuery,
     this.summary,
   });
+  final List<Debit> debits;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? statusFilter;
+  final String? debitTypeFilter;
+  final String? searchQuery;
+  final DebitSummary? summary;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -63,6 +63,6 @@ class DebitsLoaded extends DebitsState {
 }
 
 class DebitsError extends DebitsState {
-  final String message;
   const DebitsError({required this.message});
+  final String message;
 }

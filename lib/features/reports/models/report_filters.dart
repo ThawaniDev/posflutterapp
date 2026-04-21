@@ -3,20 +3,6 @@ import 'package:flutter/material.dart';
 
 /// Unified filter model for all report pages.
 class ReportFilters {
-  final DateTimeRange? dateRange;
-  final String? branchId;
-  final String? staffId;
-  final String? categoryId;
-  final String? paymentMethod;
-  final double? minAmount;
-  final double? maxAmount;
-  final String? orderStatus;
-  final String? sortBy;
-  final String? sortDir;
-  final String? granularity;
-  final String? productId;
-  final int? limit;
-  final bool compare;
 
   const ReportFilters({
     this.dateRange,
@@ -34,6 +20,20 @@ class ReportFilters {
     this.limit,
     this.compare = false,
   });
+  final DateTimeRange? dateRange;
+  final String? branchId;
+  final String? staffId;
+  final String? categoryId;
+  final String? paymentMethod;
+  final double? minAmount;
+  final double? maxAmount;
+  final String? orderStatus;
+  final String? sortBy;
+  final String? sortDir;
+  final String? granularity;
+  final String? productId;
+  final int? limit;
+  final bool compare;
 
   ReportFilters copyWith({
     DateTimeRange? Function()? dateRange,

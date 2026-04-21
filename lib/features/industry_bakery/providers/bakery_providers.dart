@@ -8,8 +8,8 @@ final bakeryProvider = StateNotifierProvider<BakeryNotifier, BakeryState>((ref) 
 });
 
 class BakeryNotifier extends StateNotifier<BakeryState> {
-  final BakeryRepository _repo;
   BakeryNotifier(this._repo) : super(const BakeryInitial());
+  final BakeryRepository _repo;
 
   Future<void> load() async {
     state = const BakeryLoading();

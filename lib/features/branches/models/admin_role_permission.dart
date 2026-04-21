@@ -1,6 +1,4 @@
 class AdminRolePermission {
-  final String adminRoleId;
-  final String adminPermissionId;
 
   const AdminRolePermission({
     required this.adminRoleId,
@@ -13,6 +11,8 @@ class AdminRolePermission {
       adminPermissionId: json['admin_permission_id'] as String,
     );
   }
+  final String adminRoleId;
+  final String adminPermissionId;
 
   Map<String, dynamic> toJson() {
     return {

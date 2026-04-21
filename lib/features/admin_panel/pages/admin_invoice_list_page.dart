@@ -100,11 +100,11 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
 }
 
 class _FilterChip extends StatelessWidget {
+
+  const _FilterChip({required this.label, required this.selected, required this.onSelected});
   final String label;
   final bool selected;
   final VoidCallback onSelected;
-
-  const _FilterChip({required this.label, required this.selected, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +122,8 @@ class _FilterChip extends StatelessWidget {
 }
 
 class _InvoiceCard extends StatelessWidget {
-  final Map<String, dynamic> invoice;
   const _InvoiceCard({required this.invoice});
+  final Map<String, dynamic> invoice;
 
   Color _statusColor(String status) {
     return switch (status) {

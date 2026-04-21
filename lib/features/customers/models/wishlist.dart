@@ -1,9 +1,4 @@
 class Wishlist {
-  final String id;
-  final String storeId;
-  final String customerId;
-  final String productId;
-  final DateTime? addedAt;
 
   const Wishlist({
     required this.id,
@@ -22,6 +17,11 @@ class Wishlist {
       addedAt: json['added_at'] != null ? DateTime.parse(json['added_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String customerId;
+  final String productId;
+  final DateTime? addedAt;
 
   Map<String, dynamic> toJson() {
     return {

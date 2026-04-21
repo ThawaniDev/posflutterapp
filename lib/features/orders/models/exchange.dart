@@ -1,12 +1,4 @@
 class Exchange {
-  final String id;
-  final String storeId;
-  final String originalOrderId;
-  final String returnId;
-  final String newOrderId;
-  final double netAmount;
-  final String processedBy;
-  final DateTime? createdAt;
 
   const Exchange({
     required this.id,
@@ -31,6 +23,14 @@ class Exchange {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String originalOrderId;
+  final String returnId;
+  final String newOrderId;
+  final double netAmount;
+  final String processedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

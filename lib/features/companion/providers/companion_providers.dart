@@ -8,9 +8,9 @@ final quickStatsProvider = StateNotifierProvider<QuickStatsNotifier, QuickStatsS
 });
 
 class QuickStatsNotifier extends StateNotifier<QuickStatsState> {
-  final CompanionRepository _repo;
 
   QuickStatsNotifier(this._repo) : super(const QuickStatsInitial());
+  final CompanionRepository _repo;
 
   Future<void> load() async {
     if (state is! QuickStatsLoaded) state = const QuickStatsLoading();
@@ -40,9 +40,9 @@ final preferencesProvider = StateNotifierProvider<PreferencesNotifier, Preferenc
 });
 
 class PreferencesNotifier extends StateNotifier<PreferencesState> {
-  final CompanionRepository _repo;
 
   PreferencesNotifier(this._repo) : super(const PreferencesInitial());
+  final CompanionRepository _repo;
 
   Future<void> load() async {
     if (state is! PreferencesLoaded) state = const PreferencesLoading();
@@ -81,9 +81,9 @@ final quickActionsProvider = StateNotifierProvider<QuickActionsNotifier, QuickAc
 });
 
 class QuickActionsNotifier extends StateNotifier<QuickActionsState> {
-  final CompanionRepository _repo;
 
   QuickActionsNotifier(this._repo) : super(const QuickActionsInitial());
+  final CompanionRepository _repo;
 
   Future<void> load() async {
     if (state is! QuickActionsLoaded) state = const QuickActionsLoading();
@@ -114,9 +114,9 @@ final companionOperationProvider = StateNotifierProvider<CompanionOperationNotif
 });
 
 class CompanionOperationNotifier extends StateNotifier<CompanionOperationState> {
-  final CompanionRepository _repo;
 
   CompanionOperationNotifier(this._repo) : super(const CompanionOperationIdle());
+  final CompanionRepository _repo;
 
   Future<void> registerSession({required String deviceName, required String deviceOs, required String appVersion}) async {
     state = const CompanionOperationRunning('register_session');
@@ -159,9 +159,9 @@ final companionDashboardProvider = StateNotifierProvider<CompanionDashboardNotif
 });
 
 class CompanionDashboardNotifier extends StateNotifier<CompanionDashboardState> {
-  final CompanionRepository _repo;
 
   CompanionDashboardNotifier(this._repo) : super(const CompanionDashboardInitial());
+  final CompanionRepository _repo;
 
   Future<void> load() async {
     if (state is! CompanionDashboardLoaded) state = const CompanionDashboardLoading();
@@ -201,9 +201,9 @@ final salesSummaryProvider = StateNotifierProvider<SalesSummaryNotifier, SalesSu
 });
 
 class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
-  final CompanionRepository _repo;
 
   SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
+  final CompanionRepository _repo;
 
   Future<void> load({String period = 'today', String? storeId}) async {
     if (state is! SalesSummaryLoaded) state = const SalesSummaryLoading();
@@ -236,9 +236,9 @@ final activeOrdersProvider = StateNotifierProvider<ActiveOrdersNotifier, ActiveO
 });
 
 class ActiveOrdersNotifier extends StateNotifier<ActiveOrdersState> {
-  final CompanionRepository _repo;
 
   ActiveOrdersNotifier(this._repo) : super(const ActiveOrdersInitial());
+  final CompanionRepository _repo;
 
   Future<void> load({String? storeId}) async {
     if (state is! ActiveOrdersLoaded) state = const ActiveOrdersLoading();
@@ -259,9 +259,9 @@ final inventoryAlertsProvider = StateNotifierProvider<InventoryAlertsNotifier, I
 });
 
 class InventoryAlertsNotifier extends StateNotifier<InventoryAlertsState> {
-  final CompanionRepository _repo;
 
   InventoryAlertsNotifier(this._repo) : super(const InventoryAlertsInitial());
+  final CompanionRepository _repo;
 
   Future<void> load({String? storeId}) async {
     if (state is! InventoryAlertsLoaded) state = const InventoryAlertsLoading();
@@ -286,9 +286,9 @@ final activeStaffProvider = StateNotifierProvider<ActiveStaffNotifier, ActiveSta
 });
 
 class ActiveStaffNotifier extends StateNotifier<ActiveStaffState> {
-  final CompanionRepository _repo;
 
   ActiveStaffNotifier(this._repo) : super(const ActiveStaffInitial());
+  final CompanionRepository _repo;
 
   Future<void> load({String? storeId}) async {
     if (state is! ActiveStaffLoaded) state = const ActiveStaffLoading();

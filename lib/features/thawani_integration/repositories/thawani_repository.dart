@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/thawani_integration/data/remote/thawani_api_service.dart';
 
 class ThawaniRepository {
-  final ThawaniApiService _apiService;
 
   ThawaniRepository(this._apiService);
+  final ThawaniApiService _apiService;
 
   Future<Map<String, dynamic>> getStats() => _apiService.getStats();
   Future<Map<String, dynamic>> getConfig() => _apiService.getConfig();

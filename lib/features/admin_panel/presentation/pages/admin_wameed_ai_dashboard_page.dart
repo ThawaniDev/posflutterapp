@@ -33,7 +33,7 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
   void _load() {
     ref
         .read(wameedAIAdminDashboardProvider.notifier)
-        .load(params: {if (_from != null) 'from': _from!, if (_to != null) 'to': _to!});
+        .load(params: {'from': ?_from, 'to': ?_to});
   }
 
   @override
@@ -371,8 +371,8 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
 }
 
 class _NavItem {
+  const _NavItem(this.label, this.icon, this.route);
   final String label;
   final IconData icon;
   final String route;
-  const _NavItem(this.label, this.icon, this.route);
 }

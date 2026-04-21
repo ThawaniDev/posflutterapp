@@ -168,7 +168,7 @@ class _DailyPlTab extends ConsumerWidget {
                         ReportStatRow(label: l10n.reportsRevenue, value: formatCurrency(revenue), valueColor: AppColors.success),
                         ReportStatRow(label: l10n.reportsCogs, value: formatCurrency(cogs), valueColor: AppColors.warning),
                         ReportStatRow(label: l10n.expenses, value: formatCurrency(expenses), valueColor: AppColors.error),
-                        Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        Divider(height: 16, color: AppColors.borderFor(context)),
                         ReportStatRow(
                           label: l10n.reportsNetProfit,
                           value: formatCurrency(netProfit),
@@ -240,7 +240,7 @@ class _ExpensesTab extends ConsumerWidget {
 
                     return Column(
                       children: [
-                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(
@@ -251,7 +251,7 @@ class _ExpensesTab extends ConsumerWidget {
                                   color: AppColors.warning.withValues(alpha: 0.1),
                                   borderRadius: AppRadius.borderMd,
                                 ),
-                                child: Icon(Icons.category_rounded, color: AppColors.warning, size: 18),
+                                child: const Icon(Icons.category_rounded, color: AppColors.warning, size: 18),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -265,7 +265,7 @@ class _ExpensesTab extends ConsumerWidget {
                                     Text(
                                       l10n.reportNTransactions(txCount.toString()),
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                       ),
                                     ),
                                   ],

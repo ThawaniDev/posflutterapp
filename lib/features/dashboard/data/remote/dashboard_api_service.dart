@@ -8,9 +8,9 @@ final dashboardApiServiceProvider = Provider<DashboardApiService>((ref) {
 });
 
 class DashboardApiService {
-  final Dio _dio;
 
   DashboardApiService(this._dio);
+  final Dio _dio;
 
   Future<Map<String, dynamic>> getStats({int? days}) async {
     final params = <String, dynamic>{};

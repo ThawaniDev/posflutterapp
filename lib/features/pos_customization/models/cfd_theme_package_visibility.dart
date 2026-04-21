@@ -1,6 +1,4 @@
 class CfdThemePackageVisibility {
-  final String cfdThemeId;
-  final String subscriptionPlanId;
 
   const CfdThemePackageVisibility({
     required this.cfdThemeId,
@@ -13,6 +11,8 @@ class CfdThemePackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String cfdThemeId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

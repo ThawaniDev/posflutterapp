@@ -507,6 +507,7 @@
   "settingsLocalization": "স্থানীয়করণ",
   "settingsLocalizationDesc": "ভাষা, translations & regional settings",
   "settingsStoreProfile": "স্টোর প্রোফাইল",
+  "settingsBusinessType": "ব্যবসার ধরন",
   "settingsStoreProfileDesc": "স্টোর name, address & contact info",
   "settingsWorkingHours": "কর্ম ঘণ্টা",
   "settingsWorkingHoursDesc": "সেট your store operating ঘণ্টা",
@@ -610,7 +611,7 @@
   "settingsWorkingBreakEnd": "বিরতি শেষ",
   "settingsProfileCurrency": "মুদ্রা",
   "settingsProfileCurrencyCode": "মুদ্রা কোড",
-  "settingsProfileCurrencyCodeHint": "e.g. OMR, , USD",
+  "settingsProfileCurrencyCodeHint": "e.g. , , USD",
   "settingsProfileCurrencySymbol": "মুদ্রা প্রতীক",
   "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
   "settingsProfileFormatting": "নম্বর ফরম্যাটিং",
@@ -851,6 +852,10 @@
   "bakeryCustomCakeOrders": "কাস্টম কেক অর্ডার",
   "bakeryProductionSchedule": "প্রোডাকশন সূচী",
   "bakeryNewRecipe": "নতুন Recipe",
+  "bakeryEditSchedule": "সূচী সম্পাদনা",
+  "bakeryNewSchedule": "নতুন উৎপাদন সূচী",
+  "bakeryUpdateSchedule": "সূচী আপডেট",
+  "bakeryCreateSchedule": "সূচী তৈরি",
   "bakeryIngredients": "উপাদান",
   "bakeryYield": "Yield",
   "bakeryCakeSize": "কেক আকার",
@@ -1042,6 +1047,66 @@
   "staffShiftDeleted": "শিফট মুছে ফেলা হয়েছে",
   "staffDeleteShift": "মুছুন শিফট",
   "staffDeleteShiftConfirm": "মুছুন this shift? এই cannot be পূর্বাবস্থায় ফেরানো যাবে না.",
+  "staffShiftsTab": "শিফট",
+  "staffTemplatesTab": "টেমপ্লেট",
+  "staffShiftTemplates": "শিফট টেমপ্লেট",
+  "staffCreateTemplate": "টেমপ্লেট তৈরি করুন",
+  "staffEditTemplate": "টেমপ্লেট সম্পাদনা",
+  "staffDeleteTemplate": "টেমপ্লেট মুছুন",
+  "staffDeleteTemplateConfirm": "এই টেমপ্লেট মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+  "staffTemplateCreated": "টেমপ্লেট তৈরি হয়েছে",
+  "staffTemplateUpdated": "টেমপ্লেট আপডেট হয়েছে",
+  "staffTemplateDeleted": "টেমপ্লেট মুছে ফেলা হয়েছে",
+  "staffNoTemplates": "কোনো টেমপ্লেট পাওয়া যায়নি",
+  "staffNoShifts": "কোনো শিফট পাওয়া যায়নি",
+  "staffStatusScheduled": "নির্ধারিত",
+  "staffStatusCompleted": "সম্পন্ন",
+  "staffStatusMissed": "মিস হয়েছে",
+  "staffStatusSwapped": "বিনিময় হয়েছে",
+  "staffStatusUnknown": "অজানা",
+  "staffMarkComplete": "সম্পন্ন হিসেবে চিহ্নিত",
+  "staffMarkMissed": "মিস হিসেবে চিহ্নিত",
+  "staffActual": "প্রকৃত",
+  "staffUnknown": "অজানা",
+  "staffBulkAssignShifts": "গণ শিফট বরাদ্দ",
+  "staffSingle": "একক",
+  "staffBulk": "গণ",
+  "staffSelectMembers": "সদস্য নির্বাচন",
+  "staffSelectDates": "তারিখ নির্বাচন",
+  "staffAddDate": "তারিখ যোগ",
+  "staffPeriod": "সময়কাল",
+  "staffShiftsCreated": "শিফট তৈরি হয়েছে",
+  "staffShiftUpdated": "শিফট আপডেট হয়েছে",
+  "staffEditShift": "শিফট সম্পাদনা",
+  "staffBreakMinutes": "{count} মিনিট বিরতি",
+  "@staffBreakMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffBreakDuration": "বিরতির সময়কাল",
+  "staffMinutes": "মিনিট",
+  "staffStartTime": "শুরুর সময়",
+  "staffEndTime": "শেষের সময়",
+  "color": "রং",
+  "staffOnBreak": "বিরতিতে",
+  "staffOngoing": "চলমান",
+  "staffNetWorked": "নেট",
+  "staffAbsent": "অনুপস্থিত",
+  "staffCompleted": "সম্পন্ন",
+  "staffOnTime": "সময়মতো",
+  "staffLate": "দেরি",
+  "staffEarlyDeparture": "তাড়াতাড়ি প্রস্থান",
+  "staffActiveSession": "সক্রিয়",
+  "staffTotalHours": "মোট ঘন্টা",
+  "staffAvgHours": "গড় ঘন্টা",
+  "staffLateArrivals": "বিলম্বিত আগমন",
+  "staffOnTimeRate": "সময়মতো হার",
+  "staffOvertimeHours": "ওভারটাইম",
+  "staffBreakDetails": "বিরতির বিবরণ",
+  "staffExportAttendance": "রপ্তানি",
   "staffCommissions": "কমিশন",
   "staffTotalEarnings": "মোট উপার্জন",
   "staffTotalOrders": "মোট অর্ডার",
@@ -1581,12 +1646,19 @@
   "noSessions": "কোনো সেশন নেই",
   "na": "N/A",
   "paymentCash": "নগদ",
+  "paymentCard": "কার্ড",
   "paymentMada": "মাদা",
+  "paymentCardMada": "মাদা কার্ড",
   "paymentVisa": "ভিসা",
+  "paymentCardVisa": "ভিসা কার্ড",
   "paymentMastercard": "মাস্টারকার্ড",
+  "paymentApplePay": "Apple Pay",
+  "paymentStcPay": "STC Pay",
   "paymentStoreCredit": "স্টোর ক্রেডিট",
   "paymentGiftCard": "উপহার কার্ড",
   "paymentMobilePayment": "মোবাইল পেমেন্ট",
+  "paymentLoyaltyPoints": "লয়্যালটি পয়েন্ট",
+  "paymentBankTransfer": "ব্যাংক ট্রান্সফার",
   "offlineChangesSynced": "অফলাইন — changes will sync when connected",
   "syncing": "সিঙ্ক হচ্ছে...",
   "syncError": "সিঙ্ক error — will retry",
@@ -1739,6 +1811,9 @@
   "posNoProducts": "কোনো পণ্য পাওয়া যায়নি",
   "posNoProductsHint": "Try a different search or check your catalog.",
   "posProductAdded": "{name} added",
+  "posEnterWeight": "ওজন লিখুন",
+  "posTareWeightNote": "প্যাকেজিং ওজন: {weight} কেজি স্বয়ংক্রিয়ভাবে কেটে নেওয়া হবে",
+  "posWeightHint": "কেজিতে ওজন লিখুন",
   "posProductNotFound": "পণ্য not found",
   "posReturnRefund": "ফেরত / ফেরত",
   "posReceiptNumber": "রসিদ / লেনদেন number",
@@ -1753,6 +1828,20 @@
   "posPaymentTotal": "মোট:  {amount}",
   "posSplitPayment": "বিভক্ত পেমেন্ট",
   "posCashTendered": "নগদ দেওয়া",
+  "posTipAmount": "টিপের পরিমাণ",
+  "posTotalWithTip": "টিপ সহ মোট",
+  "posPaymentTotalInsufficient": "পেমেন্ট মোট পরিমাণ কভার করে না",
+  "posReturnQtyExceedsOriginal": "{product} এর রিটার্ন পরিমাণ মূলের চেয়ে বেশি (সর্বোচ্চ: {max})",
+  "@posReturnQtyExceedsOriginal": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
   "posChange": "পরিবর্তন",
   "posRemaining": "অবশিষ্ট",
   "posCompletePayment": "Complete পেমেন্ট",
@@ -1810,6 +1899,7 @@
   "posNoProductsSubtitle": "Try a different search or check your catalog.",
   "posTapProductsToAdd": "ট্যাপ products থেকে add them",
   "posTax15": "কর (15%)",
+  "posTaxExempt": "কর অব্যাহতি",
   "posClearCartMessage": "সব আইটেম সরানো হবে।",
   "posClear": "পরিষ্কার",
   "posWalkInCustomer": "Walk-in গ্রাহক",
@@ -1829,6 +1919,11 @@
   "@posProductAdded": {
     "placeholders": {
       "name": {}
+    }
+  },
+  "@posTareWeightNote": {
+    "placeholders": {
+      "weight": {}
     }
   },
   "posReviewSessionSummary": "পর্যালোচনা your session summary",
@@ -2185,6 +2280,7 @@
   "commonEdit": "সম্পাদনা",
   "commonInactive": "Inactive",
   "commonInvalid": "অবৈধ",
+  "commonError": "একটি ত্রুটি ঘটেছে",
   "commonNo": "না",
   "commonNotes": "নোট",
   "commonNotesOptional": "নোট (ঐচ্ছিক)",
@@ -2269,6 +2365,9 @@
   "inventoryPOCancelled": "ক্রয় order cancelled",
   "inventoryPOCreatedMsg": "ক্রয় order created",
   "inventoryPOSent": "ক্রয় order sent",
+  "inventoryPOReceived": "ক্রয় অর্ডার গৃহীত",
+  "inventoryReceivePOTitle": "ক্রয় অর্ডার গ্রহণ করুন",
+  "inventoryOrdered": "অর্ডারকৃত",
   "inventoryPartiallyReceived": "আংশিকভাবে গৃহীত",
   "inventoryProduct": "পণ্য",
   "inventoryPurchaseOrders": "ক্রয় অর্ডার",
@@ -2280,6 +2379,7 @@
   "inventoryReceived": "গৃহীত",
   "inventoryRecipeCreated": "Recipe created",
   "inventoryRecipeDeleted": "Recipe মুছে ফেলা হয়েছে",
+  "inventoryRecipeUpdated": "রেসিপি আপডেট হয়েছে",
   "inventoryRecipes": "Recipes",
   "inventoryRecipesSubtitle": "Define product ingredients এবং yields",
   "inventoryRef": "রেফ",
@@ -2758,6 +2858,7 @@
     }
   },
   "appBarLanguage": "ভাষা",
+  "appBarMore": "আরও",
   "quickNavTitle": "দ্রুত নেভিগেশন",
   "appBarTheme": "থিম",
   "appBarDarkMode": "ডার্ক মোড",
@@ -2902,6 +3003,9 @@
   "receiptTemplateBodyConfig": "মূল অংশ কনফিগারেশন",
   "receiptTemplateFooterConfig": "ফুটার কনফিগারেশন",
   "cfdThemesTitle": "গ্রাহক সম্মুখীন ডিসপ্লে থিম",
+  "cfdEnabled": "CFD সক্রিয়",
+  "cfdTargetMonitor": "লক্ষ্য মনিটর",
+  "cfdIdleRotation": "নিষ্ক্রিয় ঘূর্ণন (সেকেন্ড)",
   "cfdThemesEmpty": "না CFD থিম",
   "cfdThemesEmptySubtitle": "না customer facing display themes are available জন্য your plan.",
   "cfdThemeDetail": "CFD থিম বিস্তারিত",
@@ -3124,7 +3228,6 @@
   "debitsAllocatedAt": "বরাদ্দকৃত At",
   "debitsCreatedAt": "তৈরি হয়েছে At",
   "debitsOrderNumber": "অর্ডার #",
-
   "sidebarReceivables": "প্রাপ্য",
   "receivablesTitle": "প্রাপ্য",
   "receivablesCreate": "প্রাপ্য তৈরি করুন",
@@ -3197,7 +3300,6 @@
   "receivablesSettledAt": "নিষ্পত্তির তারিখ",
   "receivablesCreatedAt": "তৈরির তারিখ",
   "receivablesOrderNumber": "অর্ডার #",
-
   "searchDropdownHint": "অনুসন্ধান...",
   "noResultsFound": "কোনো ফলাফল পাওয়া যায়নি",
   "selectOption": "নির্বাচন করুন...",
@@ -6258,5 +6360,458 @@
   "adminNoProductSales": "কোনো পণ্য বিক্রয় ডেটা নেই",
   "adminNoUsersFound": "কোনো ব্যবহারকারী পাওয়া যায়নি",
   "adminSearchUsers": "ব্যবহারকারী অনুসন্ধান",
-  "adminNoAbTestsLinked": "এই ফ্ল্যাগের সাথে কোনো A/B টেস্ট সংযুক্ত নেই"
+  "adminNoAbTestsLinked": "এই ফ্ল্যাগের সাথে কোনো A/B টেস্ট সংযুক্ত নেই",
+  "softPosFreeActive": "SoftPOS ফ্রি টিয়ার সক্রিয়",
+  "softPosFreeTier": "SoftPOS ফ্রি টিয়ার",
+  "softPosRemaining": "অবশিষ্ট",
+  "softPosTransactions": "লেনদেন",
+  "softPosReachThreshold": "ফ্রি SoftPOS আনলক করতে {threshold}টি লেনদেন সম্পন্ন করুন",
+  "softPosSaving": "আপনি প্রতি মাসে {amount} সাশ্রয় করছেন!",
+  "subBillingCycleMonthly": "মাসিক",
+  "subBillingCycleYearly": "বার্ষিক",
+  "subThisAddOn": "এই অ্যাড-অন",
+  "subUnableToIdentifyAddOn": "অ্যাড-অন শনাক্ত করা যায়নি",
+  "subAddOnConfirmMessage": "{cycle} প্রতি {price} {currency}-এ {name} যোগ করুন?",
+  "subAddOnRemovedSuccess": "{name} সফলভাবে সরানো হয়েছে",
+  "subAddOnRemoveFailed": "অ্যাড-অন সরানো ব্যর্থ: {error}",
+  "subBillingLabel": "বিলিং: {cycle}",
+  "subPeriodLabel": "সময়কাল: {start} – {end}",
+  "subGracePeriodEnds": "গ্রেস পিরিয়ড শেষ: {date}",
+  "subTrialEnds": "ট্রায়াল শেষ: {date}",
+  "subConfirmSubscriptionMessage": "{price} {currency} এ {planName} ({billingCycle}) সাবস্ক্রাইব করবেন?",
+  "selectProduct": "পণ্য নির্বাচন করুন",
+  "selectCustomer": "গ্রাহক নির্বাচন করুন",
+  "selectCategory": "ক্যাটাগরি নির্বাচন করুন",
+  "selectType": "ধরন নির্বাচন করুন",
+  "selectStatus": "স্ট্যাটাস নির্বাচন করুন",
+  "selectBranch": "শাখা নির্বাচন করুন",
+  "selectStaffMember": "কর্মী নির্বাচন করুন",
+  "selectTemplate": "টেমপ্লেট নির্বাচন করুন",
+  "selectPaymentMethod": "পেমেন্ট পদ্ধতি নির্বাচন করুন",
+  "selectReason": "কারণ নির্বাচন করুন",
+  "selectGrade": "গ্রেড নির্বাচন করুন",
+  "selectFormat": "ফরম্যাট নির্বাচন করুন",
+  "selectPriority": "অগ্রাধিকার নির্বাচন করুন",
+  "selectChannel": "চ্যানেল নির্বাচন করুন",
+  "selectDay": "দিন নির্বাচন করুন",
+  "selectFrequency": "ফ্রিকোয়েন্সি নির্বাচন করুন",
+  "selectCountry": "দেশ নির্বাচন করুন",
+  "selectDeviceType": "ডিভাইসের ধরন নির্বাচন করুন",
+  "selectBaudRate": "বড রেট নির্বাচন করুন",
+  "selectOrder": "অর্ডার নির্বাচন করুন",
+  "selectTable": "টেবিল নির্বাচন করুন",
+  "selectPlatform": "প্ল্যাটফর্ম নির্বাচন করুন",
+  "selectRegister": "রেজিস্টার নির্বাচন করুন",
+  "selectRole": "ভূমিকা নির্বাচন করুন",
+  "selectStore": "স্টোর নির্বাচন করুন",
+  "selectCycle": "সাইকেল নির্বাচন করুন",
+  "selectMetalType": "ধাতুর ধরন নির্বাচন করুন",
+  "selectChargesType": "চার্জের ধরন নির্বাচন করুন",
+  "selectTechnician": "টেকনিশিয়ান নির্বাচন করুন",
+  "selectScheduleType": "শিডিউলের ধরন নির্বাচন করুন",
+  "selectEmploymentType": "কর্মসংস্থানের ধরন নির্বাচন করুন",
+  "selectSalaryType": "বেতনের ধরন নির্বাচন করুন",
+  "selectBusinessType": "ব্যবসার ধরন নির্বাচন করুন",
+  "selectMethod": "পদ্ধতি নির্বাচন করুন",
+  "allTypes": "সকল ধরন",
+  "wameedAIMenu": "মেনু",
+  "wameedAIPhotos": "ফটো",
+  "wameedAIFiles": "ফাইল",
+  "wameedAIBrowseCapabilities": "সকল AI সক্ষমতা ব্রাউজ করুন",
+  "wameedAITodaySummary": "আজকের সারাংশ",
+  "wameedAITodaySummarySubtitle": "রাজস্ব, শীর্ষ আইটেম এবং প্রবণতা",
+  "wameedAISmartReorderSubtitle": "AI-প্রস্তাবিত ক্রয় তালিকা",
+  "wameedAICustomerSegmentsSubtitle": "আচরণ অনুসারে গ্রাহকদের গোষ্ঠীবদ্ধ করুন",
+  "wameedAIInvoiceOCRSubtitle": "সরবরাহকারীর চালান আপনার সিস্টেমে স্ক্যান করুন",
+  "wameedAISuggTodaySalesTitle": "আজকের বিক্রয় সারাংশ",
+  "wameedAISuggTodaySalesSubtitle": "রাজস্ব, শীর্ষ আইটেম এবং প্রবণতা দেখান",
+  "wameedAISuggTodaySalesPrompt": "শীর্ষ পণ্য এবং প্রবণতা সহ আজকের বিক্রয় সারাংশ দেখান",
+  "wameedAISuggReorderTitle": "পুনঃঅর্ডার প্রস্তাব",
+  "wameedAISuggReorderSubtitle": "কম স্টক এবং দ্রুত বিক্রয় আইটেমের জন্য",
+  "wameedAISuggReorderPrompt": "কম বা দ্রুত বিক্রি হওয়া আইটেমগুলির জন্য পুনঃঅর্ডার তালিকা প্রস্তাব করুন",
+  "wameedAISuggSlowMoversTitle": "ধীর গতির আইটেম খুঁজুন",
+  "wameedAISuggSlowMoversSubtitle": "যে আইটেমগুলি ভাল বিক্রি হচ্ছে না",
+  "wameedAISuggSlowMoversPrompt": "এই মাসে আমার ইনভেন্টরিতে সবচেয়ে ধীর গতির পণ্য তালিকা করুন",
+  "wameedAISuggSegmentsTitle": "গ্রাহক সেগমেন্ট",
+  "wameedAISuggSegmentsSubtitle": "আচরণ অনুসারে গ্রাহকদের গোষ্ঠীবদ্ধ করুন",
+  "wameedAISuggSegmentsPrompt": "আমার গ্রাহকদের বিশ্লেষণ করুন এবং দরকারী সেগমেন্টে গোষ্ঠীবদ্ধ করুন",
+  "subPerMonth": "/মাস",
+  "subPerYear": "/বছর",
+  "subPerYearShort": "/বছর",
+  "subPerMonthShort": "/মাস",
+  "subFreeTrialDays": "{days}-দিনের বিনামূল্যে ট্রায়াল",
+  "@subFreeTrialDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGracePeriodActive": "গ্রেস পিরিয়ড সক্রিয়",
+  "subSubscriptionExpired": "সাবস্ক্রিপশন মেয়াদোত্তীর্ণ",
+  "subExpiredRenewMessage": "আপনার সাবস্ক্রিপশন মেয়াদোত্তীর্ণ হয়েছে। অ্যাক্সেস পুনরুদ্ধার করতে এখনই নবায়ন করুন।",
+  "subGraceDaysRemaining": "গ্রেস পিরিয়ডে {days} দিন বাকি। অ্যাক্সেস হারানো এড়াতে নবায়ন করুন।",
+  "@subGraceDaysRemaining": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGraceEndsToday": "গ্রেস পিরিয়ড আজ শেষ হচ্ছে। অবিলম্বে নবায়ন করুন।",
+  "subInvoice": "চালান",
+  "subCreated": "তৈরি",
+  "subDueDateLabel": "নির্ধারিত তারিখ",
+  "subPaidOn": "পরিশোধের তারিখ",
+  "subSubtotal": "সাবটোটাল",
+  "subVat15": "ভ্যাট (১৫%)",
+  "subTotal": "মোট",
+  "subDownloadPdfInvoice": "PDF চালান ডাউনলোড করুন",
+  "subDownloading": "ডাউনলোড হচ্ছে...",
+  "subQty": "পরিমাণ",
+  "subUnit": "একক",
+  "subDueColon": "বাকি: {date}",
+  "@subDueColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaidColon": "পরিশোধিত: {date}",
+  "@subPaidColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subFilterAll": "সব",
+  "subFilterPaid": "পরিশোধিত",
+  "subFilterPending": "অমীমাংসিত",
+  "subFilterOverdue": "বিলম্বিত",
+  "subFilterCancelled": "বাতিল",
+  "subRenewsOn": "নবায়ন: {date}",
+  "@subRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subUsageUnlimited": "{current} / ∞",
+  "@subUsageUnlimited": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "subUsageCounted": "{current} / {max}",
+  "@subUsageCounted": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitProducts": "পণ্য",
+  "subLimitStaffMembers": "কর্মী সদস্য",
+  "subLimitCashierTerminals": "ক্যাশিয়ার টার্মিনাল",
+  "subLimitBranches": "শাখা",
+  "subLimitTransactionsPerMonth": "মাসিক লেনদেন",
+  "subLimitStorageMb": "স্টোরেজ (MB)",
+  "subLimitPdfReportsPerMonth": "PDF রিপোর্ট / মাস",
+  "thawaniNotSet": "সেট করা হয়নি",
+  "thawaniLabel": "থাওয়ানি",
+  "thawaniUnmapped": "আনম্যাপড",
+  "thawaniPendingSync": "সিঙ্ক অপেক্ষমাণ",
+  "thawaniSyncsToday": "আজকের সিঙ্ক",
+  "thawaniFailedSyncsTodayCount": "আজ {count}টি সিঙ্ক ব্যর্থ",
+  "@thawaniFailedSyncsTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thawaniThawaniLine": "থাওয়ানি: {id}",
+  "@thawaniThawaniLine": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategoryNum": "ক্যাটাগরি #{id}",
+  "@thawaniCategoryNum": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "genericProcessing": "প্রক্রিয়াকরণ",
+  "genericEntityType": "সত্তার ধরন",
+  "genericPaginationInfo": "পৃষ্ঠা {current} / {total} ({count} মোট)",
+  "@genericPaginationInfo": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPredefinedRoleNote": "এটি একটি সিস্টেম-সংজ্ঞায়িত ভূমিকা। এর নাম পরিবর্তন করা যাবে না, তবে আপনি এর অনুমতি কাস্টমাইজ করতে পারবেন।",
+  "staffCountSelected": "{count} নির্বাচিত",
+  "@staffCountSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPermissionsActiveCount": "{active}/{total} সক্রিয়",
+  "@staffPermissionsActiveCount": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@subAddOnConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "@subAddOnRemovedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@subAddOnRemoveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@subConfirmSubscriptionMessage": {
+    "placeholders": {
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "@subBillingLabel": {
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "@subPeriodLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "@subTrialEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@subGracePeriodEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@softPosSaving": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@softPosReachThreshold": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subDaysRemaining": "বাকি দিন",
+  "subNextPayment": "পরবর্তী পেমেন্ট",
+  "subPaymentMethod": "পেমেন্ট পদ্ধতি",
+  "subQuickActions": "দ্রুত ক্রিয়া",
+  "subViewPayments": "পেমেন্ট দেখুন",
+  "subIncludedFeatures": "অন্তর্ভুক্ত বৈশিষ্ট্য",
+  "subSubscriptionOverview": "সাবস্ক্রিপশন ওভারভিউ",
+  "subPlanDetails": "প্ল্যান বিবরণ",
+  "subNextBillingDate": "পরবর্তী বিলিং তারিখ",
+  "subNDaysLeft": "{days} দিন বাকি",
+  "@subNDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subCurrentPlanBadge": "বর্তমান",
+  "subBestValue": "সেরা মান",
+  "subFeaturesIncluded": "{count}টি বৈশিষ্ট্য অন্তর্ভুক্ত",
+  "@subFeaturesIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitsIncluded": "{count}টি সীমা",
+  "@subLimitsIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subNotAvailable": "উপলভ্য নয়",
+  "subEnabled": "সক্রিয়",
+  "subDisabled": "নিষ্ক্রিয়",
+  "subSoftPosFreeAfter": "{threshold} SoftPOS লেনদেনের পর বিনামূল্যে",
+  "@subSoftPosFreeAfter": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subSoftPosFreeExplainer": "{period}-এর মধ্যে {threshold}টি কার্ড পেমেন্ট গ্রহণ করতে SoftPOS ব্যবহার করুন এবং আপনার সাবস্ক্রিপশন বিনামূল্যে হয়ে যাবে!",
+  "@subSoftPosFreeExplainer": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeEligible": "বিনামূল্যে SoftPOS যোগ্য",
+  "subSoftPosOrPay": "অন্যথায়: {price} {period}",
+  "@subSoftPosOrPay": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "notifCentreTitle": "নোটিফিকেশন সেন্টার",
+  "notifCentreSubtitle": "সব অ্যালার্ট এক জায়গায়",
+  "notifTabInbox": "ইনবক্স",
+  "notifTabAnnouncements": "ঘোষণা",
+  "notifTabPaymentReminders": "পেমেন্ট রিমাইন্ডার",
+  "notifTabAppUpdates": "অ্যাপ আপডেট",
+  "notifBellTooltip": "নোটিফিকেশন",
+  "notifViewAll": "সব দেখুন",
+  "notifNoRecent": "সাম্প্রতিক কোনো নোটিফিকেশন নেই",
+  "notifMaintenanceBannerTitle": "নির্ধারিত রক্ষণাবেক্ষণ",
+  "notifMaintenanceUntil": "প্রত্যাশিত সমাপ্তি: {endAt}",
+  "announcementsEmpty": "এখন কোনো ঘোষণা নেই",
+  "announcementsDismiss": "সরান",
+  "announcementsDismissed": "ঘোষণা সরানো হয়েছে",
+  "paymentReminderDue": "নির্ধারিত",
+  "paymentRemindersEmpty": "কোনো পেমেন্ট রিমাইন্ডার নেই",
+  "paymentRemindersUpcoming": "আসন্ন",
+  "paymentRemindersOverdue": "বকেয়া",
+  "paymentRemindersChannel": "চ্যানেল",
+  "paymentRemindersSentAt": "পাঠানোর সময়",
+  "paymentRemindersSummary": "{total} মোট · {upcoming} আসন্ন · {overdue} বকেয়া",
+  "appReleasesEmpty": "কোনো রিলিজ উপলব্ধ নেই",
+  "appReleaseLatest": "সর্বশেষ রিলিজ",
+  "appReleaseVersion": "সংস্করণ {version}",
+  "appReleaseForceUpdate": "বাধ্যতামূলক আপডেট",
+  "appReleaseChangelog": "নতুন কী",
+  "appReleaseDownload": "ডাউনলোড",
+  "appReleasePlatform": "প্ল্যাটফর্ম",
+  "appReleaseChannel": "চ্যানেল",
+  "appReleaseReleasedAt": "{date} এ প্রকাশিত",
+  "@notifMaintenanceUntil": {
+    "placeholders": {
+      "endAt": {
+        "type": "String"
+      }
+    }
+  },
+  "@paymentRemindersSummary": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      },
+      "overdue": {
+        "type": "int"
+      }
+    }
+  },
+  "@appReleaseVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@appReleaseReleasedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

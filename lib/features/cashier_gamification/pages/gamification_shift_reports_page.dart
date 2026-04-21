@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/data/gamification_repository.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
@@ -72,7 +71,7 @@ class _GamificationShiftReportsPageState extends ConsumerState<GamificationShift
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
             AppSpacing.gapH12,
@@ -105,8 +104,8 @@ class _GamificationShiftReportsPageState extends ConsumerState<GamificationShift
 }
 
 class _ReportDetailSheet extends ConsumerStatefulWidget {
-  final String reportId;
   const _ReportDetailSheet({required this.reportId});
+  final String reportId;
 
   @override
   ConsumerState<_ReportDetailSheet> createState() => _ReportDetailSheetState();
@@ -147,11 +146,12 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
         });
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
           _error = e.toString();
         });
+      }
     }
   }
 
@@ -160,14 +160,16 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
     final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).languageCode;
 
-    if (_loading)
+    if (_loading) {
       return const Center(
         child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator()),
       );
-    if (_error != null)
+    }
+    if (_error != null) {
       return Center(
         child: Padding(padding: const EdgeInsets.all(24), child: Text(_error!)),
       );
+    }
 
     final r = _report!;
     final summary = locale == 'ar' ? r['summary_ar'] : r['summary_en'];
@@ -182,8 +184,8 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
             Text('${r['cashier']} — ${r['date']}', style: Theme.of(context).textTheme.titleMedium),
             AppSpacing.gapH16,
             _DetailRow(l10n.gamificationTransactions, '${r['transactions']}'),
-            _DetailRow(l10n.gamificationRevenue, '${(r['revenue'] as double).toStringAsFixed(2)}'),
-            _DetailRow(l10n.gamificationItemsPerMinute, '${(r['ipm'] as double).toStringAsFixed(2)}'),
+            _DetailRow(l10n.gamificationRevenue, (r['revenue'] as double).toStringAsFixed(2)),
+            _DetailRow(l10n.gamificationItemsPerMinute, (r['ipm'] as double).toStringAsFixed(2)),
             _DetailRow('Voids', '${r['voids']}'),
             _DetailRow('Returns', '${r['returns']}'),
             _DetailRow(l10n.gamificationRiskScore, '${(r['risk'] as double).toStringAsFixed(0)} (${r['risk_level']})'),
@@ -201,9 +203,9 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
 }
 
 class _DetailRow extends StatelessWidget {
+  const _DetailRow(this.label, this.value);
   final String label;
   final String value;
-  const _DetailRow(this.label, this.value);
 
   @override
   Widget build(BuildContext context) {

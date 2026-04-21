@@ -3,23 +3,6 @@ import 'package:wameedpos/features/support/enums/ticket_priority.dart';
 import 'package:wameedpos/features/support/enums/ticket_status.dart';
 
 class SupportTicket {
-  final String id;
-  final String ticketNumber;
-  final String organizationId;
-  final String? storeId;
-  final String? userId;
-  final String? assignedTo;
-  final TicketCategory category;
-  final TicketPriority priority;
-  final TicketStatus status;
-  final String subject;
-  final String description;
-  final DateTime? slaDeadlineAt;
-  final DateTime? firstResponseAt;
-  final DateTime? resolvedAt;
-  final DateTime? closedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SupportTicket({
     required this.id,
@@ -62,6 +45,23 @@ class SupportTicket {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String ticketNumber;
+  final String organizationId;
+  final String? storeId;
+  final String? userId;
+  final String? assignedTo;
+  final TicketCategory category;
+  final TicketPriority priority;
+  final TicketStatus status;
+  final String subject;
+  final String description;
+  final DateTime? slaDeadlineAt;
+  final DateTime? firstResponseAt;
+  final DateTime? resolvedAt;
+  final DateTime? closedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/restaurant_table.dart';
-import '../providers/restaurant_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TableFormPage extends ConsumerStatefulWidget {
-  final RestaurantTable? table;
   const TableFormPage({super.key, this.table});
+  final RestaurantTable? table;
 
   @override
   ConsumerState<TableFormPage> createState() => _TableFormPageState();
@@ -104,11 +104,11 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _displayNameCtrl, label: l10n.displayNameOptional, hint: l10n.restaurantTableLocationHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _zoneCtrl, label: l10n.zoneOptional, hint: l10n.restaurantTableSectionHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -120,7 +120,7 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosToggle(
               value: _isActive,
               onChanged: (v) => setState(() => _isActive = v),

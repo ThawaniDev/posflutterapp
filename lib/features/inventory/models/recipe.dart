@@ -1,14 +1,4 @@
 class Recipe {
-  final String id;
-  final String organizationId;
-  final String productId;
-  final String? name;
-  final String? description;
-  final String? productName;
-  final double yieldQuantity;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Recipe({
     required this.id,
@@ -37,6 +27,16 @@ class Recipe {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String productId;
+  final String? name;
+  final String? description;
+  final String? productName;
+  final double yieldQuantity;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

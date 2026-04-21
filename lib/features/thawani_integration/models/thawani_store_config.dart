@@ -1,16 +1,4 @@
 class ThawaniStoreConfig {
-  final String id;
-  final String storeId;
-  final String thawaniStoreId;
-  final bool? isConnected;
-  final bool? autoSyncProducts;
-  final bool? autoSyncInventory;
-  final bool? autoAcceptOrders;
-  final Map<String, dynamic>? operatingHoursJson;
-  final double? commissionRate;
-  final DateTime? connectedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ThawaniStoreConfig({
     required this.id,
@@ -43,6 +31,18 @@ class ThawaniStoreConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String thawaniStoreId;
+  final bool? isConnected;
+  final bool? autoSyncProducts;
+  final bool? autoSyncInventory;
+  final bool? autoAcceptOrders;
+  final Map<String, dynamic>? operatingHoursJson;
+  final double? commissionRate;
+  final DateTime? connectedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -6,9 +6,9 @@ final backupRepositoryProvider = Provider<BackupRepository>((ref) {
 });
 
 class BackupRepository {
-  final BackupApiService _api;
 
   BackupRepository(this._api);
+  final BackupApiService _api;
 
   Future<Map<String, dynamic>> createBackup({required String terminalId, String backupType = 'manual', bool encrypt = false}) =>
       _api.createBackup(terminalId: terminalId, backupType: backupType, encrypt: encrypt);

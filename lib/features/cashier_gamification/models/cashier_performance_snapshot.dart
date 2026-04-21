@@ -1,49 +1,16 @@
 class CashierInfo {
-  final String id;
-  final String name;
-  final String? email;
 
   const CashierInfo({required this.id, required this.name, this.email});
 
   factory CashierInfo.fromJson(Map<String, dynamic> json) {
     return CashierInfo(id: json['id'] as String, name: json['name'] as String? ?? '', email: json['email'] as String?);
   }
+  final String id;
+  final String name;
+  final String? email;
 }
 
 class CashierPerformanceSnapshot {
-  final String id;
-  final String storeId;
-  final String cashierId;
-  final CashierInfo? cashier;
-  final String? posSessionId;
-  final String date;
-  final String periodType;
-  final String? shiftStart;
-  final String? shiftEnd;
-  final int activeMinutes;
-  final int totalTransactions;
-  final int totalItemsSold;
-  final double totalRevenue;
-  final double totalDiscountGiven;
-  final double avgBasketSize;
-  final double itemsPerMinute;
-  final int avgTransactionTimeSeconds;
-  final int voidCount;
-  final double voidAmount;
-  final double voidRate;
-  final int returnCount;
-  final double returnAmount;
-  final int discountCount;
-  final double discountRate;
-  final int priceOverrideCount;
-  final int noSaleCount;
-  final int upsellCount;
-  final double upsellRate;
-  final double cashVariance;
-  final double cashVarianceAbsolute;
-  final double riskScore;
-  final List<String> anomalyFlags;
-  final DateTime? createdAt;
 
   const CashierPerformanceSnapshot({
     required this.id,
@@ -118,6 +85,39 @@ class CashierPerformanceSnapshot {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String cashierId;
+  final CashierInfo? cashier;
+  final String? posSessionId;
+  final String date;
+  final String periodType;
+  final String? shiftStart;
+  final String? shiftEnd;
+  final int activeMinutes;
+  final int totalTransactions;
+  final int totalItemsSold;
+  final double totalRevenue;
+  final double totalDiscountGiven;
+  final double avgBasketSize;
+  final double itemsPerMinute;
+  final int avgTransactionTimeSeconds;
+  final int voidCount;
+  final double voidAmount;
+  final double voidRate;
+  final int returnCount;
+  final double returnAmount;
+  final int discountCount;
+  final double discountRate;
+  final int priceOverrideCount;
+  final int noSaleCount;
+  final int upsellCount;
+  final double upsellRate;
+  final double cashVariance;
+  final double cashVarianceAbsolute;
+  final double riskScore;
+  final List<String> anomalyFlags;
+  final DateTime? createdAt;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CashierPerformanceSnapshot && other.id == id;

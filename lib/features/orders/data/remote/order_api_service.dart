@@ -12,9 +12,9 @@ final orderApiServiceProvider = Provider<OrderApiService>((ref) {
 });
 
 class OrderApiService {
-  final Dio _dio;
 
   OrderApiService(this._dio);
+  final Dio _dio;
 
   // ─── Orders ───────────────────────────────────────────────────
 
@@ -30,8 +30,8 @@ class OrderApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (status != null) 'status': status,
-        if (source != null) 'source': source,
+        'status': ?status,
+        'source': ?source,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );

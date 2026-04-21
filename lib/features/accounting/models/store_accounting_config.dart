@@ -1,19 +1,6 @@
 import 'package:wameedpos/features/accounting/enums/accounting_provider.dart';
 
 class StoreAccountingConfig {
-  final String id;
-  final String storeId;
-  final AccountingProvider provider;
-  final String accessTokenEncrypted;
-  final String refreshTokenEncrypted;
-  final DateTime tokenExpiresAt;
-  final String? realmId;
-  final String? tenantId;
-  final String? companyName;
-  final DateTime? connectedAt;
-  final DateTime? lastSyncAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StoreAccountingConfig({
     required this.id,
@@ -48,6 +35,19 @@ class StoreAccountingConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final AccountingProvider provider;
+  final String accessTokenEncrypted;
+  final String refreshTokenEncrypted;
+  final DateTime tokenExpiresAt;
+  final String? realmId;
+  final String? tenantId;
+  final String? companyName;
+  final DateTime? connectedAt;
+  final DateTime? lastSyncAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

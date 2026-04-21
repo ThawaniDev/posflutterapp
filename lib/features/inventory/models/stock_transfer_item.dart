@@ -1,9 +1,4 @@
 class StockTransferItem {
-  final String id;
-  final String stockTransferId;
-  final String productId;
-  final double quantitySent;
-  final double? quantityReceived;
 
   const StockTransferItem({
     required this.id,
@@ -22,6 +17,11 @@ class StockTransferItem {
       quantityReceived: (json['quantity_received'] != null ? double.tryParse(json['quantity_received'].toString()) : null),
     );
   }
+  final String id;
+  final String stockTransferId;
+  final String productId;
+  final double quantitySent;
+  final double? quantityReceived;
 
   Map<String, dynamic> toJson() {
     return {

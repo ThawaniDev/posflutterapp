@@ -2,18 +2,6 @@ import 'package:wameedpos/features/industry_jewelry/enums/buyback_payment_method
 import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class BuybackTransaction {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final MetalType metalType;
-  final String karat;
-  final double weightG;
-  final double ratePerGram;
-  final double totalAmount;
-  final BuybackPaymentMethod paymentMethod;
-  final String staffUserId;
-  final String? notes;
-  final DateTime? createdAt;
 
   const BuybackTransaction({
     required this.id,
@@ -46,6 +34,18 @@ class BuybackTransaction {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final MetalType metalType;
+  final String karat;
+  final double weightG;
+  final double ratePerGram;
+  final double totalAmount;
+  final BuybackPaymentMethod paymentMethod;
+  final String staffUserId;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

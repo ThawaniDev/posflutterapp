@@ -3,11 +3,6 @@ import 'dart:math';
 
 /// Configuration for retry behavior.
 class RetryConfig {
-  final Duration initialDelay;
-  final Duration maxDelay;
-  final int maxRetries;
-  final double backoffMultiplier;
-  final double jitterFactor;
 
   const RetryConfig({
     this.initialDelay = const Duration(seconds: 5),
@@ -16,15 +11,15 @@ class RetryConfig {
     this.backoffMultiplier = 3.0,
     this.jitterFactor = 0.1,
   });
+  final Duration initialDelay;
+  final Duration maxDelay;
+  final int maxRetries;
+  final double backoffMultiplier;
+  final double jitterFactor;
 }
 
 /// Retry attempt information.
 class RetryAttempt {
-  final int attempt;
-  final int maxAttempts;
-  final Duration delay;
-  final DateTime scheduledAt;
-  final String? lastError;
 
   const RetryAttempt({
     required this.attempt,
@@ -33,6 +28,11 @@ class RetryAttempt {
     required this.scheduledAt,
     this.lastError,
   });
+  final int attempt;
+  final int maxAttempts;
+  final Duration delay;
+  final DateTime scheduledAt;
+  final String? lastError;
 }
 
 /// Handles retry logic with exponential backoff and jitter for failed sync operations.
@@ -187,10 +187,10 @@ class SyncRetryService {
 }
 
 class RetryExhaustedException implements Exception {
-  final String message;
-  final Exception? lastError;
 
   RetryExhaustedException(this.message, {this.lastError});
+  final String message;
+  final Exception? lastError;
 
   @override
   String toString() => 'RetryExhaustedException: $message';

@@ -12,9 +12,9 @@ final paymentRepositoryProvider = Provider<PaymentRepository>((ref) {
 });
 
 class PaymentRepository {
-  final PaymentApiService _apiService;
 
   PaymentRepository({required PaymentApiService apiService}) : _apiService = apiService;
+  final PaymentApiService _apiService;
 
   // Payments
   Future<PaginatedResult<Payment>> listPayments({int page = 1, int perPage = 20, String? method, String? transactionId}) =>

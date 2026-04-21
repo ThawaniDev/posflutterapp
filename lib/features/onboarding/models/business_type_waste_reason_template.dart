@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/customers/enums/waste_reason_category.dart';
 
 class BusinessTypeWasteReasonTemplate {
-  final String id;
-  final String businessTypeId;
-  final String reasonCode;
-  final String name;
-  final String nameAr;
-  final WasteReasonCategory category;
-  final String? description;
-  final bool? requiresApproval;
-  final bool? affectsCostReporting;
-  final int? sortOrder;
 
   const BusinessTypeWasteReasonTemplate({
     required this.id,
@@ -39,6 +29,16 @@ class BusinessTypeWasteReasonTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String reasonCode;
+  final String name;
+  final String nameAr;
+  final WasteReasonCategory category;
+  final String? description;
+  final bool? requiresApproval;
+  final bool? affectsCostReporting;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

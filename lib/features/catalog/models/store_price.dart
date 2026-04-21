@@ -1,12 +1,4 @@
 class StorePrice {
-  final String id;
-  final String storeId;
-  final String? productId;
-  final double sellPrice;
-  final DateTime? validFrom;
-  final DateTime? validTo;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StorePrice({
     required this.id,
@@ -31,6 +23,14 @@ class StorePrice {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? productId;
+  final double sellPrice;
+  final DateTime? validFrom;
+  final DateTime? validTo;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

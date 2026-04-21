@@ -1,15 +1,4 @@
 class Theme {
-  final String id;
-  final String name;
-  final String slug;
-  final String primaryColor;
-  final String secondaryColor;
-  final String backgroundColor;
-  final String textColor;
-  final bool? isActive;
-  final bool? isSystem;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Theme({
     required this.id,
@@ -40,6 +29,17 @@ class Theme {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String slug;
+  final String primaryColor;
+  final String secondaryColor;
+  final String backgroundColor;
+  final String textColor;
+  final bool? isActive;
+  final bool? isSystem;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

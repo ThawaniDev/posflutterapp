@@ -150,7 +150,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.devices_other, color: AppColors.primary),
+                  const Icon(Icons.devices_other, color: AppColors.primary),
                   AppSpacing.gapW8,
                   Text(
                     widget.isEditing ? 'Edit Device' : 'Add Device',
@@ -317,7 +317,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
           SegmentedButton<String>(
             segments: [
               ButtonSegment(value: 'kg', label: Text(l10n.hardwareKg)),
-              ButtonSegment(value: 'g', label: Text('g')),
+              const ButtonSegment(value: 'g', label: Text('g')),
               ButtonSegment(value: 'lb', label: Text(l10n.hardwareLb)),
             ],
             selected: {_scaleUnit},

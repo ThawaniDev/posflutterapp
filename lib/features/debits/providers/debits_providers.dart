@@ -11,9 +11,9 @@ final debitsProvider = StateNotifierProvider<DebitsNotifier, DebitsState>((ref) 
 });
 
 class DebitsNotifier extends StateNotifier<DebitsState> {
-  final DebitRepository _repo;
 
   DebitsNotifier(this._repo) : super(const DebitsInitial());
+  final DebitRepository _repo;
 
   String? _statusFilter;
   String? _debitTypeFilter;

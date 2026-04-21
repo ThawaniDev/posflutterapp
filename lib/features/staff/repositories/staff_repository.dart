@@ -13,9 +13,9 @@ final staffRepositoryProvider = Provider<StaffRepository>((ref) {
 });
 
 class StaffRepository {
-  final StaffApiService _api;
 
   StaffRepository(this._api);
+  final StaffApiService _api;
 
   // ─── Staff CRUD ────────────────────────────────────────────
 
@@ -90,6 +90,19 @@ class StaffRepository {
   Future<List<ShiftTemplate>> listShiftTemplates() => _api.listShiftTemplates();
 
   Future<ShiftTemplate> createShiftTemplate(Map<String, dynamic> data) => _api.createShiftTemplate(data);
+
+  Future<ShiftTemplate> updateShiftTemplate(String id, Map<String, dynamic> data) => _api.updateShiftTemplate(id, data);
+
+  Future<void> deleteShiftTemplate(String id) => _api.deleteShiftTemplate(id);
+
+  // ─── Attendance Summary ───────────────────────────────────
+
+  Future<Map<String, dynamic>> getAttendanceSummary({String? staffUserId, String? dateFrom, String? dateTo}) =>
+      _api.getAttendanceSummary(staffUserId: staffUserId, dateFrom: dateFrom, dateTo: dateTo);
+
+  // ─── Bulk Shifts ──────────────────────────────────────────
+
+  Future<List<ShiftSchedule>> bulkCreateShifts(Map<String, dynamic> data) => _api.bulkCreateShifts(data);
 
   // ─── Commissions ──────────────────────────────────────────
 

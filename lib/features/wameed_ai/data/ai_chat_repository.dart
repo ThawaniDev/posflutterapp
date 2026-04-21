@@ -7,9 +7,9 @@ final aiChatRepositoryProvider = Provider<AIChatRepository>((ref) {
 });
 
 class AIChatRepository {
-  final AIChatApiService _api;
 
   AIChatRepository(this._api);
+  final AIChatApiService _api;
 
   Future<List<LlmModel>> getAvailableModels() => _api.getAvailableModels();
 

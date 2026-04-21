@@ -320,9 +320,9 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
           subtitle,
-          style: TextStyle(fontSize: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
         ),
-        trailing: Icon(Icons.chevron_right, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+        trailing: Icon(Icons.chevron_right, color: AppColors.mutedFor(context)),
         onTap: onTap,
       ),
     );

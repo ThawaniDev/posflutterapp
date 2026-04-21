@@ -17,13 +17,13 @@ class PlansLoading extends PlansState {
 }
 
 class PlansLoaded extends PlansState {
-  final List<SubscriptionPlan> plans;
   const PlansLoaded({required this.plans});
+  final List<SubscriptionPlan> plans;
 }
 
 class PlansError extends PlansState {
-  final String message;
   const PlansError({required this.message});
+  final String message;
 }
 
 // ─── Subscription State ──────────────────────────────────────────
@@ -41,19 +41,19 @@ class SubscriptionLoading extends SubscriptionState {
 }
 
 class SubscriptionLoaded extends SubscriptionState {
-  final StoreSubscription? subscription;
   const SubscriptionLoaded({this.subscription});
+  final StoreSubscription? subscription;
 }
 
 class SubscriptionActionSuccess extends SubscriptionState {
+  const SubscriptionActionSuccess({required this.subscription, required this.message});
   final StoreSubscription subscription;
   final String message;
-  const SubscriptionActionSuccess({required this.subscription, required this.message});
 }
 
 class SubscriptionError extends SubscriptionState {
-  final String message;
   const SubscriptionError({required this.message});
+  final String message;
 }
 
 // ─── Invoices State ──────────────────────────────────────────────
@@ -71,16 +71,16 @@ class InvoicesLoading extends InvoicesState {
 }
 
 class InvoicesLoaded extends InvoicesState {
+  const InvoicesLoaded({required this.invoices, this.currentPage = 1, this.lastPage = 1, this.total = 0});
   final List<Invoice> invoices;
   final int currentPage;
   final int lastPage;
   final int total;
-  const InvoicesLoaded({required this.invoices, this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class InvoicesError extends InvoicesState {
-  final String message;
   const InvoicesError({required this.message});
+  final String message;
 }
 
 // ─── Usage State ─────────────────────────────────────────────────
@@ -98,13 +98,13 @@ class UsageLoading extends UsageState {
 }
 
 class UsageLoaded extends UsageState {
-  final List<Map<String, dynamic>> usageItems;
   const UsageLoaded({required this.usageItems});
+  final List<Map<String, dynamic>> usageItems;
 }
 
 class UsageError extends UsageState {
-  final String message;
   const UsageError({required this.message});
+  final String message;
 }
 
 // ─── Invoice Detail State ────────────────────────────────────────
@@ -122,13 +122,13 @@ class InvoiceDetailLoading extends InvoiceDetailState {
 }
 
 class InvoiceDetailLoaded extends InvoiceDetailState {
-  final Invoice invoice;
   const InvoiceDetailLoaded({required this.invoice});
+  final Invoice invoice;
 }
 
 class InvoiceDetailError extends InvoiceDetailState {
-  final String message;
   const InvoiceDetailError({required this.message});
+  final String message;
 }
 
 // ─── Add-Ons State ───────────────────────────────────────────────
@@ -146,14 +146,14 @@ class AddOnsLoading extends AddOnsState {
 }
 
 class AddOnsLoaded extends AddOnsState {
+  const AddOnsLoaded({required this.availableAddOns, required this.storeAddOns});
   final List<Map<String, dynamic>> availableAddOns;
   final List<Map<String, dynamic>> storeAddOns;
-  const AddOnsLoaded({required this.availableAddOns, required this.storeAddOns});
 }
 
 class AddOnsError extends AddOnsState {
-  final String message;
   const AddOnsError({required this.message});
+  final String message;
 }
 
 // ─── Plan Comparison State ───────────────────────────────────────
@@ -171,11 +171,11 @@ class PlanComparisonLoading extends PlanComparisonState {
 }
 
 class PlanComparisonLoaded extends PlanComparisonState {
-  final Map<String, dynamic> comparison;
   const PlanComparisonLoaded({required this.comparison});
+  final Map<String, dynamic> comparison;
 }
 
 class PlanComparisonError extends PlanComparisonState {
-  final String message;
   const PlanComparisonError({required this.message});
+  final String message;
 }

@@ -5,9 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/features/catalog/enums/product_unit.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/models/modifier_group.dart';
@@ -22,10 +20,10 @@ import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/features/catalog/repositories/catalog_repository.dart';
 
 class ProductFormPage extends ConsumerStatefulWidget {
-  final String? productId;
-  final String? initialBarcode;
 
   const ProductFormPage({super.key, this.productId, this.initialBarcode});
+  final String? productId;
+  final String? initialBarcode;
 
   @override
   ConsumerState<ProductFormPage> createState() => _ProductFormPageState();
@@ -71,7 +69,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
 
   // ─── Modifiers ───────────────────────────────────────────────
   List<ModifierGroup> _modifierGroups = [];
-  List<ModifierOption> _modifierOptions = [];
+  final List<ModifierOption> _modifierOptions = [];
   bool _modifiersLoaded = false;
 
   // ─── Barcodes ────────────────────────────────────────────────
@@ -417,7 +415,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             subtitle: Text(l10n.catalogProductVisibleInPos),
             value: _isActive,
             onChanged: (value) => setState(() => _isActive = value),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
             contentPadding: EdgeInsets.zero,
           ),
 
@@ -427,7 +425,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             subtitle: Text(l10n.catalogSoldByWeight),
             value: _isWeighable,
             onChanged: (value) => setState(() => _isWeighable = value),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
             contentPadding: EdgeInsets.zero,
           ),
           if (_isWeighable) ...[
@@ -447,7 +445,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             subtitle: Text(l10n.catalogAgeRestriction),
             value: _ageRestricted,
             onChanged: (value) => setState(() => _ageRestricted = value),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
             contentPadding: EdgeInsets.zero,
           ),
         ],
@@ -512,7 +510,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Row(
                       children: [
-                        Icon(Icons.info_outline, color: AppColors.info, size: 20),
+                        const Icon(Icons.info_outline, color: AppColors.info, size: 20),
                         const SizedBox(width: AppSpacing.sm),
                         Text(
                           'Margin: ${margin.toStringAsFixed(1)}%',
@@ -780,7 +778,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                                     if (group.minSelect != null) 'Min: ${group.minSelect}',
                                     if (group.maxSelect != null) 'Max: ${group.maxSelect}',
                                   ].join(' · '),
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                 ),
                               ],
                             ),
@@ -809,7 +807,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                                 Icon(
                                   opt.isDefault == true ? Icons.radio_button_checked : Icons.radio_button_off,
                                   size: 16,
-                                  color: opt.isDefault == true ? AppColors.primary : AppColors.textMutedLight,
+                                  color: opt.isDefault == true ? AppColors.primary : AppColors.mutedFor(context),
                                 ),
                                 const SizedBox(width: AppSpacing.sm),
                                 Expanded(child: Text(opt.name)),
@@ -857,7 +855,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                   title: Text(l10n.staffRequired),
                   value: isRequired,
                   onChanged: (v) => setDialogState(() => isRequired = v),
-                  activeColor: AppColors.primary,
+                  activeThumbColor: AppColors.primary,
                   contentPadding: EdgeInsets.zero,
                 ),
                 Row(
@@ -1084,7 +1082,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: AppColors.primary10,
-                    child: Icon(Icons.business, size: 18, color: AppColors.primary),
+                    child: const Icon(Icons.business, size: 18, color: AppColors.primary),
                   ),
                   title: Text(supplier?.name ?? ps.supplierId, style: const TextStyle(fontWeight: FontWeight.w600)),
                   subtitle: Text(
@@ -1213,9 +1211,9 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.broken_image, size: 48, color: AppColors.error),
+                        const Icon(Icons.broken_image, size: 48, color: AppColors.error),
                         const SizedBox(height: AppSpacing.sm),
-                        Text(l10n.catalogImageLoadFailed, style: TextStyle(color: AppColors.error)),
+                        Text(l10n.catalogImageLoadFailed, style: const TextStyle(color: AppColors.error)),
                       ],
                     ),
                   ),
@@ -1228,13 +1226,13 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
               decoration: BoxDecoration(
                 color: AppColors.primary10,
                 borderRadius: AppRadius.borderLg,
-                border: Border.all(color: AppColors.borderLight, style: BorderStyle.solid),
+                border: Border.all(color: AppColors.borderFor(context), style: BorderStyle.solid),
               ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.add_photo_alternate_outlined, size: 48, color: AppColors.primary),
+                    const Icon(Icons.add_photo_alternate_outlined, size: 48, color: AppColors.primary),
                     const SizedBox(height: AppSpacing.sm),
                     Text(l10n.catalogImagePasteHint, style: Theme.of(context).textTheme.bodyMedium),
                   ],

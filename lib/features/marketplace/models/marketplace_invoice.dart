@@ -1,14 +1,4 @@
 class MarketplaceInvoice {
-  final String id;
-  final String purchaseId;
-  final String organizationId;
-  final String? listingName;
-  final double amount;
-  final String currency;
-  final String status;
-  final String? paymentMethod;
-  final DateTime? paidAt;
-  final DateTime? createdAt;
 
   const MarketplaceInvoice({
     required this.id,
@@ -37,6 +27,16 @@ class MarketplaceInvoice {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String purchaseId;
+  final String organizationId;
+  final String? listingName;
+  final double amount;
+  final String currency;
+  final String status;
+  final String? paymentMethod;
+  final DateTime? paidAt;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

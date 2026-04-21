@@ -8,10 +8,10 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
 
 class AIResultCard extends StatelessWidget {
-  final AIFeatureResult result;
-  final String featureSlug;
 
   const AIResultCard({super.key, required this.result, required this.featureSlug});
+  final AIFeatureResult result;
+  final String featureSlug;
 
   @override
   Widget build(BuildContext context) {

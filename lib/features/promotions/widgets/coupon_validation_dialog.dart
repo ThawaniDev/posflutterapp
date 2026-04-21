@@ -19,10 +19,10 @@ Future<CouponValidationValid?> showCouponValidationDialog(BuildContext context, 
 }
 
 class _CouponValidationDialog extends ConsumerStatefulWidget {
-  final String? customerId;
-  final double? orderTotal;
 
   const _CouponValidationDialog({this.customerId, this.orderTotal});
+  final String? customerId;
+  final double? orderTotal;
 
   @override
   ConsumerState<_CouponValidationDialog> createState() => _CouponValidationDialogState();
@@ -87,7 +87,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.check_circle, color: AppColors.successDark, size: 20),
+                        const Icon(Icons.check_circle, color: AppColors.successDark, size: 20),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(promotionName, style: theme.textTheme.titleSmall?.copyWith(color: AppColors.successDark)),

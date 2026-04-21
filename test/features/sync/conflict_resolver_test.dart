@@ -51,7 +51,7 @@ void main() {
 
   group('ConflictResolution', () {
     test('constructor and fields', () {
-      final resolution = ConflictResolution(
+      const resolution = ConflictResolution(
         conflictId: 'c1',
         resolved: true,
         strategy: ConflictResolutionStrategy.acceptCloud,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/repair_job.dart';
-import '../providers/electronics_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_electronics/models/repair_job.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RepairJobFormPage extends ConsumerStatefulWidget {
-  final RepairJob? job;
   const RepairJobFormPage({super.key, this.job});
+  final RepairJob? job;
 
   @override
   ConsumerState<RepairJobFormPage> createState() => _RepairJobFormPageState();
@@ -108,16 +108,16 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
               hint: l10n.electronicsDeviceHintRepair,
               maxLines: 2,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imeiCtrl,
               label: l10n.electronicsImeiOptional,
               hint: l10n.electronicsImeiHint,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _issueDescCtrl, label: l10n.electronicsIssueDescription, hint: l10n.electronicsIssueHint, maxLines: 3),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectTechnician,
               label: l10n.electronicsAssignedTech,
@@ -126,7 +126,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -149,9 +149,9 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
               ],
             ),
             if (_isEditing) ...[
-              SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               PosTextField(controller: _diagnosisNotesCtrl, label: l10n.electronicsDiagnosisNotes, hint: l10n.electronicsDiagnosisHint, maxLines: 3),
-              SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               PosTextField(controller: _repairNotesCtrl, label: l10n.electronicsRepairNotes, hint: l10n.electronicsRepairHint, maxLines: 3),
             ],
           ],

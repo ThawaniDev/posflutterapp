@@ -3,47 +3,6 @@ import 'package:wameedpos/features/provider_payments/enums/provider_payment_stat
 import 'package:wameedpos/features/provider_payments/models/payment_email_log.dart';
 
 class ProviderPayment {
-  final String id;
-  final String? organizationId;
-  final String? invoiceId;
-  final PaymentPurpose? purpose;
-  final String? purposeLabel;
-  final double amount;
-  final double taxAmount;
-  final double totalAmount;
-  final String? currency;
-  final String? originalCurrency;
-  final double? originalAmount;
-  final double? exchangeRateUsed;
-  final ProviderPaymentStatus status;
-  final String? gateway;
-  final String? tranRef;
-  final String? tranType;
-  final String? cartId;
-  final String? responseStatus;
-  final String? responseCode;
-  final String? responseMessage;
-  final String? cardType;
-  final String? cardScheme;
-  final String? paymentDescription;
-  final String? paymentMethod;
-  final bool confirmationEmailSent;
-  final DateTime? confirmationEmailSentAt;
-  final String? confirmationEmailError;
-  final bool invoiceGenerated;
-  final DateTime? invoiceGeneratedAt;
-  final bool ipnReceived;
-  final DateTime? ipnReceivedAt;
-  final double? refundAmount;
-  final String? refundTranRef;
-  final String? refundReason;
-  final DateTime? refundedAt;
-  final String? notes;
-  final String? redirectUrl;
-  final List<PaymentEmailLog>? emailLogs;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-
   const ProviderPayment({
     required this.id,
     this.organizationId,
@@ -135,6 +94,46 @@ class ProviderPayment {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String? organizationId;
+  final String? invoiceId;
+  final PaymentPurpose? purpose;
+  final String? purposeLabel;
+  final double amount;
+  final double taxAmount;
+  final double totalAmount;
+  final String? currency;
+  final String? originalCurrency;
+  final double? originalAmount;
+  final double? exchangeRateUsed;
+  final ProviderPaymentStatus status;
+  final String? gateway;
+  final String? tranRef;
+  final String? tranType;
+  final String? cartId;
+  final String? responseStatus;
+  final String? responseCode;
+  final String? responseMessage;
+  final String? cardType;
+  final String? cardScheme;
+  final String? paymentDescription;
+  final String? paymentMethod;
+  final bool confirmationEmailSent;
+  final DateTime? confirmationEmailSentAt;
+  final String? confirmationEmailError;
+  final bool invoiceGenerated;
+  final DateTime? invoiceGeneratedAt;
+  final bool ipnReceived;
+  final DateTime? ipnReceivedAt;
+  final double? refundAmount;
+  final String? refundTranRef;
+  final String? refundReason;
+  final DateTime? refundedAt;
+  final String? notes;
+  final String? redirectUrl;
+  final List<PaymentEmailLog>? emailLogs;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -270,7 +269,7 @@ class ProviderPayment {
   bool get isPending => status == ProviderPaymentStatus.pending;
   bool get canRefund => isSuccessful && refundAmount == null;
 
-  String get formattedAmount => '${totalAmount.toStringAsFixed(2)} ${currency ?? 'SAR'}';
+  String get formattedAmount => '${totalAmount.toStringAsFixed(2)} ${currency ?? ''}';
 
   bool get hasOriginalCurrency => originalCurrency != null && originalCurrency != currency;
 

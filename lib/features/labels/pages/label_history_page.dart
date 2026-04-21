@@ -5,8 +5,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/features/labels/models/label_print_history.dart';
 import 'package:wameedpos/features/labels/repositories/label_repository.dart';
 

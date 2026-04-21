@@ -75,8 +75,8 @@ class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
 }
 
 class _DiscountCard extends StatelessWidget {
-  final Map<String, dynamic> discount;
   const _DiscountCard({required this.discount});
+  final Map<String, dynamic> discount;
 
   @override
   Widget build(BuildContext context) {

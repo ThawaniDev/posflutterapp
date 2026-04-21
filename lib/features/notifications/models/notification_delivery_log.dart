@@ -2,22 +2,6 @@ import 'package:wameedpos/features/notifications/enums/notification_channel.dart
 import 'package:wameedpos/features/notifications/enums/notification_delivery_status.dart';
 
 class NotificationDeliveryLog {
-  final String id;
-  final String? notificationId;
-  final NotificationChannel channel;
-  final String provider;
-  final String recipient;
-  final NotificationDeliveryStatus status;
-  final String? providerMessageId;
-  final String? errorMessage;
-  final int? latencyMs;
-  final bool? isFallback;
-  final Map<String, dynamic>? attemptedProviders;
-  final DateTime? createdAt;
-  final int? retryCount;
-  final DateTime? nextRetryAt;
-  final Map<String, dynamic>? requestPayload;
-  final Map<String, dynamic>? responsePayload;
 
   const NotificationDeliveryLog({
     required this.id,
@@ -60,6 +44,22 @@ class NotificationDeliveryLog {
       responsePayload: json['response_payload'] != null ? Map<String, dynamic>.from(json['response_payload'] as Map) : null,
     );
   }
+  final String id;
+  final String? notificationId;
+  final NotificationChannel channel;
+  final String provider;
+  final String recipient;
+  final NotificationDeliveryStatus status;
+  final String? providerMessageId;
+  final String? errorMessage;
+  final int? latencyMs;
+  final bool? isFallback;
+  final Map<String, dynamic>? attemptedProviders;
+  final DateTime? createdAt;
+  final int? retryCount;
+  final DateTime? nextRetryAt;
+  final Map<String, dynamic>? requestPayload;
+  final Map<String, dynamic>? responsePayload;
 
   Map<String, dynamic> toJson() {
     return {

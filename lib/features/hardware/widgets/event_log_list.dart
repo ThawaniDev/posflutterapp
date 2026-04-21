@@ -19,7 +19,7 @@ class EventLogList extends StatelessWidget {
     if (event.contains('removed')) {
       return AppColors.warning;
     }
-    return isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    return AppColors.mutedFor(context);
   }
 
   IconData _eventIcon(String event) {

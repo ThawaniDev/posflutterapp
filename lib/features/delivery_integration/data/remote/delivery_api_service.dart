@@ -4,9 +4,9 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class DeliveryApiService {
-  final Dio _dio;
 
   DeliveryApiService(this._dio);
+  final Dio _dio;
 
   /// GET /delivery/stats
   Future<Map<String, dynamic>> getStats() async {

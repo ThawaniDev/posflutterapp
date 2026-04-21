@@ -5,9 +5,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DashboardKpiCards extends StatelessWidget {
-  final Map<String, dynamic> stats;
 
   const DashboardKpiCards({super.key, required this.stats});
+  final Map<String, dynamic> stats;
 
   @override
   Widget build(BuildContext context) {

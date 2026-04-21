@@ -25,8 +25,8 @@ void main() {
 
     test('PosSessionsLoaded holds sessions and pagination', () {
       final sessions = [
-        PosSession(id: 's1', storeId: 'st1', registerId: 'r1', cashierId: 'c1', status: SessionStatus.open, openingCash: 100.0),
-        PosSession(id: 's2', storeId: 'st1', registerId: 'r2', cashierId: 'c2', status: SessionStatus.closed, openingCash: 200.0),
+        const PosSession(id: 's1', storeId: 'st1', registerId: 'r1', cashierId: 'c1', status: SessionStatus.open, openingCash: 100.0),
+        const PosSession(id: 's2', storeId: 'st1', registerId: 'r2', cashierId: 'c2', status: SessionStatus.closed, openingCash: 200.0),
       ];
 
       final state = PosSessionsLoaded(sessions: sessions, total: 50, currentPage: 1, lastPage: 3, perPage: 25);
@@ -39,12 +39,12 @@ void main() {
     });
 
     test('PosSessionsLoaded hasMore is false on last page', () {
-      final state = PosSessionsLoaded(sessions: [], total: 5, currentPage: 1, lastPage: 1, perPage: 25);
+      const state = PosSessionsLoaded(sessions: [], total: 5, currentPage: 1, lastPage: 1, perPage: 25);
       expect(state.hasMore, false);
     });
 
     test('PosSessionsLoaded copyWith replaces fields', () {
-      final state = PosSessionsLoaded(
+      const state = PosSessionsLoaded(
         sessions: [
           PosSession(id: 's1', storeId: 'st1', registerId: 'r1', cashierId: 'c1', status: SessionStatus.open, openingCash: 100.0),
         ],
@@ -66,7 +66,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      PosSessionsState state = const PosSessionsLoading();
+      const PosSessionsState state = PosSessionsLoading();
       final result = switch (state) {
         PosSessionsInitial() => 'initial',
         PosSessionsLoading() => 'loading',
@@ -90,7 +90,7 @@ void main() {
 
     test('TransactionsLoaded holds transactions and pagination', () {
       final txns = [
-        Transaction(
+        const Transaction(
           id: 't1',
           organizationId: 'o1',
           storeId: 'st1',
@@ -114,12 +114,12 @@ void main() {
     });
 
     test('TransactionsLoaded hasMore false on last page', () {
-      final state = TransactionsLoaded(transactions: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = TransactionsLoaded(transactions: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
     });
 
     test('TransactionsLoaded copyWith', () {
-      final state = TransactionsLoaded(transactions: [], total: 10, currentPage: 1, lastPage: 2, perPage: 20);
+      const state = TransactionsLoaded(transactions: [], total: 10, currentPage: 1, lastPage: 2, perPage: 20);
       final updated = state.copyWith(currentPage: 2, total: 20);
       expect(updated.currentPage, 2);
       expect(updated.total, 20);
@@ -139,7 +139,7 @@ void main() {
 
     test('HeldCartsLoaded holds carts list', () {
       final carts = [
-        HeldCart(id: 'h1', storeId: 'st1', registerId: 'r1', cashierId: 'c1', cartData: {'items': []}, label: 'Quick hold'),
+        const HeldCart(id: 'h1', storeId: 'st1', registerId: 'r1', cashierId: 'c1', cartData: {'items': []}, label: 'Quick hold'),
       ];
 
       final state = HeldCartsLoaded(carts: carts);
@@ -148,7 +148,7 @@ void main() {
     });
 
     test('sealed class switch for HeldCartsState', () {
-      HeldCartsState state = const HeldCartsError(message: 'timeout');
+      const HeldCartsState state = HeldCartsError(message: 'timeout');
       final result = switch (state) {
         HeldCartsInitial() => 'initial',
         HeldCartsLoading() => 'loading',

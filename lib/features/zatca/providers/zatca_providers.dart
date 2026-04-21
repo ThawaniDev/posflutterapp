@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/zatca_certificate.dart';
-import '../models/zatca_invoice.dart';
-import '../repositories/zatca_repository.dart';
-import 'zatca_state.dart';
+import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
+import 'package:wameedpos/features/zatca/repositories/zatca_repository.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 
 // ─── Enrollment Provider ───────────────────────────────────────
 
@@ -13,9 +13,9 @@ final zatcaEnrollmentProvider =
 });
 
 class ZatcaEnrollmentNotifier extends StateNotifier<ZatcaEnrollmentState> {
-  final ZatcaRepository _repo;
 
   ZatcaEnrollmentNotifier(this._repo) : super(const ZatcaEnrollmentInitial());
+  final ZatcaRepository _repo;
 
   Future<void> enroll({
     required String otp,
@@ -52,10 +52,10 @@ final zatcaInvoiceListProvider =
 });
 
 class ZatcaInvoiceListNotifier extends StateNotifier<ZatcaInvoiceListState> {
-  final ZatcaRepository _repo;
 
   ZatcaInvoiceListNotifier(this._repo)
       : super(const ZatcaInvoiceListInitial());
+  final ZatcaRepository _repo;
 
   Future<void> load({
     String? status,
@@ -99,10 +99,10 @@ final zatcaComplianceSummaryProvider = StateNotifierProvider<
 
 class ZatcaComplianceSummaryNotifier
     extends StateNotifier<ZatcaComplianceSummaryState> {
-  final ZatcaRepository _repo;
 
   ZatcaComplianceSummaryNotifier(this._repo)
       : super(const ZatcaComplianceSummaryInitial());
+  final ZatcaRepository _repo;
 
   Future<void> load() async {
     state = const ZatcaComplianceSummaryLoading();
@@ -134,9 +134,9 @@ final zatcaVatReportProvider =
 });
 
 class ZatcaVatReportNotifier extends StateNotifier<ZatcaVatReportState> {
-  final ZatcaRepository _repo;
 
   ZatcaVatReportNotifier(this._repo) : super(const ZatcaVatReportInitial());
+  final ZatcaRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
     state = const ZatcaVatReportLoading();

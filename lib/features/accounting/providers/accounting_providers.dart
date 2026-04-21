@@ -11,9 +11,9 @@ final accountingConnectionProvider = StateNotifierProvider<AccountingConnectionN
 });
 
 class AccountingConnectionNotifier extends StateNotifier<AccountingConnectionState> {
-  final AccountingRepository _repository;
 
   AccountingConnectionNotifier(this._repository) : super(const AccountingConnectionInitial());
+  final AccountingRepository _repository;
 
   Future<void> loadStatus() async {
     if (state is! AccountingConnectionLoaded) state = const AccountingConnectionLoading();
@@ -44,9 +44,9 @@ final accountingActionProvider = StateNotifierProvider<AccountingActionNotifier,
 });
 
 class AccountingActionNotifier extends StateNotifier<AccountingActionState> {
-  final AccountingRepository _repository;
 
   AccountingActionNotifier(this._repository) : super(const AccountingActionInitial());
+  final AccountingRepository _repository;
 
   Future<void> connect({
     required String provider,
@@ -114,9 +114,9 @@ final accountMappingProvider = StateNotifierProvider<AccountMappingNotifier, Acc
 });
 
 class AccountMappingNotifier extends StateNotifier<AccountMappingState> {
-  final AccountingRepository _repository;
 
   AccountMappingNotifier(this._repository) : super(const AccountMappingInitial());
+  final AccountingRepository _repository;
 
   Future<void> loadMappings() async {
     if (state is! AccountMappingLoaded) state = const AccountMappingLoading();
@@ -165,9 +165,9 @@ final accountingExportsProvider = StateNotifierProvider<AccountingExportsNotifie
 });
 
 class AccountingExportsNotifier extends StateNotifier<AccountingExportsState> {
-  final AccountingRepository _repository;
 
   AccountingExportsNotifier(this._repository) : super(const AccountingExportsInitial());
+  final AccountingRepository _repository;
 
   Future<void> loadExports({String? status, int? limit}) async {
     if (state is! AccountingExportsLoaded) state = const AccountingExportsLoading();
@@ -209,9 +209,9 @@ final autoExportConfigProvider = StateNotifierProvider<AutoExportConfigNotifier,
 });
 
 class AutoExportConfigNotifier extends StateNotifier<AutoExportConfigState> {
-  final AccountingRepository _repository;
 
   AutoExportConfigNotifier(this._repository) : super(const AutoExportConfigInitial());
+  final AccountingRepository _repository;
 
   Future<void> loadConfig() async {
     if (state is! AutoExportConfigLoaded) state = const AutoExportConfigLoading();

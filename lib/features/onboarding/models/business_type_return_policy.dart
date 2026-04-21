@@ -1,17 +1,4 @@
 class BusinessTypeReturnPolicy {
-  final String id;
-  final String businessTypeId;
-  final int returnWindowDays;
-  final Map<String, dynamic>? refundMethods;
-  final bool? requireReceipt;
-  final double? restockingFeePercentage;
-  final int? voidGracePeriodMinutes;
-  final bool? requireManagerApproval;
-  final double? maxReturnWithoutApproval;
-  final bool? returnReasonRequired;
-  final bool? partialReturnAllowed;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const BusinessTypeReturnPolicy({
     required this.id,
@@ -46,6 +33,19 @@ class BusinessTypeReturnPolicy {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final int returnWindowDays;
+  final Map<String, dynamic>? refundMethods;
+  final bool? requireReceipt;
+  final double? restockingFeePercentage;
+  final int? voidGracePeriodMinutes;
+  final bool? requireManagerApproval;
+  final double? maxReturnWithoutApproval;
+  final bool? returnReasonRequired;
+  final bool? partialReturnAllowed;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

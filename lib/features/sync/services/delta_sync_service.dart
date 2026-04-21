@@ -44,7 +44,7 @@ class DeltaSyncService {
       if (serverChecksum != null) {
         final localChecksum = integrityService.computeChecksum(changes);
         if (localChecksum != serverChecksum) {
-          return DeltaSyncResult(pulled: 0, hasMore: false, error: 'Checksum verification failed');
+          return const DeltaSyncResult(pulled: 0, hasMore: false, error: 'Checksum verification failed');
         }
       }
 
@@ -104,12 +104,6 @@ class DeltaSyncService {
 }
 
 class DeltaSyncResult {
-  final int pulled;
-  final bool hasMore;
-  final bool skipped;
-  final String? error;
-  final List<Map<String, dynamic>>? changes;
-  final String? syncToken;
 
   const DeltaSyncResult({
     required this.pulled,
@@ -119,17 +113,17 @@ class DeltaSyncResult {
     this.changes,
     this.syncToken,
   });
+  final int pulled;
+  final bool hasMore;
+  final bool skipped;
+  final String? error;
+  final List<Map<String, dynamic>>? changes;
+  final String? syncToken;
 
   bool get hasError => error != null;
 }
 
 class DeltaPushResult {
-  final int pushed;
-  final bool skipped;
-  final int conflictsCount;
-  final List<Map<String, dynamic>>? conflicts;
-  final String? error;
-  final String? syncToken;
 
   const DeltaPushResult({
     required this.pushed,
@@ -139,6 +133,12 @@ class DeltaPushResult {
     this.error,
     this.syncToken,
   });
+  final int pushed;
+  final bool skipped;
+  final int conflictsCount;
+  final List<Map<String, dynamic>>? conflicts;
+  final String? error;
+  final String? syncToken;
 
   bool get hasError => error != null;
   bool get hasConflicts => conflictsCount > 0;

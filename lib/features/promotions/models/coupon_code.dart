@@ -1,11 +1,4 @@
 class CouponCode {
-  final String id;
-  final String promotionId;
-  final String code;
-  final int? maxUses;
-  final int? usageCount;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const CouponCode({
     required this.id,
@@ -28,6 +21,13 @@ class CouponCode {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String promotionId;
+  final String code;
+  final int? maxUses;
+  final int? usageCount;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -7,11 +7,11 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Definition of a single KPI card.
 class KpiDef {
+  const KpiDef(this.label, this.value, this.color, [this.subtitle]);
   final String label;
   final String value;
   final Color color;
   final String? subtitle;
-  const KpiDef(this.label, this.value, this.color, [this.subtitle]);
 }
 
 /// Helper to create a [KpiDef].
@@ -25,10 +25,10 @@ KpiDef kpi(String label, dynamic value, Color color, [String? subtitle]) {
 /// Reusable KPI card section that watches an [AdminStatsState] provider
 /// and renders a responsive grid of metric cards.
 class AdminStatsKpiSection extends ConsumerWidget {
-  final StateNotifierProvider<StateNotifier<AdminStatsState>, AdminStatsState> provider;
-  final List<KpiDef> Function(Map<String, dynamic> data) cardBuilder;
 
   const AdminStatsKpiSection({super.key, required this.provider, required this.cardBuilder});
+  final StateNotifierProvider<StateNotifier<AdminStatsState>, AdminStatsState> provider;
+  final List<KpiDef> Function(Map<String, dynamic> data) cardBuilder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,12 +60,12 @@ class AdminStatsKpiSection extends ConsumerWidget {
         crossAxisSpacing: AppSpacing.xs,
         mainAxisSpacing: AppSpacing.xs,
         childAspectRatio: cols == 4 ? 2.2 : 2.0,
-        children: defs.map((d) => _card(d)).toList(),
+        children: defs.map((d) => _card(context, d)).toList(),
       ),
     );
   }
 
-  Widget _card(KpiDef d) {
+  Widget _card(BuildContext context, KpiDef d) {
     return PosCard(
       elevation: 1,
       borderRadius: AppRadius.borderMd,
@@ -106,7 +106,7 @@ class AdminStatsKpiSection extends ConsumerWidget {
                 padding: const EdgeInsetsDirectional.only(start: 9),
                 child: Text(
                   d.subtitle!,
-                  style: const TextStyle(fontSize: 10, color: AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

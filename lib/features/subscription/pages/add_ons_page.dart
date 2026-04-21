@@ -68,6 +68,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
     }
 
     final activeIds = state.storeAddOns.map((a) => a['plan_add_on_id']?.toString() ?? '').toSet();
+    final langCode = Localizations.localeOf(context).languageCode;
 
     return RefreshIndicator(
       onRefresh: () async => ref.read(addOnsProvider.notifier).loadAddOns(),
@@ -78,12 +79,15 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
           final addOn = available[index];
           final addOnId = addOn['id']?.toString() ?? '';
           final isActive = activeIds.contains(addOnId);
+          final name = (langCode == 'ar' && addOn['name_ar'] != null && addOn['name_ar'].toString().isNotEmpty)
+              ? addOn['name_ar'].toString()
+              : addOn['name']?.toString() ?? 'Add-On';
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: AddOnCard(
-              name: addOn['name']?.toString() ?? 'Add-On',
+              name: name,
               description: addOn['description']?.toString(),
-              price: (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0,
+              price: (addOn['monthly_price'] != null ? double.tryParse(addOn['monthly_price'].toString()) : null) ?? 0,
               billingCycle: addOn['billing_cycle']?.toString() ?? 'monthly',
               isActive: isActive,
               onToggle: () => _toggleAddOn(addOn, isActive),
@@ -100,6 +104,8 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
       return PosEmptyState(title: l10n.subscriptionNoActiveAddOns, icon: Icons.extension);
     }
 
+    final langCode = Localizations.localeOf(context).languageCode;
+
     return RefreshIndicator(
       onRefresh: () async => ref.read(addOnsProvider.notifier).loadAddOns(),
       child: ListView.builder(
@@ -107,17 +113,23 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
         itemCount: myAddOns.length,
         itemBuilder: (context, index) {
           final storeAddOn = myAddOns[index];
-          final planAddOn = storeAddOn['plan_add_on'] as Map<String, dynamic>?;
+          final addOnData = (storeAddOn['add_on'] ?? storeAddOn['plan_add_on']) as Map<String, dynamic>?;
           final expiresAtStr = storeAddOn['expires_at']?.toString();
           final expiresAt = expiresAtStr != null ? DateTime.tryParse(expiresAtStr) : null;
+
+          final name = addOnData != null
+              ? ((langCode == 'ar' && addOnData['name_ar'] != null && addOnData['name_ar'].toString().isNotEmpty)
+                    ? addOnData['name_ar'].toString()
+                    : addOnData['name']?.toString() ?? 'Add-On')
+              : storeAddOn['plan_add_on_id']?.toString() ?? 'Add-On';
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: AddOnCard(
-              name: planAddOn?['name']?.toString() ?? storeAddOn['plan_add_on_id']?.toString() ?? 'Add-On',
-              description: planAddOn?['description']?.toString(),
-              price: (planAddOn?['price'] != null ? double.tryParse(planAddOn!['price'].toString()) : null) ?? 0,
-              billingCycle: planAddOn?['billing_cycle']?.toString() ?? 'monthly',
+              name: name,
+              description: addOnData?['description']?.toString(),
+              price: (addOnData?['monthly_price'] != null ? double.tryParse(addOnData!['monthly_price'].toString()) : null) ?? 0,
+              billingCycle: addOnData?['billing_cycle']?.toString() ?? 'monthly',
               isActive: true,
               expiresAt: expiresAt,
               onToggle: () => _confirmRemoveAddOn(storeAddOn),
@@ -136,15 +148,23 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
     }
   }
 
+  String _localizedAddOnName(Map<String, dynamic> addOn) {
+    final langCode = Localizations.localeOf(context).languageCode;
+    if (langCode == 'ar' && addOn['name_ar'] != null && addOn['name_ar'].toString().isNotEmpty) {
+      return addOn['name_ar'].toString();
+    }
+    return addOn['name']?.toString() ?? l10n.subThisAddOn;
+  }
+
   void _confirmAddAddOn(Map<String, dynamic> addOn) async {
-    final name = addOn['name']?.toString() ?? l10n.subThisAddOn;
-    final price = (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0;
+    final name = _localizedAddOnName(addOn);
+    final price = (addOn['monthly_price'] != null ? double.tryParse(addOn['monthly_price'].toString()) : null) ?? 0;
     final cycle = addOn['billing_cycle']?.toString() ?? l10n.subBillingCycleMonthly;
 
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.subAddNamedAddon(name),
-      message: l10n.subAddOnConfirmMessage(name, price.toStringAsFixed(2), 'SAR', cycle),
+      message: l10n.subAddOnConfirmMessage(name, price.toStringAsFixed(2), '', cycle),
       confirmLabel: l10n.subActionAdd,
       cancelLabel: l10n.commonCancel,
     );
@@ -163,7 +183,9 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
   }
 
   void _confirmRemoveAddOn(Map<String, dynamic> addOn) async {
-    final name = addOn['name']?.toString() ?? addOn['plan_add_on']?['name']?.toString() ?? l10n.subThisAddOn;
+    final addOnData = addOn['add_on'] ?? addOn['plan_add_on'];
+    final nameSource = addOnData is Map<String, dynamic> ? addOnData : addOn;
+    final name = _localizedAddOnName(nameSource);
     final addOnId = addOn['plan_add_on_id']?.toString() ?? addOn['id']?.toString();
 
     if (addOnId == null) {

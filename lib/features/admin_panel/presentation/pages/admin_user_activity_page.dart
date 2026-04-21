@@ -10,9 +10,9 @@ import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminUserActivityPage extends ConsumerStatefulWidget {
+  const AdminUserActivityPage({super.key, required this.userId, this.isAdmin = false});
   final String userId;
   final bool isAdmin;
-  const AdminUserActivityPage({super.key, required this.userId, this.isAdmin = false});
 
   @override
   ConsumerState<AdminUserActivityPage> createState() => _AdminUserActivityPageState();

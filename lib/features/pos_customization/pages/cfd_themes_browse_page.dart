@@ -110,7 +110,7 @@ class _CfdThemesBrowsePageState extends ConsumerState<CfdThemesBrowsePage> {
                     AppSpacing.gapH4,
                     Text(
                       theme.slug,
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                     ),
                     const Spacer(),
                     Wrap(

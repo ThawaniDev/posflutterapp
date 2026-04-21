@@ -4,17 +4,6 @@ import 'package:flutter/foundation.dart';
 
 /// Card payment result
 class CardPaymentResult {
-  final bool success;
-  final String? approvalCode;
-  final String? transactionId;
-  final String? cardScheme; // mada, visa, mastercard
-  final String? maskedCard; // **** **** **** 1234
-  final String? cardHolderName;
-  final int? amountInHalalas;
-  final String? errorCode;
-  final String? errorMessage;
-  final String? rrn; // Retrieval Reference Number
-  final Map<String, dynamic>? receiptData;
 
   const CardPaymentResult({
     required this.success,
@@ -29,18 +18,21 @@ class CardPaymentResult {
     this.rrn,
     this.receiptData,
   });
+  final bool success;
+  final String? approvalCode;
+  final String? transactionId;
+  final String? cardScheme; // mada, visa, mastercard
+  final String? maskedCard; // **** **** **** 1234
+  final String? cardHolderName;
+  final int? amountInHalalas;
+  final String? errorCode;
+  final String? errorMessage;
+  final String? rrn; // Retrieval Reference Number
+  final Map<String, dynamic>? receiptData;
 }
 
 /// Card terminal configuration
 class CardTerminalConfig {
-  final String provider; // nearpay, nexo
-  final String connectionType; // usb, network, bluetooth
-  final String? authKey; // NearPay auth key
-  final String? environment; // sandbox, production
-  final String locale; // ar, en
-  final String? ipAddress; // Nexo terminal IP
-  final int port;
-  final int timeoutSeconds;
 
   const CardTerminalConfig({
     this.provider = 'nearpay',
@@ -65,6 +57,14 @@ class CardTerminalConfig {
       timeoutSeconds: json['timeout_seconds'] as int? ?? 60,
     );
   }
+  final String provider; // nearpay, nexo
+  final String connectionType; // usb, network, bluetooth
+  final String? authKey; // NearPay auth key
+  final String? environment; // sandbox, production
+  final String locale; // ar, en
+  final String? ipAddress; // Nexo terminal IP
+  final int port;
+  final int timeoutSeconds;
 
   Map<String, dynamic> toJson() => {
     'provider': provider,

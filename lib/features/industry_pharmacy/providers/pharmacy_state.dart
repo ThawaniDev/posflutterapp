@@ -14,16 +14,16 @@ class PharmacyLoading extends PharmacyState {
 }
 
 class PharmacyLoaded extends PharmacyState {
-  final List<Prescription> prescriptions;
-  final List<DrugSchedule> drugSchedules;
 
   const PharmacyLoaded({required this.prescriptions, required this.drugSchedules});
+  final List<Prescription> prescriptions;
+  final List<DrugSchedule> drugSchedules;
 
   PharmacyLoaded copyWith({List<Prescription>? prescriptions, List<DrugSchedule>? drugSchedules}) =>
       PharmacyLoaded(prescriptions: prescriptions ?? this.prescriptions, drugSchedules: drugSchedules ?? this.drugSchedules);
 }
 
 class PharmacyError extends PharmacyState {
-  final String message;
   const PharmacyError({required this.message});
+  final String message;
 }

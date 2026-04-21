@@ -15,8 +15,8 @@ import 'package:wameedpos/features/support/widgets/ticket_priority_badge.dart';
 import 'package:wameedpos/features/support/widgets/ticket_status_badge.dart';
 
 class TicketDetailPage extends ConsumerStatefulWidget {
-  final String ticketId;
   const TicketDetailPage({super.key, required this.ticketId});
+  final String ticketId;
 
   @override
   ConsumerState<TicketDetailPage> createState() => _TicketDetailPageState();
@@ -108,7 +108,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
                       child: Text(
                         l10n.supportNoMessages,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                       ),
                     )
@@ -156,7 +156,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
             children: [
               Text(
                 '#${ticket.ticketNumber}',
-                style: AppTypography.labelMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.labelMedium.copyWith(color: AppColors.mutedFor(context)),
               ),
               const Spacer(),
               TicketStatusBadge(status: ticket.status),
@@ -184,14 +184,14 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               Text(
                 ticket.category.value.replaceAll('_', ' ').toUpperCase(),
                 style: AppTypography.micro.copyWith(
-                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  color: AppColors.mutedFor(context),
                   fontWeight: FontWeight.w600,
                 ),
               ),
               if (dateStr.isNotEmpty)
                 Text(
                   dateStr,
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
             ],
           ),
@@ -254,8 +254,8 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: isDark ? AppColors.cardDark : AppColors.surfaceFor(context),
+        border: Border(top: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

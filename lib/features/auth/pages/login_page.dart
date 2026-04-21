@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/utils/validators.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
@@ -150,56 +150,57 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    // Quick-fill dev buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  _emailController.text = 'owner@ostora.sa';
-                                  _passwordController.text = 'password123';
-                                },
-                          icon: const Icon(Icons.admin_panel_settings, size: 16),
-                          label: Text(AppLocalizations.of(context)!.loginAdmin),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            textStyle: const TextStyle(fontSize: 12),
+                    // Quick-fill dev buttons — only visible in debug mode
+                    if (kDebugMode)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton.icon(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    _emailController.text = 'owner@ostora.sa';
+                                    _passwordController.text = 'password123';
+                                  },
+                            icon: const Icon(Icons.admin_panel_settings, size: 16),
+                            label: Text(AppLocalizations.of(context)!.loginAdmin),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.primary,
+                              textStyle: const TextStyle(fontSize: 12),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        TextButton.icon(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  _emailController.text = 'kamal@gmail.com';
-                                  _passwordController.text = 'Test@123';
-                                },
-                          icon: const Icon(Icons.point_of_sale, size: 16),
-                          label: Text(AppLocalizations.of(context)!.loginCashier),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            textStyle: const TextStyle(fontSize: 12),
+                          const SizedBox(width: AppSpacing.sm),
+                          TextButton.icon(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    _emailController.text = 'kamal@gmail.com';
+                                    _passwordController.text = 'Test@123';
+                                  },
+                            icon: const Icon(Icons.point_of_sale, size: 16),
+                            label: Text(AppLocalizations.of(context)!.loginCashier),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.primary,
+                              textStyle: const TextStyle(fontSize: 12),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        TextButton.icon(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  _emailController.text = 'branchmanager@ostora.sa';
-                                  _passwordController.text = 'password123';
-                                },
-                          icon: const Icon(Icons.store_rounded, size: 16),
-                          label: Text(l10n.branchMgr),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            textStyle: const TextStyle(fontSize: 12),
+                          const SizedBox(width: AppSpacing.sm),
+                          TextButton.icon(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    _emailController.text = 'branchmanager@ostora.sa';
+                                    _passwordController.text = 'password123';
+                                  },
+                            icon: const Icon(Icons.store_rounded, size: 16),
+                            label: Text(l10n.branchMgr),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.primary,
+                              textStyle: const TextStyle(fontSize: 12),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                   ],
                 ),
               ),

@@ -8,9 +8,9 @@ final customizationSettingsProvider = StateNotifierProvider<CustomizationSetting
 });
 
 class CustomizationSettingsNotifier extends StateNotifier<CustomizationSettingsState> {
-  final CustomizationRepository _repo;
 
   CustomizationSettingsNotifier(this._repo) : super(const SettingsInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const SettingsLoading();
@@ -64,9 +64,9 @@ final receiptTemplateProvider = StateNotifierProvider<ReceiptTemplateNotifier, R
 });
 
 class ReceiptTemplateNotifier extends StateNotifier<ReceiptTemplateState> {
-  final CustomizationRepository _repo;
 
   ReceiptTemplateNotifier(this._repo) : super(const ReceiptInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const ReceiptLoading();
@@ -117,9 +117,9 @@ final quickAccessProvider = StateNotifierProvider<QuickAccessNotifier, QuickAcce
 });
 
 class QuickAccessNotifier extends StateNotifier<QuickAccessState> {
-  final CustomizationRepository _repo;
 
   QuickAccessNotifier(this._repo) : super(const QuickAccessInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const QuickAccessLoading();

@@ -97,7 +97,7 @@ class _ConfigsTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         return PosCard(
-          borderRadius: BorderRadius.circular(10,),
+          borderRadius: BorderRadius.circular(10),
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: Color(0xFFE8F5E9),
@@ -139,18 +139,18 @@ class _MappingsTabState extends ConsumerState<_MappingsTab> {
     // For the list view, show a placeholder that directs to config detail
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.account_tree, size: 48, color: AppColors.textMutedLight),
-            SizedBox(height: AppSpacing.sm),
-            Text(l10n.accountingMappings, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: AppSpacing.xs),
+            Icon(Icons.account_tree, size: 48, color: AppColors.mutedFor(context)),
+            const SizedBox(height: AppSpacing.sm),
+            Text(l10n.accountingMappings, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               'Select an accounting config to view its account mappings.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.textMutedLight),
+              style: TextStyle(color: AppColors.mutedFor(context)),
             ),
           ],
         ),
@@ -187,7 +187,7 @@ class _ExportsTab extends ConsumerWidget {
         final item = items[i];
         final status = (item['status'] ?? '').toString();
         return PosCard(
-          borderRadius: BorderRadius.circular(10,),
+          borderRadius: BorderRadius.circular(10),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF1E88E5).withValues(alpha: 0.1),
@@ -198,19 +198,19 @@ class _ExportsTab extends ConsumerWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text('${item['start_date'] ?? ''} → ${item['end_date'] ?? ''}', style: const TextStyle(fontSize: 12)),
-            trailing: _statusChip(status),
+            trailing: _statusChip(context, status),
           ),
         );
       },
     );
   }
 
-  Widget _statusChip(String status) {
+  Widget _statusChip(BuildContext context, String status) {
     final color = switch (status) {
       'completed' => AppColors.success,
       'pending' => AppColors.warning,
       'failed' => AppColors.error,
-      _ => AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -250,7 +250,7 @@ class _AutoExportTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         return PosCard(
-          borderRadius: BorderRadius.circular(10,),
+          borderRadius: BorderRadius.circular(10),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF7C3AED).withValues(alpha: 0.1),
@@ -266,7 +266,7 @@ class _AutoExportTab extends ConsumerWidget {
             ),
             trailing: Icon(
               item['is_active'] == true ? Icons.toggle_on : Icons.toggle_off,
-              color: item['is_active'] == true ? AppColors.success : AppColors.textMutedLight,
+              color: item['is_active'] == true ? AppColors.success : AppColors.mutedFor(context),
               size: 32,
             ),
           ),

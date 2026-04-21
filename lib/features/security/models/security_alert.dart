@@ -3,16 +3,6 @@ import 'package:wameedpos/features/security/enums/security_alert_status.dart';
 import 'package:wameedpos/features/settings/enums/security_alert_type.dart';
 
 class SecurityAlert {
-  final String id;
-  final String? adminUserId;
-  final SecurityAlertType alertType;
-  final AlertSeverity severity;
-  final Map<String, dynamic>? details;
-  final SecurityAlertStatus status;
-  final DateTime? resolvedAt;
-  final String? resolvedBy;
-  final String? resolutionNotes;
-  final DateTime? createdAt;
 
   const SecurityAlert({
     required this.id,
@@ -41,6 +31,16 @@ class SecurityAlert {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? adminUserId;
+  final SecurityAlertType alertType;
+  final AlertSeverity severity;
+  final Map<String, dynamic>? details;
+  final SecurityAlertStatus status;
+  final DateTime? resolvedAt;
+  final String? resolvedBy;
+  final String? resolutionNotes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

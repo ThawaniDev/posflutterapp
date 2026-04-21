@@ -2,25 +2,6 @@ import 'package:wameedpos/features/inventory/enums/supplier_return_status.dart';
 import 'package:wameedpos/features/inventory/models/supplier_return_item.dart';
 
 class SupplierReturn {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String supplierId;
-  final String? supplierName;
-  final String? referenceNumber;
-  final SupplierReturnStatus? status;
-  final String? reason;
-  final double totalAmount;
-  final String? notes;
-  final String? createdBy;
-  final String? createdByName;
-  final String? approvedBy;
-  final String? approvedByName;
-  final DateTime? approvedAt;
-  final DateTime? completedAt;
-  final List<SupplierReturnItem>? items;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SupplierReturn({
     required this.id,
@@ -72,6 +53,25 @@ class SupplierReturn {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String supplierId;
+  final String? supplierName;
+  final String? referenceNumber;
+  final SupplierReturnStatus? status;
+  final String? reason;
+  final double totalAmount;
+  final String? notes;
+  final String? createdBy;
+  final String? createdByName;
+  final String? approvedBy;
+  final String? approvedByName;
+  final DateTime? approvedAt;
+  final DateTime? completedAt;
+  final List<SupplierReturnItem>? items;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

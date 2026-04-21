@@ -84,6 +84,10 @@ class CartNotifier extends StateNotifier<CartState> {
     state = state.copyWith(manualDiscount: discount);
   }
 
+  void toggleTaxExempt() {
+    state = state.copyWith(taxExempt: !state.taxExempt);
+  }
+
   void clear() {
     state = const CartState();
   }
@@ -122,9 +126,8 @@ final activeSessionProvider = StateNotifierProvider<ActiveSessionNotifier, Activ
 });
 
 class ActiveSessionNotifier extends StateNotifier<ActiveSessionState> {
-  final PosTerminalRepository _repo;
-
   ActiveSessionNotifier(this._repo) : super(const ActiveSessionNone());
+  final PosTerminalRepository _repo;
 
   Future<void> openSession({required double openingCash, required String registerId}) async {
     state = const ActiveSessionLoading();
@@ -180,9 +183,8 @@ final posProductsProvider = StateNotifierProvider<PosProductsNotifier, PosProduc
 });
 
 class PosProductsNotifier extends StateNotifier<PosProductsState> {
-  final PosTerminalRepository _repo;
-
   PosProductsNotifier(this._repo) : super(const PosProductsInitial());
+  final PosTerminalRepository _repo;
 
   Future<void> load({String? search, String? categoryId, String? barcode}) async {
     state = const PosProductsLoading();
@@ -220,9 +222,8 @@ final posCustomersProvider = StateNotifierProvider<PosCustomersNotifier, PosCust
 });
 
 class PosCustomersNotifier extends StateNotifier<PosCustomersState> {
-  final PosTerminalRepository _repo;
-
   PosCustomersNotifier(this._repo) : super(const PosCustomersInitial());
+  final PosTerminalRepository _repo;
 
   Future<void> search(String query) async {
     if (query.isEmpty) {
@@ -248,14 +249,14 @@ final saleProvider = StateNotifierProvider<SaleNotifier, SaleState>((ref) {
 });
 
 class SaleNotifier extends StateNotifier<SaleState> {
-  final PosTerminalRepository _repo;
-
   SaleNotifier(this._repo) : super(const SaleIdle());
+  final PosTerminalRepository _repo;
 
   Future<bool> completeSale({
     required String sessionId,
     required CartState cart,
     required List<Map<String, dynamic>> payments,
+    double tipAmount = 0,
   }) async {
     state = const SaleProcessing();
     try {
@@ -265,11 +266,13 @@ class SaleNotifier extends StateNotifier<SaleState> {
         'subtotal': cart.subtotal,
         'discount_amount': cart.discountTotal > 0 ? cart.discountTotal : null,
         'tax_amount': cart.taxAmount,
-        'total_amount': cart.totalAmount,
+        'tip_amount': tipAmount > 0 ? tipAmount : null,
+        'total_amount': cart.totalAmount + tipAmount,
         'items': cart.items.map((i) => i.toTransactionItemJson()).toList(),
         'payments': payments,
         if (cart.customer != null) 'customer_id': cart.customer!.id,
         if (cart.notes != null) 'notes': cart.notes,
+        if (cart.taxExempt) 'is_tax_exempt': true,
       };
       final transaction = await _repo.createTransaction(data);
       final change = payments

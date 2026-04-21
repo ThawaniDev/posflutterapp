@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
@@ -121,7 +120,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                   padding: const EdgeInsets.all(40),
                   child: Column(
                     children: [
-                      SizedBox(width: 56, height: 56, child: CircularProgressIndicator(strokeWidth: 3, color: AppColors.primary)),
+                      const SizedBox(width: 56, height: 56, child: CircularProgressIndicator(strokeWidth: 3, color: AppColors.primary)),
                       AppSpacing.gapH20,
                       Text(
                         l10n.wameedAIProcessingInvoice,
@@ -237,7 +236,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
               AppSpacing.gapW8,
               Text(
                 label,
-                style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+                style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
               ),
             ],
           ),

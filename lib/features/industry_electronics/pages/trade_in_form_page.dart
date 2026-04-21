@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/trade_in_record.dart';
-import '../providers/electronics_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_electronics/models/trade_in_record.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TradeInFormPage extends ConsumerStatefulWidget {
-  final TradeInRecord? record;
   const TradeInFormPage({super.key, this.record});
+  final TradeInRecord? record;
 
   @override
   ConsumerState<TradeInFormPage> createState() => _TradeInFormPageState();
@@ -92,14 +92,14 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
               hint: l10n.electronicsDeviceHintTradeIn,
               maxLines: 2,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imeiCtrl,
               label: l10n.electronicsImeiOptional,
               hint: l10n.electronicsImeiHint,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectGrade,
               label: l10n.electronicsConditionGrade,
@@ -109,14 +109,14 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _assessedValueCtrl,
               label: l10n.electronicsAssessedValue,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectStaffMember,
               label: l10n.staffMember,

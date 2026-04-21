@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
-import 'pos_button.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
 
 // ─────────────────────────────────────────────────────────────
 // DIALOG / POPUP HELPERS
@@ -120,6 +120,141 @@ class _PosConfirmDialog extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────────
+// WEIGHT INPUT DIALOG
+// ─────────────────────────────────────────────────────────────
+
+/// Show a dialog to enter weight for weighable products.
+///
+/// Returns the entered weight as [double], or `null` if dismissed.
+Future<double?> showPosWeightDialog(
+  BuildContext context, {
+  required String title,
+  String? message,
+  required String confirmLabel,
+  required String cancelLabel,
+  required String hintText,
+}) {
+  return showDialog<double>(
+    context: context,
+    builder: (_) => _PosWeightDialog(
+      title: title,
+      message: message,
+      confirmLabel: confirmLabel,
+      cancelLabel: cancelLabel,
+      hintText: hintText,
+    ),
+  );
+}
+
+class _PosWeightDialog extends StatefulWidget {
+  const _PosWeightDialog({
+    required this.title,
+    this.message,
+    required this.confirmLabel,
+    required this.cancelLabel,
+    required this.hintText,
+  });
+
+  final String title;
+  final String? message;
+  final String confirmLabel;
+  final String cancelLabel;
+  final String hintText;
+
+  @override
+  State<_PosWeightDialog> createState() => _PosWeightDialogState();
+}
+
+class _PosWeightDialogState extends State<_PosWeightDialog> {
+  final _controller = TextEditingController();
+  String? _error;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final value = double.tryParse(_controller.text.trim());
+    if (value == null || value <= 0) {
+      setState(() => _error = widget.hintText);
+      return;
+    }
+    Navigator.pop(context, value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Dialog(
+      insetPadding: const EdgeInsets.all(24),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: AppSizes.maxWidthDialog),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.10), shape: BoxShape.circle),
+                child: const Center(child: Icon(Icons.scale_rounded, size: 28, color: AppColors.primary)),
+              ),
+              AppSpacing.gapH16,
+              Text(
+                widget.title,
+                style: AppTypography.headlineSmall.copyWith(
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              if (widget.message != null) ...[
+                AppSpacing.gapH8,
+                Text(
+                  widget.message!,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              AppSpacing.gapH16,
+              TextField(
+                controller: _controller,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                autofocus: true,
+                textAlign: TextAlign.center,
+                style: AppTypography.headlineMedium,
+                decoration: InputDecoration(hintText: widget.hintText, errorText: _error, suffixText: 'kg'),
+                onSubmitted: (_) => _submit(),
+              ),
+              AppSpacing.gapH24,
+              Row(
+                children: [
+                  Expanded(
+                    child: PosButton(
+                      label: widget.cancelLabel,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: PosButton(label: widget.confirmLabel, variant: PosButtonVariant.primary, onPressed: _submit),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
 // BOTTOM SHEET
 // ─────────────────────────────────────────────────────────────
 
@@ -176,7 +311,7 @@ class PosBottomSheetHeader extends StatelessWidget {
               ],
             ),
           ),
-          if (action != null) action!,
+          ?action,
           if (showClose) IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
         ],
       ),

@@ -8,9 +8,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BranchOverviewCard extends StatelessWidget {
-  final List<Map<String, dynamic>> branches;
 
   const BranchOverviewCard({super.key, required this.branches});
+  final List<Map<String, dynamic>> branches;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class BranchOverviewCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.store_rounded, color: AppColors.rose, size: 20),
+              const Icon(Icons.store_rounded, color: AppColors.rose, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardBranchOverview, style: AppTypography.headlineSmall),
               const Spacer(),
@@ -54,10 +54,10 @@ class BranchOverviewCard extends StatelessWidget {
 const _branchColors = [AppColors.primary, AppColors.info, AppColors.success, AppColors.warning, AppColors.purple, AppColors.rose];
 
 class _BranchComparisonChart extends StatelessWidget {
-  final List<Map<String, dynamic>> branches;
-  final bool isDark;
 
   const _BranchComparisonChart({required this.branches, required this.isDark});
+  final List<Map<String, dynamic>> branches;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _BranchComparisonChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context), strokeWidth: 0.8),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -104,7 +104,7 @@ class _BranchComparisonChart extends StatelessWidget {
                   meta: meta,
                   child: Text(
                     name.length > 10 ? '${name.substring(0, 9)}…' : name,
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   ),
                 );
               },
@@ -118,7 +118,7 @@ class _BranchComparisonChart extends StatelessWidget {
                 meta: meta,
                 child: Text(
                   _formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                 ),
               ),
             ),
@@ -133,11 +133,11 @@ class _BranchComparisonChart extends StatelessWidget {
 }
 
 class _BranchRow extends StatelessWidget {
+
+  const _BranchRow({required this.branch, required this.isDark, required this.l10n});
   final Map<String, dynamic> branch;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _BranchRow({required this.branch, required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +150,7 @@ class _BranchRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(Icons.store_outlined, size: 18, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(Icons.store_outlined, size: 18, color: AppColors.mutedFor(context)),
           AppSpacing.gapW8,
           Expanded(
             flex: 3,
@@ -160,7 +160,7 @@ class _BranchRow extends StatelessWidget {
                 Text(name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
                 Text(
                   '$transactions ${l10n.dashboardTransactions.toLowerCase()} · $staffCount ${l10n.staff.toLowerCase()}',
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),

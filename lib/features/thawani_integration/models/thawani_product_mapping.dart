@@ -1,14 +1,4 @@
 class ThawaniProductMapping {
-  final String id;
-  final String storeId;
-  final String productId;
-  final String thawaniProductId;
-  final bool? isPublished;
-  final double? onlinePrice;
-  final int? displayOrder;
-  final DateTime? lastSyncedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ThawaniProductMapping({
     required this.id,
@@ -37,6 +27,16 @@ class ThawaniProductMapping {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String productId;
+  final String thawaniProductId;
+  final bool? isPublished;
+  final double? onlinePrice;
+  final int? displayOrder;
+  final DateTime? lastSyncedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

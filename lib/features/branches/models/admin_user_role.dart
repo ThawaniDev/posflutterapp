@@ -1,8 +1,4 @@
 class AdminUserRole {
-  final String adminUserId;
-  final String adminRoleId;
-  final DateTime? assignedAt;
-  final String? assignedBy;
 
   const AdminUserRole({
     required this.adminUserId,
@@ -19,6 +15,10 @@ class AdminUserRole {
       assignedBy: json['assigned_by'] as String?,
     );
   }
+  final String adminUserId;
+  final String adminRoleId;
+  final DateTime? assignedAt;
+  final String? assignedBy;
 
   Map<String, dynamic> toJson() {
     return {

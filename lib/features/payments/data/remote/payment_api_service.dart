@@ -15,9 +15,9 @@ final paymentApiServiceProvider = Provider<PaymentApiService>((ref) {
 });
 
 class PaymentApiService {
-  final Dio _dio;
 
   PaymentApiService(this._dio);
+  final Dio _dio;
 
   // ─── Payments ─────────────────────────────────────────────────
 
@@ -27,8 +27,8 @@ class PaymentApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (method != null) 'method': method,
-        if (transactionId != null) 'transaction_id': transactionId,
+        'method': ?method,
+        'transaction_id': ?transactionId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -136,7 +136,7 @@ class PaymentApiService {
   // ─── Financial Reports ────────────────────────────────────────
 
   Future<Map<String, dynamic>> dailySummary({String? date}) async {
-    final response = await _dio.get(ApiEndpoints.financeDailySummary, queryParameters: {if (date != null) 'date': date});
+    final response = await _dio.get(ApiEndpoints.financeDailySummary, queryParameters: {'date': ?date});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
@@ -144,7 +144,7 @@ class PaymentApiService {
   Future<Map<String, dynamic>> reconciliation({String? startDate, String? endDate}) async {
     final response = await _dio.get(
       ApiEndpoints.financeReconciliation,
-      queryParameters: {if (startDate != null) 'start_date': startDate, if (endDate != null) 'end_date': endDate},
+      queryParameters: {'start_date': ?startDate, 'end_date': ?endDate},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;

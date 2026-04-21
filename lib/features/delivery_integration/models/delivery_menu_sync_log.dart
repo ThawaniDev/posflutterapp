@@ -2,18 +2,6 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/features/delivery_integration/enums/menu_sync_status.dart';
 
 class DeliveryMenuSyncLog {
-  final String id;
-  final String storeId;
-  final DeliveryConfigPlatform platform;
-  final MenuSyncStatus status;
-  final int? itemsSynced;
-  final int? itemsFailed;
-  final Map<String, dynamic>? errorDetails;
-  final String? triggeredBy;
-  final String? syncType;
-  final int? durationSeconds;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
 
   const DeliveryMenuSyncLog({
     required this.id,
@@ -46,6 +34,18 @@ class DeliveryMenuSyncLog {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final DeliveryConfigPlatform platform;
+  final MenuSyncStatus status;
+  final int? itemsSynced;
+  final int? itemsFailed;
+  final Map<String, dynamic>? errorDetails;
+  final String? triggeredBy;
+  final String? syncType;
+  final int? durationSeconds;
+  final DateTime? startedAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

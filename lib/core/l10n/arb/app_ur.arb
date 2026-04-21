@@ -507,6 +507,7 @@
   "settingsLocalization": "مقامی بنانا",
   "settingsLocalizationDesc": "زبانیں، ترجمے اور علاقائی ترتیبات",
   "settingsStoreProfile": "اسٹور پروفائل",
+  "settingsBusinessType": "کاروبار کی قسم",
   "settingsStoreProfileDesc": "اسٹور کا نام، پتہ اور رابطہ معلومات",
   "settingsWorkingHours": "اوقات کار",
   "settingsWorkingHoursDesc": "اپنے اسٹور کے اوقات کار سیٹ کریں",
@@ -610,7 +611,7 @@
   "settingsWorkingBreakEnd": "وقفہ اختتام",
   "settingsProfileCurrency": "کرنسی",
   "settingsProfileCurrencyCode": "کرنسی کوڈ",
-  "settingsProfileCurrencyCodeHint": "e.g. OMR, , USD",
+  "settingsProfileCurrencyCodeHint": "e.g. , , USD",
   "settingsProfileCurrencySymbol": "کرنسی علامت",
   "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
   "settingsProfileFormatting": "نمبر فارمیٹنگ",
@@ -851,6 +852,10 @@
   "bakeryCustomCakeOrders": "حسب ضرورت کیک آرڈرز",
   "bakeryProductionSchedule": "پروڈکشن شیڈول",
   "bakeryNewRecipe": "نیا Recipe",
+  "bakeryEditSchedule": "شیڈول میں ترمیم",
+  "bakeryNewSchedule": "نیا پیداوار شیڈول",
+  "bakeryUpdateSchedule": "شیڈول اپ ڈیٹ",
+  "bakeryCreateSchedule": "شیڈول بنائیں",
   "bakeryIngredients": "اجزاء",
   "bakeryYield": "Yield",
   "bakeryCakeSize": "کیک سائز",
@@ -1042,6 +1047,66 @@
   "staffShiftDeleted": "شفٹ حذف ہوئی",
   "staffDeleteShift": "شفٹ حذف کریں",
   "staffDeleteShiftConfirm": "یہ شفٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔",
+  "staffShiftsTab": "شفٹس",
+  "staffTemplatesTab": "ٹیمپلیٹس",
+  "staffShiftTemplates": "شفٹ ٹیمپلیٹس",
+  "staffCreateTemplate": "ٹیمپلیٹ بنائیں",
+  "staffEditTemplate": "ٹیمپلیٹ ترمیم",
+  "staffDeleteTemplate": "ٹیمپلیٹ حذف کریں",
+  "staffDeleteTemplateConfirm": "یہ ٹیمپلیٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔",
+  "staffTemplateCreated": "ٹیمپلیٹ بنایا گیا",
+  "staffTemplateUpdated": "ٹیمپلیٹ اپڈیٹ ہوا",
+  "staffTemplateDeleted": "ٹیمپلیٹ حذف ہوا",
+  "staffNoTemplates": "کوئی ٹیمپلیٹ نہیں ملی",
+  "staffNoShifts": "کوئی شفٹ نہیں ملی",
+  "staffStatusScheduled": "مقرر",
+  "staffStatusCompleted": "مکمل",
+  "staffStatusMissed": "چھوٹی ہوئی",
+  "staffStatusSwapped": "تبدیل شدہ",
+  "staffStatusUnknown": "نامعلوم",
+  "staffMarkComplete": "مکمل نشان زد",
+  "staffMarkMissed": "چھوٹی نشان زد",
+  "staffActual": "اصل",
+  "staffUnknown": "نامعلوم",
+  "staffBulkAssignShifts": "بیک وقت شفٹس تفویض",
+  "staffSingle": "انفرادی",
+  "staffBulk": "اجتماعی",
+  "staffSelectMembers": "اراکین منتخب کریں",
+  "staffSelectDates": "تاریخیں منتخب کریں",
+  "staffAddDate": "تاریخ شامل کریں",
+  "staffPeriod": "مدت",
+  "staffShiftsCreated": "شفٹس بنائی گئیں",
+  "staffShiftUpdated": "شفٹ اپڈیٹ ہوئی",
+  "staffEditShift": "شفٹ ترمیم",
+  "staffBreakMinutes": "{count} منٹ وقفہ",
+  "@staffBreakMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffBreakDuration": "وقفے کی مدت",
+  "staffMinutes": "منٹ",
+  "staffStartTime": "شروع کا وقت",
+  "staffEndTime": "اختتام کا وقت",
+  "color": "رنگ",
+  "staffOnBreak": "وقفے پر",
+  "staffOngoing": "جاری",
+  "staffNetWorked": "خالص",
+  "staffAbsent": "غیر حاضر",
+  "staffCompleted": "مکمل",
+  "staffOnTime": "وقت پر",
+  "staffLate": "تاخیر",
+  "staffEarlyDeparture": "جلد رخصتی",
+  "staffActiveSession": "فعال",
+  "staffTotalHours": "کل گھنٹے",
+  "staffAvgHours": "اوسط گھنٹے",
+  "staffLateArrivals": "تاخیر سے آمد",
+  "staffOnTimeRate": "وقت پر شرح",
+  "staffOvertimeHours": "اوور ٹائم",
+  "staffBreakDetails": "وقفے کی تفصیلات",
+  "staffExportAttendance": "برآمد",
   "staffCommissions": "کمیشنز",
   "staffTotalEarnings": "کل آمدنی",
   "staffTotalOrders": "کل آرڈرز",
@@ -1581,12 +1646,19 @@
   "noSessions": "کوئی سیشن نہیں",
   "na": "N/A",
   "paymentCash": "نقد",
+  "paymentCard": "کارڈ",
   "paymentMada": "مدی",
+  "paymentCardMada": "مدی کارڈ",
   "paymentVisa": "ویزا",
+  "paymentCardVisa": "ویزا کارڈ",
   "paymentMastercard": "ماسٹر کارڈ",
+  "paymentApplePay": "Apple Pay",
+  "paymentStcPay": "STC Pay",
   "paymentStoreCredit": "اسٹور کریڈٹ",
   "paymentGiftCard": "تحفہ کارڈ",
   "paymentMobilePayment": "موبائل ادائیگی",
+  "paymentLoyaltyPoints": "لائلٹی پوائنٹس",
+  "paymentBankTransfer": "بینک ٹرانسفر",
   "offlineChangesSynced": "آف لائن — تبدیلیاں منسلک ہونے پر مطابقت ہوں گی",
   "syncing": "مطابقت پذیری ہو رہی ہے...",
   "syncError": "مطابقت خرابی — دوبارہ کوشش ہو گی",
@@ -1739,6 +1811,9 @@
   "posNoProducts": "کوئی مصنوع نہیں ملی",
   "posNoProductsHint": "مختلف تلاش آزمائیں یا اپنا کیٹلاگ چیک کریں۔",
   "posProductAdded": "{name} added",
+  "posEnterWeight": "وزن درج کریں",
+  "posTareWeightNote": "پیکیجنگ وزن: {weight} کلو خودکار طور پر کٹ جائے گا",
+  "posWeightHint": "کلو میں وزن درج کریں",
   "posProductNotFound": "مصنوع نہیں ملی",
   "posReturnRefund": "واپسی / واپسی",
   "posReceiptNumber": "رسید / لین دین نمبر",
@@ -1753,6 +1828,20 @@
   "posPaymentTotal": "کل:  {amount}",
   "posSplitPayment": "تقسیم ادائیگی",
   "posCashTendered": "نقد پیش کیا",
+  "posTipAmount": "ٹپ کی رقم",
+  "posTotalWithTip": "ٹپ کے ساتھ کل",
+  "posPaymentTotalInsufficient": "ادائیگی کی کل رقم واجب الادا رقم کو پورا نہیں کرتی",
+  "posReturnQtyExceedsOriginal": "{product} کی واپسی کی مقدار اصل سے زیادہ ہے (زیادہ سے زیادہ: {max})",
+  "@posReturnQtyExceedsOriginal": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
   "posChange": "تبدیلی",
   "posRemaining": "باقی",
   "posCompletePayment": "ادائیگی مکمل کریں",
@@ -1810,6 +1899,7 @@
   "posNoProductsSubtitle": "مختلف تلاش آزمائیں یا اپنا کیٹلاگ چیک کریں۔",
   "posTapProductsToAdd": "مصنوعات شامل کرنے کے لیے ٹیپ کریں",
   "posTax15": "ٹیکس (15%)",
+  "posTaxExempt": "ٹیکس سے مستثنیٰ",
   "posClearCartMessage": "تمام آئٹمز ہٹا دیے جائیں گے۔",
   "posClear": "صاف کریں",
   "posWalkInCustomer": "Walk-in گاہک",
@@ -1829,6 +1919,11 @@
   "@posProductAdded": {
     "placeholders": {
       "name": {}
+    }
+  },
+  "@posTareWeightNote": {
+    "placeholders": {
+      "weight": {}
     }
   },
   "posReviewSessionSummary": "اپنے سیشن خلاصے کا جائزہ لیں",
@@ -2185,6 +2280,7 @@
   "commonEdit": "ترمیم",
   "commonInactive": "Inactive",
   "commonInvalid": "غلط",
+  "commonError": "ایک خرابی پیش آئی",
   "commonNo": "نہیں",
   "commonNotes": "نوٹس",
   "commonNotesOptional": "نوٹس (اختیاری)",
@@ -2269,6 +2365,9 @@
   "inventoryPOCancelled": "خریداری آرڈر منسوخ",
   "inventoryPOCreatedMsg": "خریداری آرڈر بنایا گیا",
   "inventoryPOSent": "خریداری آرڈر بھیجا گیا",
+  "inventoryPOReceived": "خریداری آرڈر وصول ہو گیا",
+  "inventoryReceivePOTitle": "خریداری آرڈر وصول کریں",
+  "inventoryOrdered": "آرڈر شدہ",
   "inventoryPartiallyReceived": "جزوی وصول شدہ",
   "inventoryProduct": "مصنوع",
   "inventoryPurchaseOrders": "خریداری آرڈرز",
@@ -2280,6 +2379,7 @@
   "inventoryReceived": "وصول شدہ",
   "inventoryRecipeCreated": "ترکیب بنائی گئی",
   "inventoryRecipeDeleted": "ترکیب حذف ہوئی",
+  "inventoryRecipeUpdated": "ترکیب اپ ڈیٹ ہوئی",
   "inventoryRecipes": "Recipes",
   "inventoryRecipesSubtitle": "مصنوع اجزاء اور پیداوار کی تعریف کریں",
   "inventoryRef": "حوالہ",
@@ -2758,6 +2858,7 @@
     }
   },
   "appBarLanguage": "زبان",
+  "appBarMore": "مزید",
   "quickNavTitle": "فوری نیویگیشن",
   "appBarTheme": "تھیم",
   "appBarDarkMode": "ڈارک موڈ",
@@ -2902,6 +3003,9 @@
   "receiptTemplateBodyConfig": "جسم ترتیب",
   "receiptTemplateFooterConfig": "فوٹر ترتیب",
   "cfdThemesTitle": "گاہک سامنے والا ڈسپلے تھیمز",
+  "cfdEnabled": "CFD فعال",
+  "cfdTargetMonitor": "منزل مانیٹر",
+  "cfdIdleRotation": "بے کار گردش (سیکنڈ)",
   "cfdThemesEmpty": "نہیں CFD تھیمز",
   "cfdThemesEmptySubtitle": "نہیں customer facing display themes are available کے لیے your plan.",
   "cfdThemeDetail": "CFD تھیم تفصیلات",
@@ -3124,7 +3228,6 @@
   "debitsAllocatedAt": "مختص شدہ At",
   "debitsCreatedAt": "بنایا گیا At",
   "debitsOrderNumber": "آرڈر #",
-
   "sidebarReceivables": "وصولیات",
   "receivablesTitle": "وصولیات",
   "receivablesCreate": "وصولی بنائیں",
@@ -3197,7 +3300,6 @@
   "receivablesSettledAt": "تصفیہ تاریخ",
   "receivablesCreatedAt": "بنانے کی تاریخ",
   "receivablesOrderNumber": "آرڈر #",
-
   "searchDropdownHint": "تلاش...",
   "noResultsFound": "کوئی نتائج نہیں ملے",
   "selectOption": "منتخب کریں...",
@@ -6258,5 +6360,458 @@
   "adminNoProductSales": "کوئی پروڈکٹ فروخت ڈیٹا نہیں",
   "adminNoUsersFound": "کوئی صارف نہیں ملا",
   "adminSearchUsers": "صارفین تلاش",
-  "adminNoAbTestsLinked": "اس فلیگ سے کوئی A/B ٹیسٹ منسلک نہیں"
+  "adminNoAbTestsLinked": "اس فلیگ سے کوئی A/B ٹیسٹ منسلک نہیں",
+  "softPosFreeActive": "SoftPOS مفت ٹیئر فعال ہے",
+  "softPosFreeTier": "SoftPOS مفت ٹیئر",
+  "softPosRemaining": "باقی",
+  "softPosTransactions": "لین دین",
+  "softPosReachThreshold": "مفت SoftPOS فعال کرنے کے لیے {threshold} لین دین مکمل کریں",
+  "softPosSaving": "آپ ماہانہ {amount} بچا رہے ہیں!",
+  "subBillingCycleMonthly": "ماہانہ",
+  "subBillingCycleYearly": "سالانہ",
+  "subThisAddOn": "یہ ایڈ آن",
+  "subUnableToIdentifyAddOn": "ایڈ آن کی شناخت نہیں ہو سکی",
+  "subAddOnConfirmMessage": "{cycle} فی {price} {currency} میں {name} شامل کریں؟",
+  "subAddOnRemovedSuccess": "{name} کامیابی سے ہٹا دیا گیا",
+  "subAddOnRemoveFailed": "ایڈ آن ہٹانے میں ناکامی: {error}",
+  "subBillingLabel": "بلنگ: {cycle}",
+  "subPeriodLabel": "مدت: {start} – {end}",
+  "subGracePeriodEnds": "رعایتی مدت ختم: {date}",
+  "subTrialEnds": "آزمائشی مدت ختم: {date}",
+  "subConfirmSubscriptionMessage": "{planName} ({billingCycle}) کو {price} {currency} میں سبسکرائب کریں؟",
+  "selectProduct": "پروڈکٹ منتخب کریں",
+  "selectCustomer": "کسٹمر منتخب کریں",
+  "selectCategory": "کیٹیگری منتخب کریں",
+  "selectType": "قسم منتخب کریں",
+  "selectStatus": "اسٹیٹس منتخب کریں",
+  "selectBranch": "برانچ منتخب کریں",
+  "selectStaffMember": "عملے کا رکن منتخب کریں",
+  "selectTemplate": "ٹیمپلیٹ منتخب کریں",
+  "selectPaymentMethod": "ادائیگی کا طریقہ منتخب کریں",
+  "selectReason": "وجہ منتخب کریں",
+  "selectGrade": "گریڈ منتخب کریں",
+  "selectFormat": "فارمیٹ منتخب کریں",
+  "selectPriority": "ترجیح منتخب کریں",
+  "selectChannel": "چینل منتخب کریں",
+  "selectDay": "دن منتخب کریں",
+  "selectFrequency": "فریکوئنسی منتخب کریں",
+  "selectCountry": "ملک منتخب کریں",
+  "selectDeviceType": "ڈیوائس کی قسم منتخب کریں",
+  "selectBaudRate": "باڈ ریٹ منتخب کریں",
+  "selectOrder": "آرڈر منتخب کریں",
+  "selectTable": "ٹیبل منتخب کریں",
+  "selectPlatform": "پلیٹ فارم منتخب کریں",
+  "selectRegister": "رجسٹر منتخب کریں",
+  "selectRole": "کردار منتخب کریں",
+  "selectStore": "اسٹور منتخب کریں",
+  "selectCycle": "سائیکل منتخب کریں",
+  "selectMetalType": "دھات کی قسم منتخب کریں",
+  "selectChargesType": "چارجز کی قسم منتخب کریں",
+  "selectTechnician": "ٹیکنیشن منتخب کریں",
+  "selectScheduleType": "شیڈول کی قسم منتخب کریں",
+  "selectEmploymentType": "ملازمت کی قسم منتخب کریں",
+  "selectSalaryType": "تنخواہ کی قسم منتخب کریں",
+  "selectBusinessType": "کاروبار کی قسم منتخب کریں",
+  "selectMethod": "طریقہ منتخب کریں",
+  "allTypes": "تمام اقسام",
+  "wameedAIMenu": "مینو",
+  "wameedAIPhotos": "تصاویر",
+  "wameedAIFiles": "فائلز",
+  "wameedAIBrowseCapabilities": "تمام AI صلاحیتیں دیکھیں",
+  "wameedAITodaySummary": "آج کا خلاصہ",
+  "wameedAITodaySummarySubtitle": "آمدنی، ٹاپ آئٹمز اور رجحانات",
+  "wameedAISmartReorderSubtitle": "AI تجویز کردہ خریداری کی فہرست",
+  "wameedAICustomerSegmentsSubtitle": "رویے کے مطابق صارفین کی گروپ بندی",
+  "wameedAIInvoiceOCRSubtitle": "سپلائر انوائسز اپنے سسٹم میں اسکین کریں",
+  "wameedAISuggTodaySalesTitle": "آج کی سیلز کا خلاصہ",
+  "wameedAISuggTodaySalesSubtitle": "آمدنی، ٹاپ آئٹمز اور رجحانات دکھائیں",
+  "wameedAISuggTodaySalesPrompt": "ٹاپ مصنوعات اور رجحانات کے ساتھ آج کی سیلز کا خلاصہ دکھائیں",
+  "wameedAISuggReorderTitle": "ری آرڈر تجویز",
+  "wameedAISuggReorderSubtitle": "کم اسٹاک اور تیزی سے بکنے والی اشیاء کے لیے",
+  "wameedAISuggReorderPrompt": "کم یا تیزی سے بکنے والی اشیاء کے لیے ری آرڈر فہرست تجویز کریں",
+  "wameedAISuggSlowMoversTitle": "سست رفتار آئٹمز تلاش کریں",
+  "wameedAISuggSlowMoversSubtitle": "وہ آئٹمز جو اچھی فروخت نہیں ہو رہیں",
+  "wameedAISuggSlowMoversPrompt": "اس مہینے میری انوینٹری میں سب سے سست رفتار مصنوعات کی فہرست بنائیں",
+  "wameedAISuggSegmentsTitle": "کسٹمر سیگمنٹس",
+  "wameedAISuggSegmentsSubtitle": "رویے کے مطابق صارفین کی گروپ بندی",
+  "wameedAISuggSegmentsPrompt": "میرے صارفین کا تجزیہ کریں اور مفید سیگمنٹس میں گروپ بندی کریں",
+  "subPerMonth": "/ماہ",
+  "subPerYear": "/سال",
+  "subPerYearShort": "/سال",
+  "subPerMonthShort": "/ماہ",
+  "subFreeTrialDays": "{days} دن کا مفت ٹرائل",
+  "@subFreeTrialDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGracePeriodActive": "مہلت کی مدت فعال",
+  "subSubscriptionExpired": "سبسکرپشن ختم ہو گئی",
+  "subExpiredRenewMessage": "آپ کی سبسکرپشن ختم ہو گئی ہے۔ رسائی بحال کرنے کے لیے ابھی تجدید کریں۔",
+  "subGraceDaysRemaining": "مہلت میں {days} دن باقی۔ رسائی کھونے سے بچنے کے لیے تجدید کریں۔",
+  "@subGraceDaysRemaining": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGraceEndsToday": "مہلت کی مدت آج ختم ہو رہی ہے۔ فوری طور پر تجدید کریں۔",
+  "subInvoice": "انوائس",
+  "subCreated": "بنایا گیا",
+  "subDueDateLabel": "آخری تاریخ",
+  "subPaidOn": "ادائیگی کی تاریخ",
+  "subSubtotal": "ذیلی کل",
+  "subVat15": "VAT (15%)",
+  "subTotal": "کل",
+  "subDownloadPdfInvoice": "PDF انوائس ڈاؤنلوڈ کریں",
+  "subDownloading": "ڈاؤنلوڈ ہو رہا ہے...",
+  "subQty": "مقدار",
+  "subUnit": "یونٹ",
+  "subDueColon": "واجب: {date}",
+  "@subDueColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaidColon": "ادا شدہ: {date}",
+  "@subPaidColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subFilterAll": "سب",
+  "subFilterPaid": "ادا شدہ",
+  "subFilterPending": "زیر التوا",
+  "subFilterOverdue": "تاخیر شدہ",
+  "subFilterCancelled": "منسوخ",
+  "subRenewsOn": "تجدید: {date}",
+  "@subRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subUsageUnlimited": "{current} / ∞",
+  "@subUsageUnlimited": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "subUsageCounted": "{current} / {max}",
+  "@subUsageCounted": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitProducts": "مصنوعات",
+  "subLimitStaffMembers": "عملے کے ارکان",
+  "subLimitCashierTerminals": "کیشیئر ٹرمینلز",
+  "subLimitBranches": "برانچز",
+  "subLimitTransactionsPerMonth": "ماہانہ لین دین",
+  "subLimitStorageMb": "اسٹوریج (MB)",
+  "subLimitPdfReportsPerMonth": "PDF رپورٹس / ماہ",
+  "thawaniNotSet": "سیٹ نہیں",
+  "thawaniLabel": "ثوانی",
+  "thawaniUnmapped": "غیر نقشہ بند",
+  "thawaniPendingSync": "سنک زیر التوا",
+  "thawaniSyncsToday": "آج کی سنکس",
+  "thawaniFailedSyncsTodayCount": "آج {count} سنکس ناکام",
+  "@thawaniFailedSyncsTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thawaniThawaniLine": "ثوانی: {id}",
+  "@thawaniThawaniLine": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategoryNum": "کیٹیگری #{id}",
+  "@thawaniCategoryNum": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "genericProcessing": "پروسیسنگ",
+  "genericEntityType": "ہستی کی قسم",
+  "genericPaginationInfo": "صفحہ {current} / {total} ({count} کل)",
+  "@genericPaginationInfo": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPredefinedRoleNote": "یہ سسٹم کی طے شدہ کردار ہے۔ اس کا نام تبدیل نہیں کیا جا سکتا، لیکن آپ اس کی اجازتیں اپنی مرضی کے مطابق بنا سکتے ہیں۔",
+  "staffCountSelected": "{count} منتخب",
+  "@staffCountSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPermissionsActiveCount": "{active}/{total} فعال",
+  "@staffPermissionsActiveCount": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@subAddOnConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "@subAddOnRemovedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@subAddOnRemoveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@subConfirmSubscriptionMessage": {
+    "placeholders": {
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "@subBillingLabel": {
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "@subPeriodLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "@subTrialEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@subGracePeriodEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@softPosSaving": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@softPosReachThreshold": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subDaysRemaining": "باقی دن",
+  "subNextPayment": "اگلی ادائیگی",
+  "subPaymentMethod": "ادائیگی کا طریقہ",
+  "subQuickActions": "فوری اقدامات",
+  "subViewPayments": "ادائیگیاں دیکھیں",
+  "subIncludedFeatures": "شامل خصوصیات",
+  "subSubscriptionOverview": "سبسکرپشن کا جائزہ",
+  "subPlanDetails": "پلان کی تفصیلات",
+  "subNextBillingDate": "اگلی بلنگ تاریخ",
+  "subNDaysLeft": "{days} دن باقی",
+  "@subNDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subCurrentPlanBadge": "موجودہ",
+  "subBestValue": "بہترین قیمت",
+  "subFeaturesIncluded": "{count} خصوصیات شامل",
+  "@subFeaturesIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitsIncluded": "{count} حدود",
+  "@subLimitsIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subNotAvailable": "دستیاب نہیں",
+  "subEnabled": "فعال",
+  "subDisabled": "غیر فعال",
+  "subSoftPosFreeAfter": "{threshold} SoftPOS لین دین کے بعد مفت",
+  "@subSoftPosFreeAfter": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subSoftPosFreeExplainer": "{period} کے اندر {threshold} کارڈ ادائیگیاں قبول کرنے کے لیے SoftPOS استعمال کریں اور آپ کی سبسکرپشن مفت ہو جائے گی!",
+  "@subSoftPosFreeExplainer": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeEligible": "مفت SoftPOS کے اہل",
+  "subSoftPosOrPay": "ورنہ: {price} {period}",
+  "@subSoftPosOrPay": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "notifCentreTitle": "نوٹیفکیشن سینٹر",
+  "notifCentreSubtitle": "تمام الرٹس ایک جگہ",
+  "notifTabInbox": "ان باکس",
+  "notifTabAnnouncements": "اعلانات",
+  "notifTabPaymentReminders": "ادائیگی کی یاد دہانیاں",
+  "notifTabAppUpdates": "ایپ اپڈیٹس",
+  "notifBellTooltip": "نوٹیفکیشنز",
+  "notifViewAll": "سب دیکھیں",
+  "notifNoRecent": "کوئی حالیہ نوٹیفکیشن نہیں",
+  "notifMaintenanceBannerTitle": "طے شدہ دیکھ بھال",
+  "notifMaintenanceUntil": "متوقع اختتام: {endAt}",
+  "announcementsEmpty": "ابھی کوئی اعلان نہیں",
+  "announcementsDismiss": "بند کریں",
+  "announcementsDismissed": "اعلان بند کر دیا گیا",
+  "paymentReminderDue": "واجب الادا",
+  "paymentRemindersEmpty": "کوئی ادائیگی یاد دہانی نہیں",
+  "paymentRemindersUpcoming": "آنے والی",
+  "paymentRemindersOverdue": "تاخیر سے",
+  "paymentRemindersChannel": "چینل",
+  "paymentRemindersSentAt": "بھیجا گیا",
+  "paymentRemindersSummary": "{total} کل · {upcoming} آنے والی · {overdue} تاخیر سے",
+  "appReleasesEmpty": "کوئی ریلیز دستیاب نہیں",
+  "appReleaseLatest": "تازہ ترین ریلیز",
+  "appReleaseVersion": "ورژن {version}",
+  "appReleaseForceUpdate": "لازمی اپڈیٹ",
+  "appReleaseChangelog": "نیا کیا ہے",
+  "appReleaseDownload": "ڈاؤن لوڈ",
+  "appReleasePlatform": "پلیٹ فارم",
+  "appReleaseChannel": "چینل",
+  "appReleaseReleasedAt": "{date} کو جاری",
+  "@notifMaintenanceUntil": {
+    "placeholders": {
+      "endAt": {
+        "type": "String"
+      }
+    }
+  },
+  "@paymentRemindersSummary": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      },
+      "overdue": {
+        "type": "int"
+      }
+    }
+  },
+  "@appReleaseVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@appReleaseReleasedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

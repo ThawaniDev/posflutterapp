@@ -8,8 +8,8 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminTeamUserDetailPage extends ConsumerStatefulWidget {
-  final String userId;
   const AdminTeamUserDetailPage({super.key, required this.userId});
+  final String userId;
 
   @override
   ConsumerState<AdminTeamUserDetailPage> createState() => _AdminTeamUserDetailPageState();
@@ -95,7 +95,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                           ),
                           if (twoFactor) ...[
                             const SizedBox(width: 8),
-                            Icon(Icons.verified_user, size: 16, color: AppColors.success),
+                            const Icon(Icons.verified_user, size: 16, color: AppColors.success),
                             const SizedBox(width: 4),
                             Text('2FA', style: theme.textTheme.labelSmall),
                           ],

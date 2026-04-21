@@ -14,6 +14,8 @@ final subscriptionSyncServiceProvider = Provider<SubscriptionSyncService>((ref) 
 /// Runs on a heartbeat interval and updates the [FeatureGateService] cache.
 /// The POS relies on this to stay current with plan changes without manual refresh.
 class SubscriptionSyncService {
+
+  SubscriptionSyncService(this._featureGateService);
   final FeatureGateService _featureGateService;
 
   Timer? _heartbeatTimer;
@@ -24,8 +26,6 @@ class SubscriptionSyncService {
 
   /// Cached entitlement data from last sync
   Map<String, dynamic>? _lastEntitlementData;
-
-  SubscriptionSyncService(this._featureGateService);
 
   /// Start periodic sync.
   void startSync() {

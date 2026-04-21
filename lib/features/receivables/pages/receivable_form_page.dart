@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
@@ -14,9 +13,9 @@ import 'package:wameedpos/features/receivables/providers/receivables_providers.d
 import 'package:wameedpos/features/receivables/repositories/receivable_repository.dart';
 
 class ReceivableFormPage extends ConsumerStatefulWidget {
-  final String? receivableId;
 
   const ReceivableFormPage({super.key, this.receivableId});
+  final String? receivableId;
 
   @override
   ConsumerState<ReceivableFormPage> createState() => _ReceivableFormPageState();

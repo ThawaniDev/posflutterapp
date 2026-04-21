@@ -12,16 +12,6 @@ int _toInt(dynamic v) {
 }
 
 class LlmModel {
-  final String id;
-  final String provider;
-  final String modelId;
-  final String displayName;
-  final String? description;
-  final bool supportsVision;
-  final bool supportsJsonMode;
-  final int maxContextTokens;
-  final int maxOutputTokens;
-  final bool isDefault;
 
   const LlmModel({
     required this.id,
@@ -48,6 +38,16 @@ class LlmModel {
     maxOutputTokens: json['max_output_tokens'] as int? ?? 4096,
     isDefault: json['is_default'] == true,
   );
+  final String id;
+  final String provider;
+  final String modelId;
+  final String displayName;
+  final String? description;
+  final bool supportsVision;
+  final bool supportsJsonMode;
+  final int maxContextTokens;
+  final int maxOutputTokens;
+  final bool isDefault;
 
   String get providerLabel {
     switch (provider) {
@@ -64,18 +64,6 @@ class LlmModel {
 }
 
 class AIChat {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String userId;
-  final String title;
-  final String? llmModelId;
-  final LlmModel? llmModel;
-  final int messageCount;
-  final int totalTokens;
-  final double totalCostUsd;
-  final DateTime? lastMessageAt;
-  final List<AIChatMessage> messages;
 
   const AIChat({
     required this.id,
@@ -106,6 +94,18 @@ class AIChat {
     lastMessageAt: json['last_message_at'] != null ? DateTime.tryParse(json['last_message_at'] as String) : null,
     messages: (json['messages'] as List<dynamic>?)?.map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>)).toList() ?? [],
   );
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String userId;
+  final String title;
+  final String? llmModelId;
+  final LlmModel? llmModel;
+  final int messageCount;
+  final int totalTokens;
+  final double totalCostUsd;
+  final DateTime? lastMessageAt;
+  final List<AIChatMessage> messages;
 
   AIChat copyWith({String? title, LlmModel? llmModel, int? messageCount, List<AIChatMessage>? messages}) => AIChat(
     id: id,
@@ -124,19 +124,6 @@ class AIChat {
 }
 
 class AIChatMessage {
-  final String id;
-  final String chatId;
-  final String role; // 'user' | 'assistant'
-  final String content;
-  final String? featureSlug;
-  final Map<String, dynamic>? featureData;
-  final List<dynamic>? attachments;
-  final String? modelUsed;
-  final int inputTokens;
-  final int outputTokens;
-  final double costUsd;
-  final int latencyMs;
-  final DateTime? createdAt;
 
   const AIChatMessage({
     required this.id,
@@ -169,18 +156,25 @@ class AIChatMessage {
     latencyMs: _toInt(json['latency_ms']),
     createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at'] as String) : null,
   );
+  final String id;
+  final String chatId;
+  final String role; // 'user' | 'assistant'
+  final String content;
+  final String? featureSlug;
+  final Map<String, dynamic>? featureData;
+  final List<dynamic>? attachments;
+  final String? modelUsed;
+  final int inputTokens;
+  final int outputTokens;
+  final double costUsd;
+  final int latencyMs;
+  final DateTime? createdAt;
 
   bool get isUser => role == 'user';
   bool get isAssistant => role == 'assistant';
 }
 
 class AIFeatureCard {
-  final String id;
-  final String slug;
-  final String displayName;
-  final String? description;
-  final String category;
-  final String? icon;
 
   const AIFeatureCard({
     required this.id,
@@ -199,4 +193,10 @@ class AIFeatureCard {
     category: json['category'] as String,
     icon: json['icon'] as String?,
   );
+  final String id;
+  final String slug;
+  final String displayName;
+  final String? description;
+  final String category;
+  final String? icon;
 }

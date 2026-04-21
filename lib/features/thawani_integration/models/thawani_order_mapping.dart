@@ -2,24 +2,6 @@ import 'package:wameedpos/features/thawani_integration/enums/thawani_delivery_ty
 import 'package:wameedpos/features/thawani_integration/enums/thawani_order_status.dart';
 
 class ThawaniOrderMapping {
-  final String id;
-  final String storeId;
-  final String? orderId;
-  final String thawaniOrderId;
-  final String thawaniOrderNumber;
-  final ThawaniOrderStatus status;
-  final ThawaniDeliveryType deliveryType;
-  final String? customerName;
-  final String? customerPhone;
-  final String? deliveryAddress;
-  final double orderTotal;
-  final double? commissionAmount;
-  final String? rejectionReason;
-  final DateTime? acceptedAt;
-  final DateTime? preparedAt;
-  final DateTime? completedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const ThawaniOrderMapping({
     required this.id,
@@ -64,6 +46,24 @@ class ThawaniOrderMapping {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? orderId;
+  final String thawaniOrderId;
+  final String thawaniOrderNumber;
+  final ThawaniOrderStatus status;
+  final ThawaniDeliveryType deliveryType;
+  final String? customerName;
+  final String? customerPhone;
+  final String? deliveryAddress;
+  final double orderTotal;
+  final double? commissionAmount;
+  final String? rejectionReason;
+  final DateTime? acceptedAt;
+  final DateTime? preparedAt;
+  final DateTime? completedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -18,9 +18,9 @@ import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 class StaffFormPage extends ConsumerStatefulWidget {
-  final String? staffId;
 
   const StaffFormPage({super.key, this.staffId});
+  final String? staffId;
 
   @override
   ConsumerState<StaffFormPage> createState() => _StaffFormPageState();
@@ -291,7 +291,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.borderSm,
-                side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                side: BorderSide(color: AppColors.borderFor(context)),
               ),
               tileColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
               leading: const Icon(Icons.calendar_today),
@@ -343,13 +343,13 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 color: isDark ? AppColors.cardDark : AppColors.cardLight,
                 borderRadius: AppRadius.borderMd,
 
-                border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+                border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
                 child: ListTile(
                   leading: const Icon(Icons.pin, color: AppColors.primary),
                   title: Text(l10n.staffChangePin),
                   subtitle: Text(
                     l10n.staffChangePinDesc,
-                    style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(color: AppColors.mutedFor(context)),
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showChangePinDialog(context, l10n),
@@ -425,7 +425,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             title: Text(l10n.staffUserAccountLinked),
             subtitle: Text(
               detailState.staff.linkedUser?.email ?? detailState.staff.email ?? '',
-              style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: TextStyle(color: AppColors.mutedFor(context)),
             ),
           ),
         );
@@ -440,7 +440,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
           title: Text(l10n.staffCreateUserAccount),
           subtitle: Text(
             l10n.staffCreateUserAccountDesc,
-            style: TextStyle(fontSize: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
           ),
           value: _createUserAccount,
           onChanged: (v) => setState(() => _createUserAccount = v),

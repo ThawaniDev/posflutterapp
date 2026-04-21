@@ -1,8 +1,4 @@
 class PlatformAnnouncementDismissal {
-  final String id;
-  final String announcementId;
-  final String storeId;
-  final DateTime? dismissedAt;
 
   const PlatformAnnouncementDismissal({
     required this.id,
@@ -19,6 +15,10 @@ class PlatformAnnouncementDismissal {
       dismissedAt: json['dismissed_at'] != null ? DateTime.parse(json['dismissed_at'] as String) : null,
     );
   }
+  final String id;
+  final String announcementId;
+  final String storeId;
+  final DateTime? dismissedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -171,7 +171,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
-                  label: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
+                  label: Text(l10n.delete, style: const TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(gw['id']),
                 ),
               ],

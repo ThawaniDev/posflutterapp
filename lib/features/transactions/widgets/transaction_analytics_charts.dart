@@ -103,7 +103,7 @@ class TransactionDailyTrendChart extends StatelessWidget {
                   show: true,
                   drawVerticalLine: false,
                   getDrawingHorizontalLine: (_) => FlLine(
-                    color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight,
+                    color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
                     strokeWidth: 0.8,
                   ),
                 ),
@@ -124,7 +124,7 @@ class TransactionDailyTrendChart extends StatelessWidget {
                           meta: meta,
                           child: Text(
                             '${d.day}/${d.month}',
-                            style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                            style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                           ),
                         );
                       },
@@ -138,7 +138,7 @@ class TransactionDailyTrendChart extends StatelessWidget {
                         meta: meta,
                         child: Text(
                           _formatCompact(value),
-                          style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                          style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                         ),
                       ),
                     ),
@@ -229,7 +229,7 @@ class _PaymentBreakdownChart extends StatelessWidget {
                           const SizedBox(width: 6),
                           Text(
                             labels[i],
-                            style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                            style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
                           ),
                         ],
                       ),
@@ -307,7 +307,7 @@ class _HourlyDistributionChart extends StatelessWidget {
                   show: true,
                   drawVerticalLine: false,
                   getDrawingHorizontalLine: (_) => FlLine(
-                    color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight,
+                    color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
                     strokeWidth: 0.8,
                   ),
                 ),
@@ -325,7 +325,7 @@ class _HourlyDistributionChart extends StatelessWidget {
                           meta: meta,
                           child: Text(
                             '${value.toInt()}h',
-                            style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                            style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                           ),
                         );
                       },
@@ -339,7 +339,7 @@ class _HourlyDistributionChart extends StatelessWidget {
                         meta: meta,
                         child: Text(
                           _formatCompact(value),
-                          style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                          style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                         ),
                       ),
                     ),

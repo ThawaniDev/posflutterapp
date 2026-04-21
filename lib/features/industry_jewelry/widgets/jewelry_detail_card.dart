@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../models/jewelry_product_detail.dart';
-import '../enums/metal_type.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class JewelryDetailCard extends StatelessWidget {
-  final JewelryProductDetail detail;
-  final VoidCallback? onTap;
 
   const JewelryDetailCard({super.key, required this.detail, this.onTap});
+  final JewelryProductDetail detail;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class JewelryDetailCard extends StatelessWidget {
                         Text(
                           'Gross: ${detail.grossWeightG}g • Net: ${detail.netWeightG}g',
                           style: AppTypography.caption.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                       ],

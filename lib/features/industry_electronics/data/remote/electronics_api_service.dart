@@ -12,15 +12,15 @@ final electronicsApiServiceProvider = Provider<ElectronicsApiService>((ref) {
 });
 
 class ElectronicsApiService {
-  final Dio _dio;
   ElectronicsApiService(this._dio);
+  final Dio _dio;
 
   Future<List<DeviceImeiRecord>> listImeiRecords({String? status, String? search, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.electronicsImeiRecords,
       queryParameters: {
         'per_page': perPage,
-        if (status != null) 'status': status,
+        'status': ?status,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );
@@ -46,7 +46,7 @@ class ElectronicsApiService {
       ApiEndpoints.electronicsRepairJobs,
       queryParameters: {
         'per_page': perPage,
-        if (status != null) 'status': status,
+        'status': ?status,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );
@@ -78,7 +78,7 @@ class ElectronicsApiService {
       ApiEndpoints.electronicsTradeIns,
       queryParameters: {
         'per_page': perPage,
-        if (customerId != null) 'customer_id': customerId,
+        'customer_id': ?customerId,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );

@@ -1,13 +1,4 @@
 class PendingOrder {
-  final String id;
-  final String storeId;
-  final String? customerId;
-  final Map<String, dynamic> itemsJson;
-  final double total;
-  final String? notes;
-  final String createdBy;
-  final DateTime? expiresAt;
-  final DateTime? createdAt;
 
   const PendingOrder({
     required this.id,
@@ -34,6 +25,15 @@ class PendingOrder {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? customerId;
+  final Map<String, dynamic> itemsJson;
+  final double total;
+  final String? notes;
+  final String createdBy;
+  final DateTime? expiresAt;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

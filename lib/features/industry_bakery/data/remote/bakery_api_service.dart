@@ -12,8 +12,8 @@ final bakeryApiServiceProvider = Provider<BakeryApiService>((ref) {
 });
 
 class BakeryApiService {
-  final Dio _dio;
   BakeryApiService(this._dio);
+  final Dio _dio;
 
   Future<List<BakeryRecipe>> listRecipes({String? search, int perPage = 20}) async {
     final response = await _dio.get(
@@ -44,7 +44,7 @@ class BakeryApiService {
   Future<List<ProductionSchedule>> listProductionSchedules({String? status, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.bakeryProductionSchedules,
-      queryParameters: {'per_page': perPage, if (status != null) 'status': status},
+      queryParameters: {'per_page': perPage, 'status': ?status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -72,7 +72,7 @@ class BakeryApiService {
   Future<List<CustomCakeOrder>> listCakeOrders({String? status, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.bakeryCakeOrders,
-      queryParameters: {'per_page': perPage, if (status != null) 'status': status},
+      queryParameters: {'per_page': perPage, 'status': ?status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;

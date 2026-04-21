@@ -19,9 +19,9 @@ final inventoryApiServiceProvider = Provider<InventoryApiService>((ref) {
 
 /// Remote API service for all inventory endpoints.
 class InventoryApiService {
-  final Dio _dio;
 
   InventoryApiService(this._dio);
+  final Dio _dio;
 
   // ─── Stock Levels ─────────────────────────────────────────────
 
@@ -40,7 +40,7 @@ class InventoryApiService {
         'store_id': storeId,
         'page': page,
         'per_page': perPage,
-        if (productId != null) 'product_id': productId,
+        'product_id': ?productId,
         if (lowStock == true) 'low_stock': 1,
         if (search != null && search.isNotEmpty) 'search': search,
       },
@@ -61,7 +61,7 @@ class InventoryApiService {
   Future<StockLevel> setReorderPoint(String stockLevelId, {required double reorderPoint, double? maxStockLevel}) async {
     final response = await _dio.put(
       '${ApiEndpoints.stockLevels}/$stockLevelId/reorder-point',
-      data: {'reorder_point': reorderPoint, if (maxStockLevel != null) 'max_stock_level': maxStockLevel},
+      data: {'reorder_point': reorderPoint, 'max_stock_level': ?maxStockLevel},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return StockLevel.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -78,7 +78,7 @@ class InventoryApiService {
   }) async {
     final response = await _dio.get(
       ApiEndpoints.stockMovements,
-      queryParameters: {'store_id': storeId, 'page': page, 'per_page': perPage, if (productId != null) 'product_id': productId},
+      queryParameters: {'store_id': storeId, 'page': page, 'per_page': perPage, 'product_id': ?productId},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final map = apiResponse.data as Map<String, dynamic>;
@@ -230,7 +230,7 @@ class InventoryApiService {
   }) async {
     final response = await _dio.get(
       ApiEndpoints.purchaseOrders,
-      queryParameters: {'store_id': storeId, 'page': page, 'per_page': perPage, if (status != null) 'status': status},
+      queryParameters: {'store_id': storeId, 'page': page, 'per_page': perPage, 'status': ?status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
     final map = apiResponse.data as Map<String, dynamic>;
@@ -337,8 +337,8 @@ class InventoryApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (status != null) 'status': status,
-        if (supplierId != null) 'supplier_id': supplierId,
+        'status': ?status,
+        'supplier_id': ?supplierId,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );

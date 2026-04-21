@@ -1,9 +1,4 @@
 class CustomerGroup {
-  final String id;
-  final String organizationId;
-  final String name;
-  final double? discountPercent;
-  final DateTime? createdAt;
 
   const CustomerGroup({
     required this.id,
@@ -22,6 +17,11 @@ class CustomerGroup {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final double? discountPercent;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -4,7 +4,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/payments/providers/payment_providers.dart';
 import 'package:wameedpos/features/payments/providers/payment_state.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CashSessionsPage extends ConsumerStatefulWidget {
   const CashSessionsPage({super.key});

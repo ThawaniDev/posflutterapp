@@ -307,7 +307,7 @@ class _PlatformChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (label, icon, color) = _meta(platform);
+    final (label, icon, color) = _meta(context, platform);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -318,7 +318,7 @@ class _PlatformChip extends StatelessWidget {
     );
   }
 
-  (String, IconData, Color) _meta(String? p) {
+  (String, IconData, Color) _meta(BuildContext context, String? p) {
     switch (p?.toLowerCase()) {
       case 'windows':
         return ('Windows', Icons.laptop_windows_outlined, AppColors.info);
@@ -329,7 +329,7 @@ class _PlatformChip extends StatelessWidget {
       case 'android':
         return ('Android', Icons.android_outlined, AppColors.success);
       default:
-        return ('Unknown', Icons.device_unknown_outlined, AppColors.textMutedLight);
+        return ('Unknown', Icons.device_unknown_outlined, AppColors.mutedFor(context));
     }
   }
 }

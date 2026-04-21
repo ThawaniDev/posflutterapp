@@ -10,9 +10,9 @@ final customersProvider = StateNotifierProvider<CustomersNotifier, CustomersStat
 });
 
 class CustomersNotifier extends StateNotifier<CustomersState> {
-  final CustomerRepository _repo;
 
   CustomersNotifier(this._repo) : super(const CustomersInitial());
+  final CustomerRepository _repo;
 
   Future<void> load({int page = 1, String? search, String? groupId}) async {
     state = const CustomersLoading();
@@ -51,9 +51,9 @@ final customerGroupsProvider = StateNotifierProvider<CustomerGroupsNotifier, Cus
 });
 
 class CustomerGroupsNotifier extends StateNotifier<CustomerGroupsState> {
-  final CustomerRepository _repo;
 
   CustomerGroupsNotifier(this._repo) : super(const CustomerGroupsInitial());
+  final CustomerRepository _repo;
 
   Future<void> load() async {
     state = const CustomerGroupsLoading();
@@ -96,10 +96,10 @@ final customerDetailProvider = StateNotifierProvider.family<CustomerDetailNotifi
 });
 
 class CustomerDetailNotifier extends StateNotifier<CustomerDetailState> {
-  final CustomerRepository _repo;
-  final String? _customerId;
 
   CustomerDetailNotifier(this._repo, this._customerId) : super(const CustomerDetailInitial());
+  final CustomerRepository _repo;
+  final String? _customerId;
 
   Future<void> load() async {
     if (_customerId == null) return;

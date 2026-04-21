@@ -1,7 +1,4 @@
 class AIBillingSummary {
-  final AIBillingConfig config;
-  final AIBillingCurrentMonth currentMonth;
-  final List<AIBillingInvoicePreview> recentInvoices;
 
   const AIBillingSummary({required this.config, required this.currentMonth, this.recentInvoices = const []});
 
@@ -14,14 +11,12 @@ class AIBillingSummary {
           : const [],
     );
   }
+  final AIBillingConfig config;
+  final AIBillingCurrentMonth currentMonth;
+  final List<AIBillingInvoicePreview> recentInvoices;
 }
 
 class AIBillingConfig {
-  final bool isAiEnabled;
-  final double monthlyLimitUsd;
-  final double effectiveLimitUsd;
-  final String? disabledReason;
-  final String? disabledAt;
 
   const AIBillingConfig({
     this.isAiEnabled = true,
@@ -40,17 +35,14 @@ class AIBillingConfig {
       disabledAt: json['disabled_at'] as String?,
     );
   }
+  final bool isAiEnabled;
+  final double monthlyLimitUsd;
+  final double effectiveLimitUsd;
+  final String? disabledReason;
+  final String? disabledAt;
 }
 
 class AIBillingCurrentMonth {
-  final int year;
-  final int month;
-  final int totalRequests;
-  final int totalTokens;
-  final double billedCostUsd;
-  final double limitUsd;
-  final double limitPercentage;
-  final List<AIBillingFeatureUsage> byFeature;
 
   const AIBillingCurrentMonth({
     required this.year,
@@ -77,13 +69,17 @@ class AIBillingCurrentMonth {
           : const [],
     );
   }
+  final int year;
+  final int month;
+  final int totalRequests;
+  final int totalTokens;
+  final double billedCostUsd;
+  final double limitUsd;
+  final double limitPercentage;
+  final List<AIBillingFeatureUsage> byFeature;
 }
 
 class AIBillingFeatureUsage {
-  final String featureSlug;
-  final int requestCount;
-  final int totalTokens;
-  final double billedCostUsd;
 
   const AIBillingFeatureUsage({required this.featureSlug, this.requestCount = 0, this.totalTokens = 0, this.billedCostUsd = 0});
 
@@ -95,17 +91,13 @@ class AIBillingFeatureUsage {
       billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
     );
   }
+  final String featureSlug;
+  final int requestCount;
+  final int totalTokens;
+  final double billedCostUsd;
 }
 
 class AIBillingInvoicePreview {
-  final String id;
-  final String invoiceNumber;
-  final int year;
-  final int month;
-  final double billedAmountUsd;
-  final String status;
-  final String dueDate;
-  final String? paidAt;
 
   const AIBillingInvoicePreview({
     required this.id,
@@ -130,24 +122,17 @@ class AIBillingInvoicePreview {
       paidAt: json['paid_at'] as String?,
     );
   }
-}
-
-class AIBillingInvoiceDetail {
   final String id;
   final String invoiceNumber;
   final int year;
   final int month;
-  final String periodStart;
-  final String periodEnd;
-  final int totalRequests;
-  final int totalTokens;
   final double billedAmountUsd;
   final String status;
   final String dueDate;
   final String? paidAt;
-  final String? paymentReference;
-  final List<AIBillingInvoiceItem> items;
-  final List<AIBillingPayment> payments;
+}
+
+class AIBillingInvoiceDetail {
 
   const AIBillingInvoiceDetail({
     required this.id,
@@ -190,15 +175,24 @@ class AIBillingInvoiceDetail {
           : const [],
     );
   }
+  final String id;
+  final String invoiceNumber;
+  final int year;
+  final int month;
+  final String periodStart;
+  final String periodEnd;
+  final int totalRequests;
+  final int totalTokens;
+  final double billedAmountUsd;
+  final String status;
+  final String dueDate;
+  final String? paidAt;
+  final String? paymentReference;
+  final List<AIBillingInvoiceItem> items;
+  final List<AIBillingPayment> payments;
 }
 
 class AIBillingInvoiceItem {
-  final String featureSlug;
-  final String featureName;
-  final String featureNameAr;
-  final int requestCount;
-  final int totalTokens;
-  final double billedCostUsd;
 
   const AIBillingInvoiceItem({
     required this.featureSlug,
@@ -219,15 +213,15 @@ class AIBillingInvoiceItem {
       billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
     );
   }
+  final String featureSlug;
+  final String featureName;
+  final String featureNameAr;
+  final int requestCount;
+  final int totalTokens;
+  final double billedCostUsd;
 }
 
 class AIBillingPayment {
-  final String id;
-  final double amountUsd;
-  final String paymentMethod;
-  final String? reference;
-  final String? notes;
-  final String createdAt;
 
   const AIBillingPayment({
     required this.id,
@@ -248,4 +242,10 @@ class AIBillingPayment {
       createdAt: json['created_at'] as String,
     );
   }
+  final String id;
+  final double amountUsd;
+  final String paymentMethod;
+  final String? reference;
+  final String? notes;
+  final String createdAt;
 }

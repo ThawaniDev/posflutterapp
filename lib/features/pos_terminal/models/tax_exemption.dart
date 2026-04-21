@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/settings/enums/tax_exemption_type.dart';
 
 class TaxExemption {
-  final String id;
-  final String transactionId;
-  final String? customerId;
-  final TaxExemptionType exemptionType;
-  final String? customerTaxId;
-  final String? certificateNumber;
-  final String? notes;
-  final DateTime? createdAt;
 
   const TaxExemption({
     required this.id,
@@ -33,6 +25,14 @@ class TaxExemption {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String transactionId;
+  final String? customerId;
+  final TaxExemptionType exemptionType;
+  final String? customerTaxId;
+  final String? certificateNumber;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

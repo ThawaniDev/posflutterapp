@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../models/trade_in_record.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_electronics/models/trade_in_record.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TradeInCard extends StatelessWidget {
-  final TradeInRecord record;
-  final VoidCallback? onTap;
 
   const TradeInCard({super.key, required this.record, this.onTap});
+  final TradeInRecord record;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +49,11 @@ class TradeInCard extends StatelessWidget {
                     if (record.imei != null)
                       Text(
                         l10n.electronicsImeiWithValue(record.imei ?? ''),
-                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                       ),
                     Text(
                       'Grade: ${record.conditionGrade}',
-                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),

@@ -5,12 +5,12 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// Widget showing a usage progress bar for a plan limit.
 class UsageProgress extends StatelessWidget {
+
+  const UsageProgress({super.key, required this.label, required this.current, required this.limit, required this.percentage});
   final String label;
   final int current;
   final int? limit;
   final double percentage;
-
-  const UsageProgress({super.key, required this.label, required this.current, required this.limit, required this.percentage});
 
   @override
   Widget build(BuildContext context) {

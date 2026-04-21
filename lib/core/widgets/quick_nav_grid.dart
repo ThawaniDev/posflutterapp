@@ -42,7 +42,7 @@ class _QuickNavGridDialog extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 16, 12, 12),
               child: Row(
                 children: [
-                  Icon(Icons.grid_view_rounded, size: 22, color: AppColors.primary),
+                  const Icon(Icons.grid_view_rounded, size: 22, color: AppColors.primary),
                   AppSpacing.gapW8,
                   Expanded(
                     child: Text(l10n.quickNavTitle, style: AppTypography.titleLarge.copyWith(fontWeight: FontWeight.w700)),

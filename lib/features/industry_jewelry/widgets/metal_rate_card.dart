@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../enums/metal_type.dart';
-import '../models/daily_metal_rate.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/models/daily_metal_rate.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class MetalRateCard extends StatelessWidget {
-  final DailyMetalRate rate;
-  final VoidCallback? onTap;
 
   const MetalRateCard({super.key, required this.rate, this.onTap});
+  final DailyMetalRate rate;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MetalRateCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,

@@ -18,11 +18,11 @@ final storeRepositoryProvider = Provider<StoreRepository>((ref) {
 
 /// Orchestrates store, settings, working hours, and onboarding APIs.
 class StoreRepository {
+
+  StoreRepository({required this.storeApi, required this.onboardingApi, required this.localStorage});
   final StoreApiService storeApi;
   final OnboardingApiService onboardingApi;
   final AuthLocalStorage localStorage;
-
-  StoreRepository({required this.storeApi, required this.onboardingApi, required this.localStorage});
 
   /// Resolves the current user's store ID from local storage.
   Future<String> _resolveStoreId() async {

@@ -15,11 +15,11 @@ class BakeryLoading extends BakeryState {
 }
 
 class BakeryLoaded extends BakeryState {
+
+  const BakeryLoaded({required this.recipes, required this.productionSchedules, required this.cakeOrders});
   final List<BakeryRecipe> recipes;
   final List<ProductionSchedule> productionSchedules;
   final List<CustomCakeOrder> cakeOrders;
-
-  const BakeryLoaded({required this.recipes, required this.productionSchedules, required this.cakeOrders});
 
   BakeryLoaded copyWith({
     List<BakeryRecipe>? recipes,
@@ -33,6 +33,6 @@ class BakeryLoaded extends BakeryState {
 }
 
 class BakeryError extends BakeryState {
-  final String message;
   const BakeryError({required this.message});
+  final String message;
 }

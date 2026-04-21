@@ -92,7 +92,7 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
                           Text(
                             l10n.amountWithSar(widget.amount.toStringAsFixed(2)),
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],
@@ -198,7 +198,7 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
   Widget _buildProviderOption(CheckoutProviderOption provider, bool isAr, bool isDark) {
     final isSelected = _selectedProvider?.provider == provider.provider;
     final name = isAr ? (provider.nameAr ?? provider.name) : provider.name;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return GestureDetector(
       onTap: () => setState(() => _selectedProvider = provider),
@@ -208,7 +208,7 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
         decoration: BoxDecoration(
           borderRadius: AppRadius.borderMd,
           border: Border.all(
-            color: isSelected ? AppColors.primary : (isDark ? AppColors.borderDark : AppColors.borderLight),
+            color: isSelected ? AppColors.primary : (AppColors.borderFor(context)),
             width: isSelected ? 2 : 1,
           ),
           color: isSelected ? AppColors.primary.withValues(alpha: 0.06) : null,

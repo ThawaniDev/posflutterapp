@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/device_imei_record.dart';
-import '../enums/device_imei_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
+import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ImeiRecordCard extends StatelessWidget {
-  final DeviceImeiRecord record;
-  final VoidCallback? onTap;
 
   const ImeiRecordCard({super.key, required this.record, this.onTap});
+  final DeviceImeiRecord record;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class ImeiRecordCard extends StatelessWidget {
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderMd,
@@ -60,7 +59,7 @@ class ImeiRecordCard extends StatelessWidget {
               ),
               if (record.purchasePrice != null)
                 Text(
-                  '${record.purchasePrice!.toStringAsFixed(2)}',
+                  record.purchasePrice!.toStringAsFixed(2),
                   style: AppTypography.priceSmall.copyWith(color: AppColors.primary),
                 ),
             ],

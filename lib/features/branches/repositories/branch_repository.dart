@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/branches/data/remote/branch_api_service.dart';
 
 class BranchRepository {
-  final BranchApiService _apiService;
 
   BranchRepository(this._apiService);
+  final BranchApiService _apiService;
 
   Future<Map<String, dynamic>> listBranches({Map<String, dynamic>? queryParams}) =>
       _apiService.listBranches(queryParams: queryParams);

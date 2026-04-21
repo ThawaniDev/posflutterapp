@@ -6,8 +6,8 @@ final autoUpdateRepositoryProvider = Provider<AutoUpdateRepository>((ref) {
 });
 
 class AutoUpdateRepository {
-  final AutoUpdateApiService _api;
   AutoUpdateRepository(this._api);
+  final AutoUpdateApiService _api;
 
   Future<Map<String, dynamic>> checkForUpdate({required String currentVersion, required String platform, String? channel}) =>
       _api.checkForUpdate(currentVersion: currentVersion, platform: platform, channel: channel);

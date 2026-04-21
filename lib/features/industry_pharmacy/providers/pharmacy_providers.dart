@@ -8,8 +8,8 @@ final pharmacyProvider = StateNotifierProvider<PharmacyNotifier, PharmacyState>(
 });
 
 class PharmacyNotifier extends StateNotifier<PharmacyState> {
-  final PharmacyRepository _repo;
   PharmacyNotifier(this._repo) : super(const PharmacyInitial());
+  final PharmacyRepository _repo;
 
   Future<void> load() async {
     state = const PharmacyLoading();

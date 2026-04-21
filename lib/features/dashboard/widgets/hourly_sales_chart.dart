@@ -9,9 +9,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class HourlySalesChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
 
   const HourlySalesChart({super.key, required this.data});
+  final List<Map<String, dynamic>> data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class HourlySalesChart extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.schedule_rounded, color: AppColors.info, size: 20),
+              const Icon(Icons.schedule_rounded, color: AppColors.info, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardHourlySales, style: AppTypography.headlineSmall),
             ],
@@ -36,7 +36,7 @@ class HourlySalesChart extends StatelessWidget {
               child: Center(
                 child: Text(
                   l10n.noData,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             )
@@ -52,10 +52,10 @@ class HourlySalesChart extends StatelessWidget {
 }
 
 class _HourlyBarChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data;
-  final bool isDark;
 
   const _HourlyBarChart({required this.data, required this.isDark});
+  final List<Map<String, dynamic>> data;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class _HourlyBarChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context), strokeWidth: 0.8),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -105,7 +105,7 @@ class _HourlyBarChart extends StatelessWidget {
                   meta: meta,
                   child: Text(
                     '${h}h',
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   ),
                 );
               },
@@ -119,7 +119,7 @@ class _HourlyBarChart extends StatelessWidget {
                 meta: meta,
                 child: Text(
                   _formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                 ),
               ),
             ),

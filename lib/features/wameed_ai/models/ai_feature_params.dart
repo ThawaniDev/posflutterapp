@@ -1,4 +1,5 @@
 /// Defines what input parameters each AI feature requires before invocation.
+library;
 
 enum FeatureFieldType {
   text,
@@ -17,15 +18,6 @@ enum FeatureFieldType {
 }
 
 class FeatureField {
-  final String key;
-  final String label;
-  final String labelAr;
-  final FeatureFieldType type;
-  final bool required;
-  final String? hint;
-  final String? hintAr;
-  final dynamic defaultValue;
-  final List<FeatureFieldOption>? options;
 
   const FeatureField({
     required this.key,
@@ -38,22 +30,31 @@ class FeatureField {
     this.defaultValue,
     this.options,
   });
+  final String key;
+  final String label;
+  final String labelAr;
+  final FeatureFieldType type;
+  final bool required;
+  final String? hint;
+  final String? hintAr;
+  final dynamic defaultValue;
+  final List<FeatureFieldOption>? options;
 }
 
 class FeatureFieldOption {
+
+  const FeatureFieldOption({required this.value, required this.label, required this.labelAr});
   final String value;
   final String label;
   final String labelAr;
-
-  const FeatureFieldOption({required this.value, required this.label, required this.labelAr});
 }
 
 class FeatureInputConfig {
+
+  const FeatureInputConfig({required this.slug, required this.fields, required this.promptTemplate});
   final String slug;
   final List<FeatureField> fields;
   final String promptTemplate;
-
-  const FeatureInputConfig({required this.slug, required this.fields, required this.promptTemplate});
 
   bool get hasRequiredFields => fields.any((f) => f.required);
 

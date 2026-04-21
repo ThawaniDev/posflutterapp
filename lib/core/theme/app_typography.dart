@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
 
 /// Wameed POS Design System — Typography
 ///

@@ -14,9 +14,9 @@ final marketplaceApiServiceProvider = Provider<MarketplaceApiService>((ref) {
 });
 
 class MarketplaceApiService {
-  final Dio _dio;
 
   MarketplaceApiService(this._dio);
+  final Dio _dio;
 
   // ── Browse Listings ───────────────────────────────────────
 

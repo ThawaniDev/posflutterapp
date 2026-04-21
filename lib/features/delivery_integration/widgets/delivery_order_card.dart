@@ -7,11 +7,11 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeliveryOrderCard extends StatelessWidget {
+
+  const DeliveryOrderCard({super.key, required this.order, this.onTap, this.onStatusAction});
   final Map<String, dynamic> order;
   final VoidCallback? onTap;
   final void Function(String status)? onStatusAction;
-
-  const DeliveryOrderCard({super.key, required this.order, this.onTap, this.onStatusAction});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class DeliveryOrderCard extends StatelessWidget {
     final itemsCount = order['items_count'] as int?;
     final createdAt = order['created_at'] as String?;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
       elevation: 0,

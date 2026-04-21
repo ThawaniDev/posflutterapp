@@ -22,8 +22,8 @@ void main() {
 
     test('AIFeaturesLoaded holds features list', () {
       final features = [
-        AIFeatureDefinition(id: 'f1', slug: 'smart_reorder', name: 'Smart Reorder', category: AIFeatureCategory.inventory),
-        AIFeatureDefinition(id: 'f2', slug: 'daily_summary', name: 'Daily Summary', category: AIFeatureCategory.sales),
+        const AIFeatureDefinition(id: 'f1', slug: 'smart_reorder', name: 'Smart Reorder', category: AIFeatureCategory.inventory),
+        const AIFeatureDefinition(id: 'f2', slug: 'daily_summary', name: 'Daily Summary', category: AIFeatureCategory.sales),
       ];
       final state = AIFeaturesLoaded(features: features);
       expect(state.features, hasLength(2));
@@ -90,7 +90,7 @@ void main() {
     });
 
     test('AISuggestionsLoaded holds paginated data', () {
-      final state = AISuggestionsLoaded(
+      const state = AISuggestionsLoaded(
         suggestions: [AISuggestion(id: 's1', storeId: 'st1', featureSlug: 'smart_reorder')],
         total: 50,
         currentPage: 1,

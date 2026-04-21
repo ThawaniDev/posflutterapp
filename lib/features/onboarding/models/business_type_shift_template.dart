@@ -1,14 +1,4 @@
 class BusinessTypeShiftTemplate {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final String startTime;
-  final String endTime;
-  final Map<String, dynamic>? daysOfWeek;
-  final int? breakDurationMinutes;
-  final bool? isDefault;
-  final int? sortOrder;
 
   const BusinessTypeShiftTemplate({
     required this.id,
@@ -37,6 +27,16 @@ class BusinessTypeShiftTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final String startTime;
+  final String endTime;
+  final Map<String, dynamic>? daysOfWeek;
+  final int? breakDurationMinutes;
+  final bool? isDefault;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

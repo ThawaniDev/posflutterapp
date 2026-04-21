@@ -1,15 +1,4 @@
 class SecuritySession {
-  final String id;
-  final String storeId;
-  final String userId;
-  final String? deviceId;
-  final String? ipAddress;
-  final String? userAgent;
-  final String status;
-  final DateTime? startedAt;
-  final DateTime? endedAt;
-  final DateTime? lastActivityAt;
-  final Map<String, dynamic>? metadata;
 
   const SecuritySession({
     required this.id,
@@ -40,6 +29,17 @@ class SecuritySession {
       metadata: json['metadata'] != null && json['metadata'] is Map ? Map<String, dynamic>.from(json['metadata'] as Map) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String userId;
+  final String? deviceId;
+  final String? ipAddress;
+  final String? userAgent;
+  final String status;
+  final DateTime? startedAt;
+  final DateTime? endedAt;
+  final DateTime? lastActivityAt;
+  final Map<String, dynamic>? metadata;
 
   Map<String, dynamic> toJson() {
     return {

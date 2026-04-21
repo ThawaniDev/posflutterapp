@@ -1,12 +1,4 @@
 class SignagePlaylist {
-  final String id;
-  final String storeId;
-  final String name;
-  final Map<String, dynamic> slides;
-  final Map<String, dynamic>? schedule;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const SignagePlaylist({
     required this.id,
@@ -31,6 +23,14 @@ class SignagePlaylist {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String name;
+  final Map<String, dynamic> slides;
+  final Map<String, dynamic>? schedule;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

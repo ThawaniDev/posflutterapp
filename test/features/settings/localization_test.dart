@@ -102,7 +102,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final locale = SupportedLocale(
+      const locale = SupportedLocale(
         id: 'loc-2',
         localeCode: 'en',
         languageName: 'English',
@@ -119,7 +119,7 @@ void main() {
     });
 
     test('copyWith overwrites fields', () {
-      final locale = SupportedLocale(
+      const locale = SupportedLocale(
         id: 'loc-1',
         localeCode: 'ar',
         languageName: 'Arabic',
@@ -132,14 +132,14 @@ void main() {
     });
 
     test('equality by id', () {
-      final a = SupportedLocale(
+      const a = SupportedLocale(
         id: 'same',
         localeCode: 'ar',
         languageName: 'A',
         languageNameNative: 'A',
         direction: LocaleDirection.rtl,
       );
-      final b = SupportedLocale(
+      const b = SupportedLocale(
         id: 'same',
         localeCode: 'en',
         languageName: 'B',
@@ -188,7 +188,7 @@ void main() {
     });
 
     test('copyWith preserves untouched fields', () {
-      final ts = MasterTranslationString(
+      const ts = MasterTranslationString(
         id: 'ts-1',
         stringKey: 'key',
         category: TranslationCategory.ui,
@@ -218,7 +218,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final o = TranslationOverride(
+      const o = TranslationOverride(
         id: 'to-2',
         storeId: 'store-xyz',
         stringKey: 'pos.title',
@@ -231,8 +231,8 @@ void main() {
     });
 
     test('equality by id', () {
-      final a = TranslationOverride(id: 'same', storeId: 's1', stringKey: 'k1', locale: 'en', customValue: 'v1');
-      final b = TranslationOverride(id: 'same', storeId: 's2', stringKey: 'k2', locale: 'ar', customValue: 'v2');
+      const a = TranslationOverride(id: 'same', storeId: 's1', stringKey: 'k1', locale: 'en', customValue: 'v1');
+      const b = TranslationOverride(id: 'same', storeId: 's2', stringKey: 'k2', locale: 'ar', customValue: 'v2');
       expect(a, equals(b));
     });
   });
@@ -262,7 +262,7 @@ void main() {
     });
 
     test('toJson round-trip', () {
-      final v = TranslationVersion(id: 'tv-3', versionHash: 'hash123', notes: 'v3');
+      const v = TranslationVersion(id: 'tv-3', versionHash: 'hash123', notes: 'v3');
       final json = v.toJson();
       expect(json['version_hash'], 'hash123');
       expect(json['notes'], 'v3');
@@ -285,7 +285,7 @@ void main() {
     });
 
     test('toJson produces correct map', () {
-      final pref = UserPreference(id: 'up-2', userId: 'user-2');
+      const pref = UserPreference(id: 'up-2', userId: 'user-2');
       final json = pref.toJson();
       expect(json['user_id'], 'user-2');
     });
@@ -306,7 +306,7 @@ void main() {
 
     test('loaded state holds locales', () {
       final locales = [
-        SupportedLocale(
+        const SupportedLocale(
           id: '1',
           localeCode: 'en',
           languageName: 'English',
@@ -327,7 +327,7 @@ void main() {
   group('TranslationListState', () {
     test('loaded state holds translations and total', () {
       final items = [
-        MasterTranslationString(
+        const MasterTranslationString(
           id: '1',
           stringKey: 'test.key',
           category: TranslationCategory.ui,
@@ -343,7 +343,7 @@ void main() {
 
   group('OverrideListState', () {
     test('loaded state holds overrides', () {
-      final overrides = [TranslationOverride(id: '1', storeId: 's', stringKey: 'k', locale: 'en', customValue: 'v')];
+      final overrides = [const TranslationOverride(id: '1', storeId: 's', stringKey: 'k', locale: 'en', customValue: 'v')];
       final state = OverrideListLoaded(overrides);
       expect(state.overrides.length, 1);
     });
@@ -351,7 +351,7 @@ void main() {
 
   group('VersionListState', () {
     test('loaded state holds versions', () {
-      final versions = [TranslationVersion(id: '1', versionHash: 'hash')];
+      final versions = [const TranslationVersion(id: '1', versionHash: 'hash')];
       final state = VersionListLoaded(versions);
       expect(state.versions.length, 1);
     });
@@ -374,7 +374,7 @@ void main() {
 
   group('Localization cross-cutting', () {
     test('SupportedLocale RTL detection', () {
-      final ar = SupportedLocale(
+      const ar = SupportedLocale(
         id: '1',
         localeCode: 'ar',
         languageName: 'Arabic',
@@ -385,7 +385,7 @@ void main() {
     });
 
     test('MasterTranslationString overridable flag', () {
-      final ts = MasterTranslationString(
+      const ts = MasterTranslationString(
         id: '1',
         stringKey: 'pos.title',
         category: TranslationCategory.ui,
@@ -397,8 +397,8 @@ void main() {
     });
 
     test('TranslationVersion hash integrity', () {
-      final v1 = TranslationVersion(id: '1', versionHash: 'abc');
-      final v2 = TranslationVersion(id: '2', versionHash: 'abc');
+      const v1 = TranslationVersion(id: '1', versionHash: 'abc');
+      const v2 = TranslationVersion(id: '2', versionHash: 'abc');
       expect(v1.versionHash, v2.versionHash);
       expect(v1, isNot(equals(v2))); // Different ids
     });

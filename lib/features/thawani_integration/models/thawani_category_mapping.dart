@@ -1,13 +1,4 @@
 class ThawaniCategoryMapping {
-  final String id;
-  final String storeId;
-  final String? categoryId;
-  final String? thawaniCategoryId;
-  final String? syncStatus;
-  final String? syncDirection;
-  final String? syncError;
-  final DateTime? lastSyncedAt;
-  final Map<String, dynamic>? category;
 
   const ThawaniCategoryMapping({
     required this.id,
@@ -34,6 +25,15 @@ class ThawaniCategoryMapping {
       category: json['category'] as Map<String, dynamic>?,
     );
   }
+  final String id;
+  final String storeId;
+  final String? categoryId;
+  final String? thawaniCategoryId;
+  final String? syncStatus;
+  final String? syncDirection;
+  final String? syncError;
+  final DateTime? lastSyncedAt;
+  final Map<String, dynamic>? category;
 
   Map<String, dynamic> toJson() => {
     'id': id,

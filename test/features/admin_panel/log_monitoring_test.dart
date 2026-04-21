@@ -136,7 +136,7 @@ void main() {
 
   group('SecurityAlertDetailState', () {
     test('pattern matching', () {
-      final s = const SecurityAlertDetailLoaded({'severity': 'high'});
+      const s = SecurityAlertDetailLoaded({'severity': 'high'});
       final result = switch (s as SecurityAlertDetailState) {
         SecurityAlertDetailInitial() => 'init',
         SecurityAlertDetailLoading() => 'load',

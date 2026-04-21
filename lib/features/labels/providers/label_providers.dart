@@ -10,9 +10,9 @@ final labelTemplatesProvider = StateNotifierProvider<LabelTemplatesNotifier, Lab
 });
 
 class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
-  final LabelRepository _repo;
 
   LabelTemplatesNotifier(this._repo) : super(const LabelTemplatesInitial());
+  final LabelRepository _repo;
 
   Future<void> load({String? search, String? type}) async {
     state = const LabelTemplatesLoading();
@@ -54,10 +54,10 @@ final labelDetailProvider = StateNotifierProvider.family<LabelDetailNotifier, La
 });
 
 class LabelDetailNotifier extends StateNotifier<LabelDetailState> {
-  final LabelRepository _repo;
-  final String? _templateId;
 
   LabelDetailNotifier(this._repo, this._templateId) : super(const LabelDetailInitial());
+  final LabelRepository _repo;
+  final String? _templateId;
 
   Future<void> load() async {
     if (_templateId == null) return;

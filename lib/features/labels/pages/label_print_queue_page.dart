@@ -4,16 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
 import 'package:wameedpos/features/labels/providers/label_state.dart';
 import 'package:wameedpos/features/labels/repositories/label_repository.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 
 /// The Label Print Queue page allows users to:
 /// - Select a label template
@@ -23,9 +18,9 @@ import 'package:wameedpos/core/widgets/responsive_layout.dart';
 /// - Preview labels before printing
 /// - Submit the print job
 class LabelPrintQueuePage extends ConsumerStatefulWidget {
-  final String? templateId;
 
   const LabelPrintQueuePage({super.key, this.templateId});
+  final String? templateId;
 
   @override
   ConsumerState<LabelPrintQueuePage> createState() => _LabelPrintQueuePageState();
@@ -190,13 +185,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                 Icon(
                                   Icons.queue_rounded,
                                   size: 40,
-                                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                  color: AppColors.mutedFor(context),
                                 ),
                                 const SizedBox(height: AppSpacing.sm),
                                 Text(
                                   l10n.labelEmptyQueue,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    color: AppColors.mutedFor(context),
                                   ),
                                 ),
                               ],
@@ -516,13 +511,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                       Icon(
                                         Icons.queue_rounded,
                                         size: 48,
-                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                       ),
                                       const SizedBox(height: AppSpacing.md),
                                       Text(
                                         l10n.labelEmptyQueue,
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                          color: AppColors.mutedFor(context),
                                         ),
                                       ),
                                     ],
@@ -717,11 +712,11 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
 }
 
 class _PrintQueueItem {
+
+  const _PrintQueueItem({required this.productName, required this.sku, required this.quantity});
   final String productName;
   final String sku;
   final int quantity;
-
-  const _PrintQueueItem({required this.productName, required this.sku, required this.quantity});
 
   _PrintQueueItem copyWith({String? productName, String? sku, int? quantity}) {
     return _PrintQueueItem(

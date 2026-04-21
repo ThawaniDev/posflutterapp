@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../../customers/enums/condition_grade.dart';
-import '../enums/device_imei_status.dart';
-import '../models/device_imei_record.dart';
-import '../providers/electronics_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/customers/enums/condition_grade.dart';
+import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
+import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ImeiRecordFormPage extends ConsumerStatefulWidget {
-  final DeviceImeiRecord? record;
   const ImeiRecordFormPage({super.key, this.record});
+  final DeviceImeiRecord? record;
 
   @override
   ConsumerState<ImeiRecordFormPage> createState() => _ImeiRecordFormPageState();
@@ -137,18 +137,18 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _imeiCtrl, label: l10n.electronicsImei, hint: l10n.electronicsImeiHint, keyboardType: TextInputType.number),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imei2Ctrl,
               label: l10n.electronicsImei2Optional,
               hint: l10n.electronicsDualSimImei,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _serialNumberCtrl, label: l10n.electronicsSerialOptional, hint: l10n.electronicsSerialHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<ConditionGrade>(
               hint: l10n.selectGrade,
               label: l10n.electronicsConditionGrade,
@@ -158,7 +158,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _purchasePriceCtrl,
               label: l10n.electronicsPurchasePrice,
@@ -166,7 +166,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             if (_isEditing) ...[
-              SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.md),
               PosSearchableDropdown<DeviceImeiStatus>(
                 hint: l10n.selectStatus,
                 label: l10n.status,
@@ -177,7 +177,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
                 clearable: false,
               ),
             ],
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: () => _pickDate(isStoreWarranty: false),
               child: AbsorbPointer(
@@ -189,7 +189,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
                 ),
               ),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: () => _pickDate(isStoreWarranty: true),
               child: AbsorbPointer(

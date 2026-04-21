@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../enums/flower_subscription_frequency.dart';
-import '../models/flower_subscription.dart';
-import '../providers/florist_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_florist/enums/flower_subscription_frequency.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_subscription.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_providers.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
 import 'package:wameedpos/features/customers/providers/customer_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class SubscriptionFormPage extends ConsumerStatefulWidget {
-  final FlowerSubscription? subscription;
   const SubscriptionFormPage({super.key, this.subscription});
+  final FlowerSubscription? subscription;
 
   @override
   ConsumerState<SubscriptionFormPage> createState() => _SubscriptionFormPageState();
@@ -118,13 +118,13 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               onChanged: (v) => setState(() => _selectedCustomerId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _arrangementTemplateIdCtrl,
               label: l10n.floristArrangementOptional,
               hint: l10n.floristSelectTemplate,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<FlowerSubscriptionFrequency>(
               hint: l10n.selectFrequency,
               label: l10n.floristFrequency,
@@ -136,7 +136,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectDay,
               label: l10n.floristDeliveryDay,
@@ -154,16 +154,16 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _deliveryAddressCtrl, label: l10n.floristDeliveryAddress, hint: l10n.floristDeliveryAddressHint, maxLines: 2),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _pricePerDeliveryCtrl,
               label: l10n.floristPricePerDelivery,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
               child: AbsorbPointer(

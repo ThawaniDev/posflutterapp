@@ -1,16 +1,4 @@
 class Prescription {
-  final String id;
-  final String storeId;
-  final String? orderId;
-  final String prescriptionNumber;
-  final String patientName;
-  final String? patientId;
-  final String? doctorName;
-  final String? doctorLicense;
-  final String? insuranceProvider;
-  final double? insuranceClaimAmount;
-  final String? notes;
-  final DateTime? createdAt;
 
   const Prescription({
     required this.id,
@@ -43,6 +31,18 @@ class Prescription {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? orderId;
+  final String prescriptionNumber;
+  final String patientName;
+  final String? patientId;
+  final String? doctorName;
+  final String? doctorLicense;
+  final String? insuranceProvider;
+  final double? insuranceClaimAmount;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

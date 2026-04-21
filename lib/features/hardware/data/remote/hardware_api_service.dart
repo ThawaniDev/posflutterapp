@@ -12,9 +12,9 @@ class HardwareApiService {
     final response = await _dio.get(
       ApiEndpoints.hardwareConfig,
       queryParameters: {
-        if (terminalId != null) 'terminal_id': terminalId,
-        if (deviceType != null) 'device_type': deviceType,
-        if (isActive != null) 'is_active': isActive,
+        'terminal_id': ?terminalId,
+        'device_type': ?deviceType,
+        'is_active': ?isActive,
       },
     );
     return response.data['data'] as List<dynamic>;
@@ -34,9 +34,9 @@ class HardwareApiService {
         'terminal_id': terminalId,
         'device_type': deviceType,
         'connection_type': connectionType,
-        if (deviceName != null) 'device_name': deviceName,
-        if (configJson != null) 'config_json': configJson,
-        if (isActive != null) 'is_active': isActive,
+        'device_name': ?deviceName,
+        'config_json': ?configJson,
+        'is_active': ?isActive,
       },
     );
     return response.data['data'] as Map<String, dynamic>;
@@ -49,7 +49,7 @@ class HardwareApiService {
   Future<List<dynamic>> supportedModels({String? deviceType, bool? isCertified}) async {
     final response = await _dio.get(
       ApiEndpoints.hardwareSupportedModels,
-      queryParameters: {if (deviceType != null) 'device_type': deviceType, if (isCertified != null) 'is_certified': isCertified},
+      queryParameters: {'device_type': ?deviceType, 'is_certified': ?isCertified},
     );
     return response.data['data'] as List<dynamic>;
   }
@@ -66,7 +66,7 @@ class HardwareApiService {
         'terminal_id': terminalId,
         'device_type': deviceType,
         'connection_type': connectionType,
-        if (testType != null) 'test_type': testType,
+        'test_type': ?testType,
       },
     );
     return response.data['data'] as Map<String, dynamic>;
@@ -80,7 +80,7 @@ class HardwareApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.hardwareEventLog,
-      data: {'terminal_id': terminalId, 'device_type': deviceType, 'event': event, if (details != null) 'details': details},
+      data: {'terminal_id': terminalId, 'device_type': deviceType, 'event': event, 'details': ?details},
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -89,10 +89,10 @@ class HardwareApiService {
     final response = await _dio.get(
       ApiEndpoints.hardwareEventLogs,
       queryParameters: {
-        if (terminalId != null) 'terminal_id': terminalId,
-        if (deviceType != null) 'device_type': deviceType,
-        if (event != null) 'event': event,
-        if (perPage != null) 'per_page': perPage,
+        'terminal_id': ?terminalId,
+        'device_type': ?deviceType,
+        'event': ?event,
+        'per_page': ?perPage,
       },
     );
     return response.data['data'] as Map<String, dynamic>;

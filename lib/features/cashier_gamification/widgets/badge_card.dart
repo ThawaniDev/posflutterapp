@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BadgeCard extends StatelessWidget {
+
+  const BadgeCard({super.key, required this.badge, this.onTap, this.onEdit, this.onDelete, this.showActions = false});
   final CashierBadge badge;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
   final bool showActions;
-
-  const BadgeCard({super.key, required this.badge, this.onTap, this.onEdit, this.onDelete, this.showActions = false});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,7 @@ class BadgeCard extends StatelessWidget {
                     ),
                   if (showActions) ...[
                     if (onEdit != null)
-                      IconButton(icon: Icon(Icons.edit_rounded, size: 18), onPressed: onEdit, tooltip: l10n.edit),
+                      IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: onEdit, tooltip: l10n.edit),
                     if (onDelete != null)
                       IconButton(
                         icon: Icon(Icons.delete_rounded, size: 18, color: theme.colorScheme.error),

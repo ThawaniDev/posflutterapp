@@ -63,9 +63,9 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
 }
 
 class _ProductList extends StatelessWidget {
-  final List<Map<String, dynamic>> products;
 
   const _ProductList({required this.products});
+  final List<Map<String, dynamic>> products;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class _ProductList extends StatelessWidget {
 
               return Column(
                 children: [
-                  if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                   ReportRankedItem(
                     rank: i + 1,
                     title: p['product_name'] as String? ?? '',

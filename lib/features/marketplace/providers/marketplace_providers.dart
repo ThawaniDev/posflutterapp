@@ -12,9 +12,9 @@ final marketplaceListingsProvider = StateNotifierProvider<MarketplaceListingsNot
 });
 
 class MarketplaceListingsNotifier extends StateNotifier<MarketplaceListingsState> {
-  final MarketplaceRepository _repo;
 
   MarketplaceListingsNotifier(this._repo) : super(const MarketplaceListingsInitial());
+  final MarketplaceRepository _repo;
 
   Future<void> load({
     String? search,
@@ -95,10 +95,10 @@ final marketplaceDetailProvider = StateNotifierProvider.family<MarketplaceDetail
 });
 
 class MarketplaceDetailNotifier extends StateNotifier<MarketplaceDetailState> {
-  final MarketplaceRepository _repo;
-  final String _listingId;
 
   MarketplaceDetailNotifier(this._repo, this._listingId) : super(const MarketplaceDetailInitial());
+  final MarketplaceRepository _repo;
+  final String _listingId;
 
   Future<void> load() async {
     state = const MarketplaceDetailLoading();
@@ -161,9 +161,9 @@ final myPurchasesProvider = StateNotifierProvider<MyPurchasesNotifier, MyPurchas
 });
 
 class MyPurchasesNotifier extends StateNotifier<MyPurchasesState> {
-  final MarketplaceRepository _repo;
 
   MyPurchasesNotifier(this._repo) : super(const MyPurchasesInitial());
+  final MarketplaceRepository _repo;
 
   Future<void> load() async {
     state = const MyPurchasesLoading();

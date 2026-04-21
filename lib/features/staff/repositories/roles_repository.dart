@@ -11,12 +11,11 @@ final rolesRepositoryProvider = Provider<RolesRepository>((ref) {
 /// Repository that orchestrates roles/permissions API calls.
 /// Automatically resolves the current store ID from auth session.
 class RolesRepository {
-  final RoleApiService _apiService;
-  final AuthLocalStorage _localStorage;
-
   RolesRepository({required RoleApiService apiService, required AuthLocalStorage localStorage})
     : _apiService = apiService,
       _localStorage = localStorage;
+  final RoleApiService _apiService;
+  final AuthLocalStorage _localStorage;
 
   Future<String> _getStoreId() async {
     final storeId = await _localStorage.getStoreId();
@@ -79,14 +78,28 @@ class RolesRepository {
   // ─── Current User Permissions ──────────────────────────────────
 
   Future<List<String>> getMyPermissions() async {
-    final storeId = await _getStoreId();
+    final storeId = await _localStorage.getStoreId();
     return _apiService.getUserPermissions(storeId);
   }
 
   /// Get permissions + branch scope + accessible store IDs.
+  /// `store_id` is optional; backend resolves a default for org-scoped users.
+  /// If the response includes a resolved store_id, persist it so subsequent
+  /// repository calls (which still require a store id) succeed.
   Future<Map<String, dynamic>> getMyPermissionsWithScope() async {
-    final storeId = await _getStoreId();
-    return _apiService.getUserPermissionsWithScope(storeId);
+    final storeId = await _localStorage.getStoreId();
+    final result = await _apiService.getUserPermissionsWithScope(storeId);
+
+    final resolvedStoreId =
+        (result['store_id'] as String?) ??
+        ((result['accessible_store_ids'] as List?)?.isNotEmpty ?? false
+            ? (result['accessible_store_ids'] as List).first as String
+            : null);
+    if (storeId == null && resolvedStoreId != null) {
+      await _localStorage.saveStoreId(resolvedStoreId);
+    }
+
+    return result;
   }
 
   // ─── Permissions Catalog ───────────────────────────────────────

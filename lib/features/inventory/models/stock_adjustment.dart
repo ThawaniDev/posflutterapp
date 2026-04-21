@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/inventory/enums/stock_adjustment_type.dart';
 
 class StockAdjustment {
-  final String id;
-  final String storeId;
-  final StockAdjustmentType? type;
-  final String? reasonCode;
-  final String? notes;
-  final String? adjustedBy;
-  final DateTime? createdAt;
 
   const StockAdjustment({
     required this.id,
@@ -30,6 +23,13 @@ class StockAdjustment {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final StockAdjustmentType? type;
+  final String? reasonCode;
+  final String? notes;
+  final String? adjustedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

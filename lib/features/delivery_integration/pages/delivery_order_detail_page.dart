@@ -11,8 +11,8 @@ import 'package:wameedpos/features/delivery_integration/providers/delivery_provi
 import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
 class DeliveryOrderDetailPage extends ConsumerStatefulWidget {
-  final String orderId;
   const DeliveryOrderDetailPage({super.key, required this.orderId});
+  final String orderId;
 
   @override
   ConsumerState<DeliveryOrderDetailPage> createState() => _DeliveryOrderDetailPageState();
@@ -207,11 +207,11 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
 // ─── Supporting Widgets ─────────────────────────────────
 
 class _StatusHeader extends StatelessWidget {
+
+  const _StatusHeader({required this.status, this.platform, required this.externalId});
   final DeliveryOrderStatus status;
   final DeliveryConfigPlatform? platform;
   final String externalId;
-
-  const _StatusHeader({required this.status, this.platform, required this.externalId});
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +236,7 @@ class _StatusHeader extends StatelessWidget {
           ),
           if (externalId.isNotEmpty) ...[
             AppSpacing.gapH4,
-            Text('#$externalId', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+            Text('#$externalId', style: const TextStyle(fontSize: 14, color: AppColors.textSecondary)),
           ],
           if (platform != null) ...[
             AppSpacing.gapH4,
@@ -256,11 +256,11 @@ class _StatusHeader extends StatelessWidget {
 }
 
 class _SectionCard extends StatelessWidget {
+
+  const _SectionCard({required this.title, required this.icon, required this.children});
   final String title;
   final IconData icon;
   final List<Widget> children;
-
-  const _SectionCard({required this.title, required this.icon, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -290,13 +290,13 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
+
+  const _InfoRow({required this.label, required this.value, this.isBold = false, this.valueColor, this.onTap});
   final String label;
   final String value;
   final bool isBold;
   final Color? valueColor;
   final VoidCallback? onTap;
-
-  const _InfoRow({required this.label, required this.value, this.isBold = false, this.valueColor, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +309,7 @@ class _InfoRow extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Text(label, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+              child: Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             ),
             Expanded(
               flex: 3,
@@ -318,7 +318,7 @@ class _InfoRow extends StatelessWidget {
                 style: TextStyle(fontSize: 13, fontWeight: isBold ? FontWeight.w600 : FontWeight.normal, color: valueColor),
               ),
             ),
-            if (onTap != null) Icon(Icons.copy, size: 14, color: AppColors.textSecondary),
+            if (onTap != null) const Icon(Icons.copy, size: 14, color: AppColors.textSecondary),
           ],
         ),
       ),
@@ -327,11 +327,11 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _TimelineRow extends StatelessWidget {
+
+  const _TimelineRow({required this.label, required this.time, required this.color});
   final String label;
   final String time;
   final Color color;
-
-  const _TimelineRow({required this.label, required this.time, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +346,7 @@ class _TimelineRow extends StatelessWidget {
           ),
           AppSpacing.gapW12,
           Expanded(child: Text(label, style: const TextStyle(fontSize: 13))),
-          Text(_formatDateTime(time), style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          Text(_formatDateTime(time), style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
         ],
       ),
     );

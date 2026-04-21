@@ -1,27 +1,4 @@
 class Receivable {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String customerId;
-  final String? referenceNumber;
-  final String receivableType;
-  final String source;
-  final String? description;
-  final String? descriptionAr;
-  final double amount;
-  final double remainingBalance;
-  final String status;
-  final DateTime? dueDate;
-  final String? notes;
-  final int? syncVersion;
-  final ReceivableCustomer? customer;
-  final String? createdByName;
-  final String? settledByName;
-  final DateTime? settledAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final List<ReceivablePayment> payments;
-  final List<ReceivableLog> logs;
 
   const Receivable({
     required this.id,
@@ -80,6 +57,29 @@ class Receivable {
       logs: (json['logs'] as List<dynamic>?)?.map((item) => ReceivableLog.fromJson(item as Map<String, dynamic>)).toList() ?? [],
     );
   }
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String customerId;
+  final String? referenceNumber;
+  final String receivableType;
+  final String source;
+  final String? description;
+  final String? descriptionAr;
+  final double amount;
+  final double remainingBalance;
+  final String status;
+  final DateTime? dueDate;
+  final String? notes;
+  final int? syncVersion;
+  final ReceivableCustomer? customer;
+  final String? createdByName;
+  final String? settledByName;
+  final DateTime? settledAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<ReceivablePayment> payments;
+  final List<ReceivableLog> logs;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -163,29 +163,20 @@ class Receivable {
 }
 
 class ReceivableCustomer {
-  final String id;
-  final String name;
-  final String? phone;
 
   const ReceivableCustomer({required this.id, required this.name, this.phone});
 
   factory ReceivableCustomer.fromJson(Map<String, dynamic> json) {
     return ReceivableCustomer(id: json['id'] as String, name: json['name'] as String, phone: json['phone'] as String?);
   }
+  final String id;
+  final String name;
+  final String? phone;
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'phone': phone};
 }
 
 class ReceivablePayment {
-  final String id;
-  final String receivableId;
-  final String? orderId;
-  final String? orderNumber;
-  final String? paymentMethod;
-  final double amount;
-  final String? notes;
-  final String? settledByName;
-  final DateTime? settledAt;
 
   const ReceivablePayment({
     required this.id,
@@ -212,6 +203,15 @@ class ReceivablePayment {
       settledAt: json['settled_at'] != null ? DateTime.parse(json['settled_at'] as String) : null,
     );
   }
+  final String id;
+  final String receivableId;
+  final String? orderId;
+  final String? orderNumber;
+  final String? paymentMethod;
+  final double amount;
+  final String? notes;
+  final String? settledByName;
+  final DateTime? settledAt;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -233,17 +233,6 @@ class ReceivablePayment {
 }
 
 class ReceivableLog {
-  final String id;
-  final String receivableId;
-  final String event;
-  final String? fromValue;
-  final String? toValue;
-  final double? amount;
-  final String? note;
-  final Map<String, dynamic>? meta;
-  final String? actorId;
-  final String? actorName;
-  final DateTime? createdAt;
 
   const ReceivableLog({
     required this.id,
@@ -274,6 +263,17 @@ class ReceivableLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String receivableId;
+  final String event;
+  final String? fromValue;
+  final String? toValue;
+  final double? amount;
+  final String? note;
+  final Map<String, dynamic>? meta;
+  final String? actorId;
+  final String? actorName;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -291,14 +291,6 @@ class ReceivableLog {
 }
 
 class ReceivableSummary {
-  final double totalReceivables;
-  final int pendingCount;
-  final double pendingAmount;
-  final int partiallyPaidCount;
-  final int fullyPaidCount;
-  final int reversedCount;
-  final int overdueCount;
-  final double totalPaid;
 
   const ReceivableSummary({
     required this.totalReceivables,
@@ -323,6 +315,14 @@ class ReceivableSummary {
       totalPaid: double.tryParse(json['total_paid'].toString()) ?? 0.0,
     );
   }
+  final double totalReceivables;
+  final int pendingCount;
+  final double pendingAmount;
+  final int partiallyPaidCount;
+  final int fullyPaidCount;
+  final int reversedCount;
+  final int overdueCount;
+  final double totalPaid;
 
   double get outstandingAmount => totalReceivables - totalPaid;
 }

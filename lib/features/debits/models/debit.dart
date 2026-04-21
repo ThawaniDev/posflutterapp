@@ -1,25 +1,4 @@
 class Debit {
-  final String id;
-  final String organizationId;
-  final String storeId;
-  final String customerId;
-  final String? referenceNumber;
-  final String debitType;
-  final String source;
-  final String? description;
-  final String? descriptionAr;
-  final double amount;
-  final double remainingBalance;
-  final String status;
-  final String? notes;
-  final int? syncVersion;
-  final DebitCustomer? customer;
-  final String? createdByName;
-  final String? allocatedByName;
-  final DateTime? allocatedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final List<DebitAllocation> allocations;
 
   const Debit({
     required this.id,
@@ -74,6 +53,27 @@ class Debit {
           [],
     );
   }
+  final String id;
+  final String organizationId;
+  final String storeId;
+  final String customerId;
+  final String? referenceNumber;
+  final String debitType;
+  final String source;
+  final String? description;
+  final String? descriptionAr;
+  final double amount;
+  final double remainingBalance;
+  final String status;
+  final String? notes;
+  final int? syncVersion;
+  final DebitCustomer? customer;
+  final String? createdByName;
+  final String? allocatedByName;
+  final DateTime? allocatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<DebitAllocation> allocations;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -151,10 +151,6 @@ class Debit {
 }
 
 class DebitCustomer {
-  final String id;
-  final String name;
-  final String? phone;
-  final String? email;
 
   const DebitCustomer({required this.id, required this.name, this.phone, this.email});
 
@@ -166,19 +162,15 @@ class DebitCustomer {
       email: json['email'] as String?,
     );
   }
+  final String id;
+  final String name;
+  final String? phone;
+  final String? email;
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'phone': phone, 'email': email};
 }
 
 class DebitAllocation {
-  final String id;
-  final String debitId;
-  final String orderId;
-  final String? orderNumber;
-  final double amount;
-  final String? notes;
-  final String? allocatedByName;
-  final DateTime? allocatedAt;
 
   const DebitAllocation({
     required this.id,
@@ -203,6 +195,14 @@ class DebitAllocation {
       allocatedAt: json['allocated_at'] != null ? DateTime.parse(json['allocated_at'] as String) : null,
     );
   }
+  final String id;
+  final String debitId;
+  final String orderId;
+  final String? orderNumber;
+  final double amount;
+  final String? notes;
+  final String? allocatedByName;
+  final DateTime? allocatedAt;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -223,13 +223,6 @@ class DebitAllocation {
 }
 
 class DebitSummary {
-  final double totalDebits;
-  final int pendingCount;
-  final double pendingAmount;
-  final int partiallyAllocatedCount;
-  final int fullyAllocatedCount;
-  final int reversedCount;
-  final double totalAllocated;
 
   const DebitSummary({
     required this.totalDebits,
@@ -252,6 +245,13 @@ class DebitSummary {
       totalAllocated: double.tryParse(json['total_allocated'].toString()) ?? 0.0,
     );
   }
+  final double totalDebits;
+  final int pendingCount;
+  final double pendingAmount;
+  final int partiallyAllocatedCount;
+  final int fullyAllocatedCount;
+  final int reversedCount;
+  final double totalAllocated;
 
   double get unallocatedAmount => totalDebits - totalAllocated;
 }

@@ -4,23 +4,6 @@ import 'package:wameedpos/features/pos_customization/enums/cfd_idle_layout.dart'
 import 'package:wameedpos/features/onboarding/enums/thank_you_animation.dart';
 
 class CfdTheme {
-  final String id;
-  final String name;
-  final String slug;
-  final String backgroundColor;
-  final String textColor;
-  final String accentColor;
-  final String? fontFamily;
-  final CfdCartLayout? cartLayout;
-  final CfdIdleLayout? idleLayout;
-  final AnimationStyle? animationStyle;
-  final int? transitionSeconds;
-  final bool? showStoreLogo;
-  final bool? showRunningTotal;
-  final ThankYouAnimation? thankYouAnimation;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const CfdTheme({
     required this.id,
@@ -63,6 +46,23 @@ class CfdTheme {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String slug;
+  final String backgroundColor;
+  final String textColor;
+  final String accentColor;
+  final String? fontFamily;
+  final CfdCartLayout? cartLayout;
+  final CfdIdleLayout? idleLayout;
+  final AnimationStyle? animationStyle;
+  final int? transitionSeconds;
+  final bool? showStoreLogo;
+  final bool? showRunningTotal;
+  final ThankYouAnimation? thankYouAnimation;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

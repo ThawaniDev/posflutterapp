@@ -51,11 +51,11 @@ class BackupStorageWidget extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.backupStorage, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(l10n.backupStorage, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH16,
                   LinearProgressIndicator(
                     value: usagePercent / 100,
-                    backgroundColor: AppColors.borderLight,
+                    backgroundColor: AppColors.borderFor(context),
                     minHeight: 10,
                     borderRadius: AppRadius.borderMd,
                   ),
@@ -83,7 +83,7 @@ class BackupStorageWidget extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(icon, size: 20, color: AppColors.mutedFor(context)),
           const SizedBox(width: 12),
           Expanded(child: Text(label)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),

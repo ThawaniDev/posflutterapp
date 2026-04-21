@@ -4,9 +4,9 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class BranchApiService {
-  final Dio _dio;
 
   BranchApiService(this._dio);
+  final Dio _dio;
 
   /// GET /core/stores — List branches with optional filters
   Future<Map<String, dynamic>> listBranches({Map<String, dynamic>? queryParams}) async {

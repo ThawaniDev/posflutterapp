@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/support/enums/ticket_sender_type.dart';
 
 class SupportTicketMessage {
-  final String id;
-  final String supportTicketId;
-  final TicketSenderType senderType;
-  final String senderId;
-  final String messageText;
-  final List<dynamic>? attachments;
-  final bool? isInternalNote;
-  final DateTime? sentAt;
 
   const SupportTicketMessage({
     required this.id,
@@ -33,6 +25,14 @@ class SupportTicketMessage {
       sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
     );
   }
+  final String id;
+  final String supportTicketId;
+  final TicketSenderType senderType;
+  final String senderId;
+  final String messageText;
+  final List<dynamic>? attachments;
+  final bool? isInternalNote;
+  final DateTime? sentAt;
 
   Map<String, dynamic> toJson() {
     return {

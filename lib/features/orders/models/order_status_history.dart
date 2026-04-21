@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/orders/enums/order_status.dart';
 
 class OrderStatusHistory {
-  final String id;
-  final String orderId;
-  final OrderStatus? fromStatus;
-  final OrderStatus toStatus;
-  final String? changedBy;
-  final String? notes;
-  final DateTime? createdAt;
 
   const OrderStatusHistory({
     required this.id,
@@ -30,6 +23,13 @@ class OrderStatusHistory {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String orderId;
+  final OrderStatus? fromStatus;
+  final OrderStatus toStatus;
+  final String? changedBy;
+  final String? notes;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

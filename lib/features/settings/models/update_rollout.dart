@@ -1,12 +1,4 @@
 class UpdateRollout {
-  final String id;
-  final String version;
-  final int rolloutPercentage;
-  final bool? isCritical;
-  final Map<String, dynamic>? targetStores;
-  final Map<String, dynamic>? pinnedStores;
-  final String releaseNotes;
-  final DateTime? releasedAt;
 
   const UpdateRollout({
     required this.id,
@@ -31,6 +23,14 @@ class UpdateRollout {
       releasedAt: json['released_at'] != null ? DateTime.parse(json['released_at'] as String) : null,
     );
   }
+  final String id;
+  final String version;
+  final int rolloutPercentage;
+  final bool? isCritical;
+  final Map<String, dynamic>? targetStores;
+  final Map<String, dynamic>? pinnedStores;
+  final String releaseNotes;
+  final DateTime? releasedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -110,7 +110,7 @@ void main() {
   // ═══════════════════════════════════════════════════════════
 
   group('SyncQueueManager', () {
-    QueuedOperation _makeOp(String id) => QueuedOperation(
+    QueuedOperation makeOp(String id) => QueuedOperation(
       id: id,
       table: 'products',
       type: QueueOperationType.create,
@@ -127,8 +127,8 @@ void main() {
 
     test('enqueue adds operations', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
 
       expect(manager.pendingCount, 2);
       expect(manager.isEmpty, false);
@@ -138,9 +138,9 @@ void main() {
 
     test('dequeue removes specific operation', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
-      await manager.enqueue(_makeOp('3'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
+      await manager.enqueue(makeOp('3'));
 
       await manager.dequeue('2');
 
@@ -150,9 +150,9 @@ void main() {
 
     test('dequeueProcessed removes first N operations', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
-      await manager.enqueue(_makeOp('3'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
+      await manager.enqueue(makeOp('3'));
 
       await manager.dequeueProcessed(2);
 
@@ -162,8 +162,8 @@ void main() {
 
     test('dequeueProcessed clears all when count >= length', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
 
       await manager.dequeueProcessed(10);
 
@@ -172,7 +172,7 @@ void main() {
 
     test('markFailed increments retry count and sets error', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
+      await manager.enqueue(makeOp('1'));
 
       await manager.markFailed('1', 'Server error');
       expect(manager.pending[0].retryCount, 1);
@@ -185,7 +185,7 @@ void main() {
 
     test('markFailed is no-op for unknown ID', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
+      await manager.enqueue(makeOp('1'));
 
       await manager.markFailed('unknown', 'Error');
       expect(manager.pending[0].retryCount, 0);
@@ -193,8 +193,8 @@ void main() {
 
     test('clear removes all operations', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
 
       await manager.clear();
       expect(manager.isEmpty, true);
@@ -202,8 +202,8 @@ void main() {
 
     test('persists across instances', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
-      await manager.enqueue(_makeOp('2'));
+      await manager.enqueue(makeOp('1'));
+      await manager.enqueue(makeOp('2'));
 
       // Create a new manager with the same path
       final manager2 = SyncQueueManager(storagePath: tempDir.path);
@@ -244,14 +244,14 @@ void main() {
 
     test('pending returns unmodifiable list', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
+      await manager.enqueue(makeOp('1'));
 
-      expect(() => manager.pending.add(_makeOp('2')), throwsUnsupportedError);
+      expect(() => manager.pending.add(makeOp('2')), throwsUnsupportedError);
     });
 
     test('load is idempotent', () async {
       await manager.load();
-      await manager.enqueue(_makeOp('1'));
+      await manager.enqueue(makeOp('1'));
       await manager.load(); // Should not re-read
 
       expect(manager.pendingCount, 1);

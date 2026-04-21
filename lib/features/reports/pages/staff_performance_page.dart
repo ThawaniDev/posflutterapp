@@ -65,9 +65,9 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
 }
 
 class _StaffList extends StatelessWidget {
-  final List<Map<String, dynamic>> staff;
 
   const _StaffList({required this.staff});
+  final List<Map<String, dynamic>> staff;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class _StaffList extends StatelessWidget {
 
               return Column(
                 children: [
-                  if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
@@ -158,7 +158,7 @@ class _StaffList extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: i < 3 ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                                color: i < 3 ? AppColors.primary : (AppColors.mutedFor(context)),
                               ),
                             ),
                           ),
@@ -179,7 +179,7 @@ class _StaffList extends StatelessWidget {
                                       ),
                                       child: Text(
                                         '#${i + 1}',
-                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary),
+                                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary),
                                       ),
                                     ),
                                     const SizedBox(width: 6),

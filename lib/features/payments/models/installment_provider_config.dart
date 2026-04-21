@@ -2,6 +2,53 @@ import 'package:wameedpos/features/payments/enums/installment_provider.dart';
 
 /// Platform-level installment provider configuration.
 class InstallmentProviderConfig {
+  const InstallmentProviderConfig({
+    required this.id,
+    required this.provider,
+    required this.name,
+    this.nameAr,
+    this.description,
+    this.descriptionAr,
+    this.logoUrl,
+    this.isEnabled = true,
+    this.isUnderMaintenance = false,
+    this.maintenanceMessage,
+    this.maintenanceMessageAr,
+    this.supportedCurrencies = const [''],
+    this.minAmount,
+    this.maxAmount,
+    this.supportedInstallmentCounts = const [3, 4],
+    this.sortOrder = 0,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory InstallmentProviderConfig.fromJson(Map<String, dynamic> json) {
+    return InstallmentProviderConfig(
+      id: json['id'] as String,
+      provider: InstallmentProvider.fromValue(json['provider'] as String),
+      name: json['name'] as String? ?? '',
+      nameAr: json['name_ar'] as String?,
+      description: json['description'] as String?,
+      descriptionAr: json['description_ar'] as String?,
+      logoUrl: json['logo_url'] as String?,
+      isEnabled: json['is_enabled'] as bool? ?? true,
+      isUnderMaintenance: json['is_under_maintenance'] as bool? ?? false,
+      maintenanceMessage: json['maintenance_message'] as String?,
+      maintenanceMessageAr: json['maintenance_message_ar'] as String?,
+      supportedCurrencies: (json['supported_currencies'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [''],
+      minAmount: double.tryParse(json['min_amount']?.toString() ?? ''),
+      maxAmount: double.tryParse(json['max_amount']?.toString() ?? ''),
+      supportedInstallmentCounts:
+          (json['supported_installment_counts'] as List<dynamic>?)
+              ?.map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
+              .toList() ??
+          [3, 4],
+      sortOrder: json['sort_order'] as int? ?? 0,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+    );
+  }
   final String id;
   final InstallmentProvider provider;
   final String name;
@@ -21,55 +68,7 @@ class InstallmentProviderConfig {
   final String? createdAt;
   final String? updatedAt;
 
-  const InstallmentProviderConfig({
-    required this.id,
-    required this.provider,
-    required this.name,
-    this.nameAr,
-    this.description,
-    this.descriptionAr,
-    this.logoUrl,
-    this.isEnabled = true,
-    this.isUnderMaintenance = false,
-    this.maintenanceMessage,
-    this.maintenanceMessageAr,
-    this.supportedCurrencies = const ['SAR'],
-    this.minAmount,
-    this.maxAmount,
-    this.supportedInstallmentCounts = const [3, 4],
-    this.sortOrder = 0,
-    this.createdAt,
-    this.updatedAt,
-  });
-
   bool get isAvailable => isEnabled && !isUnderMaintenance;
-
-  factory InstallmentProviderConfig.fromJson(Map<String, dynamic> json) {
-    return InstallmentProviderConfig(
-      id: json['id'] as String,
-      provider: InstallmentProvider.fromValue(json['provider'] as String),
-      name: json['name'] as String? ?? '',
-      nameAr: json['name_ar'] as String?,
-      description: json['description'] as String?,
-      descriptionAr: json['description_ar'] as String?,
-      logoUrl: json['logo_url'] as String?,
-      isEnabled: json['is_enabled'] as bool? ?? true,
-      isUnderMaintenance: json['is_under_maintenance'] as bool? ?? false,
-      maintenanceMessage: json['maintenance_message'] as String?,
-      maintenanceMessageAr: json['maintenance_message_ar'] as String?,
-      supportedCurrencies: (json['supported_currencies'] as List<dynamic>?)?.map((e) => e as String).toList() ?? ['SAR'],
-      minAmount: double.tryParse(json['min_amount']?.toString() ?? ''),
-      maxAmount: double.tryParse(json['max_amount']?.toString() ?? ''),
-      supportedInstallmentCounts:
-          (json['supported_installment_counts'] as List<dynamic>?)
-              ?.map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
-              .toList() ??
-          [3, 4],
-      sortOrder: json['sort_order'] as int? ?? 0,
-      createdAt: json['created_at'] as String?,
-      updatedAt: json['updated_at'] as String?,
-    );
-  }
 
   Map<String, dynamic> toJson() => {
     'id': id,

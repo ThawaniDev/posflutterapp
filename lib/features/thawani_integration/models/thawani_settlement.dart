@@ -1,13 +1,4 @@
 class ThawaniSettlement {
-  final String id;
-  final String storeId;
-  final DateTime settlementDate;
-  final double grossAmount;
-  final double commissionAmount;
-  final double netAmount;
-  final int orderCount;
-  final String? thawaniReference;
-  final DateTime? createdAt;
 
   const ThawaniSettlement({
     required this.id,
@@ -34,6 +25,15 @@ class ThawaniSettlement {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final DateTime settlementDate;
+  final double grossAmount;
+  final double commissionAmount;
+  final double netAmount;
+  final int orderCount;
+  final String? thawaniReference;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

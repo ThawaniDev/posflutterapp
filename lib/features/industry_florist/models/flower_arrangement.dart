@@ -1,12 +1,4 @@
 class FlowerArrangement {
-  final String id;
-  final String storeId;
-  final String name;
-  final String? occasion;
-  final Map<String, dynamic> itemsJson;
-  final double totalPrice;
-  final bool? isTemplate;
-  final DateTime? createdAt;
 
   const FlowerArrangement({
     required this.id,
@@ -31,6 +23,14 @@ class FlowerArrangement {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String name;
+  final String? occasion;
+  final Map<String, dynamic> itemsJson;
+  final double totalPrice;
+  final bool? isTemplate;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

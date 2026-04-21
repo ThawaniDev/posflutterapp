@@ -6,7 +6,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
 import 'package:wameedpos/features/pos_customization/widgets/pos_settings_widget.dart';
 import 'package:wameedpos/features/pos_customization/widgets/receipt_template_widget.dart';
@@ -47,8 +46,8 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
           Container(
             padding: EdgeInsets.symmetric(horizontal: context.isPhone ? AppSpacing.sm : AppSpacing.base, vertical: AppSpacing.md),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-              border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+              color: AppColors.surfaceFor(context),
+              border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: SizedBox(
               height: context.isPhone ? 100 : 200,
@@ -164,7 +163,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                       Text(
                         subtitle,
                         style: AppTypography.bodySmall.copyWith(
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: AppColors.mutedFor(context),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -176,7 +175,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                 Icon(
                   Icons.keyboard_arrow_down_rounded,
                   size: 18,
-                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  color: AppColors.mutedFor(context),
                 ),
             ],
           ),

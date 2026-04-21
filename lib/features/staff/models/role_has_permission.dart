@@ -1,6 +1,4 @@
 class RoleHasPermission {
-  final int permissionId;
-  final int roleId;
 
   const RoleHasPermission({
     required this.permissionId,
@@ -13,6 +11,8 @@ class RoleHasPermission {
       roleId: (json['role_id'] as num).toInt(),
     );
   }
+  final int permissionId;
+  final int roleId;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,11 +1,4 @@
 class AccountMapping {
-  final String id;
-  final String storeId;
-  final String posAccountKey;
-  final String providerAccountId;
-  final String providerAccountName;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AccountMapping({
     required this.id,
@@ -28,6 +21,13 @@ class AccountMapping {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String posAccountKey;
+  final String providerAccountId;
+  final String providerAccountName;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -8,9 +8,9 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderRoleTemplateDetailPage extends ConsumerStatefulWidget {
-  final String templateId;
 
   const AdminProviderRoleTemplateDetailPage({super.key, required this.templateId});
+  final String templateId;
 
   @override
   ConsumerState<AdminProviderRoleTemplateDetailPage> createState() => _State();
@@ -115,9 +115,9 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
           if (permissions.isEmpty)
             PosCard(
               child: Padding(
-                padding: EdgeInsets.all(AppSpacing.md),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 child: Center(
-                  child: Text(l10n.noPermissionsAssigned, style: TextStyle(color: AppColors.textSecondary)),
+                  child: Text(l10n.noPermissionsAssigned, style: const TextStyle(color: AppColors.textSecondary)),
                 ),
               ),
             )

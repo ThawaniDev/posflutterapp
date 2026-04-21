@@ -11,8 +11,8 @@ import 'package:wameedpos/features/pos_customization/models/cfd_theme.dart';
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
 class CfdThemeDetailPage extends ConsumerStatefulWidget {
-  final String slug;
   const CfdThemeDetailPage({super.key, required this.slug});
+  final String slug;
 
   @override
   ConsumerState<CfdThemeDetailPage> createState() => _CfdThemeDetailPageState();
@@ -92,7 +92,7 @@ class _CfdThemeDetailPageState extends ConsumerState<CfdThemeDetailPage> {
                           Text(
                             theme.slug,
                             style: AppTypography.bodySmall.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],
@@ -137,7 +137,7 @@ class _CfdThemeDetailPageState extends ConsumerState<CfdThemeDetailPage> {
                   decoration: BoxDecoration(
                     color: bgColor,
                     borderRadius: AppRadius.borderMd,
-                    border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                    border: Border.all(color: AppColors.borderFor(context)),
                   ),
                   child: Center(
                     child: Column(
@@ -232,7 +232,7 @@ class _CfdThemeDetailPageState extends ConsumerState<CfdThemeDetailPage> {
             flex: 2,
             child: Text(
               label,
-              style: AppTypography.labelSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
             ),
           ),
           AppSpacing.gapW8,

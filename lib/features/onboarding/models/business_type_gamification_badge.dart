@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/customers/enums/badge_trigger_type.dart';
 
 class BusinessTypeGamificationBadge {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final String? iconUrl;
-  final BadgeTriggerType triggerType;
-  final int triggerThreshold;
-  final int? pointsReward;
-  final String? description;
-  final String? descriptionAr;
-  final int? sortOrder;
 
   const BusinessTypeGamificationBadge({
     required this.id,
@@ -42,6 +31,17 @@ class BusinessTypeGamificationBadge {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final String? iconUrl;
+  final BadgeTriggerType triggerType;
+  final int triggerThreshold;
+  final int? pointsReward;
+  final String? description;
+  final String? descriptionAr;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

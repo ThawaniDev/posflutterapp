@@ -15,13 +15,13 @@ class AIChatListLoading extends AIChatListState {
 }
 
 class AIChatListLoaded extends AIChatListState {
-  final List<AIChat> chats;
   const AIChatListLoaded({required this.chats});
+  final List<AIChat> chats;
 }
 
 class AIChatListError extends AIChatListState {
-  final String message;
   const AIChatListError({required this.message});
+  final String message;
 }
 
 // ─── Active Chat State ──────────────────────────────────────────
@@ -39,15 +39,15 @@ class AIChatLoading extends AIChatState {
 }
 
 class AIChatLoaded extends AIChatState {
+  const AIChatLoaded({required this.chat, this.isSending = false, this.errorMessage});
   final AIChat chat;
   final bool isSending;
   final String? errorMessage;
-  const AIChatLoaded({required this.chat, this.isSending = false, this.errorMessage});
 }
 
 class AIChatError extends AIChatState {
-  final String message;
   const AIChatError({required this.message});
+  final String message;
 }
 
 // ─── LLM Models State ──────────────────────────────────────────
@@ -65,13 +65,13 @@ class AIModelsLoading extends AIModelsState {
 }
 
 class AIModelsLoaded extends AIModelsState {
-  final List<LlmModel> models;
   const AIModelsLoaded({required this.models});
+  final List<LlmModel> models;
 }
 
 class AIModelsError extends AIModelsState {
-  final String message;
   const AIModelsError({required this.message});
+  final String message;
 }
 
 // ─── Feature Cards State ────────────────────────────────────────
@@ -89,11 +89,11 @@ class AIFeatureCardsLoading extends AIFeatureCardsState {
 }
 
 class AIFeatureCardsLoaded extends AIFeatureCardsState {
-  final List<Map<String, dynamic>> categories;
   const AIFeatureCardsLoaded({required this.categories});
+  final List<Map<String, dynamic>> categories;
 }
 
 class AIFeatureCardsError extends AIFeatureCardsState {
-  final String message;
   const AIFeatureCardsError({required this.message});
+  final String message;
 }

@@ -16,13 +16,13 @@ class NotificationListLoading extends NotificationListState {
 }
 
 class NotificationListLoaded extends NotificationListState {
-  final List<Map<String, dynamic>> notifications;
   const NotificationListLoaded(this.notifications);
+  final List<Map<String, dynamic>> notifications;
 }
 
 class NotificationListError extends NotificationListState {
-  final String message;
   const NotificationListError(this.message);
+  final String message;
 }
 
 // ─── Unread Count State ─────────────────────────────────
@@ -39,14 +39,14 @@ class UnreadCountLoading extends UnreadCountState {
 }
 
 class UnreadCountLoaded extends UnreadCountState {
+  const UnreadCountLoaded(this.count, {this.byCategory});
   final int count;
   final Map<String, int>? byCategory;
-  const UnreadCountLoaded(this.count, {this.byCategory});
 }
 
 class UnreadCountError extends UnreadCountState {
-  final String message;
   const UnreadCountError(this.message);
+  final String message;
 }
 
 // ─── Notification Action State ──────────────────────────
@@ -63,13 +63,13 @@ class NotificationActionLoading extends NotificationActionState {
 }
 
 class NotificationActionSuccess extends NotificationActionState {
-  final String message;
   const NotificationActionSuccess(this.message);
+  final String message;
 }
 
 class NotificationActionError extends NotificationActionState {
-  final String message;
   const NotificationActionError(this.message);
+  final String message;
 }
 
 // ─── Preferences State ──────────────────────────────────
@@ -86,11 +86,6 @@ class NotificationPreferencesLoading extends NotificationPreferencesState {
 }
 
 class NotificationPreferencesLoaded extends NotificationPreferencesState {
-  final Map<String, dynamic> preferences;
-  final String? quietHoursStart;
-  final String? quietHoursEnd;
-  final bool? soundEnabled;
-  final String? emailDigest;
   const NotificationPreferencesLoaded({
     required this.preferences,
     this.quietHoursStart,
@@ -98,11 +93,16 @@ class NotificationPreferencesLoaded extends NotificationPreferencesState {
     this.soundEnabled,
     this.emailDigest,
   });
+  final Map<String, dynamic> preferences;
+  final String? quietHoursStart;
+  final String? quietHoursEnd;
+  final bool? soundEnabled;
+  final String? emailDigest;
 }
 
 class NotificationPreferencesError extends NotificationPreferencesState {
-  final String message;
   const NotificationPreferencesError(this.message);
+  final String message;
 }
 
 // ─── FCM Token State ────────────────────────────────────
@@ -119,9 +119,9 @@ class FcmTokenLoading extends FcmTokenState {
 }
 
 class FcmTokenRegistered extends FcmTokenState {
+  const FcmTokenRegistered({required this.token, required this.deviceType});
   final String token;
   final String deviceType;
-  const FcmTokenRegistered({required this.token, required this.deviceType});
 }
 
 class FcmTokenRemoved extends FcmTokenState {
@@ -129,8 +129,8 @@ class FcmTokenRemoved extends FcmTokenState {
 }
 
 class FcmTokenError extends FcmTokenState {
-  final String message;
   const FcmTokenError(this.message);
+  final String message;
 }
 
 // ─── Delivery Logs State ────────────────────────────────
@@ -147,13 +147,13 @@ class DeliveryLogsLoading extends DeliveryLogsState {
 }
 
 class DeliveryLogsLoaded extends DeliveryLogsState {
-  final List<NotificationDeliveryLog> logs;
   const DeliveryLogsLoaded(this.logs);
+  final List<NotificationDeliveryLog> logs;
 }
 
 class DeliveryLogsError extends DeliveryLogsState {
-  final String message;
   const DeliveryLogsError(this.message);
+  final String message;
 }
 
 // ─── Sound Configs State ────────────────────────────────
@@ -170,13 +170,13 @@ class SoundConfigsLoading extends SoundConfigsState {
 }
 
 class SoundConfigsLoaded extends SoundConfigsState {
-  final List<NotificationSoundConfig> configs;
   const SoundConfigsLoaded(this.configs);
+  final List<NotificationSoundConfig> configs;
 }
 
 class SoundConfigsError extends SoundConfigsState {
-  final String message;
   const SoundConfigsError(this.message);
+  final String message;
 }
 
 // ─── Schedules State ────────────────────────────────────
@@ -193,13 +193,13 @@ class SchedulesLoading extends SchedulesState {
 }
 
 class SchedulesLoaded extends SchedulesState {
-  final List<NotificationSchedule> schedules;
   const SchedulesLoaded(this.schedules);
+  final List<NotificationSchedule> schedules;
 }
 
 class SchedulesError extends SchedulesState {
-  final String message;
   const SchedulesError(this.message);
+  final String message;
 }
 
 // ─── Notification Stats State ───────────────────────────
@@ -216,11 +216,11 @@ class NotificationStatsLoading extends NotificationStatsState {
 }
 
 class NotificationStatsLoaded extends NotificationStatsState {
-  final Map<String, dynamic> stats;
   const NotificationStatsLoaded(this.stats);
+  final Map<String, dynamic> stats;
 }
 
 class NotificationStatsError extends NotificationStatsState {
-  final String message;
   const NotificationStatsError(this.message);
+  final String message;
 }

@@ -2,21 +2,6 @@ import 'package:wameedpos/features/customers/enums/challenge_reward_type.dart';
 import 'package:wameedpos/features/customers/enums/challenge_type.dart';
 
 class LoyaltyChallenge {
-  final String id;
-  final String storeId;
-  final String nameAr;
-  final String nameEn;
-  final String? descriptionAr;
-  final String? descriptionEn;
-  final ChallengeType challengeType;
-  final double targetValue;
-  final ChallengeRewardType rewardType;
-  final double? rewardValue;
-  final String? rewardBadgeId;
-  final DateTime startDate;
-  final DateTime? endDate;
-  final bool? isActive;
-  final DateTime? createdAt;
 
   const LoyaltyChallenge({
     required this.id,
@@ -55,6 +40,21 @@ class LoyaltyChallenge {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String nameAr;
+  final String nameEn;
+  final String? descriptionAr;
+  final String? descriptionEn;
+  final ChallengeType challengeType;
+  final double targetValue;
+  final ChallengeRewardType rewardType;
+  final double? rewardValue;
+  final String? rewardBadgeId;
+  final DateTime startDate;
+  final DateTime? endDate;
+  final bool? isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

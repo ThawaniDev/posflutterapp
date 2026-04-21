@@ -57,8 +57,8 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
     final features = data.cast<Map<String, dynamic>>();
 
     // Compute KPIs
-    int total = features.length;
-    int enabled = features.where((f) => f['is_enabled'] == true).length;
+    final int total = features.length;
+    final int enabled = features.where((f) => f['is_enabled'] == true).length;
     final categories = features.map((f) => f['category']?.toString() ?? '').toSet();
 
     // Group by category
@@ -181,7 +181,7 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
                   children: [
                     Text(name, style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 2),
-                    Text(slug, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                    Text(slug, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
                     if (description.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(description, style: AppTypography.bodySmall, maxLines: 2, overflow: TextOverflow.ellipsis),
@@ -191,7 +191,7 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
               ),
               Switch(
                 value: isEnabled,
-                activeColor: AppColors.success,
+                activeThumbColor: AppColors.success,
                 onChanged: (v) {
                   ref.read(wameedAIAdminActionProvider.notifier).toggleFeature(id);
                 },

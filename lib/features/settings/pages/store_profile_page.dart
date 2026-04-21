@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/pages/settings_sub_page.dart';
 import 'package:wameedpos/features/settings/widgets/settings_widgets.dart';
@@ -23,6 +25,15 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
   String _decimalSeparator = '.';
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(businessTypesProvider.notifier).load();
+      ref.read(myStoreProvider.notifier).load();
+    });
+  }
+
+  @override
   String pageTitle(AppLocalizations l10n) => l10n.settingsStoreProfile;
 
   void _init(StoreSettings s) {
@@ -39,14 +50,42 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
   Widget buildSettingsBody(BuildContext context, StoreSettings settings) {
     _init(settings);
     final l10n = AppLocalizations.of(context)!;
+    final storeState = ref.watch(myStoreProvider);
+    final btState = ref.watch(businessTypesProvider);
 
     return Column(
       children: [
+        // Business Type Section
+        if (btState is BusinessTypesLoaded && storeState is StoreLoaded)
+          SettingsSectionCard(
+            title: l10n.settingsBusinessType,
+            icon: Icons.storefront,
+            children: [
+              SettingsDropdownRow<String>(
+                label: l10n.settingsBusinessType,
+                value: storeState.store.businessType?.value ?? 'retail',
+                items: btState.templates
+                    .map(
+                      (t) => PosDropdownItem(
+                        value: t.code,
+                        label: Localizations.localeOf(context).languageCode == 'ar' ? t.nameAr : t.nameEn,
+                      ),
+                    )
+                    .toList(),
+                onChanged: (v) async {
+                  if (v != null && storeId != null) {
+                    await ref.read(myStoreProvider.notifier).applyBusinessType(storeId!, v);
+                    if (mounted) showPosSuccessSnackbar(context, l10n.settingsSaved);
+                  }
+                },
+              ),
+            ],
+          ),
         SettingsSectionCard(
           title: l10n.settingsProfileCurrency,
           icon: Icons.attach_money,
           children: [
-            PosTextField(controller: _currencyCodeCtrl, label: l10n.settingsProfileCurrencyCode, hint: 'SAR'),
+            PosTextField(controller: _currencyCodeCtrl, label: l10n.settingsProfileCurrencyCode, hint: ''),
             const SizedBox(height: 12),
             PosTextField(controller: _currencySymbolCtrl, label: l10n.settingsProfileCurrencySymbol, hint: '﷼'),
           ],

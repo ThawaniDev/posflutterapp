@@ -107,7 +107,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       const SizedBox(height: AppSpacing.lg),
 
                       // Revenue Trend
-                      Text(l10n.reportsRevenueTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.reportsRevenueTrend, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
                         PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoTrendData)),

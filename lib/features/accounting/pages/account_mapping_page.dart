@@ -79,9 +79,9 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
           width: double.infinity,
           padding: AppSpacing.paddingAll12,
           color: AppColors.info.withValues(alpha: 0.08),
-          child: Row(
+          child: const Row(
             children: [
-              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
+              Icon(Icons.info_outline, color: AppColors.info, size: 20),
               AppSpacing.gapW8,
               Expanded(
                 child: Text(
@@ -194,7 +194,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
                 child: TextButton.icon(
                   onPressed: () => _deleteMapping(existingMapping['id'] as String),
                   icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
-                  label: Text(l10n.remove, style: TextStyle(color: AppColors.error, fontSize: 12)),
+                  label: Text(l10n.remove, style: const TextStyle(color: AppColors.error, fontSize: 12)),
                 ),
               ),
             ],

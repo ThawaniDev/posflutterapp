@@ -16,9 +16,9 @@ final posTerminalApiServiceProvider = Provider<PosTerminalApiService>((ref) {
 });
 
 class PosTerminalApiService {
-  final Dio _dio;
 
   PosTerminalApiService(this._dio);
+  final Dio _dio;
 
   // ─── Sessions ─────────────────────────────────────────────────
 
@@ -69,9 +69,9 @@ class PosTerminalApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (sessionId != null) 'session_id': sessionId,
-        if (type != null) 'type': type,
-        if (status != null) 'status': status,
+        'session_id': ?sessionId,
+        'type': ?type,
+        'status': ?status,
         if (search != null && search.isNotEmpty) 'search': search,
       },
     );
@@ -132,7 +132,7 @@ class PosTerminalApiService {
         'page': page,
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
-        if (categoryId != null) 'category_id': categoryId,
+        'category_id': ?categoryId,
         if (barcode != null && barcode.isNotEmpty) 'barcode': barcode,
       },
     );

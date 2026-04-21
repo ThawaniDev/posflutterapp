@@ -5,7 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
@@ -541,7 +540,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                     Text(title, style: isMobile ? AppTypography.titleMedium : AppTypography.titleLarge),
                     Text(
                       subtitle,
-                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),

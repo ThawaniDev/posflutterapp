@@ -148,7 +148,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
       'redeemed' => AppColors.info,
       'expired' => AppColors.warning,
       'deactivated' => AppColors.error,
-      _ => AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

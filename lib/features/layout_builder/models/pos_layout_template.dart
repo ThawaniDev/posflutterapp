@@ -1,16 +1,4 @@
 class PosLayoutTemplate {
-  final String id;
-  final String businessTypeId;
-  final String layoutKey;
-  final String name;
-  final String nameAr;
-  final String? description;
-  final String? previewImageUrl;
-  final Map<String, dynamic> config;
-  final bool isDefault;
-  final bool isActive;
-  final int sortOrder;
-  final DateTime? createdAt;
 
   const PosLayoutTemplate({
     required this.id,
@@ -43,6 +31,18 @@ class PosLayoutTemplate {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String layoutKey;
+  final String name;
+  final String nameAr;
+  final String? description;
+  final String? previewImageUrl;
+  final Map<String, dynamic> config;
+  final bool isDefault;
+  final bool isActive;
+  final int sortOrder;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

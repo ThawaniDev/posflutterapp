@@ -1,12 +1,4 @@
 class StoreWorkingHour {
-  final String id;
-  final int dayOfWeek;
-  final String dayName;
-  final bool isOpen;
-  final String? openTime;
-  final String? closeTime;
-  final String? breakStart;
-  final String? breakEnd;
 
   const StoreWorkingHour({
     required this.id,
@@ -18,10 +10,6 @@ class StoreWorkingHour {
     this.breakStart,
     this.breakEnd,
   });
-
-  static const List<String> dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-  static const List<String> dayNamesAr = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
   factory StoreWorkingHour.fromJson(Map<String, dynamic> json) {
     return StoreWorkingHour(
@@ -35,6 +23,18 @@ class StoreWorkingHour {
       breakEnd: json['break_end'] as String?,
     );
   }
+  final String id;
+  final int dayOfWeek;
+  final String dayName;
+  final bool isOpen;
+  final String? openTime;
+  final String? closeTime;
+  final String? breakStart;
+  final String? breakEnd;
+
+  static const List<String> dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  static const List<String> dayNamesAr = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
   Map<String, dynamic> toJson() {
     return {

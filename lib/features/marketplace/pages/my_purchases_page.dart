@@ -44,8 +44,8 @@ class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-                  border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+                  color: AppColors.surfaceFor(context),
+                  border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
                 ),
                 child: TabBar(
                   tabs: [
@@ -99,7 +99,7 @@ class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
               : PosBadge(label: l10n.marketplaceCancelled, variant: PosBadgeVariant.neutral),
         4 => Text(
           purchase.expiresAt != null ? _formatDate(purchase.expiresAt!) : '-',
-          style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
         ),
         _ => const SizedBox.shrink(),
       },

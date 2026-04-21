@@ -1,12 +1,6 @@
 import 'package:wameedpos/features/staff/enums/staff_document_type.dart';
 
 class StaffDocument {
-  final String id;
-  final String staffUserId;
-  final StaffDocumentType documentType;
-  final String fileUrl;
-  final DateTime? expiryDate;
-  final DateTime? uploadedAt;
 
   const StaffDocument({
     required this.id,
@@ -27,6 +21,12 @@ class StaffDocument {
       uploadedAt: json['uploaded_at'] != null ? DateTime.parse(json['uploaded_at'] as String) : null,
     );
   }
+  final String id;
+  final String staffUserId;
+  final StaffDocumentType documentType;
+  final String fileUrl;
+  final DateTime? expiryDate;
+  final DateTime? uploadedAt;
 
   Map<String, dynamic> toJson() {
     return {

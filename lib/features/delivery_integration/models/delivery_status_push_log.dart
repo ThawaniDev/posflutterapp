@@ -1,15 +1,4 @@
 class DeliveryStatusPushLog {
-  final String id;
-  final String deliveryOrderMappingId;
-  final String statusPushed;
-  final String platform;
-  final int? httpStatusCode;
-  final Map<String, dynamic>? requestPayload;
-  final Map<String, dynamic>? responsePayload;
-  final bool success;
-  final int attemptNumber;
-  final String? errorMessage;
-  final DateTime? pushedAt;
 
   const DeliveryStatusPushLog({
     required this.id,
@@ -40,6 +29,17 @@ class DeliveryStatusPushLog {
       pushedAt: json['pushed_at'] != null ? DateTime.parse(json['pushed_at'] as String) : null,
     );
   }
+  final String id;
+  final String deliveryOrderMappingId;
+  final String statusPushed;
+  final String platform;
+  final int? httpStatusCode;
+  final Map<String, dynamic>? requestPayload;
+  final Map<String, dynamic>? responsePayload;
+  final bool success;
+  final int attemptNumber;
+  final String? errorMessage;
+  final DateTime? pushedAt;
 
   Map<String, dynamic> toJson() {
     return {

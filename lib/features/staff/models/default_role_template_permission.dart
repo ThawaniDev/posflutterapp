@@ -1,7 +1,4 @@
 class DefaultRoleTemplatePermission {
-  final String id;
-  final String defaultRoleTemplateId;
-  final String providerPermissionId;
 
   const DefaultRoleTemplatePermission({
     required this.id,
@@ -16,6 +13,9 @@ class DefaultRoleTemplatePermission {
       providerPermissionId: json['provider_permission_id'] as String,
     );
   }
+  final String id;
+  final String defaultRoleTemplateId;
+  final String providerPermissionId;
 
   Map<String, dynamic> toJson() {
     return {

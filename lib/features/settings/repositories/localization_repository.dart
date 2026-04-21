@@ -7,9 +7,9 @@ final localizationRepositoryProvider = Provider<LocalizationRepository>((ref) {
 });
 
 class LocalizationRepository {
-  final LocalizationApiService _api;
 
   LocalizationRepository(this._api);
+  final LocalizationApiService _api;
 
   Future<Response> listLocales({bool? activeOnly}) => _api.listLocales(activeOnly: activeOnly);
 

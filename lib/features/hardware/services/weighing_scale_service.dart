@@ -3,16 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 /// Weighing scale configuration
-class ScaleConfig {
-  final String comPort; // COM3, /dev/ttyUSB0, etc.
-  final int baudRate;
-  final int dataBits;
-  final String parity; // none, odd, even
-  final int stopBits;
-  final String protocol; // standard, continuous, on_demand
-  final String unit; // kg, g, lb
-  final int decimalPlaces;
-  final String? requestCommand; // command to request weight reading
+class ScaleConfig { // command to request weight reading
 
   const ScaleConfig({
     this.comPort = 'COM3',
@@ -39,6 +30,15 @@ class ScaleConfig {
       requestCommand: json['request_command'] as String?,
     );
   }
+  final String comPort; // COM3, /dev/ttyUSB0, etc.
+  final int baudRate;
+  final int dataBits;
+  final String parity; // none, odd, even
+  final int stopBits;
+  final String protocol; // standard, continuous, on_demand
+  final String unit; // kg, g, lb
+  final int decimalPlaces;
+  final String? requestCommand;
 
   Map<String, dynamic> toJson() => {
     'com_port': comPort,
@@ -55,12 +55,12 @@ class ScaleConfig {
 
 /// Weight reading result
 class WeightReading {
+
+  const WeightReading({required this.weight, required this.unit, required this.stable, required this.readAt});
   final double weight;
   final String unit;
   final bool stable;
   final DateTime readAt;
-
-  const WeightReading({required this.weight, required this.unit, required this.stable, required this.readAt});
 }
 
 /// Weighing scale service — serial port communication
@@ -70,7 +70,7 @@ class WeighingScaleService {
   final _weightController = StreamController<WeightReading>.broadcast();
   bool _isConnected = false;
   Timer? _pollingTimer;
-  double _lastWeight = 0.0;
+  final double _lastWeight = 0.0;
   double _tare = 0.0;
 
   Stream<WeightReading> get onWeightChange => _weightController.stream;

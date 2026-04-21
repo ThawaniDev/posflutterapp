@@ -19,13 +19,13 @@ class StoreLoading extends StoreState {
 }
 
 class StoreLoaded extends StoreState {
-  final Store store;
   const StoreLoaded(this.store);
+  final Store store;
 }
 
 class StoreError extends StoreState {
-  final String message;
   const StoreError(this.message);
+  final String message;
 }
 
 // ─── Store Settings State ────────────────────────────────────────
@@ -43,13 +43,13 @@ class StoreSettingsLoading extends StoreSettingsState {
 }
 
 class StoreSettingsLoaded extends StoreSettingsState {
-  final StoreSettings settings;
   const StoreSettingsLoaded(this.settings);
+  final StoreSettings settings;
 }
 
 class StoreSettingsError extends StoreSettingsState {
-  final String message;
   const StoreSettingsError(this.message);
+  final String message;
 }
 
 // ─── Working Hours State ─────────────────────────────────────────
@@ -67,13 +67,13 @@ class WorkingHoursLoading extends WorkingHoursState {
 }
 
 class WorkingHoursLoaded extends WorkingHoursState {
-  final List<StoreWorkingHour> hours;
   const WorkingHoursLoaded(this.hours);
+  final List<StoreWorkingHour> hours;
 }
 
 class WorkingHoursError extends WorkingHoursState {
-  final String message;
   const WorkingHoursError(this.message);
+  final String message;
 }
 
 // ─── Business Types State ────────────────────────────────────────
@@ -91,13 +91,13 @@ class BusinessTypesLoading extends BusinessTypesState {
 }
 
 class BusinessTypesLoaded extends BusinessTypesState {
-  final List<BusinessTypeTemplate> templates;
   const BusinessTypesLoaded(this.templates);
+  final List<BusinessTypeTemplate> templates;
 }
 
 class BusinessTypesError extends BusinessTypesState {
-  final String message;
   const BusinessTypesError(this.message);
+  final String message;
 }
 
 // ─── Onboarding State ────────────────────────────────────────────
@@ -115,11 +115,11 @@ class OnboardingLoading extends OnboardingState {
 }
 
 class OnboardingLoaded extends OnboardingState {
-  final OnboardingProgress progress;
   const OnboardingLoaded(this.progress);
+  final OnboardingProgress progress;
 }
 
 class OnboardingError extends OnboardingState {
-  final String message;
   const OnboardingError(this.message);
+  final String message;
 }

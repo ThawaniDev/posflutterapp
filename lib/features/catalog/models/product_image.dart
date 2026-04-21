@@ -1,9 +1,4 @@
 class ProductImage {
-  final String id;
-  final String productId;
-  final String imageUrl;
-  final int? sortOrder;
-  final DateTime? createdAt;
 
   const ProductImage({
     required this.id,
@@ -22,6 +17,11 @@ class ProductImage {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String productId;
+  final String imageUrl;
+  final int? sortOrder;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
-import '../theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PosErrorState extends StatelessWidget {
+
+  const PosErrorState({super.key, required this.message, this.onRetry, this.icon = Icons.error_outline});
   final String message;
   final VoidCallback? onRetry;
   final IconData icon;
-
-  const PosErrorState({super.key, required this.message, this.onRetry, this.icon = Icons.error_outline});
 
   @override
   Widget build(BuildContext context) {

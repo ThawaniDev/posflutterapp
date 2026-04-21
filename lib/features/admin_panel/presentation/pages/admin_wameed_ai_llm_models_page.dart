@@ -55,10 +55,10 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
     final models = (data['models'] as List?)?.cast<Map<String, dynamic>>() ?? [];
 
     // KPIs
-    int total = models.length;
-    int enabled = models.where((m) => m['is_enabled'] == true).length;
-    int withKeys = models.where((m) => m['has_custom_api_key'] == true).length;
-    int defaultCount = models.where((m) => m['is_default'] == true).length;
+    final int total = models.length;
+    final int enabled = models.where((m) => m['is_enabled'] == true).length;
+    final int withKeys = models.where((m) => m['has_custom_api_key'] == true).length;
+    final int defaultCount = models.where((m) => m['is_default'] == true).length;
     double totalCost = 0;
     int totalRequests = 0;
     for (final m in models) {
@@ -156,7 +156,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                         DataCell(
                           PosBadge(
                             label: isEnabled ? l10n.enabled : l10n.disabled,
-                            customColor: isEnabled ? AppColors.success : AppColors.textMutedLight,
+                            customColor: isEnabled ? AppColors.success : AppColors.mutedFor(context),
                           ),
                         ),
                         DataCell(Text('${metrics['total_requests'] ?? 0}')),
@@ -169,7 +169,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                               IconButton(
                                 icon: Icon(
                                   isEnabled ? Icons.toggle_on : Icons.toggle_off,
-                                  color: isEnabled ? AppColors.success : AppColors.textMutedLight,
+                                  color: isEnabled ? AppColors.success : AppColors.mutedFor(context),
                                 ),
                                 onPressed: () => ref.read(wameedAIAdminActionProvider.notifier).toggleLlmModel(id),
                                 tooltip: isEnabled ? l10n.disable : l10n.enable,

@@ -70,7 +70,7 @@ void main() {
     });
 
     test('toJson omits id and storeId', () {
-      final settings = StoreSettings(id: 'settings-1', storeId: 'store-1', taxRate: 15.0, currencyCode: 'SAR', decimalPlaces: 2);
+      const settings = StoreSettings(id: 'settings-1', storeId: 'store-1', taxRate: 15.0, currencyCode: 'SAR', decimalPlaces: 2);
 
       final json = settings.toJson();
 
@@ -81,7 +81,7 @@ void main() {
     });
 
     test('toJson serializes boolean flags', () {
-      final settings = StoreSettings(taxRate: 15.0, pricesIncludeTax: false, allowNegativeStock: true, enableTips: false);
+      const settings = StoreSettings(taxRate: 15.0, pricesIncludeTax: false, allowNegativeStock: true, enableTips: false);
 
       final json = settings.toJson();
       expect(json['prices_include_tax'], false);
@@ -130,7 +130,7 @@ void main() {
     });
 
     test('isStepCompleted returns true for completed steps', () {
-      final progress = OnboardingProgress(
+      const progress = OnboardingProgress(
         id: '1',
         storeId: 'store-1',
         currentStep: OnboardingStep.tax,

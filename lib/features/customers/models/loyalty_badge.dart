@@ -1,12 +1,4 @@
 class LoyaltyBadge {
-  final String id;
-  final String storeId;
-  final String nameAr;
-  final String nameEn;
-  final String? iconUrl;
-  final String? descriptionAr;
-  final String? descriptionEn;
-  final DateTime? createdAt;
 
   const LoyaltyBadge({
     required this.id,
@@ -31,6 +23,14 @@ class LoyaltyBadge {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String nameAr;
+  final String nameEn;
+  final String? iconUrl;
+  final String? descriptionAr;
+  final String? descriptionEn;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

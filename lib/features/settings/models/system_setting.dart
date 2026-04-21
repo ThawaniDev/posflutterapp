@@ -1,10 +1,4 @@
 class SystemSetting {
-  final String id;
-  final String key;
-  final Map<String, dynamic> value;
-  final String? description;
-  final String? updatedBy;
-  final DateTime? updatedAt;
 
   const SystemSetting({
     required this.id,
@@ -25,6 +19,12 @@ class SystemSetting {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String key;
+  final Map<String, dynamic> value;
+  final String? description;
+  final String? updatedBy;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

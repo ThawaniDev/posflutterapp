@@ -7,9 +7,9 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A list tile widget for displaying an invoice summary.
 class InvoiceTile extends StatelessWidget {
-  final Invoice invoice;
 
   const InvoiceTile({super.key, required this.invoice});
+  final Invoice invoice;
 
   @override
   Widget build(BuildContext context) {

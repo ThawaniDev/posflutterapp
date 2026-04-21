@@ -4,12 +4,12 @@ import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 /// \u0081 denomination values (notes and coins)
 class SarDenomination {
+
+  const SarDenomination({required this.value, required this.label, required this.labelAr, this.isCoin = false});
   final double value;
   final String label;
   final String labelAr;
   final bool isCoin;
-
-  const SarDenomination({required this.value, required this.label, required this.labelAr, this.isCoin = false});
 
   static const List<SarDenomination> all = [
     SarDenomination(value: 500, label: '500 \u0081', labelAr: '٥٠٠ \u0081'),
@@ -33,21 +33,21 @@ class SarDenomination {
 
 /// Denomination count entry for cash counting
 class DenominationCount {
-  final SarDenomination denomination;
-  int count;
 
   DenominationCount({required this.denomination, this.count = 0});
+  final SarDenomination denomination;
+  int count;
 
   double get total => denomination.value * count;
 }
 
 /// Split payment leg
-class SplitPaymentLeg {
-  final PaymentMethodKey method;
-  final double amount;
-  final Map<String, dynamic>? metadata; // Card details, gift card code, etc.
+class SplitPaymentLeg { // Card details, gift card code, etc.
 
   const SplitPaymentLeg({required this.method, required this.amount, this.metadata});
+  final PaymentMethodKey method;
+  final double amount;
+  final Map<String, dynamic>? metadata;
 
   SplitPaymentLeg copyWith({PaymentMethodKey? method, double? amount, Map<String, dynamic>? metadata}) {
     return SplitPaymentLeg(method: method ?? this.method, amount: amount ?? this.amount, metadata: metadata ?? this.metadata);

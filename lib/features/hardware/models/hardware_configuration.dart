@@ -2,16 +2,6 @@ import 'package:wameedpos/features/hardware/enums/connection_type.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class HardwareConfiguration {
-  final String id;
-  final String storeId;
-  final String terminalId;
-  final HardwareDeviceType deviceType;
-  final ConnectionType connectionType;
-  final String? deviceName;
-  final Map<String, dynamic> configJson;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const HardwareConfiguration({
     required this.id,
@@ -40,6 +30,16 @@ class HardwareConfiguration {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String terminalId;
+  final HardwareDeviceType deviceType;
+  final ConnectionType connectionType;
+  final String? deviceName;
+  final Map<String, dynamic> configJson;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

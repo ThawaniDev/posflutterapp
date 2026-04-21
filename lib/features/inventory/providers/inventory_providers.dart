@@ -15,9 +15,8 @@ final stockLevelsProvider = StateNotifierProvider<StockLevelsNotifier, StockLeve
 });
 
 class StockLevelsNotifier extends StateNotifier<StockLevelsState> {
-  final InventoryRepository _repository;
-
   StockLevelsNotifier(this._repository) : super(const StockLevelsInitial());
+  final InventoryRepository _repository;
 
   bool _lowStockOnly = false;
   String? _search;
@@ -98,9 +97,8 @@ final stockMovementsProvider = StateNotifierProvider<StockMovementsNotifier, Sto
 });
 
 class StockMovementsNotifier extends StateNotifier<StockMovementsState> {
-  final InventoryRepository _repository;
-
   StockMovementsNotifier(this._repository) : super(const StockMovementsInitial());
+  final InventoryRepository _repository;
 
   String? _productId;
 
@@ -146,9 +144,8 @@ final goodsReceiptsProvider = StateNotifierProvider<GoodsReceiptsNotifier, Goods
 });
 
 class GoodsReceiptsNotifier extends StateNotifier<GoodsReceiptsState> {
-  final InventoryRepository _repository;
-
   GoodsReceiptsNotifier(this._repository) : super(const GoodsReceiptsInitial());
+  final InventoryRepository _repository;
 
   Future<void> load({int page = 1}) async {
     state = const GoodsReceiptsLoading();
@@ -211,9 +208,8 @@ final stockAdjustmentsProvider = StateNotifierProvider<StockAdjustmentsNotifier,
 });
 
 class StockAdjustmentsNotifier extends StateNotifier<StockAdjustmentsState> {
-  final InventoryRepository _repository;
-
   StockAdjustmentsNotifier(this._repository) : super(const StockAdjustmentsInitial());
+  final InventoryRepository _repository;
 
   Future<void> load({int page = 1}) async {
     state = const StockAdjustmentsLoading();
@@ -249,9 +245,8 @@ final stockTransfersProvider = StateNotifierProvider<StockTransfersNotifier, Sto
 });
 
 class StockTransfersNotifier extends StateNotifier<StockTransfersState> {
-  final InventoryRepository _repository;
-
   StockTransfersNotifier(this._repository) : super(const StockTransfersInitial());
+  final InventoryRepository _repository;
 
   Future<void> load({int page = 1}) async {
     state = const StockTransfersLoading();
@@ -324,9 +319,8 @@ final purchaseOrdersProvider = StateNotifierProvider<PurchaseOrdersNotifier, Pur
 });
 
 class PurchaseOrdersNotifier extends StateNotifier<PurchaseOrdersState> {
-  final InventoryRepository _repository;
-
   PurchaseOrdersNotifier(this._repository) : super(const PurchaseOrdersInitial());
+  final InventoryRepository _repository;
 
   String? _statusFilter;
 
@@ -354,6 +348,14 @@ class PurchaseOrdersNotifier extends StateNotifier<PurchaseOrdersState> {
         final loaded = state as PurchaseOrdersLoaded;
         state = PurchaseOrdersLoaded(orders: [order, ...loaded.orders], total: loaded.total + 1);
       }
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<PurchaseOrder> getOrder(String id) async {
+    try {
+      return await _repository.getPurchaseOrder(id);
     } on DioException catch (e) {
       throw Exception(_extractError(e));
     }
@@ -406,9 +408,8 @@ final recipesProvider = StateNotifierProvider<RecipesNotifier, RecipesState>((re
 });
 
 class RecipesNotifier extends StateNotifier<RecipesState> {
-  final InventoryRepository _repository;
-
   RecipesNotifier(this._repository) : super(const RecipesInitial());
+  final InventoryRepository _repository;
 
   Future<void> load({int page = 1}) async {
     state = const RecipesLoading();
@@ -468,9 +469,8 @@ final supplierReturnsProvider = StateNotifierProvider<SupplierReturnsNotifier, S
 });
 
 class SupplierReturnsNotifier extends StateNotifier<SupplierReturnsState> {
-  final InventoryRepository _repository;
-
   SupplierReturnsNotifier(this._repository) : super(const SupplierReturnsInitial());
+  final InventoryRepository _repository;
 
   String? _statusFilter;
   String? _supplierFilter;

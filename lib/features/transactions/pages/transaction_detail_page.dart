@@ -4,10 +4,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/pos_terminal/enums/transaction_status.dart';
 import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
 import 'package:wameedpos/features/pos_terminal/models/payment.dart';
@@ -188,7 +185,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
             child: Text(
               label,
               style: AppTypography.bodySmall.copyWith(
-                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                color: AppColors.mutedFor(context),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -213,7 +210,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
               const Spacer(),
               Text(
                 '${items.length} ${l10n.txItemsCount}',
-                style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
               ),
             ],
           ),
@@ -228,7 +225,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight, width: 0.5)),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context), width: 0.5)),
       ),
       child: Row(
         children: [
@@ -241,7 +238,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
                 if (item.barcode != null)
                   Text(
                     item.barcode!,
-                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                   ),
                 if (item.serialNumber != null)
                   Text('S/N: ${item.serialNumber}', style: AppTypography.micro.copyWith(color: AppColors.info)),
@@ -297,7 +294,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight, width: 0.5)),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context), width: 0.5)),
       ),
       child: Row(
         children: [
@@ -315,7 +312,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
                 if (payment.cardLastFour != null)
                   Text(
                     '•••• ${payment.cardLastFour}${payment.cardBrand != null ? ' · ${payment.cardBrand}' : ''}',
-                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                   ),
               ],
             ),
@@ -368,7 +365,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
             label,
             style: AppTypography.bodySmall.copyWith(
               fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
-              color: isBold ? null : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              color: isBold ? null : (AppColors.mutedFor(context)),
             ),
           ),
           Text(

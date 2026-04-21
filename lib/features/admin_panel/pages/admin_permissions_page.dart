@@ -47,7 +47,7 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
             return PosCard(
               margin: const EdgeInsetsDirectional.only(bottom: 12),
               child: ExpansionTile(
-                leading: Icon(Icons.folder_outlined, color: AppColors.primary),
+                leading: const Icon(Icons.folder_outlined, color: AppColors.primary),
                 title: Text(_formatGroupName(groupName), style: theme.textTheme.titleSmall),
                 subtitle: Text('${permissions.length} permissions', style: theme.textTheme.bodySmall),
                 children: permissions.map((perm) {

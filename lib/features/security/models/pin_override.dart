@@ -1,11 +1,4 @@
 class PinOverride {
-  final String id;
-  final String storeId;
-  final String requestingUserId;
-  final String authorizingUserId;
-  final String permissionCode;
-  final Map<String, dynamic>? actionContext;
-  final DateTime? createdAt;
 
   const PinOverride({
     required this.id,
@@ -28,6 +21,13 @@ class PinOverride {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String requestingUserId;
+  final String authorizingUserId;
+  final String permissionCode;
+  final Map<String, dynamic>? actionContext;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

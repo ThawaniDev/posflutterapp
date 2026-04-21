@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
-import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 
 // ─────────────────────────────────────────────────────────────
 // LOADING INDICATOR
@@ -145,7 +145,7 @@ class PosAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    Widget avatar = CircleAvatar(
+    final Widget avatar = CircleAvatar(
       radius: radius,
       backgroundColor: AppColors.primary10,
       backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
@@ -325,7 +325,7 @@ class PosSection extends StatelessWidget {
                     color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   ),
                 ),
-                if (titleAction != null) titleAction!,
+                ?titleAction,
               ],
             ),
             AppSpacing.gapH16,

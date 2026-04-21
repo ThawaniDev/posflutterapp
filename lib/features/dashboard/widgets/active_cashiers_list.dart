@@ -7,9 +7,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ActiveCashiersList extends StatelessWidget {
-  final List<Map<String, dynamic>> cashiers;
 
   const ActiveCashiersList({super.key, required this.cashiers});
+  final List<Map<String, dynamic>> cashiers;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ActiveCashiersList extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.people_rounded, color: AppColors.info, size: 20),
+              const Icon(Icons.people_rounded, color: AppColors.info, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardActiveCashiers, style: AppTypography.headlineSmall),
               const Spacer(),
@@ -44,7 +44,7 @@ class ActiveCashiersList extends StatelessWidget {
               child: Center(
                 child: Text(
                   l10n.dashboardNoActiveSessions,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             )
@@ -76,7 +76,7 @@ class ActiveCashiersList extends StatelessWidget {
                           Text(
                             '${l10n.dashboardSince} ${c['opened_at'] as String? ?? '-'}',
                             style: AppTypography.micro.copyWith(
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: AppColors.mutedFor(context),
                             ),
                           ),
                         ],

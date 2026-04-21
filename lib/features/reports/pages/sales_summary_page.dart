@@ -137,7 +137,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
             if (daily.isEmpty)
               ReportDataCard(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Center(child: Text(l10n.noDataForSelectedPeriod)),
                 ),
               )
@@ -147,7 +147,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                 child: Column(
                   children: [
                     for (int i = 0; i < daily.length; i++) ...[
-                      if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                      if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
@@ -163,7 +163,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                   Text(
                                     l10n.reportNOrders(daily[i]['total_transactions'].toString()),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                      color: AppColors.mutedFor(context),
                                     ),
                                   ),
                                 ],

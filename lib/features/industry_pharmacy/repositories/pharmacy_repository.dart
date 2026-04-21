@@ -8,8 +8,8 @@ final pharmacyRepositoryProvider = Provider<PharmacyRepository>((ref) {
 });
 
 class PharmacyRepository {
-  final PharmacyApiService _apiService;
   PharmacyRepository({required PharmacyApiService apiService}) : _apiService = apiService;
+  final PharmacyApiService _apiService;
 
   Future<List<Prescription>> listPrescriptions({String? search, int perPage = 20}) =>
       _apiService.listPrescriptions(search: search, perPage: perPage);

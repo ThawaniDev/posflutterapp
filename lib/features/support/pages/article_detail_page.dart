@@ -10,8 +10,8 @@ import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
 
 class ArticleDetailPage extends ConsumerStatefulWidget {
-  final String slug;
   const ArticleDetailPage({super.key, required this.slug});
+  final String slug;
 
   @override
   ConsumerState<ArticleDetailPage> createState() => _ArticleDetailPageState();

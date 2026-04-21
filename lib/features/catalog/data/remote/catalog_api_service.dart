@@ -18,9 +18,9 @@ final catalogApiServiceProvider = Provider<CatalogApiService>((ref) {
 
 /// Remote API service for catalog endpoints (products, categories, suppliers).
 class CatalogApiService {
-  final Dio _dio;
 
   CatalogApiService(this._dio);
+  final Dio _dio;
 
   // ─── Products ─────────────────────────────────────────────────
 
@@ -39,11 +39,11 @@ class CatalogApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (categoryId != null) 'category_id': categoryId,
+        'category_id': ?categoryId,
         if (search != null && search.isNotEmpty) 'search': search,
         if (isActive != null) 'is_active': isActive ? 1 : 0,
-        if (sortBy != null) 'sort_by': sortBy,
-        if (sortDir != null) 'sort_dir': sortDir,
+        'sort_by': ?sortBy,
+        'sort_dir': ?sortDir,
       },
     );
 
@@ -113,7 +113,7 @@ class CatalogApiService {
   Future<void> bulkAction({required List<String> productIds, required String action, String? categoryId}) async {
     await _dio.post(
       '${ApiEndpoints.products}/bulk-action',
-      data: {'product_ids': productIds, 'action': action, if (categoryId != null) 'category_id': categoryId},
+      data: {'product_ids': productIds, 'action': action, 'category_id': ?categoryId},
     );
   }
 
@@ -264,11 +264,6 @@ class CatalogApiService {
 
 /// Generic paginated result for list endpoints.
 class PaginatedResult<T> {
-  final List<T> items;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final int perPage;
 
   const PaginatedResult({
     required this.items,
@@ -277,6 +272,11 @@ class PaginatedResult<T> {
     required this.lastPage,
     required this.perPage,
   });
+  final List<T> items;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
 
   bool get hasMore => currentPage < lastPage;
 }

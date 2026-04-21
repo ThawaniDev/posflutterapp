@@ -1,6 +1,4 @@
 class ReceiptTemplatePackageVisibility {
-  final String receiptLayoutTemplateId;
-  final String subscriptionPlanId;
 
   const ReceiptTemplatePackageVisibility({
     required this.receiptLayoutTemplateId,
@@ -13,6 +11,8 @@ class ReceiptTemplatePackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String receiptLayoutTemplateId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

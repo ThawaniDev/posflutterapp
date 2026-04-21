@@ -13,8 +13,8 @@ final installmentAdminProvider = StateNotifierProvider<InstallmentAdminNotifier,
 });
 
 class InstallmentAdminNotifier extends StateNotifier<InstallmentAdminState> {
-  final InstallmentRepository _repo;
   InstallmentAdminNotifier(this._repo) : super(const InstallmentAdminInitial());
+  final InstallmentRepository _repo;
 
   Future<void> load() async {
     state = const InstallmentAdminLoading();
@@ -79,8 +79,8 @@ final storeInstallmentConfigProvider = StateNotifierProvider<StoreInstallmentCon
 });
 
 class StoreInstallmentConfigNotifier extends StateNotifier<StoreInstallmentConfigState> {
-  final InstallmentRepository _repo;
   StoreInstallmentConfigNotifier(this._repo) : super(const StoreInstallmentConfigInitial());
+  final InstallmentRepository _repo;
 
   Future<void> load() async {
     state = const StoreInstallmentConfigLoading();
@@ -158,10 +158,10 @@ final installmentCheckoutProvider = StateNotifierProvider<InstallmentCheckoutNot
 });
 
 class InstallmentCheckoutNotifier extends StateNotifier<InstallmentCheckoutState> {
-  final InstallmentRepository _repo;
   InstallmentCheckoutNotifier(this._repo) : super(const InstallmentCheckoutInitial());
+  final InstallmentRepository _repo;
 
-  Future<void> loadProviders({required double amount, String currency = 'SAR'}) async {
+  Future<void> loadProviders({required double amount, String currency = ''}) async {
     state = const InstallmentCheckoutLoading();
     try {
       final providers = await _repo.getCheckoutProviders(amount: amount, currency: currency);

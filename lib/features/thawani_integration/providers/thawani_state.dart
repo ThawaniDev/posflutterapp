@@ -12,16 +12,6 @@ class ThawaniStatsLoading extends ThawaniStatsState {
 }
 
 class ThawaniStatsLoaded extends ThawaniStatsState {
-  final bool isConnected;
-  final String? thawaniStoreId;
-  final int totalOrders;
-  final int totalProductsMapped;
-  final int totalCategoriesMapped;
-  final int totalSettlements;
-  final int pendingOrders;
-  final int pendingSyncItems;
-  final int syncLogsToday;
-  final int failedSyncsToday;
 
   const ThawaniStatsLoaded({
     required this.isConnected,
@@ -35,11 +25,21 @@ class ThawaniStatsLoaded extends ThawaniStatsState {
     required this.syncLogsToday,
     required this.failedSyncsToday,
   });
+  final bool isConnected;
+  final String? thawaniStoreId;
+  final int totalOrders;
+  final int totalProductsMapped;
+  final int totalCategoriesMapped;
+  final int totalSettlements;
+  final int pendingOrders;
+  final int pendingSyncItems;
+  final int syncLogsToday;
+  final int failedSyncsToday;
 }
 
 class ThawaniStatsError extends ThawaniStatsState {
-  final String message;
   const ThawaniStatsError(this.message);
+  final String message;
 }
 
 // ─── Thawani Config State ───────────────────────────────
@@ -56,13 +56,13 @@ class ThawaniConfigLoading extends ThawaniConfigState {
 }
 
 class ThawaniConfigLoaded extends ThawaniConfigState {
-  final Map<String, dynamic>? config;
   const ThawaniConfigLoaded(this.config);
+  final Map<String, dynamic>? config;
 }
 
 class ThawaniConfigError extends ThawaniConfigState {
-  final String message;
   const ThawaniConfigError(this.message);
+  final String message;
 }
 
 // ─── Thawani Action State ───────────────────────────────
@@ -79,13 +79,13 @@ class ThawaniActionLoading extends ThawaniActionState {
 }
 
 class ThawaniActionSuccess extends ThawaniActionState {
-  final String message;
   const ThawaniActionSuccess(this.message);
+  final String message;
 }
 
 class ThawaniActionError extends ThawaniActionState {
-  final String message;
   const ThawaniActionError(this.message);
+  final String message;
 }
 
 // ─── Thawani Sync State ─────────────────────────────────
@@ -98,19 +98,19 @@ class ThawaniSyncInitial extends ThawaniSyncState {
 }
 
 class ThawaniSyncLoading extends ThawaniSyncState {
-  final String operation;
   const ThawaniSyncLoading(this.operation);
+  final String operation;
 }
 
 class ThawaniSyncSuccess extends ThawaniSyncState {
+  const ThawaniSyncSuccess(this.message, {this.data});
   final String message;
   final Map<String, dynamic>? data;
-  const ThawaniSyncSuccess(this.message, {this.data});
 }
 
 class ThawaniSyncError extends ThawaniSyncState {
-  final String message;
   const ThawaniSyncError(this.message);
+  final String message;
 }
 
 // ─── Thawani Category Mappings State ────────────────────
@@ -127,13 +127,13 @@ class ThawaniCategoryMappingsLoading extends ThawaniCategoryMappingsState {
 }
 
 class ThawaniCategoryMappingsLoaded extends ThawaniCategoryMappingsState {
-  final List<dynamic> mappings;
   const ThawaniCategoryMappingsLoaded(this.mappings);
+  final List<dynamic> mappings;
 }
 
 class ThawaniCategoryMappingsError extends ThawaniCategoryMappingsState {
-  final String message;
   const ThawaniCategoryMappingsError(this.message);
+  final String message;
 }
 
 // ─── Thawani Sync Logs State ────────────────────────────
@@ -150,14 +150,14 @@ class ThawaniSyncLogsLoading extends ThawaniSyncLogsState {
 }
 
 class ThawaniSyncLogsLoaded extends ThawaniSyncLogsState {
+  const ThawaniSyncLogsLoaded(this.logs, {this.pagination});
   final List<dynamic> logs;
   final Map<String, dynamic>? pagination;
-  const ThawaniSyncLogsLoaded(this.logs, {this.pagination});
 }
 
 class ThawaniSyncLogsError extends ThawaniSyncLogsState {
-  final String message;
   const ThawaniSyncLogsError(this.message);
+  final String message;
 }
 
 // ─── Thawani Queue Stats State ──────────────────────────
@@ -174,15 +174,15 @@ class ThawaniQueueStatsLoading extends ThawaniQueueStatsState {
 }
 
 class ThawaniQueueStatsLoaded extends ThawaniQueueStatsState {
+
+  const ThawaniQueueStatsLoaded({required this.pending, required this.processing, required this.completed, required this.failed});
   final int pending;
   final int processing;
   final int completed;
   final int failed;
-
-  const ThawaniQueueStatsLoaded({required this.pending, required this.processing, required this.completed, required this.failed});
 }
 
 class ThawaniQueueStatsError extends ThawaniQueueStatsState {
-  final String message;
   const ThawaniQueueStatsError(this.message);
+  final String message;
 }

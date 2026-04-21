@@ -13,9 +13,9 @@ final productsProvider = StateNotifierProvider<ProductsNotifier, ProductsState>(
 });
 
 class ProductsNotifier extends StateNotifier<ProductsState> {
-  final CatalogRepository _repository;
 
   ProductsNotifier(this._repository) : super(const ProductsInitial());
+  final CatalogRepository _repository;
 
   String? _categoryFilter;
   String? _searchQuery;
@@ -144,10 +144,10 @@ final productDetailProvider = StateNotifierProvider.family<ProductDetailNotifier
 });
 
 class ProductDetailNotifier extends StateNotifier<ProductDetailState> {
-  final CatalogRepository _repository;
-  final String? _productId;
 
   ProductDetailNotifier(this._repository, this._productId) : super(const ProductDetailInitial());
+  final CatalogRepository _repository;
+  final String? _productId;
 
   Future<void> load() async {
     if (_productId == null) return; // New product — no load needed
@@ -186,9 +186,9 @@ final categoriesProvider = StateNotifierProvider<CategoriesNotifier, CategoriesS
 });
 
 class CategoriesNotifier extends StateNotifier<CategoriesState> {
-  final CatalogRepository _repository;
 
   CategoriesNotifier(this._repository) : super(const CategoriesInitial());
+  final CatalogRepository _repository;
 
   Future<void> load({bool activeOnly = false}) async {
     state = const CategoriesLoading();
@@ -283,9 +283,9 @@ final suppliersProvider = StateNotifierProvider<SuppliersNotifier, SuppliersStat
 });
 
 class SuppliersNotifier extends StateNotifier<SuppliersState> {
-  final CatalogRepository _repository;
 
   SuppliersNotifier(this._repository) : super(const SuppliersInitial());
+  final CatalogRepository _repository;
 
   String? _searchQuery;
 

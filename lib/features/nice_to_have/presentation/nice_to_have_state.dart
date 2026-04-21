@@ -12,13 +12,13 @@ final class WishlistLoading extends WishlistState {
 }
 
 final class WishlistLoaded extends WishlistState {
-  final List<dynamic> items;
   const WishlistLoaded(this.items);
+  final List<dynamic> items;
 }
 
 final class WishlistError extends WishlistState {
-  final String message;
   const WishlistError(this.message);
+  final String message;
 }
 
 // ─── Appointments ─────────────────────────────────────────
@@ -35,13 +35,13 @@ final class AppointmentLoading extends AppointmentState {
 }
 
 final class AppointmentLoaded extends AppointmentState {
-  final List<dynamic> appointments;
   const AppointmentLoaded(this.appointments);
+  final List<dynamic> appointments;
 }
 
 final class AppointmentError extends AppointmentState {
-  final String message;
   const AppointmentError(this.message);
+  final String message;
 }
 
 // ─── CfdConfig ────────────────────────────────────────────
@@ -58,13 +58,13 @@ final class CfdConfigLoading extends CfdConfigState {
 }
 
 final class CfdConfigLoaded extends CfdConfigState {
-  final Map<String, dynamic> config;
   const CfdConfigLoaded(this.config);
+  final Map<String, dynamic> config;
 }
 
 final class CfdConfigError extends CfdConfigState {
-  final String message;
   const CfdConfigError(this.message);
+  final String message;
 }
 
 // ─── Gift Registry ────────────────────────────────────────
@@ -81,13 +81,13 @@ final class GiftRegistryLoading extends GiftRegistryState {
 }
 
 final class GiftRegistryLoaded extends GiftRegistryState {
-  final List<dynamic> registries;
   const GiftRegistryLoaded(this.registries);
+  final List<dynamic> registries;
 }
 
 final class GiftRegistryError extends GiftRegistryState {
-  final String message;
   const GiftRegistryError(this.message);
+  final String message;
 }
 
 // ─── Signage ──────────────────────────────────────────────
@@ -104,13 +104,13 @@ final class SignageLoading extends SignageState {
 }
 
 final class SignageLoaded extends SignageState {
-  final List<dynamic> playlists;
   const SignageLoaded(this.playlists);
+  final List<dynamic> playlists;
 }
 
 final class SignageError extends SignageState {
-  final String message;
   const SignageError(this.message);
+  final String message;
 }
 
 // ─── Gamification ─────────────────────────────────────────
@@ -127,15 +127,15 @@ final class GamificationLoading extends GamificationState {
 }
 
 final class GamificationLoaded extends GamificationState {
+  const GamificationLoaded({required this.challenges, required this.badges, required this.tiers});
   final List<dynamic> challenges;
   final List<dynamic> badges;
   final List<dynamic> tiers;
-  const GamificationLoaded({required this.challenges, required this.badges, required this.tiers});
 }
 
 final class GamificationError extends GamificationState {
-  final String message;
   const GamificationError(this.message);
+  final String message;
 }
 
 // ─── Nice-to-Have Operation ───────────────────────────────
@@ -152,11 +152,11 @@ final class NthOpLoading extends NiceToHaveOperationState {
 }
 
 final class NthOpSuccess extends NiceToHaveOperationState {
-  final String message;
   const NthOpSuccess(this.message);
+  final String message;
 }
 
 final class NthOpError extends NiceToHaveOperationState {
-  final String message;
   const NthOpError(this.message);
+  final String message;
 }

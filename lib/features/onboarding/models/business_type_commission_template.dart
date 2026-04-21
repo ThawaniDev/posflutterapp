@@ -2,15 +2,6 @@ import 'package:wameedpos/features/catalog/enums/business_commission_type.dart';
 import 'package:wameedpos/features/staff/enums/commission_applies_to.dart';
 
 class BusinessTypeCommissionTemplate {
-  final String id;
-  final String businessTypeId;
-  final String name;
-  final String nameAr;
-  final BusinessCommissionType commissionType;
-  final double? value;
-  final CommissionAppliesTo? appliesTo;
-  final Map<String, dynamic>? tierThresholds;
-  final int? sortOrder;
 
   const BusinessTypeCommissionTemplate({
     required this.id,
@@ -37,6 +28,15 @@ class BusinessTypeCommissionTemplate {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }
+  final String id;
+  final String businessTypeId;
+  final String name;
+  final String nameAr;
+  final BusinessCommissionType commissionType;
+  final double? value;
+  final CommissionAppliesTo? appliesTo;
+  final Map<String, dynamic>? tierThresholds;
+  final int? sortOrder;
 
   Map<String, dynamic> toJson() {
     return {

@@ -17,10 +17,10 @@ class AuthLoading extends AuthState {
 
 /// Authenticated with user data.
 class AuthAuthenticated extends AuthState {
-  final User user;
-  final String token;
 
   const AuthAuthenticated({required this.user, required this.token});
+  final User user;
+  final String token;
 
   AuthAuthenticated copyWith({User? user, String? token}) {
     return AuthAuthenticated(user: user ?? this.user, token: token ?? this.token);
@@ -29,15 +29,15 @@ class AuthAuthenticated extends AuthState {
 
 /// Not authenticated.
 class AuthUnauthenticated extends AuthState {
-  final String? message;
 
   const AuthUnauthenticated({this.message});
+  final String? message;
 }
 
 /// Auth error occurred.
 class AuthError extends AuthState {
-  final String message;
-  final String? code;
 
   const AuthError({required this.message, this.code});
+  final String message;
+  final String? code;
 }

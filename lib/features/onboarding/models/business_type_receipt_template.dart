@@ -2,17 +2,6 @@ import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_qr_position.dart';
 
 class BusinessTypeReceiptTemplate {
-  final String id;
-  final String businessTypeId;
-  final int? paperWidth;
-  final Map<String, dynamic> headerSections;
-  final Map<String, dynamic> bodySections;
-  final Map<String, dynamic> footerSections;
-  final ZatcaQrPosition? zatcaQrPosition;
-  final bool? showBilingual;
-  final FontSize? fontSize;
-  final String? customFooterText;
-  final String? customFooterTextAr;
 
   const BusinessTypeReceiptTemplate({
     required this.id,
@@ -43,6 +32,17 @@ class BusinessTypeReceiptTemplate {
       customFooterTextAr: json['custom_footer_text_ar'] as String?,
     );
   }
+  final String id;
+  final String businessTypeId;
+  final int? paperWidth;
+  final Map<String, dynamic> headerSections;
+  final Map<String, dynamic> bodySections;
+  final Map<String, dynamic> footerSections;
+  final ZatcaQrPosition? zatcaQrPosition;
+  final bool? showBilingual;
+  final FontSize? fontSize;
+  final String? customFooterText;
+  final String? customFooterTextAr;
 
   Map<String, dynamic> toJson() {
     return {

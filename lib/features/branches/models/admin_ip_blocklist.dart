@@ -1,9 +1,4 @@
 class AdminIpBlocklist {
-  final String id;
-  final String ipAddress;
-  final String? reason;
-  final String blockedBy;
-  final DateTime? createdAt;
 
   const AdminIpBlocklist({
     required this.id,
@@ -22,6 +17,11 @@ class AdminIpBlocklist {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String ipAddress;
+  final String? reason;
+  final String blockedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

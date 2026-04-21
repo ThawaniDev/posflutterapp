@@ -10,9 +10,9 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
 });
 
 class CustomerRepository {
-  final CustomerApiService _apiService;
 
   CustomerRepository({required CustomerApiService apiService}) : _apiService = apiService;
+  final CustomerApiService _apiService;
 
   // Customers
   Future<PaginatedResult<Customer>> listCustomers({int page = 1, int perPage = 20, String? search, String? groupId}) =>

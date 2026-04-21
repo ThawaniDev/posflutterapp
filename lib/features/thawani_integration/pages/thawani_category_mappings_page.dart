@@ -80,7 +80,7 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
               _ => (Colors.grey, PosStatusBadgeVariant.neutral),
             };
             final isDark = Theme.of(context).brightness == Brightness.dark;
-            final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+            final mutedColor = AppColors.mutedFor(context);
             final categoryName =
                 category?['name'] ?? category?['name_ar'] ?? l10n.thawaniCategoryNum('${mapping['category_id'] ?? '?'}');
 
@@ -105,7 +105,7 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
                     if (mapping['sync_error'] != null)
                       Text(
                         mapping['sync_error'].toString(),
-                        style: TextStyle(fontSize: 11, color: AppColors.error),
+                        style: const TextStyle(fontSize: 11, color: AppColors.error),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

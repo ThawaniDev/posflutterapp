@@ -507,6 +507,7 @@
   "settingsLocalization": "التعريب",
   "settingsLocalizationDesc": "اللغات والترجمات والإعدادات الإقليمية",
   "settingsStoreProfile": "ملف المتجر",
+  "settingsBusinessType": "نوع النشاط",
   "settingsStoreProfileDesc": "اسم المتجر والعنوان ومعلومات الاتصال",
   "settingsWorkingHours": "ساعات العمل",
   "settingsWorkingHoursDesc": "تعيين ساعات عمل المتجر",
@@ -610,7 +611,7 @@
   "settingsWorkingBreakEnd": "نهاية الاستراحة",
   "settingsProfileCurrency": "العملة",
   "settingsProfileCurrencyCode": "رمز العملة",
-  "settingsProfileCurrencyCodeHint": "مثال: OMR, , USD",
+  "settingsProfileCurrencyCodeHint": "مثال: , , USD",
   "settingsProfileCurrencySymbol": "رمز العملة",
   "settingsProfileCurrencySymbolHint": "مثال: ر.ع, ﷼, $",
   "settingsProfileFormatting": "تنسيق الأرقام",
@@ -851,6 +852,10 @@
   "bakeryCustomCakeOrders": "طلبات الكيك المخصص",
   "bakeryProductionSchedule": "جدول الإنتاج",
   "bakeryNewRecipe": "وصفة جديدة",
+  "bakeryEditSchedule": "تعديل الجدول",
+  "bakeryNewSchedule": "جدول إنتاج جديد",
+  "bakeryUpdateSchedule": "تحديث الجدول",
+  "bakeryCreateSchedule": "إنشاء الجدول",
   "bakeryIngredients": "المكونات",
   "bakeryYield": "الكمية الناتجة",
   "bakeryCakeSize": "حجم الكيك",
@@ -1042,6 +1047,66 @@
   "staffShiftDeleted": "تم حذف الوردية",
   "staffDeleteShift": "حذف الوردية",
   "staffDeleteShiftConfirm": "حذف هذه الوردية؟ لا يمكن التراجع عن هذا.",
+  "staffShiftsTab": "الورديات",
+  "staffTemplatesTab": "القوالب",
+  "staffShiftTemplates": "قوالب الورديات",
+  "staffCreateTemplate": "إنشاء قالب",
+  "staffEditTemplate": "تعديل القالب",
+  "staffDeleteTemplate": "حذف القالب",
+  "staffDeleteTemplateConfirm": "حذف هذا القالب؟ لا يمكن التراجع عن هذا.",
+  "staffTemplateCreated": "تم إنشاء القالب",
+  "staffTemplateUpdated": "تم تحديث القالب",
+  "staffTemplateDeleted": "تم حذف القالب",
+  "staffNoTemplates": "لا توجد قوالب",
+  "staffNoShifts": "لا توجد ورديات",
+  "staffStatusScheduled": "مجدولة",
+  "staffStatusCompleted": "مكتملة",
+  "staffStatusMissed": "فائتة",
+  "staffStatusSwapped": "مبدّلة",
+  "staffStatusUnknown": "غير معروف",
+  "staffMarkComplete": "تحديد كمكتملة",
+  "staffMarkMissed": "تحديد كفائتة",
+  "staffActual": "الفعلي",
+  "staffUnknown": "غير معروف",
+  "staffBulkAssignShifts": "تعيين ورديات جماعي",
+  "staffSingle": "فردي",
+  "staffBulk": "جماعي",
+  "staffSelectMembers": "اختر الأعضاء",
+  "staffSelectDates": "اختر التواريخ",
+  "staffAddDate": "إضافة تاريخ",
+  "staffPeriod": "الفترة",
+  "staffShiftsCreated": "تم إنشاء الورديات",
+  "staffShiftUpdated": "تم تحديث الوردية",
+  "staffEditShift": "تعديل الوردية",
+  "staffBreakMinutes": "{count} دقيقة استراحة",
+  "@staffBreakMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffBreakDuration": "مدة الاستراحة",
+  "staffMinutes": "دقيقة",
+  "staffStartTime": "وقت البداية",
+  "staffEndTime": "وقت النهاية",
+  "color": "اللون",
+  "staffOnBreak": "في استراحة",
+  "staffOngoing": "جارية",
+  "staffNetWorked": "الصافي",
+  "staffAbsent": "غائب",
+  "staffCompleted": "مكتمل",
+  "staffOnTime": "في الموعد",
+  "staffLate": "متأخر",
+  "staffEarlyDeparture": "مغادرة مبكرة",
+  "staffActiveSession": "نشط",
+  "staffTotalHours": "إجمالي الساعات",
+  "staffAvgHours": "متوسط الساعات",
+  "staffLateArrivals": "التأخيرات",
+  "staffOnTimeRate": "نسبة الالتزام",
+  "staffOvertimeHours": "الإضافي",
+  "staffBreakDetails": "تفاصيل الاستراحات",
+  "staffExportAttendance": "تصدير",
   "staffCommissions": "العمولات",
   "staffTotalEarnings": "إجمالي الأرباح",
   "staffTotalOrders": "إجمالي الطلبات",
@@ -1581,12 +1646,19 @@
   "noSessions": "لا توجد جلسات",
   "na": "غ/م",
   "paymentCash": "نقدي",
+  "paymentCard": "بطاقة",
   "paymentMada": "مدى",
+  "paymentCardMada": "بطاقة مدى",
   "paymentVisa": "فيزا",
+  "paymentCardVisa": "بطاقة فيزا",
   "paymentMastercard": "ماستركارد",
+  "paymentApplePay": "Apple Pay",
+  "paymentStcPay": "STC Pay",
   "paymentStoreCredit": "رصيد المتجر",
   "paymentGiftCard": "بطاقة هدية",
   "paymentMobilePayment": "دفع عبر الجوال",
+  "paymentLoyaltyPoints": "نقاط الولاء",
+  "paymentBankTransfer": "تحويل بنكي",
   "offlineChangesSynced": "غير متصل — سيتم مزامنة التغييرات عند الاتصال",
   "syncing": "جاري المزامنة...",
   "syncError": "خطأ في المزامنة — ستتم إعادة المحاولة",
@@ -1739,6 +1811,9 @@
   "posNoProducts": "لم يتم العثور على منتجات",
   "posNoProductsHint": "جرب بحثاً مختلفاً أو تحقق من الكتالوج.",
   "posProductAdded": "تم إضافة {name}",
+  "posEnterWeight": "أدخل الوزن",
+  "posTareWeightNote": "وزن العبوة: {weight} كجم سيتم خصمه تلقائياً",
+  "posWeightHint": "أدخل الوزن بالكيلوجرام",
   "posProductNotFound": "المنتج غير موجود",
   "posReturnRefund": "مرتجع / استرداد",
   "posReceiptNumber": "رقم الإيصال / المعاملة",
@@ -1753,6 +1828,20 @@
   "posPaymentTotal": "الإجمالي:  {amount}",
   "posSplitPayment": "تقسيم الدفع",
   "posCashTendered": "المبلغ المدفوع",
+  "posTipAmount": "مبلغ البقشيش",
+  "posTotalWithTip": "الإجمالي مع البقشيش",
+  "posPaymentTotalInsufficient": "إجمالي المدفوعات لا يغطي المبلغ المطلوب",
+  "posReturnQtyExceedsOriginal": "كمية الإرجاع تتجاوز الأصلية للمنتج {product} (الحد الأقصى: {max})",
+  "@posReturnQtyExceedsOriginal": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
   "posChange": "الباقي",
   "posRemaining": "المتبقي",
   "posCompletePayment": "إتمام الدفع",
@@ -1800,6 +1889,7 @@
   "posNoProductsSubtitle": "جرب بحثاً مختلفاً أو تحقق من الكتالوج.",
   "posTapProductsToAdd": "انقر على المنتجات لإضافتها",
   "posTax15": "الضريبة (15%)",
+  "posTaxExempt": "معفى من الضريبة",
   "posClearCartMessage": "سيتم إزالة جميع الأصناف.",
   "posClear": "مسح",
   "posWalkInCustomer": "عميل زائر",
@@ -2041,6 +2131,7 @@
   "commonEdit": "تعديل",
   "commonInactive": "غير نشط",
   "commonInvalid": "غير صالح",
+  "commonError": "حدث خطأ",
   "commonNo": "لا",
   "commonNotes": "ملاحظات",
   "commonNotesOptional": "ملاحظات (اختياري)",
@@ -2127,6 +2218,9 @@
   "inventoryPOCancelled": "تم إلغاء أمر الشراء",
   "inventoryPOCreatedMsg": "تم إنشاء أمر الشراء",
   "inventoryPOSent": "تم إرسال أمر الشراء",
+  "inventoryPOReceived": "تم استلام أمر الشراء",
+  "inventoryReceivePOTitle": "استلام أمر الشراء",
+  "inventoryOrdered": "مطلوب",
   "inventoryPartiallyReceived": "مستلم جزئياً",
   "inventoryProduct": "المنتج",
   "inventoryPurchaseOrders": "أوامر الشراء",
@@ -2138,6 +2232,7 @@
   "inventoryReceived": "مستلم",
   "inventoryRecipeCreated": "تم إنشاء الوصفة",
   "inventoryRecipeDeleted": "تم حذف الوصفة",
+  "inventoryRecipeUpdated": "تم تحديث الوصفة",
   "inventoryRecipes": "الوصفات",
   "inventoryRecipesSubtitle": "تحديد مكونات المنتجات والعوائد",
   "inventoryRef": "المرجع",
@@ -2667,6 +2762,7 @@
     }
   },
   "appBarLanguage": "اللغة",
+  "appBarMore": "المزيد",
   "quickNavTitle": "التنقل السريع",
   "appBarTheme": "المظهر",
   "appBarDarkMode": "الوضع الداكن",
@@ -2811,6 +2907,9 @@
   "receiptTemplateBodyConfig": "إعدادات المحتوى",
   "receiptTemplateFooterConfig": "إعدادات التذييل",
   "cfdThemesTitle": "سمات شاشة العرض للعميل",
+  "cfdEnabled": "شاشة العرض مفعلة",
+  "cfdTargetMonitor": "الشاشة المستهدفة",
+  "cfdIdleRotation": "دورة الخمول (ثواني)",
   "cfdThemesEmpty": "لا توجد سمات",
   "cfdThemesEmptySubtitle": "لا توجد سمات شاشة عرض العميل متاحة لخطتك.",
   "cfdThemeDetail": "تفاصيل سمة شاشة العميل",
@@ -3033,7 +3132,6 @@
   "debitsAllocatedAt": "تاريخ التخصيص",
   "debitsCreatedAt": "تاريخ الإنشاء",
   "debitsOrderNumber": "رقم الطلب",
-
   "sidebarReceivables": "المستحقات",
   "receivablesTitle": "المستحقات",
   "receivablesCreate": "إنشاء مستحق",
@@ -3106,7 +3204,6 @@
   "receivablesSettledAt": "تاريخ التسوية",
   "receivablesCreatedAt": "تاريخ الإنشاء",
   "receivablesOrderNumber": "رقم الطلب",
-
   "searchDropdownHint": "بحث...",
   "noResultsFound": "لا توجد نتائج",
   "selectOption": "اختر...",
@@ -5962,9 +6059,15 @@
   "genericPaginationInfo": "صفحة {current} من {total} ({count} إجمالاً)",
   "@genericPaginationInfo": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" },
-      "count": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
     }
   },
   "labelsPrintedBy": "طبع بواسطة",
@@ -6230,6 +6333,248 @@
       },
       "total": {
         "type": "int"
+      }
+    }
+  },
+  "subThisAddOn": "هذه الإضافة",
+  "subBillingCycleMonthly": "شهري",
+  "subBillingCycleYearly": "سنوي",
+  "subUnableToIdentifyAddOn": "تعذر تحديد الإضافة",
+  "softPosFreeTier": "الباقة المجانية",
+  "softPosFreeActive": "الباقة المجانية نشطة",
+  "softPosTransactions": "المعاملات",
+  "softPosRemaining": "المتبقي",
+  "subAddOnConfirmMessage": "إضافة {name} مقابل {price} {currency}/{cycle}؟",
+  "@subAddOnConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnRemovedSuccess": "تم إزالة {name}",
+  "@subAddOnRemovedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnRemoveFailed": "فشل إزالة الإضافة: {error}",
+  "@subAddOnRemoveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subConfirmSubscriptionMessage": "الاشتراك في {planName} ({billingCycle}) مقابل {price} {currency}؟",
+  "@subConfirmSubscriptionMessage": {
+    "placeholders": {
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "subBillingLabel": "الفوترة: {cycle}",
+  "@subBillingLabel": {
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "subPeriodLabel": "الفترة: {start} – {end}",
+  "@subPeriodLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "subTrialEnds": "تنتهي الفترة التجريبية: {date}",
+  "@subTrialEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subGracePeriodEnds": "تنتهي فترة السماح: {date}",
+  "@subGracePeriodEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosSaving": "توفير {amount} ريال",
+  "@softPosSaving": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosReachThreshold": "أكمل {threshold} معاملة لفتح الميزات المدفوعة",
+  "@softPosReachThreshold": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subDaysRemaining": "الأيام المتبقية",
+  "subNextPayment": "الدفعة القادمة",
+  "subPaymentMethod": "طريقة الدفع",
+  "subQuickActions": "إجراءات سريعة",
+  "subViewPayments": "عرض المدفوعات",
+  "subIncludedFeatures": "الميزات المشمولة",
+  "subSubscriptionOverview": "نظرة عامة على الاشتراك",
+  "subPlanDetails": "تفاصيل الخطة",
+  "subNextBillingDate": "تاريخ الفوترة التالي",
+  "subNDaysLeft": "{days} يوم متبقي",
+  "@subNDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subCurrentPlanBadge": "الحالية",
+  "subBestValue": "أفضل قيمة",
+  "subFeaturesIncluded": "{count} ميزة مشمولة",
+  "@subFeaturesIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitsIncluded": "{count} حدود",
+  "@subLimitsIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subNotAvailable": "غير متوفر",
+  "subEnabled": "مفعّل",
+  "subDisabled": "معطّل",
+  "subSoftPosFreeAfter": "مجاني بعد {threshold} معاملة SoftPOS",
+  "@subSoftPosFreeAfter": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subSoftPosFreeExplainer": "استخدم SoftPOS لقبول {threshold} دفعة بطاقة خلال {period} وسيصبح اشتراكك مجانياً!",
+  "@subSoftPosFreeExplainer": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeEligible": "مؤهل لـ SoftPOS المجاني",
+  "subSoftPosOrPay": "وإلا: {price} ريال{period}",
+  "@subSoftPosOrPay": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "notifCentreTitle": "مركز الإشعارات",
+  "notifCentreSubtitle": "جميع التنبيهات في مكان واحد",
+  "notifTabInbox": "الوارد",
+  "notifTabAnnouncements": "الإعلانات",
+  "notifTabPaymentReminders": "تذكيرات الدفع",
+  "notifTabAppUpdates": "تحديثات التطبيق",
+  "notifBellTooltip": "الإشعارات",
+  "notifViewAll": "عرض الكل",
+  "notifNoRecent": "لا توجد إشعارات حديثة",
+  "notifMaintenanceBannerTitle": "صيانة مجدولة",
+  "notifMaintenanceUntil": "النهاية المتوقعة: {endAt}",
+  "announcementsEmpty": "لا توجد إعلانات حاليًا",
+  "announcementsDismiss": "إخفاء",
+  "announcementsDismissed": "تم إخفاء الإعلان",
+  "paymentReminderDue": "تاريخ الاستحقاق",
+  "paymentRemindersEmpty": "لا توجد تذكيرات دفع",
+  "paymentRemindersUpcoming": "قادمة",
+  "paymentRemindersOverdue": "متأخرة",
+  "paymentRemindersChannel": "القناة",
+  "paymentRemindersSentAt": "وقت الإرسال",
+  "paymentRemindersSummary": "{total} المجموع · {upcoming} قادمة · {overdue} متأخرة",
+  "appReleasesEmpty": "لا توجد إصدارات متاحة",
+  "appReleaseLatest": "أحدث إصدار",
+  "appReleaseVersion": "الإصدار {version}",
+  "appReleaseForceUpdate": "تحديث إلزامي",
+  "appReleaseChangelog": "الجديد",
+  "appReleaseDownload": "تنزيل",
+  "appReleasePlatform": "المنصة",
+  "appReleaseChannel": "القناة",
+  "appReleaseReleasedAt": "صدر بتاريخ {date}",
+  "@notifMaintenanceUntil": {
+    "placeholders": {
+      "endAt": {
+        "type": "String"
+      }
+    }
+  },
+  "@paymentRemindersSummary": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      },
+      "overdue": {
+        "type": "int"
+      }
+    }
+  },
+  "@appReleaseVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@appReleaseReleasedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
       }
     }
   }

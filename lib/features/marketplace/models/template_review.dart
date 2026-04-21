@@ -1,12 +1,4 @@
 class TemplateReview {
-  final String id;
-  final String listingId;
-  final String organizationId;
-  final String? reviewerName;
-  final int rating;
-  final String? comment;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const TemplateReview({
     required this.id,
@@ -31,6 +23,14 @@ class TemplateReview {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String listingId;
+  final String organizationId;
+  final String? reviewerName;
+  final int rating;
+  final String? comment;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

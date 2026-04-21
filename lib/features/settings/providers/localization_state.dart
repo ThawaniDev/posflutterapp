@@ -18,13 +18,13 @@ final class LocaleListLoading extends LocaleListState {
 }
 
 final class LocaleListLoaded extends LocaleListState {
-  final List<SupportedLocale> locales;
   const LocaleListLoaded(this.locales);
+  final List<SupportedLocale> locales;
 }
 
 final class LocaleListError extends LocaleListState {
-  final String message;
   const LocaleListError(this.message);
+  final String message;
 }
 
 // ─── Translation list state ─────────────────────────────────────────────────
@@ -42,14 +42,14 @@ final class TranslationListLoading extends TranslationListState {
 }
 
 final class TranslationListLoaded extends TranslationListState {
+  const TranslationListLoaded(this.translations, {this.total = 0});
   final List<MasterTranslationString> translations;
   final int total;
-  const TranslationListLoaded(this.translations, {this.total = 0});
 }
 
 final class TranslationListError extends TranslationListState {
-  final String message;
   const TranslationListError(this.message);
+  final String message;
 }
 
 // ─── Override list state ────────────────────────────────────────────────────
@@ -67,13 +67,13 @@ final class OverrideListLoading extends OverrideListState {
 }
 
 final class OverrideListLoaded extends OverrideListState {
-  final List<TranslationOverride> overrides;
   const OverrideListLoaded(this.overrides);
+  final List<TranslationOverride> overrides;
 }
 
 final class OverrideListError extends OverrideListState {
-  final String message;
   const OverrideListError(this.message);
+  final String message;
 }
 
 // ─── Version list state ─────────────────────────────────────────────────────
@@ -91,13 +91,13 @@ final class VersionListLoading extends VersionListState {
 }
 
 final class VersionListLoaded extends VersionListState {
-  final List<TranslationVersion> versions;
   const VersionListLoaded(this.versions);
+  final List<TranslationVersion> versions;
 }
 
 final class VersionListError extends VersionListState {
-  final String message;
   const VersionListError(this.message);
+  final String message;
 }
 
 // ─── Export state ───────────────────────────────────────────────────────────
@@ -115,11 +115,11 @@ final class TranslationExportLoading extends TranslationExportState {
 }
 
 final class TranslationExportLoaded extends TranslationExportState {
-  final Map<String, String> translations;
   const TranslationExportLoaded(this.translations);
+  final Map<String, String> translations;
 }
 
 final class TranslationExportError extends TranslationExportState {
-  final String message;
   const TranslationExportError(this.message);
+  final String message;
 }

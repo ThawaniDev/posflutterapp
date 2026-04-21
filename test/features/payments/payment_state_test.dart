@@ -28,8 +28,8 @@ void main() {
 
     test('PaymentsLoaded holds payments and pagination', () {
       final payments = [
-        Payment(id: 'p1', transactionId: 't1', method: PaymentMethodKey.cash, amount: 100.0),
-        Payment(id: 'p2', transactionId: 't2', method: PaymentMethodKey.cardVisa, amount: 200.0),
+        const Payment(id: 'p1', transactionId: 't1', method: PaymentMethodKey.cash, amount: 100.0),
+        const Payment(id: 'p2', transactionId: 't2', method: PaymentMethodKey.cardVisa, amount: 200.0),
       ];
 
       final state = PaymentsLoaded(payments: payments, total: 50, currentPage: 1, lastPage: 3, perPage: 20);
@@ -41,15 +41,15 @@ void main() {
     });
 
     test('PaymentsLoaded hasMore false on last page', () {
-      final state = PaymentsLoaded(payments: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = PaymentsLoaded(payments: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
     });
 
     test('PaymentsLoaded pagination check', () {
-      final state = PaymentsLoaded(payments: [], total: 10, currentPage: 1, lastPage: 2, perPage: 20);
+      const state = PaymentsLoaded(payments: [], total: 10, currentPage: 1, lastPage: 2, perPage: 20);
       expect(state.hasMore, true);
 
-      final state2 = PaymentsLoaded(payments: [], total: 10, currentPage: 2, lastPage: 2, perPage: 20);
+      const state2 = PaymentsLoaded(payments: [], total: 10, currentPage: 2, lastPage: 2, perPage: 20);
       expect(state2.hasMore, false);
     });
 
@@ -60,7 +60,7 @@ void main() {
     });
 
     test('sealed class switch', () {
-      PaymentsState state = const PaymentsLoading();
+      const PaymentsState state = PaymentsLoading();
       final result = switch (state) {
         PaymentsInitial() => 'initial',
         PaymentsLoading() => 'loading',
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('CashSessionsLoaded holds sessions and pagination', () {
-      final sessions = [CashSession(id: 'cs1', storeId: 's1', openedBy: 'u1', openingFloat: 500.0, status: SessionStatus.open)];
+      final sessions = [const CashSession(id: 'cs1', storeId: 's1', openedBy: 'u1', openingFloat: 500.0, status: SessionStatus.open)];
 
       final state = CashSessionsLoaded(sessions: sessions, total: 10, currentPage: 1, lastPage: 1, perPage: 20);
 
@@ -92,7 +92,7 @@ void main() {
     });
 
     test('CashSessionsLoaded pagination', () {
-      final state = CashSessionsLoaded(sessions: [], total: 5, currentPage: 1, lastPage: 2, perPage: 20);
+      const state = CashSessionsLoaded(sessions: [], total: 5, currentPage: 1, lastPage: 2, perPage: 20);
       expect(state.hasMore, true);
     });
   });
@@ -139,7 +139,7 @@ void main() {
     });
 
     test('GiftCardReady holds optional gift card and balance', () {
-      final gc = GiftCard(
+      const gc = GiftCard(
         id: 'gc1',
         organizationId: 'o1',
         code: 'GC-TEST1234',
@@ -150,14 +150,14 @@ void main() {
         status: GiftCardStatus.active,
       );
 
-      final state = GiftCardReady(lastIssued: gc);
+      const state = GiftCardReady(lastIssued: gc);
       expect(state.lastIssued?.code, 'GC-TEST1234');
       expect(state.lastIssued?.balance, 75.0);
       expect(state.lastBalance, isNull);
     });
 
     test('GiftCardReady with balance check', () {
-      final state = GiftCardReady(lastBalance: {'code': 'GC-12345', 'balance': 50.0, 'status': 'active'});
+      const state = GiftCardReady(lastBalance: {'code': 'GC-12345', 'balance': 50.0, 'status': 'active'});
       expect(state.lastBalance?['balance'], 50.0);
       expect(state.lastIssued, isNull);
     });

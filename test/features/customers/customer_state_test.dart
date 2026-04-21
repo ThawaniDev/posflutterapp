@@ -21,8 +21,8 @@ void main() {
 
     test('CustomersLoaded holds customers and pagination', () {
       final customers = [
-        Customer(id: 'c1', organizationId: 'o1', name: 'Alice', phone: '+96812345678', loyaltyPoints: 150),
-        Customer(id: 'c2', organizationId: 'o1', name: 'Bob', phone: '+96887654321', email: 'bob@example.com'),
+        const Customer(id: 'c1', organizationId: 'o1', name: 'Alice', phone: '+96812345678', loyaltyPoints: 150),
+        const Customer(id: 'c2', organizationId: 'o1', name: 'Bob', phone: '+96887654321', email: 'bob@example.com'),
       ];
 
       final state = CustomersLoaded(customers: customers, total: 100, currentPage: 1, lastPage: 5, perPage: 20);
@@ -34,12 +34,12 @@ void main() {
     });
 
     test('CustomersLoaded hasMore is false on last page', () {
-      final state = CustomersLoaded(customers: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
+      const state = CustomersLoaded(customers: [], total: 5, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
     });
 
     test('CustomersLoaded copyWith replaces fields', () {
-      final state = CustomersLoaded(
+      const state = CustomersLoaded(
         customers: [Customer(id: 'c1', organizationId: 'o1', name: 'Alice', phone: '+96812345678')],
         total: 10,
         currentPage: 1,
@@ -60,7 +60,7 @@ void main() {
     });
 
     test('sealed class exhaustive switch', () {
-      CustomersState state = const CustomersLoading();
+      const CustomersState state = CustomersLoading();
       final result = switch (state) {
         CustomersInitial() => 'initial',
         CustomersLoading() => 'loading',
@@ -84,8 +84,8 @@ void main() {
 
     test('CustomerGroupsLoaded holds groups', () {
       final groups = [
-        CustomerGroup(id: 'g1', organizationId: 'o1', name: 'VIP', discountPercent: 10.0),
-        CustomerGroup(id: 'g2', organizationId: 'o1', name: 'Regular'),
+        const CustomerGroup(id: 'g1', organizationId: 'o1', name: 'VIP', discountPercent: 10.0),
+        const CustomerGroup(id: 'g2', organizationId: 'o1', name: 'Regular'),
       ];
 
       final state = CustomerGroupsLoaded(groups: groups);
@@ -95,7 +95,7 @@ void main() {
     });
 
     test('sealed class switch for CustomerGroupsState', () {
-      CustomerGroupsState state = const CustomerGroupsError(message: 'timeout');
+      const CustomerGroupsState state = CustomerGroupsError(message: 'timeout');
       final result = switch (state) {
         CustomerGroupsInitial() => 'initial',
         CustomerGroupsLoading() => 'loading',
@@ -119,7 +119,7 @@ void main() {
     });
 
     test('CustomerDetailLoaded holds customer', () {
-      final customer = Customer(
+      const customer = Customer(
         id: 'c1',
         organizationId: 'o1',
         name: 'Alice',
@@ -127,15 +127,15 @@ void main() {
         loyaltyPoints: 500,
         storeCreditBalance: 25.0,
       );
-      final state = CustomerDetailLoaded(customer: customer);
+      const state = CustomerDetailLoaded(customer: customer);
       expect(state.customer.name, 'Alice');
       expect(state.customer.loyaltyPoints, 500);
       expect(state.customer.storeCreditBalance, 25.0);
     });
 
     test('CustomerDetailSaved holds saved customer', () {
-      final customer = Customer(id: 'c1', organizationId: 'o1', name: 'Alice Updated', phone: '+96812345678');
-      final state = CustomerDetailSaved(customer: customer);
+      const customer = Customer(id: 'c1', organizationId: 'o1', name: 'Alice Updated', phone: '+96812345678');
+      const state = CustomerDetailSaved(customer: customer);
       expect(state.customer.name, 'Alice Updated');
     });
   });

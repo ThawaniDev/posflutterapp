@@ -1,15 +1,4 @@
 class StockLevel {
-  final String id;
-  final String storeId;
-  final String productId;
-  final String? productName;
-  final double quantity;
-  final double? reservedQuantity;
-  final double? reorderPoint;
-  final double? maxStockLevel;
-  final double? averageCost;
-  final int? syncVersion;
-  final DateTime? updatedAt;
 
   const StockLevel({
     required this.id,
@@ -40,6 +29,17 @@ class StockLevel {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String productId;
+  final String? productName;
+  final double quantity;
+  final double? reservedQuantity;
+  final double? reorderPoint;
+  final double? maxStockLevel;
+  final double? averageCost;
+  final int? syncVersion;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

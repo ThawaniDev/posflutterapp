@@ -161,11 +161,6 @@ class TransactionStatsError extends TransactionStatsState {
 // ─── Helper Models ──────────────────────────────────────────
 
 class DailyTrendPoint {
-  const DailyTrendPoint({required this.date, required this.sales, required this.count});
-
-  final DateTime date;
-  final double sales;
-  final int count;
 
   factory DailyTrendPoint.fromJson(Map<String, dynamic> json) {
     return DailyTrendPoint(
@@ -174,4 +169,9 @@ class DailyTrendPoint {
       count: (json['count'] as num?)?.toInt() ?? 0,
     );
   }
+  const DailyTrendPoint({required this.date, required this.sales, required this.count});
+
+  final DateTime date;
+  final double sales;
+  final int count;
 }

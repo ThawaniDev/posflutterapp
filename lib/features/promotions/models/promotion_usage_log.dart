@@ -1,11 +1,4 @@
 class PromotionUsageLog {
-  final String id;
-  final String promotionId;
-  final String? couponCodeId;
-  final String orderId;
-  final String? customerId;
-  final double discountAmount;
-  final DateTime? createdAt;
 
   const PromotionUsageLog({
     required this.id,
@@ -28,6 +21,13 @@ class PromotionUsageLog {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String promotionId;
+  final String? couponCodeId;
+  final String orderId;
+  final String? customerId;
+  final double discountAmount;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

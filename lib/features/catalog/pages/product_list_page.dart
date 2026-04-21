@@ -5,12 +5,7 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
@@ -420,7 +415,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       width: 48,
       height: 48,
       decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderMd),
-      child: Icon(Icons.inventory_2_outlined, size: 24, color: AppColors.primary),
+      child: const Icon(Icons.inventory_2_outlined, size: 24, color: AppColors.primary),
     );
   }
 
@@ -507,11 +502,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerLow,
-        border: Border(bottom: BorderSide(color: AppColors.borderLight)),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         children: [
-          Icon(Icons.filter_alt_outlined, size: 16, color: AppColors.textMutedLight),
+          Icon(Icons.filter_alt_outlined, size: 16, color: AppColors.mutedFor(context)),
           const SizedBox(width: AppSpacing.sm),
           // Category filter
           SizedBox(
@@ -535,7 +530,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           if (state is ProductsLoaded) ...[
             Text(
               '${state.total} products',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ],
@@ -558,7 +553,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
             Text(error, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.lg),
@@ -679,7 +674,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                       if (product.barcode != null)
                         Text(
                           product.barcode!,
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                         ),
                     ],
                   ),
@@ -762,7 +757,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       width: 36,
       height: 36,
       decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderSm),
-      child: Icon(Icons.inventory_2_outlined, size: 18, color: AppColors.primary),
+      child: const Icon(Icons.inventory_2_outlined, size: 18, color: AppColors.primary),
     );
   }
 }
@@ -772,11 +767,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _CategorySidebar extends StatelessWidget {
+
+  const _CategorySidebar({required this.categories, required this.selectedCategoryId, required this.onCategorySelected});
   final List<Category> categories;
   final String? selectedCategoryId;
   final ValueChanged<String?> onCategorySelected;
-
-  const _CategorySidebar({required this.categories, required this.selectedCategoryId, required this.onCategorySelected});
 
   @override
   Widget build(BuildContext context) {
@@ -837,13 +832,13 @@ class _CategorySidebar extends StatelessWidget {
 }
 
 class _SidebarItem extends StatelessWidget {
+
+  const _SidebarItem({required this.label, required this.icon, this.isSelected = false, this.depth = 0, this.onTap});
   final String label;
   final IconData icon;
   final bool isSelected;
   final int depth;
   final VoidCallback? onTap;
-
-  const _SidebarItem({required this.label, required this.icon, this.isSelected = false, this.depth = 0, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -860,7 +855,7 @@ class _SidebarItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon, size: 16, color: isSelected ? AppColors.primary : AppColors.textMutedLight),
+              Icon(icon, size: 16, color: isSelected ? AppColors.primary : AppColors.mutedFor(context)),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
@@ -891,11 +886,11 @@ class _SidebarItem extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _ProductGridCard extends StatelessWidget {
+
+  const _ProductGridCard({required this.product, required this.onTap, required this.onDelete});
   final Product product;
   final VoidCallback onTap;
   final VoidCallback onDelete;
-
-  const _ProductGridCard({required this.product, required this.onTap, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -903,7 +898,7 @@ class _ProductGridCard extends StatelessWidget {
       elevation: 0,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadius.borderLg,
@@ -925,10 +920,10 @@ class _ProductGridCard extends StatelessWidget {
                           product.imageUrl!,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) =>
-                              Center(child: Icon(Icons.inventory_2_outlined, size: 40, color: AppColors.primary)),
+                              const Center(child: Icon(Icons.inventory_2_outlined, size: 40, color: AppColors.primary)),
                         ),
                       )
-                    : Center(child: Icon(Icons.inventory_2_outlined, size: 40, color: AppColors.primary)),
+                    : const Center(child: Icon(Icons.inventory_2_outlined, size: 40, color: AppColors.primary)),
               ),
             ),
 

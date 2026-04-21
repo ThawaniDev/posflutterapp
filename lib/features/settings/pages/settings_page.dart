@@ -102,10 +102,10 @@ class SettingsPage extends ConsumerWidget {
 }
 
 class _SettingsSection extends StatelessWidget {
-  final String title;
-  final List<_SettingsItem> items;
 
   const _SettingsSection({required this.title, required this.items});
+  final String title;
+  final List<_SettingsItem> items;
 
   @override
   Widget build(BuildContext context) {
@@ -138,12 +138,12 @@ class _SettingsSection extends StatelessWidget {
 }
 
 class _SettingsItem extends StatelessWidget {
+
+  const _SettingsItem({required this.icon, required this.title, required this.subtitle, required this.onTap});
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-
-  const _SettingsItem({required this.icon, required this.title, required this.subtitle, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

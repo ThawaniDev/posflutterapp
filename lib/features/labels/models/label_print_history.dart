@@ -1,12 +1,4 @@
 class LabelPrintHistory {
-  final String id;
-  final String storeId;
-  final String? templateId;
-  final String printedBy;
-  final int productCount;
-  final int totalLabels;
-  final String? printerName;
-  final DateTime? printedAt;
 
   const LabelPrintHistory({
     required this.id,
@@ -31,6 +23,14 @@ class LabelPrintHistory {
       printedAt: json['printed_at'] != null ? DateTime.parse(json['printed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String? templateId;
+  final String printedBy;
+  final int productCount;
+  final int totalLabels;
+  final String? printerName;
+  final DateTime? printedAt;
 
   Map<String, dynamic> toJson() {
     return {

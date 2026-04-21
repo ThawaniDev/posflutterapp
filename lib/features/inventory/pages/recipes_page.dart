@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
@@ -101,13 +98,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
         subtitle: l10n.inventoryNoRecipesHint,
       ),
       actions: [
-        PosTableRowAction<Recipe>(
-          label: l10n.commonEdit,
-          icon: Icons.edit_outlined,
-          onTap: (recipe) {
-            // TODO: Navigate to edit page
-          },
-        ),
+        PosTableRowAction<Recipe>(label: l10n.commonEdit, icon: Icons.edit_outlined, onTap: (recipe) => _showEditDialog(recipe)),
         PosTableRowAction<Recipe>(
           label: l10n.commonDelete,
           icon: Icons.delete_outline,
@@ -135,6 +126,84 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
         }
       },
     );
+  }
+
+  Future<void> _showEditDialog(Recipe recipe) async {
+    final l10n = AppLocalizations.of(context)!;
+    final formKey = GlobalKey<FormState>();
+    final yieldController = TextEditingController(text: recipe.yieldQuantity.toStringAsFixed(2));
+    bool isActive = recipe.isActive ?? true;
+
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          return AlertDialog(
+            title: Text(l10n.commonEdit),
+            content: SizedBox(
+              width: 400,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      recipe.name ?? recipe.productName ?? recipe.productId,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    TextFormField(
+                      controller: yieldController,
+                      decoration: InputDecoration(labelText: l10n.inventoryYieldQuantity),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      validator: (v) {
+                        if (v == null || v.isEmpty) return l10n.commonRequired;
+                        if (double.tryParse(v) == null) return l10n.commonInvalid;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    SwitchListTile(
+                      title: Text(l10n.commonActive),
+                      value: isActive,
+                      onChanged: (v) => setDialogState(() => isActive = v),
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+              PosButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    Navigator.pop(ctx, {'yield_quantity': double.parse(yieldController.text), 'is_active': isActive});
+                  }
+                },
+                variant: PosButtonVariant.ghost,
+                label: l10n.commonSave,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    if (result != null && mounted) {
+      try {
+        await ref.read(recipesProvider.notifier).updateRecipe(recipe.id, result);
+        if (mounted) {
+          showPosSuccessSnackbar(context, l10n.inventoryRecipeUpdated);
+        }
+      } catch (e) {
+        if (mounted) {
+          showPosErrorSnackbar(context, e.toString());
+        }
+      }
+    }
+
+    yieldController.dispose();
   }
 
   Future<void> _showCreateDialog() async {

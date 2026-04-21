@@ -2,15 +2,6 @@ import 'package:wameedpos/features/zatca/enums/zatca_certificate_status.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_certificate_type.dart';
 
 class ZatcaCertificate {
-  final String id;
-  final String storeId;
-  final ZatcaCertificateType certificateType;
-  final String certificatePem;
-  final String ccsid;
-  final DateTime issuedAt;
-  final DateTime expiresAt;
-  final ZatcaCertificateStatus? status;
-  final DateTime? createdAt;
 
   const ZatcaCertificate({
     required this.id,
@@ -37,6 +28,15 @@ class ZatcaCertificate {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final ZatcaCertificateType certificateType;
+  final String certificatePem;
+  final String ccsid;
+  final DateTime issuedAt;
+  final DateTime expiresAt;
+  final ZatcaCertificateStatus? status;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

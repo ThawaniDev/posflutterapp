@@ -9,9 +9,9 @@ final reportApiServiceProvider = Provider<ReportApiService>((ref) {
 });
 
 class ReportApiService {
-  final Dio _dio;
 
   ReportApiService(this._dio);
+  final Dio _dio;
 
   Map<String, dynamic> _buildParams(ReportFilters filters) => filters.toQueryParams();
 
@@ -173,7 +173,7 @@ class ReportApiService {
       'name': name,
       'frequency': frequency,
       'recipients': recipients,
-      if (format != null) 'format': format,
+      'format': ?format,
     };
 
     final response = await _dio.post(ApiEndpoints.reportSchedules, data: body);

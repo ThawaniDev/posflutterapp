@@ -229,7 +229,7 @@ void main() {
 
     test('loaded with invoices and pagination', () {
       final invoices = [
-        ZatcaInvoice(
+        const ZatcaInvoice(
           id: 'inv-1',
           storeId: 's1',
           orderId: 'o1',

@@ -1,9 +1,4 @@
 class ProviderNote {
-  final String id;
-  final String organizationId;
-  final String adminUserId;
-  final String noteText;
-  final DateTime? createdAt;
 
   const ProviderNote({
     required this.id,
@@ -22,6 +17,11 @@ class ProviderNote {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String adminUserId;
+  final String noteText;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

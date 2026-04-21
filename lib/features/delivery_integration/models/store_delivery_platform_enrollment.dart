@@ -1,13 +1,4 @@
 class StoreDeliveryPlatformEnrollment {
-  final String id;
-  final String storeId;
-  final String platformSlug;
-  final String? merchantIdOnPlatform;
-  final bool? isEnabled;
-  final bool? autoAccept;
-  final double? commissionOverride;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const StoreDeliveryPlatformEnrollment({
     required this.id,
@@ -34,6 +25,15 @@ class StoreDeliveryPlatformEnrollment {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String platformSlug;
+  final String? merchantIdOnPlatform;
+  final bool? isEnabled;
+  final bool? autoAccept;
+  final double? commissionOverride;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

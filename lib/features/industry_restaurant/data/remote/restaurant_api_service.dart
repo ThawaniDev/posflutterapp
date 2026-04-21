@@ -13,8 +13,8 @@ final restaurantApiServiceProvider = Provider<RestaurantApiService>((ref) {
 });
 
 class RestaurantApiService {
-  final Dio _dio;
   RestaurantApiService(this._dio);
+  final Dio _dio;
 
   // Tables
   Future<List<RestaurantTable>> listTables({int perPage = 50}) async {
@@ -46,7 +46,7 @@ class RestaurantApiService {
   Future<List<KitchenTicket>> listKitchenTickets({String? status, int perPage = 50}) async {
     final response = await _dio.get(
       ApiEndpoints.restaurantKitchenTickets,
-      queryParameters: {'per_page': perPage, if (status != null) 'status': status},
+      queryParameters: {'per_page': perPage, 'status': ?status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -69,7 +69,7 @@ class RestaurantApiService {
   Future<List<TableReservation>> listReservations({String? status, String? date, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.restaurantReservations,
-      queryParameters: {'per_page': perPage, if (status != null) 'status': status, if (date != null) 'date': date},
+      queryParameters: {'per_page': perPage, 'status': ?status, 'date': ?date},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;

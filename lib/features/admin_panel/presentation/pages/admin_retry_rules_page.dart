@@ -144,13 +144,13 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                     // Info card
                     PosCard(
                       color: AppColors.info.withValues(alpha: 0.08),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
+                      child: const Padding(
+                        padding: EdgeInsets.all(AppSpacing.md),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(Icons.info_outline, color: AppColors.infoDark),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +159,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                                     'How retry rules work',
                                     style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.infoDark),
                                   ),
-                                  const SizedBox(height: 4),
+                                  SizedBox(height: 4),
                                   Text(
                                     'When a payment fails, the system will automatically '
                                     'retry up to the configured number of times, waiting '

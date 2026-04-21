@@ -12,11 +12,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 /// Fetches a signed preview URL then displays it in a WebView (native)
 /// or an iframe (web).
 class TemplatePreviewPage extends ConsumerStatefulWidget {
+
+  const TemplatePreviewPage({super.key, required this.templateType, required this.templateId, required this.templateName});
   final String templateType;
   final String templateId;
   final String templateName;
-
-  const TemplatePreviewPage({super.key, required this.templateType, required this.templateId, required this.templateName});
 
   @override
   ConsumerState<TemplatePreviewPage> createState() => _TemplatePreviewPageState();
@@ -74,11 +74,12 @@ class _TemplatePreviewPageState extends ConsumerState<TemplatePreviewPage> {
           throw ArgumentError('Unknown template type: ${widget.templateType}');
       }
       if (kIsWeb) {
-        if (mounted)
+        if (mounted) {
           setState(() {
             _previewUrl = url;
             _isLoading = false;
           });
+        }
       } else {
         _controller!.loadRequest(Uri.parse(url));
       }

@@ -11,10 +11,10 @@ final posSessionsProvider = StateNotifierProvider<PosSessionsNotifier, PosSessio
 });
 
 class PosSessionsNotifier extends StateNotifier<PosSessionsState> {
-  final PosTerminalRepository _repo;
-  int _perPage = 20;
 
   PosSessionsNotifier(this._repo) : super(const PosSessionsInitial());
+  final PosTerminalRepository _repo;
+  int _perPage = 20;
 
   Future<void> load({int page = 1}) async {
     state = const PosSessionsLoading();
@@ -57,6 +57,8 @@ class PosSessionsNotifier extends StateNotifier<PosSessionsState> {
       await load();
     } on DioException catch (e) {
       state = PosSessionsError(message: _extractError(e));
+    } catch (e) {
+      state = PosSessionsError(message: e.toString());
     }
   }
 
@@ -66,6 +68,8 @@ class PosSessionsNotifier extends StateNotifier<PosSessionsState> {
       await load();
     } on DioException catch (e) {
       state = PosSessionsError(message: _extractError(e));
+    } catch (e) {
+      state = PosSessionsError(message: e.toString());
     }
   }
 }
@@ -77,9 +81,9 @@ final transactionsProvider = StateNotifierProvider<TransactionsNotifier, Transac
 });
 
 class TransactionsNotifier extends StateNotifier<TransactionsState> {
-  final PosTerminalRepository _repo;
 
   TransactionsNotifier(this._repo) : super(const TransactionsInitial());
+  final PosTerminalRepository _repo;
 
   Future<void> load({int page = 1, String? sessionId, String? search}) async {
     state = const TransactionsLoading();
@@ -105,6 +109,8 @@ class TransactionsNotifier extends StateNotifier<TransactionsState> {
       await load();
     } on DioException catch (e) {
       state = TransactionsError(message: _extractError(e));
+    } catch (e) {
+      state = TransactionsError(message: e.toString());
     }
   }
 }
@@ -116,9 +122,9 @@ final heldCartsProvider = StateNotifierProvider<HeldCartsNotifier, HeldCartsStat
 });
 
 class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
-  final PosTerminalRepository _repo;
 
   HeldCartsNotifier(this._repo) : super(const HeldCartsInitial());
+  final PosTerminalRepository _repo;
 
   Future<void> load() async {
     state = const HeldCartsLoading();
@@ -138,6 +144,8 @@ class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
       await load();
     } on DioException catch (e) {
       state = HeldCartsError(message: _extractError(e));
+    } catch (e) {
+      state = HeldCartsError(message: e.toString());
     }
   }
 
@@ -147,6 +155,8 @@ class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
       await load();
     } on DioException catch (e) {
       state = HeldCartsError(message: _extractError(e));
+    } catch (e) {
+      state = HeldCartsError(message: e.toString());
     }
   }
 
@@ -156,6 +166,8 @@ class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
       await load();
     } on DioException catch (e) {
       state = HeldCartsError(message: _extractError(e));
+    } catch (e) {
+      state = HeldCartsError(message: e.toString());
     }
   }
 }
@@ -184,11 +196,11 @@ final terminalsProvider = StateNotifierProvider<TerminalsNotifier, TerminalsStat
 });
 
 class TerminalsNotifier extends StateNotifier<TerminalsState> {
+
+  TerminalsNotifier(this._repo) : super(const TerminalsInitial());
   final PosTerminalRepository _repo;
   String? _currentSearch;
   int _perPage = 20;
-
-  TerminalsNotifier(this._repo) : super(const TerminalsInitial());
 
   Future<void> load({int page = 1, String? search}) async {
     _currentSearch = search ?? _currentSearch;

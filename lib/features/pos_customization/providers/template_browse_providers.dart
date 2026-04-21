@@ -20,13 +20,13 @@ class ReceiptLayoutListLoading extends ReceiptLayoutListState {
 }
 
 class ReceiptLayoutListLoaded extends ReceiptLayoutListState {
-  final List<ReceiptLayoutTemplate> templates;
   const ReceiptLayoutListLoaded({required this.templates});
+  final List<ReceiptLayoutTemplate> templates;
 }
 
 class ReceiptLayoutListError extends ReceiptLayoutListState {
-  final String message;
   const ReceiptLayoutListError({required this.message});
+  final String message;
 }
 
 final receiptLayoutListProvider = StateNotifierProvider<ReceiptLayoutListNotifier, ReceiptLayoutListState>((ref) {
@@ -34,9 +34,9 @@ final receiptLayoutListProvider = StateNotifierProvider<ReceiptLayoutListNotifie
 });
 
 class ReceiptLayoutListNotifier extends StateNotifier<ReceiptLayoutListState> {
-  final CustomizationRepository _repo;
 
   ReceiptLayoutListNotifier(this._repo) : super(const ReceiptLayoutListInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const ReceiptLayoutListLoading();
@@ -66,13 +66,13 @@ class ReceiptLayoutDetailLoading extends ReceiptLayoutDetailState {
 }
 
 class ReceiptLayoutDetailLoaded extends ReceiptLayoutDetailState {
-  final ReceiptLayoutTemplate template;
   const ReceiptLayoutDetailLoaded({required this.template});
+  final ReceiptLayoutTemplate template;
 }
 
 class ReceiptLayoutDetailError extends ReceiptLayoutDetailState {
-  final String message;
   const ReceiptLayoutDetailError({required this.message});
+  final String message;
 }
 
 final receiptLayoutDetailProvider = StateNotifierProvider.family<ReceiptLayoutDetailNotifier, ReceiptLayoutDetailState, String>((
@@ -83,10 +83,10 @@ final receiptLayoutDetailProvider = StateNotifierProvider.family<ReceiptLayoutDe
 });
 
 class ReceiptLayoutDetailNotifier extends StateNotifier<ReceiptLayoutDetailState> {
-  final CustomizationRepository _repo;
-  final String _slug;
 
   ReceiptLayoutDetailNotifier(this._repo, this._slug) : super(const ReceiptLayoutDetailInitial());
+  final CustomizationRepository _repo;
+  final String _slug;
 
   Future<void> load() async {
     state = const ReceiptLayoutDetailLoading();
@@ -116,13 +116,13 @@ class CfdThemeListLoading extends CfdThemeListState {
 }
 
 class CfdThemeListLoaded extends CfdThemeListState {
-  final List<CfdTheme> themes;
   const CfdThemeListLoaded({required this.themes});
+  final List<CfdTheme> themes;
 }
 
 class CfdThemeListError extends CfdThemeListState {
-  final String message;
   const CfdThemeListError({required this.message});
+  final String message;
 }
 
 final cfdThemeListProvider = StateNotifierProvider<CfdThemeListNotifier, CfdThemeListState>((ref) {
@@ -130,9 +130,9 @@ final cfdThemeListProvider = StateNotifierProvider<CfdThemeListNotifier, CfdThem
 });
 
 class CfdThemeListNotifier extends StateNotifier<CfdThemeListState> {
-  final CustomizationRepository _repo;
 
   CfdThemeListNotifier(this._repo) : super(const CfdThemeListInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const CfdThemeListLoading();
@@ -162,13 +162,13 @@ class CfdThemeDetailLoading extends CfdThemeDetailState {
 }
 
 class CfdThemeDetailLoaded extends CfdThemeDetailState {
-  final CfdTheme theme;
   const CfdThemeDetailLoaded({required this.theme});
+  final CfdTheme theme;
 }
 
 class CfdThemeDetailError extends CfdThemeDetailState {
-  final String message;
   const CfdThemeDetailError({required this.message});
+  final String message;
 }
 
 final cfdThemeDetailProvider = StateNotifierProvider.family<CfdThemeDetailNotifier, CfdThemeDetailState, String>((ref, slug) {
@@ -176,10 +176,10 @@ final cfdThemeDetailProvider = StateNotifierProvider.family<CfdThemeDetailNotifi
 });
 
 class CfdThemeDetailNotifier extends StateNotifier<CfdThemeDetailState> {
-  final CustomizationRepository _repo;
-  final String _slug;
 
   CfdThemeDetailNotifier(this._repo, this._slug) : super(const CfdThemeDetailInitial());
+  final CustomizationRepository _repo;
+  final String _slug;
 
   Future<void> load() async {
     state = const CfdThemeDetailLoading();
@@ -218,13 +218,13 @@ class LabelLayoutListLoading extends LabelLayoutListState {
 }
 
 class LabelLayoutListLoaded extends LabelLayoutListState {
-  final List<LabelLayoutTemplate> templates;
   const LabelLayoutListLoaded({required this.templates});
+  final List<LabelLayoutTemplate> templates;
 }
 
 class LabelLayoutListError extends LabelLayoutListState {
-  final String message;
   const LabelLayoutListError({required this.message});
+  final String message;
 }
 
 final labelLayoutListProvider = StateNotifierProvider<LabelLayoutListNotifier, LabelLayoutListState>((ref) {
@@ -232,9 +232,9 @@ final labelLayoutListProvider = StateNotifierProvider<LabelLayoutListNotifier, L
 });
 
 class LabelLayoutListNotifier extends StateNotifier<LabelLayoutListState> {
-  final CustomizationRepository _repo;
 
   LabelLayoutListNotifier(this._repo) : super(const LabelLayoutListInitial());
+  final CustomizationRepository _repo;
 
   Future<void> load() async {
     state = const LabelLayoutListLoading();
@@ -264,13 +264,13 @@ class LabelLayoutDetailLoading extends LabelLayoutDetailState {
 }
 
 class LabelLayoutDetailLoaded extends LabelLayoutDetailState {
-  final LabelLayoutTemplate template;
   const LabelLayoutDetailLoaded({required this.template});
+  final LabelLayoutTemplate template;
 }
 
 class LabelLayoutDetailError extends LabelLayoutDetailState {
-  final String message;
   const LabelLayoutDetailError({required this.message});
+  final String message;
 }
 
 final labelLayoutDetailProvider = StateNotifierProvider.family<LabelLayoutDetailNotifier, LabelLayoutDetailState, String>((
@@ -281,10 +281,10 @@ final labelLayoutDetailProvider = StateNotifierProvider.family<LabelLayoutDetail
 });
 
 class LabelLayoutDetailNotifier extends StateNotifier<LabelLayoutDetailState> {
-  final CustomizationRepository _repo;
-  final String _slug;
 
   LabelLayoutDetailNotifier(this._repo, this._slug) : super(const LabelLayoutDetailInitial());
+  final CustomizationRepository _repo;
+  final String _slug;
 
   Future<void> load() async {
     state = const LabelLayoutDetailLoading();

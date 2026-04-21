@@ -8,9 +8,9 @@ final labelRepositoryProvider = Provider<LabelRepository>((ref) {
 });
 
 class LabelRepository {
-  final LabelApiService _apiService;
 
   LabelRepository({required LabelApiService apiService}) : _apiService = apiService;
+  final LabelApiService _apiService;
 
   Future<List<LabelTemplate>> listTemplates() => _apiService.listTemplates();
   Future<List<LabelTemplate>> getPresets() => _apiService.getPresets();

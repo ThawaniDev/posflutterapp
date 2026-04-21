@@ -8,9 +8,9 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIMessageBubble extends StatelessWidget {
-  final AIChatMessage message;
 
   const AIMessageBubble({super.key, required this.message});
+  final AIChatMessage message;
 
   void _copyToClipboard(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;

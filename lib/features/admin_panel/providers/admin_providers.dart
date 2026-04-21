@@ -11,9 +11,9 @@ final adminStoreListProvider = StateNotifierProvider<AdminStoreListNotifier, Adm
 });
 
 class AdminStoreListNotifier extends StateNotifier<AdminStoreListState> {
-  final AdminRepository _repository;
 
   AdminStoreListNotifier(this._repository) : super(const AdminStoreListInitial());
+  final AdminRepository _repository;
 
   Future<void> load({
     String? search,
@@ -56,9 +56,9 @@ final adminStoreDetailProvider = StateNotifierProvider<AdminStoreDetailNotifier,
 });
 
 class AdminStoreDetailNotifier extends StateNotifier<AdminStoreDetailState> {
-  final AdminRepository _repository;
 
   AdminStoreDetailNotifier(this._repository) : super(const AdminStoreDetailInitial());
+  final AdminRepository _repository;
 
   Future<void> load(String storeId) async {
     state = const AdminStoreDetailLoading();
@@ -90,9 +90,9 @@ final adminActionProvider = StateNotifierProvider<AdminActionNotifier, AdminActi
 });
 
 class AdminActionNotifier extends StateNotifier<AdminActionState> {
-  final AdminRepository _repository;
 
   AdminActionNotifier(this._repository) : super(const AdminActionInitial());
+  final AdminRepository _repository;
 
   Future<void> suspendStore(String storeId, {String? reason}) async {
     state = const AdminActionLoading();
@@ -175,9 +175,9 @@ final registrationListProvider = StateNotifierProvider<RegistrationListNotifier,
 });
 
 class RegistrationListNotifier extends StateNotifier<RegistrationListState> {
-  final AdminRepository _repository;
 
   RegistrationListNotifier(this._repository) : super(const RegistrationListInitial());
+  final AdminRepository _repository;
 
   Future<void> load({String? status, String? search, String? storeId, int perPage = 15, int page = 1}) async {
     state = const RegistrationListLoading();
@@ -212,9 +212,9 @@ final limitOverrideProvider = StateNotifierProvider<LimitOverrideNotifier, Limit
 });
 
 class LimitOverrideNotifier extends StateNotifier<LimitOverrideListState> {
-  final AdminRepository _repository;
 
   LimitOverrideNotifier(this._repository) : super(const LimitOverrideListInitial());
+  final AdminRepository _repository;
 
   Future<void> load(String storeId) async {
     state = const LimitOverrideListLoading();
@@ -268,9 +268,9 @@ final providerNotesProvider = StateNotifierProvider<ProviderNotesNotifier, Provi
 });
 
 class ProviderNotesNotifier extends StateNotifier<ProviderNotesState> {
-  final AdminRepository _repository;
 
   ProviderNotesNotifier(this._repository) : super(const ProviderNotesInitial());
+  final AdminRepository _repository;
 
   Future<void> load(String organizationId) async {
     state = const ProviderNotesLoading();
@@ -303,9 +303,9 @@ final adminRoleListProvider = StateNotifierProvider<AdminRoleListNotifier, Admin
 });
 
 class AdminRoleListNotifier extends StateNotifier<AdminRoleListState> {
-  final AdminRepository _repository;
 
   AdminRoleListNotifier(this._repository) : super(const AdminRoleListInitial());
+  final AdminRepository _repository;
 
   Future<void> load() async {
     state = const AdminRoleListLoading();
@@ -328,9 +328,9 @@ final adminRoleDetailProvider = StateNotifierProvider<AdminRoleDetailNotifier, A
 });
 
 class AdminRoleDetailNotifier extends StateNotifier<AdminRoleDetailState> {
-  final AdminRepository _repository;
 
   AdminRoleDetailNotifier(this._repository) : super(const AdminRoleDetailInitial());
+  final AdminRepository _repository;
 
   Future<void> load(String roleId) async {
     state = const AdminRoleDetailLoading();
@@ -352,9 +352,9 @@ final roleActionProvider = StateNotifierProvider<RoleActionNotifier, AdminAction
 });
 
 class RoleActionNotifier extends StateNotifier<AdminActionState> {
-  final AdminRepository _repository;
 
   RoleActionNotifier(this._repository) : super(const AdminActionInitial());
+  final AdminRepository _repository;
 
   Future<void> createRole({required String name, String? slug, String? description, List<String>? permissionIds}) async {
     state = const AdminActionLoading();
@@ -409,9 +409,9 @@ final permissionListProvider = StateNotifierProvider<PermissionListNotifier, Per
 });
 
 class PermissionListNotifier extends StateNotifier<PermissionListState> {
-  final AdminRepository _repository;
 
   PermissionListNotifier(this._repository) : super(const PermissionListInitial());
+  final AdminRepository _repository;
 
   Future<void> load() async {
     state = const PermissionListLoading();
@@ -437,9 +437,9 @@ final adminTeamListProvider = StateNotifierProvider<AdminTeamListNotifier, Admin
 });
 
 class AdminTeamListNotifier extends StateNotifier<AdminTeamListState> {
-  final AdminRepository _repository;
 
   AdminTeamListNotifier(this._repository) : super(const AdminTeamListInitial());
+  final AdminRepository _repository;
 
   Future<void> load({String? search, bool? isActive, String? roleId, String? storeId, int perPage = 15, int page = 1}) async {
     state = const AdminTeamListLoading();
@@ -475,9 +475,9 @@ final adminTeamUserDetailProvider = StateNotifierProvider<AdminTeamUserDetailNot
 });
 
 class AdminTeamUserDetailNotifier extends StateNotifier<AdminTeamUserDetailState> {
-  final AdminRepository _repository;
 
   AdminTeamUserDetailNotifier(this._repository) : super(const AdminTeamUserDetailInitial());
+  final AdminRepository _repository;
 
   Future<void> load(String userId) async {
     state = const AdminTeamUserDetailLoading();
@@ -499,9 +499,9 @@ final teamActionProvider = StateNotifierProvider<TeamActionNotifier, AdminAction
 });
 
 class TeamActionNotifier extends StateNotifier<AdminActionState> {
-  final AdminRepository _repository;
 
   TeamActionNotifier(this._repository) : super(const AdminActionInitial());
+  final AdminRepository _repository;
 
   Future<void> createUser({
     required String name,
@@ -575,9 +575,9 @@ final adminProfileProvider = StateNotifierProvider<AdminProfileNotifier, AdminPr
 });
 
 class AdminProfileNotifier extends StateNotifier<AdminProfileState> {
-  final AdminRepository _repository;
 
   AdminProfileNotifier(this._repository) : super(const AdminProfileInitial());
+  final AdminRepository _repository;
 
   Future<void> load() async {
     state = const AdminProfileLoading();
@@ -599,9 +599,9 @@ final activityLogProvider = StateNotifierProvider<ActivityLogNotifier, ActivityL
 });
 
 class ActivityLogNotifier extends StateNotifier<ActivityLogState> {
-  final AdminRepository _repository;
 
   ActivityLogNotifier(this._repository) : super(const ActivityLogInitial());
+  final AdminRepository _repository;
 
   Future<void> load({
     String? adminUserId,
@@ -648,8 +648,8 @@ final planListProvider = StateNotifierProvider<PlanListNotifier, PlanListState>(
 });
 
 class PlanListNotifier extends StateNotifier<PlanListState> {
-  final AdminRepository _repo;
   PlanListNotifier(this._repo) : super(const PlanListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadPlans({bool? activeOnly}) async {
     state = const PlanListLoading();
@@ -672,8 +672,8 @@ final planDetailProvider = StateNotifierProvider<PlanDetailNotifier, PlanDetailS
 });
 
 class PlanDetailNotifier extends StateNotifier<PlanDetailState> {
-  final AdminRepository _repo;
   PlanDetailNotifier(this._repo) : super(const PlanDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadPlan(String planId) async {
     state = const PlanDetailLoading();
@@ -695,8 +695,8 @@ final planActionProvider = StateNotifierProvider<PlanActionNotifier, AsyncValue<
 });
 
 class PlanActionNotifier extends StateNotifier<AsyncValue<void>> {
-  final AdminRepository _repo;
   PlanActionNotifier(this._repo) : super(const AsyncData(null));
+  final AdminRepository _repo;
 
   Future<bool> createPlan(Map<String, dynamic> data) async {
     state = const AsyncLoading();
@@ -756,8 +756,8 @@ final addOnListProvider = StateNotifierProvider<AddOnListNotifier, AddOnListStat
 });
 
 class AddOnListNotifier extends StateNotifier<AddOnListState> {
-  final AdminRepository _repo;
   AddOnListNotifier(this._repo) : super(const AddOnListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadAddOns({bool? activeOnly}) async {
     state = const AddOnListLoading();
@@ -780,8 +780,8 @@ final addOnActionProvider = StateNotifierProvider<AddOnActionNotifier, AsyncValu
 });
 
 class AddOnActionNotifier extends StateNotifier<AsyncValue<void>> {
-  final AdminRepository _repo;
   AddOnActionNotifier(this._repo) : super(const AsyncData(null));
+  final AdminRepository _repo;
 
   Future<bool> createAddOn(Map<String, dynamic> data) async {
     state = const AsyncLoading();
@@ -829,8 +829,8 @@ final discountListProvider = StateNotifierProvider<DiscountListNotifier, Discoun
 });
 
 class DiscountListNotifier extends StateNotifier<DiscountListState> {
-  final AdminRepository _repo;
   DiscountListNotifier(this._repo) : super(const DiscountListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadDiscounts({bool? active, int perPage = 15}) async {
     state = const DiscountListLoading();
@@ -859,8 +859,8 @@ final discountActionProvider = StateNotifierProvider<DiscountActionNotifier, Asy
 });
 
 class DiscountActionNotifier extends StateNotifier<AsyncValue<void>> {
-  final AdminRepository _repo;
   DiscountActionNotifier(this._repo) : super(const AsyncData(null));
+  final AdminRepository _repo;
 
   Future<bool> createDiscount(Map<String, dynamic> data) async {
     state = const AsyncLoading();
@@ -908,8 +908,8 @@ final subscriptionListProvider = StateNotifierProvider<SubscriptionListNotifier,
 });
 
 class SubscriptionListNotifier extends StateNotifier<SubscriptionListState> {
-  final AdminRepository _repo;
   SubscriptionListNotifier(this._repo) : super(const SubscriptionListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadSubscriptions({String? status, String? planId, String? storeId, int perPage = 15}) async {
     state = const SubscriptionListLoading();
@@ -938,8 +938,8 @@ final invoiceListProvider = StateNotifierProvider<InvoiceListNotifier, InvoiceLi
 });
 
 class InvoiceListNotifier extends StateNotifier<InvoiceListState> {
-  final AdminRepository _repo;
   InvoiceListNotifier(this._repo) : super(const InvoiceListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadInvoices({String? status, String? subscriptionId, String? storeId, int perPage = 15}) async {
     state = const InvoiceListLoading();
@@ -975,8 +975,8 @@ final providerUserListProvider = StateNotifierProvider<ProviderUserListNotifier,
 );
 
 class ProviderUserListNotifier extends StateNotifier<ProviderUserListState> {
-  final AdminRepository _repo;
   ProviderUserListNotifier(this._repo) : super(const ProviderUserListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadUsers({
     String? search,
@@ -1019,8 +1019,8 @@ final providerUserDetailProvider = StateNotifierProvider<ProviderUserDetailNotif
 );
 
 class ProviderUserDetailNotifier extends StateNotifier<ProviderUserDetailState> {
-  final AdminRepository _repo;
   ProviderUserDetailNotifier(this._repo) : super(const ProviderUserDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadUser(String userId) async {
     state = const ProviderUserDetailLoading();
@@ -1040,8 +1040,8 @@ final providerUserActionProvider = StateNotifierProvider<ProviderUserActionNotif
 );
 
 class ProviderUserActionNotifier extends StateNotifier<AsyncValue<void>> {
-  final AdminRepository _repo;
   ProviderUserActionNotifier(this._repo) : super(const AsyncData(null));
+  final AdminRepository _repo;
 
   Future<Map<String, dynamic>> resetPassword(String userId) async {
     state = const AsyncLoading();
@@ -1083,8 +1083,8 @@ final adminUserListProvider = StateNotifierProvider<AdminUserListNotifier, Admin
 );
 
 class AdminUserListNotifier extends StateNotifier<AdminUserListState> {
-  final AdminRepository _repo;
   AdminUserListNotifier(this._repo) : super(const AdminUserListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadAdmins({String? search, bool? isActive, String? storeId}) async {
     state = const AdminUserListLoading();
@@ -1105,8 +1105,8 @@ final adminUserDetailProvider = StateNotifierProvider<AdminUserDetailNotifier, A
 );
 
 class AdminUserDetailNotifier extends StateNotifier<AdminUserDetailState> {
-  final AdminRepository _repo;
   AdminUserDetailNotifier(this._repo) : super(const AdminUserDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadAdmin(String userId) async {
     state = const AdminUserDetailLoading();
@@ -1126,8 +1126,8 @@ final adminUserActionProvider = StateNotifierProvider<AdminUserActionNotifier, A
 );
 
 class AdminUserActionNotifier extends StateNotifier<AsyncValue<void>> {
-  final AdminRepository _repo;
   AdminUserActionNotifier(this._repo) : super(const AsyncData(null));
+  final AdminRepository _repo;
 
   Future<void> inviteAdmin(Map<String, dynamic> data) async {
     state = const AsyncLoading();
@@ -1167,8 +1167,8 @@ final userActivityProvider = StateNotifierProvider<UserActivityNotifier, UserAct
 );
 
 class UserActivityNotifier extends StateNotifier<UserActivityState> {
-  final AdminRepository _repo;
   UserActivityNotifier(this._repo) : super(const UserActivityInitial());
+  final AdminRepository _repo;
 
   Future<void> loadProviderActivity(String userId) async {
     state = const UserActivityLoading();
@@ -1203,8 +1203,8 @@ final billingInvoiceListProvider = StateNotifierProvider<BillingInvoiceListNotif
 });
 
 class BillingInvoiceListNotifier extends StateNotifier<BillingInvoiceListState> {
-  final AdminRepository _repo;
   BillingInvoiceListNotifier(this._repo) : super(const BillingInvoiceListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadInvoices({
     String? search,
@@ -1241,8 +1241,8 @@ final billingInvoiceDetailProvider = StateNotifierProvider<BillingInvoiceDetailN
 });
 
 class BillingInvoiceDetailNotifier extends StateNotifier<BillingInvoiceDetailState> {
-  final AdminRepository _repo;
   BillingInvoiceDetailNotifier(this._repo) : super(const BillingInvoiceDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadInvoice(String invoiceId) async {
     state = const BillingInvoiceDetailLoading();
@@ -1263,8 +1263,8 @@ final billingInvoiceActionProvider = StateNotifierProvider<BillingInvoiceActionN
 });
 
 class BillingInvoiceActionNotifier extends StateNotifier<AsyncValue<Map<String, dynamic>?>> {
-  final AdminRepository _repo;
   BillingInvoiceActionNotifier(this._repo) : super(const AsyncValue.data(null));
+  final AdminRepository _repo;
 
   Future<void> createManualInvoice(Map<String, dynamic> data) async {
     state = const AsyncValue.loading();
@@ -1313,8 +1313,8 @@ final failedPaymentsProvider = StateNotifierProvider<FailedPaymentsNotifier, Bil
 });
 
 class FailedPaymentsNotifier extends StateNotifier<BillingInvoiceListState> {
-  final AdminRepository _repo;
   FailedPaymentsNotifier(this._repo) : super(const BillingInvoiceListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadFailedPayments({String? storeId, int page = 1}) async {
     state = const BillingInvoiceListLoading();
@@ -1339,8 +1339,8 @@ final revenueDashboardProvider = StateNotifierProvider<RevenueDashboardNotifier,
 });
 
 class RevenueDashboardNotifier extends StateNotifier<RevenueDashboardState> {
-  final AdminRepository _repo;
   RevenueDashboardNotifier(this._repo) : super(const RevenueDashboardInitial());
+  final AdminRepository _repo;
 
   Future<void> loadDashboard({String? storeId}) async {
     state = const RevenueDashboardLoading();
@@ -1370,8 +1370,8 @@ final retryRulesProvider = StateNotifierProvider<RetryRulesNotifier, RetryRulesS
 });
 
 class RetryRulesNotifier extends StateNotifier<RetryRulesState> {
-  final AdminRepository _repo;
   RetryRulesNotifier(this._repo) : super(const RetryRulesInitial());
+  final AdminRepository _repo;
 
   Future<void> loadRules() async {
     state = const RetryRulesLoading();
@@ -1414,8 +1414,8 @@ final gatewayListProvider = StateNotifierProvider<GatewayListNotifier, GatewayLi
 });
 
 class GatewayListNotifier extends StateNotifier<GatewayListState> {
-  final AdminRepository _repo;
   GatewayListNotifier(this._repo) : super(const GatewayListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadGateways({String? environment, String? storeId}) async {
     state = const GatewayListLoading();
@@ -1438,8 +1438,8 @@ final gatewayActionProvider = StateNotifierProvider<GatewayActionNotifier, Async
 });
 
 class GatewayActionNotifier extends StateNotifier<AsyncValue<Map<String, dynamic>?>> {
-  final AdminRepository _repo;
   GatewayActionNotifier(this._repo) : super(const AsyncValue.data(null));
+  final AdminRepository _repo;
 
   Future<void> createGateway(Map<String, dynamic> data) async {
     state = const AsyncValue.loading();
@@ -1488,8 +1488,8 @@ final hardwareSaleListProvider = StateNotifierProvider<HardwareSaleListNotifier,
 });
 
 class HardwareSaleListNotifier extends StateNotifier<HardwareSaleListState> {
-  final AdminRepository _repo;
   HardwareSaleListNotifier(this._repo) : super(const HardwareSaleListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadSales({String? storeId, String? itemType, String? search, int page = 1}) async {
     state = const HardwareSaleListLoading();
@@ -1517,8 +1517,8 @@ final hardwareSaleActionProvider = StateNotifierProvider<HardwareSaleActionNotif
 });
 
 class HardwareSaleActionNotifier extends StateNotifier<AsyncValue<Map<String, dynamic>?>> {
-  final AdminRepository _repo;
   HardwareSaleActionNotifier(this._repo) : super(const AsyncValue.data(null));
+  final AdminRepository _repo;
 
   Future<void> createSale(Map<String, dynamic> data) async {
     state = const AsyncValue.loading();
@@ -1557,8 +1557,8 @@ final implementationFeeListProvider = StateNotifierProvider<ImplementationFeeLis
 });
 
 class ImplementationFeeListNotifier extends StateNotifier<ImplementationFeeListState> {
-  final AdminRepository _repo;
   ImplementationFeeListNotifier(this._repo) : super(const ImplementationFeeListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadFees({String? storeId, String? feeType, String? status, int page = 1}) async {
     state = const ImplementationFeeListLoading();
@@ -1588,8 +1588,8 @@ final implementationFeeActionProvider = StateNotifierProvider<ImplementationFeeA
 );
 
 class ImplementationFeeActionNotifier extends StateNotifier<AsyncValue<Map<String, dynamic>?>> {
-  final AdminRepository _repo;
   ImplementationFeeActionNotifier(this._repo) : super(const AsyncValue.data(null));
+  final AdminRepository _repo;
 
   Future<void> createFee(Map<String, dynamic> data) async {
     state = const AsyncValue.loading();
@@ -1631,8 +1631,8 @@ final analyticsDashboardProvider = StateNotifierProvider<AnalyticsDashboardNotif
 });
 
 class AnalyticsDashboardNotifier extends StateNotifier<AnalyticsDashboardState> {
-  final AdminRepository _repo;
   AnalyticsDashboardNotifier(this._repo) : super(const AnalyticsDashboardInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const AnalyticsDashboardLoading();
@@ -1658,8 +1658,8 @@ final analyticsRevenueProvider = StateNotifierProvider<AnalyticsRevenueNotifier,
 });
 
 class AnalyticsRevenueNotifier extends StateNotifier<AnalyticsRevenueState> {
-  final AdminRepository _repo;
   AnalyticsRevenueNotifier(this._repo) : super(const AnalyticsRevenueInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo, String? planId, String? storeId}) async {
     state = const AnalyticsRevenueLoading();
@@ -1695,8 +1695,8 @@ final analyticsSubscriptionsProvider = StateNotifierProvider<AnalyticsSubscripti
 });
 
 class AnalyticsSubscriptionsNotifier extends StateNotifier<AnalyticsSubscriptionsState> {
-  final AdminRepository _repo;
   AnalyticsSubscriptionsNotifier(this._repo) : super(const AnalyticsSubscriptionsInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo, String? storeId}) async {
     state = const AnalyticsSubscriptionsLoading();
@@ -1730,8 +1730,8 @@ final analyticsStoresProvider = StateNotifierProvider<AnalyticsStoresNotifier, A
 });
 
 class AnalyticsStoresNotifier extends StateNotifier<AnalyticsStoresState> {
-  final AdminRepository _repo;
   AnalyticsStoresNotifier(this._repo) : super(const AnalyticsStoresInitial());
+  final AdminRepository _repo;
 
   Future<void> load({int limit = 20, String? storeId}) async {
     state = const AnalyticsStoresLoading();
@@ -1761,8 +1761,8 @@ final analyticsFeaturesProvider = StateNotifierProvider<AnalyticsFeaturesNotifie
 });
 
 class AnalyticsFeaturesNotifier extends StateNotifier<AnalyticsFeaturesState> {
-  final AdminRepository _repo;
   AnalyticsFeaturesNotifier(this._repo) : super(const AnalyticsFeaturesInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo, String? storeId}) async {
     state = const AnalyticsFeaturesLoading();
@@ -1793,8 +1793,8 @@ final analyticsSystemHealthProvider = StateNotifierProvider<AnalyticsSystemHealt
 });
 
 class AnalyticsSystemHealthNotifier extends StateNotifier<AnalyticsSystemHealthState> {
-  final AdminRepository _repo;
   AnalyticsSystemHealthNotifier(this._repo) : super(const AnalyticsSystemHealthInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const AnalyticsSystemHealthLoading();
@@ -1822,8 +1822,8 @@ final analyticsExportProvider = StateNotifierProvider<AnalyticsExportNotifier, A
 });
 
 class AnalyticsExportNotifier extends StateNotifier<AnalyticsExportState> {
-  final AdminRepository _repo;
   AnalyticsExportNotifier(this._repo) : super(const AnalyticsExportInitial());
+  final AdminRepository _repo;
 
   Future<void> exportRevenue({String? dateFrom, String? dateTo, String format = 'xlsx'}) async {
     state = const AnalyticsExportLoading();
@@ -1893,8 +1893,8 @@ final featureFlagListProvider = StateNotifierProvider<FeatureFlagListNotifier, F
 });
 
 class FeatureFlagListNotifier extends StateNotifier<FeatureFlagListState> {
-  final AdminRepository _repo;
   FeatureFlagListNotifier(this._repo) : super(const FeatureFlagListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadFlags({Map<String, dynamic>? params}) async {
     state = const FeatureFlagListLoading();
@@ -1915,8 +1915,8 @@ final featureFlagDetailProvider = StateNotifierProvider<FeatureFlagDetailNotifie
 });
 
 class FeatureFlagDetailNotifier extends StateNotifier<FeatureFlagDetailState> {
-  final AdminRepository _repo;
   FeatureFlagDetailNotifier(this._repo) : super(const FeatureFlagDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadFlag(String id) async {
     state = const FeatureFlagDetailLoading();
@@ -1938,8 +1938,8 @@ final featureFlagActionProvider = StateNotifierProvider<FeatureFlagActionNotifie
 });
 
 class FeatureFlagActionNotifier extends StateNotifier<FeatureFlagActionState> {
-  final AdminRepository _repo;
   FeatureFlagActionNotifier(this._repo) : super(const FeatureFlagActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const FeatureFlagActionLoading();
@@ -1989,8 +1989,8 @@ final abTestListProvider = StateNotifierProvider<ABTestListNotifier, ABTestListS
 });
 
 class ABTestListNotifier extends StateNotifier<ABTestListState> {
-  final AdminRepository _repo;
   ABTestListNotifier(this._repo) : super(const ABTestListInitial());
+  final AdminRepository _repo;
 
   Future<void> loadTests({Map<String, dynamic>? params}) async {
     state = const ABTestListLoading();
@@ -2016,8 +2016,8 @@ final abTestDetailProvider = StateNotifierProvider<ABTestDetailNotifier, ABTestD
 });
 
 class ABTestDetailNotifier extends StateNotifier<ABTestDetailState> {
-  final AdminRepository _repo;
   ABTestDetailNotifier(this._repo) : super(const ABTestDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> loadTest(String id) async {
     state = const ABTestDetailLoading();
@@ -2039,8 +2039,8 @@ final abTestResultsProvider = StateNotifierProvider<ABTestResultsNotifier, ABTes
 });
 
 class ABTestResultsNotifier extends StateNotifier<ABTestResultsState> {
-  final AdminRepository _repo;
   ABTestResultsNotifier(this._repo) : super(const ABTestResultsInitial());
+  final AdminRepository _repo;
 
   Future<void> loadResults(String id) async {
     state = const ABTestResultsLoading();
@@ -2066,8 +2066,8 @@ final abTestActionProvider = StateNotifierProvider<ABTestActionNotifier, ABTestA
 });
 
 class ABTestActionNotifier extends StateNotifier<ABTestActionState> {
-  final AdminRepository _repo;
   ABTestActionNotifier(this._repo) : super(const ABTestActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const ABTestActionLoading();
@@ -2150,8 +2150,8 @@ final cmsPageListProvider = StateNotifierProvider<CmsPageListNotifier, CmsPageLi
 );
 
 class CmsPageListNotifier extends StateNotifier<CmsPageListState> {
-  final AdminRepository _repo;
   CmsPageListNotifier(this._repo) : super(const CmsPageListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? search, String? pageType, bool? isPublished, String? storeId}) async {
     state = const CmsPageListLoading();
@@ -2171,8 +2171,8 @@ final cmsPageDetailProvider = StateNotifierProvider<CmsPageDetailNotifier, CmsPa
 );
 
 class CmsPageDetailNotifier extends StateNotifier<CmsPageDetailState> {
-  final AdminRepository _repo;
   CmsPageDetailNotifier(this._repo) : super(const CmsPageDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const CmsPageDetailLoading();
@@ -2191,8 +2191,8 @@ final cmsPageActionProvider = StateNotifierProvider<CmsPageActionNotifier, CmsPa
 );
 
 class CmsPageActionNotifier extends StateNotifier<CmsPageActionState> {
-  final AdminRepository _repo;
   CmsPageActionNotifier(this._repo) : super(const CmsPageActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const CmsPageActionLoading();
@@ -2241,8 +2241,8 @@ final articleListProvider = StateNotifierProvider<ArticleListNotifier, ArticleLi
 );
 
 class ArticleListNotifier extends StateNotifier<ArticleListState> {
-  final AdminRepository _repo;
   ArticleListNotifier(this._repo) : super(const ArticleListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? search, String? category, bool? isPublished, int? page, int? perPage, String? storeId}) async {
     state = const ArticleListLoading();
@@ -2274,8 +2274,8 @@ final articleDetailProvider = StateNotifierProvider<ArticleDetailNotifier, Artic
 );
 
 class ArticleDetailNotifier extends StateNotifier<ArticleDetailState> {
-  final AdminRepository _repo;
   ArticleDetailNotifier(this._repo) : super(const ArticleDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const ArticleDetailLoading();
@@ -2294,8 +2294,8 @@ final articleActionProvider = StateNotifierProvider<ArticleActionNotifier, Artic
 );
 
 class ArticleActionNotifier extends StateNotifier<ArticleActionState> {
-  final AdminRepository _repo;
   ArticleActionNotifier(this._repo) : super(const ArticleActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const ArticleActionLoading();
@@ -2344,8 +2344,8 @@ final announcementListProvider = StateNotifierProvider<AnnouncementListNotifier,
 );
 
 class AnnouncementListNotifier extends StateNotifier<AnnouncementListState> {
-  final AdminRepository _repo;
   AnnouncementListNotifier(this._repo) : super(const AnnouncementListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? search, String? type, int? page, int? perPage, String? storeId}) async {
     state = const AnnouncementListLoading();
@@ -2370,8 +2370,8 @@ final announcementDetailProvider = StateNotifierProvider<AnnouncementDetailNotif
 );
 
 class AnnouncementDetailNotifier extends StateNotifier<AnnouncementDetailState> {
-  final AdminRepository _repo;
   AnnouncementDetailNotifier(this._repo) : super(const AnnouncementDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const AnnouncementDetailLoading();
@@ -2390,8 +2390,8 @@ final announcementActionProvider = StateNotifierProvider<AnnouncementActionNotif
 );
 
 class AnnouncementActionNotifier extends StateNotifier<AnnouncementActionState> {
-  final AdminRepository _repo;
   AnnouncementActionNotifier(this._repo) : super(const AnnouncementActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const AnnouncementActionLoading();
@@ -2430,8 +2430,8 @@ final notificationTemplateListProvider = StateNotifierProvider<NotificationTempl
 );
 
 class NotificationTemplateListNotifier extends StateNotifier<NotificationTemplateListState> {
-  final AdminRepository _repo;
   NotificationTemplateListNotifier(this._repo) : super(const NotificationTemplateListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? search, String? channel, bool? isActive, String? storeId}) async {
     state = const NotificationTemplateListLoading();
@@ -2455,8 +2455,8 @@ final notificationTemplateDetailProvider =
     );
 
 class NotificationTemplateDetailNotifier extends StateNotifier<NotificationTemplateDetailState> {
-  final AdminRepository _repo;
   NotificationTemplateDetailNotifier(this._repo) : super(const NotificationTemplateDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const NotificationTemplateDetailLoading();
@@ -2476,8 +2476,8 @@ final notificationTemplateActionProvider =
     );
 
 class NotificationTemplateActionNotifier extends StateNotifier<NotificationTemplateActionState> {
-  final AdminRepository _repo;
   NotificationTemplateActionNotifier(this._repo) : super(const NotificationTemplateActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const NotificationTemplateActionLoading();
@@ -2531,8 +2531,8 @@ final activityLogListProvider = StateNotifierProvider<ActivityLogListNotifier, A
 );
 
 class ActivityLogListNotifier extends StateNotifier<ActivityLogListState> {
-  final AdminRepository _repo;
   ActivityLogListNotifier(this._repo) : super(const ActivityLogListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const ActivityLogListLoading();
@@ -2552,8 +2552,8 @@ final activityLogDetailProvider = StateNotifierProvider<ActivityLogDetailNotifie
 );
 
 class ActivityLogDetailNotifier extends StateNotifier<ActivityLogDetailState> {
-  final AdminRepository _repo;
   ActivityLogDetailNotifier(this._repo) : super(const ActivityLogDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const ActivityLogDetailLoading();
@@ -2573,8 +2573,8 @@ final securityAlertListProvider = StateNotifierProvider<SecurityAlertListNotifie
 );
 
 class SecurityAlertListNotifier extends StateNotifier<SecurityAlertListState> {
-  final AdminRepository _repo;
   SecurityAlertListNotifier(this._repo) : super(const SecurityAlertListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecurityAlertListLoading();
@@ -2594,8 +2594,8 @@ final securityAlertDetailProvider = StateNotifierProvider<SecurityAlertDetailNot
 );
 
 class SecurityAlertDetailNotifier extends StateNotifier<SecurityAlertDetailState> {
-  final AdminRepository _repo;
   SecurityAlertDetailNotifier(this._repo) : super(const SecurityAlertDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const SecurityAlertDetailLoading();
@@ -2615,8 +2615,8 @@ final securityAlertActionProvider = StateNotifierProvider<SecurityAlertActionNot
 );
 
 class SecurityAlertActionNotifier extends StateNotifier<SecurityAlertActionState> {
-  final AdminRepository _repo;
   SecurityAlertActionNotifier(this._repo) : super(const SecurityAlertActionInitial());
+  final AdminRepository _repo;
 
   Future<void> resolve(String id, Map<String, dynamic> data) async {
     state = const SecurityAlertActionLoading();
@@ -2636,8 +2636,8 @@ final notificationLogListProvider = StateNotifierProvider<NotificationLogListNot
 );
 
 class NotificationLogListNotifier extends StateNotifier<NotificationLogListState> {
-  final AdminRepository _repo;
   NotificationLogListNotifier(this._repo) : super(const NotificationLogListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const NotificationLogListLoading();
@@ -2657,8 +2657,8 @@ final platformEventListProvider = StateNotifierProvider<PlatformEventListNotifie
 );
 
 class PlatformEventListNotifier extends StateNotifier<PlatformEventListState> {
-  final AdminRepository _repo;
   PlatformEventListNotifier(this._repo) : super(const PlatformEventListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const PlatformEventListLoading();
@@ -2678,8 +2678,8 @@ final platformEventDetailProvider = StateNotifierProvider<PlatformEventDetailNot
 );
 
 class PlatformEventDetailNotifier extends StateNotifier<PlatformEventDetailState> {
-  final AdminRepository _repo;
   PlatformEventDetailNotifier(this._repo) : super(const PlatformEventDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const PlatformEventDetailLoading();
@@ -2699,8 +2699,8 @@ final platformEventActionProvider = StateNotifierProvider<PlatformEventActionNot
 );
 
 class PlatformEventActionNotifier extends StateNotifier<PlatformEventActionState> {
-  final AdminRepository _repo;
   PlatformEventActionNotifier(this._repo) : super(const PlatformEventActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const PlatformEventActionLoading();
@@ -2720,8 +2720,8 @@ final healthDashboardProvider = StateNotifierProvider<HealthDashboardNotifier, H
 );
 
 class HealthDashboardNotifier extends StateNotifier<HealthDashboardState> {
-  final AdminRepository _repo;
   HealthDashboardNotifier(this._repo) : super(const HealthDashboardInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const HealthDashboardLoading();
@@ -2741,8 +2741,8 @@ final healthCheckListProvider = StateNotifierProvider<HealthCheckListNotifier, H
 );
 
 class HealthCheckListNotifier extends StateNotifier<HealthCheckListState> {
-  final AdminRepository _repo;
   HealthCheckListNotifier(this._repo) : super(const HealthCheckListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const HealthCheckListLoading();
@@ -2762,8 +2762,8 @@ final storeHealthListProvider = StateNotifierProvider<StoreHealthListNotifier, S
 );
 
 class StoreHealthListNotifier extends StateNotifier<StoreHealthListState> {
-  final AdminRepository _repo;
   StoreHealthListNotifier(this._repo) : super(const StoreHealthListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const StoreHealthListLoading();
@@ -2786,8 +2786,8 @@ final ticketListProvider = StateNotifierProvider<TicketListNotifier, TicketListS
 );
 
 class TicketListNotifier extends StateNotifier<TicketListState> {
-  final AdminRepository _repo;
   TicketListNotifier(this._repo) : super(const TicketListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const TicketListLoading();
@@ -2806,8 +2806,8 @@ final ticketDetailProvider = StateNotifierProvider<TicketDetailNotifier, TicketD
 );
 
 class TicketDetailNotifier extends StateNotifier<TicketDetailState> {
-  final AdminRepository _repo;
   TicketDetailNotifier(this._repo) : super(const TicketDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const TicketDetailLoading();
@@ -2826,8 +2826,8 @@ final ticketActionProvider = StateNotifierProvider<TicketActionNotifier, TicketA
 );
 
 class TicketActionNotifier extends StateNotifier<TicketActionState> {
-  final AdminRepository _repo;
   TicketActionNotifier(this._repo) : super(const TicketActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const TicketActionLoading();
@@ -2876,8 +2876,8 @@ final ticketMessageListProvider = StateNotifierProvider<TicketMessageListNotifie
 );
 
 class TicketMessageListNotifier extends StateNotifier<TicketMessageListState> {
-  final AdminRepository _repo;
   TicketMessageListNotifier(this._repo) : super(const TicketMessageListInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String ticketId, {Map<String, dynamic>? params}) async {
     state = const TicketMessageListLoading();
@@ -2896,8 +2896,8 @@ final ticketMessageActionProvider = StateNotifierProvider<TicketMessageActionNot
 );
 
 class TicketMessageActionNotifier extends StateNotifier<TicketMessageActionState> {
-  final AdminRepository _repo;
   TicketMessageActionNotifier(this._repo) : super(const TicketMessageActionInitial());
+  final AdminRepository _repo;
 
   Future<void> send(String ticketId, Map<String, dynamic> data) async {
     state = const TicketMessageActionLoading();
@@ -2916,8 +2916,8 @@ final cannedResponseListProvider = StateNotifierProvider<CannedResponseListNotif
 );
 
 class CannedResponseListNotifier extends StateNotifier<CannedResponseListState> {
-  final AdminRepository _repo;
   CannedResponseListNotifier(this._repo) : super(const CannedResponseListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const CannedResponseListLoading();
@@ -2936,8 +2936,8 @@ final cannedResponseDetailProvider = StateNotifierProvider<CannedResponseDetailN
 );
 
 class CannedResponseDetailNotifier extends StateNotifier<CannedResponseDetailState> {
-  final AdminRepository _repo;
   CannedResponseDetailNotifier(this._repo) : super(const CannedResponseDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const CannedResponseDetailLoading();
@@ -2956,8 +2956,8 @@ final cannedResponseActionProvider = StateNotifierProvider<CannedResponseActionN
 );
 
 class CannedResponseActionNotifier extends StateNotifier<CannedResponseActionState> {
-  final AdminRepository _repo;
   CannedResponseActionNotifier(this._repo) : super(const CannedResponseActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const CannedResponseActionLoading();
@@ -3010,8 +3010,8 @@ final marketplaceStoreListProvider = StateNotifierProvider<MarketplaceStoreListN
 );
 
 class MarketplaceStoreListNotifier extends StateNotifier<MarketplaceStoreListState> {
-  final AdminRepository _repo;
   MarketplaceStoreListNotifier(this._repo) : super(const MarketplaceStoreListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const MarketplaceStoreListLoading();
@@ -3030,8 +3030,8 @@ final marketplaceStoreDetailProvider = StateNotifierProvider<MarketplaceStoreDet
 );
 
 class MarketplaceStoreDetailNotifier extends StateNotifier<MarketplaceStoreDetailState> {
-  final AdminRepository _repo;
   MarketplaceStoreDetailNotifier(this._repo) : super(const MarketplaceStoreDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const MarketplaceStoreDetailLoading();
@@ -3050,8 +3050,8 @@ final marketplaceStoreActionProvider = StateNotifierProvider<MarketplaceStoreAct
 );
 
 class MarketplaceStoreActionNotifier extends StateNotifier<MarketplaceStoreActionState> {
-  final AdminRepository _repo;
   MarketplaceStoreActionNotifier(this._repo) : super(const MarketplaceStoreActionInitial());
+  final AdminRepository _repo;
 
   Future<void> updateConfig(String id, Map<String, dynamic> data) async {
     state = const MarketplaceStoreActionLoading();
@@ -3090,8 +3090,8 @@ final marketplaceProductListProvider = StateNotifierProvider<MarketplaceProductL
 );
 
 class MarketplaceProductListNotifier extends StateNotifier<MarketplaceProductListState> {
-  final AdminRepository _repo;
   MarketplaceProductListNotifier(this._repo) : super(const MarketplaceProductListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const MarketplaceProductListLoading();
@@ -3110,8 +3110,8 @@ final marketplaceProductActionProvider = StateNotifierProvider<MarketplaceProduc
 );
 
 class MarketplaceProductActionNotifier extends StateNotifier<MarketplaceProductActionState> {
-  final AdminRepository _repo;
   MarketplaceProductActionNotifier(this._repo) : super(const MarketplaceProductActionInitial());
+  final AdminRepository _repo;
 
   Future<void> update(String id, Map<String, dynamic> data) async {
     state = const MarketplaceProductActionLoading();
@@ -3140,8 +3140,8 @@ final marketplaceOrderListProvider = StateNotifierProvider<MarketplaceOrderListN
 );
 
 class MarketplaceOrderListNotifier extends StateNotifier<MarketplaceOrderListState> {
-  final AdminRepository _repo;
   MarketplaceOrderListNotifier(this._repo) : super(const MarketplaceOrderListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const MarketplaceOrderListLoading();
@@ -3160,8 +3160,8 @@ final marketplaceOrderDetailProvider = StateNotifierProvider<MarketplaceOrderDet
 );
 
 class MarketplaceOrderDetailNotifier extends StateNotifier<MarketplaceOrderDetailState> {
-  final AdminRepository _repo;
   MarketplaceOrderDetailNotifier(this._repo) : super(const MarketplaceOrderDetailInitial());
+  final AdminRepository _repo;
 
   Future<void> load(String id) async {
     state = const MarketplaceOrderDetailLoading();
@@ -3181,8 +3181,8 @@ final marketplaceSettlementListProvider =
     );
 
 class MarketplaceSettlementListNotifier extends StateNotifier<MarketplaceSettlementListState> {
-  final AdminRepository _repo;
   MarketplaceSettlementListNotifier(this._repo) : super(const MarketplaceSettlementListInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const MarketplaceSettlementListLoading();
@@ -3202,8 +3202,8 @@ final marketplaceSettlementSummaryProvider =
     );
 
 class MarketplaceSettlementSummaryNotifier extends StateNotifier<MarketplaceSettlementSummaryState> {
-  final AdminRepository _repo;
   MarketplaceSettlementSummaryNotifier(this._repo) : super(const MarketplaceSettlementSummaryInitial());
+  final AdminRepository _repo;
 
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const MarketplaceSettlementSummaryLoading();
@@ -3225,8 +3225,8 @@ final deploymentOverviewProvider = StateNotifierProvider<DeploymentOverviewNotif
 );
 
 class DeploymentOverviewNotifier extends StateNotifier<DeploymentOverviewState> {
-  final AdminRepository _repo;
   DeploymentOverviewNotifier(this._repo) : super(const DeploymentOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load({String? storeId}) async {
     state = const DeploymentOverviewLoading();
     try {
@@ -3243,8 +3243,8 @@ final deploymentReleaseListProvider = StateNotifierProvider<DeploymentReleaseLis
 );
 
 class DeploymentReleaseListNotifier extends StateNotifier<DeploymentReleaseListState> {
-  final AdminRepository _repo;
   DeploymentReleaseListNotifier(this._repo) : super(const DeploymentReleaseListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const DeploymentReleaseListLoading();
     try {
@@ -3261,8 +3261,8 @@ final deploymentReleaseDetailProvider = StateNotifierProvider<DeploymentReleaseD
 );
 
 class DeploymentReleaseDetailNotifier extends StateNotifier<DeploymentReleaseDetailState> {
-  final AdminRepository _repo;
   DeploymentReleaseDetailNotifier(this._repo) : super(const DeploymentReleaseDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const DeploymentReleaseDetailLoading();
     try {
@@ -3279,8 +3279,8 @@ final deploymentReleaseActionProvider = StateNotifierProvider<DeploymentReleaseA
 );
 
 class DeploymentReleaseActionNotifier extends StateNotifier<DeploymentReleaseActionState> {
-  final AdminRepository _repo;
   DeploymentReleaseActionNotifier(this._repo) : super(const DeploymentReleaseActionInitial());
+  final AdminRepository _repo;
   Future<void> create(Map<String, dynamic> data) async {
     state = const DeploymentReleaseActionLoading();
     try {
@@ -3347,8 +3347,8 @@ final deploymentStatsListProvider = StateNotifierProvider<DeploymentStatsListNot
 );
 
 class DeploymentStatsListNotifier extends StateNotifier<DeploymentStatsListState> {
-  final AdminRepository _repo;
   DeploymentStatsListNotifier(this._repo) : super(const DeploymentStatsListInitial());
+  final AdminRepository _repo;
   Future<void> load(String releaseId, {Map<String, dynamic>? params}) async {
     state = const DeploymentStatsListLoading();
     try {
@@ -3375,8 +3375,8 @@ final deploymentReleaseSummaryProvider = StateNotifierProvider<DeploymentRelease
 );
 
 class DeploymentReleaseSummaryNotifier extends StateNotifier<DeploymentReleaseSummaryState> {
-  final AdminRepository _repo;
   DeploymentReleaseSummaryNotifier(this._repo) : super(const DeploymentReleaseSummaryInitial());
+  final AdminRepository _repo;
   Future<void> load(String releaseId) async {
     state = const DeploymentReleaseSummaryLoading();
     try {
@@ -3397,8 +3397,8 @@ final dataManagementOverviewProvider = StateNotifierProvider<DataManagementOverv
 );
 
 class DataManagementOverviewNotifier extends StateNotifier<DataManagementOverviewState> {
-  final AdminRepository _repo;
   DataManagementOverviewNotifier(this._repo) : super(const DataManagementOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load({String? storeId}) async {
     state = const DataManagementOverviewLoading();
     try {
@@ -3414,8 +3414,8 @@ final databaseBackupListProvider = StateNotifierProvider<DatabaseBackupListNotif
 );
 
 class DatabaseBackupListNotifier extends StateNotifier<DatabaseBackupListState> {
-  final AdminRepository _repo;
   DatabaseBackupListNotifier(this._repo) : super(const DatabaseBackupListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const DatabaseBackupListLoading();
     try {
@@ -3431,8 +3431,8 @@ final databaseBackupActionProvider = StateNotifierProvider<DatabaseBackupActionN
 );
 
 class DatabaseBackupActionNotifier extends StateNotifier<DatabaseBackupActionState> {
-  final AdminRepository _repo;
   DatabaseBackupActionNotifier(this._repo) : super(const DatabaseBackupActionInitial());
+  final AdminRepository _repo;
   Future<void> create(Map<String, dynamic> data) async {
     state = const DatabaseBackupActionLoading();
     try {
@@ -3457,8 +3457,8 @@ final backupHistoryListProvider = StateNotifierProvider<BackupHistoryListNotifie
 );
 
 class BackupHistoryListNotifier extends StateNotifier<BackupHistoryListState> {
-  final AdminRepository _repo;
   BackupHistoryListNotifier(this._repo) : super(const BackupHistoryListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const BackupHistoryListLoading();
     try {
@@ -3474,8 +3474,8 @@ final syncLogListProvider = StateNotifierProvider<SyncLogListNotifier, SyncLogLi
 );
 
 class SyncLogListNotifier extends StateNotifier<SyncLogListState> {
-  final AdminRepository _repo;
   SyncLogListNotifier(this._repo) : super(const SyncLogListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SyncLogListLoading();
     try {
@@ -3491,8 +3491,8 @@ final syncLogSummaryProvider = StateNotifierProvider<SyncLogSummaryNotifier, Syn
 );
 
 class SyncLogSummaryNotifier extends StateNotifier<SyncLogSummaryState> {
-  final AdminRepository _repo;
   SyncLogSummaryNotifier(this._repo) : super(const SyncLogSummaryInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SyncLogSummaryLoading();
     try {
@@ -3508,8 +3508,8 @@ final syncConflictListProvider = StateNotifierProvider<SyncConflictListNotifier,
 );
 
 class SyncConflictListNotifier extends StateNotifier<SyncConflictListState> {
-  final AdminRepository _repo;
   SyncConflictListNotifier(this._repo) : super(const SyncConflictListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SyncConflictListLoading();
     try {
@@ -3525,8 +3525,8 @@ final syncConflictActionProvider = StateNotifierProvider<SyncConflictActionNotif
 );
 
 class SyncConflictActionNotifier extends StateNotifier<SyncConflictActionState> {
-  final AdminRepository _repo;
   SyncConflictActionNotifier(this._repo) : super(const SyncConflictActionInitial());
+  final AdminRepository _repo;
   Future<void> resolve(String id, Map<String, dynamic> data) async {
     state = const SyncConflictActionLoading();
     try {
@@ -3546,8 +3546,8 @@ final securityOverviewProvider = StateNotifierProvider<SecurityOverviewNotifier,
 );
 
 class SecurityOverviewNotifier extends StateNotifier<SecurityOverviewState> {
-  final AdminRepository _repo;
   SecurityOverviewNotifier(this._repo) : super(const SecurityOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load({String? storeId}) async {
     state = const SecurityOverviewLoading();
     try {
@@ -3563,8 +3563,8 @@ final secCenterAlertListProvider = StateNotifierProvider<SecCenterAlertListNotif
 );
 
 class SecCenterAlertListNotifier extends StateNotifier<SecCenterAlertListState> {
-  final AdminRepository _repo;
   SecCenterAlertListNotifier(this._repo) : super(const SecCenterAlertListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecCenterAlertListLoading();
     try {
@@ -3580,8 +3580,8 @@ final secCenterAlertActionProvider = StateNotifierProvider<SecCenterAlertActionN
 );
 
 class SecCenterAlertActionNotifier extends StateNotifier<SecCenterAlertActionState> {
-  final AdminRepository _repo;
   SecCenterAlertActionNotifier(this._repo) : super(const SecCenterAlertActionInitial());
+  final AdminRepository _repo;
   Future<void> resolve(String id, Map<String, dynamic> data) async {
     state = const SecCenterAlertActionLoading();
     try {
@@ -3597,8 +3597,8 @@ final securitySessionListProvider = StateNotifierProvider<SecuritySessionListNot
 );
 
 class SecuritySessionListNotifier extends StateNotifier<SecuritySessionListState> {
-  final AdminRepository _repo;
   SecuritySessionListNotifier(this._repo) : super(const SecuritySessionListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecuritySessionListLoading();
     try {
@@ -3614,8 +3614,8 @@ final securityDeviceListProvider = StateNotifierProvider<SecurityDeviceListNotif
 );
 
 class SecurityDeviceListNotifier extends StateNotifier<SecurityDeviceListState> {
-  final AdminRepository _repo;
   SecurityDeviceListNotifier(this._repo) : super(const SecurityDeviceListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecurityDeviceListLoading();
     try {
@@ -3631,8 +3631,8 @@ final securityPolicyListProvider = StateNotifierProvider<SecurityPolicyListNotif
 );
 
 class SecurityPolicyListNotifier extends StateNotifier<SecurityPolicyListState> {
-  final AdminRepository _repo;
   SecurityPolicyListNotifier(this._repo) : super(const SecurityPolicyListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecurityPolicyListLoading();
     try {
@@ -3648,8 +3648,8 @@ final securityPolicyActionProvider = StateNotifierProvider<SecurityPolicyActionN
 );
 
 class SecurityPolicyActionNotifier extends StateNotifier<SecurityPolicyActionState> {
-  final AdminRepository _repo;
   SecurityPolicyActionNotifier(this._repo) : super(const SecurityPolicyActionInitial());
+  final AdminRepository _repo;
   Future<void> update(String id, Map<String, dynamic> data) async {
     state = const SecurityPolicyActionLoading();
     try {
@@ -3665,8 +3665,8 @@ final securityIpAllowlistProvider = StateNotifierProvider<SecurityIpAllowlistNot
 );
 
 class SecurityIpAllowlistNotifier extends StateNotifier<SecurityIpListState> {
-  final AdminRepository _repo;
   SecurityIpAllowlistNotifier(this._repo) : super(const SecurityIpListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecurityIpListLoading();
     try {
@@ -3682,8 +3682,8 @@ final securityIpBlocklistProvider = StateNotifierProvider<SecurityIpBlocklistNot
 );
 
 class SecurityIpBlocklistNotifier extends StateNotifier<SecurityIpListState> {
-  final AdminRepository _repo;
   SecurityIpBlocklistNotifier(this._repo) : super(const SecurityIpListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const SecurityIpListLoading();
     try {
@@ -3703,8 +3703,8 @@ final finOpsOverviewProvider = StateNotifierProvider<FinOpsOverviewNotifier, Fin
 );
 
 class FinOpsOverviewNotifier extends StateNotifier<FinOpsOverviewState> {
-  final AdminRepository _repo;
   FinOpsOverviewNotifier(this._repo) : super(const FinOpsOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load({String? storeId}) async {
     state = const FinOpsOverviewLoading();
     try {
@@ -3720,8 +3720,8 @@ final finOpsPaymentsProvider = StateNotifierProvider<FinOpsPaymentsNotifier, Fin
 );
 
 class FinOpsPaymentsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsPaymentsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3737,8 +3737,8 @@ final finOpsPaymentDetailProvider = StateNotifierProvider<FinOpsPaymentDetailNot
 );
 
 class FinOpsPaymentDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsPaymentDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -3754,8 +3754,8 @@ final finOpsRefundsProvider = StateNotifierProvider<FinOpsRefundsNotifier, FinOp
 );
 
 class FinOpsRefundsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsRefundsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3771,8 +3771,8 @@ final finOpsRefundDetailProvider = StateNotifierProvider<FinOpsRefundDetailNotif
 );
 
 class FinOpsRefundDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsRefundDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -3788,8 +3788,8 @@ final finOpsCashSessionsProvider = StateNotifierProvider<FinOpsCashSessionsNotif
 );
 
 class FinOpsCashSessionsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsCashSessionsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3805,8 +3805,8 @@ final finOpsCashSessionDetailProvider = StateNotifierProvider<FinOpsCashSessionD
 );
 
 class FinOpsCashSessionDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsCashSessionDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -3822,8 +3822,8 @@ final finOpsCashEventsProvider = StateNotifierProvider<FinOpsCashEventsNotifier,
 );
 
 class FinOpsCashEventsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsCashEventsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3839,8 +3839,8 @@ final finOpsExpensesProvider = StateNotifierProvider<FinOpsExpensesNotifier, Fin
 );
 
 class FinOpsExpensesNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsExpensesNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3856,8 +3856,8 @@ final finOpsGiftCardsProvider = StateNotifierProvider<FinOpsGiftCardsNotifier, F
 );
 
 class FinOpsGiftCardsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsGiftCardsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3873,8 +3873,8 @@ final finOpsGiftCardDetailProvider = StateNotifierProvider<FinOpsGiftCardDetailN
 );
 
 class FinOpsGiftCardDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsGiftCardDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -3890,8 +3890,8 @@ final finOpsGiftCardTxnsProvider = StateNotifierProvider<FinOpsGiftCardTxnsNotif
 );
 
 class FinOpsGiftCardTxnsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsGiftCardTxnsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3907,8 +3907,8 @@ final finOpsAccountingConfigsProvider = StateNotifierProvider<FinOpsAccountingCo
 );
 
 class FinOpsAccountingConfigsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsAccountingConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3924,8 +3924,8 @@ final finOpsAccountingExportsProvider = StateNotifierProvider<FinOpsAccountingEx
 );
 
 class FinOpsAccountingExportsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsAccountingExportsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3941,8 +3941,8 @@ final finOpsAutoExportConfigsProvider = StateNotifierProvider<FinOpsAutoExportCo
 );
 
 class FinOpsAutoExportConfigsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsAutoExportConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3958,8 +3958,8 @@ final finOpsThawaniSettlementsProvider = StateNotifierProvider<FinOpsThawaniSett
 );
 
 class FinOpsThawaniSettlementsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsThawaniSettlementsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3975,8 +3975,8 @@ final finOpsThawaniOrdersProvider = StateNotifierProvider<FinOpsThawaniOrdersNot
 );
 
 class FinOpsThawaniOrdersNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsThawaniOrdersNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -3992,8 +3992,8 @@ final finOpsThawaniStoreConfigsProvider = StateNotifierProvider<FinOpsThawaniSto
 );
 
 class FinOpsThawaniStoreConfigsNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsThawaniStoreConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -4009,8 +4009,8 @@ final finOpsDailySalesSummaryProvider = StateNotifierProvider<FinOpsDailySalesSu
 );
 
 class FinOpsDailySalesSummaryNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsDailySalesSummaryNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -4026,8 +4026,8 @@ final finOpsProductSalesSummaryProvider = StateNotifierProvider<FinOpsProductSal
 );
 
 class FinOpsProductSalesSummaryNotifier extends StateNotifier<FinOpsListState> {
-  final AdminRepository _repo;
   FinOpsProductSalesSummaryNotifier(this._repo) : super(const FinOpsListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const FinOpsListLoading();
     try {
@@ -4045,8 +4045,8 @@ final finOpsExpenseActionProvider = StateNotifierProvider<FinOpsExpenseActionNot
 );
 
 class FinOpsExpenseActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsExpenseActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4082,8 +4082,8 @@ final finOpsGiftCardActionProvider = StateNotifierProvider<FinOpsGiftCardActionN
 );
 
 class FinOpsGiftCardActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsGiftCardActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> issue(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4118,8 +4118,8 @@ final finOpsRefundActionProvider = StateNotifierProvider<FinOpsRefundActionNotif
 );
 
 class FinOpsRefundActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsRefundActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> process(String id, Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4136,8 +4136,8 @@ final finOpsCashSessionActionProvider = StateNotifierProvider<FinOpsCashSessionA
 );
 
 class FinOpsCashSessionActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsCashSessionActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> forceClose(String id, {Map<String, dynamic>? data}) async {
     state = const FinOpsActionLoading();
@@ -4154,8 +4154,8 @@ final finOpsAccountingConfigActionProvider = StateNotifierProvider<FinOpsAccount
 );
 
 class FinOpsAccountingConfigActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsAccountingConfigActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4191,8 +4191,8 @@ final finOpsAccountMappingActionProvider = StateNotifierProvider<FinOpsAccountMa
 );
 
 class FinOpsAccountMappingActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsAccountMappingActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4228,8 +4228,8 @@ final finOpsAccountingExportActionProvider = StateNotifierProvider<FinOpsAccount
 );
 
 class FinOpsAccountingExportActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsAccountingExportActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> trigger(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4255,8 +4255,8 @@ final finOpsAutoExportConfigActionProvider = StateNotifierProvider<FinOpsAutoExp
 );
 
 class FinOpsAutoExportConfigActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsAutoExportConfigActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> create(Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4283,8 +4283,8 @@ final finOpsThawaniSettlementActionProvider = StateNotifierProvider<FinOpsThawan
 );
 
 class FinOpsThawaniSettlementActionNotifier extends StateNotifier<FinOpsActionState> {
-  final AdminRepository _repo;
   FinOpsThawaniSettlementActionNotifier(this._repo) : super(const FinOpsActionInitial());
+  final AdminRepository _repo;
 
   Future<void> reconcile(String id, Map<String, dynamic> data) async {
     state = const FinOpsActionLoading();
@@ -4301,8 +4301,8 @@ final finOpsGiftCardTxnDetailProvider = StateNotifierProvider<FinOpsGiftCardTxnD
 );
 
 class FinOpsGiftCardTxnDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsGiftCardTxnDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -4318,8 +4318,8 @@ final finOpsDailySalesSummaryDetailProvider = StateNotifierProvider<FinOpsDailyS
 );
 
 class FinOpsDailySalesSummaryDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsDailySalesSummaryDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -4335,8 +4335,8 @@ final finOpsProductSalesSummaryDetailProvider = StateNotifierProvider<FinOpsProd
 );
 
 class FinOpsProductSalesSummaryDetailNotifier extends StateNotifier<FinOpsDetailState> {
-  final AdminRepository _repo;
   FinOpsProductSalesSummaryDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const FinOpsDetailLoading();
     try {
@@ -4356,8 +4356,8 @@ final infraOverviewProvider = StateNotifierProvider<InfraOverviewNotifier, Infra
 );
 
 class InfraOverviewNotifier extends StateNotifier<InfraOverviewState> {
-  final AdminRepository _repo;
   InfraOverviewNotifier(this._repo) : super(const InfraOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load({String? storeId}) async {
     state = const InfraOverviewLoading();
     try {
@@ -4373,8 +4373,8 @@ final infraQueuesProvider = StateNotifierProvider<InfraQueuesNotifier, InfraList
 );
 
 class InfraQueuesNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraQueuesNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const InfraListLoading();
     try {
@@ -4390,8 +4390,8 @@ final infraFailedJobsProvider = StateNotifierProvider<InfraFailedJobsNotifier, I
 );
 
 class InfraFailedJobsNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraFailedJobsNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const InfraListLoading();
     try {
@@ -4407,8 +4407,8 @@ final infraHealthProvider = StateNotifierProvider<InfraHealthNotifier, InfraOver
 );
 
 class InfraHealthNotifier extends StateNotifier<InfraOverviewState> {
-  final AdminRepository _repo;
   InfraHealthNotifier(this._repo) : super(const InfraOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const InfraOverviewLoading();
     try {
@@ -4424,8 +4424,8 @@ final infraScheduledTasksProvider = StateNotifierProvider<InfraScheduledTasksNot
 );
 
 class InfraScheduledTasksNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraScheduledTasksNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const InfraListLoading();
     try {
@@ -4441,8 +4441,8 @@ final infraServerMetricsProvider = StateNotifierProvider<InfraServerMetricsNotif
 );
 
 class InfraServerMetricsNotifier extends StateNotifier<InfraOverviewState> {
-  final AdminRepository _repo;
   InfraServerMetricsNotifier(this._repo) : super(const InfraOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const InfraOverviewLoading();
     try {
@@ -4458,8 +4458,8 @@ final infraStorageUsageProvider = StateNotifierProvider<InfraStorageUsageNotifie
 );
 
 class InfraStorageUsageNotifier extends StateNotifier<InfraOverviewState> {
-  final AdminRepository _repo;
   InfraStorageUsageNotifier(this._repo) : super(const InfraOverviewInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const InfraOverviewLoading();
     try {
@@ -4479,8 +4479,8 @@ final providerPermissionListProvider = StateNotifierProvider<ProviderPermissionL
 );
 
 class ProviderPermissionListNotifier extends StateNotifier<ProviderPermissionListState> {
-  final AdminRepository _repo;
   ProviderPermissionListNotifier(this._repo) : super(const ProviderPermissionListInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const ProviderPermissionListLoading();
     try {
@@ -4496,8 +4496,8 @@ final providerRoleTemplateListProvider = StateNotifierProvider<ProviderRoleTempl
 );
 
 class ProviderRoleTemplateListNotifier extends StateNotifier<ProviderRoleTemplateListState> {
-  final AdminRepository _repo;
   ProviderRoleTemplateListNotifier(this._repo) : super(const ProviderRoleTemplateListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const ProviderRoleTemplateListLoading();
     try {
@@ -4514,8 +4514,8 @@ final providerRoleTemplateDetailProvider =
     );
 
 class ProviderRoleTemplateDetailNotifier extends StateNotifier<ProviderRoleTemplateDetailState> {
-  final AdminRepository _repo;
   ProviderRoleTemplateDetailNotifier(this._repo) : super(const ProviderRoleTemplateDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const ProviderRoleTemplateDetailLoading();
     try {
@@ -4533,8 +4533,8 @@ final infraDatabaseBackupsProvider = StateNotifierProvider<InfraDatabaseBackupsN
 );
 
 class InfraDatabaseBackupsNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraDatabaseBackupsNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const InfraListLoading();
     try {
@@ -4550,8 +4550,8 @@ final infraProviderBackupsProvider = StateNotifierProvider<InfraProviderBackupsN
 );
 
 class InfraProviderBackupsNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraProviderBackupsNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const InfraListLoading();
     try {
@@ -4569,8 +4569,8 @@ final infraHealthChecksProvider = StateNotifierProvider<InfraHealthChecksNotifie
 );
 
 class InfraHealthChecksNotifier extends StateNotifier<InfraListState> {
-  final AdminRepository _repo;
   InfraHealthChecksNotifier(this._repo) : super(const InfraListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const InfraListLoading();
     try {
@@ -4590,8 +4590,8 @@ final wameedAIAdminDashboardProvider = StateNotifierProvider<WameedAIAdminDashbo
 );
 
 class WameedAIAdminDashboardNotifier extends StateNotifier<WameedAIAdminDashboardState> {
-  final AdminRepository _repo;
   WameedAIAdminDashboardNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminDashboardLoading();
     try {
@@ -4607,8 +4607,8 @@ final wameedAIAdminLogsProvider = StateNotifierProvider<WameedAIAdminLogsNotifie
 );
 
 class WameedAIAdminLogsNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminLogsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4624,8 +4624,8 @@ final wameedAIAdminLogStatsProvider = StateNotifierProvider<WameedAIAdminLogStat
 );
 
 class WameedAIAdminLogStatsNotifier extends StateNotifier<WameedAIAdminDashboardState> {
-  final AdminRepository _repo;
   WameedAIAdminLogStatsNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminDashboardLoading();
     try {
@@ -4641,8 +4641,8 @@ final wameedAIAdminProvidersProvider = StateNotifierProvider<WameedAIAdminProvid
 );
 
 class WameedAIAdminProvidersNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminProvidersNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4658,8 +4658,8 @@ final wameedAIAdminFeaturesProvider = StateNotifierProvider<WameedAIAdminFeature
 );
 
 class WameedAIAdminFeaturesNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminFeaturesNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load() async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4675,8 +4675,8 @@ final wameedAIAdminLlmModelsProvider = StateNotifierProvider<WameedAIAdminLlmMod
 );
 
 class WameedAIAdminLlmModelsNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminLlmModelsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4692,8 +4692,8 @@ final wameedAIAdminChatsProvider = StateNotifierProvider<WameedAIAdminChatsNotif
 );
 
 class WameedAIAdminChatsNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminChatsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4709,8 +4709,8 @@ final wameedAIAdminChatDetailProvider = StateNotifierProvider<WameedAIAdminChatD
 );
 
 class WameedAIAdminChatDetailNotifier extends StateNotifier<WameedAIAdminDetailState> {
-  final AdminRepository _repo;
   WameedAIAdminChatDetailNotifier(this._repo) : super(const WameedAIAdminDetailInitial());
+  final AdminRepository _repo;
   Future<void> load(String id) async {
     state = const WameedAIAdminDetailLoading();
     try {
@@ -4727,8 +4727,8 @@ final wameedAIAdminBillingDashboardProvider =
     );
 
 class WameedAIAdminBillingDashboardNotifier extends StateNotifier<WameedAIAdminDashboardState> {
-  final AdminRepository _repo;
   WameedAIAdminBillingDashboardNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminDashboardLoading();
     try {
@@ -4744,8 +4744,8 @@ final wameedAIAdminBillingInvoicesProvider = StateNotifierProvider<WameedAIAdmin
 );
 
 class WameedAIAdminBillingInvoicesNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminBillingInvoicesNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4761,8 +4761,8 @@ final wameedAIAdminBillingStoresProvider = StateNotifierProvider<WameedAIAdminBi
 );
 
 class WameedAIAdminBillingStoresNotifier extends StateNotifier<WameedAIAdminListState> {
-  final AdminRepository _repo;
   WameedAIAdminBillingStoresNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  final AdminRepository _repo;
   Future<void> load({Map<String, dynamic>? params}) async {
     state = const WameedAIAdminListLoading();
     try {
@@ -4778,8 +4778,8 @@ final wameedAIAdminActionProvider = StateNotifierProvider<WameedAIAdminActionNot
 );
 
 class WameedAIAdminActionNotifier extends StateNotifier<WameedAIAdminActionState> {
-  final AdminRepository _repo;
   WameedAIAdminActionNotifier(this._repo) : super(const WameedAIAdminActionInitial());
+  final AdminRepository _repo;
 
   Future<void> toggleFeature(String id) async {
     state = const WameedAIAdminActionLoading();
@@ -4867,8 +4867,8 @@ final billingStatsProvider = StateNotifierProvider<BillingStatsNotifier, AdminSt
 );
 
 class BillingStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   BillingStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const AdminStatsLoading();
@@ -4885,8 +4885,8 @@ final finOpsStatsProvider = StateNotifierProvider<FinOpsStatsNotifier, AdminStat
 );
 
 class FinOpsStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   FinOpsStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load({String? storeId}) async {
     state = const AdminStatsLoading();
@@ -4903,8 +4903,8 @@ final userStatsProvider = StateNotifierProvider<UserStatsNotifier, AdminStatsSta
 );
 
 class UserStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   UserStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load() async {
     state = const AdminStatsLoading();
@@ -4923,8 +4923,8 @@ final logStatsProvider = StateNotifierProvider<LogStatsNotifier, AdminStatsState
 );
 
 class LogStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   LogStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load() async {
     state = const AdminStatsLoading();
@@ -4943,8 +4943,8 @@ final featureFlagStatsProvider = StateNotifierProvider<FeatureFlagStatsNotifier,
 );
 
 class FeatureFlagStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   FeatureFlagStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load() async {
     state = const AdminStatsLoading();
@@ -4963,8 +4963,8 @@ final supportStatsProvider = StateNotifierProvider<SupportStatsNotifier, AdminSt
 );
 
 class SupportStatsNotifier extends StateNotifier<AdminStatsState> {
-  final AdminRepository _repo;
   SupportStatsNotifier(this._repo) : super(const AdminStatsInitial());
+  final AdminRepository _repo;
 
   Future<void> load() async {
     state = const AdminStatsLoading();

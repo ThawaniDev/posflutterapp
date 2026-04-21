@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../enums/making_charges_type.dart';
-import '../enums/metal_type.dart';
-import '../models/jewelry_product_detail.dart';
-import '../providers/jewelry_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/making_charges_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductDetailFormPage extends ConsumerStatefulWidget {
-  final JewelryProductDetail? detail;
   const ProductDetailFormPage({super.key, this.detail});
+  final JewelryProductDetail? detail;
 
   @override
   ConsumerState<ProductDetailFormPage> createState() => _ProductDetailFormPageState();
@@ -126,7 +126,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
               showSearch: true,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<MetalType>(
               hint: l10n.selectMetalType,
               label: l10n.jewelryMetalType,
@@ -140,9 +140,9 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: l10n.jewelryKaratHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -164,7 +164,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<MakingChargesType>(
               hint: l10n.selectChargesType,
               label: l10n.jewelryMakingChargesType,
@@ -176,18 +176,18 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               showSearch: false,
               clearable: false,
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _makingChargesValueCtrl,
               label: l10n.jewelryMakingChargesValue,
               hint: 'e.g. 150.00',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: AppSpacing.lg),
+            const SizedBox(height: AppSpacing.lg),
             Text(l10n.jewelryStoneDetails, style: Theme.of(context).textTheme.titleMedium),
-            SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             PosTextField(controller: _stoneTypeCtrl, label: l10n.jewelryStoneTypeOptional, hint: l10n.jewelryStoneTypeHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -209,7 +209,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                 ),
               ],
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _certificateNumberCtrl, label: l10n.jewelryCertificateOptional, hint: l10n.jewelryCertificateHint),
           ],
         ),

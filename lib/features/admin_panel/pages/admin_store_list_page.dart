@@ -142,7 +142,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
         decoration: BoxDecoration(
           color: selected ? AppColors.primary10 : Colors.transparent,
           borderRadius: AppRadius.borderFull,
-          border: Border.all(color: selected ? AppColors.primary : AppColors.borderLight),
+          border: Border.all(color: selected ? AppColors.primary : AppColors.borderFor(context)),
         ),
         child: Text(
           label,
@@ -188,7 +188,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
       elevation: 0,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: InkWell(
         borderRadius: AppRadius.borderLg,
         onTap: () {
@@ -214,7 +214,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                     Text(storeName, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                     if (orgName.isNotEmpty) ...[
                       AppSpacing.gapH2,
-                      Text(orgName, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
+                      Text(orgName, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
                     ],
                   ],
                 ),
@@ -226,11 +226,11 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                   decoration: BoxDecoration(color: AppColors.primary5, borderRadius: AppRadius.borderFull),
                   child: Text(
                     businessType,
-                    style: TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w500),
+                    style: const TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w500),
                   ),
                 ),
               AppSpacing.gapW8,
-              Icon(Icons.chevron_right, color: AppColors.textMutedLight),
+              Icon(Icons.chevron_right, color: AppColors.mutedFor(context)),
             ],
           ),
         ),
@@ -242,15 +242,15 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
     return Container(
       padding: AppSpacing.paddingAll16,
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(top: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Showing ${state.stores.length} of ${state.total} stores',
-            style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+            style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
           ),
           Row(
             children: [

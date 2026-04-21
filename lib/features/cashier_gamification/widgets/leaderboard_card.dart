@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class LeaderboardCard extends StatelessWidget {
+
+  const LeaderboardCard({super.key, required this.snapshot, required this.rank, this.onTap});
   final CashierPerformanceSnapshot snapshot;
   final int rank;
   final VoidCallback? onTap;
-
-  const LeaderboardCard({super.key, required this.snapshot, required this.rank, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +113,11 @@ class LeaderboardCard extends StatelessWidget {
 }
 
 class _MetricChip extends StatelessWidget {
+
+  const _MetricChip({required this.label, required this.value, required this.color});
   final String label;
   final String value;
   final Color color;
-
-  const _MetricChip({required this.label, required this.value, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -137,10 +136,10 @@ class _MetricChip extends StatelessWidget {
 }
 
 class _RiskBadge extends StatelessWidget {
-  final double score;
-  final bool compact;
 
   const _RiskBadge({required this.score, this.compact = false});
+  final double score;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {

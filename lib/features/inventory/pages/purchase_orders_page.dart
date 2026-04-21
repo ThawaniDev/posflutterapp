@@ -3,9 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/models/supplier.dart';
@@ -57,6 +55,130 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
     } catch (e) {
       if (mounted) {
         showPosErrorSnackbar(context, e.toString());
+      }
+    }
+  }
+
+  Future<void> _handleReceive(PurchaseOrder order) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    // Fetch order detail to get items
+    PurchaseOrder detail;
+    try {
+      detail = await ref.read(purchaseOrdersProvider.notifier).getOrder(order.id);
+    } catch (e) {
+      if (mounted) showPosErrorSnackbar(context, e.toString());
+      return;
+    }
+
+    final items = detail.items;
+    if (items == null || items.isEmpty) {
+      if (mounted) showPosErrorSnackbar(context, l10n.commonError);
+      return;
+    }
+
+    // Controllers for quantity_received per item, pre-filled with ordered qty
+    final controllers = <String, TextEditingController>{
+      for (final item in items) item.productId: TextEditingController(text: item.quantityOrdered.toStringAsFixed(0)),
+    };
+
+    final result = await showDialog<List<Map<String, dynamic>>>(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          insetPadding: const EdgeInsets.all(24),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(l10n.inventoryReceivePOTitle, style: AppTypography.headlineSmall),
+                  AppSpacing.gapH16,
+                  Flexible(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      separatorBuilder: (_, __) => AppSpacing.gapH12,
+                      itemBuilder: (_, i) {
+                        final item = items[i];
+                        return Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(item.productName ?? item.productId.substring(0, 8), style: AppTypography.bodyMedium),
+                                  Text(
+                                    '${l10n.inventoryOrdered}: ${item.quantityOrdered.toStringAsFixed(0)}',
+                                    style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            AppSpacing.gapW12,
+                            Expanded(
+                              flex: 2,
+                              child: TextField(
+                                controller: controllers[item.productId],
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                decoration: InputDecoration(labelText: l10n.inventoryReceived, isDense: true),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  AppSpacing.gapH24,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.commonCancel,
+                          variant: PosButtonVariant.outline,
+                          onPressed: () => Navigator.pop(ctx),
+                        ),
+                      ),
+                      AppSpacing.gapW12,
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.inventoryReceive,
+                          variant: PosButtonVariant.primary,
+                          onPressed: () {
+                            final receivedItems = <Map<String, dynamic>>[];
+                            for (final item in items) {
+                              final qty = double.tryParse(controllers[item.productId]?.text ?? '') ?? 0;
+                              receivedItems.add({'product_id': item.productId, 'quantity_received': qty});
+                            }
+                            Navigator.pop(ctx, receivedItems);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    // Dispose controllers
+    for (final c in controllers.values) {
+      c.dispose();
+    }
+
+    if (result != null && mounted) {
+      try {
+        await ref.read(purchaseOrdersProvider.notifier).receiveOrder(order.id, result);
+        if (mounted) showPosSuccessSnackbar(context, l10n.inventoryPOReceived);
+      } catch (e) {
+        if (mounted) showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -164,9 +286,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
           icon: Icons.archive_outlined,
           color: AppColors.success,
           isVisible: (po) => po.status == PurchaseOrderStatus.sent,
-          onTap: (po) {
-            // TODO: Show receive dialog with item quantities
-          },
+          onTap: (po) => _handleReceive(po),
         ),
         PosTableRowAction<PurchaseOrder>(
           label: l10n.commonCancel,

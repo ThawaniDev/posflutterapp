@@ -1,19 +1,4 @@
 class BackupHistory {
-  final String id;
-  final String storeId;
-  final String? terminalId;
-  final String backupType;
-  final String? storageLocation;
-  final String? localPath;
-  final String? cloudKey;
-  final int fileSizeBytes;
-  final String? checksum;
-  final String? dbVersion;
-  final int recordsCount;
-  final bool isVerified;
-  final bool isEncrypted;
-  final String status;
-  final String? errorMessage;
 
   const BackupHistory({
     required this.id,
@@ -52,6 +37,21 @@ class BackupHistory {
       errorMessage: json['error_message'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final String? terminalId;
+  final String backupType;
+  final String? storageLocation;
+  final String? localPath;
+  final String? cloudKey;
+  final int fileSizeBytes;
+  final String? checksum;
+  final String? dbVersion;
+  final int recordsCount;
+  final bool isVerified;
+  final bool isEncrypted;
+  final String status;
+  final String? errorMessage;
 
   Map<String, dynamic> toJson() {
     return {

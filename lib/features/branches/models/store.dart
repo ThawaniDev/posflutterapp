@@ -1,61 +1,6 @@
 import 'package:wameedpos/features/branches/enums/business_type.dart';
 
 class Store {
-  final String id;
-  final String organizationId;
-  final String name;
-  final String? nameAr;
-  final String slug;
-  final String? branchCode;
-  final String? description;
-  final String? descriptionAr;
-  final String? address;
-  final String? city;
-  final String? region;
-  final String? postalCode;
-  final String? country;
-  final String? googleMapsUrl;
-  final double? latitude;
-  final double? longitude;
-  final String? phone;
-  final String? secondaryPhone;
-  final String? email;
-  final String? contactPerson;
-  final String? managerId;
-  final Map<String, dynamic>? manager;
-  final String? timezone;
-  final String? currency;
-  final String? locale;
-  final BusinessType? businessType;
-  final bool isActive;
-  final bool isMainBranch;
-  final bool isWarehouse;
-  final bool acceptsOnlineOrders;
-  final bool acceptsReservations;
-  final bool hasDelivery;
-  final bool hasPickup;
-  final String? openingDate;
-  final String? closingDate;
-  final int? maxRegisters;
-  final int? maxStaff;
-  final double? areaSqm;
-  final int? seatingCapacity;
-  final String? crNumber;
-  final String? vatNumber;
-  final String? municipalLicense;
-  final String? licenseExpiryDate;
-  final Map<String, dynamic>? socialLinks;
-  final Map<String, dynamic>? extraMetadata;
-  final String? logoUrl;
-  final String? coverImageUrl;
-  final String? internalNotes;
-  final int sortOrder;
-  final int? storageUsedMb;
-  final int? staffCount;
-  final int? registerCount;
-  final Map<String, dynamic>? settings;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const Store({
     required this.id,
@@ -174,6 +119,61 @@ class Store {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String name;
+  final String? nameAr;
+  final String slug;
+  final String? branchCode;
+  final String? description;
+  final String? descriptionAr;
+  final String? address;
+  final String? city;
+  final String? region;
+  final String? postalCode;
+  final String? country;
+  final String? googleMapsUrl;
+  final double? latitude;
+  final double? longitude;
+  final String? phone;
+  final String? secondaryPhone;
+  final String? email;
+  final String? contactPerson;
+  final String? managerId;
+  final Map<String, dynamic>? manager;
+  final String? timezone;
+  final String? currency;
+  final String? locale;
+  final BusinessType? businessType;
+  final bool isActive;
+  final bool isMainBranch;
+  final bool isWarehouse;
+  final bool acceptsOnlineOrders;
+  final bool acceptsReservations;
+  final bool hasDelivery;
+  final bool hasPickup;
+  final String? openingDate;
+  final String? closingDate;
+  final int? maxRegisters;
+  final int? maxStaff;
+  final double? areaSqm;
+  final int? seatingCapacity;
+  final String? crNumber;
+  final String? vatNumber;
+  final String? municipalLicense;
+  final String? licenseExpiryDate;
+  final Map<String, dynamic>? socialLinks;
+  final Map<String, dynamic>? extraMetadata;
+  final String? logoUrl;
+  final String? coverImageUrl;
+  final String? internalNotes;
+  final int sortOrder;
+  final int? storageUsedMb;
+  final int? staffCount;
+  final int? registerCount;
+  final Map<String, dynamic>? settings;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

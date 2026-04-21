@@ -5,9 +5,9 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SyncLogList extends StatelessWidget {
-  final List<Map<String, dynamic>> logs;
 
   const SyncLogList({super.key, required this.logs});
+  final List<Map<String, dynamic>> logs;
 
   @override
   Widget build(BuildContext context) {

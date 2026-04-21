@@ -4,13 +4,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AIUrgencyCard extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  final String urgency;
-  final IconData? icon;
-  final VoidCallback? onTap;
-  final Widget? trailing;
-  final List<Widget>? children;
 
   const AIUrgencyCard({
     super.key,
@@ -22,6 +15,13 @@ class AIUrgencyCard extends StatelessWidget {
     this.trailing,
     this.children,
   });
+  final String title;
+  final String? subtitle;
+  final String urgency;
+  final IconData? icon;
+  final VoidCallback? onTap;
+  final Widget? trailing;
+  final List<Widget>? children;
 
   Color get _urgencyColor {
     return switch (urgency.toLowerCase()) {

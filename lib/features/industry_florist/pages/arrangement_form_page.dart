@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/widgets.dart';
-import '../models/flower_arrangement.dart';
-import '../providers/florist_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ArrangementFormPage extends ConsumerStatefulWidget {
-  final FlowerArrangement? arrangement;
   const ArrangementFormPage({super.key, this.arrangement});
+  final FlowerArrangement? arrangement;
 
   @override
   ConsumerState<ArrangementFormPage> createState() => _ArrangementFormPageState();
@@ -83,16 +83,16 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _nameCtrl, label: l10n.arrangementName, hint: l10n.floristBouquetHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _occasionCtrl, label: l10n.occasionOptional, hint: l10n.floristOccasionHint),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _totalPriceCtrl,
               label: l10n.floristTotalPrice,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: AppSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             PosToggle(
               value: _isTemplate,
               onChanged: (v) => setState(() => _isTemplate = v),

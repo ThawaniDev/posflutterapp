@@ -1,15 +1,4 @@
 class TemplatePurchase {
-  final String id;
-  final String organizationId;
-  final String listingId;
-  final String? listingName;
-  final String purchaseType;
-  final double amountPaid;
-  final String? subscriptionInterval;
-  final DateTime? expiresAt;
-  final bool isActive;
-  final DateTime? cancelledAt;
-  final DateTime? createdAt;
 
   const TemplatePurchase({
     required this.id,
@@ -24,8 +13,6 @@ class TemplatePurchase {
     this.cancelledAt,
     this.createdAt,
   });
-
-  bool get isExpired => expiresAt != null && expiresAt!.isBefore(DateTime.now());
 
   factory TemplatePurchase.fromJson(Map<String, dynamic> json) {
     return TemplatePurchase(
@@ -42,6 +29,19 @@ class TemplatePurchase {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final String listingId;
+  final String? listingName;
+  final String purchaseType;
+  final double amountPaid;
+  final String? subscriptionInterval;
+  final DateTime? expiresAt;
+  final bool isActive;
+  final DateTime? cancelledAt;
+  final DateTime? createdAt;
+
+  bool get isExpired => expiresAt != null && expiresAt!.isBefore(DateTime.now());
 
   Map<String, dynamic> toJson() {
     return {

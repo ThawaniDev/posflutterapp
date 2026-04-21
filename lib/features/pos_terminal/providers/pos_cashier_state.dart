@@ -6,18 +6,18 @@ import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 // ─── Cart State ─────────────────────────────────────────────────
 
 class CartState {
+  const CartState({this.items = const [], this.customer, this.notes, this.manualDiscount, this.taxExempt = false});
   final List<CartItem> items;
   final Customer? customer;
   final String? notes;
   final double? manualDiscount;
-
-  const CartState({this.items = const [], this.customer, this.notes, this.manualDiscount});
+  final bool taxExempt;
 
   int get itemCount => items.fold(0, (sum, i) => sum + i.quantity.toInt());
 
   double get subtotal => items.fold(0.0, (sum, i) => sum + i.subtotal);
 
-  double get taxAmount => items.fold(0.0, (sum, i) => sum + i.taxAmount);
+  double get taxAmount => taxExempt ? 0.0 : items.fold(0.0, (sum, i) => sum + i.taxAmount);
 
   double get discountTotal => (manualDiscount ?? 0) + items.fold(0.0, (sum, i) => sum + (i.discountAmount ?? 0));
 
@@ -33,12 +33,14 @@ class CartState {
     String? notes,
     double? manualDiscount,
     bool clearCustomer = false,
+    bool? taxExempt,
   }) {
     return CartState(
       items: items ?? this.items,
       customer: clearCustomer ? null : (customer ?? this.customer),
       notes: notes ?? this.notes,
       manualDiscount: manualDiscount ?? this.manualDiscount,
+      taxExempt: taxExempt ?? this.taxExempt,
     );
   }
 
@@ -63,6 +65,7 @@ class CartState {
       if (customer != null) 'customer_id': customer!.id,
       if (notes != null) 'notes': notes,
       if (manualDiscount != null) 'manual_discount': manualDiscount,
+      if (taxExempt) 'is_tax_exempt': true,
     };
   }
 }
@@ -82,13 +85,6 @@ class PosProductsLoading extends PosProductsState {
 }
 
 class PosProductsLoaded extends PosProductsState {
-  final List<Product> products;
-  final int total;
-  final int currentPage;
-  final int lastPage;
-  final String? search;
-  final String? categoryId;
-
   const PosProductsLoaded({
     required this.products,
     required this.total,
@@ -97,13 +93,19 @@ class PosProductsLoaded extends PosProductsState {
     this.search,
     this.categoryId,
   });
+  final List<Product> products;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final String? search;
+  final String? categoryId;
 
   bool get hasMore => currentPage < lastPage;
 }
 
 class PosProductsError extends PosProductsState {
-  final String message;
   const PosProductsError({required this.message});
+  final String message;
 }
 
 // ─── POS Customers State ────────────────────────────────────────
@@ -121,14 +123,13 @@ class PosCustomersLoading extends PosCustomersState {
 }
 
 class PosCustomersLoaded extends PosCustomersState {
-  final List<Customer> customers;
-
   const PosCustomersLoaded({required this.customers});
+  final List<Customer> customers;
 }
 
 class PosCustomersError extends PosCustomersState {
-  final String message;
   const PosCustomersError({required this.message});
+  final String message;
 }
 
 // ─── Active Session State ───────────────────────────────────────
@@ -146,13 +147,13 @@ class ActiveSessionLoading extends ActiveSessionState {
 }
 
 class ActiveSessionLoaded extends ActiveSessionState {
-  final PosSession session;
   const ActiveSessionLoaded({required this.session});
+  final PosSession session;
 }
 
 class ActiveSessionError extends ActiveSessionState {
-  final String message;
   const ActiveSessionError({required this.message});
+  final String message;
 }
 
 // ─── Sale Result ────────────────────────────────────────────────
@@ -170,13 +171,13 @@ class SaleProcessing extends SaleState {
 }
 
 class SaleCompleted extends SaleState {
+  const SaleCompleted({required this.transactionNumber, required this.totalAmount, this.changeGiven});
   final String transactionNumber;
   final double totalAmount;
   final double? changeGiven;
-  const SaleCompleted({required this.transactionNumber, required this.totalAmount, this.changeGiven});
 }
 
 class SaleError extends SaleState {
-  final String message;
   const SaleError({required this.message});
+  final String message;
 }

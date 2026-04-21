@@ -105,7 +105,7 @@ class _AdminInstallmentProvidersPageState extends ConsumerState<AdminInstallment
                         Text(
                           description,
                           style: AppTypography.bodySmall.copyWith(
-                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            color: AppColors.mutedFor(context),
                           ),
                         ),
                     ],

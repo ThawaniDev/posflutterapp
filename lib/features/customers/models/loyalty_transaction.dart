@@ -1,15 +1,6 @@
 import 'package:wameedpos/features/customers/enums/loyalty_transaction_type.dart';
 
 class LoyaltyTransaction {
-  final String id;
-  final String customerId;
-  final LoyaltyTransactionType type;
-  final int points;
-  final int balanceAfter;
-  final String? orderId;
-  final String? notes;
-  final String? performedBy;
-  final DateTime? createdAt;
 
   const LoyaltyTransaction({
     required this.id,
@@ -36,6 +27,15 @@ class LoyaltyTransaction {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String customerId;
+  final LoyaltyTransactionType type;
+  final int points;
+  final int balanceAfter;
+  final String? orderId;
+  final String? notes;
+  final String? performedBy;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

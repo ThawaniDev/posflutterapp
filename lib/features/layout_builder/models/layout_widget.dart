@@ -1,17 +1,4 @@
 class LayoutWidget {
-  final String id;
-  final String name;
-  final String description;
-  final String category;
-  final String componentKey;
-  final Map<String, dynamic> defaultConfig;
-  final int minWidth;
-  final int minHeight;
-  final int maxWidth;
-  final int maxHeight;
-  final String? iconUrl;
-  final bool isActive;
-  final DateTime? createdAt;
 
   const LayoutWidget({
     required this.id,
@@ -46,6 +33,19 @@ class LayoutWidget {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String description;
+  final String category;
+  final String componentKey;
+  final Map<String, dynamic> defaultConfig;
+  final int minWidth;
+  final int minHeight;
+  final int maxWidth;
+  final int maxHeight;
+  final String? iconUrl;
+  final bool isActive;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

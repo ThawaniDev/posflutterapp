@@ -6,9 +6,9 @@ final companionRepositoryProvider = Provider<CompanionRepository>((ref) {
 });
 
 class CompanionRepository {
-  final CompanionApiService _api;
 
   CompanionRepository(this._api);
+  final CompanionApiService _api;
 
   Future<Map<String, dynamic>> quickStats() => _api.quickStats();
 

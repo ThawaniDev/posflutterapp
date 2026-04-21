@@ -186,7 +186,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
   Widget _buildQueueStats(ThawaniQueueStatsState state) {
     return switch (state) {
       ThawaniQueueStatsInitial() || ThawaniQueueStatsLoading() => const SizedBox(height: 40, child: PosLoading()),
-      ThawaniQueueStatsError(:final message) => Text(message, style: TextStyle(color: AppColors.error, fontSize: 12)),
+      ThawaniQueueStatsError(:final message) => Text(message, style: const TextStyle(color: AppColors.error, fontSize: 12)),
       ThawaniQueueStatsLoaded(:final pending, :final processing, :final completed, :final failed) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -207,7 +207,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
           '$count',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
         ),
-        Text(label, style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+        Text(label, style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context))),
       ],
     );
   }

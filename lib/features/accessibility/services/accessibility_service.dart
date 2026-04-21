@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/accessibility_providers.dart';
-import '../providers/accessibility_state.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_providers.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
 
 /// Central accessibility state that applies font scaling, high contrast,
 /// reduced motion, and other preferences to the app theme.
 class AccessibilitySettings {
-  final double fontScale;
-  final bool highContrast;
-  final String colorBlindMode;
-  final bool reducedMotion;
-  final bool audioFeedback;
-  final double audioVolume;
-  final bool largeTouchTargets;
-  final bool visibleFocus;
-  final bool screenReaderHints;
 
   const AccessibilitySettings({
     this.fontScale = 1.0,
@@ -28,6 +19,15 @@ class AccessibilitySettings {
     this.visibleFocus = true,
     this.screenReaderHints = true,
   });
+  final double fontScale;
+  final bool highContrast;
+  final String colorBlindMode;
+  final bool reducedMotion;
+  final bool audioFeedback;
+  final double audioVolume;
+  final bool largeTouchTargets;
+  final bool visibleFocus;
+  final bool screenReaderHints;
 
   AccessibilitySettings copyWith({
     double? fontScale,
@@ -112,15 +112,15 @@ final highContrastThemeProvider = Provider<ThemeData?>((ref) {
       border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF000000), width: 2)),
       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF000000), width: 3)),
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
+    elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(Color(0xFFFFFFFF)),
-        backgroundColor: const WidgetStatePropertyAll(Color(0xFF000000)),
-        side: const WidgetStatePropertyAll(BorderSide(color: Color(0xFF000000), width: 2)),
+        foregroundColor: WidgetStatePropertyAll(Color(0xFFFFFFFF)),
+        backgroundColor: WidgetStatePropertyAll(Color(0xFF000000)),
+        side: WidgetStatePropertyAll(BorderSide(color: Color(0xFF000000), width: 2)),
       ),
     ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: const ButtonStyle(
+    outlinedButtonTheme: const OutlinedButtonThemeData(
+      style: ButtonStyle(
         foregroundColor: WidgetStatePropertyAll(Color(0xFF000000)),
         side: WidgetStatePropertyAll(BorderSide(color: Color(0xFF000000), width: 2)),
       ),

@@ -64,7 +64,8 @@ import 'app_localizations_ur.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,7 +73,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,15 +86,21 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ar'), Locale('bn'), Locale('en'), Locale('ur')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('bn'),
+    Locale('en'),
+    Locale('ur'),
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -2842,6 +2850,12 @@ abstract class AppLocalizations {
   /// **'Store Profile'**
   String get settingsStoreProfile;
 
+  /// No description provided for @settingsBusinessType.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Type'**
+  String get settingsBusinessType;
+
   /// No description provided for @settingsStoreProfileDesc.
   ///
   /// In en, this message translates to:
@@ -3463,7 +3477,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsProfileCurrencyCodeHint.
   ///
   /// In en, this message translates to:
-  /// **'e.g. OMR, , USD'**
+  /// **'e.g. , , USD'**
   String get settingsProfileCurrencyCodeHint;
 
   /// No description provided for @settingsProfileCurrencySymbol.
@@ -4738,6 +4752,30 @@ abstract class AppLocalizations {
   /// **'New Recipe'**
   String get bakeryNewRecipe;
 
+  /// No description provided for @bakeryEditSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Schedule'**
+  String get bakeryEditSchedule;
+
+  /// No description provided for @bakeryNewSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'New Production Schedule'**
+  String get bakeryNewSchedule;
+
+  /// No description provided for @bakeryUpdateSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Schedule'**
+  String get bakeryUpdateSchedule;
+
+  /// No description provided for @bakeryCreateSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Schedule'**
+  String get bakeryCreateSchedule;
+
   /// No description provided for @bakeryIngredients.
   ///
   /// In en, this message translates to:
@@ -5842,6 +5880,324 @@ abstract class AppLocalizations {
   /// **'Delete this shift? This cannot be undone.'**
   String get staffDeleteShiftConfirm;
 
+  /// No description provided for @staffShiftsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Shifts'**
+  String get staffShiftsTab;
+
+  /// No description provided for @staffTemplatesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get staffTemplatesTab;
+
+  /// No description provided for @staffShiftTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Templates'**
+  String get staffShiftTemplates;
+
+  /// No description provided for @staffCreateTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Template'**
+  String get staffCreateTemplate;
+
+  /// No description provided for @staffEditTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Template'**
+  String get staffEditTemplate;
+
+  /// No description provided for @staffDeleteTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Template'**
+  String get staffDeleteTemplate;
+
+  /// No description provided for @staffDeleteTemplateConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this template? This cannot be undone.'**
+  String get staffDeleteTemplateConfirm;
+
+  /// No description provided for @staffTemplateCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Template created'**
+  String get staffTemplateCreated;
+
+  /// No description provided for @staffTemplateUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Template updated'**
+  String get staffTemplateUpdated;
+
+  /// No description provided for @staffTemplateDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Template deleted'**
+  String get staffTemplateDeleted;
+
+  /// No description provided for @staffNoTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'No templates found'**
+  String get staffNoTemplates;
+
+  /// No description provided for @staffNoShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'No shifts found'**
+  String get staffNoShifts;
+
+  /// No description provided for @staffStatusScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get staffStatusScheduled;
+
+  /// No description provided for @staffStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get staffStatusCompleted;
+
+  /// No description provided for @staffStatusMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get staffStatusMissed;
+
+  /// No description provided for @staffStatusSwapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Swapped'**
+  String get staffStatusSwapped;
+
+  /// No description provided for @staffStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get staffStatusUnknown;
+
+  /// No description provided for @staffMarkComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Complete'**
+  String get staffMarkComplete;
+
+  /// No description provided for @staffMarkMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Missed'**
+  String get staffMarkMissed;
+
+  /// No description provided for @staffActual.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual'**
+  String get staffActual;
+
+  /// No description provided for @staffUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get staffUnknown;
+
+  /// No description provided for @staffBulkAssignShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Assign Shifts'**
+  String get staffBulkAssignShifts;
+
+  /// No description provided for @staffSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'Single'**
+  String get staffSingle;
+
+  /// No description provided for @staffBulk.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk'**
+  String get staffBulk;
+
+  /// No description provided for @staffSelectMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Members'**
+  String get staffSelectMembers;
+
+  /// No description provided for @staffSelectDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Dates'**
+  String get staffSelectDates;
+
+  /// No description provided for @staffAddDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Date'**
+  String get staffAddDate;
+
+  /// No description provided for @staffPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get staffPeriod;
+
+  /// No description provided for @staffShiftsCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Shifts created'**
+  String get staffShiftsCreated;
+
+  /// No description provided for @staffShiftUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift updated'**
+  String get staffShiftUpdated;
+
+  /// No description provided for @staffEditShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Shift'**
+  String get staffEditShift;
+
+  /// No description provided for @staffBreakMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min break'**
+  String staffBreakMinutes(int count);
+
+  /// No description provided for @staffBreakDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Break Duration'**
+  String get staffBreakDuration;
+
+  /// No description provided for @staffMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get staffMinutes;
+
+  /// No description provided for @staffStartTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get staffStartTime;
+
+  /// No description provided for @staffEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End Time'**
+  String get staffEndTime;
+
+  /// No description provided for @color.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// No description provided for @staffOnBreak.
+  ///
+  /// In en, this message translates to:
+  /// **'On Break'**
+  String get staffOnBreak;
+
+  /// No description provided for @staffOngoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ongoing'**
+  String get staffOngoing;
+
+  /// No description provided for @staffNetWorked.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get staffNetWorked;
+
+  /// No description provided for @staffAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Absent'**
+  String get staffAbsent;
+
+  /// No description provided for @staffCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get staffCompleted;
+
+  /// No description provided for @staffOnTime.
+  ///
+  /// In en, this message translates to:
+  /// **'On Time'**
+  String get staffOnTime;
+
+  /// No description provided for @staffLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get staffLate;
+
+  /// No description provided for @staffEarlyDeparture.
+  ///
+  /// In en, this message translates to:
+  /// **'Early Departure'**
+  String get staffEarlyDeparture;
+
+  /// No description provided for @staffActiveSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get staffActiveSession;
+
+  /// No description provided for @staffTotalHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Hours'**
+  String get staffTotalHours;
+
+  /// No description provided for @staffAvgHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Hours'**
+  String get staffAvgHours;
+
+  /// No description provided for @staffLateArrivals.
+  ///
+  /// In en, this message translates to:
+  /// **'Late Arrivals'**
+  String get staffLateArrivals;
+
+  /// No description provided for @staffOnTimeRate.
+  ///
+  /// In en, this message translates to:
+  /// **'On-Time Rate'**
+  String get staffOnTimeRate;
+
+  /// No description provided for @staffOvertimeHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Overtime'**
+  String get staffOvertimeHours;
+
+  /// No description provided for @staffBreakDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Break Details'**
+  String get staffBreakDetails;
+
+  /// No description provided for @staffExportAttendance.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get staffExportAttendance;
+
   /// No description provided for @staffCommissions.
   ///
   /// In en, this message translates to:
@@ -6074,7 +6430,11 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} /{billingCycle}'**
-  String subscriptionSubscribeConfirm(String planName, String billingCycle, String price);
+  String subscriptionSubscribeConfirm(
+    String planName,
+    String billingCycle,
+    String price,
+  );
 
   /// No description provided for @subscriptionSubscribe.
   ///
@@ -8236,11 +8596,23 @@ abstract class AppLocalizations {
   /// **'Cash'**
   String get paymentCash;
 
+  /// No description provided for @paymentCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentCard;
+
   /// No description provided for @paymentMada.
   ///
   /// In en, this message translates to:
   /// **'mada'**
   String get paymentMada;
+
+  /// No description provided for @paymentCardMada.
+  ///
+  /// In en, this message translates to:
+  /// **'Mada Card'**
+  String get paymentCardMada;
 
   /// No description provided for @paymentVisa.
   ///
@@ -8248,11 +8620,29 @@ abstract class AppLocalizations {
   /// **'Visa'**
   String get paymentVisa;
 
+  /// No description provided for @paymentCardVisa.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa Card'**
+  String get paymentCardVisa;
+
   /// No description provided for @paymentMastercard.
   ///
   /// In en, this message translates to:
   /// **'Mastercard'**
   String get paymentMastercard;
+
+  /// No description provided for @paymentApplePay.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Pay'**
+  String get paymentApplePay;
+
+  /// No description provided for @paymentStcPay.
+  ///
+  /// In en, this message translates to:
+  /// **'STC Pay'**
+  String get paymentStcPay;
 
   /// No description provided for @paymentStoreCredit.
   ///
@@ -8271,6 +8661,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mobile Payment'**
   String get paymentMobilePayment;
+
+  /// No description provided for @paymentLoyaltyPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Points'**
+  String get paymentLoyaltyPoints;
+
+  /// No description provided for @paymentBankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Transfer'**
+  String get paymentBankTransfer;
 
   /// No description provided for @offlineChangesSynced.
   ///
@@ -9058,6 +9460,24 @@ abstract class AppLocalizations {
   /// **'{name} added'**
   String posProductAdded(Object name);
 
+  /// No description provided for @posEnterWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Weight'**
+  String get posEnterWeight;
+
+  /// No description provided for @posTareWeightNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Tare weight: {weight} kg will be deducted automatically'**
+  String posTareWeightNote(Object weight);
+
+  /// No description provided for @posWeightHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter weight in kg'**
+  String get posWeightHint;
+
   /// No description provided for @posProductNotFound.
   ///
   /// In en, this message translates to:
@@ -9141,6 +9561,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cash Tendered'**
   String get posCashTendered;
+
+  /// No description provided for @posTipAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip Amount'**
+  String get posTipAmount;
+
+  /// No description provided for @posTotalWithTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Total with Tip'**
+  String get posTotalWithTip;
+
+  /// No description provided for @posPaymentTotalInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment total does not cover the amount due'**
+  String get posPaymentTotalInsufficient;
+
+  /// No description provided for @posReturnQtyExceedsOriginal.
+  ///
+  /// In en, this message translates to:
+  /// **'Return quantity exceeds original for {product} (max: {max})'**
+  String posReturnQtyExceedsOriginal(String product, String max);
 
   /// No description provided for @posChange.
   ///
@@ -9423,6 +9867,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tax (15%)'**
   String get posTax15;
+
+  /// No description provided for @posTaxExempt.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Exempt'**
+  String get posTaxExempt;
 
   /// No description provided for @posClearCartMessage.
   ///
@@ -10870,6 +11320,12 @@ abstract class AppLocalizations {
   /// **'Invalid'**
   String get commonInvalid;
 
+  /// No description provided for @commonError.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get commonError;
+
   /// No description provided for @commonNo.
   ///
   /// In en, this message translates to:
@@ -11302,6 +11758,24 @@ abstract class AppLocalizations {
   /// **'Purchase order sent'**
   String get inventoryPOSent;
 
+  /// No description provided for @inventoryPOReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order received'**
+  String get inventoryPOReceived;
+
+  /// No description provided for @inventoryReceivePOTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive Purchase Order'**
+  String get inventoryReceivePOTitle;
+
+  /// No description provided for @inventoryOrdered.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered'**
+  String get inventoryOrdered;
+
   /// No description provided for @inventoryPartiallyReceived.
   ///
   /// In en, this message translates to:
@@ -11367,6 +11841,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recipe deleted'**
   String get inventoryRecipeDeleted;
+
+  /// No description provided for @inventoryRecipeUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe updated'**
+  String get inventoryRecipeUpdated;
 
   /// No description provided for @inventoryRecipes.
   ///
@@ -13690,6 +14170,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get appBarLanguage;
 
+  /// No description provided for @appBarMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get appBarMore;
+
   /// No description provided for @quickNavTitle.
   ///
   /// In en, this message translates to:
@@ -14385,6 +14871,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customer Facing Display Themes'**
   String get cfdThemesTitle;
+
+  /// No description provided for @cfdEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'CFD Enabled'**
+  String get cfdEnabled;
+
+  /// No description provided for @cfdTargetMonitor.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Monitor'**
+  String get cfdTargetMonitor;
+
+  /// No description provided for @cfdIdleRotation.
+  ///
+  /// In en, this message translates to:
+  /// **'Idle Rotation (seconds)'**
+  String get cfdIdleRotation;
 
   /// No description provided for @cfdThemesEmpty.
   ///
@@ -29235,9 +29739,434 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{active}/{total} active'**
   String staffPermissionsActiveCount(int active, int total);
+
+  /// No description provided for @subThisAddOn.
+  ///
+  /// In en, this message translates to:
+  /// **'this add-on'**
+  String get subThisAddOn;
+
+  /// No description provided for @subBillingCycleMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get subBillingCycleMonthly;
+
+  /// No description provided for @subBillingCycleYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get subBillingCycleYearly;
+
+  /// No description provided for @subUnableToIdentifyAddOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to identify add-on'**
+  String get subUnableToIdentifyAddOn;
+
+  /// No description provided for @softPosFreeTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Tier'**
+  String get softPosFreeTier;
+
+  /// No description provided for @softPosFreeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Free tier is active'**
+  String get softPosFreeActive;
+
+  /// No description provided for @softPosTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get softPosTransactions;
+
+  /// No description provided for @softPosRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get softPosRemaining;
+
+  /// No description provided for @subAddOnConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {name} for {price} {currency}/{cycle}?'**
+  String subAddOnConfirmMessage(
+    String name,
+    String price,
+    String currency,
+    String cycle,
+  );
+
+  /// No description provided for @subAddOnRemovedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has been removed'**
+  String subAddOnRemovedSuccess(String name);
+
+  /// No description provided for @subAddOnRemoveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove add-on: {error}'**
+  String subAddOnRemoveFailed(String error);
+
+  /// No description provided for @subConfirmSubscriptionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe to {planName} ({billingCycle}) for {price} {currency}?'**
+  String subConfirmSubscriptionMessage(
+    String planName,
+    String billingCycle,
+    String price,
+    String currency,
+  );
+
+  /// No description provided for @subBillingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing: {cycle}'**
+  String subBillingLabel(String cycle);
+
+  /// No description provided for @subPeriodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {start} – {end}'**
+  String subPeriodLabel(String start, String end);
+
+  /// No description provided for @subTrialEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial ends: {date}'**
+  String subTrialEnds(String date);
+
+  /// No description provided for @subGracePeriodEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace period ends: {date}'**
+  String subGracePeriodEnds(String date);
+
+  /// No description provided for @softPosSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving {amount} '**
+  String softPosSaving(String amount);
+
+  /// No description provided for @softPosReachThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach {threshold} transactions to unlock paid features'**
+  String softPosReachThreshold(int threshold);
+
+  /// No description provided for @subDaysRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Days Left'**
+  String get subDaysRemaining;
+
+  /// No description provided for @subNextPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Payment'**
+  String get subNextPayment;
+
+  /// No description provided for @subPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get subPaymentMethod;
+
+  /// No description provided for @subQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get subQuickActions;
+
+  /// No description provided for @subViewPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'View Payments'**
+  String get subViewPayments;
+
+  /// No description provided for @subIncludedFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Included Features'**
+  String get subIncludedFeatures;
+
+  /// No description provided for @subSubscriptionOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Overview'**
+  String get subSubscriptionOverview;
+
+  /// No description provided for @subPlanDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Details'**
+  String get subPlanDetails;
+
+  /// No description provided for @subNextBillingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Billing Date'**
+  String get subNextBillingDate;
+
+  /// No description provided for @subNDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days left'**
+  String subNDaysLeft(int days);
+
+  /// No description provided for @subCurrentPlanBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get subCurrentPlanBadge;
+
+  /// No description provided for @subBestValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Value'**
+  String get subBestValue;
+
+  /// No description provided for @subFeaturesIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} features included'**
+  String subFeaturesIncluded(int count);
+
+  /// No description provided for @subLimitsIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} limits'**
+  String subLimitsIncluded(int count);
+
+  /// No description provided for @subNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Available'**
+  String get subNotAvailable;
+
+  /// No description provided for @subEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get subEnabled;
+
+  /// No description provided for @subDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get subDisabled;
+
+  /// No description provided for @subSoftPosFreeAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'FREE after {threshold} SoftPOS transactions'**
+  String subSoftPosFreeAfter(int threshold);
+
+  /// No description provided for @subSoftPosFreeExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Use SoftPOS to accept {threshold} card payments within {period} and your subscription becomes free!'**
+  String subSoftPosFreeExplainer(int threshold, String period);
+
+  /// No description provided for @subSoftPosFreeEligible.
+  ///
+  /// In en, this message translates to:
+  /// **'SoftPOS Free Eligible'**
+  String get subSoftPosFreeEligible;
+
+  /// No description provided for @subSoftPosOrPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Otherwise: {price} {period}'**
+  String subSoftPosOrPay(String price, String period);
+
+  /// No description provided for @notifCentreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Centre'**
+  String get notifCentreTitle;
+
+  /// No description provided for @notifCentreSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All your alerts in one place'**
+  String get notifCentreSubtitle;
+
+  /// No description provided for @notifTabInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get notifTabInbox;
+
+  /// No description provided for @notifTabAnnouncements.
+  ///
+  /// In en, this message translates to:
+  /// **'Announcements'**
+  String get notifTabAnnouncements;
+
+  /// No description provided for @notifTabPaymentReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Reminders'**
+  String get notifTabPaymentReminders;
+
+  /// No description provided for @notifTabAppUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'App Updates'**
+  String get notifTabAppUpdates;
+
+  /// No description provided for @notifBellTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifBellTooltip;
+
+  /// No description provided for @notifViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get notifViewAll;
+
+  /// No description provided for @notifNoRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent notifications'**
+  String get notifNoRecent;
+
+  /// No description provided for @notifMaintenanceBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled maintenance'**
+  String get notifMaintenanceBannerTitle;
+
+  /// No description provided for @notifMaintenanceUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected end: {endAt}'**
+  String notifMaintenanceUntil(String endAt);
+
+  /// No description provided for @announcementsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No announcements right now'**
+  String get announcementsEmpty;
+
+  /// No description provided for @announcementsDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get announcementsDismiss;
+
+  /// No description provided for @announcementsDismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Announcement dismissed'**
+  String get announcementsDismissed;
+
+  /// No description provided for @paymentReminderDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get paymentReminderDue;
+
+  /// No description provided for @paymentRemindersEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment reminders'**
+  String get paymentRemindersEmpty;
+
+  /// No description provided for @paymentRemindersUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get paymentRemindersUpcoming;
+
+  /// No description provided for @paymentRemindersOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get paymentRemindersOverdue;
+
+  /// No description provided for @paymentRemindersChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get paymentRemindersChannel;
+
+  /// No description provided for @paymentRemindersSentAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent at'**
+  String get paymentRemindersSentAt;
+
+  /// No description provided for @paymentRemindersSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{total} total · {upcoming} upcoming · {overdue} overdue'**
+  String paymentRemindersSummary(int total, int upcoming, int overdue);
+
+  /// No description provided for @appReleasesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No releases available'**
+  String get appReleasesEmpty;
+
+  /// No description provided for @appReleaseLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest release'**
+  String get appReleaseLatest;
+
+  /// No description provided for @appReleaseVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appReleaseVersion(String version);
+
+  /// No description provided for @appReleaseForceUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Required update'**
+  String get appReleaseForceUpdate;
+
+  /// No description provided for @appReleaseChangelog.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get appReleaseChangelog;
+
+  /// No description provided for @appReleaseDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get appReleaseDownload;
+
+  /// No description provided for @appReleasePlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get appReleasePlatform;
+
+  /// No description provided for @appReleaseChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get appReleaseChannel;
+
+  /// No description provided for @appReleaseReleasedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Released {date}'**
+  String appReleaseReleasedAt(String date);
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -29246,7 +30175,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'bn', 'en', 'ur'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['ar', 'bn', 'en', 'ur'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

@@ -12,12 +12,11 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 
 /// Repository that orchestrates auth API calls and local storage.
 class AuthRepository {
-  final AuthApiService _apiService;
-  final AuthLocalStorage _localStorage;
-
   AuthRepository({required AuthApiService apiService, required AuthLocalStorage localStorage})
     : _apiService = apiService,
       _localStorage = localStorage;
+  final AuthApiService _apiService;
+  final AuthLocalStorage _localStorage;
 
   // ─── Registration ──────────────────────────────────────────────
 
@@ -31,7 +30,7 @@ class AuthRepository {
     String? storeName,
     String? storeNameAr,
     String country = 'SA',
-    String currency = 'SAR',
+    String currency = '',
     String locale = 'ar',
     String? businessType,
   }) async {

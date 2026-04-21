@@ -11,9 +11,9 @@ final marketplaceRepositoryProvider = Provider<MarketplaceRepository>((ref) {
 });
 
 class MarketplaceRepository {
-  final MarketplaceApiService _apiService;
 
   MarketplaceRepository({required MarketplaceApiService apiService}) : _apiService = apiService;
+  final MarketplaceApiService _apiService;
 
   Future<List<MarketplaceListing>> listListings({
     String? search,

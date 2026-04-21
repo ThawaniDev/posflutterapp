@@ -1,7 +1,4 @@
 class DeliveryPlatformWebhookTemplate {
-  final String id;
-  final String deliveryPlatformId;
-  final String pathTemplate;
 
   const DeliveryPlatformWebhookTemplate({
     required this.id,
@@ -16,6 +13,9 @@ class DeliveryPlatformWebhookTemplate {
       pathTemplate: json['path_template'] as String,
     );
   }
+  final String id;
+  final String deliveryPlatformId;
+  final String pathTemplate;
 
   Map<String, dynamic> toJson() {
     return {

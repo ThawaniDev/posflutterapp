@@ -164,7 +164,7 @@ class _ValuationTab extends ConsumerWidget {
                     final stockVal = (p['stock_value'] != null ? double.tryParse(p['stock_value'].toString()) : null) ?? 0;
                     return Column(
                       children: [
-                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                         ReportRankedItem(
                           rank: i + 1,
                           title: p['product_name'] as String? ?? '',
@@ -227,7 +227,7 @@ class _TurnoverTab extends ConsumerWidget {
 
                         return Column(
                           children: [
-                            if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                            if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                             ReportRankedItem(
                               rank: i + 1,
                               title: p['product_name'] as String? ?? '',
@@ -284,7 +284,7 @@ class _ShrinkageTab extends ConsumerWidget {
                     final cost = (r['total_cost'] as num?)?.abs().toDouble() ?? 0;
                     return Column(
                       children: [
-                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(
@@ -295,7 +295,7 @@ class _ShrinkageTab extends ConsumerWidget {
                                   color: AppColors.warning.withValues(alpha: 0.1),
                                   borderRadius: AppRadius.borderMd,
                                 ),
-                                child: Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
+                                child: const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -309,7 +309,7 @@ class _ShrinkageTab extends ConsumerWidget {
                                     Text(
                                       l10n.reportNUnits(qty.toString()),
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                        color: AppColors.mutedFor(context),
                                       ),
                                     ),
                                   ],
@@ -344,7 +344,7 @@ class _ShrinkageTab extends ConsumerWidget {
                     final cost = (p['total_cost'] as num?)?.abs().toDouble() ?? 0;
                     return Column(
                       children: [
-                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
                         ReportRankedItem(
                           rank: i + 1,
                           title: p['product_name'] as String? ?? '',
@@ -433,7 +433,7 @@ class _LowStockTab extends ConsumerWidget {
                                   Text(
                                     l10n.reportStockReorder(current.toString(), reorder.toString()),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                      color: AppColors.mutedFor(context),
                                     ),
                                   ),
                                 ],

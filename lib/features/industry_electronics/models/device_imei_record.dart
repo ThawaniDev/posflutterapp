@@ -2,19 +2,6 @@ import 'package:wameedpos/features/customers/enums/condition_grade.dart';
 import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
 
 class DeviceImeiRecord {
-  final String id;
-  final String productId;
-  final String storeId;
-  final String imei;
-  final String? imei2;
-  final String? serialNumber;
-  final ConditionGrade? conditionGrade;
-  final double? purchasePrice;
-  final DeviceImeiStatus? status;
-  final DateTime? warrantyEndDate;
-  final DateTime? storeWarrantyEndDate;
-  final String? soldOrderId;
-  final DateTime? createdAt;
 
   const DeviceImeiRecord({
     required this.id,
@@ -51,6 +38,19 @@ class DeviceImeiRecord {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String productId;
+  final String storeId;
+  final String imei;
+  final String? imei2;
+  final String? serialNumber;
+  final ConditionGrade? conditionGrade;
+  final double? purchasePrice;
+  final DeviceImeiStatus? status;
+  final DateTime? warrantyEndDate;
+  final DateTime? storeWarrantyEndDate;
+  final String? soldOrderId;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

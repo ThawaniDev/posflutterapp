@@ -6,12 +6,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_searchable_dropdown.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/pos_terminal/enums/transaction_status.dart';
 import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
@@ -336,7 +330,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.receipt_long_outlined, size: 48, color: AppColors.textMutedLight),
+              Icon(Icons.receipt_long_outlined, size: 48, color: AppColors.mutedFor(context)),
               AppSpacing.gapH8,
               Text(l10n.txNoTransactions, style: AppTypography.bodyMedium),
             ],
@@ -388,7 +382,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
             AppSpacing.gapH4,
             Text(
               '${tx.createdAt!.day}/${tx.createdAt!.month}/${tx.createdAt!.year} ${tx.createdAt!.hour.toString().padLeft(2, '0')}:${tx.createdAt!.minute.toString().padLeft(2, '0')}',
-              style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
             ),
           ],
         ],

@@ -14,12 +14,6 @@ import 'package:wameedpos/features/hardware/services/weighing_scale_service.dart
 
 /// Peripheral connection status
 class PeripheralStatus {
-  final HardwareDeviceType type;
-  final bool isConfigured;
-  final bool isConnected;
-  final String? deviceName;
-  final String? errorMessage;
-  final DateTime? lastActivity;
 
   const PeripheralStatus({
     required this.type,
@@ -29,6 +23,12 @@ class PeripheralStatus {
     this.errorMessage,
     this.lastActivity,
   });
+  final HardwareDeviceType type;
+  final bool isConfigured;
+  final bool isConnected;
+  final String? deviceName;
+  final String? errorMessage;
+  final DateTime? lastActivity;
 
   PeripheralStatus copyWith({
     bool? isConfigured,

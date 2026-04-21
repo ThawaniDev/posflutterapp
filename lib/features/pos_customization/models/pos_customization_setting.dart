@@ -4,21 +4,6 @@ import 'package:wameedpos/features/pos_customization/enums/layout_direction.dart
 import 'package:wameedpos/features/pos_customization/enums/pos_theme.dart';
 
 class PosCustomizationSetting {
-  final String id;
-  final String storeId;
-  final PosTheme? theme;
-  final String? primaryColor;
-  final String? secondaryColor;
-  final String? accentColor;
-  final double? fontScale;
-  final Handedness? handedness;
-  final int? gridColumns;
-  final bool? showProductImages;
-  final bool? showPriceOnGrid;
-  final CartDisplayMode? cartDisplayMode;
-  final LayoutDirection? layoutDirection;
-  final int? syncVersion;
-  final DateTime? updatedAt;
 
   const PosCustomizationSetting({
     required this.id,
@@ -57,6 +42,21 @@ class PosCustomizationSetting {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final PosTheme? theme;
+  final String? primaryColor;
+  final String? secondaryColor;
+  final String? accentColor;
+  final double? fontScale;
+  final Handedness? handedness;
+  final int? gridColumns;
+  final bool? showProductImages;
+  final bool? showPriceOnGrid;
+  final CartDisplayMode? cartDisplayMode;
+  final LayoutDirection? layoutDirection;
+  final int? syncVersion;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

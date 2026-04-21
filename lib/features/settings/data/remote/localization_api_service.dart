@@ -8,9 +8,9 @@ final localizationApiServiceProvider = Provider<LocalizationApiService>((ref) {
 });
 
 class LocalizationApiService {
-  final Dio _dio;
 
   LocalizationApiService(this._dio);
+  final Dio _dio;
 
   /// GET /settings/locales
   Future<Response> listLocales({bool? activeOnly}) async {

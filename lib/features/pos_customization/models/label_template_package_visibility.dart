@@ -1,6 +1,4 @@
 class LabelTemplatePackageVisibility {
-  final String labelLayoutTemplateId;
-  final String subscriptionPlanId;
 
   const LabelTemplatePackageVisibility({
     required this.labelLayoutTemplateId,
@@ -13,6 +11,8 @@ class LabelTemplatePackageVisibility {
       subscriptionPlanId: json['subscription_plan_id'] as String,
     );
   }
+  final String labelLayoutTemplateId;
+  final String subscriptionPlanId;
 
   Map<String, dynamic> toJson() {
     return {

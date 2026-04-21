@@ -3,20 +3,6 @@ import 'package:wameedpos/features/payments/models/installment_provider_config.d
 
 /// Store-level configuration for an installment provider.
 class StoreInstallmentConfig {
-  final String id;
-  final String storeId;
-  final InstallmentProvider provider;
-  final bool isEnabled;
-  final String environment;
-  final bool isFullyConfigured;
-  final bool isAvailable;
-  final Map<String, String> maskedCredentials;
-  final String? successUrl;
-  final String? cancelUrl;
-  final String? failureUrl;
-  final InstallmentProviderConfig? providerConfig;
-  final String? createdAt;
-  final String? updatedAt;
 
   const StoreInstallmentConfig({
     required this.id,
@@ -55,6 +41,20 @@ class StoreInstallmentConfig {
       updatedAt: json['updated_at'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final InstallmentProvider provider;
+  final bool isEnabled;
+  final String environment;
+  final bool isFullyConfigured;
+  final bool isAvailable;
+  final Map<String, String> maskedCredentials;
+  final String? successUrl;
+  final String? cancelUrl;
+  final String? failureUrl;
+  final InstallmentProviderConfig? providerConfig;
+  final String? createdAt;
+  final String? updatedAt;
 
   Map<String, dynamic> toJson() => {
     'id': id,

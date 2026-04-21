@@ -2,20 +2,6 @@ import 'package:wameedpos/features/accounting/enums/accounting_export_status.dar
 import 'package:wameedpos/features/accounting/enums/export_triggered_by.dart';
 
 class AccountingExport {
-  final String id;
-  final String storeId;
-  final String provider;
-  final DateTime startDate;
-  final DateTime endDate;
-  final Map<String, dynamic> exportTypes;
-  final AccountingExportStatus status;
-  final int? entriesCount;
-  final String? errorMessage;
-  final Map<String, dynamic>? journalEntryIds;
-  final String? csvUrl;
-  final ExportTriggeredBy triggeredBy;
-  final DateTime? createdAt;
-  final DateTime? completedAt;
 
   const AccountingExport({
     required this.id,
@@ -52,6 +38,20 @@ class AccountingExport {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String provider;
+  final DateTime startDate;
+  final DateTime endDate;
+  final Map<String, dynamic> exportTypes;
+  final AccountingExportStatus status;
+  final int? entriesCount;
+  final String? errorMessage;
+  final Map<String, dynamic>? journalEntryIds;
+  final String? csvUrl;
+  final ExportTriggeredBy triggeredBy;
+  final DateTime? createdAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

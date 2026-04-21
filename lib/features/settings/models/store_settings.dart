@@ -1,79 +1,5 @@
 /// Complete store settings model mapping all columns from the API.
 class StoreSettings {
-  final String id;
-  final String storeId;
-
-  // ─── Tax ────────────────────────────────────────────────────
-  final String taxLabel;
-  final double taxRate;
-  final bool pricesIncludeTax;
-  final String? taxNumber;
-
-  // ─── Receipt ────────────────────────────────────────────────
-  final String? receiptHeader;
-  final String? receiptFooter;
-  final bool receiptShowLogo;
-  final bool receiptShowTaxBreakdown;
-  final bool receiptShowAddress;
-  final bool receiptShowPhone;
-  final bool receiptShowDate;
-  final bool receiptShowCashier;
-  final bool receiptShowBarcode;
-  final String receiptPaperSize;
-  final String receiptFontSize;
-  final String receiptLanguage;
-
-  // ─── Currency & Formatting ──────────────────────────────────
-  final String currencyCode;
-  final String currencySymbol;
-  final int decimalPlaces;
-  final String thousandSeparator;
-  final String decimalSeparator;
-
-  // ─── POS Behaviour ──────────────────────────────────────────
-  final bool allowNegativeStock;
-  final bool requireCustomerForSale;
-  final bool autoPrintReceipt;
-  final int sessionTimeoutMinutes;
-  final int maxDiscountPercent;
-  final bool enableTips;
-  final bool enableKitchenDisplay;
-  final bool barcodeScanSound;
-  final String defaultSaleType;
-  final bool enableHoldOrders;
-  final bool enableRefunds;
-  final bool enableExchanges;
-  final bool requireManagerForRefund;
-  final bool requireManagerForDiscount;
-  final bool enableOpenPriceItems;
-  final bool enableQuickAddProducts;
-
-  // ─── Loyalty ────────────────────────────────────────────────
-  final bool enableLoyaltyPoints;
-  final double loyaltyPointsPerCurrency;
-  final double loyaltyRedemptionValue;
-
-  // ─── Notifications ──────────────────────────────────────────
-  final bool lowStockAlert;
-  final int lowStockThreshold;
-
-  // ─── Inventory Tracking ─────────────────────────────────────
-  final bool trackInventory;
-  final bool enableBatchTracking;
-  final bool enableExpiryTracking;
-  final bool autoDeductIngredients;
-
-  // ─── Display ────────────────────────────────────────────────
-  final String themeMode;
-  final String displayLanguage;
-
-  // ─── Customer Display ───────────────────────────────────────
-  final bool enableCustomerDisplay;
-  final String? customerDisplayMessage;
-
-  // ─── Extra ──────────────────────────────────────────────────
-  final Map<String, dynamic> extra;
-  final DateTime? updatedAt;
 
   const StoreSettings({
     required this.id,
@@ -200,6 +126,80 @@ class StoreSettings {
       updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at'].toString()) : null,
     );
   }
+  final String id;
+  final String storeId;
+
+  // ─── Tax ────────────────────────────────────────────────────
+  final String taxLabel;
+  final double taxRate;
+  final bool pricesIncludeTax;
+  final String? taxNumber;
+
+  // ─── Receipt ────────────────────────────────────────────────
+  final String? receiptHeader;
+  final String? receiptFooter;
+  final bool receiptShowLogo;
+  final bool receiptShowTaxBreakdown;
+  final bool receiptShowAddress;
+  final bool receiptShowPhone;
+  final bool receiptShowDate;
+  final bool receiptShowCashier;
+  final bool receiptShowBarcode;
+  final String receiptPaperSize;
+  final String receiptFontSize;
+  final String receiptLanguage;
+
+  // ─── Currency & Formatting ──────────────────────────────────
+  final String currencyCode;
+  final String currencySymbol;
+  final int decimalPlaces;
+  final String thousandSeparator;
+  final String decimalSeparator;
+
+  // ─── POS Behaviour ──────────────────────────────────────────
+  final bool allowNegativeStock;
+  final bool requireCustomerForSale;
+  final bool autoPrintReceipt;
+  final int sessionTimeoutMinutes;
+  final int maxDiscountPercent;
+  final bool enableTips;
+  final bool enableKitchenDisplay;
+  final bool barcodeScanSound;
+  final String defaultSaleType;
+  final bool enableHoldOrders;
+  final bool enableRefunds;
+  final bool enableExchanges;
+  final bool requireManagerForRefund;
+  final bool requireManagerForDiscount;
+  final bool enableOpenPriceItems;
+  final bool enableQuickAddProducts;
+
+  // ─── Loyalty ────────────────────────────────────────────────
+  final bool enableLoyaltyPoints;
+  final double loyaltyPointsPerCurrency;
+  final double loyaltyRedemptionValue;
+
+  // ─── Notifications ──────────────────────────────────────────
+  final bool lowStockAlert;
+  final int lowStockThreshold;
+
+  // ─── Inventory Tracking ─────────────────────────────────────
+  final bool trackInventory;
+  final bool enableBatchTracking;
+  final bool enableExpiryTracking;
+  final bool autoDeductIngredients;
+
+  // ─── Display ────────────────────────────────────────────────
+  final String themeMode;
+  final String displayLanguage;
+
+  // ─── Customer Display ───────────────────────────────────────
+  final bool enableCustomerDisplay;
+  final String? customerDisplayMessage;
+
+  // ─── Extra ──────────────────────────────────────────────────
+  final Map<String, dynamic> extra;
+  final DateTime? updatedAt;
 
   /// Safely convert PostgreSQL decimal strings to double.
   static double _toDouble(dynamic value, double fallback) {

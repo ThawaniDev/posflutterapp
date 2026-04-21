@@ -4,7 +4,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/marketplace/models/template_review.dart';
 import 'package:go_router/go_router.dart';
@@ -117,7 +116,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                                 decoration: BoxDecoration(
                                   borderRadius: AppRadius.borderSm,
                                   border: Border.all(
-                                    color: isActive ? AppColors.primary : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                                    color: isActive ? AppColors.primary : (AppColors.borderFor(context)),
                                     width: isActive ? 2 : 1,
                                   ),
                                 ),
@@ -183,7 +182,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                                         border: Border.all(
                                           color: isActive
                                               ? AppColors.primary
-                                              : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                                              : (AppColors.borderFor(context)),
                                           width: isActive ? 2 : 1,
                                         ),
                                       ),
@@ -248,7 +247,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                 Text('${listing.priceAmount}', style: AppTypography.headlineSmall.copyWith(color: AppColors.primary)),
                 Text(
                   '/ ${listing.subscriptionInterval}',
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             )
@@ -285,12 +284,12 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
           // Published by
           Row(
             children: [
-              Icon(Icons.person_outline_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              Icon(Icons.person_outline_rounded, size: 16, color: AppColors.mutedFor(context)),
               AppSpacing.gapW4,
               Expanded(
                 child: Text(
                   listing.publisherName ?? l10n.marketplaceUnknownPublisher,
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             ],
@@ -328,7 +327,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
       children: [
         Icon(icon, size: 16, color: iconColor),
         AppSpacing.gapW8,
-        Text(label, style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+        Text(label, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
         const Spacer(),
         Text(value, style: AppTypography.labelSmall),
       ],

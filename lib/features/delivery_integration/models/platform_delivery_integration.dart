@@ -1,18 +1,4 @@
 class PlatformDeliveryIntegration {
-  final String id;
-  final String platformSlug;
-  final String displayName;
-  final String? displayNameAr;
-  final String apiBaseUrl;
-  final String? clientId;
-  final String? clientSecretEncrypted;
-  final String? webhookSecretEncrypted;
-  final double? defaultCommissionPercent;
-  final bool? isActive;
-  final Map<String, dynamic>? supportedCountries;
-  final String? logoUrl;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PlatformDeliveryIntegration({
     required this.id,
@@ -49,6 +35,20 @@ class PlatformDeliveryIntegration {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String platformSlug;
+  final String displayName;
+  final String? displayNameAr;
+  final String apiBaseUrl;
+  final String? clientId;
+  final String? clientSecretEncrypted;
+  final String? webhookSecretEncrypted;
+  final double? defaultCommissionPercent;
+  final bool? isActive;
+  final Map<String, dynamic>? supportedCountries;
+  final String? logoUrl;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

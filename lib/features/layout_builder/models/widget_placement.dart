@@ -1,15 +1,4 @@
 class WidgetPlacement {
-  final String id;
-  final String canvasId;
-  final String widgetId;
-  final int gridX;
-  final int gridY;
-  final int gridWidth;
-  final int gridHeight;
-  final int sortOrder;
-  final Map<String, dynamic> config;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const WidgetPlacement({
     required this.id,
@@ -40,6 +29,17 @@ class WidgetPlacement {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String canvasId;
+  final String widgetId;
+  final int gridX;
+  final int gridY;
+  final int gridWidth;
+  final int gridHeight;
+  final int sortOrder;
+  final Map<String, dynamic> config;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

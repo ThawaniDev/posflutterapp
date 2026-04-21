@@ -1,18 +1,6 @@
 import 'package:wameedpos/features/pos_customization/enums/knowledge_base_category.dart';
 
 class KnowledgeBaseArticle {
-  final String id;
-  final String title;
-  final String titleAr;
-  final String slug;
-  final String body;
-  final String bodyAr;
-  final KnowledgeBaseCategory category;
-  final String? deliveryPlatformId;
-  final bool? isPublished;
-  final int? sortOrder;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const KnowledgeBaseArticle({
     required this.id,
@@ -45,6 +33,18 @@ class KnowledgeBaseArticle {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String title;
+  final String titleAr;
+  final String slug;
+  final String body;
+  final String bodyAr;
+  final KnowledgeBaseCategory category;
+  final String? deliveryPlatformId;
+  final bool? isPublished;
+  final int? sortOrder;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

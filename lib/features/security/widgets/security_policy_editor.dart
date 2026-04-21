@@ -6,10 +6,10 @@ import 'package:wameedpos/features/security/models/security_policy.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SecurityPolicyEditor extends StatelessWidget {
-  final SecurityPolicy policy;
-  final ValueChanged<Map<String, dynamic>>? onSave;
 
   const SecurityPolicyEditor({super.key, required this.policy, this.onSave});
+  final SecurityPolicy policy;
+  final ValueChanged<Map<String, dynamic>>? onSave;
 
   @override
   Widget build(BuildContext context) {

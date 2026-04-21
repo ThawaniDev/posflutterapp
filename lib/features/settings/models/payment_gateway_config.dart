@@ -2,14 +2,6 @@ import 'package:wameedpos/features/subscription/enums/gateway_environment.dart';
 import 'package:wameedpos/features/subscription/enums/gateway_name.dart';
 
 class PaymentGatewayConfig {
-  final String id;
-  final GatewayName gatewayName;
-  final Map<String, dynamic> credentialsEncrypted;
-  final String? webhookUrl;
-  final GatewayEnvironment environment;
-  final bool? isActive;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const PaymentGatewayConfig({
     required this.id,
@@ -34,6 +26,14 @@ class PaymentGatewayConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final GatewayName gatewayName;
+  final Map<String, dynamic> credentialsEncrypted;
+  final String? webhookUrl;
+  final GatewayEnvironment environment;
+  final bool? isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

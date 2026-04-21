@@ -1,14 +1,6 @@
 import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class DailyMetalRate {
-  final String id;
-  final String storeId;
-  final MetalType metalType;
-  final String? karat;
-  final double ratePerGram;
-  final double? buybackRatePerGram;
-  final DateTime effectiveDate;
-  final DateTime? createdAt;
 
   const DailyMetalRate({
     required this.id,
@@ -35,6 +27,14 @@ class DailyMetalRate {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final MetalType metalType;
+  final String? karat;
+  final double ratePerGram;
+  final double? buybackRatePerGram;
+  final DateTime effectiveDate;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

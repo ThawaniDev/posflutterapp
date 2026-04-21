@@ -176,7 +176,7 @@ class MobileListCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (trailing != null) trailing!,
+                  ?trailing,
                   if (actions != null && actions!.isNotEmpty) _MobileActions(actions: actions!),
                 ],
               ),

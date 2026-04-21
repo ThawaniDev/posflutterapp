@@ -3,23 +3,6 @@ import 'package:wameedpos/features/hardware/enums/app_release_platform.dart';
 import 'package:wameedpos/features/hardware/enums/app_submission_status.dart';
 
 class AppRelease {
-  final String id;
-  final String versionNumber;
-  final AppReleasePlatform platform;
-  final AppReleaseChannel channel;
-  final String downloadUrl;
-  final String? storeUrl;
-  final String? buildNumber;
-  final AppSubmissionStatus? submissionStatus;
-  final String? releaseNotes;
-  final String? releaseNotesAr;
-  final bool? isForceUpdate;
-  final String? minSupportedVersion;
-  final int rolloutPercentage;
-  final bool? isActive;
-  final DateTime? releasedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AppRelease({
     required this.id,
@@ -62,6 +45,23 @@ class AppRelease {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String versionNumber;
+  final AppReleasePlatform platform;
+  final AppReleaseChannel channel;
+  final String downloadUrl;
+  final String? storeUrl;
+  final String? buildNumber;
+  final AppSubmissionStatus? submissionStatus;
+  final String? releaseNotes;
+  final String? releaseNotesAr;
+  final bool? isForceUpdate;
+  final String? minSupportedVersion;
+  final int rolloutPercentage;
+  final bool? isActive;
+  final DateTime? releasedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -112,7 +112,7 @@ class _DailySummaryTab extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(item['date']?.toString() ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
-                      Text('$orders orders', style: const TextStyle(fontSize: 12, color: AppColors.textMutedLight)),
+                      Text('$orders orders', style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context))),
                     ],
                   ),
                 ),
@@ -126,7 +126,7 @@ class _DailySummaryTab extends ConsumerWidget {
                     if (item['avg_order_value'] != null)
                       Text(
                         'Avg: ${num.tryParse(item['avg_order_value'].toString())?.toStringAsFixed(2) ?? ''}',
-                        style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight),
+                        style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
                       ),
                   ],
                 ),
@@ -186,7 +186,7 @@ class _ProductSalesTab extends ConsumerWidget {
                         item['product_name']?.toString() ?? 'Product #${item['product_id'] ?? ''}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text('$qty units sold', style: const TextStyle(fontSize: 12, color: AppColors.textMutedLight)),
+                      Text('$qty units sold', style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context))),
                     ],
                   ),
                 ),

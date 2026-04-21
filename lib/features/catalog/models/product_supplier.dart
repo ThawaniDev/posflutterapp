@@ -1,11 +1,4 @@
 class ProductSupplier {
-  final String id;
-  final String? productId;
-  final String supplierId;
-  final double? costPrice;
-  final int? leadTimeDays;
-  final String? supplierSku;
-  final DateTime? createdAt;
 
   const ProductSupplier({
     required this.id,
@@ -28,6 +21,13 @@ class ProductSupplier {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String? productId;
+  final String supplierId;
+  final double? costPrice;
+  final int? leadTimeDays;
+  final String? supplierSku;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

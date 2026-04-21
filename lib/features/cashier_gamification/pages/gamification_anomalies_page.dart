@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/anomaly_card.dart';
@@ -152,7 +151,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
             AppSpacing.gapH12,
@@ -166,7 +165,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.check_circle_outline, size: 64, color: AppColors.success),
+                    const Icon(Icons.check_circle_outline, size: 64, color: AppColors.success),
                     AppSpacing.gapH12,
                     Text(l10n.gamificationNoAnomalies, style: TextStyle(color: Colors.grey.shade600)),
                   ],

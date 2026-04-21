@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/pos_status_badge.dart';
-import '../models/production_schedule.dart';
-import '../enums/production_schedule_status.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/industry_bakery/models/production_schedule.dart';
+import 'package:wameedpos/features/industry_bakery/enums/production_schedule_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ProductionScheduleCard extends StatelessWidget {
-  final ProductionSchedule schedule;
-  final VoidCallback? onTap;
 
   const ProductionScheduleCard({super.key, required this.schedule, this.onTap});
+  final ProductionSchedule schedule;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +64,7 @@ class ProductionScheduleCard extends StatelessWidget {
                 AppSpacing.gapH4,
                 Text(
                   schedule.notes!,
-                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -82,7 +81,7 @@ class ProductionScheduleCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+        Text(label, style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context))),
         Text(value, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600)),
       ],
     );

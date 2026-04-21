@@ -1,10 +1,4 @@
 class StaffBranchAssignment {
-  final String id;
-  final String staffUserId;
-  final String branchId;
-  final int roleId;
-  final bool? isPrimary;
-  final DateTime? createdAt;
 
   const StaffBranchAssignment({
     required this.id,
@@ -25,6 +19,12 @@ class StaffBranchAssignment {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String staffUserId;
+  final String branchId;
+  final int roleId;
+  final bool? isPrimary;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

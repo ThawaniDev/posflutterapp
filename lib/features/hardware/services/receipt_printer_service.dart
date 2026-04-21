@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 
@@ -99,19 +98,6 @@ enum PrintAlignment {
 
 /// Represents a single line or command in a receipt
 class ReceiptLine {
-  final String? text;
-  final PrintAlignment alignment;
-  final bool bold;
-  final bool underline;
-  final bool doubleSize;
-  final bool doubleWidth;
-  final bool doubleHeight;
-  final String? barcode;
-  final String? qrCode;
-  final int feedLines;
-  final bool separator;
-  final String? leftText;
-  final String? rightText;
 
   const ReceiptLine({
     this.text,
@@ -158,18 +144,23 @@ class ReceiptLine {
   factory ReceiptLine.qr(String data) {
     return ReceiptLine(qrCode: data);
   }
+  final String? text;
+  final PrintAlignment alignment;
+  final bool bold;
+  final bool underline;
+  final bool doubleSize;
+  final bool doubleWidth;
+  final bool doubleHeight;
+  final String? barcode;
+  final String? qrCode;
+  final int feedLines;
+  final bool separator;
+  final String? leftText;
+  final String? rightText;
 }
 
 /// Printer configuration data
 class PrinterConfig {
-  final String connectionType; // usb, network, bluetooth
-  final String? ipAddress;
-  final int port;
-  final String? usbDevicePath;
-  final PaperWidth paperWidth;
-  final bool autoCut;
-  final PrintDensity density;
-  final String? model;
 
   const PrinterConfig({
     required this.connectionType,
@@ -197,6 +188,14 @@ class PrinterConfig {
       model: json['model'] as String?,
     );
   }
+  final String connectionType; // usb, network, bluetooth
+  final String? ipAddress;
+  final int port;
+  final String? usbDevicePath;
+  final PaperWidth paperWidth;
+  final bool autoCut;
+  final PrintDensity density;
+  final String? model;
 
   Map<String, dynamic> toJson() => {
     'connection_type': connectionType,

@@ -5,11 +5,10 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PromotionAnalyticsPage extends ConsumerStatefulWidget {
-  final String promotionId;
   const PromotionAnalyticsPage({super.key, required this.promotionId});
+  final String promotionId;
 
   @override
   ConsumerState<PromotionAnalyticsPage> createState() => _PromotionAnalyticsPageState();
@@ -60,7 +59,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
             ),
             PosKpiCard(
               label: l10n.promotionsTotalDiscount,
-              value: '${(data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
+              value: (data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00',
               icon: Icons.discount,
               iconColor: theme.colorScheme.tertiary,
             ),
@@ -121,9 +120,9 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
 }
 
 class _InfoRow extends StatelessWidget {
+  const _InfoRow({required this.label, required this.value});
   final String label;
   final String value;
-  const _InfoRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

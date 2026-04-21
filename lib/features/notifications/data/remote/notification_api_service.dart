@@ -4,9 +4,8 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class NotificationApiService {
-  final Dio _dio;
-
   NotificationApiService(this._dio);
+  final Dio _dio;
 
   /// GET /notifications — List notifications
   Future<Map<String, dynamic>> listNotifications({
@@ -46,11 +45,11 @@ class NotificationApiService {
         'category': category,
         'title': title,
         'message': message,
-        if (actionUrl != null) 'action_url': actionUrl,
-        if (referenceType != null) 'reference_type': referenceType,
-        if (referenceId != null) 'reference_id': referenceId,
-        if (priority != null) 'priority': priority,
-        if (channel != null) 'channel': channel,
+        'action_url': ?actionUrl,
+        'reference_type': ?referenceType,
+        'reference_id': ?referenceId,
+        'priority': ?priority,
+        'channel': ?channel,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -72,8 +71,8 @@ class NotificationApiService {
         'title': title,
         'message': message,
         'user_ids': userIds,
-        if (priority != null) 'priority': priority,
-        if (channel != null) 'channel': channel,
+        'priority': ?priority,
+        'channel': ?channel,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -127,11 +126,7 @@ class NotificationApiService {
   Future<Map<String, dynamic>> getDeliveryLogs({String? channel, String? status, int? perPage}) async {
     final response = await _dio.get(
       ApiEndpoints.notificationDeliveryLogs,
-      queryParameters: {
-        if (channel != null) 'channel': channel,
-        if (status != null) 'status': status,
-        if (perPage != null) 'per_page': perPage,
-      },
+      queryParameters: {'channel': ?channel, 'status': ?status, 'per_page': ?perPage},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -161,11 +156,11 @@ class NotificationApiService {
     final response = await _dio.put(
       ApiEndpoints.notificationPreferences,
       data: {
-        if (preferences != null) 'preferences': preferences,
-        if (quietHoursStart != null) 'quiet_hours_start': quietHoursStart,
-        if (quietHoursEnd != null) 'quiet_hours_end': quietHoursEnd,
-        if (soundEnabled != null) 'sound_enabled': soundEnabled,
-        if (emailDigest != null) 'email_digest': emailDigest,
+        'preferences': ?preferences,
+        'quiet_hours_start': ?quietHoursStart,
+        'quiet_hours_end': ?quietHoursEnd,
+        'sound_enabled': ?soundEnabled,
+        'email_digest': ?emailDigest,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -188,11 +183,7 @@ class NotificationApiService {
   }) async {
     final response = await _dio.put(
       '${ApiEndpoints.notificationSoundConfigs}/$eventKey',
-      data: {
-        if (soundFile != null) 'sound_file': soundFile,
-        if (volume != null) 'volume': (volume * 100).round(),
-        if (isEnabled != null) 'is_enabled': isEnabled,
-      },
+      data: {'sound_file': ?soundFile, if (volume != null) 'volume': (volume * 100).round(), 'is_enabled': ?isEnabled},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -225,8 +216,8 @@ class NotificationApiService {
         'channel': channel,
         'scheduled_at': scheduledAt,
         'schedule_type': scheduleType,
-        if (priority != null) 'priority': priority,
-        if (recurrenceRule != null) 'cron_expression': recurrenceRule,
+        'priority': ?priority,
+        'cron_expression': ?recurrenceRule,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -249,6 +240,51 @@ class NotificationApiService {
   /// DELETE /notifications/fcm-tokens — Remove FCM token
   Future<Map<String, dynamic>> removeFcmToken(String token) async {
     final response = await _dio.delete(ApiEndpoints.fcmTokens, data: {'token': token});
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── Notification Centre composite endpoints ──────────────
+
+  /// GET /announcements — Active platform announcements for the current store.
+  Future<Map<String, dynamic>> listAnnouncements() async {
+    final response = await _dio.get(ApiEndpoints.announcements);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// POST /announcements/{id}/dismiss — Dismiss an announcement for this store.
+  Future<Map<String, dynamic>> dismissAnnouncement(String id) async {
+    final response = await _dio.post(ApiEndpoints.announcementDismiss(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /payment-reminders — Payment reminders for the user's organization.
+  Future<Map<String, dynamic>> listPaymentReminders({String? type, String? channel, int? perPage}) async {
+    final queryParams = <String, dynamic>{};
+    if (type != null) queryParams['type'] = type;
+    if (channel != null) queryParams['channel'] = channel;
+    if (perPage != null) queryParams['per_page'] = perPage;
+    final response = await _dio.get(ApiEndpoints.paymentReminders, queryParameters: queryParams);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /app-releases — Active app releases.
+  Future<Map<String, dynamic>> listAppReleases({String? platform, String? channel}) async {
+    final queryParams = <String, dynamic>{};
+    if (platform != null) queryParams['platform'] = platform;
+    if (channel != null) queryParams['channel'] = channel;
+    final response = await _dio.get(ApiEndpoints.appReleases, queryParameters: queryParams);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /app-releases/latest — Latest applicable release.
+  Future<Map<String, dynamic>> getLatestAppRelease({required String platform, String channel = 'stable'}) async {
+    final response = await _dio.get(ApiEndpoints.appReleasesLatest, queryParameters: {'platform': platform, 'channel': channel});
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /maintenance-status — Public maintenance banner status.
+  Future<Map<String, dynamic>> getMaintenanceStatus() async {
+    final response = await _dio.get(ApiEndpoints.maintenanceStatus);
     return response.data as Map<String, dynamic>;
   }
 }

@@ -1,17 +1,6 @@
 import 'package:wameedpos/features/industry_florist/enums/flower_subscription_frequency.dart';
 
 class FlowerSubscription {
-  final String id;
-  final String storeId;
-  final String customerId;
-  final String? arrangementTemplateId;
-  final FlowerSubscriptionFrequency frequency;
-  final String? deliveryDay;
-  final String deliveryAddress;
-  final double pricePerDelivery;
-  final bool? isActive;
-  final DateTime nextDeliveryDate;
-  final DateTime? createdAt;
 
   const FlowerSubscription({
     required this.id,
@@ -42,6 +31,17 @@ class FlowerSubscription {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String customerId;
+  final String? arrangementTemplateId;
+  final FlowerSubscriptionFrequency frequency;
+  final String? deliveryDay;
+  final String deliveryAddress;
+  final double pricePerDelivery;
+  final bool? isActive;
+  final DateTime nextDeliveryDate;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

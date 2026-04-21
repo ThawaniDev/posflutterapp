@@ -7,10 +7,13 @@ import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 /// The currently active branch (store) ID.
 ///
 /// - Branch-scoped users: always their own store_id (cannot change).
-/// - Organization-scoped users: defaults to their store_id, can switch.
+/// - Organization-scoped users: defaults to null (all stores), can select a specific branch.
 final activeBranchIdProvider = StateProvider<String?>((ref) {
   final authState = ref.watch(authProvider);
+  final permsState = ref.watch(userPermissionsProvider);
   if (authState is AuthAuthenticated) {
+    // Org-scoped users default to "all" (null); branch-scoped default to own store
+    if (permsState.isOrganizationScoped) return null;
     return authState.user.storeId;
   }
   return null;
@@ -29,7 +32,8 @@ final accessibleBranchIdsProvider = Provider<List<String>>((ref) {
 });
 
 /// The resolved store_id to use in API calls.
-/// Falls back to the user's own store_id if no active branch is set.
+/// Returns null for org-scoped users when "All" is selected (no branch filter).
+/// Falls back to the user's own store_id for branch-scoped users.
 final resolvedStoreIdProvider = Provider<String?>((ref) {
   final permsState = ref.watch(userPermissionsProvider);
   final activeBranch = ref.watch(activeBranchIdProvider);
@@ -42,8 +46,8 @@ final resolvedStoreIdProvider = Provider<String?>((ref) {
     return userStoreId;
   }
 
-  // Org-scoped users use the selected branch, or default to own store
-  return activeBranch ?? userStoreId;
+  // Org-scoped users: null means "all stores", otherwise the selected branch
+  return activeBranch;
 });
 
 /// The role info for the currently active branch, if any.

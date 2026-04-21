@@ -8,8 +8,8 @@ final jewelryProvider = StateNotifierProvider<JewelryNotifier, JewelryState>((re
 });
 
 class JewelryNotifier extends StateNotifier<JewelryState> {
-  final JewelryRepository _repo;
   JewelryNotifier(this._repo) : super(const JewelryInitial());
+  final JewelryRepository _repo;
 
   Future<void> load() async {
     state = const JewelryLoading();

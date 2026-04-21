@@ -12,16 +12,6 @@ class DeliveryStatsLoading extends DeliveryStatsState {
 }
 
 class DeliveryStatsLoaded extends DeliveryStatsState {
-  final int totalPlatforms;
-  final int activePlatforms;
-  final int totalOrders;
-  final int pendingOrders;
-  final int completedOrders;
-  final int todayOrders;
-  final double todayRevenue;
-  final int activeOrders;
-  final int rejectedOrders;
-  final List<Map<String, dynamic>> platformBreakdown;
 
   const DeliveryStatsLoaded({
     required this.totalPlatforms,
@@ -35,11 +25,21 @@ class DeliveryStatsLoaded extends DeliveryStatsState {
     this.rejectedOrders = 0,
     this.platformBreakdown = const [],
   });
+  final int totalPlatforms;
+  final int activePlatforms;
+  final int totalOrders;
+  final int pendingOrders;
+  final int completedOrders;
+  final int todayOrders;
+  final double todayRevenue;
+  final int activeOrders;
+  final int rejectedOrders;
+  final List<Map<String, dynamic>> platformBreakdown;
 }
 
 class DeliveryStatsError extends DeliveryStatsState {
-  final String message;
   const DeliveryStatsError(this.message);
+  final String message;
 }
 
 // ─── Delivery Configs State ─────────────────────────────
@@ -56,13 +56,13 @@ class DeliveryConfigsLoading extends DeliveryConfigsState {
 }
 
 class DeliveryConfigsLoaded extends DeliveryConfigsState {
-  final List<Map<String, dynamic>> configs;
   const DeliveryConfigsLoaded(this.configs);
+  final List<Map<String, dynamic>> configs;
 }
 
 class DeliveryConfigsError extends DeliveryConfigsState {
-  final String message;
   const DeliveryConfigsError(this.message);
+  final String message;
 }
 
 // ─── Delivery Orders State ──────────────────────────────
@@ -79,16 +79,16 @@ class DeliveryOrdersLoading extends DeliveryOrdersState {
 }
 
 class DeliveryOrdersLoaded extends DeliveryOrdersState {
+  const DeliveryOrdersLoaded(this.orders, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
   final List<Map<String, dynamic>> orders;
   final int currentPage;
   final int lastPage;
   final int total;
-  const DeliveryOrdersLoaded(this.orders, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class DeliveryOrdersError extends DeliveryOrdersState {
-  final String message;
   const DeliveryOrdersError(this.message);
+  final String message;
 }
 
 // ─── Delivery Order Detail State ────────────────────────
@@ -105,13 +105,13 @@ class DeliveryOrderDetailLoading extends DeliveryOrderDetailState {
 }
 
 class DeliveryOrderDetailLoaded extends DeliveryOrderDetailState {
-  final Map<String, dynamic> order;
   const DeliveryOrderDetailLoaded(this.order);
+  final Map<String, dynamic> order;
 }
 
 class DeliveryOrderDetailError extends DeliveryOrderDetailState {
-  final String message;
   const DeliveryOrderDetailError(this.message);
+  final String message;
 }
 
 // ─── Delivery Platforms State ───────────────────────────
@@ -128,13 +128,13 @@ class DeliveryPlatformsLoading extends DeliveryPlatformsState {
 }
 
 class DeliveryPlatformsLoaded extends DeliveryPlatformsState {
-  final List<Map<String, dynamic>> platforms;
   const DeliveryPlatformsLoaded(this.platforms);
+  final List<Map<String, dynamic>> platforms;
 }
 
 class DeliveryPlatformsError extends DeliveryPlatformsState {
-  final String message;
   const DeliveryPlatformsError(this.message);
+  final String message;
 }
 
 // ─── Connection Test State ──────────────────────────────
@@ -151,13 +151,13 @@ class DeliveryConnectionTestLoading extends DeliveryConnectionTestState {
 }
 
 class DeliveryConnectionTestSuccess extends DeliveryConnectionTestState {
-  final String message;
   const DeliveryConnectionTestSuccess(this.message);
+  final String message;
 }
 
 class DeliveryConnectionTestFailure extends DeliveryConnectionTestState {
-  final String message;
   const DeliveryConnectionTestFailure(this.message);
+  final String message;
 }
 
 // ─── Menu Sync State ────────────────────────────────────
@@ -174,13 +174,13 @@ class DeliveryMenuSyncLoading extends DeliveryMenuSyncState {
 }
 
 class DeliveryMenuSyncSuccess extends DeliveryMenuSyncState {
-  final String message;
   const DeliveryMenuSyncSuccess(this.message);
+  final String message;
 }
 
 class DeliveryMenuSyncError extends DeliveryMenuSyncState {
-  final String message;
   const DeliveryMenuSyncError(this.message);
+  final String message;
 }
 
 // ─── Webhook Logs State ─────────────────────────────────
@@ -197,16 +197,16 @@ class DeliveryWebhookLogsLoading extends DeliveryWebhookLogsState {
 }
 
 class DeliveryWebhookLogsLoaded extends DeliveryWebhookLogsState {
+  const DeliveryWebhookLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
   final List<Map<String, dynamic>> logs;
   final int currentPage;
   final int lastPage;
   final int total;
-  const DeliveryWebhookLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class DeliveryWebhookLogsError extends DeliveryWebhookLogsState {
-  final String message;
   const DeliveryWebhookLogsError(this.message);
+  final String message;
 }
 
 // ─── Status Push Logs State ─────────────────────────────
@@ -223,14 +223,14 @@ class DeliveryStatusPushLogsLoading extends DeliveryStatusPushLogsState {
 }
 
 class DeliveryStatusPushLogsLoaded extends DeliveryStatusPushLogsState {
+  const DeliveryStatusPushLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
   final List<Map<String, dynamic>> logs;
   final int currentPage;
   final int lastPage;
   final int total;
-  const DeliveryStatusPushLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class DeliveryStatusPushLogsError extends DeliveryStatusPushLogsState {
-  final String message;
   const DeliveryStatusPushLogsError(this.message);
+  final String message;
 }

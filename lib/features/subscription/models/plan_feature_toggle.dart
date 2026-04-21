@@ -1,8 +1,4 @@
 class PlanFeatureToggle {
-  final String id;
-  final String subscriptionPlanId;
-  final String featureKey;
-  final bool? isEnabled;
 
   const PlanFeatureToggle({
     required this.id,
@@ -19,6 +15,10 @@ class PlanFeatureToggle {
       isEnabled: json['is_enabled'] as bool?,
     );
   }
+  final String id;
+  final String subscriptionPlanId;
+  final String featureKey;
+  final bool? isEnabled;
 
   Map<String, dynamic> toJson() {
     return {

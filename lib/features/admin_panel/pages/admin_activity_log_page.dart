@@ -64,8 +64,8 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
           Container(
             padding: AppSpacing.paddingAll16,
             decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              border: Border(bottom: BorderSide(color: AppColors.borderLight)),
+              color: AppColors.surfaceFor(context),
+              border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
             ),
             child: Row(
               children: [
@@ -199,14 +199,14 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
 
   Widget _actionIcon(String action) {
     if (action.contains('created')) {
-      return Icon(Icons.add_circle_outline, color: AppColors.success, size: 20);
+      return const Icon(Icons.add_circle_outline, color: AppColors.success, size: 20);
     } else if (action.contains('deleted')) {
-      return Icon(Icons.delete_outline, color: AppColors.error, size: 20);
+      return const Icon(Icons.delete_outline, color: AppColors.error, size: 20);
     } else if (action.contains('deactivated')) {
-      return Icon(Icons.block, color: AppColors.warning, size: 20);
+      return const Icon(Icons.block, color: AppColors.warning, size: 20);
     } else if (action.contains('activated')) {
-      return Icon(Icons.check_circle_outline, color: AppColors.success, size: 20);
+      return const Icon(Icons.check_circle_outline, color: AppColors.success, size: 20);
     }
-    return Icon(Icons.edit_outlined, color: AppColors.primary, size: 20);
+    return const Icon(Icons.edit_outlined, color: AppColors.primary, size: 20);
   }
 }

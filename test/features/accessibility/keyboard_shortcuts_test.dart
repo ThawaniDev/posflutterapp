@@ -5,7 +5,7 @@ import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_serv
 void main() {
   group('ShortcutBinding', () {
     test('stores label, key, description, context', () {
-      final binding = ShortcutBinding('Ctrl+S', LogicalKeyboardKey.keyS, 'Save', 'Global', ctrl: true);
+      const binding = ShortcutBinding('Ctrl+S', LogicalKeyboardKey.keyS, 'Save', 'Global', ctrl: true);
       expect(binding.label, 'Ctrl+S');
       expect(binding.key, LogicalKeyboardKey.keyS);
       expect(binding.description, 'Save');

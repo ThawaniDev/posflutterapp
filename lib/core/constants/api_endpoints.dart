@@ -31,6 +31,8 @@ class ApiEndpoints {
   static const String heldCarts = '/pos/held-carts';
   static const String posTerminals = '/pos/terminals';
   static const String posRegisters = '/pos/registers';
+  static const String posProducts = '/pos/products';
+  static const String posCustomers = '/pos/customers';
 
   // Orders
   static const String orders = '/orders';
@@ -42,12 +44,15 @@ class ApiEndpoints {
   static const String cashEvents = '/cash-events';
   static const String expenses = '/expenses';
   static const String giftCards = '/gift-cards';
+  static String giftCardBalance(String code) => '/gift-cards/$code/balance';
+  static String giftCardRedeem(String code) => '/gift-cards/$code/redeem';
+  static String cashSessionClose(String id) => '/cash-sessions/$id/close';
   static const String financeDailySummary = '/finance/daily-summary';
   static const String financeReconciliation = '/finance/reconciliation';
 
   // Customers
   static const String customers = '/customers';
-  static const String customerGroups = '/customers/groups';
+  static const String customerGroups = '/customers/groups/list';
   static const String loyalty = '/customers/loyalty';
 
   // Labels
@@ -107,10 +112,13 @@ class ApiEndpoints {
   static const String staffStats = '/staff/members/stats';
   static const String attendance = '/staff/attendance';
   static const String attendanceClock = '/staff/attendance/clock';
+  static const String attendanceSummary = '/staff/attendance/summary';
   static const String attendanceExport = '/staff/attendance/export';
   static const String shifts = '/staff/shifts';
+  static const String shiftsBulk = '/staff/shifts/bulk';
   static String shiftById(String id) => '/staff/shifts/$id';
   static const String shiftTemplates = '/staff/shift-templates';
+  static String shiftTemplateById(String id) => '/staff/shift-templates/$id';
   static const String roles = '/staff/roles';
   static const String userPermissions = '/staff/roles/user-permissions';
   static const String permissions = '/staff/permissions';
@@ -153,6 +161,14 @@ class ApiEndpoints {
   static const String notificationSchedules = '/notifications/schedules';
   static String notificationScheduleCancel(String id) => '/notifications/schedules/$id/cancel';
 
+  // ─── Notification Centre composite endpoints ──────────────
+  static const String announcements = '/announcements';
+  static String announcementDismiss(String id) => '/announcements/$id/dismiss';
+  static const String paymentReminders = '/payment-reminders';
+  static const String appReleases = '/app-releases';
+  static const String appReleasesLatest = '/app-releases/latest';
+  static const String maintenanceStatus = '/maintenance-status';
+
   // Store (Core)
   static const String storesMine = '/core/stores/mine';
   static const String stores = '/core/stores';
@@ -186,6 +202,7 @@ class ApiEndpoints {
   static String subscriptionInvoicePdf(String id) => '/subscription/invoices/$id/pdf';
   static const String subscriptionSyncEntitlements = '/subscription/sync/entitlements';
   static const String subscriptionStoreAddOns = '/subscription/store-add-ons';
+  static String subscriptionRemoveAddOn(String id) => '/subscription/store-add-ons/$id';
 
   // Provider Payments (PayTabs)
   static const String providerPayments = '/provider-payments';

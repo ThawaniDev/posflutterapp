@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 
 class RiskScoreGauge extends StatelessWidget {
-  final double score;
-  final double size;
 
   const RiskScoreGauge({super.key, required this.score, this.size = 80});
+  final double score;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,10 @@ class RiskScoreGauge extends StatelessWidget {
 }
 
 class _GaugePainter extends CustomPainter {
-  final double value;
-  final Color color;
 
   _GaugePainter({required this.value, required this.color});
+  final double value;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {

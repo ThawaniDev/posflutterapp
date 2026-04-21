@@ -2,14 +2,6 @@ import 'package:wameedpos/features/settings/enums/database_backup_status.dart';
 import 'package:wameedpos/features/settings/enums/database_backup_type.dart';
 
 class DatabaseBackup {
-  final String id;
-  final DatabaseBackupType backupType;
-  final String filePath;
-  final int? fileSizeBytes;
-  final DatabaseBackupStatus status;
-  final String? errorMessage;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
 
   const DatabaseBackup({
     required this.id,
@@ -34,6 +26,14 @@ class DatabaseBackup {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final DatabaseBackupType backupType;
+  final String filePath;
+  final int? fileSizeBytes;
+  final DatabaseBackupStatus status;
+  final String? errorMessage;
+  final DateTime? startedAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -12,15 +12,6 @@ class UpdateCheckLoading extends UpdateCheckState {
 }
 
 class UpdateCheckLoaded extends UpdateCheckState {
-  final bool updateAvailable;
-  final String? latestVersion;
-  final String? downloadUrl;
-  final String? storeUrl;
-  final String? releaseNotes;
-  final String? releaseNotesAr;
-  final bool isForceUpdate;
-  final String? releaseId;
-  final Map<String, dynamic> raw;
 
   const UpdateCheckLoaded({
     required this.updateAvailable,
@@ -33,11 +24,20 @@ class UpdateCheckLoaded extends UpdateCheckState {
     this.releaseId,
     required this.raw,
   });
+  final bool updateAvailable;
+  final String? latestVersion;
+  final String? downloadUrl;
+  final String? storeUrl;
+  final String? releaseNotes;
+  final String? releaseNotesAr;
+  final bool isForceUpdate;
+  final String? releaseId;
+  final Map<String, dynamic> raw;
 }
 
 class UpdateCheckError extends UpdateCheckState {
-  final String message;
   const UpdateCheckError(this.message);
+  final String message;
 }
 
 // ─── Changelog State ──────────────────────────────────
@@ -54,13 +54,13 @@ class ChangelogLoading extends ChangelogState {
 }
 
 class ChangelogLoaded extends ChangelogState {
-  final List<Map<String, dynamic>> releases;
   const ChangelogLoaded({required this.releases});
+  final List<Map<String, dynamic>> releases;
 }
 
 class ChangelogError extends ChangelogState {
-  final String message;
   const ChangelogError(this.message);
+  final String message;
 }
 
 // ─── Update History State ─────────────────────────────
@@ -77,13 +77,13 @@ class HistoryLoading extends UpdateHistoryState {
 }
 
 class HistoryLoaded extends UpdateHistoryState {
-  final List<Map<String, dynamic>> entries;
   const HistoryLoaded({required this.entries});
+  final List<Map<String, dynamic>> entries;
 }
 
 class HistoryError extends UpdateHistoryState {
-  final String message;
   const HistoryError(this.message);
+  final String message;
 }
 
 // ─── Update Operation State (report status) ───────────
@@ -96,17 +96,17 @@ class UpdateOperationIdle extends UpdateOperationState {
 }
 
 class UpdateOperationRunning extends UpdateOperationState {
-  final String operation;
   const UpdateOperationRunning(this.operation);
+  final String operation;
 }
 
 class UpdateOperationSuccess extends UpdateOperationState {
+  const UpdateOperationSuccess(this.message, {this.data});
   final String message;
   final Map<String, dynamic>? data;
-  const UpdateOperationSuccess(this.message, {this.data});
 }
 
 class UpdateOperationError extends UpdateOperationState {
-  final String message;
   const UpdateOperationError(this.message);
+  final String message;
 }

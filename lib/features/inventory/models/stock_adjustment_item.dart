@@ -1,9 +1,4 @@
 class StockAdjustmentItem {
-  final String id;
-  final String stockAdjustmentId;
-  final String productId;
-  final double quantity;
-  final double? unitCost;
 
   const StockAdjustmentItem({
     required this.id,
@@ -22,6 +17,11 @@ class StockAdjustmentItem {
       unitCost: (json['unit_cost'] != null ? double.tryParse(json['unit_cost'].toString()) : null),
     );
   }
+  final String id;
+  final String stockAdjustmentId;
+  final String productId;
+  final double quantity;
+  final double? unitCost;
 
   Map<String, dynamic> toJson() {
     return {

@@ -115,19 +115,13 @@ class FullSyncService {
 }
 
 class FullSyncProgress {
-  final double progress;
-  final String phase;
 
   const FullSyncProgress({required this.progress, required this.phase});
+  final double progress;
+  final String phase;
 }
 
 class FullSyncResult {
-  final bool success;
-  final String? error;
-  final Map<String, dynamic>? data;
-  final String? syncToken;
-  final Map<String, int>? categoryCounts;
-  final int totalRecords;
 
   const FullSyncResult({
     required this.success,
@@ -137,4 +131,10 @@ class FullSyncResult {
     this.categoryCounts,
     this.totalRecords = 0,
   });
+  final bool success;
+  final String? error;
+  final Map<String, dynamic>? data;
+  final String? syncToken;
+  final Map<String, int>? categoryCounts;
+  final int totalRecords;
 }

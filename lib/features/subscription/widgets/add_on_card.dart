@@ -6,13 +6,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Card widget for displaying a subscription add-on.
 class AddOnCard extends StatelessWidget {
-  final String name;
-  final String? description;
-  final double price;
-  final String billingCycle;
-  final bool isActive;
-  final DateTime? expiresAt;
-  final VoidCallback? onToggle;
 
   const AddOnCard({
     super.key,
@@ -24,6 +17,13 @@ class AddOnCard extends StatelessWidget {
     this.expiresAt,
     this.onToggle,
   });
+  final String name;
+  final String? description;
+  final double price;
+  final String billingCycle;
+  final bool isActive;
+  final DateTime? expiresAt;
+  final VoidCallback? onToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class AddOnCard extends StatelessWidget {
                     decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                     child: Text(
                       l10n.active,
-                      style: TextStyle(color: AppColors.success, fontSize: 12, fontWeight: FontWeight.w600),
+                      style: const TextStyle(color: AppColors.success, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
               ],

@@ -8,9 +8,9 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminStoreDetailPage extends ConsumerStatefulWidget {
-  final String storeId;
 
   const AdminStoreDetailPage({super.key, required this.storeId});
+  final String storeId;
 
   @override
   ConsumerState<AdminStoreDetailPage> createState() => _AdminStoreDetailPageState();
@@ -103,7 +103,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
             elevation: 0,
             borderRadius: AppRadius.borderLg,
 
-            border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+            border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
             child: Padding(
               padding: AppSpacing.paddingAll20,
               child: Column(
@@ -172,7 +172,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.warning_amber_rounded, size: 16, color: AppColors.error),
+                          const Icon(Icons.warning_amber_rounded, size: 16, color: AppColors.error),
                           AppSpacing.gapW8,
                           Expanded(
                             child: Text(
@@ -224,7 +224,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
       elevation: 0,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -247,7 +247,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
         children: [
           Expanded(
             flex: 2,
-            child: Text(label, style: TextStyle(color: AppColors.textMutedLight, fontSize: 13)),
+            child: Text(label, style: TextStyle(color: AppColors.mutedFor(context), fontSize: 13)),
           ),
           Expanded(
             flex: 3,
@@ -277,7 +277,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.analytics_outlined, size: 48, color: AppColors.textMutedLight),
+              Icon(Icons.analytics_outlined, size: 48, color: AppColors.mutedFor(context)),
               AppSpacing.gapH12,
               PosButton(
                 label: l10n.adminLoadMetrics,
@@ -364,7 +364,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                 style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700, color: color),
               ),
               AppSpacing.gapH4,
-              Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
+              Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
             ],
           ),
         ),
@@ -385,7 +385,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH12,
             Text(state.message),
             AppSpacing.gapH16,
@@ -422,7 +422,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.tune_outlined, size: 48, color: AppColors.textMutedLight),
+                    Icon(Icons.tune_outlined, size: 48, color: AppColors.mutedFor(context)),
                     AppSpacing.gapH12,
                     Text('No limit overrides set', style: theme.textTheme.bodyMedium),
                   ],
@@ -457,20 +457,20 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
       elevation: 0,
       borderRadius: AppRadius.borderMd,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: ListTile(
-        leading: Icon(Icons.tune, color: AppColors.info),
+        leading: const Icon(Icons.tune, color: AppColors.info),
         title: Text(key, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Value: $value'),
             if (reason != null) Text('Reason: $reason'),
-            if (expiresAt != null) Text('Expires: $expiresAt', style: TextStyle(color: AppColors.warning, fontSize: 12)),
+            if (expiresAt != null) Text('Expires: $expiresAt', style: const TextStyle(color: AppColors.warning, fontSize: 12)),
           ],
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete_outline, color: AppColors.error),
+          icon: const Icon(Icons.delete_outline, color: AppColors.error),
           onPressed: () => ref.read(limitOverrideProvider.notifier).removeOverride(widget.storeId, key),
         ),
       ),

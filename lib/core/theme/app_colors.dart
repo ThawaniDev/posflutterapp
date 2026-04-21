@@ -57,6 +57,12 @@ class AppColors {
   /// Use for secondary/helper text that should adapt to dark mode automatically.
   static Color mutedFor(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? textMutedDark : textMutedLight;
 
+  /// Returns the appropriate surface color for the current theme brightness.
+  static Color surfaceFor(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? surfaceDark : surfaceLight;
+
+  /// Returns the appropriate border color for the current theme brightness.
+  static Color borderFor(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? borderDark : borderLight;
+
   static const Color textDisabledLight = Color(0xFF94A3B8); // slate-400
   static const Color textDisabledDark = Color(0xFF64748B); // slate-500
 

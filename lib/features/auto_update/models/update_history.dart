@@ -1,14 +1,4 @@
 class UpdateHistory {
-  final int? id;
-  final String fromVersion;
-  final String toVersion;
-  final String updateType; // full, delta, rollback
-  final String status; // downloaded, installing, completed, failed, rolled_back
-  final int? downloadSizeBytes;
-  final String? backupId;
-  final String? errorMessage;
-  final DateTime startedAt;
-  final DateTime? completedAt;
 
   const UpdateHistory({
     this.id,
@@ -37,6 +27,16 @@ class UpdateHistory {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final int? id;
+  final String fromVersion;
+  final String toVersion;
+  final String updateType; // full, delta, rollback
+  final String status; // downloaded, installing, completed, failed, rolled_back
+  final int? downloadSizeBytes;
+  final String? backupId;
+  final String? errorMessage;
+  final DateTime startedAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {

@@ -5,7 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_billing.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
@@ -13,9 +12,9 @@ import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 import 'package:wameedpos/features/wameed_ai/utils/ai_helpers.dart';
 
 class AIBillingInvoiceDetailPage extends ConsumerStatefulWidget {
-  final String invoiceId;
 
   const AIBillingInvoiceDetailPage({super.key, required this.invoiceId});
+  final String invoiceId;
 
   @override
   ConsumerState<AIBillingInvoiceDetailPage> createState() => _AIBillingInvoiceDetailPageState();
@@ -55,9 +54,9 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
 }
 
 class _InvoiceDetailContent extends StatelessWidget {
-  final AIBillingInvoiceDetail invoice;
 
   const _InvoiceDetailContent({required this.invoice});
+  final AIBillingInvoiceDetail invoice;
 
   @override
   Widget build(BuildContext context) {
@@ -215,10 +214,10 @@ class _InvoiceDetailContent extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
-  final String label;
-  final String value;
 
   const _DetailRow({required this.label, required this.value});
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -238,9 +237,9 @@ class _DetailRow extends StatelessWidget {
 }
 
 class _MobileLineItem extends StatelessWidget {
-  final AIBillingInvoiceItem item;
 
   const _MobileLineItem({required this.item});
+  final AIBillingInvoiceItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -276,11 +275,11 @@ class _MobileLineItem extends StatelessWidget {
 }
 
 class _MiniStat extends StatelessWidget {
+
+  const _MiniStat({required this.label, required this.value, this.bold = false});
   final String label;
   final String value;
   final bool bold;
-
-  const _MiniStat({required this.label, required this.value, this.bold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -298,9 +297,9 @@ class _MiniStat extends StatelessWidget {
 }
 
 class _PaymentListTile extends StatelessWidget {
-  final AIBillingPayment payment;
 
   const _PaymentListTile({required this.payment});
+  final AIBillingPayment payment;
 
   @override
   Widget build(BuildContext context) {

@@ -4,23 +4,6 @@ import 'package:wameedpos/features/settings/enums/audit_user_type.dart';
 import 'package:wameedpos/features/security/enums/security_audit_action.dart';
 
 class SecurityAuditLog {
-  final String id;
-  final String storeId;
-  final String? userId;
-  final AuditUserType? userType;
-  final SecurityAuditAction action;
-  final AuditResourceType? resourceType;
-  final String? resourceId;
-  final Map<String, dynamic>? details;
-  final AuditSeverity? severity;
-  final String? ipAddress;
-  final String? deviceId;
-  final DateTime? createdAt;
-  final String? requestMethod;
-  final String? requestUrl;
-  final int? responseCode;
-  final int? durationMs;
-  final String? userAgent;
 
   const SecurityAuditLog({
     required this.id,
@@ -63,6 +46,23 @@ class SecurityAuditLog {
       userAgent: json['user_agent'] as String?,
     );
   }
+  final String id;
+  final String storeId;
+  final String? userId;
+  final AuditUserType? userType;
+  final SecurityAuditAction action;
+  final AuditResourceType? resourceType;
+  final String? resourceId;
+  final Map<String, dynamic>? details;
+  final AuditSeverity? severity;
+  final String? ipAddress;
+  final String? deviceId;
+  final DateTime? createdAt;
+  final String? requestMethod;
+  final String? requestUrl;
+  final int? responseCode;
+  final int? durationMs;
+  final String? userAgent;
 
   Map<String, dynamic> toJson() {
     return {

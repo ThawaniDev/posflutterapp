@@ -1,13 +1,6 @@
 import 'package:wameedpos/features/subscription/enums/subscription_resource_type.dart';
 
 class SubscriptionUsageSnapshot {
-  final String id;
-  final String organizationId;
-  final SubscriptionResourceType resourceType;
-  final int currentCount;
-  final int planLimit;
-  final DateTime snapshotDate;
-  final DateTime? createdAt;
 
   const SubscriptionUsageSnapshot({
     required this.id,
@@ -30,6 +23,13 @@ class SubscriptionUsageSnapshot {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String organizationId;
+  final SubscriptionResourceType resourceType;
+  final int currentCount;
+  final int planLimit;
+  final DateTime snapshotDate;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

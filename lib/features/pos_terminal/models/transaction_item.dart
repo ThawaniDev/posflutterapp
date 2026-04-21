@@ -1,29 +1,6 @@
 import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class TransactionItem {
-  final String id;
-  final String transactionId;
-  final String productId;
-  final String? barcode;
-  final String productName;
-  final String? productNameAr;
-  final double quantity;
-  final double unitPrice;
-  final double? costPrice;
-  final double? discountAmount;
-  final DiscountType? discountType;
-  final double? discountValue;
-  final double? taxRate;
-  final double taxAmount;
-  final double lineTotal;
-  final String? serialNumber;
-  final String? batchNumber;
-  final DateTime? expiryDate;
-  final Map<String, dynamic>? modifierSelections;
-  final String? notes;
-  final bool? isReturnItem;
-  final bool? ageVerified;
-  final DateTime? createdAt;
 
   const TransactionItem({
     required this.id,
@@ -80,6 +57,29 @@ class TransactionItem {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String transactionId;
+  final String productId;
+  final String? barcode;
+  final String productName;
+  final String? productNameAr;
+  final double quantity;
+  final double unitPrice;
+  final double? costPrice;
+  final double? discountAmount;
+  final DiscountType? discountType;
+  final double? discountValue;
+  final double? taxRate;
+  final double taxAmount;
+  final double lineTotal;
+  final String? serialNumber;
+  final String? batchNumber;
+  final DateTime? expiryDate;
+  final Map<String, dynamic>? modifierSelections;
+  final String? notes;
+  final bool? isReturnItem;
+  final bool? ageVerified;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

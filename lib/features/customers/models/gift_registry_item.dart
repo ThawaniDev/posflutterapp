@@ -1,11 +1,4 @@
 class GiftRegistryItem {
-  final String id;
-  final String registryId;
-  final String productId;
-  final int? quantityDesired;
-  final int? quantityPurchased;
-  final String? purchasedByName;
-  final DateTime? createdAt;
 
   const GiftRegistryItem({
     required this.id,
@@ -28,6 +21,13 @@ class GiftRegistryItem {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String registryId;
+  final String productId;
+  final int? quantityDesired;
+  final int? quantityPurchased;
+  final String? purchasedByName;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {

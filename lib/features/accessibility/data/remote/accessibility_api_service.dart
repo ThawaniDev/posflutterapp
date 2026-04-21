@@ -7,8 +7,8 @@ final accessibilityApiServiceProvider = Provider<AccessibilityApiService>((ref) 
 });
 
 class AccessibilityApiService {
-  final Ref _ref;
   AccessibilityApiService(this._ref);
+  final Ref _ref;
 
   /// GET /accessibility/preferences
   Future<Map<String, dynamic>> getPreferences() async {

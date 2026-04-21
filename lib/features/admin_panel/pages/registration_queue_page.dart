@@ -110,7 +110,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
       'pending' => AppColors.warning,
       'approved' => AppColors.success,
       'rejected' => AppColors.error,
-      _ => AppColors.textMutedLight,
+      _ => AppColors.mutedFor(context),
     };
   }
 
@@ -122,7 +122,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
         decoration: BoxDecoration(
           color: selected ? color.withValues(alpha: 0.1) : Colors.transparent,
           borderRadius: AppRadius.borderFull,
-          border: Border.all(color: selected ? color : AppColors.borderLight),
+          border: Border.all(color: selected ? color : AppColors.borderFor(context)),
         ),
         child: Text(
           label,
@@ -169,7 +169,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
       elevation: 0,
       borderRadius: AppRadius.borderLg,
 
-      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -183,7 +183,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
                     children: [
                       Text(businessName, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                       AppSpacing.gapH4,
-                      Text('$contactName • $email', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
+                      Text('$contactName • $email', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
                     ],
                   ),
                 ),
@@ -194,7 +194,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
               AppSpacing.gapH8,
               Text(
                 'Submitted: $createdAt',
-                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight, fontSize: 11),
+                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
               ),
             ],
             if (status == 'pending') ...[
@@ -251,15 +251,15 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     return Container(
       padding: AppSpacing.paddingAll16,
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(top: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Showing ${state.registrations.length} of ${state.total}',
-            style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+            style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
           ),
           Row(
             children: [

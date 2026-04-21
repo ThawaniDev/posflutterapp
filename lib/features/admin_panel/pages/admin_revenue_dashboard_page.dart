@@ -95,7 +95,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                       ],
                     ),
                     AppSpacing.gapH24,
-                    Text(l10n.reportsRevenue, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(l10n.reportsRevenue, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     AppSpacing.gapH16,
                     PosCard(
                       child: Padding(

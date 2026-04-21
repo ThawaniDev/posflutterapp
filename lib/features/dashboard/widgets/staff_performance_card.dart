@@ -8,9 +8,9 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class StaffPerformanceCard extends StatelessWidget {
-  final List<Map<String, dynamic>> staff;
 
   const StaffPerformanceCard({super.key, required this.staff});
+  final List<Map<String, dynamic>> staff;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class StaffPerformanceCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.leaderboard_rounded, color: AppColors.purple, size: 20),
+              const Icon(Icons.leaderboard_rounded, color: AppColors.purple, size: 20),
               AppSpacing.gapW8,
               Text(l10n.dashboardStaffPerformance, style: AppTypography.headlineSmall),
             ],
@@ -35,7 +35,7 @@ class StaffPerformanceCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   l10n.noData,
-                  style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ),
             )
@@ -56,10 +56,10 @@ class StaffPerformanceCard extends StatelessWidget {
 }
 
 class _StaffBarChart extends StatelessWidget {
-  final List<Map<String, dynamic>> staff;
-  final bool isDark;
 
   const _StaffBarChart({required this.staff, required this.isDark});
+  final List<Map<String, dynamic>> staff;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class _StaffBarChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderLight, strokeWidth: 0.8),
+              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context), strokeWidth: 0.8),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -106,7 +106,7 @@ class _StaffBarChart extends StatelessWidget {
                   meta: meta,
                   child: Text(
                     name.length > 8 ? '${name.substring(0, 7)}…' : name,
-                    style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                   ),
                 );
               },
@@ -120,7 +120,7 @@ class _StaffBarChart extends StatelessWidget {
                 meta: meta,
                 child: Text(
                   _formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
                 ),
               ),
             ),
@@ -141,11 +141,11 @@ class _StaffBarChart extends StatelessWidget {
 }
 
 class _StaffRow extends StatelessWidget {
+
+  const _StaffRow({required this.staff, required this.isDark, required this.l10n});
   final Map<String, dynamic> staff;
   final bool isDark;
   final AppLocalizations l10n;
-
-  const _StaffRow({required this.staff, required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,7 @@ class _StaffRow extends StatelessWidget {
                 Text(name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
                 Text(
                   '$transactions ${l10n.dashboardTransactions.toLowerCase()}',
-                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),
@@ -186,7 +186,7 @@ class _StaffRow extends StatelessWidget {
               Text('\u0081 ${sales.toStringAsFixed(0)}', style: AppTypography.labelMedium.copyWith(color: AppColors.success)),
               Text(
                 '${l10n.dashboardAvgBasket}: \u0081 ${avgBasket.toStringAsFixed(0)}',
-                style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
               ),
             ],
           ),

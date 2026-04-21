@@ -3,22 +3,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 /// NFC tag data
-class NfcTagData {
+class NfcTagData { // NDEF records if available
+
+  const NfcTagData({required this.uid, this.type, required this.scannedAt, this.payload});
   final String uid;
   final String? type; // NTAG213, MIFARE Classic, etc.
   final DateTime scannedAt;
-  final Map<String, dynamic>? payload; // NDEF records if available
-
-  const NfcTagData({required this.uid, this.type, required this.scannedAt, this.payload});
+  final Map<String, dynamic>? payload;
 }
 
 /// NFC reader configuration
 class NfcReaderConfig {
-  final String connectionType; // usb, built_in
-  final String purpose; // staff_badge, customer_card, generic
-  final bool continuousRead; // auto-read on tap
-  final int debounceMs; // prevent duplicate reads
-  final String? usbDevicePath;
 
   const NfcReaderConfig({
     this.connectionType = 'usb',
@@ -37,6 +32,11 @@ class NfcReaderConfig {
       usbDevicePath: json['usb_device_path'] as String?,
     );
   }
+  final String connectionType; // usb, built_in
+  final String purpose; // staff_badge, customer_card, generic
+  final bool continuousRead; // auto-read on tap
+  final int debounceMs; // prevent duplicate reads
+  final String? usbDevicePath;
 
   Map<String, dynamic> toJson() => {
     'connection_type': connectionType,

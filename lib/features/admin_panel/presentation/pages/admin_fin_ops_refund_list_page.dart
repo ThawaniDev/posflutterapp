@@ -140,7 +140,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
     'completed' => AppColors.success,
     'pending' => AppColors.warning,
     'failed' => AppColors.error,
-    _ => AppColors.textMutedLight,
+    _ => AppColors.mutedFor(context),
   };
 
   Widget _statusChip(String status) {

@@ -11,9 +11,9 @@ final debitsApiServiceProvider = Provider<DebitsApiService>((ref) {
 });
 
 class DebitsApiService {
-  final Dio _dio;
 
   DebitsApiService(this._dio);
+  final Dio _dio;
 
   // ─── List Debits ──────────────────────────────────────────────
 
@@ -36,16 +36,16 @@ class DebitsApiService {
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        if (customerId != null) 'customer_id': customerId,
-        if (storeId != null) 'store_id': storeId,
-        if (status != null) 'status': status,
-        if (debitType != null) 'debit_type': debitType,
-        if (source != null) 'source': source,
+        'customer_id': ?customerId,
+        'store_id': ?storeId,
+        'status': ?status,
+        'debit_type': ?debitType,
+        'source': ?source,
         if (search != null && search.isNotEmpty) 'search': search,
-        if (dateFrom != null) 'date_from': dateFrom,
-        if (dateTo != null) 'date_to': dateTo,
-        if (sortBy != null) 'sort_by': sortBy,
-        if (sortDir != null) 'sort_dir': sortDir,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+        'sort_by': ?sortBy,
+        'sort_dir': ?sortDir,
       },
     );
 
@@ -89,10 +89,10 @@ class DebitsApiService {
         'debit_type': debitType,
         'source': source,
         'amount': amount,
-        if (description != null) 'description': description,
-        if (descriptionAr != null) 'description_ar': descriptionAr,
-        if (notes != null) 'notes': notes,
-        if (referenceNumber != null) 'reference_number': referenceNumber,
+        'description': ?description,
+        'description_ar': ?descriptionAr,
+        'notes': ?notes,
+        'reference_number': ?referenceNumber,
       },
     );
 
@@ -125,7 +125,7 @@ class DebitsApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.debitAllocate(debitId),
-      data: {'order_id': orderId, 'amount': amount, if (notes != null) 'notes': notes},
+      data: {'order_id': orderId, 'amount': amount, 'notes': ?notes},
     );
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

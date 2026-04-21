@@ -507,6 +507,7 @@
   "settingsLocalization": "Localization",
   "settingsLocalizationDesc": "Languages, translations & regional settings",
   "settingsStoreProfile": "Store Profile",
+  "settingsBusinessType": "Business Type",
   "settingsStoreProfileDesc": "Store name, address & contact info",
   "settingsWorkingHours": "Working Hours",
   "settingsWorkingHoursDesc": "Set your store operating hours",
@@ -610,7 +611,7 @@
   "settingsWorkingBreakEnd": "Break End",
   "settingsProfileCurrency": "Currency",
   "settingsProfileCurrencyCode": "Currency Code",
-  "settingsProfileCurrencyCodeHint": "e.g. OMR, , USD",
+  "settingsProfileCurrencyCodeHint": "e.g. , , USD",
   "settingsProfileCurrencySymbol": "Currency Symbol",
   "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
   "settingsProfileFormatting": "Number Formatting",
@@ -851,6 +852,10 @@
   "bakeryCustomCakeOrders": "Custom Cake Orders",
   "bakeryProductionSchedule": "Production Schedule",
   "bakeryNewRecipe": "New Recipe",
+  "bakeryEditSchedule": "Edit Schedule",
+  "bakeryNewSchedule": "New Production Schedule",
+  "bakeryUpdateSchedule": "Update Schedule",
+  "bakeryCreateSchedule": "Create Schedule",
   "bakeryIngredients": "Ingredients",
   "bakeryYield": "Yield",
   "bakeryCakeSize": "Cake Size",
@@ -1042,6 +1047,66 @@
   "staffShiftDeleted": "Shift deleted",
   "staffDeleteShift": "Delete Shift",
   "staffDeleteShiftConfirm": "Delete this shift? This cannot be undone.",
+  "staffShiftsTab": "Shifts",
+  "staffTemplatesTab": "Templates",
+  "staffShiftTemplates": "Shift Templates",
+  "staffCreateTemplate": "Create Template",
+  "staffEditTemplate": "Edit Template",
+  "staffDeleteTemplate": "Delete Template",
+  "staffDeleteTemplateConfirm": "Delete this template? This cannot be undone.",
+  "staffTemplateCreated": "Template created",
+  "staffTemplateUpdated": "Template updated",
+  "staffTemplateDeleted": "Template deleted",
+  "staffNoTemplates": "No templates found",
+  "staffNoShifts": "No shifts found",
+  "staffStatusScheduled": "Scheduled",
+  "staffStatusCompleted": "Completed",
+  "staffStatusMissed": "Missed",
+  "staffStatusSwapped": "Swapped",
+  "staffStatusUnknown": "Unknown",
+  "staffMarkComplete": "Mark Complete",
+  "staffMarkMissed": "Mark Missed",
+  "staffActual": "Actual",
+  "staffUnknown": "Unknown",
+  "staffBulkAssignShifts": "Bulk Assign Shifts",
+  "staffSingle": "Single",
+  "staffBulk": "Bulk",
+  "staffSelectMembers": "Select Members",
+  "staffSelectDates": "Select Dates",
+  "staffAddDate": "Add Date",
+  "staffPeriod": "Period",
+  "staffShiftsCreated": "Shifts created",
+  "staffShiftUpdated": "Shift updated",
+  "staffEditShift": "Edit Shift",
+  "staffBreakMinutes": "{count} min break",
+  "@staffBreakMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffBreakDuration": "Break Duration",
+  "staffMinutes": "min",
+  "staffStartTime": "Start Time",
+  "staffEndTime": "End Time",
+  "color": "Color",
+  "staffOnBreak": "On Break",
+  "staffOngoing": "Ongoing",
+  "staffNetWorked": "Net",
+  "staffAbsent": "Absent",
+  "staffCompleted": "Completed",
+  "staffOnTime": "On Time",
+  "staffLate": "Late",
+  "staffEarlyDeparture": "Early Departure",
+  "staffActiveSession": "Active",
+  "staffTotalHours": "Total Hours",
+  "staffAvgHours": "Avg Hours",
+  "staffLateArrivals": "Late Arrivals",
+  "staffOnTimeRate": "On-Time Rate",
+  "staffOvertimeHours": "Overtime",
+  "staffBreakDetails": "Break Details",
+  "staffExportAttendance": "Export",
   "staffCommissions": "Commissions",
   "staffTotalEarnings": "Total Earnings",
   "staffTotalOrders": "Total Orders",
@@ -1581,12 +1646,19 @@
   "noSessions": "No sessions",
   "na": "N/A",
   "paymentCash": "Cash",
+  "paymentCard": "Card",
   "paymentMada": "mada",
+  "paymentCardMada": "Mada Card",
   "paymentVisa": "Visa",
+  "paymentCardVisa": "Visa Card",
   "paymentMastercard": "Mastercard",
+  "paymentApplePay": "Apple Pay",
+  "paymentStcPay": "STC Pay",
   "paymentStoreCredit": "Store Credit",
   "paymentGiftCard": "Gift Card",
   "paymentMobilePayment": "Mobile Payment",
+  "paymentLoyaltyPoints": "Loyalty Points",
+  "paymentBankTransfer": "Bank Transfer",
   "offlineChangesSynced": "Offline — changes will sync when connected",
   "syncing": "Syncing...",
   "syncError": "Sync error — will retry",
@@ -1739,6 +1811,9 @@
   "posNoProducts": "No products found",
   "posNoProductsHint": "Try a different search or check your catalog.",
   "posProductAdded": "{name} added",
+  "posEnterWeight": "Enter Weight",
+  "posTareWeightNote": "Tare weight: {weight} kg will be deducted automatically",
+  "posWeightHint": "Enter weight in kg",
   "posProductNotFound": "Product not found",
   "posReturnRefund": "Return / Refund",
   "posReceiptNumber": "Receipt / Transaction number",
@@ -1753,6 +1828,20 @@
   "posPaymentTotal": "Total:  {amount}",
   "posSplitPayment": "Split Payment",
   "posCashTendered": "Cash Tendered",
+  "posTipAmount": "Tip Amount",
+  "posTotalWithTip": "Total with Tip",
+  "posPaymentTotalInsufficient": "Payment total does not cover the amount due",
+  "posReturnQtyExceedsOriginal": "Return quantity exceeds original for {product} (max: {max})",
+  "@posReturnQtyExceedsOriginal": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
   "posChange": "Change",
   "posRemaining": "Remaining",
   "posCompletePayment": "Complete Payment",
@@ -1810,6 +1899,7 @@
   "posNoProductsSubtitle": "Try a different search or check your catalog.",
   "posTapProductsToAdd": "Tap products to add them",
   "posTax15": "Tax (15%)",
+  "posTaxExempt": "Tax Exempt",
   "posClearCartMessage": "All items will be removed.",
   "posClear": "Clear",
   "posWalkInCustomer": "Walk-in Customer",
@@ -1829,6 +1919,11 @@
   "@posProductAdded": {
     "placeholders": {
       "name": {}
+    }
+  },
+  "@posTareWeightNote": {
+    "placeholders": {
+      "weight": {}
     }
   },
   "posReviewSessionSummary": "Review your session summary",
@@ -2185,6 +2280,7 @@
   "commonEdit": "Edit",
   "commonInactive": "Inactive",
   "commonInvalid": "Invalid",
+  "commonError": "An error occurred",
   "commonNo": "No",
   "commonNotes": "Notes",
   "commonNotesOptional": "Notes (optional)",
@@ -2271,6 +2367,9 @@
   "inventoryPOCancelled": "Purchase order cancelled",
   "inventoryPOCreatedMsg": "Purchase order created",
   "inventoryPOSent": "Purchase order sent",
+  "inventoryPOReceived": "Purchase order received",
+  "inventoryReceivePOTitle": "Receive Purchase Order",
+  "inventoryOrdered": "Ordered",
   "inventoryPartiallyReceived": "Partially Received",
   "inventoryProduct": "Product",
   "inventoryPurchaseOrders": "Purchase Orders",
@@ -2282,6 +2381,7 @@
   "inventoryReceived": "Received",
   "inventoryRecipeCreated": "Recipe created",
   "inventoryRecipeDeleted": "Recipe deleted",
+  "inventoryRecipeUpdated": "Recipe updated",
   "inventoryRecipes": "Recipes",
   "inventoryRecipesSubtitle": "Define product ingredients and yields",
   "inventoryRef": "Ref",
@@ -2804,6 +2904,7 @@
     }
   },
   "appBarLanguage": "Language",
+  "appBarMore": "More",
   "quickNavTitle": "Quick Navigation",
   "appBarTheme": "Theme",
   "appBarDarkMode": "Dark Mode",
@@ -2948,6 +3049,9 @@
   "receiptTemplateBodyConfig": "Body Configuration",
   "receiptTemplateFooterConfig": "Footer Configuration",
   "cfdThemesTitle": "Customer Facing Display Themes",
+  "cfdEnabled": "CFD Enabled",
+  "cfdTargetMonitor": "Target Monitor",
+  "cfdIdleRotation": "Idle Rotation (seconds)",
   "cfdThemesEmpty": "No CFD Themes",
   "cfdThemesEmptySubtitle": "No customer facing display themes are available for your plan.",
   "cfdThemeDetail": "CFD Theme Details",
@@ -3170,7 +3274,6 @@
   "debitsAllocatedAt": "Allocated At",
   "debitsCreatedAt": "Created At",
   "debitsOrderNumber": "Order #",
-
   "sidebarReceivables": "Receivables",
   "receivablesTitle": "Receivables",
   "receivablesCreate": "Create Receivable",
@@ -3243,7 +3346,6 @@
   "receivablesSettledAt": "Settled At",
   "receivablesCreatedAt": "Created At",
   "receivablesOrderNumber": "Order #",
-
   "searchDropdownHint": "Search...",
   "noResultsFound": "No results found",
   "selectOption": "Select...",
@@ -6214,9 +6316,15 @@
   "genericPaginationInfo": "Page {current} of {total} ({count} total)",
   "@genericPaginationInfo": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" },
-      "count": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
     }
   },
   "labelsPrintedBy": "Printed By",
@@ -6482,6 +6590,248 @@
       },
       "total": {
         "type": "int"
+      }
+    }
+  },
+  "subThisAddOn": "this add-on",
+  "subBillingCycleMonthly": "Monthly",
+  "subBillingCycleYearly": "Yearly",
+  "subUnableToIdentifyAddOn": "Unable to identify add-on",
+  "softPosFreeTier": "Free Tier",
+  "softPosFreeActive": "Free tier is active",
+  "softPosTransactions": "Transactions",
+  "softPosRemaining": "Remaining",
+  "subAddOnConfirmMessage": "Add {name} for {price} {currency}/{cycle}?",
+  "@subAddOnConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnRemovedSuccess": "{name} has been removed",
+  "@subAddOnRemovedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnRemoveFailed": "Failed to remove add-on: {error}",
+  "@subAddOnRemoveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subConfirmSubscriptionMessage": "Subscribe to {planName} ({billingCycle}) for {price} {currency}?",
+  "@subConfirmSubscriptionMessage": {
+    "placeholders": {
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "subBillingLabel": "Billing: {cycle}",
+  "@subBillingLabel": {
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
+  "subPeriodLabel": "Period: {start} – {end}",
+  "@subPeriodLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "subTrialEnds": "Trial ends: {date}",
+  "@subTrialEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subGracePeriodEnds": "Grace period ends: {date}",
+  "@subGracePeriodEnds": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosSaving": "Saving {amount} ",
+  "@softPosSaving": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosReachThreshold": "Reach {threshold} transactions to unlock paid features",
+  "@softPosReachThreshold": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subDaysRemaining": "Days Left",
+  "subNextPayment": "Next Payment",
+  "subPaymentMethod": "Payment Method",
+  "subQuickActions": "Quick Actions",
+  "subViewPayments": "View Payments",
+  "subIncludedFeatures": "Included Features",
+  "subSubscriptionOverview": "Subscription Overview",
+  "subPlanDetails": "Plan Details",
+  "subNextBillingDate": "Next Billing Date",
+  "subNDaysLeft": "{days} days left",
+  "@subNDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subCurrentPlanBadge": "Current",
+  "subBestValue": "Best Value",
+  "subFeaturesIncluded": "{count} features included",
+  "@subFeaturesIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitsIncluded": "{count} limits",
+  "@subLimitsIncluded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subNotAvailable": "Not Available",
+  "subEnabled": "Enabled",
+  "subDisabled": "Disabled",
+  "subSoftPosFreeAfter": "FREE after {threshold} SoftPOS transactions",
+  "@subSoftPosFreeAfter": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "subSoftPosFreeExplainer": "Use SoftPOS to accept {threshold} card payments within {period} and your subscription becomes free!",
+  "@subSoftPosFreeExplainer": {
+    "placeholders": {
+      "threshold": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeEligible": "SoftPOS Free Eligible",
+  "subSoftPosOrPay": "Otherwise: {price} {period}",
+  "@subSoftPosOrPay": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "notifCentreTitle": "Notification Centre",
+  "notifCentreSubtitle": "All your alerts in one place",
+  "notifTabInbox": "Inbox",
+  "notifTabAnnouncements": "Announcements",
+  "notifTabPaymentReminders": "Payment Reminders",
+  "notifTabAppUpdates": "App Updates",
+  "notifBellTooltip": "Notifications",
+  "notifViewAll": "View all",
+  "notifNoRecent": "No recent notifications",
+  "notifMaintenanceBannerTitle": "Scheduled maintenance",
+  "notifMaintenanceUntil": "Expected end: {endAt}",
+  "@notifMaintenanceUntil": {
+    "placeholders": {
+      "endAt": {
+        "type": "String"
+      }
+    }
+  },
+  "announcementsEmpty": "No announcements right now",
+  "announcementsDismiss": "Dismiss",
+  "announcementsDismissed": "Announcement dismissed",
+  "paymentReminderDue": "Due",
+  "paymentRemindersEmpty": "No payment reminders",
+  "paymentRemindersUpcoming": "Upcoming",
+  "paymentRemindersOverdue": "Overdue",
+  "paymentRemindersChannel": "Channel",
+  "paymentRemindersSentAt": "Sent at",
+  "paymentRemindersSummary": "{total} total · {upcoming} upcoming · {overdue} overdue",
+  "@paymentRemindersSummary": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      },
+      "overdue": {
+        "type": "int"
+      }
+    }
+  },
+  "appReleasesEmpty": "No releases available",
+  "appReleaseLatest": "Latest release",
+  "appReleaseVersion": "Version {version}",
+  "@appReleaseVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "appReleaseForceUpdate": "Required update",
+  "appReleaseChangelog": "What's new",
+  "appReleaseDownload": "Download",
+  "appReleasePlatform": "Platform",
+  "appReleaseChannel": "Channel",
+  "appReleaseReleasedAt": "Released {date}",
+  "@appReleaseReleasedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
       }
     }
   }

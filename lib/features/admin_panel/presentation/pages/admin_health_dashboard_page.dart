@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/admin_providers.dart';
-import '../../providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -133,7 +133,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                       CircularProgressIndicator(
                         value: healthScore / 100,
                         strokeWidth: 8,
-                        backgroundColor: AppColors.borderLight,
+                        backgroundColor: AppColors.borderFor(context),
                         valueColor: AlwaysStoppedAnimation(
                           healthScore >= 80
                               ? AppColors.success

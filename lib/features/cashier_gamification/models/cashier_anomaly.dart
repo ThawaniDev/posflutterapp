@@ -1,30 +1,6 @@
 import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 
 class CashierAnomaly {
-  final String id;
-  final String storeId;
-  final String cashierId;
-  final CashierInfo? cashier;
-  final String? snapshotId;
-  final String anomalyType;
-  final String severity;
-  final double riskScore;
-  final String? titleEn;
-  final String? titleAr;
-  final String? descriptionEn;
-  final String? descriptionAr;
-  final String? metricName;
-  final double metricValue;
-  final double storeAverage;
-  final double storeStddev;
-  final double zScore;
-  final List<String> referenceIds;
-  final String detectedDate;
-  final bool isReviewed;
-  final String? reviewedBy;
-  final DateTime? reviewedAt;
-  final String? reviewNotes;
-  final DateTime? createdAt;
 
   const CashierAnomaly({
     required this.id,
@@ -81,6 +57,30 @@ class CashierAnomaly {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String cashierId;
+  final CashierInfo? cashier;
+  final String? snapshotId;
+  final String anomalyType;
+  final String severity;
+  final double riskScore;
+  final String? titleEn;
+  final String? titleAr;
+  final String? descriptionEn;
+  final String? descriptionAr;
+  final String? metricName;
+  final double metricValue;
+  final double storeAverage;
+  final double storeStddev;
+  final double zScore;
+  final List<String> referenceIds;
+  final String detectedDate;
+  final bool isReviewed;
+  final String? reviewedBy;
+  final DateTime? reviewedAt;
+  final String? reviewNotes;
+  final DateTime? createdAt;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CashierAnomaly && other.id == id;

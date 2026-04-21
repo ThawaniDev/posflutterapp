@@ -1,18 +1,4 @@
 class AdminUser {
-  final String id;
-  final String name;
-  final String email;
-  final String passwordHash;
-  final String? phone;
-  final String? avatarUrl;
-  final bool? isActive;
-  final String? twoFactorSecret;
-  final bool? twoFactorEnabled;
-  final DateTime? twoFactorConfirmedAt;
-  final DateTime? lastLoginAt;
-  final String? lastLoginIp;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AdminUser({
     required this.id,
@@ -49,6 +35,20 @@ class AdminUser {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String name;
+  final String email;
+  final String passwordHash;
+  final String? phone;
+  final String? avatarUrl;
+  final bool? isActive;
+  final String? twoFactorSecret;
+  final bool? twoFactorEnabled;
+  final DateTime? twoFactorConfirmedAt;
+  final DateTime? lastLoginAt;
+  final String? lastLoginIp;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {

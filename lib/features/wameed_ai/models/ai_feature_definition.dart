@@ -1,23 +1,6 @@
 import 'package:wameedpos/features/wameed_ai/enums/ai_feature_category.dart';
 
 class AIFeatureDefinition {
-  final String id;
-  final String slug;
-  final String name;
-  final String? nameAr;
-  final String? description;
-  final String? descriptionAr;
-  final AIFeatureCategory category;
-  final String? icon;
-  final String? defaultModel;
-  final bool isActive;
-  final bool isPremium;
-  final int dailyLimit;
-  final int monthlyLimit;
-  final int sortOrder;
-  final List<AIStoreFeatureConfig>? storeConfigs;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AIFeatureDefinition({
     required this.id,
@@ -62,6 +45,23 @@ class AIFeatureDefinition {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String slug;
+  final String name;
+  final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
+  final AIFeatureCategory category;
+  final String? icon;
+  final String? defaultModel;
+  final bool isActive;
+  final bool isPremium;
+  final int dailyLimit;
+  final int monthlyLimit;
+  final int sortOrder;
+  final List<AIStoreFeatureConfig>? storeConfigs;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -130,15 +130,6 @@ class AIFeatureDefinition {
 }
 
 class AIStoreFeatureConfig {
-  final String id;
-  final String storeId;
-  final String featureId;
-  final bool isEnabled;
-  final int? dailyLimit;
-  final int? monthlyLimit;
-  final Map<String, dynamic>? customConfig;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   const AIStoreFeatureConfig({
     required this.id,
@@ -165,6 +156,15 @@ class AIStoreFeatureConfig {
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final String featureId;
+  final bool isEnabled;
+  final int? dailyLimit;
+  final int? monthlyLimit;
+  final Map<String, dynamic>? customConfig;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {'is_enabled': isEnabled, 'daily_limit': dailyLimit, 'monthly_limit': monthlyLimit, 'custom_config': customConfig};

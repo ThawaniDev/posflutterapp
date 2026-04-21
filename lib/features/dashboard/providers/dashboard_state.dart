@@ -14,16 +14,6 @@ class OwnerDashboardLoading extends OwnerDashboardState {
 }
 
 class OwnerDashboardLoaded extends OwnerDashboardState {
-  final Map<String, dynamic> stats;
-  final Map<String, dynamic> salesTrend;
-  final List<Map<String, dynamic>> topProducts;
-  final List<Map<String, dynamic>> lowStock;
-  final List<Map<String, dynamic>> activeCashiers;
-  final List<Map<String, dynamic>> recentOrders;
-  final Map<String, dynamic> financialSummary;
-  final List<Map<String, dynamic>> hourlySales;
-  final List<Map<String, dynamic>> staffPerformance;
-  final List<Map<String, dynamic>> branches;
 
   const OwnerDashboardLoaded({
     required this.stats,
@@ -37,11 +27,21 @@ class OwnerDashboardLoaded extends OwnerDashboardState {
     required this.staffPerformance,
     required this.branches,
   });
+  final Map<String, dynamic> stats;
+  final Map<String, dynamic> salesTrend;
+  final List<Map<String, dynamic>> topProducts;
+  final List<Map<String, dynamic>> lowStock;
+  final List<Map<String, dynamic>> activeCashiers;
+  final List<Map<String, dynamic>> recentOrders;
+  final Map<String, dynamic> financialSummary;
+  final List<Map<String, dynamic>> hourlySales;
+  final List<Map<String, dynamic>> staffPerformance;
+  final List<Map<String, dynamic>> branches;
 }
 
 class OwnerDashboardError extends OwnerDashboardState {
-  final String message;
   const OwnerDashboardError({required this.message});
+  final String message;
 }
 
 // ─── Financial Summary State ───────────────────────────────────
@@ -59,13 +59,13 @@ class FinancialSummaryLoading extends FinancialSummaryState {
 }
 
 class FinancialSummaryLoaded extends FinancialSummaryState {
-  final Map<String, dynamic> data;
   const FinancialSummaryLoaded({required this.data});
+  final Map<String, dynamic> data;
 }
 
 class FinancialSummaryError extends FinancialSummaryState {
-  final String message;
   const FinancialSummaryError({required this.message});
+  final String message;
 }
 
 // ─── Staff Performance State ───────────────────────────────────
@@ -83,13 +83,13 @@ class StaffPerformanceLoading extends StaffPerformanceState {
 }
 
 class StaffPerformanceLoaded extends StaffPerformanceState {
-  final List<Map<String, dynamic>> staff;
   const StaffPerformanceLoaded({required this.staff});
+  final List<Map<String, dynamic>> staff;
 }
 
 class StaffPerformanceError extends StaffPerformanceState {
-  final String message;
   const StaffPerformanceError({required this.message});
+  final String message;
 }
 
 // ─── Branch Overview State ─────────────────────────────────────
@@ -107,11 +107,11 @@ class BranchOverviewLoading extends BranchOverviewState {
 }
 
 class BranchOverviewLoaded extends BranchOverviewState {
-  final List<Map<String, dynamic>> branches;
   const BranchOverviewLoaded({required this.branches});
+  final List<Map<String, dynamic>> branches;
 }
 
 class BranchOverviewError extends BranchOverviewState {
-  final String message;
   const BranchOverviewError({required this.message});
+  final String message;
 }

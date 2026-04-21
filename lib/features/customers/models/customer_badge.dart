@@ -1,8 +1,4 @@
 class CustomerBadge {
-  final String id;
-  final String customerId;
-  final String badgeId;
-  final DateTime? earnedAt;
 
   const CustomerBadge({
     required this.id,
@@ -19,6 +15,10 @@ class CustomerBadge {
       earnedAt: json['earned_at'] != null ? DateTime.parse(json['earned_at'] as String) : null,
     );
   }
+  final String id;
+  final String customerId;
+  final String badgeId;
+  final DateTime? earnedAt;
 
   Map<String, dynamic> toJson() {
     return {

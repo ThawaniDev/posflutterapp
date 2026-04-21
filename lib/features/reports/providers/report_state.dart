@@ -14,15 +14,15 @@ class SalesSummaryLoading extends SalesSummaryState {
 }
 
 class SalesSummaryLoaded extends SalesSummaryState {
-  final Map<String, dynamic> totals;
-  final List<Map<String, dynamic>> daily;
 
   const SalesSummaryLoaded({required this.totals, required this.daily});
+  final Map<String, dynamic> totals;
+  final List<Map<String, dynamic>> daily;
 }
 
 class SalesSummaryError extends SalesSummaryState {
-  final String message;
   const SalesSummaryError({required this.message});
+  final String message;
 }
 
 // Product Performance
@@ -39,13 +39,13 @@ class ProductPerformanceLoading extends ProductPerformanceState {
 }
 
 class ProductPerformanceLoaded extends ProductPerformanceState {
-  final List<Map<String, dynamic>> products;
   const ProductPerformanceLoaded({required this.products});
+  final List<Map<String, dynamic>> products;
 }
 
 class ProductPerformanceError extends ProductPerformanceState {
-  final String message;
   const ProductPerformanceError({required this.message});
+  final String message;
 }
 
 // Category Breakdown
@@ -62,13 +62,13 @@ class CategoryBreakdownLoading extends CategoryBreakdownState {
 }
 
 class CategoryBreakdownLoaded extends CategoryBreakdownState {
-  final List<Map<String, dynamic>> categories;
   const CategoryBreakdownLoaded({required this.categories});
+  final List<Map<String, dynamic>> categories;
 }
 
 class CategoryBreakdownError extends CategoryBreakdownState {
-  final String message;
   const CategoryBreakdownError({required this.message});
+  final String message;
 }
 
 // Staff Performance
@@ -85,13 +85,13 @@ class StaffPerformanceLoading extends StaffPerformanceState {
 }
 
 class StaffPerformanceLoaded extends StaffPerformanceState {
-  final List<Map<String, dynamic>> staff;
   const StaffPerformanceLoaded({required this.staff});
+  final List<Map<String, dynamic>> staff;
 }
 
 class StaffPerformanceError extends StaffPerformanceState {
-  final String message;
   const StaffPerformanceError({required this.message});
+  final String message;
 }
 
 // Hourly Sales
@@ -108,13 +108,13 @@ class HourlySalesLoading extends HourlySalesState {
 }
 
 class HourlySalesLoaded extends HourlySalesState {
-  final List<Map<String, dynamic>> hours;
   const HourlySalesLoaded({required this.hours});
+  final List<Map<String, dynamic>> hours;
 }
 
 class HourlySalesError extends HourlySalesState {
-  final String message;
   const HourlySalesError({required this.message});
+  final String message;
 }
 
 // Payment Methods
@@ -131,13 +131,13 @@ class PaymentMethodsLoading extends PaymentMethodsState {
 }
 
 class PaymentMethodsLoaded extends PaymentMethodsState {
-  final List<Map<String, dynamic>> methods;
   const PaymentMethodsLoaded({required this.methods});
+  final List<Map<String, dynamic>> methods;
 }
 
 class PaymentMethodsError extends PaymentMethodsState {
-  final String message;
   const PaymentMethodsError({required this.message});
+  final String message;
 }
 
 // Dashboard
@@ -154,16 +154,16 @@ class DashboardLoading extends DashboardState {
 }
 
 class DashboardLoaded extends DashboardState {
+
+  const DashboardLoaded({required this.today, required this.yesterday, required this.topProducts});
   final Map<String, dynamic> today;
   final Map<String, dynamic> yesterday;
   final List<Map<String, dynamic>> topProducts;
-
-  const DashboardLoaded({required this.today, required this.yesterday, required this.topProducts});
 }
 
 class DashboardError extends DashboardState {
-  final String message;
   const DashboardError({required this.message});
+  final String message;
 }
 
 // Inventory Valuation
@@ -180,13 +180,13 @@ class InventoryValuationLoading extends InventoryValuationState {
 }
 
 class InventoryValuationLoaded extends InventoryValuationState {
-  final Map<String, dynamic> data;
   const InventoryValuationLoaded({required this.data});
+  final Map<String, dynamic> data;
 }
 
 class InventoryValuationError extends InventoryValuationState {
-  final String message;
   const InventoryValuationError({required this.message});
+  final String message;
 }
 
 // Inventory Turnover
@@ -203,13 +203,13 @@ class InventoryTurnoverLoading extends InventoryTurnoverState {
 }
 
 class InventoryTurnoverLoaded extends InventoryTurnoverState {
-  final List<Map<String, dynamic>> products;
   const InventoryTurnoverLoaded({required this.products});
+  final List<Map<String, dynamic>> products;
 }
 
 class InventoryTurnoverError extends InventoryTurnoverState {
-  final String message;
   const InventoryTurnoverError({required this.message});
+  final String message;
 }
 
 // Inventory Shrinkage
@@ -226,13 +226,13 @@ class InventoryShrinkageLoading extends InventoryShrinkageState {
 }
 
 class InventoryShrinkageLoaded extends InventoryShrinkageState {
-  final Map<String, dynamic> data;
   const InventoryShrinkageLoaded({required this.data});
+  final Map<String, dynamic> data;
 }
 
 class InventoryShrinkageError extends InventoryShrinkageState {
-  final String message;
   const InventoryShrinkageError({required this.message});
+  final String message;
 }
 
 // Inventory Low Stock
@@ -249,13 +249,13 @@ class InventoryLowStockLoading extends InventoryLowStockState {
 }
 
 class InventoryLowStockLoaded extends InventoryLowStockState {
-  final List<Map<String, dynamic>> products;
   const InventoryLowStockLoaded({required this.products});
+  final List<Map<String, dynamic>> products;
 }
 
 class InventoryLowStockError extends InventoryLowStockState {
-  final String message;
   const InventoryLowStockError({required this.message});
+  final String message;
 }
 
 // Financial Daily P&L
@@ -272,14 +272,14 @@ class FinancialDailyPlLoading extends FinancialDailyPlState {
 }
 
 class FinancialDailyPlLoaded extends FinancialDailyPlState {
+  const FinancialDailyPlLoaded({required this.totals, required this.daily});
   final Map<String, dynamic> totals;
   final List<Map<String, dynamic>> daily;
-  const FinancialDailyPlLoaded({required this.totals, required this.daily});
 }
 
 class FinancialDailyPlError extends FinancialDailyPlState {
-  final String message;
   const FinancialDailyPlError({required this.message});
+  final String message;
 }
 
 // Financial Expenses
@@ -296,14 +296,14 @@ class FinancialExpensesLoading extends FinancialExpensesState {
 }
 
 class FinancialExpensesLoaded extends FinancialExpensesState {
+  const FinancialExpensesLoaded({required this.totalExpenses, required this.categories});
   final double totalExpenses;
   final List<Map<String, dynamic>> categories;
-  const FinancialExpensesLoaded({required this.totalExpenses, required this.categories});
 }
 
 class FinancialExpensesError extends FinancialExpensesState {
-  final String message;
   const FinancialExpensesError({required this.message});
+  final String message;
 }
 
 // Financial Cash Variance
@@ -320,13 +320,13 @@ class CashVarianceLoading extends CashVarianceState {
 }
 
 class CashVarianceLoaded extends CashVarianceState {
-  final Map<String, dynamic> data;
   const CashVarianceLoaded({required this.data});
+  final Map<String, dynamic> data;
 }
 
 class CashVarianceError extends CashVarianceState {
-  final String message;
   const CashVarianceError({required this.message});
+  final String message;
 }
 
 // Top Customers
@@ -343,13 +343,13 @@ class TopCustomersLoading extends TopCustomersState {
 }
 
 class TopCustomersLoaded extends TopCustomersState {
-  final List<Map<String, dynamic>> customers;
   const TopCustomersLoaded({required this.customers});
+  final List<Map<String, dynamic>> customers;
 }
 
 class TopCustomersError extends TopCustomersState {
-  final String message;
   const TopCustomersError({required this.message});
+  final String message;
 }
 
 // Customer Retention
@@ -366,11 +366,11 @@ class CustomerRetentionLoading extends CustomerRetentionState {
 }
 
 class CustomerRetentionLoaded extends CustomerRetentionState {
-  final Map<String, dynamic> data;
   const CustomerRetentionLoaded({required this.data});
+  final Map<String, dynamic> data;
 }
 
 class CustomerRetentionError extends CustomerRetentionState {
-  final String message;
   const CustomerRetentionError({required this.message});
+  final String message;
 }

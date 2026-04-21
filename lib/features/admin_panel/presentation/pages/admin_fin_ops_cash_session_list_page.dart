@@ -123,10 +123,10 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
               leading: CircleAvatar(
                 backgroundColor: status == 'open'
                     ? AppColors.success.withValues(alpha: 0.15)
-                    : AppColors.textMutedLight.withValues(alpha: 0.15),
+                    : AppColors.mutedFor(context).withValues(alpha: 0.15),
                 child: Icon(
                   Icons.point_of_sale,
-                  color: status == 'open' ? AppColors.success : AppColors.textMutedLight,
+                  color: status == 'open' ? AppColors.success : AppColors.mutedFor(context),
                   size: 20,
                 ),
               ),
@@ -148,7 +148,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
               trailing: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: (status == 'open' ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
+                  color: (status == 'open' ? AppColors.success : AppColors.mutedFor(context)).withValues(alpha: 0.1),
                   borderRadius: AppRadius.borderLg,
                 ),
                 child: Text(
@@ -156,7 +156,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
-                    color: status == 'open' ? AppColors.success : AppColors.textMutedLight,
+                    color: status == 'open' ? AppColors.success : AppColors.mutedFor(context),
                   ),
                 ),
               ),

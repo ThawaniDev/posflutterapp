@@ -26,12 +26,12 @@ final isAuthenticatedProvider = Provider<bool>((ref) {
 });
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  final AuthRepository _repository;
-  final Ref _ref;
 
   AuthNotifier(this._repository, this._ref) : super(const AuthInitial()) {
     checkStoredSession();
   }
+  final AuthRepository _repository;
+  final Ref _ref;
 
   // ─── Session Recovery ──────────────────────────────────────────
 

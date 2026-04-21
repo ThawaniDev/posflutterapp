@@ -1,16 +1,6 @@
 import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
 
 class OnboardingProgress {
-  final String id;
-  final String storeId;
-  final OnboardingStep? currentStep;
-  final List<String> completedSteps;
-  final Map<String, dynamic> checklistItems;
-  final bool isWizardCompleted;
-  final bool isChecklistDismissed;
-  final int completionPercent;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
 
   const OnboardingProgress({
     required this.id,
@@ -39,6 +29,16 @@ class OnboardingProgress {
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
     );
   }
+  final String id;
+  final String storeId;
+  final OnboardingStep? currentStep;
+  final List<String> completedSteps;
+  final Map<String, dynamic> checklistItems;
+  final bool isWizardCompleted;
+  final bool isChecklistDismissed;
+  final int completionPercent;
+  final DateTime? startedAt;
+  final DateTime? completedAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -92,6 +92,6 @@ class OnboardingProgress {
   @override
   String toString() =>
       'OnboardingProgress(id: $id, storeId: $storeId, currentStep: $currentStep, '
-      'completed: ${completedSteps.length}/${completionPercent}%, '
+      'completed: ${completedSteps.length}/$completionPercent%, '
       'wizardDone: $isWizardCompleted)';
 }

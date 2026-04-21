@@ -11,8 +11,8 @@ import 'package:wameedpos/features/branches/providers/branch_providers.dart';
 import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 class BranchDetailPage extends ConsumerWidget {
-  final String branchId;
   const BranchDetailPage({super.key, required this.branchId});
+  final String branchId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -211,10 +211,10 @@ class BranchDetailPage extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: BorderRadius.circular(AppSpacing.md),
         border: Border.all(
-          color: branch.isMainBranch ? AppColors.primary20 : (isDark ? AppColors.borderDark : AppColors.borderLight),
+          color: branch.isMainBranch ? AppColors.primary20 : (AppColors.borderFor(context)),
         ),
       ),
       child: Column(
@@ -232,7 +232,7 @@ class BranchDetailPage extends ConsumerWidget {
           Text(branch.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           if (branch.nameAr != null) ...[
             const SizedBox(height: 2),
-            Text(branch.nameAr!, style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+            Text(branch.nameAr!, style: TextStyle(color: AppColors.mutedFor(context))),
           ],
           AppSpacing.gapH8,
           Row(
@@ -262,9 +262,9 @@ class BranchDetailPage extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
           decoration: BoxDecoration(
-            color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+            color: AppColors.surfaceFor(context),
             borderRadius: BorderRadius.circular(AppSpacing.sm),
-            border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+            border: Border.all(color: AppColors.borderFor(context)),
           ),
           child: Column(
             children: [
@@ -272,7 +272,7 @@ class BranchDetailPage extends ConsumerWidget {
               const SizedBox(height: 4),
               Text(
                 label,
-                style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -289,9 +289,9 @@ class BranchDetailPage extends ConsumerWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surfaceFor(context),
         borderRadius: BorderRadius.circular(AppSpacing.md),
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+        border: Border.all(color: AppColors.borderFor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +329,7 @@ class BranchDetailPage extends ConsumerWidget {
                 width: 140,
                 child: Text(
                   label,
-                  style: TextStyle(fontSize: 13, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  style: TextStyle(fontSize: 13, color: AppColors.mutedFor(context)),
                 ),
               ),
               Expanded(child: Text(value, style: const TextStyle(fontSize: 13))),

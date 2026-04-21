@@ -120,11 +120,11 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
 }
 
 class _DayCard extends StatelessWidget {
+
+  const _DayCard({required this.day, required this.isAr, required this.onChanged});
   final WorkingHour day;
   final bool isAr;
   final ValueChanged<WorkingHour> onChanged;
-
-  const _DayCard({required this.day, required this.isAr, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -197,11 +197,11 @@ class _DayCard extends StatelessWidget {
 }
 
 class _TimePicker extends StatelessWidget {
+
+  const _TimePicker({required this.label, this.value, required this.onChanged});
   final String label;
   final String? value; // "HH:mm:ss" or "HH:mm"
   final ValueChanged<String> onChanged;
-
-  const _TimePicker({required this.label, this.value, required this.onChanged});
 
   TimeOfDay? _parseTime() {
     if (value == null || value!.isEmpty) return null;

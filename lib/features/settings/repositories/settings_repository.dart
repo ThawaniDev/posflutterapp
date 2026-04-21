@@ -6,9 +6,9 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
 });
 
 class SettingsRepository {
-  final SettingsApiService _api;
 
   SettingsRepository(this._api);
+  final SettingsApiService _api;
 
   // Store Settings
   Future<Map<String, dynamic>> getSettings({required String storeId}) => _api.getSettings(storeId: storeId);

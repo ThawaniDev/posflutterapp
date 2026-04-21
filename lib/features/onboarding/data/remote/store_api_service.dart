@@ -12,9 +12,9 @@ final storeApiServiceProvider = Provider<StoreApiService>((ref) {
 });
 
 class StoreApiService {
-  final Dio _dio;
 
   StoreApiService(this._dio);
+  final Dio _dio;
 
   // ─── Store CRUD ────────────────────────────────────────────────
 

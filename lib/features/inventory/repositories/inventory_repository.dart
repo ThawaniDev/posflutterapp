@@ -21,12 +21,12 @@ final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
 /// Repository that orchestrates inventory API calls.
 /// Automatically resolves the current store ID from auth session.
 class InventoryRepository {
-  final InventoryApiService _apiService;
-  final AuthLocalStorage _localStorage;
 
   InventoryRepository({required InventoryApiService apiService, required AuthLocalStorage localStorage})
     : _apiService = apiService,
       _localStorage = localStorage;
+  final InventoryApiService _apiService;
+  final AuthLocalStorage _localStorage;
 
   Future<String> _getStoreId() async {
     final storeId = await _localStorage.getStoreId();

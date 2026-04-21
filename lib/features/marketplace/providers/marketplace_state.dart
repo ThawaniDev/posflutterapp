@@ -19,15 +19,6 @@ class MarketplaceListingsLoading extends MarketplaceListingsState {
 }
 
 class MarketplaceListingsLoaded extends MarketplaceListingsState {
-  final List<MarketplaceListing> listings;
-  final List<MarketplaceCategory> categories;
-  final int currentPage;
-  final int totalPages;
-  final int totalItems;
-  final int perPage;
-  final String? searchQuery;
-  final String? categoryId;
-  final String? pricingType;
 
   const MarketplaceListingsLoaded({
     required this.listings,
@@ -40,6 +31,15 @@ class MarketplaceListingsLoaded extends MarketplaceListingsState {
     this.categoryId,
     this.pricingType,
   });
+  final List<MarketplaceListing> listings;
+  final List<MarketplaceCategory> categories;
+  final int currentPage;
+  final int totalPages;
+  final int totalItems;
+  final int perPage;
+  final String? searchQuery;
+  final String? categoryId;
+  final String? pricingType;
 
   MarketplaceListingsLoaded copyWith({
     List<MarketplaceListing>? listings,
@@ -67,8 +67,8 @@ class MarketplaceListingsLoaded extends MarketplaceListingsState {
 }
 
 class MarketplaceListingsError extends MarketplaceListingsState {
-  final String message;
   const MarketplaceListingsError({required this.message});
+  final String message;
 }
 
 // ─── Marketplace Detail State ──────────────────────────────
@@ -86,11 +86,11 @@ class MarketplaceDetailLoading extends MarketplaceDetailState {
 }
 
 class MarketplaceDetailLoaded extends MarketplaceDetailState {
+
+  const MarketplaceDetailLoaded({required this.listing, this.reviews = const [], this.hasAccess = false});
   final MarketplaceListing listing;
   final List<TemplateReview> reviews;
   final bool hasAccess;
-
-  const MarketplaceDetailLoaded({required this.listing, this.reviews = const [], this.hasAccess = false});
 
   MarketplaceDetailLoaded copyWith({MarketplaceListing? listing, List<TemplateReview>? reviews, bool? hasAccess}) {
     return MarketplaceDetailLoaded(
@@ -106,14 +106,14 @@ class MarketplaceDetailPurchasing extends MarketplaceDetailState {
 }
 
 class MarketplaceDetailPaymentRequired extends MarketplaceDetailState {
+  const MarketplaceDetailPaymentRequired({required this.redirectUrl, required this.purchaseId});
   final String redirectUrl;
   final String purchaseId;
-  const MarketplaceDetailPaymentRequired({required this.redirectUrl, required this.purchaseId});
 }
 
 class MarketplaceDetailError extends MarketplaceDetailState {
-  final String message;
   const MarketplaceDetailError({required this.message});
+  final String message;
 }
 
 // ─── My Purchases State ────────────────────────────────────
@@ -131,10 +131,10 @@ class MyPurchasesLoading extends MyPurchasesState {
 }
 
 class MyPurchasesLoaded extends MyPurchasesState {
-  final List<TemplatePurchase> purchases;
-  final List<MarketplaceInvoice> invoices;
 
   const MyPurchasesLoaded({required this.purchases, this.invoices = const []});
+  final List<TemplatePurchase> purchases;
+  final List<MarketplaceInvoice> invoices;
 
   MyPurchasesLoaded copyWith({List<TemplatePurchase>? purchases, List<MarketplaceInvoice>? invoices}) {
     return MyPurchasesLoaded(purchases: purchases ?? this.purchases, invoices: invoices ?? this.invoices);
@@ -142,6 +142,6 @@ class MyPurchasesLoaded extends MyPurchasesState {
 }
 
 class MyPurchasesError extends MyPurchasesState {
-  final String message;
   const MyPurchasesError({required this.message});
+  final String message;
 }

@@ -3,10 +3,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class SyncStatusBar extends StatelessWidget {
-  final bool serverOnline;
-  final int pendingConflicts;
-  final int failedSyncs;
-  final Map<String, dynamic>? lastSync;
 
   const SyncStatusBar({
     super.key,
@@ -15,6 +11,10 @@ class SyncStatusBar extends StatelessWidget {
     required this.failedSyncs,
     this.lastSync,
   });
+  final bool serverOnline;
+  final int pendingConflicts;
+  final int failedSyncs;
+  final Map<String, dynamic>? lastSync;
 
   @override
   Widget build(BuildContext context) {

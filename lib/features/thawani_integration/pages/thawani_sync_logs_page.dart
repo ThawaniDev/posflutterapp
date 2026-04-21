@@ -104,12 +104,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
                           pagination['last_page'] as int? ?? 1,
                           pagination['total'] as int? ?? 0,
                         ),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? AppColors.textMutedDark
-                              : AppColors.textMutedLight,
-                        ),
+                        style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
                       ),
                     ),
                   Expanded(
@@ -147,7 +142,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
     final directionIcon = direction == 'outgoing' ? Icons.arrow_upward : Icons.arrow_downward;
     final createdAt = log['created_at']?.toString() ?? '';
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
       elevation: 0,
@@ -184,10 +179,10 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.error_outline, size: 14, color: AppColors.error),
+                  const Icon(Icons.error_outline, size: 14, color: AppColors.error),
                   AppSpacing.gapW4,
                   Expanded(
-                    child: Text(log['error_message'].toString(), style: TextStyle(fontSize: 12, color: AppColors.error)),
+                    child: Text(log['error_message'].toString(), style: const TextStyle(fontSize: 12, color: AppColors.error)),
                   ),
                 ],
               ),

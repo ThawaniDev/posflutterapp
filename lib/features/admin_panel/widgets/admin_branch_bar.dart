@@ -14,10 +14,10 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 ///
 /// Call [onBranchChanged] to reload data whenever the selected branch changes.
 class AdminBranchBar extends ConsumerWidget {
-  final String? selectedStoreId;
-  final ValueChanged<String?> onBranchChanged;
 
   const AdminBranchBar({super.key, required this.selectedStoreId, required this.onBranchChanged});
+  final String? selectedStoreId;
+  final ValueChanged<String?> onBranchChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,19 +33,19 @@ class AdminBranchBar extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+        color: AppColors.surfaceFor(context),
+        border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
       child: Row(
         children: [
-          Icon(Icons.store_rounded, size: 18, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          Icon(Icons.store_rounded, size: 18, color: AppColors.mutedFor(context)),
           const SizedBox(width: 8),
           Text(
             'Branch:',
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: AppColors.mutedFor(context),
             ),
           ),
           const SizedBox(width: 8),
