@@ -53,12 +53,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
     setState(() => _isLoadingRecent = true);
     try {
       final repo = ref.read(posTerminalRepositoryProvider);
-      final result = await repo.listTransactions(
-        page: 1,
-        perPage: 20,
-        type: 'sale',
-        status: 'completed',
-      );
+      final result = await repo.listTransactions(page: 1, perPage: 20, type: 'sale', status: 'completed');
       if (!mounted) return;
       setState(() => _recentTransactions = result.items);
     } catch (_) {
@@ -98,8 +93,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
     final q = _recentSearch.trim().toLowerCase();
     if (q.isEmpty) return _recentTransactions;
     return _recentTransactions.where((t) {
-      return t.transactionNumber.toLowerCase().contains(q) ||
-          t.totalAmount.toStringAsFixed(2).contains(q);
+      return t.transactionNumber.toLowerCase().contains(q) || t.totalAmount.toStringAsFixed(2).contains(q);
     }).toList();
   }
 
@@ -200,18 +194,30 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
         {'method': _refundMethod.value, 'amount': totalAmount},
       ];
 
-      await ref.read(saleProvider.notifier).processReturn(
-        returnTransactionId: _transaction!.id,
-        items: items,
-        payments: payments,
-        subtotal: subtotal,
-        discountAmount: discountTotal,
-        taxAmount: taxTotal,
-        totalAmount: totalAmount,
-      );
+      // Anchor the refund to the cashier's currently-active session (not the
+      // original sale's session, which might be closed). The backend falls
+      // back to the original session if none is provided.
+      final activeState = ref.read(activeSessionProvider);
+      final currentSessionId =
+          activeState is ActiveSessionLoaded ? activeState.session.id : null;
+
+      await ref
+          .read(saleProvider.notifier)
+          .processReturn(
+            returnTransactionId: _transaction!.id,
+            items: items,
+            payments: payments,
+            subtotal: subtotal,
+            discountAmount: discountTotal,
+            taxAmount: taxTotal,
+            totalAmount: totalAmount,
+            posSessionId: currentSessionId,
+          );
 
       final saleState = ref.read(saleProvider);
       if (saleState is SaleCompleted) {
+        // Pull latest counters so the close-shift dialog shows the new refund.
+        await ref.read(activeSessionProvider.notifier).refreshSession();
         if (mounted) {
           showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posReturnProcessed(saleState.transactionNumber));
           Navigator.pop(context);
@@ -292,8 +298,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: _transaction!.items!.length,
-                    separatorBuilder: (_, __) =>
-                        Divider(height: 1, color: AppColors.borderFor(context)),
+                    separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.borderFor(context)),
                     itemBuilder: (context, index) => _ReturnItemRow(
                       item: _transaction!.items![index],
                       returnQty: _returnQuantities[index] ?? 0,
@@ -345,60 +350,56 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                   child: _isLoadingRecent
                       ? const Center(child: CircularProgressIndicator())
                       : _filteredRecent.isEmpty
-                          ? Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.receipt_long_outlined,
-                                    size: 48,
-                                    color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight,
-                                  ),
-                                  AppSpacing.gapH8,
-                                  Text(
-                                    AppLocalizations.of(context)!.posEnterReceiptNumberHint,
-                                    style: AppTypography.bodySmall.copyWith(color: mutedColor),
-                                  ),
-                                ],
+                      ? Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.receipt_long_outlined,
+                                size: 48,
+                                color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight,
                               ),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Recent sales',
-                                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
-                                ),
-                                AppSpacing.gapH8,
-                                Expanded(
-                                  child: ListView.separated(
-                                    itemCount: _filteredRecent.length,
-                                    separatorBuilder: (_, __) =>
-                                        Divider(height: 1, color: AppColors.borderFor(context)),
-                                    itemBuilder: (context, index) {
-                                      final tx = _filteredRecent[index];
-                                      final dt = tx.createdAt;
-                                      final timeLabel = dt == null
-                                          ? ''
-                                          : '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} '
-                                              '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-                                      return ListTile(
-                                        dense: true,
-                                        contentPadding: EdgeInsets.zero,
-                                        leading: const Icon(Icons.receipt_long_outlined, size: 20),
-                                        title: Text(tx.transactionNumber, style: AppTypography.labelMedium),
-                                        subtitle: Text(timeLabel, style: AppTypography.micro.copyWith(color: mutedColor)),
-                                        trailing: Text(
-                                          '\u0081 ${tx.totalAmount.toStringAsFixed(2)}',
-                                          style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
-                                        ),
-                                        onTap: () => _selectTransaction(tx),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
+                              AppSpacing.gapH8,
+                              Text(
+                                AppLocalizations.of(context)!.posEnterReceiptNumberHint,
+                                style: AppTypography.bodySmall.copyWith(color: mutedColor),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Recent sales', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                            AppSpacing.gapH8,
+                            Expanded(
+                              child: ListView.separated(
+                                itemCount: _filteredRecent.length,
+                                separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.borderFor(context)),
+                                itemBuilder: (context, index) {
+                                  final tx = _filteredRecent[index];
+                                  final dt = tx.createdAt;
+                                  final timeLabel = dt == null
+                                      ? ''
+                                      : '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} '
+                                            '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+                                  return ListTile(
+                                    dense: true,
+                                    contentPadding: EdgeInsets.zero,
+                                    leading: const Icon(Icons.receipt_long_outlined, size: 20),
+                                    title: Text(tx.transactionNumber, style: AppTypography.labelMedium),
+                                    subtitle: Text(timeLabel, style: AppTypography.micro.copyWith(color: mutedColor)),
+                                    trailing: Text(
+                                      '\u0081 ${tx.totalAmount.toStringAsFixed(2)}',
+                                      style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                    onTap: () => _selectTransaction(tx),
+                                  );
+                                },
+                              ),
                             ),
+                          ],
+                        ),
                 ),
 
               if (_error != null) ...[

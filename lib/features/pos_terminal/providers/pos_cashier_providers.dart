@@ -297,10 +297,26 @@ class SaleNotifier extends StateNotifier<SaleState> {
     required String returnTransactionId,
     required List<Map<String, dynamic>> items,
     required List<Map<String, dynamic>> payments,
+    required double subtotal,
+    required double totalAmount,
+    double discountAmount = 0,
+    double taxAmount = 0,
+    String? notes,
+    String? posSessionId,
   }) async {
     state = const SaleProcessing();
     try {
-      final data = {'return_transaction_id': returnTransactionId, 'items': items, 'payments': payments};
+      final data = <String, dynamic>{
+        'return_transaction_id': returnTransactionId,
+        'subtotal': subtotal,
+        'discount_amount': discountAmount,
+        'tax_amount': taxAmount,
+        'total_amount': totalAmount,
+        if (notes != null && notes.isNotEmpty) 'notes': notes,
+        if (posSessionId != null) 'pos_session_id': posSessionId,
+        'items': items,
+        'payments': payments,
+      };
       final transaction = await _repo.returnTransaction(data);
       state = SaleCompleted(transactionNumber: transaction.transactionNumber, totalAmount: transaction.totalAmount);
       return true;

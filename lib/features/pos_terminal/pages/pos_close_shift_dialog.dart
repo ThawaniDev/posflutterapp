@@ -168,7 +168,12 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                       Divider(height: 16, color: AppColors.borderFor(context)),
                       _summaryRow(
                         AppLocalizations.of(context)!.posExpectedCash,
-                        _session.openingCash + (_session.totalCashSales ?? 0) - (_session.totalRefunds ?? 0),
+                        // total_cash_sales is already net of cash refunds
+                        // (backend decrements it on each refund), so we do
+                        // NOT subtract total_refunds again here — that would
+                        // double-count card/other refunds and over-subtract
+                        // cash ones.
+                        _session.openingCash + (_session.totalCashSales ?? 0),
                         mutedColor,
                         isBold: true,
                       ),
