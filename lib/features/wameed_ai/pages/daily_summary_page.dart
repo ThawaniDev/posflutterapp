@@ -8,6 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_insight_mini_card.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_markdown_text.dart';
 
 class DailySummaryPage extends ConsumerStatefulWidget {
   const DailySummaryPage({super.key});
@@ -106,10 +107,9 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 ),
               if (narrativeAr.isNotEmpty) ...[
                 AppSpacing.gapH12,
-                Text(
+                AIMarkdownText(
                   narrativeAr,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
-                  textAlign: TextAlign.center,
+                  textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary, height: 1.5),
                 ),
               ],
             ],
@@ -212,7 +212,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                     ],
                   ),
                   AppSpacing.gapH12,
-                  SelectableText(narrativeAr, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+                  AIMarkdownText(narrativeAr),
                 ],
               ),
             ),

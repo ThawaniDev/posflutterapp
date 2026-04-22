@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_score_gauge.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_markdown_text.dart';
 
 class EfficiencyScorePage extends ConsumerStatefulWidget {
   const EfficiencyScorePage({super.key});
@@ -181,7 +182,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                 borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
-              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+              child: AIMarkdownText(summaryText),
             ),
           ],
 

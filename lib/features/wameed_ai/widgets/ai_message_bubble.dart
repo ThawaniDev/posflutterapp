@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_markdown_text.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
@@ -92,17 +92,7 @@ class AIMessageBubble extends StatelessWidget {
                               message.content,
                               style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white, height: 1.35),
                             )
-                          : MarkdownBody(
-                              data: message.content,
-                              selectable: true,
-                              softLineBreak: true,
-                              styleSheet: _markdownStyle(theme),
-                              onTapLink: (text, href, title) {
-                                if (href != null) {
-                                  Clipboard.setData(ClipboardData(text: href));
-                                }
-                              },
-                            ),
+                          : AIMarkdownText(message.content),
                     ),
                     // Metadata row
                     if (!isUser && (message.modelUsed != null || message.latencyMs > 0)) ...[
@@ -150,35 +140,5 @@ class AIMessageBubble extends StatelessWidget {
         .split(' ')
         .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '')
         .join(' ');
-  }
-
-  MarkdownStyleSheet _markdownStyle(ThemeData theme) {
-    final base = theme.textTheme.bodyMedium?.copyWith(height: 1.45) ?? const TextStyle(height: 1.45);
-    final mono = TextStyle(fontFamily: 'monospace', fontSize: (base.fontSize ?? 14) - 1, color: base.color);
-    return MarkdownStyleSheet.fromTheme(theme).copyWith(
-      p: base,
-      h1: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-      h2: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-      h3: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-      h4: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
-      strong: base.copyWith(fontWeight: FontWeight.w700),
-      em: base.copyWith(fontStyle: FontStyle.italic),
-      listBullet: base,
-      blockquote: base.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic),
-      blockquoteDecoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.06),
-        border: Border(left: BorderSide(color: AppColors.primary.withValues(alpha: 0.4), width: 3)),
-      ),
-      blockquotePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      code: mono.copyWith(backgroundColor: theme.colorScheme.surfaceContainerHighest),
-      codeblockDecoration: BoxDecoration(color: theme.colorScheme.surfaceContainerHighest, borderRadius: AppRadius.borderMd),
-      codeblockPadding: const EdgeInsets.all(10),
-      tableBorder: TableBorder.all(color: theme.dividerColor, width: 0.5),
-      tableCellsPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      horizontalRuleDecoration: BoxDecoration(
-        border: Border(top: BorderSide(color: theme.dividerColor)),
-      ),
-      a: base.copyWith(color: AppColors.primary, decoration: TextDecoration.underline),
-    );
   }
 }

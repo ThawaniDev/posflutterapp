@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_urgency_card.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_markdown_text.dart';
 
 class SmartReorderPage extends ConsumerStatefulWidget {
   const SmartReorderPage({super.key});
@@ -100,7 +101,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
                 borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
-              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+              child: AIMarkdownText(summaryText),
             ),
             AppSpacing.gapH20,
           ],

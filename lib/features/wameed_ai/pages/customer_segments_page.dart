@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_markdown_text.dart';
 
 class CustomerSegmentsPage extends ConsumerStatefulWidget {
   const CustomerSegmentsPage({super.key});
@@ -130,7 +131,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                 borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
-              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+              child: AIMarkdownText(summaryText),
             ),
             AppSpacing.gapH16,
           ],
@@ -290,7 +291,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                 children: [
                   const Icon(Icons.campaign_outlined, size: 16, color: AppColors.warning),
                   AppSpacing.gapW8,
-                  Expanded(child: SelectableText(marketingStrategy, style: Theme.of(context).textTheme.bodyMedium)),
+                  Expanded(child: AIMarkdownText(marketingStrategy)),
                 ],
               ),
             ),
