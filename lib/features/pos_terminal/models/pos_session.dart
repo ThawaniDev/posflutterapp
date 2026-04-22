@@ -23,6 +23,8 @@ class PosSession {
     this.createdAt,
     this.updatedAt,
     this.registerName,
+    this.cashierName,
+    this.storeName,
   });
 
   factory PosSession.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,8 @@ class PosSession {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
       registerName: json['register_name'] as String?,
+      cashierName: json['cashier_name'] as String?,
+      storeName: json['store_name'] as String?,
     );
   }
   final String id;
@@ -71,6 +75,8 @@ class PosSession {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? registerName;
+  final String? cashierName;
+  final String? storeName;
 
   Map<String, dynamic> toJson() {
     return {

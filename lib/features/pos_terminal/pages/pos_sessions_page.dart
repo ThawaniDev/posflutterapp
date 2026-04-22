@@ -195,14 +195,18 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
         );
       case 1: // Register
         return Text(
-          session.registerId.length > 8
-              ? '...${session.registerId.substring(session.registerId.length - 8)}'
-              : session.registerId,
+          session.registerName ??
+              (session.registerId.length > 8
+                  ? '...${session.registerId.substring(session.registerId.length - 8)}'
+                  : session.registerId),
           style: AppTypography.bodySmall,
         );
       case 2: // Cashier
         return Text(
-          session.cashierId.length > 8 ? '...${session.cashierId.substring(session.cashierId.length - 8)}' : session.cashierId,
+          session.cashierName ??
+              (session.cashierId.length > 8
+                  ? '...${session.cashierId.substring(session.cashierId.length - 8)}'
+                  : session.cashierId),
           style: AppTypography.bodySmall,
         );
       case 3: // Status
