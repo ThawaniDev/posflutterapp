@@ -68,6 +68,7 @@ class AppUpdateService {
   // ─── Force Update Dialog (non-dismissible) ───────────
 
   void _showForceUpdateDialog(BuildContext context, UpdateCheckLoaded state) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -75,15 +76,15 @@ class AppUpdateService {
         canPop: false,
         child: AlertDialog(
           icon: const Icon(Icons.system_update, size: 48, color: Colors.red),
-          title: const Text('Update Required'),
+          title: Text(l10n.updateRequired),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('A new version (v${state.latestVersion}) is required to continue using the app.'),
+              Text(l10n.updateRequiredVersion(state.latestVersion ?? '')),
               if (state.releaseNotes != null) ...[
                 const SizedBox(height: 12),
-                Text("What's new:", style: Theme.of(ctx).textTheme.labelLarge),
+                Text(l10n.whatsNew, style: Theme.of(ctx).textTheme.labelLarge),
                 const SizedBox(height: 4),
                 Text(state.releaseNotes!, style: Theme.of(ctx).textTheme.bodySmall, maxLines: 5, overflow: TextOverflow.ellipsis),
               ],
@@ -93,7 +94,7 @@ class AppUpdateService {
             FilledButton.icon(
               onPressed: () => _openStore(state.storeUrl ?? state.downloadUrl),
               icon: const Icon(Icons.download),
-              label: const Text('Update Now'),
+              label: Text(l10n.updateNow),
             ),
           ],
         ),
@@ -104,26 +105,27 @@ class AppUpdateService {
   // ─── Optional Update Dialog (dismissible) ────────────
 
   void _showOptionalUpdateDialog(BuildContext context, UpdateCheckLoaded state) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         icon: Icon(Icons.system_update, size: 48, color: Theme.of(ctx).colorScheme.primary),
-        title: const Text('Update Available'),
+        title: Text(l10n.updateAvailable),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Version ${state.latestVersion} is available.'),
+            Text(l10n.updateAvailableVersion(state.latestVersion ?? '')),
             if (state.releaseNotes != null) ...[
               const SizedBox(height: 12),
-              Text("What's new:", style: Theme.of(ctx).textTheme.labelLarge),
+              Text(l10n.whatsNew, style: Theme.of(ctx).textTheme.labelLarge),
               const SizedBox(height: 4),
               Text(state.releaseNotes!, style: Theme.of(ctx).textTheme.bodySmall, maxLines: 5, overflow: TextOverflow.ellipsis),
             ],
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Later')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.updateLater)),
           FilledButton.icon(
             onPressed: () {
               Navigator.of(ctx).pop();

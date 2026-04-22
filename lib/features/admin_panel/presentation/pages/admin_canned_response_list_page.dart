@@ -102,7 +102,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                       _applyFilters();
                     },
                     label: l10n.category,
-                    hint: 'All',
+                    hint: l10n.commonAll,
                     showSearch: false,
                     clearable: true,
                   ),

@@ -333,7 +333,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                 children: [
                   Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
                   AppSpacing.gapH4,
-                  Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
+                  Text(l10n.labelsProductName, style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
                   Text(
                     '0.000 \u0081',
                     style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
@@ -609,7 +609,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                         children: [
                           Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
                           AppSpacing.gapH4,
-                          Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
+                          Text(l10n.labelsProductName, style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
                           Text(
                             '0.000 \u0081',
                             style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),

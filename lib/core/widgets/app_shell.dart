@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/providers/app_settings_providers.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/providers/sidebar_provider.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/branch_selector.dart';
@@ -39,6 +40,16 @@ class AppShell extends ConsumerWidget {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final isDesktop = screenWidth >= _desktopBreakpoint;
     final l10n = AppLocalizations.of(context)!;
+
+    // Re-mount the routed page whenever the active branch changes so that
+    // initState reruns, autoDispose providers reset, and the user sees data
+    // for the newly selected store without a manual refresh.
+    final activeBranchId = ref.watch(activeBranchIdProvider);
+    final refreshTick = ref.watch(pageRefreshTickProvider);
+    final keyedChild = KeyedSubtree(
+      key: ValueKey<String>('branch:${activeBranchId ?? '__all__'}|$currentRoute|$refreshTick'),
+      child: child,
+    );
 
     // Filter sidebar groups/items based on user permissions
     final permsState = ref.watch(userPermissionsProvider);
@@ -95,7 +106,7 @@ class AppShell extends ConsumerWidget {
                     ),
                   ),
                   const MaintenanceBanner(),
-                  Expanded(child: child),
+                  Expanded(child: keyedChild),
                 ],
               ),
             ),
@@ -120,7 +131,7 @@ class AppShell extends ConsumerWidget {
       body: Column(
         children: [
           const MaintenanceBanner(),
-          Expanded(child: child),
+          Expanded(child: keyedChild),
         ],
       ),
     );
@@ -183,6 +194,12 @@ class AppShell extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
 
     return [
+      // Refresh current page (re-mounts the routed child via key bump)
+      IconButton(
+        tooltip: l10n.commonRefresh,
+        icon: const Icon(Icons.refresh_rounded),
+        onPressed: () => ref.read(pageRefreshTickProvider.notifier).state++,
+      ),
       // Notification bell
       const NotificationBell(),
       // Quick Nav grid
@@ -202,11 +219,11 @@ class AppShell extends ConsumerWidget {
         onSelected: (locale) {
           ref.read(localeProvider.notifier).set(locale);
         },
-        itemBuilder: (context) => const [
-          PopupMenuItem(value: Locale('en'), child: Text('English')),
-          PopupMenuItem(value: Locale('ar'), child: Text('Arabic')),
-          PopupMenuItem(value: Locale('bn'), child: Text('Bengali')),
-          PopupMenuItem(value: Locale('ur'), child: Text('Urdu')),
+        itemBuilder: (context) => [
+          PopupMenuItem(value: const Locale('en'), child: Text(l10n.languageEnglish)),
+          PopupMenuItem(value: const Locale('ar'), child: Text(l10n.languageArabic)),
+          PopupMenuItem(value: const Locale('bn'), child: Text(l10n.languageBengali)),
+          PopupMenuItem(value: const Locale('ur'), child: Text(l10n.languageUrdu)),
         ],
       ),
       // Theme toggle
@@ -399,7 +416,7 @@ class AppShell extends ConsumerWidget {
             .endAllSessions(storeId: authState.user.storeId!)
             .catchError((_) => <String, dynamic>{});
       }
-      ref.read(authProvider.notifier).logout();
+      ref.read(authProvider.notifier).logout(l10n);
     }
   }
 }

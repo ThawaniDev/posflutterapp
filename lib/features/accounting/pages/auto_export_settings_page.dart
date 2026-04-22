@@ -73,6 +73,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final configState = ref.watch(autoExportConfigProvider);
 
     // Populate form from loaded state once
@@ -113,7 +114,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
           borderRadius: AppRadius.borderMd,
           border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
           child: SwitchListTile(
-            title: const Text('Enable Auto Export', style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(l10n.acctEnableAutoExport, style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(_enabled ? 'Exports will run automatically on schedule' : 'Auto export is disabled'),
             value: _enabled,
             onChanged: (val) => setState(() {
@@ -222,7 +223,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Export Types', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(l10n.acctExportTypes, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 AppSpacing.gapH8,
                 ..._allExportTypes.map(
                   (t) => CheckboxListTile(
@@ -296,12 +297,12 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Schedule Info', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  Text(l10n.acctScheduleInfo, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH8,
                   if (lastRunAt != null) _buildInfoRow('Last Run', _formatDate(lastRunAt)),
                   if (nextRunAt != null) _buildInfoRow('Next Run', _formatDate(nextRunAt)),
                   if (lastRunAt == null && nextRunAt == null)
-                    const Text('No runs scheduled yet', style: TextStyle(color: AppColors.textSecondary)),
+                    Text(l10n.acctNoRunsScheduled, style: TextStyle(color: AppColors.textSecondary)),
                 ],
               ),
             ),

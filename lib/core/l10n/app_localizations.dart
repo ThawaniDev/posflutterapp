@@ -14170,12 +14170,6 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get appBarLanguage;
 
-  /// No description provided for @appBarMore.
-  ///
-  /// In en, this message translates to:
-  /// **'More'**
-  String get appBarMore;
-
   /// No description provided for @quickNavTitle.
   ///
   /// In en, this message translates to:
@@ -28552,6 +28546,12 @@ abstract class AppLocalizations {
   /// **'No predefined categories found'**
   String get pcNoPredefinedCategories;
 
+  /// No description provided for @predefinedNoCategoriesForBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'No predefined categories are available for your business type'**
+  String get predefinedNoCategoriesForBusiness;
+
   /// No description provided for @pcCloneToMyStore.
   ///
   /// In en, this message translates to:
@@ -30163,6 +30163,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Released {date}'**
   String appReleaseReleasedAt(String date);
+
+  /// No description provided for @updateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Required'**
+  String get updateRequired;
+
+  /// No description provided for @updateRequiredVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} or later is required to continue.'**
+  String updateRequiredVersion(String version);
+
+  /// No description provided for @whatsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s New'**
+  String get whatsNew;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Now'**
+  String get updateNow;
+
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get updateAvailable;
+
+  /// No description provided for @updateAvailableVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} is available.'**
+  String updateAvailableVersion(String version);
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get languageArabic;
+
+  /// No description provided for @languageBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'Bengali'**
+  String get languageBengali;
+
+  /// No description provided for @languageUrdu.
+  ///
+  /// In en, this message translates to:
+  /// **'Urdu'**
+  String get languageUrdu;
+
+  /// No description provided for @appBarMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get appBarMore;
+
+  /// No description provided for @accessShortcutAlt19.
+  ///
+  /// In en, this message translates to:
+  /// **'Alt + 1-9'**
+  String get accessShortcutAlt19;
+
+  /// No description provided for @accessShortcutTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Tab'**
+  String get accessShortcutTab;
+
+  /// No description provided for @accessShortcutEsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Esc'**
+  String get accessShortcutEsc;
+
+  /// No description provided for @accessShortcutEnter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get accessShortcutEnter;
+
+  /// No description provided for @accessShortcutCtrlSlash.
+  ///
+  /// In en, this message translates to:
+  /// **'Ctrl + /'**
+  String get accessShortcutCtrlSlash;
+
+  /// No description provided for @authLoggedOutSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out successfully'**
+  String get authLoggedOutSuccess;
+
+  /// No description provided for @authLoggedOutAllDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out from all devices'**
+  String get authLoggedOutAllDevices;
+
+  /// No description provided for @cgReviewedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed'**
+  String get cgReviewedShort;
+
+  /// No description provided for @catalogPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+968 XXXX XXXX'**
+  String get catalogPhoneHint;
+
+  /// No description provided for @catalogVatNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'SA29XXXX0000000000000000'**
+  String get catalogVatNumberHint;
+
+  /// No description provided for @paymentsAmountSar.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (SAR)'**
+  String get paymentsAmountSar;
+
+  /// No description provided for @paymentsRedemptionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Redemption Amount'**
+  String get paymentsRedemptionAmount;
+
+  /// No description provided for @posCustGridLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid Layout'**
+  String get posCustGridLayout;
+
+  /// No description provided for @posCustNoQuickAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'No quick access buttons configured'**
+  String get posCustNoQuickAccess;
+
+  /// No description provided for @predefinedCategoryCloned.
+  ///
+  /// In en, this message translates to:
+  /// **'Category cloned successfully'**
+  String get predefinedCategoryCloned;
+
+  /// No description provided for @predefinedProductCloned.
+  ///
+  /// In en, this message translates to:
+  /// **'Product cloned successfully'**
+  String get predefinedProductCloned;
+
+  /// No description provided for @predefinedAllProductsCloned.
+  ///
+  /// In en, this message translates to:
+  /// **'All products cloned successfully'**
+  String get predefinedAllProductsCloned;
+
+  /// No description provided for @promoFilterPromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Promotions'**
+  String get promoFilterPromotions;
+
+  /// No description provided for @providerPaymentInitiated.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment initiated'**
+  String get providerPaymentInitiated;
+
+  /// No description provided for @providerEmailResent.
+  ///
+  /// In en, this message translates to:
+  /// **'Email resent successfully'**
+  String get providerEmailResent;
+
+  /// No description provided for @subCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current: '**
+  String get subCurrent;
+
+  /// No description provided for @subRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required: '**
+  String get subRequired;
+
+  /// No description provided for @aiLast7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 Days'**
+  String get aiLast7Days;
+
+  /// No description provided for @aiLast30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 Days'**
+  String get aiLast30Days;
+
+  /// No description provided for @aiLast90Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 90 Days'**
+  String get aiLast90Days;
+
+  /// No description provided for @aiImageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Image is required'**
+  String get aiImageRequired;
+
+  /// No description provided for @zatcaEnterOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 6-digit OTP'**
+  String get zatcaEnterOtp;
 }
 
 class _AppLocalizationsDelegate

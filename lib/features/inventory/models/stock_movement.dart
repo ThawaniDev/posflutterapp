@@ -2,7 +2,6 @@ import 'package:wameedpos/features/inventory/enums/stock_movement_type.dart';
 import 'package:wameedpos/features/inventory/enums/stock_reference_type.dart';
 
 class StockMovement {
-
   const StockMovement({
     required this.id,
     required this.storeId,

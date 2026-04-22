@@ -4,6 +4,11 @@ import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
+/// Counter that bumps every time the user taps the global refresh button.
+/// AppShell mixes this into the routed page key so the current page remounts
+/// (initState reruns, autoDispose providers reset → fresh data fetch).
+final pageRefreshTickProvider = StateProvider<int>((_) => 0);
+
 /// The currently active branch (store) ID.
 ///
 /// - Branch-scoped users: always their own store_id (cannot change).

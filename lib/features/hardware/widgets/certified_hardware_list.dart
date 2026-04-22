@@ -18,7 +18,7 @@ class CertifiedHardwareList extends StatelessWidget {
       return Center(
         child: Padding(
           padding: AppSpacing.paddingAll24,
-          child: Text('No certified hardware found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+          child: Text(l10n.hardwareNoCertified, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
         ),
       );
     }

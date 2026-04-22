@@ -7346,9 +7346,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get appBarLanguage => 'ভাষা';
 
   @override
-  String get appBarMore => 'আরও';
-
-  @override
   String get quickNavTitle => 'দ্রুত নেভিগেশন';
 
   @override
@@ -15166,6 +15163,10 @@ class AppLocalizationsBn extends AppLocalizations {
       'কোনো পূর্বনির্ধারিত ক্যাটাগরি পাওয়া যায়নি';
 
   @override
+  String get predefinedNoCategoriesForBusiness =>
+      'আপনার ব্যবসার ধরনের জন্য কোনো পূর্বনির্ধারিত ক্যাটাগরি পাওয়া যায়নি';
+
+  @override
   String get pcCloneToMyStore => 'আমার দোকানে কপি';
 
   @override
@@ -16069,4 +16070,126 @@ class AppLocalizationsBn extends AppLocalizations {
   String appReleaseReleasedAt(String date) {
     return '$date এ প্রকাশিত';
   }
+
+  @override
+  String get updateRequired => 'আপডেট প্রয়োজন';
+
+  @override
+  String updateRequiredVersion(String version) {
+    return 'চালিয়ে যেতে $version বা তার পরবর্তী সংস্করণ প্রয়োজন।';
+  }
+
+  @override
+  String get whatsNew => 'নতুন কী আছে';
+
+  @override
+  String get updateNow => 'এখনই আপডেট করুন';
+
+  @override
+  String get updateAvailable => 'আপডেট পাওয়া গেছে';
+
+  @override
+  String updateAvailableVersion(String version) {
+    return '$version সংস্করণ পাওয়া গেছে।';
+  }
+
+  @override
+  String get updateLater => 'পরে';
+
+  @override
+  String get languageEnglish => 'ইংরেজি';
+
+  @override
+  String get languageArabic => 'আরবি';
+
+  @override
+  String get languageBengali => 'বাংলা';
+
+  @override
+  String get languageUrdu => 'উর্দু';
+
+  @override
+  String get appBarMore => 'আরো';
+
+  @override
+  String get accessShortcutAlt19 => 'Alt + 1-9';
+
+  @override
+  String get accessShortcutTab => 'Tab';
+
+  @override
+  String get accessShortcutEsc => 'Esc';
+
+  @override
+  String get accessShortcutEnter => 'Enter';
+
+  @override
+  String get accessShortcutCtrlSlash => 'Ctrl + /';
+
+  @override
+  String get authLoggedOutSuccess => 'সফলভাবে লগ আউট হয়েছে';
+
+  @override
+  String get authLoggedOutAllDevices => 'সকল ডিভাইস থেকে লগ আউট হয়েছে';
+
+  @override
+  String get cgReviewedShort => 'পর্যালোচিত';
+
+  @override
+  String get catalogPhoneHint => '+968 XXXX XXXX';
+
+  @override
+  String get catalogVatNumberHint => 'SA29XXXX0000000000000000';
+
+  @override
+  String get paymentsAmountSar => 'পরিমাণ (SAR)';
+
+  @override
+  String get paymentsRedemptionAmount => 'রিডেম্পশন পরিমাণ';
+
+  @override
+  String get posCustGridLayout => 'গ্রিড লেআউট';
+
+  @override
+  String get posCustNoQuickAccess =>
+      'কোনো দ্রুত অ্যাক্সেস বাটন কনফিগার করা হয়নি';
+
+  @override
+  String get predefinedCategoryCloned => 'ক্যাটাগরি সফলভাবে ক্লোন করা হয়েছে';
+
+  @override
+  String get predefinedProductCloned => 'পণ্য সফলভাবে ক্লোন করা হয়েছে';
+
+  @override
+  String get predefinedAllProductsCloned => 'সকল পণ্য সফলভাবে ক্লোন করা হয়েছে';
+
+  @override
+  String get promoFilterPromotions => 'প্রমোশন ফিল্টার';
+
+  @override
+  String get providerPaymentInitiated => 'পেমেন্ট শুরু হয়েছে';
+
+  @override
+  String get providerEmailResent => 'ইমেইল পুনরায় পাঠানো হয়েছে';
+
+  @override
+  String get subCurrent => 'বর্তমান: ';
+
+  @override
+  String get subRequired => 'প্রয়োজন: ';
+
+  @override
+  String get aiLast7Days => 'গত ৭ দিন';
+
+  @override
+  String get aiLast30Days => 'গত ৩০ দিন';
+
+  @override
+  String get aiLast90Days => 'গত ৯০ দিন';
+
+  @override
+  String get aiImageRequired => 'ছবি প্রয়োজন';
+
+  @override
+  String get zatcaEnterOtp => '৬ সংখ্যার OTP লিখুন';
 }

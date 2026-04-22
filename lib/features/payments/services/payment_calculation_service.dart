@@ -4,7 +4,6 @@ import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 /// \u0081 denomination values (notes and coins)
 class SarDenomination {
-
   const SarDenomination({required this.value, required this.label, required this.labelAr, this.isCoin = false});
   final double value;
   final String label;
@@ -33,7 +32,6 @@ class SarDenomination {
 
 /// Denomination count entry for cash counting
 class DenominationCount {
-
   DenominationCount({required this.denomination, this.count = 0});
   final SarDenomination denomination;
   int count;
@@ -42,7 +40,8 @@ class DenominationCount {
 }
 
 /// Split payment leg
-class SplitPaymentLeg { // Card details, gift card code, etc.
+class SplitPaymentLeg {
+  // Card details, gift card code, etc.
 
   const SplitPaymentLeg({required this.method, required this.amount, this.metadata});
   final PaymentMethodKey method;
@@ -117,9 +116,11 @@ class PaymentCalculationService {
 
   /// Check if a payment method requires card terminal
   static bool requiresTerminal(PaymentMethodKey method) {
-    return method == PaymentMethodKey.cardMada ||
+    return method == PaymentMethodKey.card ||
+        method == PaymentMethodKey.cardMada ||
         method == PaymentMethodKey.cardVisa ||
-        method == PaymentMethodKey.cardMastercard;
+        method == PaymentMethodKey.cardMastercard ||
+        method == PaymentMethodKey.mada;
   }
 
   /// Check if a payment method is a card type
@@ -132,18 +133,39 @@ class PaymentCalculationService {
     switch (method) {
       case PaymentMethodKey.cash:
         return 'Cash';
+      case PaymentMethodKey.card:
+        return 'Card';
       case PaymentMethodKey.cardMada:
+      case PaymentMethodKey.mada:
         return 'mada';
       case PaymentMethodKey.cardVisa:
         return 'Visa';
       case PaymentMethodKey.cardMastercard:
         return 'Mastercard';
+      case PaymentMethodKey.applePay:
+        return 'Apple Pay';
+      case PaymentMethodKey.stcPay:
+        return 'STC Pay';
       case PaymentMethodKey.storeCredit:
         return 'Store Credit';
       case PaymentMethodKey.giftCard:
         return 'Gift Card';
       case PaymentMethodKey.mobilePayment:
         return 'Mobile Payment';
+      case PaymentMethodKey.loyaltyPoints:
+        return 'Loyalty Points';
+      case PaymentMethodKey.bankTransfer:
+        return 'Bank Transfer';
+      case PaymentMethodKey.tabby:
+        return 'Tabby';
+      case PaymentMethodKey.tamara:
+        return 'Tamara';
+      case PaymentMethodKey.mispay:
+        return 'MisPay';
+      case PaymentMethodKey.madfu:
+        return 'Madfu';
+      case PaymentMethodKey.other:
+        return 'Other';
     }
   }
 
@@ -152,18 +174,39 @@ class PaymentCalculationService {
     switch (method) {
       case PaymentMethodKey.cash:
         return 'نقدي';
+      case PaymentMethodKey.card:
+        return 'بطاقة';
       case PaymentMethodKey.cardMada:
+      case PaymentMethodKey.mada:
         return 'مدى';
       case PaymentMethodKey.cardVisa:
         return 'فيزا';
       case PaymentMethodKey.cardMastercard:
         return 'ماستركارد';
+      case PaymentMethodKey.applePay:
+        return 'آبل باي';
+      case PaymentMethodKey.stcPay:
+        return 'STC Pay';
       case PaymentMethodKey.storeCredit:
         return 'رصيد المتجر';
       case PaymentMethodKey.giftCard:
         return 'بطاقة هدية';
       case PaymentMethodKey.mobilePayment:
         return 'دفع إلكتروني';
+      case PaymentMethodKey.loyaltyPoints:
+        return 'نقاط الولاء';
+      case PaymentMethodKey.bankTransfer:
+        return 'تحويل بنكي';
+      case PaymentMethodKey.tabby:
+        return 'تابي';
+      case PaymentMethodKey.tamara:
+        return 'تمارا';
+      case PaymentMethodKey.mispay:
+        return 'ميس باي';
+      case PaymentMethodKey.madfu:
+        return 'مدفوع';
+      case PaymentMethodKey.other:
+        return 'أخرى';
     }
   }
 

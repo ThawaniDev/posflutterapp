@@ -12,7 +12,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Initiates a payment and shows a WebView to complete PayTabs checkout.
 class PaymentCheckoutPage extends ConsumerStatefulWidget {
-
   const PaymentCheckoutPage({
     super.key,
     required this.purpose,
@@ -59,9 +58,11 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
     if (_paymentInitiated) return;
     _paymentInitiated = true;
 
+    final l10n = AppLocalizations.of(context)!;
     ref
         .read(providerPaymentActionProvider.notifier)
         .initiatePayment(
+          l10n,
           purpose: widget.purpose,
           purposeLabel: widget.purposeLabel,
           amount: widget.amount,

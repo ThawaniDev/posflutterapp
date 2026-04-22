@@ -21,6 +21,7 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return PosListPage(
@@ -90,6 +91,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(giftCardProvider);
     final theme = widget.theme;
 
@@ -127,7 +129,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
           PosTextField(
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            label: 'Amount ()',
+            label: l10n.paymentsAmountSar,
             onChanged: (_) => setState(() => _selectedPreset = null),
           ),
           AppSpacing.gapH16,
@@ -203,6 +205,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(giftCardProvider);
     final theme = widget.theme;
 
@@ -316,6 +319,7 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(giftCardProvider);
     final theme = widget.theme;
 
@@ -331,7 +335,7 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
           PosTextField(
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            label: 'Redemption Amount',
+            label: l10n.paymentsRedemptionAmount,
           ),
           AppSpacing.gapH24,
           SizedBox(

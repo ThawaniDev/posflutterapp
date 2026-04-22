@@ -471,63 +471,103 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   Widget _buildPaymentLeg(int index, _PaymentLeg leg, bool isDark, Color mutedColor) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Method dropdown
-          Expanded(
-            flex: 2,
-            child: PosSearchableDropdown<PaymentMethod>(
-              hint: AppLocalizations.of(context)!.selectPaymentMethod,
-              items: _availableMethods.map((m) {
-                return PosDropdownItem(value: m, label: m.label);
-              }).toList(),
-              selectedValue: leg.method,
-              onChanged: (v) {
-                if (v != null) _updateLegMethod(index, v);
-              },
-              showSearch: false,
-            ),
+          Row(
+            children: [
+              if (_legs.length > 1) ...[
+                Container(
+                  width: 22,
+                  height: 22,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.10), shape: BoxShape.circle),
+                  child: Text(
+                    '${index + 1}',
+                    style: AppTypography.labelSmall.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                AppSpacing.gapW8,
+              ],
+              Expanded(
+                child: Text(
+                  AppLocalizations.of(context)!.selectPaymentMethod,
+                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              if (_legs.length > 1)
+                IconButton(
+                  onPressed: () => _removeLeg(index),
+                  icon: const Icon(Icons.remove_circle_outline, color: AppColors.error, size: 20),
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  padding: EdgeInsets.zero,
+                  tooltip: AppLocalizations.of(context)!.posCancel,
+                ),
+            ],
           ),
-          AppSpacing.gapW8,
-          // Amount
-          Expanded(
-            flex: 2,
-            child: PosTextField(
-              controller: leg.controller,
-              hint: '0.00',
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-              textAlign: TextAlign.end,
-              onChanged: (v) => _updateLegAmount(index, v),
-            ),
+          AppSpacing.gapH8,
+          // Method picker as selectable cards
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: _quickMethods.map((m) {
+              final selected = leg.method == m;
+              return _MethodCard(
+                label: _methodLabel(m),
+                icon: _methodIcon(m),
+                selected: selected,
+                onTap: () => _updateLegMethod(index, m),
+              );
+            }).toList(),
           ),
-          // Remove button
-          if (_legs.length > 1)
-            IconButton(
-              onPressed: () => _removeLeg(index),
-              icon: const Icon(Icons.remove_circle_outline, color: AppColors.error, size: 20),
-              constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-              padding: EdgeInsets.zero,
-            ),
+          AppSpacing.gapH8,
+          // Amount input
+          PosTextField(
+            controller: leg.controller,
+            hint: '0.00',
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            prefixIcon: Icons.account_balance_wallet_outlined,
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+            textAlign: TextAlign.end,
+            onChanged: (v) => _updateLegAmount(index, v),
+          ),
         ],
       ),
     );
   }
 
-  List<PaymentMethod> get _availableMethods => [
-    PaymentMethod.cash,
-    PaymentMethod.card,
-    PaymentMethod.cardMada,
-    PaymentMethod.cardVisa,
-    PaymentMethod.cardMastercard,
-    PaymentMethod.applePay,
-    PaymentMethod.stcPay,
-    PaymentMethod.storeCredit,
-    PaymentMethod.giftCard,
-    PaymentMethod.loyaltyPoints,
-    PaymentMethod.bankTransfer,
-  ];
+  // Primary methods shown as cards. Other methods (gift card, store credit, etc.)
+  // can be added as additional split legs and chosen here too — keeping the
+  // surface small to match real-world POS workflows.
+  List<PaymentMethod> get _quickMethods => const [PaymentMethod.cash, PaymentMethod.card];
+
+  String _methodLabel(PaymentMethod m) {
+    final l10n = AppLocalizations.of(context)!;
+    return switch (m) {
+      PaymentMethod.cash => l10n.filterCash,
+      PaymentMethod.card => l10n.filterCard,
+      _ => m.label,
+    };
+  }
+
+  IconData _methodIcon(PaymentMethod m) {
+    return switch (m) {
+      PaymentMethod.cash => Icons.payments_rounded,
+      PaymentMethod.card ||
+      PaymentMethod.cardMada ||
+      PaymentMethod.cardVisa ||
+      PaymentMethod.cardMastercard ||
+      PaymentMethod.mada => Icons.credit_card_rounded,
+      PaymentMethod.applePay => Icons.phone_iphone_rounded,
+      PaymentMethod.stcPay => Icons.smartphone_rounded,
+      PaymentMethod.giftCard => Icons.card_giftcard_rounded,
+      PaymentMethod.storeCredit => Icons.account_balance_wallet_rounded,
+      PaymentMethod.loyaltyPoints => Icons.stars_rounded,
+      PaymentMethod.bankTransfer => Icons.account_balance_rounded,
+      PaymentMethod.tabby || PaymentMethod.tamara || PaymentMethod.mispay || PaymentMethod.madfu => Icons.credit_score_rounded,
+      _ => Icons.payment_rounded,
+    };
+  }
 
   List<double> _quickDenominations() {
     final total = widget.totalAmount;
@@ -542,5 +582,53 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final roundUp100 = (total / 100).ceil() * 100.0;
     if (roundUp100 > total && !denominations.contains(roundUp100)) denominations.add(roundUp100);
     return denominations.take(4).toList();
+  }
+}
+
+class _MethodCard extends StatelessWidget {
+  const _MethodCard({required this.label, required this.icon, required this.selected, required this.onTap});
+
+  final String label;
+  final IconData icon;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = selected ? AppColors.primary.withValues(alpha: 0.12) : AppColors.surfaceFor(context);
+    final border = selected ? AppColors.primary : AppColors.borderFor(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fg = selected ? AppColors.primary : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: AppRadius.borderMd,
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 120),
+          width: 120,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          decoration: BoxDecoration(
+            color: bg,
+            border: Border.all(color: border, width: selected ? 2 : 1),
+            borderRadius: AppRadius.borderMd,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: fg, size: 26),
+              AppSpacing.gapH4,
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.labelMedium.copyWith(color: fg, fontWeight: selected ? FontWeight.bold : FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -140,7 +140,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                         _applyFilters();
                       },
                       label: l10n.status,
-                      hint: 'All',
+                      hint: l10n.commonAll,
                       showSearch: false,
                       clearable: true,
                     );
@@ -157,7 +157,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                         _applyFilters();
                       },
                       label: l10n.supportPriority,
-                      hint: 'All',
+                      hint: l10n.commonAll,
                       showSearch: false,
                       clearable: true,
                     );
@@ -175,7 +175,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                         _applyFilters();
                       },
                       label: l10n.category,
-                      hint: 'All',
+                      hint: l10n.commonAll,
                       showSearch: false,
                       clearable: true,
                     );

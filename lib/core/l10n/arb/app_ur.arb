@@ -2858,7 +2858,6 @@
     }
   },
   "appBarLanguage": "زبان",
-  "appBarMore": "مزید",
   "quickNavTitle": "فوری نیویگیشن",
   "appBarTheme": "تھیم",
   "appBarDarkMode": "ڈارک موڈ",
@@ -6030,6 +6029,7 @@
   "pcClone": "کاپی",
   "pcBusinessTypeColon": "کاروبار کی قسم:",
   "pcNoPredefinedCategories": "کوئی پہلے سے طے شدہ زمرے نہیں ملے",
+  "predefinedNoCategoriesForBusiness": "آپ کے کاروباری قسم کے لیے کوئی پہلے سے طے شدہ زمرے دستیاب نہیں ہیں",
   "pcCloneToMyStore": "میرے اسٹور میں کاپی",
   "pcCloneProduct": "پروڈکٹ کاپی",
   "pcNoPredefinedProducts": "کوئی پہلے سے طے شدہ پروڈکٹس نہیں ملیں",
@@ -6813,5 +6813,54 @@
         "type": "String"
       }
     }
-  }
+  },
+  "updateRequired": "اپ ڈیٹ ضروری ہے",
+  "updateRequiredVersion": "جاری رکھنے کے لیے {version} یا بعد کا ورژن ضروری ہے۔",
+  "@updateRequiredVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "whatsNew": "نیا کیا ہے",
+  "updateNow": "ابھی اپ ڈیٹ کریں",
+  "updateAvailable": "اپ ڈیٹ دستیاب ہے",
+  "updateAvailableVersion": "ورژن {version} دستیاب ہے۔",
+  "@updateAvailableVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "updateLater": "بعد میں",
+  "languageEnglish": "انگریزی",
+  "languageArabic": "عربی",
+  "languageBengali": "بنگالی",
+  "languageUrdu": "اردو",
+  "appBarMore": "مزید",
+  "accessShortcutAlt19": "Alt + 1-9",
+  "accessShortcutTab": "Tab",
+  "accessShortcutEsc": "Esc",
+  "accessShortcutEnter": "Enter",
+  "accessShortcutCtrlSlash": "Ctrl + /",
+  "authLoggedOutSuccess": "کامیابی سے لاگ آؤٹ ہو گئے",
+  "authLoggedOutAllDevices": "تمام آلات سے لاگ آؤٹ ہو گئے",
+  "cgReviewedShort": "جائزہ لیا گیا",
+  "catalogPhoneHint": "+968 XXXX XXXX",
+  "catalogVatNumberHint": "SA29XXXX0000000000000000",
+  "paymentsAmountSar": "رقم (SAR)",
+  "paymentsRedemptionAmount": "ریڈیمپشن رقم",
+  "posCustGridLayout": "گرڈ لے آؤٹ",
+  "posCustNoQuickAccess": "کوئی فوری رسائی بٹن ترتیب نہیں دیا گیا",
+  "predefinedCategoryCloned": "زمرہ کامیابی سے کلون کیا گیا",
+  "predefinedProductCloned": "پروڈکٹ کامیابی سے کلون کیا گیا",
+  "predefinedAllProductsCloned": "تمام پروڈکٹس کامیابی سے کلون کی گئیں",
+  "promoFilterPromotions": "پروموشنز فلٹر کریں",
+  "providerPaymentInitiated": "ادائیگی شروع کی گئی",
+  "providerEmailResent": "ای میل دوبارہ بھیج دی گئی",
+  "subCurrent": "موجودہ: ",
+  "subRequired": "ضروری: ",
+  "aiLast7Days": "پچھلے 7 دن",
+  "aiLast30Days": "پچھلے 30 دن",
+  "aiLast90Days": "پچھلے 90 دن",
+  "aiImageRequired": "تصویر ضروری ہے",
+  "zatcaEnterOtp": "6 ہندسوں کا OTP درج کریں"
 }

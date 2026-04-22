@@ -275,18 +275,24 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final stores =
         (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? (data['stores'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    final orgLevel = (data['org_level_configs'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+    final all = [...orgLevel, ...stores];
 
-    return stores.isEmpty
+    return all.isEmpty
         ? PosEmptyState(title: l10n.noStoresFound, subtitle: l10n.adminWameedAINoStoresMessage, icon: Icons.store_rounded)
         : ListView.builder(
             padding: const EdgeInsets.all(AppSpacing.md),
-            itemCount: stores.length,
+            itemCount: all.length,
             itemBuilder: (_, i) {
-              final store = stores[i];
+              final store = all[i];
+              final isOrgLevel = store['scope'] == 'organization' || store['store_id'] == null;
               final name = store['store_name'] ?? store['name'] ?? 'Store #${store['store_id'] ?? store['id']}';
               final aiEnabled = store['is_ai_enabled'] == true || store['ai_enabled'] == true || store['is_active'] == true;
-              final totalUsage = store['total_cost_usd'] ?? store['usage_amount'] ?? 0;
-              final requestCount = store['request_count'] ?? store['total_requests'] ?? 0;
+              final monthlyLimit = (store['monthly_limit_usd'] as num?)?.toDouble() ?? 0.0;
+              final hasConfig = store['has_config'] == true;
+              final subtitleText = monthlyLimit > 0
+                  ? 'Monthly limit: \$${monthlyLimit.toStringAsFixed(2)}'
+                  : (hasConfig ? 'Configured (no limit)' : 'Not configured yet');
 
               return PosCard(
                 child: ListTile(
@@ -297,20 +303,27 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> {
                       color: (aiEnabled ? AppColors.success : AppColors.mutedFor(context)).withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderLg,
                     ),
-                    child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.mutedFor(context)),
+                    child: Icon(
+                      isOrgLevel ? Icons.business_rounded : Icons.store_rounded,
+                      color: aiEnabled ? AppColors.success : AppColors.mutedFor(context),
+                    ),
                   ),
-                  title: Text(name.toString(), style: AppTypography.titleSmall),
-                  subtitle: Text(
-                    '$requestCount ${l10n.requests} • \$${_fmt(totalUsage)}',
-                    style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight),
+                  title: Row(
+                    children: [
+                      Expanded(child: Text(name.toString(), style: AppTypography.titleSmall)),
+                      if (isOrgLevel) const PosBadge(label: 'ORG', customColor: AppColors.info),
+                    ],
                   ),
-                  trailing: Switch(
-                    value: aiEnabled,
-                    activeThumbColor: AppColors.primary,
-                    onChanged: (v) => ref
-                        .read(wameedAIAdminActionProvider.notifier)
-                        .toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),
-                  ),
+                  subtitle: Text(subtitleText, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight)),
+                  trailing: isOrgLevel
+                      ? null
+                      : Switch(
+                          value: aiEnabled,
+                          activeThumbColor: AppColors.primary,
+                          onChanged: (v) => ref
+                              .read(wameedAIAdminActionProvider.notifier)
+                              .toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),
+                        ),
                 ),
               );
             },

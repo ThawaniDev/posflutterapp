@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/auth/enums/auth_method.dart';
 import 'package:wameedpos/features/staff/models/attendance_record.dart';
 import 'package:wameedpos/features/staff/models/shift_template.dart';
@@ -15,7 +16,6 @@ final staffListProvider = StateNotifierProvider<StaffListNotifier, StaffListStat
 });
 
 class StaffListNotifier extends StateNotifier<StaffListState> {
-
   StaffListNotifier(this._repo) : super(const StaffListInitial());
   final StaffRepository _repo;
 
@@ -82,7 +82,6 @@ final staffDetailProvider = StateNotifierProvider.family<StaffDetailNotifier, St
 });
 
 class StaffDetailNotifier extends StateNotifier<StaffDetailState> {
-
   StaffDetailNotifier(this._repo, this._staffId) : super(const StaffDetailInitial());
   final StaffRepository _repo;
   final String _staffId;
@@ -117,7 +116,6 @@ final attendanceProvider = StateNotifierProvider<AttendanceNotifier, AttendanceS
 });
 
 class AttendanceNotifier extends StateNotifier<AttendanceState> {
-
   AttendanceNotifier(this._repo) : super(const AttendanceInitial());
   final StaffRepository _repo;
 
@@ -168,31 +166,30 @@ final clockActionProvider = StateNotifierProvider<ClockActionNotifier, ClockActi
 });
 
 class ClockActionNotifier extends StateNotifier<ClockActionState> {
-
   ClockActionNotifier(this._repo) : super(const ClockActionIdle());
   final StaffRepository _repo;
 
-  Future<void> clockIn({required String staffUserId, required String storeId, String? notes}) async {
+  Future<void> clockIn(AppLocalizations l10n, {required String staffUserId, required String storeId, String? notes}) async {
     state = const ClockActionLoading();
     try {
       final record = await _repo.clockIn(staffUserId: staffUserId, storeId: storeId, notes: notes);
-      state = ClockActionSuccess(record: record, message: 'Clocked in');
+      state = ClockActionSuccess(record: record, message: l10n.staffClockedIn);
     } catch (e) {
       state = ClockActionError(message: e.toString());
     }
   }
 
-  Future<void> clockOut({required String staffUserId, required String storeId, String? notes}) async {
+  Future<void> clockOut(AppLocalizations l10n, {required String staffUserId, required String storeId, String? notes}) async {
     state = const ClockActionLoading();
     try {
       final record = await _repo.clockOut(staffUserId: staffUserId, storeId: storeId, notes: notes);
-      state = ClockActionSuccess(record: record, message: 'Clocked out');
+      state = ClockActionSuccess(record: record, message: l10n.staffClockedOut);
     } catch (e) {
       state = ClockActionError(message: e.toString());
     }
   }
 
-  Future<void> startBreak({required String attendanceRecordId}) async {
+  Future<void> startBreak(AppLocalizations l10n, {required String attendanceRecordId}) async {
     state = const ClockActionLoading();
     try {
       await _repo.startBreak(attendanceRecordId: attendanceRecordId);
@@ -204,14 +201,14 @@ class ClockActionNotifier extends StateNotifier<ClockActionState> {
           clockInAt: DateTime.now(),
           authMethod: AuthMethod.fromValue('pin'),
         ),
-        message: 'Break started',
+        message: l10n.staffStartBreak,
       );
     } catch (e) {
       state = ClockActionError(message: e.toString());
     }
   }
 
-  Future<void> endBreak({required String attendanceRecordId}) async {
+  Future<void> endBreak(AppLocalizations l10n, {required String attendanceRecordId}) async {
     state = const ClockActionLoading();
     try {
       await _repo.endBreak(attendanceRecordId: attendanceRecordId);
@@ -223,7 +220,7 @@ class ClockActionNotifier extends StateNotifier<ClockActionState> {
           clockInAt: DateTime.now(),
           authMethod: AuthMethod.fromValue('pin'),
         ),
-        message: 'Break ended',
+        message: l10n.staffEndBreak,
       );
     } catch (e) {
       state = ClockActionError(message: e.toString());
@@ -242,7 +239,6 @@ final shiftProvider = StateNotifierProvider<ShiftNotifier, ShiftState>((ref) {
 });
 
 class ShiftNotifier extends StateNotifier<ShiftState> {
-
   ShiftNotifier(this._repo) : super(const ShiftInitial());
   final StaffRepository _repo;
 
@@ -319,7 +315,6 @@ final attendanceSummaryProvider = StateNotifierProvider<AttendanceSummaryNotifie
 });
 
 class AttendanceSummaryNotifier extends StateNotifier<AttendanceSummaryState> {
-
   AttendanceSummaryNotifier(this._repo) : super(const AttendanceSummaryInitial());
   final StaffRepository _repo;
 
@@ -365,7 +360,6 @@ class ShiftTemplateError extends ShiftTemplateState {
 }
 
 class ShiftTemplateNotifier extends StateNotifier<ShiftTemplateState> {
-
   ShiftTemplateNotifier(this._repo) : super(const ShiftTemplateInitial());
   final StaffRepository _repo;
 
@@ -416,7 +410,6 @@ final commissionProvider = StateNotifierProvider.family<CommissionNotifier, Comm
 });
 
 class CommissionNotifier extends StateNotifier<CommissionState> {
-
   CommissionNotifier(this._repo, this._staffId) : super(const CommissionInitial());
   final StaffRepository _repo;
   final String _staffId;
@@ -441,7 +434,6 @@ final staffStatsProvider = StateNotifierProvider<StaffStatsNotifier, StaffStatsS
 });
 
 class StaffStatsNotifier extends StateNotifier<StaffStatsState> {
-
   StaffStatsNotifier(this._repo) : super(const StaffStatsInitial());
   final StaffRepository _repo;
 
@@ -472,7 +464,6 @@ final staffFormProvider = StateNotifierProvider<StaffFormNotifier, StaffFormStat
 });
 
 class StaffFormNotifier extends StateNotifier<StaffFormState> {
-
   StaffFormNotifier(this._repo) : super(const StaffFormIdle());
   final StaffRepository _repo;
 

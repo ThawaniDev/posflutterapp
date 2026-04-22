@@ -12,7 +12,6 @@ final posSessionsProvider = StateNotifierProvider<PosSessionsNotifier, PosSessio
 });
 
 class PosSessionsNotifier extends StateNotifier<PosSessionsState> {
-
   PosSessionsNotifier(this._repo) : super(const PosSessionsInitial());
   final PosTerminalRepository _repo;
   int _perPage = 20;
@@ -82,7 +81,6 @@ final transactionsProvider = StateNotifierProvider<TransactionsNotifier, Transac
 });
 
 class TransactionsNotifier extends StateNotifier<TransactionsState> {
-
   TransactionsNotifier(this._repo) : super(const TransactionsInitial());
   final PosTerminalRepository _repo;
 
@@ -123,7 +121,6 @@ final heldCartsProvider = StateNotifierProvider<HeldCartsNotifier, HeldCartsStat
 });
 
 class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
-
   HeldCartsNotifier(this._repo) : super(const HeldCartsInitial());
   final PosTerminalRepository _repo;
 
@@ -205,7 +202,6 @@ final terminalsProvider = StateNotifierProvider<TerminalsNotifier, TerminalsStat
 });
 
 class TerminalsNotifier extends StateNotifier<TerminalsState> {
-
   TerminalsNotifier(this._repo) : super(const TerminalsInitial());
   final PosTerminalRepository _repo;
   String? _currentSearch;

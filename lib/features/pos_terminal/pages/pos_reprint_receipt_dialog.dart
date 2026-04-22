@@ -109,11 +109,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
               const SizedBox(height: AppSpacing.sm),
               Text(_error!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
             ],
-            if (_receipt != null) ...[
-              const SizedBox(height: AppSpacing.md),
-              const Divider(),
-              Expanded(child: _buildReceipt()),
-            ],
+            if (_receipt != null) ...[const SizedBox(height: AppSpacing.md), const Divider(), Expanded(child: _buildReceipt())],
           ],
         ),
       ),
@@ -122,9 +118,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
         if (_receipt != null)
           FilledButton.icon(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Sent to printer')),
-              );
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sent to printer')));
             },
             icon: const Icon(Icons.print),
             label: const Text('Print'),
@@ -144,10 +138,8 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (store['name'] != null)
-            Center(child: Text('${store['name']}', style: AppTypography.titleMedium)),
-          if (store['tax_number'] != null)
-            Center(child: Text('VAT: ${store['tax_number']}', style: AppTypography.bodySmall)),
+          if (store['name'] != null) Center(child: Text('${store['name']}', style: AppTypography.titleMedium)),
+          if (store['tax_number'] != null) Center(child: Text('VAT: ${store['tax_number']}', style: AppTypography.bodySmall)),
           const SizedBox(height: AppSpacing.sm),
           Text('# ${tx['transaction_number'] ?? ''}', style: AppTypography.bodyMedium),
           Text('${tx['type'] ?? ''}  •  ${tx['status'] ?? ''}', style: AppTypography.bodySmall),
@@ -161,9 +153,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Row(
                 children: [
-                  Expanded(
-                    child: Text('${m['product_name'] ?? ''}  ($qty × $price)', style: AppTypography.bodySmall),
-                  ),
+                  Expanded(child: Text('${m['product_name'] ?? ''}  ($qty × $price)', style: AppTypography.bodySmall)),
                   Text(total, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600)),
                 ],
               ),
@@ -191,10 +181,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
       child: Row(
         children: [
           Expanded(child: Text(label, style: AppTypography.bodySmall)),
-          Text(
-            _money(value),
-            style: AppTypography.bodySmall.copyWith(fontWeight: bold ? FontWeight.bold : FontWeight.w600),
-          ),
+          Text(_money(value), style: AppTypography.bodySmall.copyWith(fontWeight: bold ? FontWeight.bold : FontWeight.w600)),
         ],
       ),
     );

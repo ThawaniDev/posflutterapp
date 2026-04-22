@@ -77,12 +77,12 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Content (EN)', style: Theme.of(context).textTheme.titleMedium),
+                      Text(l10n.adminContentEn, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
                       Text(page['body'] ?? 'No content'),
                       if (page['body_ar'] != null) ...[
                         const Divider(height: 24),
-                        Text('Content (AR)', style: Theme.of(context).textTheme.titleMedium),
+                        Text(l10n.adminContentAr, style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: 8),
                         Text(page['body_ar'], textDirection: TextDirection.rtl),
                       ],

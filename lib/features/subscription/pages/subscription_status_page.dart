@@ -157,7 +157,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           // ── Cancel / Resume Button ──
           if (sub.status.name == 'cancelled' || sub.status.name == 'grace')
             PosButton(
-              onPressed: () => ref.read(subscriptionProvider.notifier).resume(),
+              onPressed: () => ref.read(subscriptionProvider.notifier).resume(l10n),
               icon: Icons.play_arrow,
               label: l10n.subscriptionResumeSubscription,
               isFullWidth: true,
@@ -605,7 +605,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
               Navigator.pop(ctx);
               ref
                   .read(subscriptionProvider.notifier)
-                  .cancel(reason: reasonController.text.isNotEmpty ? reasonController.text : null);
+                  .cancel(l10n, reason: reasonController.text.isNotEmpty ? reasonController.text : null);
             },
             label: l10n.subscriptionCancelSubscription,
           ),

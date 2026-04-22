@@ -511,10 +511,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     builder: (_) => PosShiftReportDialog(sessionId: session.id, isZReport: true),
                   );
                 case 'reprint':
-                  showDialog(
-                    context: context,
-                    builder: (_) => const PosReprintReceiptDialog(),
-                  );
+                  showDialog(context: context, builder: (_) => const PosReprintReceiptDialog());
                 case 'end_shift':
                   showDialog(
                     context: context,
@@ -1340,58 +1337,58 @@ class _CartItemTile extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Product info
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(item.product.name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-                  AppSpacing.gapH4,
-                  Text(
-                    '\u0081 ${item.unitPrice.toStringAsFixed(2)} x ${item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2)}',
-                    style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
-                  ),
-                  if (item.discountAmount != null && item.discountAmount! > 0)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.product.name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    AppSpacing.gapH4,
                     Text(
-                      '-\u0081 ${item.discountAmount!.toStringAsFixed(2)}',
-                      style: AppTypography.bodySmall.copyWith(color: AppColors.error),
+                      '\u0081 ${item.unitPrice.toStringAsFixed(2)} x ${item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2)}',
+                      style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                     ),
+                    if (item.discountAmount != null && item.discountAmount! > 0)
+                      Text(
+                        '-\u0081 ${item.discountAmount!.toStringAsFixed(2)}',
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.error),
+                      ),
+                  ],
+                ),
+              ),
+              // Quantity controls — larger for touch
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _QtyButton(
+                    icon: Icons.remove,
+                    onTap: () => ref.read(cartProvider.notifier).updateQuantity(index, item.quantity - 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2),
+                      style: AppTypography.titleMedium,
+                    ),
+                  ),
+                  _QtyButton(
+                    icon: Icons.add,
+                    onTap: () => ref.read(cartProvider.notifier).updateQuantity(index, item.quantity + 1),
+                  ),
                 ],
               ),
-            ),
-            // Quantity controls — larger for touch
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _QtyButton(
-                  icon: Icons.remove,
-                  onTap: () => ref.read(cartProvider.notifier).updateQuantity(index, item.quantity - 1),
+              AppSpacing.gapW12,
+              // Line total
+              SizedBox(
+                width: 88,
+                child: Text(
+                  '\u0081 ${item.lineTotal.toStringAsFixed(2)}',
+                  style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.end,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2),
-                    style: AppTypography.titleMedium,
-                  ),
-                ),
-                _QtyButton(
-                  icon: Icons.add,
-                  onTap: () => ref.read(cartProvider.notifier).updateQuantity(index, item.quantity + 1),
-                ),
-              ],
-            ),
-            AppSpacing.gapW12,
-            // Line total
-            SizedBox(
-              width: 88,
-              child: Text(
-                '\u0081 ${item.lineTotal.toStringAsFixed(2)}',
-                style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.end,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -1470,12 +1467,7 @@ class _CartItemTile extends ConsumerWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(title),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          minLines: 2,
-          maxLines: 4,
-        ),
+        content: TextField(controller: controller, autofocus: true, minLines: 2, maxLines: 4),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(context)!.cancel)),
           FilledButton(

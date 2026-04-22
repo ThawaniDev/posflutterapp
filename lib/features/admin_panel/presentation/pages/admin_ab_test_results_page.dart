@@ -15,7 +15,6 @@ class AdminABTestResultsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -25,12 +24,13 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(abTestResultsProvider);
 
     return PosListPage(
-  title: l10n.abTestResults,
-  showSearch: false,
-    child: switch (state) {
+      title: l10n.abTestResults,
+      showSearch: false,
+      child: switch (state) {
         ABTestResultsInitial() || ABTestResultsLoading() => const Center(child: CircularProgressIndicator()),
         ABTestResultsLoaded(:final test, :final results, :final winner, :final confidence) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -55,7 +55,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Variant Results', style: Theme.of(context).textTheme.titleMedium),
+              Text(l10n.adminVariantResults, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               if (results.isEmpty)
                 Text(l10n.adminNoResultsYet)
@@ -72,7 +72,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                               Text(r['variant_key'] as String? ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
                               if (r['is_control'] == true) ...[
                                 const SizedBox(width: 8),
-                                const Chip(label: Text('Control', style: TextStyle(fontSize: 10))),
+                                Chip(label: Text(l10n.adminControl, style: const TextStyle(fontSize: 10))),
                               ],
                             ],
                           ),
@@ -83,19 +83,19 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                               Column(
                                 children: [
                                   Text('${r['impressions'] ?? 0}'),
-                                  const Text('Impressions', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminImpressions, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${r['conversions'] ?? 0}'),
-                                  const Text('Conversions', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminConversions, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${((r['conversion_rate'] as num?) ?? 0.0).toStringAsFixed(2)}%'),
-                                  const Text('Rate', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminRate, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                             ],
@@ -119,6 +119,6 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
           ),
         ),
       },
-);
+    );
   }
 }

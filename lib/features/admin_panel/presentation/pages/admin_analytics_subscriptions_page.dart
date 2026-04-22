@@ -48,6 +48,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsSubscriptionsProvider);
 
     return PosListPage(
@@ -93,7 +94,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                       const SizedBox(height: AppSpacing.lg),
 
                       // Status breakdown
-                      const Text('Status Breakdown', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminStatusBreakdown, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...counts.entries.map(
                         (e) => PosCard(
@@ -112,7 +113,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                       const SizedBox(height: AppSpacing.lg),
 
                       // Lifecycle trend
-                      const Text('Lifecycle Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminLifecycleTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
                         PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoTrendData)),

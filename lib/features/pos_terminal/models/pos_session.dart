@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class PosSession {
-
   const PosSession({
     required this.id,
     required this.storeId,

@@ -131,7 +131,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Filter Promotions', style: Theme.of(ctx).textTheme.titleMedium),
+            Text(l10n.promoFilterPromotions, style: Theme.of(ctx).textTheme.titleMedium),
             const SizedBox(height: 16),
             PosSearchableDropdown<String>(
               hint: l10n.allTypes,

@@ -37,6 +37,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsStoresProvider);
     final exportState = ref.watch(analyticsExportProvider);
 
@@ -90,7 +91,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       const SizedBox(height: AppSpacing.lg),
 
                       // Health Summary
-                      const Text('Health Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminHealthSummary, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (health.isEmpty)
                         PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoHealthDataToday)),
@@ -113,7 +114,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       const SizedBox(height: AppSpacing.lg),
 
                       // Top Stores
-                      const Text('Top Stores', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminTopStores, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...stores.map(
                         (s) => PosCard(

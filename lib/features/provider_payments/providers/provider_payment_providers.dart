@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
 import 'package:wameedpos/features/provider_payments/repositories/provider_payment_repository.dart';
 
@@ -8,7 +9,6 @@ final providerPaymentsListProvider = StateNotifierProvider<ProviderPaymentsListN
 });
 
 class ProviderPaymentsListNotifier extends StateNotifier<ProviderPaymentsListState> {
-
   ProviderPaymentsListNotifier(this._repository) : super(const ProviderPaymentsListInitial());
   final ProviderPaymentRepository _repository;
 
@@ -43,7 +43,6 @@ final providerPaymentDetailProvider = StateNotifierProvider<ProviderPaymentDetai
 });
 
 class ProviderPaymentDetailNotifier extends StateNotifier<ProviderPaymentDetailState> {
-
   ProviderPaymentDetailNotifier(this._repository) : super(const ProviderPaymentDetailInitial());
   final ProviderPaymentRepository _repository;
 
@@ -69,11 +68,11 @@ final providerPaymentActionProvider = StateNotifierProvider<ProviderPaymentActio
 });
 
 class ProviderPaymentActionNotifier extends StateNotifier<ProviderPaymentActionState> {
-
   ProviderPaymentActionNotifier(this._repository) : super(const ProviderPaymentActionIdle());
   final ProviderPaymentRepository _repository;
 
-  Future<void> initiatePayment({
+  Future<void> initiatePayment(
+    AppLocalizations l10n, {
     required String purpose,
     required String purposeLabel,
     required double amount,
@@ -97,17 +96,17 @@ class ProviderPaymentActionNotifier extends StateNotifier<ProviderPaymentActionS
         currency: currency,
         notes: notes,
       );
-      state = ProviderPaymentActionSuccess(message: 'Payment initiated successfully', payment: payment);
+      state = ProviderPaymentActionSuccess(message: l10n.providerPaymentInitiated, payment: payment);
     } catch (e) {
       state = ProviderPaymentActionError(message: _extractMessage(e));
     }
   }
 
-  Future<void> resendEmail(String paymentId) async {
+  Future<void> resendEmail(AppLocalizations l10n, String paymentId) async {
     state = const ProviderPaymentActionLoading();
     try {
       await _repository.resendEmail(paymentId);
-      state = const ProviderPaymentActionSuccess(message: 'Email resent successfully');
+      state = ProviderPaymentActionSuccess(message: l10n.providerEmailResent);
     } catch (e) {
       state = ProviderPaymentActionError(message: _extractMessage(e));
     }
@@ -129,7 +128,6 @@ final paymentStatisticsProvider = StateNotifierProvider<PaymentStatisticsNotifie
 });
 
 class PaymentStatisticsNotifier extends StateNotifier<PaymentStatisticsState> {
-
   PaymentStatisticsNotifier(this._repository) : super(const PaymentStatisticsInitial());
   final ProviderPaymentRepository _repository;
 

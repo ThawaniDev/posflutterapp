@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/predefined_catalog/data/remote/predefined_catalog_api_service.dart';
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
 
@@ -12,7 +13,6 @@ final predefinedCategoriesProvider = StateNotifierProvider<PredefinedCategoriesN
 });
 
 class PredefinedCategoriesNotifier extends StateNotifier<PredefinedCategoriesState> {
-
   PredefinedCategoriesNotifier(this._api) : super(const PredefinedCategoriesInitial());
   final PredefinedCatalogApiService _api;
 
@@ -72,7 +72,6 @@ final predefinedCategoryTreeProvider = StateNotifierProvider<PredefinedCategoryT
 });
 
 class PredefinedCategoryTreeNotifier extends StateNotifier<PredefinedCategoryTreeState> {
-
   PredefinedCategoryTreeNotifier(this._api) : super(const PredefinedCategoryTreeInitial());
   final PredefinedCatalogApiService _api;
 
@@ -100,7 +99,6 @@ final predefinedProductsProvider = StateNotifierProvider<PredefinedProductsNotif
 });
 
 class PredefinedProductsNotifier extends StateNotifier<PredefinedProductsState> {
-
   PredefinedProductsNotifier(this._api) : super(const PredefinedProductsInitial());
   final PredefinedCatalogApiService _api;
 
@@ -174,15 +172,14 @@ final cloneProvider = StateNotifierProvider<CloneNotifier, CloneState>((ref) {
 });
 
 class CloneNotifier extends StateNotifier<CloneState> {
-
   CloneNotifier(this._api) : super(const CloneIdle());
   final PredefinedCatalogApiService _api;
 
-  Future<void> cloneCategory(String categoryId) async {
+  Future<void> cloneCategory(AppLocalizations l10n, String categoryId) async {
     state = const CloneInProgress();
     try {
       final result = await _api.cloneCategory(categoryId);
-      state = CloneSuccess(message: 'Category cloned successfully', result: result);
+      state = CloneSuccess(message: l10n.predefinedCategoryCloned, result: result);
     } on DioException catch (e) {
       state = CloneError(message: _extractError(e));
     } catch (e) {
@@ -190,11 +187,11 @@ class CloneNotifier extends StateNotifier<CloneState> {
     }
   }
 
-  Future<void> cloneProduct(String productId, {String? categoryId}) async {
+  Future<void> cloneProduct(AppLocalizations l10n, String productId, {String? categoryId}) async {
     state = const CloneInProgress();
     try {
       final result = await _api.cloneProduct(productId, categoryId: categoryId);
-      state = CloneSuccess(message: 'Product cloned successfully', result: result);
+      state = CloneSuccess(message: l10n.predefinedProductCloned, result: result);
     } on DioException catch (e) {
       state = CloneError(message: _extractError(e));
     } catch (e) {
@@ -202,11 +199,11 @@ class CloneNotifier extends StateNotifier<CloneState> {
     }
   }
 
-  Future<void> cloneAll() async {
+  Future<void> cloneAll(AppLocalizations l10n) async {
     state = const CloneInProgress();
     try {
       final result = await _api.cloneAll();
-      state = CloneSuccess(message: 'All predefined products cloned successfully', result: result);
+      state = CloneSuccess(message: l10n.predefinedAllProductsCloned, result: result);
     } on DioException catch (e) {
       state = CloneError(message: _extractError(e));
     } catch (e) {

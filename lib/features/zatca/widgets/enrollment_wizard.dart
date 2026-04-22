@@ -73,8 +73,8 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
             controller: _otpController,
             keyboardType: TextInputType.number,
             maxLength: 6,
-            label: 'ZATCA OTP',
-            hint: 'Enter 6-digit OTP',
+            label: l10n.zatcaOtp,
+            hint: l10n.zatcaEnterOtp,
           ),
           AppSpacing.gapH20,
           SizedBox(

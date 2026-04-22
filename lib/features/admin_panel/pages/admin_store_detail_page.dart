@@ -31,6 +31,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final storeState = ref.watch(adminStoreDetailProvider);
     final actionState = ref.watch(adminActionProvider);
     final theme = Theme.of(context);
@@ -424,7 +425,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   children: [
                     Icon(Icons.tune_outlined, size: 48, color: AppColors.mutedFor(context)),
                     AppSpacing.gapH12,
-                    Text('No limit overrides set', style: theme.textTheme.bodyMedium),
+                    Text(l10n.adminNoLimitOverrides, style: theme.textTheme.bodyMedium),
                   ],
                 ),
               ),

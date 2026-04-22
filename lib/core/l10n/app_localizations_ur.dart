@@ -7339,9 +7339,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get appBarLanguage => 'زبان';
 
   @override
-  String get appBarMore => 'مزید';
-
-  @override
   String get quickNavTitle => 'فوری نیویگیشن';
 
   @override
@@ -15141,6 +15138,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pcNoPredefinedCategories => 'کوئی پہلے سے طے شدہ زمرے نہیں ملے';
 
   @override
+  String get predefinedNoCategoriesForBusiness =>
+      'آپ کے کاروباری قسم کے لیے کوئی پہلے سے طے شدہ زمرے دستیاب نہیں ہیں';
+
+  @override
   String get pcCloneToMyStore => 'میرے اسٹور میں کاپی';
 
   @override
@@ -16042,4 +16043,126 @@ class AppLocalizationsUr extends AppLocalizations {
   String appReleaseReleasedAt(String date) {
     return '$date کو جاری';
   }
+
+  @override
+  String get updateRequired => 'اپ ڈیٹ ضروری ہے';
+
+  @override
+  String updateRequiredVersion(String version) {
+    return 'جاری رکھنے کے لیے $version یا بعد کا ورژن ضروری ہے۔';
+  }
+
+  @override
+  String get whatsNew => 'نیا کیا ہے';
+
+  @override
+  String get updateNow => 'ابھی اپ ڈیٹ کریں';
+
+  @override
+  String get updateAvailable => 'اپ ڈیٹ دستیاب ہے';
+
+  @override
+  String updateAvailableVersion(String version) {
+    return 'ورژن $version دستیاب ہے۔';
+  }
+
+  @override
+  String get updateLater => 'بعد میں';
+
+  @override
+  String get languageEnglish => 'انگریزی';
+
+  @override
+  String get languageArabic => 'عربی';
+
+  @override
+  String get languageBengali => 'بنگالی';
+
+  @override
+  String get languageUrdu => 'اردو';
+
+  @override
+  String get appBarMore => 'مزید';
+
+  @override
+  String get accessShortcutAlt19 => 'Alt + 1-9';
+
+  @override
+  String get accessShortcutTab => 'Tab';
+
+  @override
+  String get accessShortcutEsc => 'Esc';
+
+  @override
+  String get accessShortcutEnter => 'Enter';
+
+  @override
+  String get accessShortcutCtrlSlash => 'Ctrl + /';
+
+  @override
+  String get authLoggedOutSuccess => 'کامیابی سے لاگ آؤٹ ہو گئے';
+
+  @override
+  String get authLoggedOutAllDevices => 'تمام آلات سے لاگ آؤٹ ہو گئے';
+
+  @override
+  String get cgReviewedShort => 'جائزہ لیا گیا';
+
+  @override
+  String get catalogPhoneHint => '+968 XXXX XXXX';
+
+  @override
+  String get catalogVatNumberHint => 'SA29XXXX0000000000000000';
+
+  @override
+  String get paymentsAmountSar => 'رقم (SAR)';
+
+  @override
+  String get paymentsRedemptionAmount => 'ریڈیمپشن رقم';
+
+  @override
+  String get posCustGridLayout => 'گرڈ لے آؤٹ';
+
+  @override
+  String get posCustNoQuickAccess => 'کوئی فوری رسائی بٹن ترتیب نہیں دیا گیا';
+
+  @override
+  String get predefinedCategoryCloned => 'زمرہ کامیابی سے کلون کیا گیا';
+
+  @override
+  String get predefinedProductCloned => 'پروڈکٹ کامیابی سے کلون کیا گیا';
+
+  @override
+  String get predefinedAllProductsCloned =>
+      'تمام پروڈکٹس کامیابی سے کلون کی گئیں';
+
+  @override
+  String get promoFilterPromotions => 'پروموشنز فلٹر کریں';
+
+  @override
+  String get providerPaymentInitiated => 'ادائیگی شروع کی گئی';
+
+  @override
+  String get providerEmailResent => 'ای میل دوبارہ بھیج دی گئی';
+
+  @override
+  String get subCurrent => 'موجودہ: ';
+
+  @override
+  String get subRequired => 'ضروری: ';
+
+  @override
+  String get aiLast7Days => 'پچھلے 7 دن';
+
+  @override
+  String get aiLast30Days => 'پچھلے 30 دن';
+
+  @override
+  String get aiLast90Days => 'پچھلے 90 دن';
+
+  @override
+  String get aiImageRequired => 'تصویر ضروری ہے';
+
+  @override
+  String get zatcaEnterOtp => '6 ہندسوں کا OTP درج کریں';
 }

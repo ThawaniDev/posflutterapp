@@ -2762,7 +2762,6 @@
     }
   },
   "appBarLanguage": "اللغة",
-  "appBarMore": "المزيد",
   "quickNavTitle": "التنقل السريع",
   "appBarTheme": "المظهر",
   "appBarDarkMode": "الوضع الداكن",
@@ -5940,6 +5939,7 @@
   "pcClone": "استنساخ",
   "pcBusinessTypeColon": "نوع العمل:",
   "pcNoPredefinedCategories": "لم يتم العثور على فئات محددة مسبقاً",
+  "predefinedNoCategoriesForBusiness": "لا توجد فئات محددة مسبقاً متاحة لنوع عملك",
   "pcCloneToMyStore": "استنساخ إلى متجري",
   "pcCloneProduct": "استنساخ المنتج",
   "pcNoPredefinedProducts": "لم يتم العثور على منتجات محددة مسبقاً",
@@ -6577,5 +6577,54 @@
         "type": "String"
       }
     }
-  }
+  },
+  "updateRequired": "تحديث مطلوب",
+  "updateRequiredVersion": "الإصدار {version} أو أحدث مطلوب للمتابعة.",
+  "@updateRequiredVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "whatsNew": "ما الجديد",
+  "updateNow": "تحديث الآن",
+  "updateAvailable": "تحديث متاح",
+  "updateAvailableVersion": "الإصدار {version} متاح.",
+  "@updateAvailableVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "updateLater": "لاحقاً",
+  "languageEnglish": "الإنجليزية",
+  "languageArabic": "العربية",
+  "languageBengali": "البنغالية",
+  "languageUrdu": "الأردية",
+  "appBarMore": "المزيد",
+  "accessShortcutAlt19": "Alt + 1-9",
+  "accessShortcutTab": "Tab",
+  "accessShortcutEsc": "Esc",
+  "accessShortcutEnter": "Enter",
+  "accessShortcutCtrlSlash": "Ctrl + /",
+  "authLoggedOutSuccess": "تم تسجيل الخروج بنجاح",
+  "authLoggedOutAllDevices": "تم تسجيل الخروج من جميع الأجهزة",
+  "cgReviewedShort": "تمت المراجعة",
+  "catalogPhoneHint": "+968 XXXX XXXX",
+  "catalogVatNumberHint": "SA29XXXX0000000000000000",
+  "paymentsAmountSar": "المبلغ (ر.س)",
+  "paymentsRedemptionAmount": "مبلغ الاسترداد",
+  "posCustGridLayout": "تخطيط الشبكة",
+  "posCustNoQuickAccess": "لم يتم تكوين أزرار الوصول السريع",
+  "predefinedCategoryCloned": "تم استنساخ الفئة بنجاح",
+  "predefinedProductCloned": "تم استنساخ المنتج بنجاح",
+  "predefinedAllProductsCloned": "تم استنساخ جميع المنتجات بنجاح",
+  "promoFilterPromotions": "تصفية العروض الترويجية",
+  "providerPaymentInitiated": "تم بدء الدفع",
+  "providerEmailResent": "تمت إعادة إرسال البريد الإلكتروني بنجاح",
+  "subCurrent": "الحالي: ",
+  "subRequired": "المطلوب: ",
+  "aiLast7Days": "آخر 7 أيام",
+  "aiLast30Days": "آخر 30 يوم",
+  "aiLast90Days": "آخر 90 يوم",
+  "aiImageRequired": "الصورة مطلوبة",
+  "zatcaEnterOtp": "أدخل رمز OTP المكون من 6 أرقام"
 }

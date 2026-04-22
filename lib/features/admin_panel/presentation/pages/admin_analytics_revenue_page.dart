@@ -37,6 +37,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsRevenueProvider);
 
     return PosListPage(
@@ -80,7 +81,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       const SizedBox(height: AppSpacing.lg),
 
                       // Revenue by Plan
-                      const Text('Revenue by Plan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminRevenueByPlan, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (byPlan.isEmpty)
                         PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoPlanDataAvailable)),

@@ -135,7 +135,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 PosTextField(
                   controller: amountController,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  label: 'Amount ()',
+                  label: l10n.paymentsAmountSar,
                   autofocus: true,
                 ),
                 AppSpacing.gapH16,

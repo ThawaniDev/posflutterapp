@@ -43,41 +43,49 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
     final l10n = AppLocalizations.of(context)!;
     final chatListState = ref.watch(aiChatListProvider);
     final isMobile = context.isPhone;
+    final quickActions = <_QuickActionItem>[
+      _QuickActionItem(
+        icon: Icons.add_comment_outlined,
+        label: l10n.wameedAINewChat,
+        onTap: _openNewChat,
+        iconColor: AppColors.primary,
+      ),
+      _QuickActionItem(
+        icon: Icons.receipt_outlined,
+        label: l10n.wameedAIBilling,
+        onTap: () => context.push(Routes.wameedAIBilling),
+      ),
+      _QuickActionItem(
+        icon: Icons.bar_chart_outlined,
+        label: l10n.wameedAIUsage,
+        onTap: () => context.push(Routes.wameedAIUsage),
+      ),
+      _QuickActionItem(
+        icon: Icons.settings_outlined,
+        label: l10n.wameedAISettings,
+        onTap: () => context.push(Routes.wameedAISettings),
+      ),
+      _QuickActionItem(
+        icon: Icons.refresh,
+        label: l10n.commonRefresh,
+        onTap: () {
+          ref.read(aiChatListProvider.notifier).load();
+          ref.read(aiUsageProvider.notifier).load();
+        },
+      ),
+    ];
 
     return PosListPage(
       title: l10n.wameedAI,
       showSearch: false,
-      actions: [
-        PosButton.icon(
-          icon: Icons.receipt_outlined,
-          onPressed: () => context.push(Routes.wameedAIBilling),
-          tooltip: l10n.wameedAIBilling,
-        ),
-        PosButton.icon(
-          icon: Icons.bar_chart_outlined,
-          onPressed: () => context.push(Routes.wameedAIUsage),
-          tooltip: l10n.wameedAIUsage,
-        ),
-        PosButton.icon(
-          icon: Icons.settings_outlined,
-          onPressed: () => context.push(Routes.wameedAISettings),
-          tooltip: l10n.wameedAISettings,
-        ),
-        PosButton.icon(
-          icon: Icons.refresh,
-          onPressed: () {
-            ref.read(aiChatListProvider.notifier).load();
-            ref.read(aiUsageProvider.notifier).load();
-          },
-          tooltip: l10n.commonRefresh,
-        ),
-        PosButton(label: l10n.wameedAINewChat, icon: Icons.add, size: PosButtonSize.sm, onPressed: _openNewChat),
-      ],
       child: SingleChildScrollView(
         padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _buildQuickActionGrid(quickActions, isMobile),
+            AppSpacing.gapH16,
+
             // Welcome card
             Container(
               width: double.infinity,
@@ -133,6 +141,63 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildQuickActionGrid(List<_QuickActionItem> actions, bool isMobile) {
+    final theme = Theme.of(context);
+    final fallbackIconColor = theme.colorScheme.primary;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const spacing = 12.0;
+        final crossAxisCount = switch (constraints.maxWidth) {
+          >= 1200 => 5,
+          >= 900 => 4,
+          >= 650 => 3,
+          _ => isMobile ? 2 : 3,
+        };
+        final itemWidth = (constraints.maxWidth - ((crossAxisCount - 1) * spacing)) / crossAxisCount;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: actions
+              .map((action) {
+                final iconColor = action.iconColor ?? fallbackIconColor;
+                return SizedBox(
+                  width: itemWidth,
+                  child: PosCard(
+                    onTap: action.onTap,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: iconColor.withValues(alpha: 0.14),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(action.icon, size: 18, color: iconColor),
+                        ),
+                        AppSpacing.gapW8,
+                        Expanded(
+                          child: Text(
+                            action.label,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              })
+              .toList(growable: false),
+        );
+      },
     );
   }
 
@@ -298,4 +363,13 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
       ),
     ).then((_) => controller.dispose());
   }
+}
+
+class _QuickActionItem {
+  const _QuickActionItem({required this.icon, required this.label, required this.onTap, this.iconColor});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final Color? iconColor;
 }

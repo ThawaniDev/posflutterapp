@@ -26,6 +26,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsPaymentDetailProvider);
 
     return PosListPage(
@@ -56,7 +57,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Payment Information', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.adminPaymentInformation, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const Divider(),
                   _infoRow('ID', item['id']),
                   _infoRow('Transaction ID', item['transaction_id']),

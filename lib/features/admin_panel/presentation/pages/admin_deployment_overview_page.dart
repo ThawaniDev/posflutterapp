@@ -119,7 +119,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                   ),
                   Text('Rollout: ${activeRelease['rollout_percentage']}%', style: const TextStyle(color: AppColors.textSecondary)),
                 ] else
-                  const Text('No active release', style: TextStyle(color: AppColors.textSecondary)),
+                  Text(l10n.adminNoActiveRelease, style: TextStyle(color: AppColors.textSecondary)),
               ],
             ),
           ),

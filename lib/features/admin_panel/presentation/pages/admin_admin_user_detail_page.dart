@@ -26,6 +26,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(adminUserDetailProvider);
 
     return PosListPage(
@@ -79,7 +80,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Account Info', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.adminAccountInfo, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH16,
                   _infoRow('Phone', admin['phone']?.toString() ?? 'N/A'),
                   _infoRow('Status', isActive ? 'Active' : 'Inactive'),
@@ -103,7 +104,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                   Text(l10n.roles, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   if (roles.isEmpty)
-                    const Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
+                    Text(l10n.adminNoRolesAssigned, style: TextStyle(color: AppColors.textSecondary))
                   else
                     ...roles.map((r) {
                       final role = r as Map<String, dynamic>;

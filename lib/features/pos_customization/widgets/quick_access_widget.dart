@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class QuickAccessWidget extends ConsumerWidget {
   const QuickAccessWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(quickAccessProvider);
     final theme = Theme.of(context);
 
@@ -39,7 +41,7 @@ class QuickAccessWidget extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Grid Layout', style: theme.textTheme.titleMedium),
+                          Text(l10n.posCustGridLayout, style: theme.textTheme.titleMedium),
                           AppSpacing.gapH4,
                           Text('${s.gridRows} rows × ${s.gridCols} cols', style: theme.textTheme.bodyLarge),
                         ],
@@ -54,7 +56,7 @@ class QuickAccessWidget extends ConsumerWidget {
             Text('Buttons (${s.buttons.length})', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
             AppSpacing.gapH8,
             if (s.buttons.isEmpty)
-              Center(child: Text('No quick access buttons configured', style: theme.textTheme.bodyMedium))
+              Center(child: Text(l10n.posCustNoQuickAccess, style: theme.textTheme.bodyMedium))
             else
               GridView.builder(
                 shrinkWrap: true,

@@ -138,6 +138,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final onboardingState = ref.watch(onboardingProvider);
     final businessTypesState = ref.watch(businessTypesProvider);
 
@@ -542,7 +543,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
           child: const Icon(Icons.check_circle_outline, size: 56, color: AppColors.success),
         ),
         const SizedBox(height: AppSpacing.xl),
-        Text("You're all set!", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+        Text(l10n.onboardingAllSet, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: AppSpacing.md),
         Text(
           'You completed $completedCount of ${_steps.length} setup steps. '

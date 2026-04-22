@@ -136,7 +136,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     const SizedBox(height: AppSpacing.lg),
 
                     // Revenue by Status
-                    Text('Revenue by Status', style: Theme.of(context).textTheme.titleMedium),
+                    Text(l10n.adminRevenueByStatus, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: AppSpacing.sm),
                     ...state.revenueByStatus.map(
                       (item) => PosCard(

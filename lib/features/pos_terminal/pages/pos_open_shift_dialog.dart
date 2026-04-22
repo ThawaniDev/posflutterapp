@@ -84,10 +84,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
         insetPadding: const EdgeInsets.all(24),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 520),
-          child: Padding(
-            padding: AppSpacing.paddingAll24,
-            child: _buildExistingOpenSessionsBody(existingOpen),
-          ),
+          child: Padding(padding: AppSpacing.paddingAll24, child: _buildExistingOpenSessionsBody(existingOpen)),
         ),
       );
     }
@@ -119,9 +116,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                         Text(AppLocalizations.of(context)!.posOpenShift, style: AppTypography.headlineSmall),
                         Text(
                           AppLocalizations.of(context)!.posOpenShiftDescription,
-                          style: AppTypography.bodySmall.copyWith(
-                            color: AppColors.mutedFor(context),
-                          ),
+                          style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                         ),
                       ],
                     ),
@@ -235,10 +230,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
             Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.12),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), shape: BoxShape.circle),
               child: const Icon(Icons.lock_clock_rounded, color: AppColors.warning, size: 24),
             ),
             AppSpacing.gapW16,
@@ -250,9 +242,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                   Text(
                     'You can only be linked to one register at a time. '
                     'Close or resume your existing shift first.',
-                    style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.mutedFor(context),
-                    ),
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                   ),
                 ],
               ),

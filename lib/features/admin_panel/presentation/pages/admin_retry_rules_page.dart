@@ -77,11 +77,14 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Row(
+                            Row(
                               children: [
-                                Icon(Icons.settings, color: AppColors.primary),
-                                SizedBox(width: 8),
-                                Text('Retry Configuration', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                const Icon(Icons.settings, color: AppColors.primary),
+                                const SizedBox(width: 8),
+                                Text(
+                                  l10n.adminRetryConfiguration,
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
                               ],
                             ),
                             const SizedBox(height: AppSpacing.md),

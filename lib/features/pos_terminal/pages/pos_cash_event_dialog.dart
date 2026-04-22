@@ -98,18 +98,12 @@ class _PosCashEventDialogState extends ConsumerState<PosCashEventDialog> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$'))],
               autofocus: true,
-              decoration: InputDecoration(
-                labelText: l.posAmountSar,
-                prefixIcon: const Icon(Icons.payments_outlined),
-              ),
+              decoration: InputDecoration(labelText: l.posAmountSar, prefixIcon: const Icon(Icons.payments_outlined)),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: _reasonController,
-              decoration: InputDecoration(
-                labelText: l.posReason,
-                hintText: _isCashIn ? 'Owner top-up' : 'Bank deposit',
-              ),
+              decoration: InputDecoration(labelText: l.posReason, hintText: _isCashIn ? 'Owner top-up' : 'Bank deposit'),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
@@ -126,10 +120,7 @@ class _PosCashEventDialogState extends ConsumerState<PosCashEventDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: _saving ? null : () => Navigator.of(context).pop(),
-          child: Text(l.cancel),
-        ),
+        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(), child: Text(l.cancel)),
         FilledButton(
           onPressed: _saving ? null : _submit,
           child: _saving

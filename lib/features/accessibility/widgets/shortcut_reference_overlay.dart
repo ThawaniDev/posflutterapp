@@ -109,11 +109,11 @@ class ShortcutReferenceOverlay extends StatelessWidget {
       _ShortcutGroupData(
         title: l10n.accessibilityShortcutsNavigation,
         shortcuts: [
-          _ShortcutEntry(action: 'nav_screens', label: 'Alt+1-9', description: l10n.accessibilityNavScreens),
-          _ShortcutEntry(action: 'nav_tab', label: 'Tab / Shift+Tab', description: l10n.accessibilityNavTab),
-          _ShortcutEntry(action: 'nav_cancel', label: 'Esc', description: l10n.accessibilityNavCancel),
-          _ShortcutEntry(action: 'nav_confirm', label: 'Enter', description: l10n.accessibilityNavConfirm),
-          _ShortcutEntry(action: 'shortcut_ref', label: 'Ctrl+/', description: l10n.accessibilityShortcutReference),
+          _ShortcutEntry(action: 'nav_screens', label: l10n.accessShortcutAlt19, description: l10n.accessibilityNavScreens),
+          _ShortcutEntry(action: 'nav_tab', label: l10n.accessShortcutTab, description: l10n.accessibilityNavTab),
+          _ShortcutEntry(action: 'nav_cancel', label: l10n.accessShortcutEsc, description: l10n.accessibilityNavCancel),
+          _ShortcutEntry(action: 'nav_confirm', label: l10n.accessShortcutEnter, description: l10n.accessibilityNavConfirm),
+          _ShortcutEntry(action: 'shortcut_ref', label: l10n.accessShortcutCtrlSlash, description: l10n.accessibilityShortcutReference),
         ],
       ),
     ];
@@ -143,6 +143,7 @@ class _ShortcutGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return PosCard(
       margin: const EdgeInsets.only(bottom: 16),

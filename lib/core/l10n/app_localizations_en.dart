@@ -7336,9 +7336,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appBarLanguage => 'Language';
 
   @override
-  String get appBarMore => 'More';
-
-  @override
   String get quickNavTitle => 'Quick Navigation';
 
   @override
@@ -15103,6 +15100,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pcNoPredefinedCategories => 'No predefined categories found';
 
   @override
+  String get predefinedNoCategoriesForBusiness =>
+      'No predefined categories are available for your business type';
+
+  @override
   String get pcCloneToMyStore => 'Clone to my store';
 
   @override
@@ -16004,4 +16005,125 @@ class AppLocalizationsEn extends AppLocalizations {
   String appReleaseReleasedAt(String date) {
     return 'Released $date';
   }
+
+  @override
+  String get updateRequired => 'Update Required';
+
+  @override
+  String updateRequiredVersion(String version) {
+    return 'Version $version or later is required to continue.';
+  }
+
+  @override
+  String get whatsNew => 'What\'s New';
+
+  @override
+  String get updateNow => 'Update Now';
+
+  @override
+  String get updateAvailable => 'Update Available';
+
+  @override
+  String updateAvailableVersion(String version) {
+    return 'Version $version is available.';
+  }
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'Arabic';
+
+  @override
+  String get languageBengali => 'Bengali';
+
+  @override
+  String get languageUrdu => 'Urdu';
+
+  @override
+  String get appBarMore => 'More';
+
+  @override
+  String get accessShortcutAlt19 => 'Alt + 1-9';
+
+  @override
+  String get accessShortcutTab => 'Tab';
+
+  @override
+  String get accessShortcutEsc => 'Esc';
+
+  @override
+  String get accessShortcutEnter => 'Enter';
+
+  @override
+  String get accessShortcutCtrlSlash => 'Ctrl + /';
+
+  @override
+  String get authLoggedOutSuccess => 'Logged out successfully';
+
+  @override
+  String get authLoggedOutAllDevices => 'Logged out from all devices';
+
+  @override
+  String get cgReviewedShort => 'Reviewed';
+
+  @override
+  String get catalogPhoneHint => '+968 XXXX XXXX';
+
+  @override
+  String get catalogVatNumberHint => 'SA29XXXX0000000000000000';
+
+  @override
+  String get paymentsAmountSar => 'Amount (SAR)';
+
+  @override
+  String get paymentsRedemptionAmount => 'Redemption Amount';
+
+  @override
+  String get posCustGridLayout => 'Grid Layout';
+
+  @override
+  String get posCustNoQuickAccess => 'No quick access buttons configured';
+
+  @override
+  String get predefinedCategoryCloned => 'Category cloned successfully';
+
+  @override
+  String get predefinedProductCloned => 'Product cloned successfully';
+
+  @override
+  String get predefinedAllProductsCloned => 'All products cloned successfully';
+
+  @override
+  String get promoFilterPromotions => 'Filter Promotions';
+
+  @override
+  String get providerPaymentInitiated => 'Payment initiated';
+
+  @override
+  String get providerEmailResent => 'Email resent successfully';
+
+  @override
+  String get subCurrent => 'Current: ';
+
+  @override
+  String get subRequired => 'Required: ';
+
+  @override
+  String get aiLast7Days => 'Last 7 Days';
+
+  @override
+  String get aiLast30Days => 'Last 30 Days';
+
+  @override
+  String get aiLast90Days => 'Last 90 Days';
+
+  @override
+  String get aiImageRequired => 'Image is required';
+
+  @override
+  String get zatcaEnterOtp => 'Enter 6-digit OTP';
 }

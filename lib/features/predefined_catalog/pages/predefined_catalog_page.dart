@@ -40,7 +40,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
     );
 
     if (confirmed == true && mounted) {
-      await ref.read(cloneProvider.notifier).cloneAll();
+      await ref.read(cloneProvider.notifier).cloneAll(l10n);
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
@@ -61,11 +61,11 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
       title: l10n.pcCloneCategory,
       message: l10n.pcCloneCategoryConfirm(category.name),
       confirmLabel: l10n.pcClone,
-      cancelLabel: 'Cancel',
+      cancelLabel: l10n.commonCancel,
     );
 
     if (confirmed == true && mounted) {
-      await ref.read(cloneProvider.notifier).cloneCategory(category.id);
+      await ref.read(cloneProvider.notifier).cloneCategory(l10n, category.id);
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
@@ -123,7 +123,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
         return PosEmptyState(
           icon: Icons.category_outlined,
           title: l10n.pcNoPredefinedCategories,
-          subtitle: 'No predefined categories available for your business type.',
+          subtitle: l10n.predefinedNoCategoriesForBusiness,
         );
       }
 
@@ -184,7 +184,6 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 // ─── Category Card Widget ──────────────────────────────────────
 
 class _CategoryCard extends StatelessWidget {
-
   const _CategoryCard({required this.category, required this.onTap, required this.onClone});
   final PredefinedCategory category;
   final VoidCallback onTap;

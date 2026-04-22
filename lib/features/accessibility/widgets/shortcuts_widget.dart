@@ -49,28 +49,28 @@ class ShortcutsWidget extends ConsumerWidget {
                   leading: const Icon(Icons.keyboard),
                   title: Text(l10n.accessibilityNavScreens),
                   trailing: Chip(
-                    label: Text('Alt+1-9', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                    label: Text(l10n.accessShortcutAlt19, style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
                   ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.keyboard),
                   title: Text(l10n.accessibilityNavTab),
                   trailing: Chip(
-                    label: Text('Tab / Shift+Tab', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                    label: Text(l10n.accessShortcutTab, style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
                   ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.keyboard),
                   title: Text(l10n.accessibilityNavCancel),
                   trailing: Chip(
-                    label: Text('Esc', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                    label: Text(l10n.accessShortcutEsc, style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
                   ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.keyboard),
                   title: Text(l10n.accessibilityNavConfirm),
                   trailing: Chip(
-                    label: Text('Enter', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                    label: Text(l10n.accessShortcutEnter, style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
                   ),
                 ),
               ],
@@ -103,6 +103,7 @@ class _ShortcutGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,6 +28,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final exportsState = ref.watch(accountingExportsProvider);
 
     final isLoading = exportsState is AccountingExportsInitial || exportsState is AccountingExportsLoading;
@@ -258,7 +259,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                   readOnly: true,
                 ),
                 AppSpacing.gapH16,
-                const Text('Export Types (optional)', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text(l10n.acctExportTypesOptional, style: TextStyle(fontWeight: FontWeight.w600)),
                 AppSpacing.gapH8,
                 ...allTypes.map(
                   (t) => CheckboxListTile(

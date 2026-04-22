@@ -94,7 +94,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                       child: PosTextField(
                         controller: phoneController,
                         label: l10n.supplierPhone,
-                        hint: '+966 XXXX XXXX',
+                        hint: l10n.catalogPhoneHint,
                         keyboardType: TextInputType.phone,
                       ),
                     ),
@@ -166,7 +166,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(controller: ibanController, label: l10n.supplierIban, hint: 'SA...'),
+                PosTextField(controller: ibanController, label: l10n.supplierIban, hint: l10n.catalogVatNumberHint),
                 const SizedBox(height: AppSpacing.md),
                 Text(l10n.supplierBusinessInfo, style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: AppSpacing.sm),

@@ -2858,7 +2858,6 @@
     }
   },
   "appBarLanguage": "ভাষা",
-  "appBarMore": "আরও",
   "quickNavTitle": "দ্রুত নেভিগেশন",
   "appBarTheme": "থিম",
   "appBarDarkMode": "ডার্ক মোড",
@@ -6030,6 +6029,7 @@
   "pcClone": "কপি",
   "pcBusinessTypeColon": "ব্যবসার ধরন:",
   "pcNoPredefinedCategories": "কোনো পূর্বনির্ধারিত ক্যাটাগরি পাওয়া যায়নি",
+  "predefinedNoCategoriesForBusiness": "আপনার ব্যবসার ধরনের জন্য কোনো পূর্বনির্ধারিত ক্যাটাগরি পাওয়া যায়নি",
   "pcCloneToMyStore": "আমার দোকানে কপি",
   "pcCloneProduct": "পণ্য কপি",
   "pcNoPredefinedProducts": "কোনো পূর্বনির্ধারিত পণ্য পাওয়া যায়নি",
@@ -6813,5 +6813,54 @@
         "type": "String"
       }
     }
-  }
+  },
+  "updateRequired": "আপডেট প্রয়োজন",
+  "updateRequiredVersion": "চালিয়ে যেতে {version} বা তার পরবর্তী সংস্করণ প্রয়োজন।",
+  "@updateRequiredVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "whatsNew": "নতুন কী আছে",
+  "updateNow": "এখনই আপডেট করুন",
+  "updateAvailable": "আপডেট পাওয়া গেছে",
+  "updateAvailableVersion": "{version} সংস্করণ পাওয়া গেছে।",
+  "@updateAvailableVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "updateLater": "পরে",
+  "languageEnglish": "ইংরেজি",
+  "languageArabic": "আরবি",
+  "languageBengali": "বাংলা",
+  "languageUrdu": "উর্দু",
+  "appBarMore": "আরো",
+  "accessShortcutAlt19": "Alt + 1-9",
+  "accessShortcutTab": "Tab",
+  "accessShortcutEsc": "Esc",
+  "accessShortcutEnter": "Enter",
+  "accessShortcutCtrlSlash": "Ctrl + /",
+  "authLoggedOutSuccess": "সফলভাবে লগ আউট হয়েছে",
+  "authLoggedOutAllDevices": "সকল ডিভাইস থেকে লগ আউট হয়েছে",
+  "cgReviewedShort": "পর্যালোচিত",
+  "catalogPhoneHint": "+968 XXXX XXXX",
+  "catalogVatNumberHint": "SA29XXXX0000000000000000",
+  "paymentsAmountSar": "পরিমাণ (SAR)",
+  "paymentsRedemptionAmount": "রিডেম্পশন পরিমাণ",
+  "posCustGridLayout": "গ্রিড লেআউট",
+  "posCustNoQuickAccess": "কোনো দ্রুত অ্যাক্সেস বাটন কনফিগার করা হয়নি",
+  "predefinedCategoryCloned": "ক্যাটাগরি সফলভাবে ক্লোন করা হয়েছে",
+  "predefinedProductCloned": "পণ্য সফলভাবে ক্লোন করা হয়েছে",
+  "predefinedAllProductsCloned": "সকল পণ্য সফলভাবে ক্লোন করা হয়েছে",
+  "promoFilterPromotions": "প্রমোশন ফিল্টার",
+  "providerPaymentInitiated": "পেমেন্ট শুরু হয়েছে",
+  "providerEmailResent": "ইমেইল পুনরায় পাঠানো হয়েছে",
+  "subCurrent": "বর্তমান: ",
+  "subRequired": "প্রয়োজন: ",
+  "aiLast7Days": "গত ৭ দিন",
+  "aiLast30Days": "গত ৩০ দিন",
+  "aiLast90Days": "গত ৯০ দিন",
+  "aiImageRequired": "ছবি প্রয়োজন",
+  "zatcaEnterOtp": "৬ সংখ্যার OTP লিখুন"
 }

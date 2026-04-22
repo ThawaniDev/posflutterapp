@@ -199,7 +199,7 @@ class _PaymentDetailContent extends ConsumerWidget {
               icon: Icons.email_outlined,
               variant: PosButtonVariant.outline,
               onPressed: () {
-                ref.read(providerPaymentActionProvider.notifier).resendEmail(payment.id);
+                ref.read(providerPaymentActionProvider.notifier).resendEmail(l10n, payment.id);
               },
             ),
             AppSpacing.verticalLg,

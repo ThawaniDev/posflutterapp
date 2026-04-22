@@ -28,6 +28,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final connectionState = ref.watch(accountingConnectionProvider);
     final actionState = ref.watch(accountingActionProvider);
 
@@ -231,7 +232,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Select Provider', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.acctSelectProvider, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   ...providers.map(
                     (p) => RadioListTile<String>(

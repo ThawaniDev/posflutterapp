@@ -136,7 +136,7 @@ class CategoryTreeTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsetsDirectional.only(end: AppSpacing.xs),
                   child: Tooltip(
-                    message: 'Sort order',
+                    message: l10n.catalogSortOrder,
                     child: Text(
                       '#${category.sortOrder}',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(color: mutedColor),

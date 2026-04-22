@@ -37,6 +37,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsFeaturesProvider);
 
     return PosListPage(
@@ -53,7 +54,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                 child: ListView(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   children: [
-                    const Text('Feature Adoption', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(l10n.adminFeatureAdoption, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     if (features.isEmpty)
                       PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoFeatureDataAvailable)),
@@ -105,7 +106,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
 
                     if (trend.isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.lg),
-                      const Text('Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.adminTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...trend.map(
                         (t) => PosCard(

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/errors/app_exception.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/features/auth/models/user.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
@@ -26,7 +27,6 @@ final isAuthenticatedProvider = Provider<bool>((ref) {
 });
 
 class AuthNotifier extends StateNotifier<AuthState> {
-
   AuthNotifier(this._repository, this._ref) : super(const AuthInitial()) {
     checkStoredSession();
   }
@@ -149,17 +149,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   // ─── Logout ────────────────────────────────────────────────────
 
-  Future<void> logout() async {
+  Future<void> logout(AppLocalizations l10n) async {
     // Remove FCM token before logout so user stops receiving push notifications
     await _ref.read(pushNotificationServiceProvider).unregisterToken();
     await _repository.logout();
-    state = const AuthUnauthenticated(message: 'Logged out successfully.');
+    state = AuthUnauthenticated(message: l10n.authLoggedOutSuccess);
   }
 
-  Future<void> logoutAll() async {
+  Future<void> logoutAll(AppLocalizations l10n) async {
     await _ref.read(pushNotificationServiceProvider).unregisterToken();
     await _repository.logoutAll();
-    state = const AuthUnauthenticated(message: 'Logged out from all devices.');
+    state = AuthUnauthenticated(message: l10n.authLoggedOutAllDevices);
   }
 
   // ─── Helpers ───────────────────────────────────────────────────

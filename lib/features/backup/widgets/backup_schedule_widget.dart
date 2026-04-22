@@ -33,6 +33,7 @@ class BackupScheduleWidget extends ConsumerWidget {
   }
 
   Widget _buildSchedule(BuildContext context, Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final d = data['data'] as Map<String, dynamic>? ?? data;
     final enabled = d['auto_backup_enabled'] as bool? ?? false;
     final frequency = d['frequency'] as String? ?? 'daily';
@@ -50,7 +51,7 @@ class BackupScheduleWidget extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Auto-Backup Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(l10n.backupAutoSettings, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH16,
                   _row(context, Icons.cloud_upload, 'Auto-Backup', enabled ? 'Enabled' : 'Disabled'),
                   _row(context, Icons.schedule, 'Frequency', frequency[0].toUpperCase() + frequency.substring(1)),

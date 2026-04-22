@@ -12,7 +12,6 @@ int _toInt(dynamic v) {
 }
 
 class LlmModel {
-
   const LlmModel({
     required this.id,
     required this.provider,
@@ -64,11 +63,10 @@ class LlmModel {
 }
 
 class AIChat {
-
   const AIChat({
     required this.id,
     required this.organizationId,
-    required this.storeId,
+    this.storeId,
     required this.userId,
     required this.title,
     this.llmModelId,
@@ -83,7 +81,7 @@ class AIChat {
   factory AIChat.fromJson(Map<String, dynamic> json) => AIChat(
     id: json['id'] as String,
     organizationId: json['organization_id'] as String,
-    storeId: json['store_id'] as String,
+    storeId: json['store_id'] as String?,
     userId: json['user_id'] as String,
     title: json['title'] as String? ?? 'New Chat',
     llmModelId: json['llm_model_id'] as String?,
@@ -96,7 +94,7 @@ class AIChat {
   );
   final String id;
   final String organizationId;
-  final String storeId;
+  final String? storeId;
   final String userId;
   final String title;
   final String? llmModelId;
@@ -124,7 +122,6 @@ class AIChat {
 }
 
 class AIChatMessage {
-
   const AIChatMessage({
     required this.id,
     required this.chatId,
@@ -175,7 +172,6 @@ class AIChatMessage {
 }
 
 class AIFeatureCard {
-
   const AIFeatureCard({
     required this.id,
     required this.slug,

@@ -311,15 +311,16 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   }
 
   void _showClockDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => _ClockDialog(
         onClock: (staffId, storeId, isClockIn, notes) {
           Navigator.pop(ctx);
           if (isClockIn) {
-            ref.read(clockActionProvider.notifier).clockIn(staffUserId: staffId, storeId: storeId, notes: notes);
+            ref.read(clockActionProvider.notifier).clockIn(l10n, staffUserId: staffId, storeId: storeId, notes: notes);
           } else {
-            ref.read(clockActionProvider.notifier).clockOut(staffUserId: staffId, storeId: storeId, notes: notes);
+            ref.read(clockActionProvider.notifier).clockOut(l10n, staffUserId: staffId, storeId: storeId, notes: notes);
           }
         },
       ),
@@ -327,11 +328,13 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   }
 
   void _startBreak(AttendanceRecord record) {
-    ref.read(clockActionProvider.notifier).startBreak(attendanceRecordId: record.id);
+    final l10n = AppLocalizations.of(context)!;
+    ref.read(clockActionProvider.notifier).startBreak(l10n, attendanceRecordId: record.id);
   }
 
   void _endBreak(AttendanceRecord record) {
-    ref.read(clockActionProvider.notifier).endBreak(attendanceRecordId: record.id);
+    final l10n = AppLocalizations.of(context)!;
+    ref.read(clockActionProvider.notifier).endBreak(l10n, attendanceRecordId: record.id);
   }
 }
 
@@ -340,7 +343,6 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _AttendanceCard extends StatefulWidget {
-
   const _AttendanceCard({
     required this.record,
     required this.staffList,
@@ -656,7 +658,6 @@ class _AttendanceCardState extends State<_AttendanceCard> {
 // ═══════════════════════════════════════════════════════════════
 
 class _InfoChip extends StatelessWidget {
-
   const _InfoChip({required this.icon, required this.label, this.color});
   final IconData icon;
   final String label;
@@ -681,7 +682,6 @@ class _InfoChip extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _ClockDialog extends ConsumerStatefulWidget {
-
   const _ClockDialog({required this.onClock});
   final void Function(String staffId, String storeId, bool isClockIn, String? notes) onClock;
 

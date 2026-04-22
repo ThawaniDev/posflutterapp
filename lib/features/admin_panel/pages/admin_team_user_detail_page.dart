@@ -97,7 +97,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                             const SizedBox(width: 8),
                             const Icon(Icons.verified_user, size: 16, color: AppColors.success),
                             const SizedBox(width: 4),
-                            Text('2FA', style: theme.textTheme.labelSmall),
+                            Text(l10n.admin2FA, style: theme.textTheme.labelSmall),
                           ],
                         ],
                       ),

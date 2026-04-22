@@ -8,11 +8,7 @@ import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_reposi
 /// X-report = mid-shift snapshot; Z-report = end-of-shift (also flips
 /// `z_report_printed` on the session). Both render the same payload.
 class PosShiftReportDialog extends ConsumerStatefulWidget {
-  const PosShiftReportDialog({
-    required this.sessionId,
-    required this.isZReport,
-    super.key,
-  });
+  const PosShiftReportDialog({required this.sessionId, required this.isZReport, super.key});
 
   final String sessionId;
   final bool isZReport;
@@ -106,11 +102,7 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
       ),
       actions: [
         TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close')),
-        FilledButton.icon(
-          onPressed: _loading ? null : _load,
-          icon: const Icon(Icons.refresh),
-          label: const Text('Refresh'),
-        ),
+        FilledButton.icon(onPressed: _loading ? null : _load, icon: const Icon(Icons.refresh), label: const Text('Refresh')),
       ],
     );
   }
@@ -148,10 +140,7 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
             _section('Payment Methods', [
               ...breakdown.map((b) {
                 final m = b as Map;
-                return _row(
-                  '${m['method']}',
-                  '${_money(m['sales_total'])} / -${_money(m['refund_total'])}',
-                );
+                return _row('${m['method']}', '${_money(m['sales_total'])} / -${_money(m['refund_total'])}');
               }),
             ]),
           if (events.isNotEmpty)
@@ -163,12 +152,7 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          '$sign ${_money(m['amount'])}  ${m['reason'] ?? ''}',
-                          style: AppTypography.bodySmall,
-                        ),
-                      ),
+                      Expanded(child: Text('$sign ${_money(m['amount'])}  ${m['reason'] ?? ''}', style: AppTypography.bodySmall)),
                     ],
                   ),
                 );

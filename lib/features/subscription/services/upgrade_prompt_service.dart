@@ -145,7 +145,7 @@ class _FeatureGateDialog extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Feature Locked', style: AppTypography.titleMedium),
+                Text(l10n.subFeatureLocked, style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
                 Text(featureName, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
               ],
@@ -173,7 +173,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                   if (currentPlanName != null)
                     Row(
                       children: [
-                        Text('Current: ', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
+                        Text(l10n.subCurrent, style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
                         Text(currentPlanName!, style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700)),
                       ],
                     ),
@@ -181,7 +181,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                     AppSpacing.gapH4,
                     Row(
                       children: [
-                        Text('Required: ', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
+                        Text(l10n.subRequired, style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
                         Text(
                           requiredPlanName!,
                           style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
@@ -196,7 +196,7 @@ class _FeatureGateDialog extends ConsumerWidget {
           // Mini plan comparison if plans are loaded
           if (plans.length >= 2) ...[
             AppSpacing.gapH16,
-            const Text('Available Plans', style: AppTypography.labelMedium),
+            Text(l10n.subAvailablePlans, style: AppTypography.labelMedium),
             AppSpacing.gapH8,
             ...plans
                 .take(3)
@@ -325,7 +325,7 @@ class _LimitReachedDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        PosButton(onPressed: () => Navigator.pop(context, false), variant: PosButtonVariant.ghost, label: 'Not Now'),
+        PosButton(onPressed: () => Navigator.pop(context, false), variant: PosButtonVariant.ghost, label: l10n.subNotNow),
         PosButton(
           onPressed: () {
             Navigator.pop(context, true);

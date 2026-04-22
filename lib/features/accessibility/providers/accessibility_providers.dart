@@ -11,18 +11,24 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
   AccessibilityPrefsNotifier(this._repo) : super(const PrefsInitial());
   final AccessibilityRepository _repo;
 
+  double _parseDoubleOrDefault(dynamic value, double fallback) {
+    if (value == null) return fallback;
+    if (value is num) return value.toDouble();
+    return double.tryParse(value.toString()) ?? fallback;
+  }
+
   Future<void> load() async {
     if (state is! PrefsLoaded) state = const PrefsLoading();
     try {
       final res = await _repo.getPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
+        fontScale: _parseDoubleOrDefault(d['font_scale'], 1.0),
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,
         audioFeedback: d['audio_feedback'] != false,
-        audioVolume: (d['audio_volume'] != null ? double.tryParse(d['audio_volume'].toString()) : null) ?? 0.7,
+        audioVolume: _parseDoubleOrDefault(d['audio_volume'], 0.7),
         largeTouchTargets: d['large_touch_targets'] == true,
         visibleFocus: d['visible_focus'] != false,
         screenReaderHints: d['screen_reader_hints'] != false,
@@ -40,12 +46,12 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
       final res = await _repo.updatePreferences(data);
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
+        fontScale: _parseDoubleOrDefault(d['font_scale'], 1.0),
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,
         audioFeedback: d['audio_feedback'] != false,
-        audioVolume: (d['audio_volume'] != null ? double.tryParse(d['audio_volume'].toString()) : null) ?? 0.7,
+        audioVolume: _parseDoubleOrDefault(d['audio_volume'], 0.7),
         largeTouchTargets: d['large_touch_targets'] == true,
         visibleFocus: d['visible_focus'] != false,
         screenReaderHints: d['screen_reader_hints'] != false,
@@ -63,12 +69,12 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
       final res = await _repo.resetPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
+        fontScale: _parseDoubleOrDefault(d['font_scale'], 1.0),
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,
         audioFeedback: d['audio_feedback'] != false,
-        audioVolume: (d['audio_volume'] != null ? double.tryParse(d['audio_volume'].toString()) : null) ?? 0.7,
+        audioVolume: _parseDoubleOrDefault(d['audio_volume'], 0.7),
         largeTouchTargets: d['large_touch_targets'] == true,
         visibleFocus: d['visible_focus'] != false,
         screenReaderHints: d['screen_reader_hints'] != false,

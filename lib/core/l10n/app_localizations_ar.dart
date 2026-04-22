@@ -7308,9 +7308,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appBarLanguage => 'اللغة';
 
   @override
-  String get appBarMore => 'المزيد';
-
-  @override
   String get quickNavTitle => 'التنقل السريع';
 
   @override
@@ -15047,6 +15044,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pcNoPredefinedCategories => 'لم يتم العثور على فئات محددة مسبقاً';
 
   @override
+  String get predefinedNoCategoriesForBusiness =>
+      'لا توجد فئات محددة مسبقاً متاحة لنوع عملك';
+
+  @override
   String get pcCloneToMyStore => 'استنساخ إلى متجري';
 
   @override
@@ -15947,4 +15948,125 @@ class AppLocalizationsAr extends AppLocalizations {
   String appReleaseReleasedAt(String date) {
     return 'صدر بتاريخ $date';
   }
+
+  @override
+  String get updateRequired => 'تحديث مطلوب';
+
+  @override
+  String updateRequiredVersion(String version) {
+    return 'الإصدار $version أو أحدث مطلوب للمتابعة.';
+  }
+
+  @override
+  String get whatsNew => 'ما الجديد';
+
+  @override
+  String get updateNow => 'تحديث الآن';
+
+  @override
+  String get updateAvailable => 'تحديث متاح';
+
+  @override
+  String updateAvailableVersion(String version) {
+    return 'الإصدار $version متاح.';
+  }
+
+  @override
+  String get updateLater => 'لاحقاً';
+
+  @override
+  String get languageEnglish => 'الإنجليزية';
+
+  @override
+  String get languageArabic => 'العربية';
+
+  @override
+  String get languageBengali => 'البنغالية';
+
+  @override
+  String get languageUrdu => 'الأردية';
+
+  @override
+  String get appBarMore => 'المزيد';
+
+  @override
+  String get accessShortcutAlt19 => 'Alt + 1-9';
+
+  @override
+  String get accessShortcutTab => 'Tab';
+
+  @override
+  String get accessShortcutEsc => 'Esc';
+
+  @override
+  String get accessShortcutEnter => 'Enter';
+
+  @override
+  String get accessShortcutCtrlSlash => 'Ctrl + /';
+
+  @override
+  String get authLoggedOutSuccess => 'تم تسجيل الخروج بنجاح';
+
+  @override
+  String get authLoggedOutAllDevices => 'تم تسجيل الخروج من جميع الأجهزة';
+
+  @override
+  String get cgReviewedShort => 'تمت المراجعة';
+
+  @override
+  String get catalogPhoneHint => '+968 XXXX XXXX';
+
+  @override
+  String get catalogVatNumberHint => 'SA29XXXX0000000000000000';
+
+  @override
+  String get paymentsAmountSar => 'المبلغ (ر.س)';
+
+  @override
+  String get paymentsRedemptionAmount => 'مبلغ الاسترداد';
+
+  @override
+  String get posCustGridLayout => 'تخطيط الشبكة';
+
+  @override
+  String get posCustNoQuickAccess => 'لم يتم تكوين أزرار الوصول السريع';
+
+  @override
+  String get predefinedCategoryCloned => 'تم استنساخ الفئة بنجاح';
+
+  @override
+  String get predefinedProductCloned => 'تم استنساخ المنتج بنجاح';
+
+  @override
+  String get predefinedAllProductsCloned => 'تم استنساخ جميع المنتجات بنجاح';
+
+  @override
+  String get promoFilterPromotions => 'تصفية العروض الترويجية';
+
+  @override
+  String get providerPaymentInitiated => 'تم بدء الدفع';
+
+  @override
+  String get providerEmailResent => 'تمت إعادة إرسال البريد الإلكتروني بنجاح';
+
+  @override
+  String get subCurrent => 'الحالي: ';
+
+  @override
+  String get subRequired => 'المطلوب: ';
+
+  @override
+  String get aiLast7Days => 'آخر 7 أيام';
+
+  @override
+  String get aiLast30Days => 'آخر 30 يوم';
+
+  @override
+  String get aiLast90Days => 'آخر 90 يوم';
+
+  @override
+  String get aiImageRequired => 'الصورة مطلوبة';
+
+  @override
+  String get zatcaEnterOtp => 'أدخل رمز OTP المكون من 6 أرقام';
 }

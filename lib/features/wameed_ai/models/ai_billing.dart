@@ -1,23 +1,33 @@
 class AIBillingSummary {
-
-  const AIBillingSummary({required this.config, required this.currentMonth, this.recentInvoices = const []});
+  const AIBillingSummary({
+    this.scope = 'store',
+    this.config,
+    required this.currentMonth,
+    this.unpaidTotalUsd = 0,
+    this.recentInvoices = const [],
+  });
 
   factory AIBillingSummary.fromJson(Map<String, dynamic> json) {
     return AIBillingSummary(
-      config: AIBillingConfig.fromJson(json['config'] as Map<String, dynamic>),
+      scope: json['scope'] as String? ?? 'store',
+      config: json['config'] is Map<String, dynamic> ? AIBillingConfig.fromJson(json['config'] as Map<String, dynamic>) : null,
       currentMonth: AIBillingCurrentMonth.fromJson(json['current_month'] as Map<String, dynamic>),
+      unpaidTotalUsd: (json['unpaid_total_usd'] as num?)?.toDouble() ?? 0,
       recentInvoices: json['recent_invoices'] != null
           ? (json['recent_invoices'] as List).map((e) => AIBillingInvoicePreview.fromJson(e as Map<String, dynamic>)).toList()
           : const [],
     );
   }
-  final AIBillingConfig config;
+  final String scope; // 'store' | 'organization'
+  final AIBillingConfig? config;
   final AIBillingCurrentMonth currentMonth;
+  final double unpaidTotalUsd;
   final List<AIBillingInvoicePreview> recentInvoices;
+
+  bool get isOrganization => scope == 'organization';
 }
 
 class AIBillingConfig {
-
   const AIBillingConfig({
     this.isAiEnabled = true,
     this.monthlyLimitUsd = 0,
@@ -43,7 +53,6 @@ class AIBillingConfig {
 }
 
 class AIBillingCurrentMonth {
-
   const AIBillingCurrentMonth({
     required this.year,
     required this.month,
@@ -53,6 +62,7 @@ class AIBillingCurrentMonth {
     this.limitUsd = 0,
     this.limitPercentage = 0,
     this.byFeature = const [],
+    this.byStore = const [],
   });
 
   factory AIBillingCurrentMonth.fromJson(Map<String, dynamic> json) {
@@ -67,6 +77,9 @@ class AIBillingCurrentMonth {
       byFeature: json['by_feature'] != null
           ? (json['by_feature'] as List).map((e) => AIBillingFeatureUsage.fromJson(e as Map<String, dynamic>)).toList()
           : const [],
+      byStore: json['by_store'] != null
+          ? (json['by_store'] as List).map((e) => AIBillingStoreUsage.fromJson(e as Map<String, dynamic>)).toList()
+          : const [],
     );
   }
   final int year;
@@ -77,10 +90,28 @@ class AIBillingCurrentMonth {
   final double limitUsd;
   final double limitPercentage;
   final List<AIBillingFeatureUsage> byFeature;
+  final List<AIBillingStoreUsage> byStore;
+}
+
+class AIBillingStoreUsage {
+  const AIBillingStoreUsage({this.storeId, required this.storeName, this.requestCount = 0, this.billedCostUsd = 0});
+
+  factory AIBillingStoreUsage.fromJson(Map<String, dynamic> json) {
+    return AIBillingStoreUsage(
+      storeId: json['store_id'] as String?,
+      storeName: json['store_name'] as String? ?? 'Unknown',
+      requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
+      billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
+    );
+  }
+
+  final String? storeId;
+  final String storeName;
+  final int requestCount;
+  final double billedCostUsd;
 }
 
 class AIBillingFeatureUsage {
-
   const AIBillingFeatureUsage({required this.featureSlug, this.requestCount = 0, this.totalTokens = 0, this.billedCostUsd = 0});
 
   factory AIBillingFeatureUsage.fromJson(Map<String, dynamic> json) {
@@ -98,7 +129,6 @@ class AIBillingFeatureUsage {
 }
 
 class AIBillingInvoicePreview {
-
   const AIBillingInvoicePreview({
     required this.id,
     required this.invoiceNumber,
@@ -108,6 +138,9 @@ class AIBillingInvoicePreview {
     required this.status,
     required this.dueDate,
     this.paidAt,
+    this.storeId,
+    this.storeName,
+    this.scope = 'store',
   });
 
   factory AIBillingInvoicePreview.fromJson(Map<String, dynamic> json) {
@@ -120,6 +153,9 @@ class AIBillingInvoicePreview {
       status: json['status'] as String,
       dueDate: json['due_date'] as String,
       paidAt: json['paid_at'] as String?,
+      storeId: json['store_id'] as String?,
+      storeName: json['store_name'] as String?,
+      scope: json['scope'] as String? ?? 'store',
     );
   }
   final String id;
@@ -130,10 +166,12 @@ class AIBillingInvoicePreview {
   final String status;
   final String dueDate;
   final String? paidAt;
+  final String? storeId;
+  final String? storeName;
+  final String scope;
 }
 
 class AIBillingInvoiceDetail {
-
   const AIBillingInvoiceDetail({
     required this.id,
     required this.invoiceNumber,
@@ -193,7 +231,6 @@ class AIBillingInvoiceDetail {
 }
 
 class AIBillingInvoiceItem {
-
   const AIBillingInvoiceItem({
     required this.featureSlug,
     required this.featureName,
@@ -222,7 +259,6 @@ class AIBillingInvoiceItem {
 }
 
 class AIBillingPayment {
-
   const AIBillingPayment({
     required this.id,
     required this.amountUsd,

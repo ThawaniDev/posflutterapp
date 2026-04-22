@@ -124,7 +124,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
             const SizedBox(height: AppSpacing.lg),
 
             // Navigation
-            const Text('Sections', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(l10n.adminSections, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: AppSpacing.sm),
             ...[
               _NavTile(

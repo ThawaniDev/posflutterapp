@@ -55,7 +55,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                   padding: const EdgeInsets.all(AppSpacing.md),
                   children: [
                     // KPI Cards
-                    const Text('Key Metrics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(l10n.adminKeyMetrics, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     _buildKpiGrid(kpi),
                     const SizedBox(height: AppSpacing.lg),

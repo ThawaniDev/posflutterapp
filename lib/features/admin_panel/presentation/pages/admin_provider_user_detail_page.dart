@@ -79,7 +79,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Account Info', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.adminAccountInfo, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH16,
                   _infoRow('Phone', user['phone']?.toString() ?? 'N/A'),
                   _infoRow('Role', user['role']?.toString() ?? 'N/A'),

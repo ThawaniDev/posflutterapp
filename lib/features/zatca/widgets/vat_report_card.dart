@@ -58,7 +58,7 @@ class VatReportCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Total VAT', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                    Text(l10n.zatcaTotalVat, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     AppSpacing.gapH2,
                     Text(
                       '\u0081 ${data.totalVatCollected.toStringAsFixed(2)}',

@@ -17,7 +17,6 @@ class AdminFailedPaymentsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -41,14 +40,15 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
     final state = ref.watch(failedPaymentsProvider);
 
     return PosListPage(
-  title: l10n.failedPayments,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId),
-  ),
-],
-  child: Column(
+      title: l10n.failedPayments,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId),
+        ),
+      ],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -56,13 +56,16 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
               BillingInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
               BillingInvoiceListLoaded(invoices: final items) =>
                 items.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.check_circle, size: 64, color: AppColors.success),
-                            SizedBox(height: 16),
-                            Text('No failed payments', style: TextStyle(fontSize: 18, color: AppColors.textSecondary)),
+                            const Icon(Icons.check_circle, size: 64, color: AppColors.success),
+                            const SizedBox(height: 16),
+                            Text(
+                              l10n.adminNoFailedPayments,
+                              style: const TextStyle(fontSize: 18, color: AppColors.textSecondary),
+                            ),
                           ],
                         ),
                       )
@@ -77,7 +80,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _failedPaymentCard(Map<String, dynamic> invoice) {
@@ -125,10 +128,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                 ],
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.15),
-                    borderRadius: AppRadius.borderLg,
-                  ),
+                  decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                   child: const Text(
                     'FAILED',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.errorDark),

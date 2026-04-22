@@ -9,7 +9,6 @@ import 'package:wameedpos/features/predefined_catalog/providers/predefined_catal
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
 
 class PredefinedProductsPage extends ConsumerStatefulWidget {
-
   const PredefinedProductsPage({super.key, this.businessTypeId, this.categoryId, this.categoryName});
   final String? businessTypeId;
   final String? categoryId;
@@ -54,7 +53,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
     );
 
     if (confirmed == true && mounted) {
-      await ref.read(cloneProvider.notifier).cloneProduct(product.id);
+      await ref.read(cloneProvider.notifier).cloneProduct(l10n, product.id);
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
@@ -171,7 +170,6 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
 // ─── Product Card Widget ───────────────────────────────────────
 
 class _ProductCard extends StatelessWidget {
-
   const _ProductCard({required this.product, required this.onClone});
   final PredefinedProduct product;
   final VoidCallback onClone;
@@ -226,7 +224,10 @@ class _ProductCard extends StatelessWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       if (product.sku != null)
-                        Text('SKU: ${product.sku}', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context))),
+                        Text(
+                          'SKU: ${product.sku}',
+                          style: theme.textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
+                        ),
                       if (product.unit != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

@@ -184,7 +184,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
       showSearch: false,
       actions: [
         PosButton.icon(icon: Icons.refresh_rounded, onPressed: () => ref.read(schedulesProvider.notifier).load()),
-        PosButton.icon(icon: Icons.add_rounded, onPressed: _showCreateDialog, tooltip: 'Add'),
+        PosButton.icon(icon: Icons.add_rounded, onPressed: _showCreateDialog, tooltip: l10n.adminAdd),
       ],
       child: switch (state) {
         SchedulesInitial() || SchedulesLoading() => const Center(child: PosLoading()),

@@ -335,8 +335,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.borderFor(context)),
                     itemBuilder: (context, index) {
                       final item = _transaction!.items![index];
-                      final alreadyReturned =
-                          _transaction!.refundedQuantities?[item.productId] ?? 0;
+                      final alreadyReturned = _transaction!.refundedQuantities?[item.productId] ?? 0;
                       final maxReturnable = (item.quantity - alreadyReturned).clamp(0, item.quantity).toDouble();
                       return _ReturnItemRow(
                         item: item,

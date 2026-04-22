@@ -2904,7 +2904,6 @@
     }
   },
   "appBarLanguage": "Language",
-  "appBarMore": "More",
   "quickNavTitle": "Quick Navigation",
   "appBarTheme": "Theme",
   "appBarDarkMode": "Dark Mode",
@@ -6197,6 +6196,7 @@
   "pcClone": "Clone",
   "pcBusinessTypeColon": "Business Type:",
   "pcNoPredefinedCategories": "No predefined categories found",
+  "predefinedNoCategoriesForBusiness": "No predefined categories are available for your business type",
   "pcCloneToMyStore": "Clone to my store",
   "pcCloneProduct": "Clone Product",
   "pcNoPredefinedProducts": "No predefined products found",
@@ -6834,5 +6834,54 @@
         "type": "String"
       }
     }
-  }
+  },
+  "updateRequired": "Update Required",
+  "updateRequiredVersion": "Version {version} or later is required to continue.",
+  "@updateRequiredVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "whatsNew": "What's New",
+  "updateNow": "Update Now",
+  "updateAvailable": "Update Available",
+  "updateAvailableVersion": "Version {version} is available.",
+  "@updateAvailableVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "updateLater": "Later",
+  "languageEnglish": "English",
+  "languageArabic": "Arabic",
+  "languageBengali": "Bengali",
+  "languageUrdu": "Urdu",
+  "appBarMore": "More",
+  "accessShortcutAlt19": "Alt + 1-9",
+  "accessShortcutTab": "Tab",
+  "accessShortcutEsc": "Esc",
+  "accessShortcutEnter": "Enter",
+  "accessShortcutCtrlSlash": "Ctrl + /",
+  "authLoggedOutSuccess": "Logged out successfully",
+  "authLoggedOutAllDevices": "Logged out from all devices",
+  "cgReviewedShort": "Reviewed",
+  "catalogPhoneHint": "+968 XXXX XXXX",
+  "catalogVatNumberHint": "SA29XXXX0000000000000000",
+  "paymentsAmountSar": "Amount (SAR)",
+  "paymentsRedemptionAmount": "Redemption Amount",
+  "posCustGridLayout": "Grid Layout",
+  "posCustNoQuickAccess": "No quick access buttons configured",
+  "predefinedCategoryCloned": "Category cloned successfully",
+  "predefinedProductCloned": "Product cloned successfully",
+  "predefinedAllProductsCloned": "All products cloned successfully",
+  "promoFilterPromotions": "Filter Promotions",
+  "providerPaymentInitiated": "Payment initiated",
+  "providerEmailResent": "Email resent successfully",
+  "subCurrent": "Current: ",
+  "subRequired": "Required: ",
+  "aiLast7Days": "Last 7 Days",
+  "aiLast30Days": "Last 30 Days",
+  "aiLast90Days": "Last 90 Days",
+  "aiImageRequired": "Image is required",
+  "zatcaEnterOtp": "Enter 6-digit OTP"
 }

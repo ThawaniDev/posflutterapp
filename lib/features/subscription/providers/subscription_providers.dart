@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/repositories/subscription_repository.dart';
 
@@ -9,7 +10,6 @@ final plansProvider = StateNotifierProvider<PlansNotifier, PlansState>((ref) {
 });
 
 class PlansNotifier extends StateNotifier<PlansState> {
-
   PlansNotifier(this._repository) : super(const PlansInitial());
   final SubscriptionRepository _repository;
 
@@ -31,7 +31,6 @@ final subscriptionProvider = StateNotifierProvider<SubscriptionNotifier, Subscri
 });
 
 class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
-
   SubscriptionNotifier(this._repository) : super(const SubscriptionInitial());
   final SubscriptionRepository _repository;
 
@@ -45,41 +44,46 @@ class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
     }
   }
 
-  Future<void> subscribe({required String planId, String billingCycle = 'monthly', String? paymentMethod}) async {
+  Future<void> subscribe(
+    AppLocalizations l10n, {
+    required String planId,
+    String billingCycle = 'monthly',
+    String? paymentMethod,
+  }) async {
     state = const SubscriptionLoading();
     try {
       final subscription = await _repository.subscribe(planId: planId, billingCycle: billingCycle, paymentMethod: paymentMethod);
-      state = SubscriptionActionSuccess(subscription: subscription, message: 'Subscribed successfully!');
+      state = SubscriptionActionSuccess(subscription: subscription, message: l10n.subscriptionSubscribed);
     } catch (e) {
       state = SubscriptionError(message: _extractMessage(e));
     }
   }
 
-  Future<void> changePlan({required String planId, String billingCycle = 'monthly'}) async {
+  Future<void> changePlan(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly'}) async {
     state = const SubscriptionLoading();
     try {
       final subscription = await _repository.changePlan(planId: planId, billingCycle: billingCycle);
-      state = SubscriptionActionSuccess(subscription: subscription, message: 'Plan changed successfully!');
+      state = SubscriptionActionSuccess(subscription: subscription, message: l10n.subscriptionPlanChanged);
     } catch (e) {
       state = SubscriptionError(message: _extractMessage(e));
     }
   }
 
-  Future<void> cancel({String? reason}) async {
+  Future<void> cancel(AppLocalizations l10n, {String? reason}) async {
     state = const SubscriptionLoading();
     try {
       final subscription = await _repository.cancelSubscription(reason: reason);
-      state = SubscriptionActionSuccess(subscription: subscription, message: 'Subscription cancelled.');
+      state = SubscriptionActionSuccess(subscription: subscription, message: l10n.subscriptionCancelled);
     } catch (e) {
       state = SubscriptionError(message: _extractMessage(e));
     }
   }
 
-  Future<void> resume() async {
+  Future<void> resume(AppLocalizations l10n) async {
     state = const SubscriptionLoading();
     try {
       final subscription = await _repository.resumeSubscription();
-      state = SubscriptionActionSuccess(subscription: subscription, message: 'Subscription resumed!');
+      state = SubscriptionActionSuccess(subscription: subscription, message: l10n.subscriptionResumed);
     } catch (e) {
       state = SubscriptionError(message: _extractMessage(e));
     }
@@ -93,7 +97,6 @@ final invoicesProvider = StateNotifierProvider<InvoicesNotifier, InvoicesState>(
 });
 
 class InvoicesNotifier extends StateNotifier<InvoicesState> {
-
   InvoicesNotifier(this._repository) : super(const InvoicesInitial());
   final SubscriptionRepository _repository;
 
@@ -115,7 +118,6 @@ final invoiceDetailProvider = StateNotifierProvider.family<InvoiceDetailNotifier
 });
 
 class InvoiceDetailNotifier extends StateNotifier<InvoiceDetailState> {
-
   InvoiceDetailNotifier(this._repository, this._invoiceId) : super(const InvoiceDetailInitial());
   final SubscriptionRepository _repository;
   final String _invoiceId;
@@ -146,7 +148,6 @@ final usageProvider = StateNotifierProvider<UsageNotifier, UsageState>((ref) {
 });
 
 class UsageNotifier extends StateNotifier<UsageState> {
-
   UsageNotifier(this._repository) : super(const UsageInitial());
   final SubscriptionRepository _repository;
 
@@ -168,7 +169,6 @@ final addOnsProvider = StateNotifierProvider<AddOnsNotifier, AddOnsState>((ref) 
 });
 
 class AddOnsNotifier extends StateNotifier<AddOnsState> {
-
   AddOnsNotifier(this._repository) : super(const AddOnsInitial());
   final SubscriptionRepository _repository;
 
@@ -190,7 +190,6 @@ final planComparisonProvider = StateNotifierProvider<PlanComparisonNotifier, Pla
 });
 
 class PlanComparisonNotifier extends StateNotifier<PlanComparisonState> {
-
   PlanComparisonNotifier(this._repository) : super(const PlanComparisonInitial());
   final SubscriptionRepository _repository;
 

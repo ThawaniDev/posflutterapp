@@ -32,17 +32,17 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.wameedAIBilling,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.receipt_long_outlined, onPressed: () => context.push(Routes.wameedAIBillingInvoices), tooltip: l10n.wameedAIBillingInvoices,
-  ),
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load(),
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAIBilling,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.receipt_long_outlined,
+          onPressed: () => context.push(Routes.wameedAIBillingInvoices),
+          tooltip: l10n.wameedAIBillingInvoices,
+        ),
+        PosButton.icon(icon: Icons.refresh, onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load()),
+      ],
+      child: switch (state) {
         AIBillingSummaryInitial() || AIBillingSummaryLoading() => const PosLoading(),
         AIBillingSummaryError(:final message) => PosErrorState(
           message: message,
@@ -50,12 +50,11 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
         ),
         AIBillingSummaryLoaded(:final summary) => _BillingContent(summary: summary, isMobile: isMobile),
       },
-);
+    );
   }
 }
 
 class _BillingContent extends StatelessWidget {
-
   const _BillingContent({required this.summary, required this.isMobile});
   final AIBillingSummary summary;
   final bool isMobile;
@@ -71,8 +70,8 @@ class _BillingContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Status banner
-          if (!config.isAiEnabled)
+          // Status banner (only when we have a per-store config)
+          if (config != null && !config.isAiEnabled)
             Container(
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: 16),
@@ -191,7 +190,6 @@ class _BillingContent extends StatelessWidget {
 }
 
 class _FeatureCard extends StatelessWidget {
-
   const _FeatureCard({required this.feature});
   final AIBillingFeatureUsage feature;
 
@@ -211,7 +209,6 @@ class _FeatureCard extends StatelessWidget {
 }
 
 class _InvoiceListTile extends StatelessWidget {
-
   const _InvoiceListTile({required this.invoice});
   final AIBillingInvoicePreview invoice;
 

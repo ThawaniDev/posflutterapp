@@ -78,7 +78,7 @@ class AnomalyCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
                   AppSpacing.gapW4,
-                  const Text('Reviewed', style: TextStyle(fontSize: 12, color: AppColors.success)),
+                  Text(l10n.cgReviewedShort, style: TextStyle(fontSize: 12, color: AppColors.success)),
                   if (anomaly.reviewNotes != null && anomaly.reviewNotes!.isNotEmpty) ...[
                     AppSpacing.gapW8,
                     Expanded(

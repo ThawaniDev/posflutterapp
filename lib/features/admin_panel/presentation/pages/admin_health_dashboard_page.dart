@@ -65,6 +65,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final dashState = ref.watch(healthDashboardProvider);
     final storeState = ref.watch(storeHealthListProvider);
 
@@ -94,7 +95,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                   },
                   const SizedBox(height: 24),
                   // Store Health
-                  Text('Store Health', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(l10n.adminStoreHealth, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   switch (storeState) {
                     StoreHealthListInitial() || StoreHealthListLoading() => const Center(child: CircularProgressIndicator()),
@@ -154,7 +155,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Health Score', style: Theme.of(context).textTheme.titleMedium),
+                      Text(l10n.adminHealthScore, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -173,7 +174,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
           ),
         ),
         const SizedBox(height: 16),
-        Text('Services', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+        Text(l10n.adminServices, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         // Service cards
         ...services.map((svc) {

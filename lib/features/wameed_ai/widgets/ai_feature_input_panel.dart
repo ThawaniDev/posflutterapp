@@ -19,7 +19,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 /// Shows relevant fields (text, number, date, image, dropdowns, etc.) and
 /// a send button. Dismissable via a close button.
 class AIFeatureInputPanel extends ConsumerStatefulWidget {
-
   const AIFeatureInputPanel({
     super.key,
     required this.featureSlug,
@@ -117,6 +116,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Container(
@@ -273,10 +273,11 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
   }
 
   Widget _buildPeriodField(FeatureField field, ThemeData theme) {
-    const periods = [
-      FeatureFieldOption(value: 'last_7_days', label: 'Last 7 Days', labelAr: 'آخر 7 أيام'),
-      FeatureFieldOption(value: 'last_30_days', label: 'Last 30 Days', labelAr: 'آخر 30 يوم'),
-      FeatureFieldOption(value: 'last_90_days', label: 'Last 90 Days', labelAr: 'آخر 90 يوم'),
+    final l10n = AppLocalizations.of(context)!;
+    final periods = [
+      FeatureFieldOption(value: 'last_7_days', label: l10n.aiLast7Days, labelAr: 'آخر 7 أيام'),
+      FeatureFieldOption(value: 'last_30_days', label: l10n.aiLast30Days, labelAr: 'آخر 30 يوم'),
+      FeatureFieldOption(value: 'last_90_days', label: l10n.aiLast90Days, labelAr: 'آخر 90 يوم'),
     ];
     final selected = _values[field.key] as String? ?? field.defaultValue as String?;
 
@@ -303,6 +304,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
   }
 
   Widget _buildImageField(FeatureField field, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -376,7 +378,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
         if (_imageValidationFailed && field.required && _imageBase64 == null)
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text('Image is required', style: TextStyle(color: theme.colorScheme.error, fontSize: 12)),
+            child: Text(l10n.aiImageRequired, style: TextStyle(color: theme.colorScheme.error, fontSize: 12)),
           ),
       ],
     );
@@ -534,7 +536,6 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 // ─── Product Search Dialog ───────────────────────────────────────
 
 class _ProductSearchDialog extends StatefulWidget {
-
   const _ProductSearchDialog({required this.title, required this.catalogApi, required this.onSelected});
   final String title;
   final CatalogApiService catalogApi;
@@ -653,7 +654,6 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
 // ─── Category Search Dialog ──────────────────────────────────────
 
 class _CategorySearchDialog extends StatefulWidget {
-
   const _CategorySearchDialog({required this.title, required this.catalogApi, required this.onSelected});
   final String title;
   final CatalogApiService catalogApi;

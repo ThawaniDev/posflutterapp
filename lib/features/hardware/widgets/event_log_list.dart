@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class EventLogList extends StatelessWidget {
   const EventLogList({super.key, required this.logs});
@@ -33,13 +34,14 @@ class EventLogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     if (logs.isEmpty) {
       return Center(
         child: Padding(
           padding: AppSpacing.paddingAll24,
-          child: Text('No events recorded', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+          child: Text(l10n.hardwareNoEvents, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
         ),
       );
     }

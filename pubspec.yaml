@@ -79,6 +79,9 @@ dependencies:
   flutter_local_notifications: ^19.0.0
   package_info_plus: ^9.0.1
 
+  # Markdown rendering (for AI chat / feature responses)
+  flutter_markdown_plus: ^1.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
