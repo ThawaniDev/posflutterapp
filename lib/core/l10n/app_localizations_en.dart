@@ -15593,6 +15593,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelsLivePreview => 'Live preview';
 
   @override
+  String get labelsPrintLabel => 'Print label';
+
+  @override
+  String get labelsNoTemplateConfigured =>
+      'No label template configured. Create one in Labels.';
+
+  @override
   String get labelsProductName => 'Product Name';
 
   @override

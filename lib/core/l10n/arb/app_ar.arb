@@ -6192,6 +6192,8 @@
   "labelsQueueEmpty": "القائمة فارغة. أضف منتجات لطباعة الملصقات.",
   "labelsRemoveFromQueue": "إزالة من القائمة",
   "labelsLivePreview": "معاينة مباشرة",
+  "labelsPrintLabel": "طباعة ملصق",
+  "labelsNoTemplateConfigured": "لا يوجد قالب ملصق مهيأ. أنشئ قالباً من قسم الملصقات.",
   "labelsProductName": "اسم المنتج",
   "labelsBarcodeCode128": "Code 128",
   "labelsBarcodeEan13": "EAN-13",

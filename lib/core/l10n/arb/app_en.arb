@@ -6449,6 +6449,8 @@
   "labelsQueueEmpty": "Queue is empty. Add products to print labels.",
   "labelsRemoveFromQueue": "Remove from queue",
   "labelsLivePreview": "Live preview",
+  "labelsPrintLabel": "Print label",
+  "labelsNoTemplateConfigured": "No label template configured. Create one in Labels.",
   "labelsProductName": "Product Name",
   "labelsBarcodeCode128": "Code 128",
   "labelsBarcodeEan13": "EAN-13",

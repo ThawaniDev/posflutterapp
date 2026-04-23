@@ -15539,6 +15539,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelsLivePreview => 'معاينة مباشرة';
 
   @override
+  String get labelsPrintLabel => 'طباعة ملصق';
+
+  @override
+  String get labelsNoTemplateConfigured =>
+      'لا يوجد قالب ملصق مهيأ. أنشئ قالباً من قسم الملصقات.';
+
+  @override
   String get labelsProductName => 'اسم المنتج';
 
   @override

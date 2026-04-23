@@ -29422,6 +29422,18 @@ abstract class AppLocalizations {
   /// **'Live preview'**
   String get labelsLivePreview;
 
+  /// No description provided for @labelsPrintLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Print label'**
+  String get labelsPrintLabel;
+
+  /// No description provided for @labelsNoTemplateConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'No label template configured. Create one in Labels.'**
+  String get labelsNoTemplateConfigured;
+
   /// No description provided for @labelsProductName.
   ///
   /// In en, this message translates to:

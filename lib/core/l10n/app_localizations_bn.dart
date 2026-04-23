@@ -15655,6 +15655,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get labelsLivePreview => 'Live preview';
 
   @override
+  String get labelsPrintLabel => 'Print label';
+
+  @override
+  String get labelsNoTemplateConfigured =>
+      'No label template configured. Create one in Labels.';
+
+  @override
   String get labelsProductName => 'পণ্যের নাম';
 
   @override

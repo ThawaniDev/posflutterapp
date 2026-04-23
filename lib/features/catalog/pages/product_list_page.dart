@@ -11,6 +11,9 @@ import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/labels/providers/label_providers.dart';
+import 'package:wameedpos/features/labels/providers/label_state.dart';
+import 'package:wameedpos/features/labels/services/quick_print_service.dart';
 
 class ProductListPage extends ConsumerStatefulWidget {
   const ProductListPage({super.key});
@@ -95,6 +98,38 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       if (mounted) {
         showPosErrorSnackbar(context, e.toString());
       }
+    }
+  }
+
+  Future<void> _handleQuickPrintLabel(Product product) async {
+    final l = AppLocalizations.of(context)!;
+    // Ensure templates are loaded; load lazily on first use.
+    var state = ref.read(labelTemplatesProvider);
+    if (state is! LabelTemplatesLoaded) {
+      await ref.read(labelTemplatesProvider.notifier).load();
+      state = ref.read(labelTemplatesProvider);
+    }
+    final templates = state is LabelTemplatesLoaded ? state.templates : const <dynamic>[];
+
+    final result = await quickPrintProductLabel(
+      ref,
+      product: product,
+      templates: List.from(templates),
+    );
+    if (!mounted) return;
+    switch (result) {
+      case QuickPrintResult.success:
+        showPosSuccessSnackbar(context, l.labelsPrintedSuccessfully);
+        break;
+      case QuickPrintResult.noPrinter:
+        showPosErrorSnackbar(context, l.labelsNoPrinterConfigured);
+        break;
+      case QuickPrintResult.noTemplate:
+        showPosErrorSnackbar(context, l.labelsNoTemplateConfigured);
+        break;
+      case QuickPrintResult.printerError:
+        showPosErrorSnackbar(context, l.labelsPrintFailed(''));
+        break;
     }
   }
 
@@ -638,6 +673,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           onTap: (p) => context.push('${Routes.products}/${p.id}'),
         ),
         PosTableRowAction<Product>(label: l10n.labelDuplicate, icon: Icons.copy_outlined, onTap: (p) => _handleDuplicate(p)),
+        PosTableRowAction<Product>(
+          label: l10n.labelsPrintLabel,
+          icon: Icons.qr_code_2_outlined,
+          onTap: (p) => _handleQuickPrintLabel(p),
+        ),
         PosTableRowAction<Product>(
           label: l10n.catalogComboTitle,
           icon: Icons.layers_outlined,
