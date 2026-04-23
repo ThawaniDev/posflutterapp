@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+
+import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database_opener_stub.dart'
+    if (dart.library.io) 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database_opener_io.dart'
+    if (dart.library.js_interop) 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database_opener_web.dart';
 
 part 'pos_offline_database.g.dart';
 
@@ -450,12 +449,9 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
       (select(localCouponCodes)..where((t) => t.promotionId.equals(promotionId))).get();
 }
 
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dir.path, 'wameedpos_offline.sqlite'));
-    return NativeDatabase.createInBackground(file);
-  });
+QueryExecutor _openConnection() {
+  // Delegates to the platform-specific opener (native FFI on IO, WASM on web).
+  return openPosOfflineConnection();
 }
 
 final posOfflineDatabaseProvider = Provider<PosOfflineDatabase>((ref) {
