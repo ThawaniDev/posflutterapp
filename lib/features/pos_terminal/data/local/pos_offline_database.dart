@@ -104,12 +104,102 @@ class LocalSyncQueue extends Table {
   TextColumn get status => text().withDefault(const Constant('pending'))(); // pending|in_progress|done|failed
 }
 
+// ─── Catalog-supporting tables (offline-first browsing) ────────
+
+class LocalCategories extends Table {
+  TextColumn get id => text()();
+  TextColumn get parentId => text().nullable()();
+  TextColumn get name => text()();
+  TextColumn get nameAr => text().nullable()();
+  TextColumn get colorHex => text().nullable()();
+  TextColumn get iconName => text().nullable()();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalSuppliers extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get contactPerson => text().nullable()();
+  TextColumn get phone => text().nullable()();
+  TextColumn get email => text().nullable()();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalProductSuppliers extends Table {
+  TextColumn get productId => text()();
+  TextColumn get supplierId => text()();
+  RealColumn get costPrice => real().nullable()();
+  TextColumn get supplierSku => text().nullable()();
+  IntColumn get leadTimeDays => integer().nullable()();
+  BoolColumn get isPreferred => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {productId, supplierId};
+}
+
+class LocalProductVariants extends Table {
+  TextColumn get id => text()();
+  TextColumn get productId => text()();
+  TextColumn get sku => text().nullable()();
+  TextColumn get barcode => text().nullable()();
+  TextColumn get name => text()();
+  TextColumn get attributesJson => text().withDefault(const Constant('{}'))();
+  RealColumn get priceDelta => real().withDefault(const Constant(0))();
+  RealColumn get costPrice => real().nullable()();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalModifierGroups extends Table {
+  TextColumn get id => text()();
+  TextColumn get productId => text()();
+  TextColumn get name => text()();
+  TextColumn get nameAr => text().nullable()();
+  IntColumn get minSelect => integer().withDefault(const Constant(0))();
+  IntColumn get maxSelect => integer().nullable()();
+  BoolColumn get isRequired => boolean().withDefault(const Constant(false))();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalModifierOptions extends Table {
+  TextColumn get id => text()();
+  TextColumn get groupId => text()();
+  TextColumn get name => text()();
+  TextColumn get nameAr => text().nullable()();
+  RealColumn get priceDelta => real().withDefault(const Constant(0))();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(tables: [
   LocalProducts,
   LocalInventory,
   LocalHeldCarts,
   LocalTransactions,
   LocalSyncQueue,
+  LocalCategories,
+  LocalSuppliers,
+  LocalProductSuppliers,
+  LocalProductVariants,
+  LocalModifierGroups,
+  LocalModifierOptions,
 ])
 class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase() : super(_openConnection());
@@ -117,7 +207,22 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(localCategories);
+            await m.createTable(localSuppliers);
+            await m.createTable(localProductSuppliers);
+            await m.createTable(localProductVariants);
+            await m.createTable(localModifierGroups);
+            await m.createTable(localModifierOptions);
+          }
+        },
+      );
 
   // ─── Products ──────────────────────────────────────────────
 
@@ -208,6 +313,67 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
         variables: [Variable.withInt(id)],
         updates: {localSyncQueue},
       );
+
+  // ─── Catalog: categories ───────────────────────────────────
+
+  Future<void> upsertCategories(List<LocalCategoriesCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localCategories, rows));
+  }
+
+  Future<List<LocalCategory>> activeCategories() =>
+      (select(localCategories)
+            ..where((t) => t.isActive.equals(true))
+            ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
+          .get();
+
+  // ─── Catalog: suppliers ────────────────────────────────────
+
+  Future<void> upsertSuppliers(List<LocalSuppliersCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localSuppliers, rows));
+  }
+
+  Future<List<LocalSupplier>> activeSuppliers() =>
+      (select(localSuppliers)..where((t) => t.isActive.equals(true))).get();
+
+  Future<void> upsertProductSuppliers(List<LocalProductSuppliersCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localProductSuppliers, rows));
+  }
+
+  Future<List<LocalProductSupplier>> suppliersForProduct(String productId) =>
+      (select(localProductSuppliers)..where((t) => t.productId.equals(productId))).get();
+
+  // ─── Catalog: variants ─────────────────────────────────────
+
+  Future<void> upsertVariants(List<LocalProductVariantsCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localProductVariants, rows));
+  }
+
+  Future<List<LocalProductVariant>> variantsFor(String productId) =>
+      (select(localProductVariants)
+            ..where((t) => t.productId.equals(productId) & t.isActive.equals(true)))
+          .get();
+
+  // ─── Catalog: modifiers ────────────────────────────────────
+
+  Future<void> upsertModifierGroups(List<LocalModifierGroupsCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localModifierGroups, rows));
+  }
+
+  Future<void> upsertModifierOptions(List<LocalModifierOptionsCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localModifierOptions, rows));
+  }
+
+  Future<List<LocalModifierGroup>> modifierGroupsFor(String productId) =>
+      (select(localModifierGroups)
+            ..where((t) => t.productId.equals(productId))
+            ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
+          .get();
+
+  Future<List<LocalModifierOption>> modifierOptionsFor(String groupId) =>
+      (select(localModifierOptions)
+            ..where((t) => t.groupId.equals(groupId) & t.isActive.equals(true))
+            ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
+          .get();
 }
 
 LazyDatabase _openConnection() {
