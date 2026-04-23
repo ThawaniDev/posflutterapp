@@ -13679,6 +13679,82 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogImportErrorsHeading => 'Errors';
 
   @override
+  String get catalogComboTitle => 'Combo / Bundle';
+
+  @override
+  String get catalogComboHeading => 'Combo definition';
+
+  @override
+  String get catalogComboName => 'Combo name';
+
+  @override
+  String get catalogComboNameHint => 'Defaults to the product name';
+
+  @override
+  String get catalogComboPrice => 'Combo price (optional)';
+
+  @override
+  String get catalogComboPriceHint => 'Leave empty to charge sum of items';
+
+  @override
+  String get catalogComboItemsHeading => 'Combo items';
+
+  @override
+  String get catalogComboAddItem => 'Add item';
+
+  @override
+  String get catalogComboNoItems => 'No items yet. Add at least one component.';
+
+  @override
+  String get catalogComboQty => 'Qty';
+
+  @override
+  String get catalogComboOptional => 'Optional';
+
+  @override
+  String get catalogComboSaved => 'Combo saved';
+
+  @override
+  String get catalogComboCleared => 'Combo cleared';
+
+  @override
+  String get catalogComboSaveFailed => 'Failed to save combo';
+
+  @override
+  String get catalogComboClear => 'Clear combo';
+
+  @override
+  String get catalogComboClearConfirmTitle => 'Clear combo?';
+
+  @override
+  String get catalogComboClearConfirmBody =>
+      'This will remove all combo items and unflag the product.';
+
+  @override
+  String get catalogComboPickItem => 'Pick a product';
+
+  @override
+  String get catalogComboSearchHint => 'Search by name, SKU or barcode';
+
+  @override
+  String get catalogComboItemAlreadyAdded =>
+      'This product is already in the combo';
+
+  @override
+  String get catalogComboNeedsAtLeastOneItem =>
+      'Add at least one item before saving';
+
+  @override
+  String get catalogComboInvalidQuantity =>
+      'Quantity must be a positive number';
+
+  @override
+  String get catalogComboInvalidPrice => 'Combo price must be zero or more';
+
+  @override
+  String get commonSearch => 'Search';
+
+  @override
   String get catalogSearchProductsShort => 'Search products...';
 
   @override

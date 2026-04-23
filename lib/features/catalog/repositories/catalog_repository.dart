@@ -173,4 +173,19 @@ class CatalogRepository {
       mapping: mapping,
     );
   }
+
+  // ─── Combo Products ──────────────────────────────────────────
+
+  Future<ComboDefinition> getCombo(String productId) =>
+      _apiService.getCombo(productId);
+
+  Future<ComboDefinition> syncCombo(
+    String productId, {
+    String? name,
+    double? comboPrice,
+    required List<ComboItemPayload> items,
+  }) =>
+      _apiService.syncCombo(productId, name: name, comboPrice: comboPrice, items: items);
+
+  Future<void> clearCombo(String productId) => _apiService.clearCombo(productId);
 }

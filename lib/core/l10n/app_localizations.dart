@@ -25978,6 +25978,150 @@ abstract class AppLocalizations {
   /// **'Errors'**
   String get catalogImportErrorsHeading;
 
+  /// No description provided for @catalogComboTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo / Bundle'**
+  String get catalogComboTitle;
+
+  /// No description provided for @catalogComboHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo definition'**
+  String get catalogComboHeading;
+
+  /// No description provided for @catalogComboName.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo name'**
+  String get catalogComboName;
+
+  /// No description provided for @catalogComboNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Defaults to the product name'**
+  String get catalogComboNameHint;
+
+  /// No description provided for @catalogComboPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo price (optional)'**
+  String get catalogComboPrice;
+
+  /// No description provided for @catalogComboPriceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to charge sum of items'**
+  String get catalogComboPriceHint;
+
+  /// No description provided for @catalogComboItemsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo items'**
+  String get catalogComboItemsHeading;
+
+  /// No description provided for @catalogComboAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get catalogComboAddItem;
+
+  /// No description provided for @catalogComboNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No items yet. Add at least one component.'**
+  String get catalogComboNoItems;
+
+  /// No description provided for @catalogComboQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get catalogComboQty;
+
+  /// No description provided for @catalogComboOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get catalogComboOptional;
+
+  /// No description provided for @catalogComboSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo saved'**
+  String get catalogComboSaved;
+
+  /// No description provided for @catalogComboCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo cleared'**
+  String get catalogComboCleared;
+
+  /// No description provided for @catalogComboSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save combo'**
+  String get catalogComboSaveFailed;
+
+  /// No description provided for @catalogComboClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear combo'**
+  String get catalogComboClear;
+
+  /// No description provided for @catalogComboClearConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear combo?'**
+  String get catalogComboClearConfirmTitle;
+
+  /// No description provided for @catalogComboClearConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove all combo items and unflag the product.'**
+  String get catalogComboClearConfirmBody;
+
+  /// No description provided for @catalogComboPickItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a product'**
+  String get catalogComboPickItem;
+
+  /// No description provided for @catalogComboSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, SKU or barcode'**
+  String get catalogComboSearchHint;
+
+  /// No description provided for @catalogComboItemAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'This product is already in the combo'**
+  String get catalogComboItemAlreadyAdded;
+
+  /// No description provided for @catalogComboNeedsAtLeastOneItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one item before saving'**
+  String get catalogComboNeedsAtLeastOneItem;
+
+  /// No description provided for @catalogComboInvalidQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be a positive number'**
+  String get catalogComboInvalidQuantity;
+
+  /// No description provided for @catalogComboInvalidPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Combo price must be zero or more'**
+  String get catalogComboInvalidPrice;
+
+  /// No description provided for @commonSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get commonSearch;
+
   /// No description provided for @catalogSearchProductsShort.
   ///
   /// In en, this message translates to:

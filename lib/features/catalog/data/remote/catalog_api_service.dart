@@ -184,6 +184,39 @@ class CatalogApiService {
     return list.map((j) => ProductBarcode.fromJson(j as Map<String, dynamic>)).toList();
   }
 
+  // ─── Combo Products ──────────────────────────────────────────
+
+  /// GET /catalog/products/:id/combo
+  Future<ComboDefinition> getCombo(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/combo');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return ComboDefinition.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// PUT /catalog/products/:id/combo
+  Future<ComboDefinition> syncCombo(
+    String productId, {
+    String? name,
+    double? comboPrice,
+    required List<ComboItemPayload> items,
+  }) async {
+    final response = await _dio.put(
+      '${ApiEndpoints.products}/$productId/combo',
+      data: {
+        'name': ?name,
+        'combo_price': ?comboPrice,
+        'items': items.map((i) => i.toJson()).toList(),
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return ComboDefinition.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// DELETE /catalog/products/:id/combo
+  Future<void> clearCombo(String productId) async {
+    await _dio.delete('${ApiEndpoints.products}/$productId/combo');
+  }
+
   // ─── Categories ───────────────────────────────────────────────
 
   /// GET /catalog/categories (tree)
@@ -278,15 +311,7 @@ class CatalogApiService {
       data: formData,
     );
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
-    final map = apiResponse.data as Map<String, dynamic>;
-    return ImportPreview(
-      header: List<String>.from((map['header'] as List).map((e) => e.toString())),
-      preview: (map['preview'] as List)
-          .map((row) => List<String>.from((row as List).map((c) => c?.toString() ?? '')))
-          .toList(),
-      totalRows: map['total_rows'] as int? ?? 0,
-      availableFields: List<String>.from((map['available_fields'] as List).map((e) => e.toString())),
-    );
+    return ImportPreview.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
   /// POST /catalog/products/bulk-import
@@ -308,16 +333,8 @@ class CatalogApiService {
       data: formData,
     );
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
-    final map = apiResponse.data as Map<String, dynamic>;
-    return ImportResult(
-      created: map['created'] as int? ?? 0,
-      failed: map['failed'] as int? ?? 0,
-      errors: ((map['errors'] as List?) ?? const [])
-          .map((e) => ImportError(
-                row: (e as Map<String, dynamic>)['row'] as int? ?? 0,
-                message: e['message']?.toString() ?? '',
-              ))
-          .toList(),
+    return ImportResult.fromJson(
+      apiResponse.data as Map<String, dynamic>,
       message: apiResponse.message,
     );
   }
@@ -330,6 +347,28 @@ class ImportPreview {
     required this.totalRows,
     required this.availableFields,
   });
+
+  factory ImportPreview.fromJson(Map<String, dynamic> map) {
+    final rawHeader = map['header'];
+    final rawPreview = map['preview'];
+    final rawAvail = map['available_fields'];
+    return ImportPreview(
+      header: rawHeader is List
+          ? rawHeader.map((e) => e?.toString() ?? '').toList()
+          : const <String>[],
+      preview: rawPreview is List
+          ? rawPreview
+              .whereType<List>()
+              .map((row) => row.map((c) => c?.toString() ?? '').toList())
+              .toList()
+          : const <List<String>>[],
+      totalRows: _asInt(map['total_rows']) ?? 0,
+      availableFields: rawAvail is List
+          ? rawAvail.map((e) => e?.toString() ?? '').toList()
+          : const <String>[],
+    );
+  }
+
   final List<String> header;
   final List<List<String>> preview;
   final int totalRows;
@@ -343,6 +382,22 @@ class ImportResult {
     required this.errors,
     this.message,
   });
+
+  factory ImportResult.fromJson(Map<String, dynamic> map, {String? message}) {
+    final rawErrors = map['errors'];
+    return ImportResult(
+      created: _asInt(map['created']) ?? 0,
+      failed: _asInt(map['failed']) ?? 0,
+      errors: rawErrors is List
+          ? rawErrors
+              .whereType<Map<String, dynamic>>()
+              .map(ImportError.fromJson)
+              .toList()
+          : const <ImportError>[],
+      message: message,
+    );
+  }
+
   final int created;
   final int failed;
   final List<ImportError> errors;
@@ -351,8 +406,116 @@ class ImportResult {
 
 class ImportError {
   const ImportError({required this.row, required this.message});
+
+  factory ImportError.fromJson(Map<String, dynamic> json) => ImportError(
+        row: _asInt(json['row']) ?? 0,
+        message: json['message']?.toString() ?? '',
+      );
+
   final int row;
   final String message;
+}
+
+/// In-memory representation of a combo definition returned by
+/// `GET /catalog/products/:id/combo` and `PUT .../combo`. Built to be
+/// resilient to the server returning `combo: null` when the product
+/// is not yet flagged as a combo.
+class ComboDefinition {
+  const ComboDefinition({
+    required this.isCombo,
+    required this.id,
+    required this.name,
+    required this.comboPrice,
+    required this.items,
+  });
+
+  factory ComboDefinition.fromJson(Map<String, dynamic> json) {
+    final combo = json['combo'];
+    if (combo is! Map<String, dynamic>) {
+      return const ComboDefinition(
+        isCombo: false,
+        id: null,
+        name: null,
+        comboPrice: null,
+        items: <ComboItem>[],
+      );
+    }
+    final rawItems = combo['items'];
+    final parsedItems = rawItems is List
+        ? rawItems.map((e) => ComboItem.fromJson(e as Map<String, dynamic>)).toList()
+        : <ComboItem>[];
+    return ComboDefinition(
+      isCombo: json['is_combo'] == true,
+      id: combo['id']?.toString(),
+      name: combo['name']?.toString(),
+      comboPrice: _asDouble(combo['combo_price']),
+      items: parsedItems,
+    );
+  }
+
+  final bool isCombo;
+  final String? id;
+  final String? name;
+  final double? comboPrice;
+  final List<ComboItem> items;
+}
+
+class ComboItem {
+  const ComboItem({
+    this.id,
+    required this.productId,
+    required this.productName,
+    required this.productNameAr,
+    required this.quantity,
+    required this.isOptional,
+  });
+
+  factory ComboItem.fromJson(Map<String, dynamic> json) => ComboItem(
+        id: json['id']?.toString(),
+        productId: json['product_id']?.toString() ?? '',
+        productName: json['product_name']?.toString(),
+        productNameAr: json['product_name_ar']?.toString(),
+        quantity: _asDouble(json['quantity']) ?? 1,
+        isOptional: json['is_optional'] == true,
+      );
+
+  final String? id;
+  final String productId;
+  final String? productName;
+  final String? productNameAr;
+  final double quantity;
+  final bool isOptional;
+}
+
+class ComboItemPayload {
+  const ComboItemPayload({
+    required this.productId,
+    required this.quantity,
+    this.isOptional = false,
+  });
+
+  final String productId;
+  final double quantity;
+  final bool isOptional;
+
+  Map<String, dynamic> toJson() => {
+        'product_id': productId,
+        'quantity': quantity,
+        'is_optional': isOptional,
+      };
+}
+
+double? _asDouble(dynamic v) {
+  if (v == null) return null;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString());
+}
+
+int? _asInt(dynamic v) {
+  if (v == null) return null;
+  if (v is int) return v;
+  if (v is num) return v.toInt();
+  return int.tryParse(v.toString());
 }
 
 /// Generic paginated result for list endpoints.

@@ -13628,6 +13628,83 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogImportErrorsHeading => 'الأخطاء';
 
   @override
+  String get catalogComboTitle => 'وجبة / مجموعة';
+
+  @override
+  String get catalogComboHeading => 'تعريف المجموعة';
+
+  @override
+  String get catalogComboName => 'اسم المجموعة';
+
+  @override
+  String get catalogComboNameHint => 'افتراضياً اسم المنتج';
+
+  @override
+  String get catalogComboPrice => 'سعر المجموعة (اختياري)';
+
+  @override
+  String get catalogComboPriceHint => 'اتركه فارغاً لاحتساب مجموع الأصناف';
+
+  @override
+  String get catalogComboItemsHeading => 'أصناف المجموعة';
+
+  @override
+  String get catalogComboAddItem => 'إضافة صنف';
+
+  @override
+  String get catalogComboNoItems =>
+      'لا توجد أصناف. أضف صنفاً واحداً على الأقل.';
+
+  @override
+  String get catalogComboQty => 'الكمية';
+
+  @override
+  String get catalogComboOptional => 'اختياري';
+
+  @override
+  String get catalogComboSaved => 'تم حفظ المجموعة';
+
+  @override
+  String get catalogComboCleared => 'تمت إزالة المجموعة';
+
+  @override
+  String get catalogComboSaveFailed => 'فشل حفظ المجموعة';
+
+  @override
+  String get catalogComboClear => 'مسح المجموعة';
+
+  @override
+  String get catalogComboClearConfirmTitle => 'مسح المجموعة؟';
+
+  @override
+  String get catalogComboClearConfirmBody =>
+      'سيتم حذف جميع الأصناف وإلغاء وضع علامة المجموعة.';
+
+  @override
+  String get catalogComboPickItem => 'اختر منتجاً';
+
+  @override
+  String get catalogComboSearchHint => 'ابحث بالاسم أو SKU أو الباركود';
+
+  @override
+  String get catalogComboItemAlreadyAdded =>
+      'هذا المنتج موجود مسبقاً في المجموعة';
+
+  @override
+  String get catalogComboNeedsAtLeastOneItem =>
+      'أضف صنفاً واحداً على الأقل قبل الحفظ';
+
+  @override
+  String get catalogComboInvalidQuantity => 'يجب أن تكون الكمية رقماً موجباً';
+
+  @override
+  String get catalogComboInvalidPrice =>
+      'سعر المجموعة يجب أن يكون صفراً أو أكثر';
+
+  @override
+  String get commonSearch => 'بحث';
+
+  @override
   String get catalogSearchProductsShort => 'ابحث عن المنتجات...';
 
   @override

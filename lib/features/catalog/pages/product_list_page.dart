@@ -639,6 +639,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
         ),
         PosTableRowAction<Product>(label: l10n.labelDuplicate, icon: Icons.copy_outlined, onTap: (p) => _handleDuplicate(p)),
         PosTableRowAction<Product>(
+          label: l10n.catalogComboTitle,
+          icon: Icons.layers_outlined,
+          onTap: (p) => context.push('${Routes.productsCombo}/${p.id}'),
+        ),
+        PosTableRowAction<Product>(
           label: l10n.delete,
           icon: Icons.delete_outline,
           isDestructive: true,
