@@ -15615,6 +15615,46 @@ class AppLocalizationsBn extends AppLocalizations {
   String get labelsAddElement => 'উপাদান যোগ করুন';
 
   @override
+  String get labelsAddProductsToQueue => 'Add Products to Print Queue';
+
+  @override
+  String get labelsProductSearchHint => 'Search by name, SKU, or barcode';
+
+  @override
+  String labelsSelectedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products selected',
+      one: '1 product selected',
+      zero: 'No products selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get labelsPrintedSuccessfully => 'Labels printed successfully';
+
+  @override
+  String labelsPrintFailed(String error) {
+    return 'Print failed: $error';
+  }
+
+  @override
+  String get labelsNoPrinterConfigured =>
+      'No label printer configured. Please configure one in Hardware Settings.';
+
+  @override
+  String get labelsQueueEmpty =>
+      'Queue is empty. Add products to print labels.';
+
+  @override
+  String get labelsRemoveFromQueue => 'Remove from queue';
+
+  @override
+  String get labelsLivePreview => 'Live preview';
+
+  @override
   String get labelsProductName => 'পণ্যের নাম';
 
   @override

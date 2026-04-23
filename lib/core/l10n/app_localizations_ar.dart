@@ -15497,6 +15497,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelsAddElement => 'إضافة عنصر';
 
   @override
+  String get labelsAddProductsToQueue => 'إضافة منتجات إلى قائمة الطباعة';
+
+  @override
+  String get labelsProductSearchHint => 'ابحث بالاسم أو الـ SKU أو الباركود';
+
+  @override
+  String labelsSelectedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتج محدد',
+      many: '$count منتجاً محدداً',
+      few: '$count منتجات محددة',
+      two: 'منتجان محددان',
+      one: 'منتج واحد محدد',
+      zero: 'لا توجد منتجات محددة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get labelsPrintedSuccessfully => 'تمت طباعة الملصقات بنجاح';
+
+  @override
+  String labelsPrintFailed(String error) {
+    return 'فشل الطباعة: $error';
+  }
+
+  @override
+  String get labelsNoPrinterConfigured =>
+      'لا توجد طابعة ملصقات مهيأة. يرجى تهيئة طابعة من إعدادات الأجهزة.';
+
+  @override
+  String get labelsQueueEmpty => 'القائمة فارغة. أضف منتجات لطباعة الملصقات.';
+
+  @override
+  String get labelsRemoveFromQueue => 'إزالة من القائمة';
+
+  @override
+  String get labelsLivePreview => 'معاينة مباشرة';
+
+  @override
   String get labelsProductName => 'اسم المنتج';
 
   @override

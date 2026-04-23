@@ -6169,6 +6169,29 @@
   },
   "labelsPrintedBy": "طبع بواسطة",
   "labelsAddElement": "إضافة عنصر",
+  "labelsAddProductsToQueue": "إضافة منتجات إلى قائمة الطباعة",
+  "labelsProductSearchHint": "ابحث بالاسم أو الـ SKU أو الباركود",
+  "labelsSelectedCount": "{count, plural, =0{لا توجد منتجات محددة} =1{منتج واحد محدد} =2{منتجان محددان} few{{count} منتجات محددة} many{{count} منتجاً محدداً} other{{count} منتج محدد}}",
+  "@labelsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "labelsPrintedSuccessfully": "تمت طباعة الملصقات بنجاح",
+  "labelsPrintFailed": "فشل الطباعة: {error}",
+  "@labelsPrintFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsNoPrinterConfigured": "لا توجد طابعة ملصقات مهيأة. يرجى تهيئة طابعة من إعدادات الأجهزة.",
+  "labelsQueueEmpty": "القائمة فارغة. أضف منتجات لطباعة الملصقات.",
+  "labelsRemoveFromQueue": "إزالة من القائمة",
+  "labelsLivePreview": "معاينة مباشرة",
   "labelsProductName": "اسم المنتج",
   "labelsBarcodeCode128": "Code 128",
   "labelsBarcodeEan13": "EAN-13",

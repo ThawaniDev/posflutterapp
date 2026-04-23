@@ -6426,6 +6426,29 @@
   },
   "labelsPrintedBy": "Printed By",
   "labelsAddElement": "Add Element",
+  "labelsAddProductsToQueue": "Add Products to Print Queue",
+  "labelsProductSearchHint": "Search by name, SKU, or barcode",
+  "labelsSelectedCount": "{count, plural, =0{No products selected} =1{1 product selected} other{{count} products selected}}",
+  "@labelsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "labelsPrintedSuccessfully": "Labels printed successfully",
+  "labelsPrintFailed": "Print failed: {error}",
+  "@labelsPrintFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsNoPrinterConfigured": "No label printer configured. Please configure one in Hardware Settings.",
+  "labelsQueueEmpty": "Queue is empty. Add products to print labels.",
+  "labelsRemoveFromQueue": "Remove from queue",
+  "labelsLivePreview": "Live preview",
   "labelsProductName": "Product Name",
   "labelsBarcodeCode128": "Code 128",
   "labelsBarcodeEan13": "EAN-13",

@@ -5,10 +5,14 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
+import 'package:wameedpos/features/hardware/services/label_printer_service.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
 import 'package:wameedpos/features/labels/providers/label_state.dart';
 import 'package:wameedpos/features/labels/repositories/label_repository.dart';
+import 'package:wameedpos/features/labels/widgets/label_preview_widget.dart';
+import 'package:wameedpos/features/labels/widgets/label_product_picker_sheet.dart';
 
 /// The Label Print Queue page allows users to:
 /// - Select a label template
@@ -134,21 +138,14 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
           ),
           const SizedBox(height: AppSpacing.sm),
 
-          // Search
+          // Add products button
           PosCard(
             padding: const EdgeInsets.all(AppSpacing.sm),
-            child: Row(
-              children: [
-                Expanded(
-                  child: PosSearchField(
-                    controller: _searchController,
-                    hint: l10n.labelSearchProducts,
-                    onSubmitted: (_) => _addDemoItem(),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                IconButton(icon: const Icon(Icons.add_rounded), onPressed: _addDemoItem),
-              ],
+            child: PosButton(
+              label: l10n.labelsAddProductsToQueue,
+              icon: Icons.add_rounded,
+              variant: PosButtonVariant.soft,
+              onPressed: _openProductPicker,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -320,35 +317,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
             const SizedBox(height: AppSpacing.md),
             Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: AppSpacing.md),
-            Container(
-              width: 200,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                borderRadius: AppRadius.borderXs,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
-                  AppSpacing.gapH4,
-                  Text(l10n.labelsProductName, style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
-                  Text(
-                    '0.000 \u0081',
-                    style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    height: 18,
-                    color: Colors.grey.shade300,
-                    child: Center(
-                      child: Text('||||||||||||', style: TextStyle(fontSize: 8, letterSpacing: -1, color: Colors.grey.shade700)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            Center(child: _buildPreviewSurface(templates: ref.read(labelTemplatesProvider) is LabelTemplatesLoaded ? (ref.read(labelTemplatesProvider) as LabelTemplatesLoaded).templates : <LabelTemplate>[])),
             const SizedBox(height: AppSpacing.md),
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
@@ -454,19 +423,12 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                       Row(
                         children: [
                           Expanded(
-                            child: PosSearchField(
-                              controller: _searchController,
-                              hint: l10n.labelSearchProducts,
-                              onSubmitted: (_) => _addDemoItem(),
+                            child: PosButton(
+                              label: l10n.labelsAddProductsToQueue,
+                              icon: Icons.add_rounded,
+                              variant: PosButtonVariant.soft,
+                              onPressed: _openProductPicker,
                             ),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          PosButton(
-                            label: l10n.labelAdd,
-                            icon: Icons.add_rounded,
-                            variant: PosButtonVariant.soft,
-                            size: PosButtonSize.sm,
-                            onPressed: _addDemoItem,
                           ),
                         ],
                       ),
@@ -595,40 +557,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                 Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: AppSpacing.md),
                 Expanded(
-                  child: Center(
-                    child: Container(
-                      width: 200,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                        borderRadius: AppRadius.borderXs,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
-                          AppSpacing.gapH4,
-                          Text(l10n.labelsProductName, style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
-                          Text(
-                            '0.000 \u0081',
-                            style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                            height: 18,
-                            color: Colors.grey.shade300,
-                            child: Center(
-                              child: Text(
-                                '||||||||||||',
-                                style: TextStyle(fontSize: 8, letterSpacing: -1, color: Colors.grey.shade700),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: Center(child: _buildPreviewSurface(templates: templates)),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 // Summary
@@ -666,62 +595,166 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
     );
   }
 
-  void _addDemoItem() {
-    final name = _searchController.text.trim();
-    if (name.isEmpty) return;
+  /// Render the live preview using the selected template and the first queued item.
+  Widget _buildPreviewSurface({required List<LabelTemplate> templates}) {
+    if (_selectedTemplateId == null || templates.isEmpty) {
+      return Text(
+        AppLocalizations.of(context)!.labelSelectTemplate,
+        style: Theme.of(context).textTheme.bodySmall,
+        textAlign: TextAlign.center,
+      );
+    }
+    LabelTemplate? template;
+    for (final t in templates) {
+      if (t.id == _selectedTemplateId) {
+        template = t;
+        break;
+      }
+    }
+    if (template == null) return const SizedBox.shrink();
+
+    final first = _queueItems.isEmpty ? null : _queueItems.first;
+    final data = first == null
+        ? const LabelPreviewData.demo()
+        : LabelPreviewData(
+            productName: first.productName,
+            productNameAr: first.productNameAr,
+            barcode: first.barcode,
+            price: first.price,
+            currency: '\u0081',
+            sku: first.sku,
+          );
+
+    // Pick a scale that fits the side panel comfortably.
+    const maxWidth = 240.0;
+    final scale = (maxWidth / template.labelWidthMm).clamp(2.0, 8.0);
+    return LabelPreviewWidget(template: template, data: data, scale: scale);
+  }
+
+  Future<void> _openProductPicker() async {
+    final existing = _queueItems.map((i) => i.productId).toSet();
+    final selections = await showLabelProductPickerSheet(context, excludeProductIds: existing);
+    if (selections == null || selections.isEmpty) return;
     setState(() {
-      _queueItems.add(_PrintQueueItem(productName: name, sku: 'SKU-${_queueItems.length + 1}', quantity: 1));
+      for (final sel in selections) {
+        _queueItems.add(
+          _PrintQueueItem(
+            productId: sel.product.id,
+            productName: sel.product.name,
+            productNameAr: sel.product.nameAr ?? sel.product.name,
+            sku: sel.product.sku ?? '-',
+            barcode: sel.product.barcode ?? sel.product.sku ?? sel.product.id,
+            price: sel.product.sellPrice,
+            quantity: sel.quantity,
+          ),
+        );
+      }
       _searchController.clear();
     });
   }
 
+  /// Resolve the configured label printer from hardware settings, or null when none.
+  LabelPrinterConfig? _resolvePrinterConfig() {
+    final printer = ref.read(hardwareManagerProvider).labelPrinter;
+    final cfg = printer.config;
+    final connected = (cfg.connectionType == 'network' && (cfg.ipAddress?.isNotEmpty ?? false)) ||
+        (cfg.connectionType == 'usb' && (cfg.usbDevicePath?.isNotEmpty ?? false));
+    return connected ? cfg : null;
+  }
+
   Future<void> _handlePrint() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedTemplateId == null) {
-      final l10n = AppLocalizations.of(context)!;
       showPosWarningSnackbar(context, l10n.labelSelectTemplate);
       return;
     }
+    if (_queueItems.isEmpty) return;
 
     setState(() => _isPrinting = true);
 
-    final data = {
-      'template_id': _selectedTemplateId,
-      'printer_name': _printerName,
-      'product_count': _queueItems.length,
-      'total_labels': _queueItems.fold<int>(0, (sum, i) => sum + i.quantity) * _copies,
-    };
-
     try {
-      // Record print via label repository
-      await ref.read(labelRepositoryProvider).recordPrint(data);
-      if (mounted) {
-        final l10n = AppLocalizations.of(context)!;
-        showPosSuccessSnackbar(context, l10n.labelPrintSuccess);
+      // 1. Send the actual print job to the configured label printer.
+      final printer = ref.read(hardwareManagerProvider).labelPrinter;
+      final config = _resolvePrinterConfig();
+      bool printOk = true;
+      if (config != null) {
+        printer.configure(config);
+        final products = <ProductLabelData>[];
+        for (final item in _queueItems) {
+          for (var i = 0; i < item.quantity; i++) {
+            products.add(
+              ProductLabelData(
+                nameAr: item.productNameAr,
+                nameEn: item.productName,
+                barcode: item.barcode,
+                price: item.price,
+                sku: item.sku,
+              ),
+            );
+          }
+        }
+        printOk = await printer.printProductLabels(products, copies: _copies);
+      } else {
+        // No physical printer — surface a clear warning but still record history
+        // so the operator can audit the request and dispatch via a manual flow.
+        if (mounted) showPosWarningSnackbar(context, l10n.labelsNoPrinterConfigured);
+        printOk = false;
+      }
+
+      // 2. Always record print history server-side for audit/reporting.
+      final totalLabels = _queueItems.fold<int>(0, (sum, i) => sum + i.quantity) * _copies;
+      await ref.read(labelRepositoryProvider).recordPrint({
+        'template_id': _selectedTemplateId,
+        'printer_name': _printerName.isEmpty ? (config?.ipAddress ?? '') : _printerName,
+        'product_count': _queueItems.length,
+        'total_labels': totalLabels,
+      });
+
+      if (!mounted) return;
+      if (printOk) {
+        showPosSuccessSnackbar(context, l10n.labelsPrintedSuccessfully);
         setState(() {
           _isPrinting = false;
           _queueItems.clear();
         });
+      } else {
+        setState(() => _isPrinting = false);
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isPrinting = false);
-        showPosErrorSnackbar(context, e.toString());
+        showPosErrorSnackbar(context, l10n.labelsPrintFailed(e.toString()));
       }
     }
   }
 }
 
 class _PrintQueueItem {
-
-  const _PrintQueueItem({required this.productName, required this.sku, required this.quantity});
+  const _PrintQueueItem({
+    required this.productId,
+    required this.productName,
+    required this.productNameAr,
+    required this.sku,
+    required this.barcode,
+    required this.price,
+    required this.quantity,
+  });
+  final String productId;
   final String productName;
+  final String productNameAr;
   final String sku;
+  final String barcode;
+  final double price;
   final int quantity;
 
-  _PrintQueueItem copyWith({String? productName, String? sku, int? quantity}) {
+  _PrintQueueItem copyWith({int? quantity}) {
     return _PrintQueueItem(
-      productName: productName ?? this.productName,
-      sku: sku ?? this.sku,
+      productId: productId,
+      productName: productName,
+      productNameAr: productNameAr,
+      sku: sku,
+      barcode: barcode,
+      price: price,
       quantity: quantity ?? this.quantity,
     );
   }

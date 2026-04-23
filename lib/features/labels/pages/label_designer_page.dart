@@ -49,6 +49,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
   _LabelElement? _selectedElement;
   bool _isLoading = false;
   String? _loadedTemplateId;
+  double _zoom = 1.0;
 
   @override
   void initState() {
@@ -123,7 +124,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
 
     final canvasWidth = double.tryParse(_widthController.text) ?? 50;
     final canvasHeight = double.tryParse(_heightController.text) ?? 30;
-    const scale = 4.0; // 1mm = 4px on screen
+    final scale = 4.0 * _zoom; // 1mm = 4px @ 100% zoom
 
     return Scaffold(
       appBar: PosAppBar(
@@ -225,8 +226,16 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                               ),
                             ),
                             const Spacer(),
-                            PosButton.icon(icon: Icons.zoom_in_rounded, variant: PosButtonVariant.ghost, onPressed: () {}),
-                            PosButton.icon(icon: Icons.zoom_out_rounded, variant: PosButtonVariant.ghost, onPressed: () {}),
+                            PosButton.icon(
+                              icon: Icons.zoom_in_rounded,
+                              variant: PosButtonVariant.ghost,
+                              onPressed: () => setState(() => _zoom = (_zoom * 1.2).clamp(0.5, 4.0)),
+                            ),
+                            PosButton.icon(
+                              icon: Icons.zoom_out_rounded,
+                              variant: PosButtonVariant.ghost,
+                              onPressed: () => setState(() => _zoom = (_zoom / 1.2).clamp(0.5, 4.0)),
+                            ),
                           ],
                         ),
                       ),

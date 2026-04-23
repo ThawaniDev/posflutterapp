@@ -29368,6 +29368,60 @@ abstract class AppLocalizations {
   /// **'Add Element'**
   String get labelsAddElement;
 
+  /// No description provided for @labelsAddProductsToQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Products to Print Queue'**
+  String get labelsAddProductsToQueue;
+
+  /// No description provided for @labelsProductSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, SKU, or barcode'**
+  String get labelsProductSearchHint;
+
+  /// No description provided for @labelsSelectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No products selected} =1{1 product selected} other{{count} products selected}}'**
+  String labelsSelectedCount(int count);
+
+  /// No description provided for @labelsPrintedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Labels printed successfully'**
+  String get labelsPrintedSuccessfully;
+
+  /// No description provided for @labelsPrintFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Print failed: {error}'**
+  String labelsPrintFailed(String error);
+
+  /// No description provided for @labelsNoPrinterConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'No label printer configured. Please configure one in Hardware Settings.'**
+  String get labelsNoPrinterConfigured;
+
+  /// No description provided for @labelsQueueEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue is empty. Add products to print labels.'**
+  String get labelsQueueEmpty;
+
+  /// No description provided for @labelsRemoveFromQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from queue'**
+  String get labelsRemoveFromQueue;
+
+  /// No description provided for @labelsLivePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Live preview'**
+  String get labelsLivePreview;
+
   /// No description provided for @labelsProductName.
   ///
   /// In en, this message translates to:
