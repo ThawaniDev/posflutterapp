@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -448,6 +449,20 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             activeThumbColor: AppColors.primary,
             contentPadding: EdgeInsets.zero,
           ),
+
+          // Combo / bundle entry — only meaningful once the product exists.
+          if (_isEditing) ...[
+            const SizedBox(height: AppSpacing.md),
+            PosCard(
+              child: ListTile(
+                leading: const Icon(Icons.layers_outlined, color: AppColors.primary),
+                title: Text(l10n.catalogComboTitle),
+                subtitle: Text(l10n.catalogComboHeading),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('${Routes.productsCombo}/${widget.productId}'),
+              ),
+            ),
+          ],
         ],
       ),
     );
