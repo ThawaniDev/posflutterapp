@@ -41,6 +41,8 @@ class StoreSettings {
     this.requireManagerForDiscount = false,
     this.enableOpenPriceItems = false,
     this.enableQuickAddProducts = true,
+    this.returnWithoutReceiptPolicy = 'deny',
+    this.heldCartExpiryHours = 24,
     this.enableLoyaltyPoints = false,
     this.loyaltyPointsPerCurrency = 1.0,
     this.loyaltyRedemptionValue = 0.01,
@@ -103,6 +105,8 @@ class StoreSettings {
       requireManagerForDiscount: json['require_manager_for_discount'] as bool? ?? false,
       enableOpenPriceItems: json['enable_open_price_items'] as bool? ?? false,
       enableQuickAddProducts: json['enable_quick_add_products'] as bool? ?? true,
+      returnWithoutReceiptPolicy: json['return_without_receipt_policy'] as String? ?? 'deny',
+      heldCartExpiryHours: json['held_cart_expiry_hours'] as int? ?? 24,
       // Loyalty
       enableLoyaltyPoints: json['enable_loyalty_points'] as bool? ?? false,
       loyaltyPointsPerCurrency: _toDouble(json['loyalty_points_per_currency'], 1.0),
@@ -173,6 +177,8 @@ class StoreSettings {
   final bool requireManagerForDiscount;
   final bool enableOpenPriceItems;
   final bool enableQuickAddProducts;
+  final String returnWithoutReceiptPolicy; // deny / refund_to_credit / exchange_only
+  final int heldCartExpiryHours;
 
   // ─── Loyalty ────────────────────────────────────────────────
   final bool enableLoyaltyPoints;
@@ -247,6 +253,8 @@ class StoreSettings {
       'require_manager_for_discount': requireManagerForDiscount,
       'enable_open_price_items': enableOpenPriceItems,
       'enable_quick_add_products': enableQuickAddProducts,
+      'return_without_receipt_policy': returnWithoutReceiptPolicy,
+      'held_cart_expiry_hours': heldCartExpiryHours,
       'enable_loyalty_points': enableLoyaltyPoints,
       'loyalty_points_per_currency': loyaltyPointsPerCurrency,
       'loyalty_redemption_value': loyaltyRedemptionValue,
@@ -302,6 +310,8 @@ class StoreSettings {
     bool? requireManagerForDiscount,
     bool? enableOpenPriceItems,
     bool? enableQuickAddProducts,
+    String? returnWithoutReceiptPolicy,
+    int? heldCartExpiryHours,
     bool? enableLoyaltyPoints,
     double? loyaltyPointsPerCurrency,
     double? loyaltyRedemptionValue,
@@ -357,6 +367,8 @@ class StoreSettings {
       requireManagerForDiscount: requireManagerForDiscount ?? this.requireManagerForDiscount,
       enableOpenPriceItems: enableOpenPriceItems ?? this.enableOpenPriceItems,
       enableQuickAddProducts: enableQuickAddProducts ?? this.enableQuickAddProducts,
+      returnWithoutReceiptPolicy: returnWithoutReceiptPolicy ?? this.returnWithoutReceiptPolicy,
+      heldCartExpiryHours: heldCartExpiryHours ?? this.heldCartExpiryHours,
       enableLoyaltyPoints: enableLoyaltyPoints ?? this.enableLoyaltyPoints,
       loyaltyPointsPerCurrency: loyaltyPointsPerCurrency ?? this.loyaltyPointsPerCurrency,
       loyaltyRedemptionValue: loyaltyRedemptionValue ?? this.loyaltyRedemptionValue,

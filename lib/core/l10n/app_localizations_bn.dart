@@ -1651,6 +1651,19 @@ class AppLocalizationsBn extends AppLocalizations {
       'Require manager পিন when applying discounts';
 
   @override
+  String get settingsPosReturnWithoutReceiptPolicy =>
+      'Return Without Receipt Policy';
+
+  @override
+  String get settingsPosReturnPolicyDeny => 'Deny (no return without receipt)';
+
+  @override
+  String get settingsPosReturnPolicyCredit => 'Refund to store credit';
+
+  @override
+  String get settingsPosReturnPolicyExchange => 'Exchange only';
+
+  @override
   String get settingsPosLimits => 'সীমা';
 
   @override
@@ -1658,6 +1671,9 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get settingsPosSessionTimeout => 'সেশন টাইমআউট (মিনিট)';
+
+  @override
+  String get settingsPosHeldCartExpiry => 'Held Cart Expiry (hours)';
 
   @override
   String get settingsPosInventory => 'ইনভেন্টরি';

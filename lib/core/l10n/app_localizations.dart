@@ -3306,6 +3306,30 @@ abstract class AppLocalizations {
   /// **'Require manager PIN when applying discounts'**
   String get settingsPosManagerDiscountDesc;
 
+  /// No description provided for @settingsPosReturnWithoutReceiptPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Without Receipt Policy'**
+  String get settingsPosReturnWithoutReceiptPolicy;
+
+  /// No description provided for @settingsPosReturnPolicyDeny.
+  ///
+  /// In en, this message translates to:
+  /// **'Deny (no return without receipt)'**
+  String get settingsPosReturnPolicyDeny;
+
+  /// No description provided for @settingsPosReturnPolicyCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund to store credit'**
+  String get settingsPosReturnPolicyCredit;
+
+  /// No description provided for @settingsPosReturnPolicyExchange.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange only'**
+  String get settingsPosReturnPolicyExchange;
+
   /// No description provided for @settingsPosLimits.
   ///
   /// In en, this message translates to:
@@ -3323,6 +3347,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Session Timeout (minutes)'**
   String get settingsPosSessionTimeout;
+
+  /// No description provided for @settingsPosHeldCartExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Held Cart Expiry (hours)'**
+  String get settingsPosHeldCartExpiry;
 
   /// No description provided for @settingsPosInventory.
   ///

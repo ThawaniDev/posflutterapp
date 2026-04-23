@@ -1644,6 +1644,19 @@ class AppLocalizationsAr extends AppLocalizations {
       'طلب رمز المدير عند تطبيق الخصومات';
 
   @override
+  String get settingsPosReturnWithoutReceiptPolicy =>
+      'سياسة الإرجاع بدون إيصال';
+
+  @override
+  String get settingsPosReturnPolicyDeny => 'رفض (لا إرجاع بدون إيصال)';
+
+  @override
+  String get settingsPosReturnPolicyCredit => 'استرداد كرصيد متجر';
+
+  @override
+  String get settingsPosReturnPolicyExchange => 'استبدال فقط';
+
+  @override
   String get settingsPosLimits => 'الحدود';
 
   @override
@@ -1651,6 +1664,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsPosSessionTimeout => 'مهلة الجلسة (دقائق)';
+
+  @override
+  String get settingsPosHeldCartExpiry => 'انتهاء صلاحية السلة المعلقة (ساعات)';
 
   @override
   String get settingsPosInventory => 'المخزون';

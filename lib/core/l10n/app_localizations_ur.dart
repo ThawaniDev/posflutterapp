@@ -1645,6 +1645,19 @@ class AppLocalizationsUr extends AppLocalizations {
       'رعایت لاگو کرتے وقت مینیجر پن ضروری';
 
   @override
+  String get settingsPosReturnWithoutReceiptPolicy =>
+      'Return Without Receipt Policy';
+
+  @override
+  String get settingsPosReturnPolicyDeny => 'Deny (no return without receipt)';
+
+  @override
+  String get settingsPosReturnPolicyCredit => 'Refund to store credit';
+
+  @override
+  String get settingsPosReturnPolicyExchange => 'Exchange only';
+
+  @override
   String get settingsPosLimits => 'حدود';
 
   @override
@@ -1652,6 +1665,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get settingsPosSessionTimeout => 'سیشن ٹائم آؤٹ (منٹ)';
+
+  @override
+  String get settingsPosHeldCartExpiry => 'Held Cart Expiry (hours)';
 
   @override
   String get settingsPosInventory => 'انوینٹری';

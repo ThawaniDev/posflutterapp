@@ -31,6 +31,8 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
   bool _enableExchanges = true;
   bool _requireManagerForRefund = false;
   bool _requireManagerForDiscount = false;
+  String _returnWithoutReceiptPolicy = 'deny';
+  int _heldCartExpiryHours = 24;
   bool _enableOpenPriceItems = false;
   bool _enableQuickAddProducts = true;
 
@@ -74,6 +76,8 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
     _enableExchanges = s.enableExchanges;
     _requireManagerForRefund = s.requireManagerForRefund;
     _requireManagerForDiscount = s.requireManagerForDiscount;
+    _returnWithoutReceiptPolicy = s.returnWithoutReceiptPolicy;
+    _heldCartExpiryHours = s.heldCartExpiryHours;
     _enableOpenPriceItems = s.enableOpenPriceItems;
     _enableQuickAddProducts = s.enableQuickAddProducts;
     _enableLoyaltyPoints = s.enableLoyaltyPoints;
@@ -184,6 +188,18 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
               value: _requireManagerForDiscount,
               onChanged: (v) => setState(() => _requireManagerForDiscount = v),
             ),
+            SettingsDropdownRow<String>(
+              label: l10n.settingsPosReturnWithoutReceiptPolicy,
+              value: _returnWithoutReceiptPolicy,
+              items: [
+                PosDropdownItem(value: 'deny', label: l10n.settingsPosReturnPolicyDeny),
+                PosDropdownItem(value: 'refund_to_credit', label: l10n.settingsPosReturnPolicyCredit),
+                PosDropdownItem(value: 'exchange_only', label: l10n.settingsPosReturnPolicyExchange),
+              ],
+              onChanged: (v) {
+                if (v != null) setState(() => _returnWithoutReceiptPolicy = v);
+              },
+            ),
           ],
         ),
 
@@ -205,6 +221,13 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
               min: 5,
               max: 1440,
               onChanged: (v) => setState(() => _sessionTimeoutMinutes = v),
+            ),
+            SettingsNumberRow(
+              label: l10n.settingsPosHeldCartExpiry,
+              value: _heldCartExpiryHours,
+              min: 1,
+              max: 168,
+              onChanged: (v) => setState(() => _heldCartExpiryHours = v),
             ),
           ],
         ),
@@ -337,6 +360,8 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
       'enable_exchanges': _enableExchanges,
       'require_manager_for_refund': _requireManagerForRefund,
       'require_manager_for_discount': _requireManagerForDiscount,
+      'return_without_receipt_policy': _returnWithoutReceiptPolicy,
+      'held_cart_expiry_hours': _heldCartExpiryHours,
       'enable_open_price_items': _enableOpenPriceItems,
       'enable_quick_add_products': _enableQuickAddProducts,
       'enable_loyalty_points': _enableLoyaltyPoints,
