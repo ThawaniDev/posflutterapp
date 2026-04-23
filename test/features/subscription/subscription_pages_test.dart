@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
@@ -16,7 +18,11 @@ import 'package:wameedpos/features/subscription/pages/billing_history_page.dart'
 Widget _wrapWithProviders(Widget child, {List<Override> overrides = const []}) {
   return ProviderScope(
     overrides: overrides,
-    child: MaterialApp(home: child),
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: child,
+    ),
   );
 }
 
@@ -36,16 +42,16 @@ class MockSubscriptionNotifier extends StateNotifier<SubscriptionState> implemen
   Future<void> loadCurrent() async {}
 
   @override
-  Future<void> subscribe({required String planId, String billingCycle = 'monthly', String? paymentMethod}) async {}
+  Future<void> subscribe(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly', String? paymentMethod}) async {}
 
   @override
-  Future<void> changePlan({required String planId, String billingCycle = 'monthly'}) async {}
+  Future<void> changePlan(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly'}) async {}
 
   @override
-  Future<void> cancel({String? reason}) async {}
+  Future<void> cancel(AppLocalizations l10n, {String? reason}) async {}
 
   @override
-  Future<void> resume() async {}
+  Future<void> resume(AppLocalizations l10n) async {}
 }
 
 /// Mock InvoicesNotifier that holds a fixed state
@@ -168,8 +174,9 @@ void main() {
       );
 
       await tester.pumpAndSettle();
-      // Should have a switch for billing cycle toggle
-      expect(find.byType(Switch), findsOneWidget);
+      // Should have a billing cycle toggle with Monthly and Annual labels
+      expect(find.text('Monthly'), findsWidgets);
+      expect(find.text('Annual'), findsWidgets);
     });
   });
 
@@ -185,7 +192,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(PosLoadingSkeleton), findsWidgets);
     });
 
     testWidgets('shows no subscription CTA', (tester) async {
@@ -246,7 +253,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(PosLoadingSkeleton), findsWidgets);
     });
 
     testWidgets('shows empty state when no invoices', (tester) async {

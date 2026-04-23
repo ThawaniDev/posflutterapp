@@ -20,6 +20,7 @@ import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 import 'package:wameedpos/features/staff/providers/roles_state.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/services/upgrade_prompt_service.dart';
+import 'package:wameedpos/features/subscription/widgets/global_subscription_banner.dart';
 
 /// Shell widget that wraps authenticated pages with a persistent sidebar.
 ///
@@ -106,6 +107,7 @@ class AppShell extends ConsumerWidget {
                     ),
                   ),
                   const MaintenanceBanner(),
+                  const GlobalSubscriptionBanner(),
                   Expanded(child: keyedChild),
                 ],
               ),
@@ -131,6 +133,7 @@ class AppShell extends ConsumerWidget {
       body: Column(
         children: [
           const MaintenanceBanner(),
+          const GlobalSubscriptionBanner(),
           Expanded(child: keyedChild),
         ],
       ),

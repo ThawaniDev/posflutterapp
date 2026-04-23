@@ -436,8 +436,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
       message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), ''),
       confirmLabel: l10n.subProceedToPayment,
       cancelLabel: l10n.commonCancel,
-    );
-    if (confirmed == true) {
+    );    if (!mounted) return;    if (confirmed == true) {
       context.push(
         Routes.providerPaymentCheckout,
         extra: {

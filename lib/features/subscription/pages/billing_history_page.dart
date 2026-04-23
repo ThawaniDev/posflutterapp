@@ -112,7 +112,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
               child: ListView.separated(
                 padding: AppSpacing.paddingAllMd,
                 itemCount: invoices.length,
-                separatorBuilder: (_, __) => AppSpacing.verticalSm,
+                separatorBuilder: (_, _) => AppSpacing.verticalSm,
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () => context.go('${Routes.invoiceDetail}/${invoices[index].id}'),

@@ -5,6 +5,7 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/widgets/plan_comparison_table.dart';
@@ -113,17 +114,18 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
     return const SizedBox.shrink();
   }
 
-  void _onPlanSelected(plan) async {
+  Future<void> _onPlanSelected(SubscriptionPlan plan) async {
     final billingCycle = _isAnnual ? l10n.subBillingCycleYearly : l10n.subBillingCycleMonthly;
     final price = _isAnnual ? (plan.annualPrice ?? plan.monthlyPrice) : plan.monthlyPrice;
 
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.subSubscribeToPlan(plan.name),
-      message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), ''),
+      message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), ''),
       confirmLabel: l10n.subProceedToPayment,
       cancelLabel: l10n.commonCancel,
     );
+    if (!mounted) return;
     if (confirmed == true) {
       context.push(
         Routes.providerPaymentCheckout,

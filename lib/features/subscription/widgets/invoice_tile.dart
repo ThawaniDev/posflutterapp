@@ -19,7 +19,7 @@ class InvoiceTile extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
-          backgroundColor: _statusColor(statusName).withOpacity(0.15),
+          backgroundColor: _statusColor(statusName).withValues(alpha: 0.15),
           child: Icon(_statusIcon(statusName), color: _statusColor(statusName), size: 20),
         ),
         title: Text(invoice.invoiceNumber ?? '', style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -44,7 +44,7 @@ class InvoiceTile extends StatelessWidget {
             AppSpacing.verticalXs,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(color: _statusColor(statusName).withOpacity(0.15), borderRadius: AppRadius.borderLg),
+              decoration: BoxDecoration(color: _statusColor(statusName).withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
               child: Text(
                 statusName,
                 style: TextStyle(fontSize: 11, color: _statusColor(statusName), fontWeight: FontWeight.w600),
