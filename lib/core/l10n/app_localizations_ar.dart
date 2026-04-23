@@ -12500,6 +12500,93 @@ class AppLocalizationsAr extends AppLocalizations {
   String get promoSyncNow => 'مزامنة الآن';
 
   @override
+  String get promoNew => 'عرض جديد';
+
+  @override
+  String get promoCreate => 'إنشاء العرض';
+
+  @override
+  String get promoUpdate => 'تحديث العرض';
+
+  @override
+  String get promoBasicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get promoDiscountSection => 'الخصم';
+
+  @override
+  String get promoValiditySection => 'الصلاحية';
+
+  @override
+  String get promoTargetingSection => 'الاستهداف';
+
+  @override
+  String get promoLimitsSection => 'الحدود';
+
+  @override
+  String get promoFlagsSection => 'الإعدادات';
+
+  @override
+  String get promoBundleSection => 'منتجات الحزمة';
+
+  @override
+  String get promoAddBundleProduct => 'إضافة منتج للحزمة';
+
+  @override
+  String get fieldRequired => 'مطلوب';
+
+  @override
+  String get discountPercentage => 'نسبة الخصم %';
+
+  @override
+  String get discountAmount => 'مبلغ الخصم';
+
+  @override
+  String get validFrom => 'صالح من';
+
+  @override
+  String get validTo => 'صالح حتى';
+
+  @override
+  String get activeTimeFrom => 'الوقت من';
+
+  @override
+  String get activeTimeTo => 'الوقت حتى';
+
+  @override
+  String get activeDays => 'الأيام النشطة';
+
+  @override
+  String get monday => 'الإثنين';
+
+  @override
+  String get tuesday => 'الثلاثاء';
+
+  @override
+  String get wednesday => 'الأربعاء';
+
+  @override
+  String get thursday => 'الخميس';
+
+  @override
+  String get friday => 'الجمعة';
+
+  @override
+  String get saturday => 'السبت';
+
+  @override
+  String get sunday => 'الأحد';
+
+  @override
+  String get customerGroups => 'مجموعات العملاء';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String get minItemQuantity => 'أدنى كمية عنصر';
+
+  @override
   String get promotionName => 'اسم العرض *';
 
   @override

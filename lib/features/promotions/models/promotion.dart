@@ -1,5 +1,13 @@
 import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
 
+class BundleProductEntry {
+  const BundleProductEntry({required this.productId, this.quantity = 1});
+  final String productId;
+  final int quantity;
+
+  Map<String, dynamic> toJson() => {'product_id': productId, 'quantity': quantity};
+}
+
 class Promotion {
 
   const Promotion({
@@ -29,6 +37,10 @@ class Promotion {
     this.syncVersion,
     this.createdAt,
     this.updatedAt,
+    this.productIds = const [],
+    this.categoryIds = const [],
+    this.customerGroupIds = const [],
+    this.bundleProducts = const [],
   });
 
   factory Promotion.fromJson(Map<String, dynamic> json) {
@@ -61,6 +73,14 @@ class Promotion {
       syncVersion: (json['sync_version'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+      productIds: json['product_ids'] != null ? List<String>.from(json['product_ids'] as List) : const [],
+      categoryIds: json['category_ids'] != null ? List<String>.from(json['category_ids'] as List) : const [],
+      customerGroupIds: json['customer_group_ids'] != null ? List<String>.from(json['customer_group_ids'] as List) : const [],
+      bundleProducts: json['bundle_products'] != null
+          ? (json['bundle_products'] as List)
+              .map((e) => BundleProductEntry(productId: e['product_id'] as String, quantity: (e['quantity'] as num?)?.toInt() ?? 1))
+              .toList()
+          : const [],
     );
   }
   final String id;
@@ -89,6 +109,10 @@ class Promotion {
   final int? syncVersion;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final List<String> productIds;
+  final List<String> categoryIds;
+  final List<String> customerGroupIds;
+  final List<BundleProductEntry> bundleProducts;
 
   Map<String, dynamic> toJson() {
     return {

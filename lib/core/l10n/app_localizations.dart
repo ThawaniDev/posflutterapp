@@ -23818,6 +23818,180 @@ abstract class AppLocalizations {
   /// **'Sync Now'**
   String get promoSyncNow;
 
+  /// No description provided for @promoNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New Promotion'**
+  String get promoNew;
+
+  /// No description provided for @promoCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Promotion'**
+  String get promoCreate;
+
+  /// No description provided for @promoUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Promotion'**
+  String get promoUpdate;
+
+  /// No description provided for @promoBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get promoBasicInfo;
+
+  /// No description provided for @promoDiscountSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get promoDiscountSection;
+
+  /// No description provided for @promoValiditySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Validity'**
+  String get promoValiditySection;
+
+  /// No description provided for @promoTargetingSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Targeting'**
+  String get promoTargetingSection;
+
+  /// No description provided for @promoLimitsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Limits'**
+  String get promoLimitsSection;
+
+  /// No description provided for @promoFlagsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Flags'**
+  String get promoFlagsSection;
+
+  /// No description provided for @promoBundleSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle Products'**
+  String get promoBundleSection;
+
+  /// No description provided for @promoAddBundleProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Add bundle product'**
+  String get promoAddBundleProduct;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get fieldRequired;
+
+  /// No description provided for @discountPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount %'**
+  String get discountPercentage;
+
+  /// No description provided for @discountAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Amount'**
+  String get discountAmount;
+
+  /// No description provided for @validFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid From'**
+  String get validFrom;
+
+  /// No description provided for @validTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid To'**
+  String get validTo;
+
+  /// No description provided for @activeTimeFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Active From'**
+  String get activeTimeFrom;
+
+  /// No description provided for @activeTimeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Active To'**
+  String get activeTimeTo;
+
+  /// No description provided for @activeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Days'**
+  String get activeDays;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
+
+  /// No description provided for @customerGroups.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Groups'**
+  String get customerGroups;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAll;
+
+  /// No description provided for @minItemQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Min Item Quantity'**
+  String get minItemQuantity;
+
   /// No description provided for @promotionName.
   ///
   /// In en, this message translates to:

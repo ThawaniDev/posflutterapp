@@ -12603,6 +12603,93 @@ class AppLocalizationsBn extends AppLocalizations {
   String get promoSyncNow => 'Sync Now';
 
   @override
+  String get promoNew => 'New Promotion';
+
+  @override
+  String get promoCreate => 'Create Promotion';
+
+  @override
+  String get promoUpdate => 'Update Promotion';
+
+  @override
+  String get promoBasicInfo => 'Basic Info';
+
+  @override
+  String get promoDiscountSection => 'Discount';
+
+  @override
+  String get promoValiditySection => 'Validity';
+
+  @override
+  String get promoTargetingSection => 'Targeting';
+
+  @override
+  String get promoLimitsSection => 'Limits';
+
+  @override
+  String get promoFlagsSection => 'Flags';
+
+  @override
+  String get promoBundleSection => 'Bundle Products';
+
+  @override
+  String get promoAddBundleProduct => 'Add bundle product';
+
+  @override
+  String get fieldRequired => 'Required';
+
+  @override
+  String get discountPercentage => 'Discount %';
+
+  @override
+  String get discountAmount => 'Discount Amount';
+
+  @override
+  String get validFrom => 'Valid From';
+
+  @override
+  String get validTo => 'Valid To';
+
+  @override
+  String get activeTimeFrom => 'Active From';
+
+  @override
+  String get activeTimeTo => 'Active To';
+
+  @override
+  String get activeDays => 'Active Days';
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get tuesday => 'Tuesday';
+
+  @override
+  String get wednesday => 'Wednesday';
+
+  @override
+  String get thursday => 'Thursday';
+
+  @override
+  String get friday => 'Friday';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
+
+  @override
+  String get customerGroups => 'Customer Groups';
+
+  @override
+  String get seeAll => 'See all';
+
+  @override
+  String get minItemQuantity => 'Min Item Quantity';
+
+  @override
   String get promotionName => 'প্রচারণার নাম *';
 
   @override
