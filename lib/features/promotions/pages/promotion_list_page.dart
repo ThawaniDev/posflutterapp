@@ -6,6 +6,7 @@ import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
 import 'package:wameedpos/features/promotions/models/promotion.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
 import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
+import 'package:wameedpos/features/promotions/pages/coupon_management_page.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
 import 'package:wameedpos/features/promotions/repositories/promotion_repository.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -241,7 +242,9 @@ class _PromotionCard extends ConsumerWidget {
                     itemBuilder: (_) => [
                       PopupMenuItem(value: 'edit', child: Text(l10n.edit)),
                       PopupMenuItem(value: 'analytics', child: Text(l10n.analytics)),
+                      PopupMenuItem(value: 'duplicate', child: Text(l10n.promoDuplicate)),
                       if (isCoupon) PopupMenuItem(value: 'generate', child: Text(l10n.generateCoupons)),
+                      if (isCoupon) PopupMenuItem(value: 'manage-coupons', child: Text(l10n.promoManageCoupons)),
                       PopupMenuItem(value: 'delete', child: Text(l10n.delete)),
                     ],
                   ),
@@ -272,10 +275,35 @@ class _PromotionCard extends ConsumerWidget {
         Navigator.push(context, MaterialPageRoute(builder: (_) => PromotionFormPage(promotionId: promotion.id)));
       case 'analytics':
         Navigator.push(context, MaterialPageRoute(builder: (_) => PromotionAnalyticsPage(promotionId: promotion.id)));
+      case 'duplicate':
+        _duplicatePromotion(context, ref);
+      case 'manage-coupons':
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CouponManagementPage(
+              promotionId: promotion.id,
+              promotionName: promotion.name,
+            ),
+          ),
+        );
       case 'generate':
         _showGenerateCouponsDialog(context, ref);
       case 'delete':
         _confirmDelete(context, ref);
+    }
+  }
+
+  Future<void> _duplicatePromotion(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      await ref.read(promotionRepositoryProvider).duplicatePromotion(promotion.id);
+      await ref.read(promotionsProvider.notifier).load();
+      if (!context.mounted) return;
+      showPosInfoSnackbar(context, l10n.promoDuplicated);
+    } catch (e) {
+      if (!context.mounted) return;
+      showPosErrorSnackbar(context, e.toString());
     }
   }
 

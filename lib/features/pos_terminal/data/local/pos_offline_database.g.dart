@@ -6623,6 +6623,1902 @@ class LocalModifierOptionsCompanion
   }
 }
 
+class $LocalPromotionsTable extends LocalPromotions
+    with TableInfo<$LocalPromotionsTable, LocalPromotion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalPromotionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _discountValueMeta = const VerificationMeta(
+    'discountValue',
+  );
+  @override
+  late final GeneratedColumn<double> discountValue = GeneratedColumn<double>(
+    'discount_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _buyQuantityMeta = const VerificationMeta(
+    'buyQuantity',
+  );
+  @override
+  late final GeneratedColumn<int> buyQuantity = GeneratedColumn<int>(
+    'buy_quantity',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _getQuantityMeta = const VerificationMeta(
+    'getQuantity',
+  );
+  @override
+  late final GeneratedColumn<int> getQuantity = GeneratedColumn<int>(
+    'get_quantity',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _getDiscountPercentMeta =
+      const VerificationMeta('getDiscountPercent');
+  @override
+  late final GeneratedColumn<double> getDiscountPercent =
+      GeneratedColumn<double>(
+        'get_discount_percent',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _bundlePriceMeta = const VerificationMeta(
+    'bundlePrice',
+  );
+  @override
+  late final GeneratedColumn<double> bundlePrice = GeneratedColumn<double>(
+    'bundle_price',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _minOrderTotalMeta = const VerificationMeta(
+    'minOrderTotal',
+  );
+  @override
+  late final GeneratedColumn<double> minOrderTotal = GeneratedColumn<double>(
+    'min_order_total',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _minItemQuantityMeta = const VerificationMeta(
+    'minItemQuantity',
+  );
+  @override
+  late final GeneratedColumn<int> minItemQuantity = GeneratedColumn<int>(
+    'min_item_quantity',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _validFromMeta = const VerificationMeta(
+    'validFrom',
+  );
+  @override
+  late final GeneratedColumn<DateTime> validFrom = GeneratedColumn<DateTime>(
+    'valid_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _validToMeta = const VerificationMeta(
+    'validTo',
+  );
+  @override
+  late final GeneratedColumn<DateTime> validTo = GeneratedColumn<DateTime>(
+    'valid_to',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _activeDaysJsonMeta = const VerificationMeta(
+    'activeDaysJson',
+  );
+  @override
+  late final GeneratedColumn<String> activeDaysJson = GeneratedColumn<String>(
+    'active_days_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  static const VerificationMeta _activeTimeFromMeta = const VerificationMeta(
+    'activeTimeFrom',
+  );
+  @override
+  late final GeneratedColumn<String> activeTimeFrom = GeneratedColumn<String>(
+    'active_time_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _activeTimeToMeta = const VerificationMeta(
+    'activeTimeTo',
+  );
+  @override
+  late final GeneratedColumn<String> activeTimeTo = GeneratedColumn<String>(
+    'active_time_to',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _maxUsesMeta = const VerificationMeta(
+    'maxUses',
+  );
+  @override
+  late final GeneratedColumn<int> maxUses = GeneratedColumn<int>(
+    'max_uses',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _maxUsesPerCustomerMeta =
+      const VerificationMeta('maxUsesPerCustomer');
+  @override
+  late final GeneratedColumn<int> maxUsesPerCustomer = GeneratedColumn<int>(
+    'max_uses_per_customer',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _usageCountMeta = const VerificationMeta(
+    'usageCount',
+  );
+  @override
+  late final GeneratedColumn<int> usageCount = GeneratedColumn<int>(
+    'usage_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isStackableMeta = const VerificationMeta(
+    'isStackable',
+  );
+  @override
+  late final GeneratedColumn<bool> isStackable = GeneratedColumn<bool>(
+    'is_stackable',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_stackable" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _isCouponMeta = const VerificationMeta(
+    'isCoupon',
+  );
+  @override
+  late final GeneratedColumn<bool> isCoupon = GeneratedColumn<bool>(
+    'is_coupon',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_coupon" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _productIdsJsonMeta = const VerificationMeta(
+    'productIdsJson',
+  );
+  @override
+  late final GeneratedColumn<String> productIdsJson = GeneratedColumn<String>(
+    'product_ids_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  static const VerificationMeta _categoryIdsJsonMeta = const VerificationMeta(
+    'categoryIdsJson',
+  );
+  @override
+  late final GeneratedColumn<String> categoryIdsJson = GeneratedColumn<String>(
+    'category_ids_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  static const VerificationMeta _customerGroupIdsJsonMeta =
+      const VerificationMeta('customerGroupIdsJson');
+  @override
+  late final GeneratedColumn<String> customerGroupIdsJson =
+      GeneratedColumn<String>(
+        'customer_group_ids_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('[]'),
+      );
+  static const VerificationMeta _bundleProductsJsonMeta =
+      const VerificationMeta('bundleProductsJson');
+  @override
+  late final GeneratedColumn<String> bundleProductsJson =
+      GeneratedColumn<String>(
+        'bundle_products_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('[]'),
+      );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    type,
+    discountValue,
+    buyQuantity,
+    getQuantity,
+    getDiscountPercent,
+    bundlePrice,
+    minOrderTotal,
+    minItemQuantity,
+    validFrom,
+    validTo,
+    activeDaysJson,
+    activeTimeFrom,
+    activeTimeTo,
+    maxUses,
+    maxUsesPerCustomer,
+    usageCount,
+    isStackable,
+    isActive,
+    isCoupon,
+    productIdsJson,
+    categoryIdsJson,
+    customerGroupIdsJson,
+    bundleProductsJson,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_promotions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalPromotion> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('discount_value')) {
+      context.handle(
+        _discountValueMeta,
+        discountValue.isAcceptableOrUnknown(
+          data['discount_value']!,
+          _discountValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('buy_quantity')) {
+      context.handle(
+        _buyQuantityMeta,
+        buyQuantity.isAcceptableOrUnknown(
+          data['buy_quantity']!,
+          _buyQuantityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('get_quantity')) {
+      context.handle(
+        _getQuantityMeta,
+        getQuantity.isAcceptableOrUnknown(
+          data['get_quantity']!,
+          _getQuantityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('get_discount_percent')) {
+      context.handle(
+        _getDiscountPercentMeta,
+        getDiscountPercent.isAcceptableOrUnknown(
+          data['get_discount_percent']!,
+          _getDiscountPercentMeta,
+        ),
+      );
+    }
+    if (data.containsKey('bundle_price')) {
+      context.handle(
+        _bundlePriceMeta,
+        bundlePrice.isAcceptableOrUnknown(
+          data['bundle_price']!,
+          _bundlePriceMeta,
+        ),
+      );
+    }
+    if (data.containsKey('min_order_total')) {
+      context.handle(
+        _minOrderTotalMeta,
+        minOrderTotal.isAcceptableOrUnknown(
+          data['min_order_total']!,
+          _minOrderTotalMeta,
+        ),
+      );
+    }
+    if (data.containsKey('min_item_quantity')) {
+      context.handle(
+        _minItemQuantityMeta,
+        minItemQuantity.isAcceptableOrUnknown(
+          data['min_item_quantity']!,
+          _minItemQuantityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('valid_from')) {
+      context.handle(
+        _validFromMeta,
+        validFrom.isAcceptableOrUnknown(data['valid_from']!, _validFromMeta),
+      );
+    }
+    if (data.containsKey('valid_to')) {
+      context.handle(
+        _validToMeta,
+        validTo.isAcceptableOrUnknown(data['valid_to']!, _validToMeta),
+      );
+    }
+    if (data.containsKey('active_days_json')) {
+      context.handle(
+        _activeDaysJsonMeta,
+        activeDaysJson.isAcceptableOrUnknown(
+          data['active_days_json']!,
+          _activeDaysJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('active_time_from')) {
+      context.handle(
+        _activeTimeFromMeta,
+        activeTimeFrom.isAcceptableOrUnknown(
+          data['active_time_from']!,
+          _activeTimeFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('active_time_to')) {
+      context.handle(
+        _activeTimeToMeta,
+        activeTimeTo.isAcceptableOrUnknown(
+          data['active_time_to']!,
+          _activeTimeToMeta,
+        ),
+      );
+    }
+    if (data.containsKey('max_uses')) {
+      context.handle(
+        _maxUsesMeta,
+        maxUses.isAcceptableOrUnknown(data['max_uses']!, _maxUsesMeta),
+      );
+    }
+    if (data.containsKey('max_uses_per_customer')) {
+      context.handle(
+        _maxUsesPerCustomerMeta,
+        maxUsesPerCustomer.isAcceptableOrUnknown(
+          data['max_uses_per_customer']!,
+          _maxUsesPerCustomerMeta,
+        ),
+      );
+    }
+    if (data.containsKey('usage_count')) {
+      context.handle(
+        _usageCountMeta,
+        usageCount.isAcceptableOrUnknown(data['usage_count']!, _usageCountMeta),
+      );
+    }
+    if (data.containsKey('is_stackable')) {
+      context.handle(
+        _isStackableMeta,
+        isStackable.isAcceptableOrUnknown(
+          data['is_stackable']!,
+          _isStackableMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('is_coupon')) {
+      context.handle(
+        _isCouponMeta,
+        isCoupon.isAcceptableOrUnknown(data['is_coupon']!, _isCouponMeta),
+      );
+    }
+    if (data.containsKey('product_ids_json')) {
+      context.handle(
+        _productIdsJsonMeta,
+        productIdsJson.isAcceptableOrUnknown(
+          data['product_ids_json']!,
+          _productIdsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('category_ids_json')) {
+      context.handle(
+        _categoryIdsJsonMeta,
+        categoryIdsJson.isAcceptableOrUnknown(
+          data['category_ids_json']!,
+          _categoryIdsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('customer_group_ids_json')) {
+      context.handle(
+        _customerGroupIdsJsonMeta,
+        customerGroupIdsJson.isAcceptableOrUnknown(
+          data['customer_group_ids_json']!,
+          _customerGroupIdsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('bundle_products_json')) {
+      context.handle(
+        _bundleProductsJsonMeta,
+        bundleProductsJson.isAcceptableOrUnknown(
+          data['bundle_products_json']!,
+          _bundleProductsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalPromotion map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalPromotion(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      discountValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_value'],
+      ),
+      buyQuantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}buy_quantity'],
+      ),
+      getQuantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}get_quantity'],
+      ),
+      getDiscountPercent: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}get_discount_percent'],
+      ),
+      bundlePrice: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}bundle_price'],
+      ),
+      minOrderTotal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}min_order_total'],
+      ),
+      minItemQuantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}min_item_quantity'],
+      ),
+      validFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}valid_from'],
+      ),
+      validTo: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}valid_to'],
+      ),
+      activeDaysJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}active_days_json'],
+      )!,
+      activeTimeFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}active_time_from'],
+      ),
+      activeTimeTo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}active_time_to'],
+      ),
+      maxUses: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max_uses'],
+      ),
+      maxUsesPerCustomer: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max_uses_per_customer'],
+      ),
+      usageCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}usage_count'],
+      )!,
+      isStackable: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_stackable'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      isCoupon: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_coupon'],
+      )!,
+      productIdsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product_ids_json'],
+      )!,
+      categoryIdsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_ids_json'],
+      )!,
+      customerGroupIdsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}customer_group_ids_json'],
+      )!,
+      bundleProductsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bundle_products_json'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalPromotionsTable createAlias(String alias) {
+    return $LocalPromotionsTable(attachedDatabase, alias);
+  }
+}
+
+class LocalPromotion extends DataClass implements Insertable<LocalPromotion> {
+  final String id;
+  final String name;
+  final String type;
+  final double? discountValue;
+  final int? buyQuantity;
+  final int? getQuantity;
+  final double? getDiscountPercent;
+  final double? bundlePrice;
+  final double? minOrderTotal;
+  final int? minItemQuantity;
+  final DateTime? validFrom;
+  final DateTime? validTo;
+  final String activeDaysJson;
+  final String? activeTimeFrom;
+  final String? activeTimeTo;
+  final int? maxUses;
+  final int? maxUsesPerCustomer;
+  final int usageCount;
+  final bool isStackable;
+  final bool isActive;
+  final bool isCoupon;
+  final String productIdsJson;
+  final String categoryIdsJson;
+  final String customerGroupIdsJson;
+  final String bundleProductsJson;
+  final DateTime updatedAt;
+  const LocalPromotion({
+    required this.id,
+    required this.name,
+    required this.type,
+    this.discountValue,
+    this.buyQuantity,
+    this.getQuantity,
+    this.getDiscountPercent,
+    this.bundlePrice,
+    this.minOrderTotal,
+    this.minItemQuantity,
+    this.validFrom,
+    this.validTo,
+    required this.activeDaysJson,
+    this.activeTimeFrom,
+    this.activeTimeTo,
+    this.maxUses,
+    this.maxUsesPerCustomer,
+    required this.usageCount,
+    required this.isStackable,
+    required this.isActive,
+    required this.isCoupon,
+    required this.productIdsJson,
+    required this.categoryIdsJson,
+    required this.customerGroupIdsJson,
+    required this.bundleProductsJson,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['type'] = Variable<String>(type);
+    if (!nullToAbsent || discountValue != null) {
+      map['discount_value'] = Variable<double>(discountValue);
+    }
+    if (!nullToAbsent || buyQuantity != null) {
+      map['buy_quantity'] = Variable<int>(buyQuantity);
+    }
+    if (!nullToAbsent || getQuantity != null) {
+      map['get_quantity'] = Variable<int>(getQuantity);
+    }
+    if (!nullToAbsent || getDiscountPercent != null) {
+      map['get_discount_percent'] = Variable<double>(getDiscountPercent);
+    }
+    if (!nullToAbsent || bundlePrice != null) {
+      map['bundle_price'] = Variable<double>(bundlePrice);
+    }
+    if (!nullToAbsent || minOrderTotal != null) {
+      map['min_order_total'] = Variable<double>(minOrderTotal);
+    }
+    if (!nullToAbsent || minItemQuantity != null) {
+      map['min_item_quantity'] = Variable<int>(minItemQuantity);
+    }
+    if (!nullToAbsent || validFrom != null) {
+      map['valid_from'] = Variable<DateTime>(validFrom);
+    }
+    if (!nullToAbsent || validTo != null) {
+      map['valid_to'] = Variable<DateTime>(validTo);
+    }
+    map['active_days_json'] = Variable<String>(activeDaysJson);
+    if (!nullToAbsent || activeTimeFrom != null) {
+      map['active_time_from'] = Variable<String>(activeTimeFrom);
+    }
+    if (!nullToAbsent || activeTimeTo != null) {
+      map['active_time_to'] = Variable<String>(activeTimeTo);
+    }
+    if (!nullToAbsent || maxUses != null) {
+      map['max_uses'] = Variable<int>(maxUses);
+    }
+    if (!nullToAbsent || maxUsesPerCustomer != null) {
+      map['max_uses_per_customer'] = Variable<int>(maxUsesPerCustomer);
+    }
+    map['usage_count'] = Variable<int>(usageCount);
+    map['is_stackable'] = Variable<bool>(isStackable);
+    map['is_active'] = Variable<bool>(isActive);
+    map['is_coupon'] = Variable<bool>(isCoupon);
+    map['product_ids_json'] = Variable<String>(productIdsJson);
+    map['category_ids_json'] = Variable<String>(categoryIdsJson);
+    map['customer_group_ids_json'] = Variable<String>(customerGroupIdsJson);
+    map['bundle_products_json'] = Variable<String>(bundleProductsJson);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  LocalPromotionsCompanion toCompanion(bool nullToAbsent) {
+    return LocalPromotionsCompanion(
+      id: Value(id),
+      name: Value(name),
+      type: Value(type),
+      discountValue: discountValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountValue),
+      buyQuantity: buyQuantity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(buyQuantity),
+      getQuantity: getQuantity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(getQuantity),
+      getDiscountPercent: getDiscountPercent == null && nullToAbsent
+          ? const Value.absent()
+          : Value(getDiscountPercent),
+      bundlePrice: bundlePrice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bundlePrice),
+      minOrderTotal: minOrderTotal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minOrderTotal),
+      minItemQuantity: minItemQuantity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(minItemQuantity),
+      validFrom: validFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(validFrom),
+      validTo: validTo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(validTo),
+      activeDaysJson: Value(activeDaysJson),
+      activeTimeFrom: activeTimeFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(activeTimeFrom),
+      activeTimeTo: activeTimeTo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(activeTimeTo),
+      maxUses: maxUses == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maxUses),
+      maxUsesPerCustomer: maxUsesPerCustomer == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maxUsesPerCustomer),
+      usageCount: Value(usageCount),
+      isStackable: Value(isStackable),
+      isActive: Value(isActive),
+      isCoupon: Value(isCoupon),
+      productIdsJson: Value(productIdsJson),
+      categoryIdsJson: Value(categoryIdsJson),
+      customerGroupIdsJson: Value(customerGroupIdsJson),
+      bundleProductsJson: Value(bundleProductsJson),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory LocalPromotion.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalPromotion(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      type: serializer.fromJson<String>(json['type']),
+      discountValue: serializer.fromJson<double?>(json['discountValue']),
+      buyQuantity: serializer.fromJson<int?>(json['buyQuantity']),
+      getQuantity: serializer.fromJson<int?>(json['getQuantity']),
+      getDiscountPercent: serializer.fromJson<double?>(
+        json['getDiscountPercent'],
+      ),
+      bundlePrice: serializer.fromJson<double?>(json['bundlePrice']),
+      minOrderTotal: serializer.fromJson<double?>(json['minOrderTotal']),
+      minItemQuantity: serializer.fromJson<int?>(json['minItemQuantity']),
+      validFrom: serializer.fromJson<DateTime?>(json['validFrom']),
+      validTo: serializer.fromJson<DateTime?>(json['validTo']),
+      activeDaysJson: serializer.fromJson<String>(json['activeDaysJson']),
+      activeTimeFrom: serializer.fromJson<String?>(json['activeTimeFrom']),
+      activeTimeTo: serializer.fromJson<String?>(json['activeTimeTo']),
+      maxUses: serializer.fromJson<int?>(json['maxUses']),
+      maxUsesPerCustomer: serializer.fromJson<int?>(json['maxUsesPerCustomer']),
+      usageCount: serializer.fromJson<int>(json['usageCount']),
+      isStackable: serializer.fromJson<bool>(json['isStackable']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      isCoupon: serializer.fromJson<bool>(json['isCoupon']),
+      productIdsJson: serializer.fromJson<String>(json['productIdsJson']),
+      categoryIdsJson: serializer.fromJson<String>(json['categoryIdsJson']),
+      customerGroupIdsJson: serializer.fromJson<String>(
+        json['customerGroupIdsJson'],
+      ),
+      bundleProductsJson: serializer.fromJson<String>(
+        json['bundleProductsJson'],
+      ),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'type': serializer.toJson<String>(type),
+      'discountValue': serializer.toJson<double?>(discountValue),
+      'buyQuantity': serializer.toJson<int?>(buyQuantity),
+      'getQuantity': serializer.toJson<int?>(getQuantity),
+      'getDiscountPercent': serializer.toJson<double?>(getDiscountPercent),
+      'bundlePrice': serializer.toJson<double?>(bundlePrice),
+      'minOrderTotal': serializer.toJson<double?>(minOrderTotal),
+      'minItemQuantity': serializer.toJson<int?>(minItemQuantity),
+      'validFrom': serializer.toJson<DateTime?>(validFrom),
+      'validTo': serializer.toJson<DateTime?>(validTo),
+      'activeDaysJson': serializer.toJson<String>(activeDaysJson),
+      'activeTimeFrom': serializer.toJson<String?>(activeTimeFrom),
+      'activeTimeTo': serializer.toJson<String?>(activeTimeTo),
+      'maxUses': serializer.toJson<int?>(maxUses),
+      'maxUsesPerCustomer': serializer.toJson<int?>(maxUsesPerCustomer),
+      'usageCount': serializer.toJson<int>(usageCount),
+      'isStackable': serializer.toJson<bool>(isStackable),
+      'isActive': serializer.toJson<bool>(isActive),
+      'isCoupon': serializer.toJson<bool>(isCoupon),
+      'productIdsJson': serializer.toJson<String>(productIdsJson),
+      'categoryIdsJson': serializer.toJson<String>(categoryIdsJson),
+      'customerGroupIdsJson': serializer.toJson<String>(customerGroupIdsJson),
+      'bundleProductsJson': serializer.toJson<String>(bundleProductsJson),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  LocalPromotion copyWith({
+    String? id,
+    String? name,
+    String? type,
+    Value<double?> discountValue = const Value.absent(),
+    Value<int?> buyQuantity = const Value.absent(),
+    Value<int?> getQuantity = const Value.absent(),
+    Value<double?> getDiscountPercent = const Value.absent(),
+    Value<double?> bundlePrice = const Value.absent(),
+    Value<double?> minOrderTotal = const Value.absent(),
+    Value<int?> minItemQuantity = const Value.absent(),
+    Value<DateTime?> validFrom = const Value.absent(),
+    Value<DateTime?> validTo = const Value.absent(),
+    String? activeDaysJson,
+    Value<String?> activeTimeFrom = const Value.absent(),
+    Value<String?> activeTimeTo = const Value.absent(),
+    Value<int?> maxUses = const Value.absent(),
+    Value<int?> maxUsesPerCustomer = const Value.absent(),
+    int? usageCount,
+    bool? isStackable,
+    bool? isActive,
+    bool? isCoupon,
+    String? productIdsJson,
+    String? categoryIdsJson,
+    String? customerGroupIdsJson,
+    String? bundleProductsJson,
+    DateTime? updatedAt,
+  }) => LocalPromotion(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    type: type ?? this.type,
+    discountValue: discountValue.present
+        ? discountValue.value
+        : this.discountValue,
+    buyQuantity: buyQuantity.present ? buyQuantity.value : this.buyQuantity,
+    getQuantity: getQuantity.present ? getQuantity.value : this.getQuantity,
+    getDiscountPercent: getDiscountPercent.present
+        ? getDiscountPercent.value
+        : this.getDiscountPercent,
+    bundlePrice: bundlePrice.present ? bundlePrice.value : this.bundlePrice,
+    minOrderTotal: minOrderTotal.present
+        ? minOrderTotal.value
+        : this.minOrderTotal,
+    minItemQuantity: minItemQuantity.present
+        ? minItemQuantity.value
+        : this.minItemQuantity,
+    validFrom: validFrom.present ? validFrom.value : this.validFrom,
+    validTo: validTo.present ? validTo.value : this.validTo,
+    activeDaysJson: activeDaysJson ?? this.activeDaysJson,
+    activeTimeFrom: activeTimeFrom.present
+        ? activeTimeFrom.value
+        : this.activeTimeFrom,
+    activeTimeTo: activeTimeTo.present ? activeTimeTo.value : this.activeTimeTo,
+    maxUses: maxUses.present ? maxUses.value : this.maxUses,
+    maxUsesPerCustomer: maxUsesPerCustomer.present
+        ? maxUsesPerCustomer.value
+        : this.maxUsesPerCustomer,
+    usageCount: usageCount ?? this.usageCount,
+    isStackable: isStackable ?? this.isStackable,
+    isActive: isActive ?? this.isActive,
+    isCoupon: isCoupon ?? this.isCoupon,
+    productIdsJson: productIdsJson ?? this.productIdsJson,
+    categoryIdsJson: categoryIdsJson ?? this.categoryIdsJson,
+    customerGroupIdsJson: customerGroupIdsJson ?? this.customerGroupIdsJson,
+    bundleProductsJson: bundleProductsJson ?? this.bundleProductsJson,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  LocalPromotion copyWithCompanion(LocalPromotionsCompanion data) {
+    return LocalPromotion(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      type: data.type.present ? data.type.value : this.type,
+      discountValue: data.discountValue.present
+          ? data.discountValue.value
+          : this.discountValue,
+      buyQuantity: data.buyQuantity.present
+          ? data.buyQuantity.value
+          : this.buyQuantity,
+      getQuantity: data.getQuantity.present
+          ? data.getQuantity.value
+          : this.getQuantity,
+      getDiscountPercent: data.getDiscountPercent.present
+          ? data.getDiscountPercent.value
+          : this.getDiscountPercent,
+      bundlePrice: data.bundlePrice.present
+          ? data.bundlePrice.value
+          : this.bundlePrice,
+      minOrderTotal: data.minOrderTotal.present
+          ? data.minOrderTotal.value
+          : this.minOrderTotal,
+      minItemQuantity: data.minItemQuantity.present
+          ? data.minItemQuantity.value
+          : this.minItemQuantity,
+      validFrom: data.validFrom.present ? data.validFrom.value : this.validFrom,
+      validTo: data.validTo.present ? data.validTo.value : this.validTo,
+      activeDaysJson: data.activeDaysJson.present
+          ? data.activeDaysJson.value
+          : this.activeDaysJson,
+      activeTimeFrom: data.activeTimeFrom.present
+          ? data.activeTimeFrom.value
+          : this.activeTimeFrom,
+      activeTimeTo: data.activeTimeTo.present
+          ? data.activeTimeTo.value
+          : this.activeTimeTo,
+      maxUses: data.maxUses.present ? data.maxUses.value : this.maxUses,
+      maxUsesPerCustomer: data.maxUsesPerCustomer.present
+          ? data.maxUsesPerCustomer.value
+          : this.maxUsesPerCustomer,
+      usageCount: data.usageCount.present
+          ? data.usageCount.value
+          : this.usageCount,
+      isStackable: data.isStackable.present
+          ? data.isStackable.value
+          : this.isStackable,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      isCoupon: data.isCoupon.present ? data.isCoupon.value : this.isCoupon,
+      productIdsJson: data.productIdsJson.present
+          ? data.productIdsJson.value
+          : this.productIdsJson,
+      categoryIdsJson: data.categoryIdsJson.present
+          ? data.categoryIdsJson.value
+          : this.categoryIdsJson,
+      customerGroupIdsJson: data.customerGroupIdsJson.present
+          ? data.customerGroupIdsJson.value
+          : this.customerGroupIdsJson,
+      bundleProductsJson: data.bundleProductsJson.present
+          ? data.bundleProductsJson.value
+          : this.bundleProductsJson,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalPromotion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('discountValue: $discountValue, ')
+          ..write('buyQuantity: $buyQuantity, ')
+          ..write('getQuantity: $getQuantity, ')
+          ..write('getDiscountPercent: $getDiscountPercent, ')
+          ..write('bundlePrice: $bundlePrice, ')
+          ..write('minOrderTotal: $minOrderTotal, ')
+          ..write('minItemQuantity: $minItemQuantity, ')
+          ..write('validFrom: $validFrom, ')
+          ..write('validTo: $validTo, ')
+          ..write('activeDaysJson: $activeDaysJson, ')
+          ..write('activeTimeFrom: $activeTimeFrom, ')
+          ..write('activeTimeTo: $activeTimeTo, ')
+          ..write('maxUses: $maxUses, ')
+          ..write('maxUsesPerCustomer: $maxUsesPerCustomer, ')
+          ..write('usageCount: $usageCount, ')
+          ..write('isStackable: $isStackable, ')
+          ..write('isActive: $isActive, ')
+          ..write('isCoupon: $isCoupon, ')
+          ..write('productIdsJson: $productIdsJson, ')
+          ..write('categoryIdsJson: $categoryIdsJson, ')
+          ..write('customerGroupIdsJson: $customerGroupIdsJson, ')
+          ..write('bundleProductsJson: $bundleProductsJson, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    name,
+    type,
+    discountValue,
+    buyQuantity,
+    getQuantity,
+    getDiscountPercent,
+    bundlePrice,
+    minOrderTotal,
+    minItemQuantity,
+    validFrom,
+    validTo,
+    activeDaysJson,
+    activeTimeFrom,
+    activeTimeTo,
+    maxUses,
+    maxUsesPerCustomer,
+    usageCount,
+    isStackable,
+    isActive,
+    isCoupon,
+    productIdsJson,
+    categoryIdsJson,
+    customerGroupIdsJson,
+    bundleProductsJson,
+    updatedAt,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalPromotion &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.type == this.type &&
+          other.discountValue == this.discountValue &&
+          other.buyQuantity == this.buyQuantity &&
+          other.getQuantity == this.getQuantity &&
+          other.getDiscountPercent == this.getDiscountPercent &&
+          other.bundlePrice == this.bundlePrice &&
+          other.minOrderTotal == this.minOrderTotal &&
+          other.minItemQuantity == this.minItemQuantity &&
+          other.validFrom == this.validFrom &&
+          other.validTo == this.validTo &&
+          other.activeDaysJson == this.activeDaysJson &&
+          other.activeTimeFrom == this.activeTimeFrom &&
+          other.activeTimeTo == this.activeTimeTo &&
+          other.maxUses == this.maxUses &&
+          other.maxUsesPerCustomer == this.maxUsesPerCustomer &&
+          other.usageCount == this.usageCount &&
+          other.isStackable == this.isStackable &&
+          other.isActive == this.isActive &&
+          other.isCoupon == this.isCoupon &&
+          other.productIdsJson == this.productIdsJson &&
+          other.categoryIdsJson == this.categoryIdsJson &&
+          other.customerGroupIdsJson == this.customerGroupIdsJson &&
+          other.bundleProductsJson == this.bundleProductsJson &&
+          other.updatedAt == this.updatedAt);
+}
+
+class LocalPromotionsCompanion extends UpdateCompanion<LocalPromotion> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> type;
+  final Value<double?> discountValue;
+  final Value<int?> buyQuantity;
+  final Value<int?> getQuantity;
+  final Value<double?> getDiscountPercent;
+  final Value<double?> bundlePrice;
+  final Value<double?> minOrderTotal;
+  final Value<int?> minItemQuantity;
+  final Value<DateTime?> validFrom;
+  final Value<DateTime?> validTo;
+  final Value<String> activeDaysJson;
+  final Value<String?> activeTimeFrom;
+  final Value<String?> activeTimeTo;
+  final Value<int?> maxUses;
+  final Value<int?> maxUsesPerCustomer;
+  final Value<int> usageCount;
+  final Value<bool> isStackable;
+  final Value<bool> isActive;
+  final Value<bool> isCoupon;
+  final Value<String> productIdsJson;
+  final Value<String> categoryIdsJson;
+  final Value<String> customerGroupIdsJson;
+  final Value<String> bundleProductsJson;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const LocalPromotionsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.type = const Value.absent(),
+    this.discountValue = const Value.absent(),
+    this.buyQuantity = const Value.absent(),
+    this.getQuantity = const Value.absent(),
+    this.getDiscountPercent = const Value.absent(),
+    this.bundlePrice = const Value.absent(),
+    this.minOrderTotal = const Value.absent(),
+    this.minItemQuantity = const Value.absent(),
+    this.validFrom = const Value.absent(),
+    this.validTo = const Value.absent(),
+    this.activeDaysJson = const Value.absent(),
+    this.activeTimeFrom = const Value.absent(),
+    this.activeTimeTo = const Value.absent(),
+    this.maxUses = const Value.absent(),
+    this.maxUsesPerCustomer = const Value.absent(),
+    this.usageCount = const Value.absent(),
+    this.isStackable = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isCoupon = const Value.absent(),
+    this.productIdsJson = const Value.absent(),
+    this.categoryIdsJson = const Value.absent(),
+    this.customerGroupIdsJson = const Value.absent(),
+    this.bundleProductsJson = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalPromotionsCompanion.insert({
+    required String id,
+    required String name,
+    required String type,
+    this.discountValue = const Value.absent(),
+    this.buyQuantity = const Value.absent(),
+    this.getQuantity = const Value.absent(),
+    this.getDiscountPercent = const Value.absent(),
+    this.bundlePrice = const Value.absent(),
+    this.minOrderTotal = const Value.absent(),
+    this.minItemQuantity = const Value.absent(),
+    this.validFrom = const Value.absent(),
+    this.validTo = const Value.absent(),
+    this.activeDaysJson = const Value.absent(),
+    this.activeTimeFrom = const Value.absent(),
+    this.activeTimeTo = const Value.absent(),
+    this.maxUses = const Value.absent(),
+    this.maxUsesPerCustomer = const Value.absent(),
+    this.usageCount = const Value.absent(),
+    this.isStackable = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isCoupon = const Value.absent(),
+    this.productIdsJson = const Value.absent(),
+    this.categoryIdsJson = const Value.absent(),
+    this.customerGroupIdsJson = const Value.absent(),
+    this.bundleProductsJson = const Value.absent(),
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       type = Value(type),
+       updatedAt = Value(updatedAt);
+  static Insertable<LocalPromotion> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? type,
+    Expression<double>? discountValue,
+    Expression<int>? buyQuantity,
+    Expression<int>? getQuantity,
+    Expression<double>? getDiscountPercent,
+    Expression<double>? bundlePrice,
+    Expression<double>? minOrderTotal,
+    Expression<int>? minItemQuantity,
+    Expression<DateTime>? validFrom,
+    Expression<DateTime>? validTo,
+    Expression<String>? activeDaysJson,
+    Expression<String>? activeTimeFrom,
+    Expression<String>? activeTimeTo,
+    Expression<int>? maxUses,
+    Expression<int>? maxUsesPerCustomer,
+    Expression<int>? usageCount,
+    Expression<bool>? isStackable,
+    Expression<bool>? isActive,
+    Expression<bool>? isCoupon,
+    Expression<String>? productIdsJson,
+    Expression<String>? categoryIdsJson,
+    Expression<String>? customerGroupIdsJson,
+    Expression<String>? bundleProductsJson,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (type != null) 'type': type,
+      if (discountValue != null) 'discount_value': discountValue,
+      if (buyQuantity != null) 'buy_quantity': buyQuantity,
+      if (getQuantity != null) 'get_quantity': getQuantity,
+      if (getDiscountPercent != null)
+        'get_discount_percent': getDiscountPercent,
+      if (bundlePrice != null) 'bundle_price': bundlePrice,
+      if (minOrderTotal != null) 'min_order_total': minOrderTotal,
+      if (minItemQuantity != null) 'min_item_quantity': minItemQuantity,
+      if (validFrom != null) 'valid_from': validFrom,
+      if (validTo != null) 'valid_to': validTo,
+      if (activeDaysJson != null) 'active_days_json': activeDaysJson,
+      if (activeTimeFrom != null) 'active_time_from': activeTimeFrom,
+      if (activeTimeTo != null) 'active_time_to': activeTimeTo,
+      if (maxUses != null) 'max_uses': maxUses,
+      if (maxUsesPerCustomer != null)
+        'max_uses_per_customer': maxUsesPerCustomer,
+      if (usageCount != null) 'usage_count': usageCount,
+      if (isStackable != null) 'is_stackable': isStackable,
+      if (isActive != null) 'is_active': isActive,
+      if (isCoupon != null) 'is_coupon': isCoupon,
+      if (productIdsJson != null) 'product_ids_json': productIdsJson,
+      if (categoryIdsJson != null) 'category_ids_json': categoryIdsJson,
+      if (customerGroupIdsJson != null)
+        'customer_group_ids_json': customerGroupIdsJson,
+      if (bundleProductsJson != null)
+        'bundle_products_json': bundleProductsJson,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalPromotionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? type,
+    Value<double?>? discountValue,
+    Value<int?>? buyQuantity,
+    Value<int?>? getQuantity,
+    Value<double?>? getDiscountPercent,
+    Value<double?>? bundlePrice,
+    Value<double?>? minOrderTotal,
+    Value<int?>? minItemQuantity,
+    Value<DateTime?>? validFrom,
+    Value<DateTime?>? validTo,
+    Value<String>? activeDaysJson,
+    Value<String?>? activeTimeFrom,
+    Value<String?>? activeTimeTo,
+    Value<int?>? maxUses,
+    Value<int?>? maxUsesPerCustomer,
+    Value<int>? usageCount,
+    Value<bool>? isStackable,
+    Value<bool>? isActive,
+    Value<bool>? isCoupon,
+    Value<String>? productIdsJson,
+    Value<String>? categoryIdsJson,
+    Value<String>? customerGroupIdsJson,
+    Value<String>? bundleProductsJson,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return LocalPromotionsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      discountValue: discountValue ?? this.discountValue,
+      buyQuantity: buyQuantity ?? this.buyQuantity,
+      getQuantity: getQuantity ?? this.getQuantity,
+      getDiscountPercent: getDiscountPercent ?? this.getDiscountPercent,
+      bundlePrice: bundlePrice ?? this.bundlePrice,
+      minOrderTotal: minOrderTotal ?? this.minOrderTotal,
+      minItemQuantity: minItemQuantity ?? this.minItemQuantity,
+      validFrom: validFrom ?? this.validFrom,
+      validTo: validTo ?? this.validTo,
+      activeDaysJson: activeDaysJson ?? this.activeDaysJson,
+      activeTimeFrom: activeTimeFrom ?? this.activeTimeFrom,
+      activeTimeTo: activeTimeTo ?? this.activeTimeTo,
+      maxUses: maxUses ?? this.maxUses,
+      maxUsesPerCustomer: maxUsesPerCustomer ?? this.maxUsesPerCustomer,
+      usageCount: usageCount ?? this.usageCount,
+      isStackable: isStackable ?? this.isStackable,
+      isActive: isActive ?? this.isActive,
+      isCoupon: isCoupon ?? this.isCoupon,
+      productIdsJson: productIdsJson ?? this.productIdsJson,
+      categoryIdsJson: categoryIdsJson ?? this.categoryIdsJson,
+      customerGroupIdsJson: customerGroupIdsJson ?? this.customerGroupIdsJson,
+      bundleProductsJson: bundleProductsJson ?? this.bundleProductsJson,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (discountValue.present) {
+      map['discount_value'] = Variable<double>(discountValue.value);
+    }
+    if (buyQuantity.present) {
+      map['buy_quantity'] = Variable<int>(buyQuantity.value);
+    }
+    if (getQuantity.present) {
+      map['get_quantity'] = Variable<int>(getQuantity.value);
+    }
+    if (getDiscountPercent.present) {
+      map['get_discount_percent'] = Variable<double>(getDiscountPercent.value);
+    }
+    if (bundlePrice.present) {
+      map['bundle_price'] = Variable<double>(bundlePrice.value);
+    }
+    if (minOrderTotal.present) {
+      map['min_order_total'] = Variable<double>(minOrderTotal.value);
+    }
+    if (minItemQuantity.present) {
+      map['min_item_quantity'] = Variable<int>(minItemQuantity.value);
+    }
+    if (validFrom.present) {
+      map['valid_from'] = Variable<DateTime>(validFrom.value);
+    }
+    if (validTo.present) {
+      map['valid_to'] = Variable<DateTime>(validTo.value);
+    }
+    if (activeDaysJson.present) {
+      map['active_days_json'] = Variable<String>(activeDaysJson.value);
+    }
+    if (activeTimeFrom.present) {
+      map['active_time_from'] = Variable<String>(activeTimeFrom.value);
+    }
+    if (activeTimeTo.present) {
+      map['active_time_to'] = Variable<String>(activeTimeTo.value);
+    }
+    if (maxUses.present) {
+      map['max_uses'] = Variable<int>(maxUses.value);
+    }
+    if (maxUsesPerCustomer.present) {
+      map['max_uses_per_customer'] = Variable<int>(maxUsesPerCustomer.value);
+    }
+    if (usageCount.present) {
+      map['usage_count'] = Variable<int>(usageCount.value);
+    }
+    if (isStackable.present) {
+      map['is_stackable'] = Variable<bool>(isStackable.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (isCoupon.present) {
+      map['is_coupon'] = Variable<bool>(isCoupon.value);
+    }
+    if (productIdsJson.present) {
+      map['product_ids_json'] = Variable<String>(productIdsJson.value);
+    }
+    if (categoryIdsJson.present) {
+      map['category_ids_json'] = Variable<String>(categoryIdsJson.value);
+    }
+    if (customerGroupIdsJson.present) {
+      map['customer_group_ids_json'] = Variable<String>(
+        customerGroupIdsJson.value,
+      );
+    }
+    if (bundleProductsJson.present) {
+      map['bundle_products_json'] = Variable<String>(bundleProductsJson.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalPromotionsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('discountValue: $discountValue, ')
+          ..write('buyQuantity: $buyQuantity, ')
+          ..write('getQuantity: $getQuantity, ')
+          ..write('getDiscountPercent: $getDiscountPercent, ')
+          ..write('bundlePrice: $bundlePrice, ')
+          ..write('minOrderTotal: $minOrderTotal, ')
+          ..write('minItemQuantity: $minItemQuantity, ')
+          ..write('validFrom: $validFrom, ')
+          ..write('validTo: $validTo, ')
+          ..write('activeDaysJson: $activeDaysJson, ')
+          ..write('activeTimeFrom: $activeTimeFrom, ')
+          ..write('activeTimeTo: $activeTimeTo, ')
+          ..write('maxUses: $maxUses, ')
+          ..write('maxUsesPerCustomer: $maxUsesPerCustomer, ')
+          ..write('usageCount: $usageCount, ')
+          ..write('isStackable: $isStackable, ')
+          ..write('isActive: $isActive, ')
+          ..write('isCoupon: $isCoupon, ')
+          ..write('productIdsJson: $productIdsJson, ')
+          ..write('categoryIdsJson: $categoryIdsJson, ')
+          ..write('customerGroupIdsJson: $customerGroupIdsJson, ')
+          ..write('bundleProductsJson: $bundleProductsJson, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalCouponCodesTable extends LocalCouponCodes
+    with TableInfo<$LocalCouponCodesTable, LocalCouponCode> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalCouponCodesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _promotionIdMeta = const VerificationMeta(
+    'promotionId',
+  );
+  @override
+  late final GeneratedColumn<String> promotionId = GeneratedColumn<String>(
+    'promotion_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _maxUsesMeta = const VerificationMeta(
+    'maxUses',
+  );
+  @override
+  late final GeneratedColumn<int> maxUses = GeneratedColumn<int>(
+    'max_uses',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _usageCountMeta = const VerificationMeta(
+    'usageCount',
+  );
+  @override
+  late final GeneratedColumn<int> usageCount = GeneratedColumn<int>(
+    'usage_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    promotionId,
+    code,
+    maxUses,
+    usageCount,
+    isActive,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_coupon_codes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalCouponCode> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('promotion_id')) {
+      context.handle(
+        _promotionIdMeta,
+        promotionId.isAcceptableOrUnknown(
+          data['promotion_id']!,
+          _promotionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_promotionIdMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('max_uses')) {
+      context.handle(
+        _maxUsesMeta,
+        maxUses.isAcceptableOrUnknown(data['max_uses']!, _maxUsesMeta),
+      );
+    }
+    if (data.containsKey('usage_count')) {
+      context.handle(
+        _usageCountMeta,
+        usageCount.isAcceptableOrUnknown(data['usage_count']!, _usageCountMeta),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalCouponCode map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalCouponCode(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      promotionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}promotion_id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      maxUses: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max_uses'],
+      ),
+      usageCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}usage_count'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalCouponCodesTable createAlias(String alias) {
+    return $LocalCouponCodesTable(attachedDatabase, alias);
+  }
+}
+
+class LocalCouponCode extends DataClass implements Insertable<LocalCouponCode> {
+  final String id;
+  final String promotionId;
+  final String code;
+  final int? maxUses;
+  final int usageCount;
+  final bool isActive;
+  const LocalCouponCode({
+    required this.id,
+    required this.promotionId,
+    required this.code,
+    this.maxUses,
+    required this.usageCount,
+    required this.isActive,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['promotion_id'] = Variable<String>(promotionId);
+    map['code'] = Variable<String>(code);
+    if (!nullToAbsent || maxUses != null) {
+      map['max_uses'] = Variable<int>(maxUses);
+    }
+    map['usage_count'] = Variable<int>(usageCount);
+    map['is_active'] = Variable<bool>(isActive);
+    return map;
+  }
+
+  LocalCouponCodesCompanion toCompanion(bool nullToAbsent) {
+    return LocalCouponCodesCompanion(
+      id: Value(id),
+      promotionId: Value(promotionId),
+      code: Value(code),
+      maxUses: maxUses == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maxUses),
+      usageCount: Value(usageCount),
+      isActive: Value(isActive),
+    );
+  }
+
+  factory LocalCouponCode.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalCouponCode(
+      id: serializer.fromJson<String>(json['id']),
+      promotionId: serializer.fromJson<String>(json['promotionId']),
+      code: serializer.fromJson<String>(json['code']),
+      maxUses: serializer.fromJson<int?>(json['maxUses']),
+      usageCount: serializer.fromJson<int>(json['usageCount']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'promotionId': serializer.toJson<String>(promotionId),
+      'code': serializer.toJson<String>(code),
+      'maxUses': serializer.toJson<int?>(maxUses),
+      'usageCount': serializer.toJson<int>(usageCount),
+      'isActive': serializer.toJson<bool>(isActive),
+    };
+  }
+
+  LocalCouponCode copyWith({
+    String? id,
+    String? promotionId,
+    String? code,
+    Value<int?> maxUses = const Value.absent(),
+    int? usageCount,
+    bool? isActive,
+  }) => LocalCouponCode(
+    id: id ?? this.id,
+    promotionId: promotionId ?? this.promotionId,
+    code: code ?? this.code,
+    maxUses: maxUses.present ? maxUses.value : this.maxUses,
+    usageCount: usageCount ?? this.usageCount,
+    isActive: isActive ?? this.isActive,
+  );
+  LocalCouponCode copyWithCompanion(LocalCouponCodesCompanion data) {
+    return LocalCouponCode(
+      id: data.id.present ? data.id.value : this.id,
+      promotionId: data.promotionId.present
+          ? data.promotionId.value
+          : this.promotionId,
+      code: data.code.present ? data.code.value : this.code,
+      maxUses: data.maxUses.present ? data.maxUses.value : this.maxUses,
+      usageCount: data.usageCount.present
+          ? data.usageCount.value
+          : this.usageCount,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCouponCode(')
+          ..write('id: $id, ')
+          ..write('promotionId: $promotionId, ')
+          ..write('code: $code, ')
+          ..write('maxUses: $maxUses, ')
+          ..write('usageCount: $usageCount, ')
+          ..write('isActive: $isActive')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, promotionId, code, maxUses, usageCount, isActive);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalCouponCode &&
+          other.id == this.id &&
+          other.promotionId == this.promotionId &&
+          other.code == this.code &&
+          other.maxUses == this.maxUses &&
+          other.usageCount == this.usageCount &&
+          other.isActive == this.isActive);
+}
+
+class LocalCouponCodesCompanion extends UpdateCompanion<LocalCouponCode> {
+  final Value<String> id;
+  final Value<String> promotionId;
+  final Value<String> code;
+  final Value<int?> maxUses;
+  final Value<int> usageCount;
+  final Value<bool> isActive;
+  final Value<int> rowid;
+  const LocalCouponCodesCompanion({
+    this.id = const Value.absent(),
+    this.promotionId = const Value.absent(),
+    this.code = const Value.absent(),
+    this.maxUses = const Value.absent(),
+    this.usageCount = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalCouponCodesCompanion.insert({
+    required String id,
+    required String promotionId,
+    required String code,
+    this.maxUses = const Value.absent(),
+    this.usageCount = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       promotionId = Value(promotionId),
+       code = Value(code);
+  static Insertable<LocalCouponCode> custom({
+    Expression<String>? id,
+    Expression<String>? promotionId,
+    Expression<String>? code,
+    Expression<int>? maxUses,
+    Expression<int>? usageCount,
+    Expression<bool>? isActive,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (promotionId != null) 'promotion_id': promotionId,
+      if (code != null) 'code': code,
+      if (maxUses != null) 'max_uses': maxUses,
+      if (usageCount != null) 'usage_count': usageCount,
+      if (isActive != null) 'is_active': isActive,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalCouponCodesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? promotionId,
+    Value<String>? code,
+    Value<int?>? maxUses,
+    Value<int>? usageCount,
+    Value<bool>? isActive,
+    Value<int>? rowid,
+  }) {
+    return LocalCouponCodesCompanion(
+      id: id ?? this.id,
+      promotionId: promotionId ?? this.promotionId,
+      code: code ?? this.code,
+      maxUses: maxUses ?? this.maxUses,
+      usageCount: usageCount ?? this.usageCount,
+      isActive: isActive ?? this.isActive,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (promotionId.present) {
+      map['promotion_id'] = Variable<String>(promotionId.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (maxUses.present) {
+      map['max_uses'] = Variable<int>(maxUses.value);
+    }
+    if (usageCount.present) {
+      map['usage_count'] = Variable<int>(usageCount.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCouponCodesCompanion(')
+          ..write('id: $id, ')
+          ..write('promotionId: $promotionId, ')
+          ..write('code: $code, ')
+          ..write('maxUses: $maxUses, ')
+          ..write('usageCount: $usageCount, ')
+          ..write('isActive: $isActive, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$PosOfflineDatabase extends GeneratedDatabase {
   _$PosOfflineDatabase(QueryExecutor e) : super(e);
   $PosOfflineDatabaseManager get managers => $PosOfflineDatabaseManager(this);
@@ -6644,6 +8540,12 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
       $LocalModifierGroupsTable(this);
   late final $LocalModifierOptionsTable localModifierOptions =
       $LocalModifierOptionsTable(this);
+  late final $LocalPromotionsTable localPromotions = $LocalPromotionsTable(
+    this,
+  );
+  late final $LocalCouponCodesTable localCouponCodes = $LocalCouponCodesTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6660,6 +8562,8 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
     localProductVariants,
     localModifierGroups,
     localModifierOptions,
+    localPromotions,
+    localCouponCodes,
   ];
 }
 
@@ -10037,6 +11941,882 @@ typedef $$LocalModifierOptionsTableProcessedTableManager =
       LocalModifierOption,
       PrefetchHooks Function()
     >;
+typedef $$LocalPromotionsTableCreateCompanionBuilder =
+    LocalPromotionsCompanion Function({
+      required String id,
+      required String name,
+      required String type,
+      Value<double?> discountValue,
+      Value<int?> buyQuantity,
+      Value<int?> getQuantity,
+      Value<double?> getDiscountPercent,
+      Value<double?> bundlePrice,
+      Value<double?> minOrderTotal,
+      Value<int?> minItemQuantity,
+      Value<DateTime?> validFrom,
+      Value<DateTime?> validTo,
+      Value<String> activeDaysJson,
+      Value<String?> activeTimeFrom,
+      Value<String?> activeTimeTo,
+      Value<int?> maxUses,
+      Value<int?> maxUsesPerCustomer,
+      Value<int> usageCount,
+      Value<bool> isStackable,
+      Value<bool> isActive,
+      Value<bool> isCoupon,
+      Value<String> productIdsJson,
+      Value<String> categoryIdsJson,
+      Value<String> customerGroupIdsJson,
+      Value<String> bundleProductsJson,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$LocalPromotionsTableUpdateCompanionBuilder =
+    LocalPromotionsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> type,
+      Value<double?> discountValue,
+      Value<int?> buyQuantity,
+      Value<int?> getQuantity,
+      Value<double?> getDiscountPercent,
+      Value<double?> bundlePrice,
+      Value<double?> minOrderTotal,
+      Value<int?> minItemQuantity,
+      Value<DateTime?> validFrom,
+      Value<DateTime?> validTo,
+      Value<String> activeDaysJson,
+      Value<String?> activeTimeFrom,
+      Value<String?> activeTimeTo,
+      Value<int?> maxUses,
+      Value<int?> maxUsesPerCustomer,
+      Value<int> usageCount,
+      Value<bool> isStackable,
+      Value<bool> isActive,
+      Value<bool> isCoupon,
+      Value<String> productIdsJson,
+      Value<String> categoryIdsJson,
+      Value<String> customerGroupIdsJson,
+      Value<String> bundleProductsJson,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$LocalPromotionsTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalPromotionsTable> {
+  $$LocalPromotionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountValue => $composableBuilder(
+    column: $table.discountValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get buyQuantity => $composableBuilder(
+    column: $table.buyQuantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get getQuantity => $composableBuilder(
+    column: $table.getQuantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get getDiscountPercent => $composableBuilder(
+    column: $table.getDiscountPercent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get bundlePrice => $composableBuilder(
+    column: $table.bundlePrice,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get minOrderTotal => $composableBuilder(
+    column: $table.minOrderTotal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get minItemQuantity => $composableBuilder(
+    column: $table.minItemQuantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get validFrom => $composableBuilder(
+    column: $table.validFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get validTo => $composableBuilder(
+    column: $table.validTo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get activeDaysJson => $composableBuilder(
+    column: $table.activeDaysJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get activeTimeFrom => $composableBuilder(
+    column: $table.activeTimeFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get activeTimeTo => $composableBuilder(
+    column: $table.activeTimeTo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get maxUses => $composableBuilder(
+    column: $table.maxUses,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get maxUsesPerCustomer => $composableBuilder(
+    column: $table.maxUsesPerCustomer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isStackable => $composableBuilder(
+    column: $table.isStackable,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isCoupon => $composableBuilder(
+    column: $table.isCoupon,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get productIdsJson => $composableBuilder(
+    column: $table.productIdsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get categoryIdsJson => $composableBuilder(
+    column: $table.categoryIdsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get customerGroupIdsJson => $composableBuilder(
+    column: $table.customerGroupIdsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bundleProductsJson => $composableBuilder(
+    column: $table.bundleProductsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalPromotionsTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalPromotionsTable> {
+  $$LocalPromotionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountValue => $composableBuilder(
+    column: $table.discountValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get buyQuantity => $composableBuilder(
+    column: $table.buyQuantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get getQuantity => $composableBuilder(
+    column: $table.getQuantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get getDiscountPercent => $composableBuilder(
+    column: $table.getDiscountPercent,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get bundlePrice => $composableBuilder(
+    column: $table.bundlePrice,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get minOrderTotal => $composableBuilder(
+    column: $table.minOrderTotal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get minItemQuantity => $composableBuilder(
+    column: $table.minItemQuantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get validFrom => $composableBuilder(
+    column: $table.validFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get validTo => $composableBuilder(
+    column: $table.validTo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get activeDaysJson => $composableBuilder(
+    column: $table.activeDaysJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get activeTimeFrom => $composableBuilder(
+    column: $table.activeTimeFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get activeTimeTo => $composableBuilder(
+    column: $table.activeTimeTo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get maxUses => $composableBuilder(
+    column: $table.maxUses,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get maxUsesPerCustomer => $composableBuilder(
+    column: $table.maxUsesPerCustomer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isStackable => $composableBuilder(
+    column: $table.isStackable,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isCoupon => $composableBuilder(
+    column: $table.isCoupon,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get productIdsJson => $composableBuilder(
+    column: $table.productIdsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get categoryIdsJson => $composableBuilder(
+    column: $table.categoryIdsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get customerGroupIdsJson => $composableBuilder(
+    column: $table.customerGroupIdsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bundleProductsJson => $composableBuilder(
+    column: $table.bundleProductsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalPromotionsTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalPromotionsTable> {
+  $$LocalPromotionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<double> get discountValue => $composableBuilder(
+    column: $table.discountValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get buyQuantity => $composableBuilder(
+    column: $table.buyQuantity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get getQuantity => $composableBuilder(
+    column: $table.getQuantity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get getDiscountPercent => $composableBuilder(
+    column: $table.getDiscountPercent,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get bundlePrice => $composableBuilder(
+    column: $table.bundlePrice,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get minOrderTotal => $composableBuilder(
+    column: $table.minOrderTotal,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get minItemQuantity => $composableBuilder(
+    column: $table.minItemQuantity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get validFrom =>
+      $composableBuilder(column: $table.validFrom, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get validTo =>
+      $composableBuilder(column: $table.validTo, builder: (column) => column);
+
+  GeneratedColumn<String> get activeDaysJson => $composableBuilder(
+    column: $table.activeDaysJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get activeTimeFrom => $composableBuilder(
+    column: $table.activeTimeFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get activeTimeTo => $composableBuilder(
+    column: $table.activeTimeTo,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get maxUses =>
+      $composableBuilder(column: $table.maxUses, builder: (column) => column);
+
+  GeneratedColumn<int> get maxUsesPerCustomer => $composableBuilder(
+    column: $table.maxUsesPerCustomer,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isStackable => $composableBuilder(
+    column: $table.isStackable,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCoupon =>
+      $composableBuilder(column: $table.isCoupon, builder: (column) => column);
+
+  GeneratedColumn<String> get productIdsJson => $composableBuilder(
+    column: $table.productIdsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get categoryIdsJson => $composableBuilder(
+    column: $table.categoryIdsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get customerGroupIdsJson => $composableBuilder(
+    column: $table.customerGroupIdsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get bundleProductsJson => $composableBuilder(
+    column: $table.bundleProductsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$LocalPromotionsTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalPromotionsTable,
+          LocalPromotion,
+          $$LocalPromotionsTableFilterComposer,
+          $$LocalPromotionsTableOrderingComposer,
+          $$LocalPromotionsTableAnnotationComposer,
+          $$LocalPromotionsTableCreateCompanionBuilder,
+          $$LocalPromotionsTableUpdateCompanionBuilder,
+          (
+            LocalPromotion,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalPromotionsTable,
+              LocalPromotion
+            >,
+          ),
+          LocalPromotion,
+          PrefetchHooks Function()
+        > {
+  $$LocalPromotionsTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalPromotionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalPromotionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalPromotionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LocalPromotionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<double?> discountValue = const Value.absent(),
+                Value<int?> buyQuantity = const Value.absent(),
+                Value<int?> getQuantity = const Value.absent(),
+                Value<double?> getDiscountPercent = const Value.absent(),
+                Value<double?> bundlePrice = const Value.absent(),
+                Value<double?> minOrderTotal = const Value.absent(),
+                Value<int?> minItemQuantity = const Value.absent(),
+                Value<DateTime?> validFrom = const Value.absent(),
+                Value<DateTime?> validTo = const Value.absent(),
+                Value<String> activeDaysJson = const Value.absent(),
+                Value<String?> activeTimeFrom = const Value.absent(),
+                Value<String?> activeTimeTo = const Value.absent(),
+                Value<int?> maxUses = const Value.absent(),
+                Value<int?> maxUsesPerCustomer = const Value.absent(),
+                Value<int> usageCount = const Value.absent(),
+                Value<bool> isStackable = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isCoupon = const Value.absent(),
+                Value<String> productIdsJson = const Value.absent(),
+                Value<String> categoryIdsJson = const Value.absent(),
+                Value<String> customerGroupIdsJson = const Value.absent(),
+                Value<String> bundleProductsJson = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalPromotionsCompanion(
+                id: id,
+                name: name,
+                type: type,
+                discountValue: discountValue,
+                buyQuantity: buyQuantity,
+                getQuantity: getQuantity,
+                getDiscountPercent: getDiscountPercent,
+                bundlePrice: bundlePrice,
+                minOrderTotal: minOrderTotal,
+                minItemQuantity: minItemQuantity,
+                validFrom: validFrom,
+                validTo: validTo,
+                activeDaysJson: activeDaysJson,
+                activeTimeFrom: activeTimeFrom,
+                activeTimeTo: activeTimeTo,
+                maxUses: maxUses,
+                maxUsesPerCustomer: maxUsesPerCustomer,
+                usageCount: usageCount,
+                isStackable: isStackable,
+                isActive: isActive,
+                isCoupon: isCoupon,
+                productIdsJson: productIdsJson,
+                categoryIdsJson: categoryIdsJson,
+                customerGroupIdsJson: customerGroupIdsJson,
+                bundleProductsJson: bundleProductsJson,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required String type,
+                Value<double?> discountValue = const Value.absent(),
+                Value<int?> buyQuantity = const Value.absent(),
+                Value<int?> getQuantity = const Value.absent(),
+                Value<double?> getDiscountPercent = const Value.absent(),
+                Value<double?> bundlePrice = const Value.absent(),
+                Value<double?> minOrderTotal = const Value.absent(),
+                Value<int?> minItemQuantity = const Value.absent(),
+                Value<DateTime?> validFrom = const Value.absent(),
+                Value<DateTime?> validTo = const Value.absent(),
+                Value<String> activeDaysJson = const Value.absent(),
+                Value<String?> activeTimeFrom = const Value.absent(),
+                Value<String?> activeTimeTo = const Value.absent(),
+                Value<int?> maxUses = const Value.absent(),
+                Value<int?> maxUsesPerCustomer = const Value.absent(),
+                Value<int> usageCount = const Value.absent(),
+                Value<bool> isStackable = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isCoupon = const Value.absent(),
+                Value<String> productIdsJson = const Value.absent(),
+                Value<String> categoryIdsJson = const Value.absent(),
+                Value<String> customerGroupIdsJson = const Value.absent(),
+                Value<String> bundleProductsJson = const Value.absent(),
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => LocalPromotionsCompanion.insert(
+                id: id,
+                name: name,
+                type: type,
+                discountValue: discountValue,
+                buyQuantity: buyQuantity,
+                getQuantity: getQuantity,
+                getDiscountPercent: getDiscountPercent,
+                bundlePrice: bundlePrice,
+                minOrderTotal: minOrderTotal,
+                minItemQuantity: minItemQuantity,
+                validFrom: validFrom,
+                validTo: validTo,
+                activeDaysJson: activeDaysJson,
+                activeTimeFrom: activeTimeFrom,
+                activeTimeTo: activeTimeTo,
+                maxUses: maxUses,
+                maxUsesPerCustomer: maxUsesPerCustomer,
+                usageCount: usageCount,
+                isStackable: isStackable,
+                isActive: isActive,
+                isCoupon: isCoupon,
+                productIdsJson: productIdsJson,
+                categoryIdsJson: categoryIdsJson,
+                customerGroupIdsJson: customerGroupIdsJson,
+                bundleProductsJson: bundleProductsJson,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalPromotionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalPromotionsTable,
+      LocalPromotion,
+      $$LocalPromotionsTableFilterComposer,
+      $$LocalPromotionsTableOrderingComposer,
+      $$LocalPromotionsTableAnnotationComposer,
+      $$LocalPromotionsTableCreateCompanionBuilder,
+      $$LocalPromotionsTableUpdateCompanionBuilder,
+      (
+        LocalPromotion,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalPromotionsTable,
+          LocalPromotion
+        >,
+      ),
+      LocalPromotion,
+      PrefetchHooks Function()
+    >;
+typedef $$LocalCouponCodesTableCreateCompanionBuilder =
+    LocalCouponCodesCompanion Function({
+      required String id,
+      required String promotionId,
+      required String code,
+      Value<int?> maxUses,
+      Value<int> usageCount,
+      Value<bool> isActive,
+      Value<int> rowid,
+    });
+typedef $$LocalCouponCodesTableUpdateCompanionBuilder =
+    LocalCouponCodesCompanion Function({
+      Value<String> id,
+      Value<String> promotionId,
+      Value<String> code,
+      Value<int?> maxUses,
+      Value<int> usageCount,
+      Value<bool> isActive,
+      Value<int> rowid,
+    });
+
+class $$LocalCouponCodesTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCouponCodesTable> {
+  $$LocalCouponCodesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get promotionId => $composableBuilder(
+    column: $table.promotionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get maxUses => $composableBuilder(
+    column: $table.maxUses,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalCouponCodesTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCouponCodesTable> {
+  $$LocalCouponCodesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get promotionId => $composableBuilder(
+    column: $table.promotionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get maxUses => $composableBuilder(
+    column: $table.maxUses,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalCouponCodesTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCouponCodesTable> {
+  $$LocalCouponCodesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get promotionId => $composableBuilder(
+    column: $table.promotionId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<int> get maxUses =>
+      $composableBuilder(column: $table.maxUses, builder: (column) => column);
+
+  GeneratedColumn<int> get usageCount => $composableBuilder(
+    column: $table.usageCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+}
+
+class $$LocalCouponCodesTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalCouponCodesTable,
+          LocalCouponCode,
+          $$LocalCouponCodesTableFilterComposer,
+          $$LocalCouponCodesTableOrderingComposer,
+          $$LocalCouponCodesTableAnnotationComposer,
+          $$LocalCouponCodesTableCreateCompanionBuilder,
+          $$LocalCouponCodesTableUpdateCompanionBuilder,
+          (
+            LocalCouponCode,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalCouponCodesTable,
+              LocalCouponCode
+            >,
+          ),
+          LocalCouponCode,
+          PrefetchHooks Function()
+        > {
+  $$LocalCouponCodesTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalCouponCodesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalCouponCodesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalCouponCodesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LocalCouponCodesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> promotionId = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<int?> maxUses = const Value.absent(),
+                Value<int> usageCount = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCouponCodesCompanion(
+                id: id,
+                promotionId: promotionId,
+                code: code,
+                maxUses: maxUses,
+                usageCount: usageCount,
+                isActive: isActive,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String promotionId,
+                required String code,
+                Value<int?> maxUses = const Value.absent(),
+                Value<int> usageCount = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCouponCodesCompanion.insert(
+                id: id,
+                promotionId: promotionId,
+                code: code,
+                maxUses: maxUses,
+                usageCount: usageCount,
+                isActive: isActive,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalCouponCodesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalCouponCodesTable,
+      LocalCouponCode,
+      $$LocalCouponCodesTableFilterComposer,
+      $$LocalCouponCodesTableOrderingComposer,
+      $$LocalCouponCodesTableAnnotationComposer,
+      $$LocalCouponCodesTableCreateCompanionBuilder,
+      $$LocalCouponCodesTableUpdateCompanionBuilder,
+      (
+        LocalCouponCode,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalCouponCodesTable,
+          LocalCouponCode
+        >,
+      ),
+      LocalCouponCode,
+      PrefetchHooks Function()
+    >;
 
 class $PosOfflineDatabaseManager {
   final _$PosOfflineDatabase _db;
@@ -10063,4 +12843,8 @@ class $PosOfflineDatabaseManager {
       $$LocalModifierGroupsTableTableManager(_db, _db.localModifierGroups);
   $$LocalModifierOptionsTableTableManager get localModifierOptions =>
       $$LocalModifierOptionsTableTableManager(_db, _db.localModifierOptions);
+  $$LocalPromotionsTableTableManager get localPromotions =>
+      $$LocalPromotionsTableTableManager(_db, _db.localPromotions);
+  $$LocalCouponCodesTableTableManager get localCouponCodes =>
+      $$LocalCouponCodesTableTableManager(_db, _db.localCouponCodes);
 }

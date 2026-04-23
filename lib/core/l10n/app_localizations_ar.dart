@@ -12460,6 +12460,46 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterCouponCode => 'أدخل رمز القسيمة';
 
   @override
+  String get promoManageCoupons => 'إدارة القسائم';
+
+  @override
+  String get promoDuplicate => 'تكرار';
+
+  @override
+  String get promoDuplicated => 'تم تكرار العرض.';
+
+  @override
+  String get promoCouponsEmpty =>
+      'لا توجد قسائم بعد. استخدم إنشاء لإضافة قسائم.';
+
+  @override
+  String get promoCouponDeleted => 'تم حذف القسيمة.';
+
+  @override
+  String promoCouponDeleteConfirm(String code) {
+    return 'هل تريد حذف القسيمة \"$code\"؟';
+  }
+
+  @override
+  String get promoApplyToCart => 'تطبيق عرض / قسيمة';
+
+  @override
+  String promoAppliedDiscount(int count, String amount) {
+    return 'تم تطبيق $count عرضًا بتوفير $amount';
+  }
+
+  @override
+  String get promoNoApplicable => 'لا توجد عروض قابلة للتطبيق';
+
+  @override
+  String promoSyncSuccess(int count) {
+    return 'تمت مزامنة $count عرضًا.';
+  }
+
+  @override
+  String get promoSyncNow => 'مزامنة الآن';
+
+  @override
   String get promotionName => 'اسم العرض *';
 
   @override

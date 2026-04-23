@@ -122,4 +122,94 @@ class PromotionApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
+
+  // ─── New Endpoints ────────────────────────────────────────────
+
+  Future<Promotion> duplicatePromotion(String promotionId) async {
+    final response = await _dio.post(ApiEndpoints.promotionDuplicate(promotionId));
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Promotion.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<PaginatedResult<CouponCode>> listPromotionCoupons(
+    String promotionId, {
+    int page = 1,
+    int perPage = 20,
+    String? search,
+    bool? isActive,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.promotionCoupons(promotionId),
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (search != null && search.isNotEmpty) 'search': search,
+        if (isActive != null) 'is_active': isActive.toString(),
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => CouponCode.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  Future<List<CouponCode>> batchGenerateCoupons({
+    required String promotionId,
+    required int count,
+    int? maxUses,
+    String? prefix,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.couponBatchGenerate,
+      data: {
+        'promotion_id': promotionId,
+        'count': count,
+        if (maxUses != null) 'max_uses': maxUses,
+        if (prefix != null && prefix.isNotEmpty) 'prefix': prefix,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.dataList;
+    return list.map((j) => CouponCode.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> deleteCoupon(String couponId) async {
+    await _dio.delete(ApiEndpoints.couponById(couponId));
+  }
+
+  Future<Map<String, dynamic>> evaluateCart({
+    required List<Map<String, dynamic>> items,
+    String? customerId,
+    List<String>? customerGroupIds,
+    String? couponCode,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.promotionEvaluate,
+      data: {
+        'items': items,
+        if (customerId != null) 'customer_id': customerId,
+        if (customerGroupIds != null && customerGroupIds.isNotEmpty) 'customer_group_ids': customerGroupIds,
+        if (couponCode != null && couponCode.isNotEmpty) 'coupon_code': couponCode,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> posSync({DateTime? since}) async {
+    final response = await _dio.get(
+      ApiEndpoints.posPromotionsSync,
+      queryParameters: {
+        if (since != null) 'since': since.toUtc().toIso8601String(),
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
 }

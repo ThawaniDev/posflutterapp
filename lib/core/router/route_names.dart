@@ -100,6 +100,7 @@ class Routes {
   // Promotions
   static const String promotions = '/promotions';
   static const String promotionAnalytics = '/promotions/analytics';
+  static const String promotionCoupons = '/promotions/coupons';
 
   // Thawani Integration
   static const String thawaniIntegration = '/thawani-integration';

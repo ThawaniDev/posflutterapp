@@ -12,6 +12,7 @@ import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_sync_service.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/services/subscription_sync_service.dart';
+import 'package:wameedpos/features/promotions/services/promotion_sync_service.dart';
 
 /// Global key so we can show dialogs (e.g. force-update) from services.
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -34,6 +35,8 @@ class WameedPosApp extends ConsumerWidget {
         ref.read(posOfflineSyncServiceProvider)
           ..startPeriodicDrain()
           ..drain();
+        // Best-effort promotion pull for offline evaluator
+        Future.microtask(() => ref.read(promotionSyncServiceProvider).syncFromServer().catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null)));
         _checkForUpdate(ref);
       }
     });
@@ -48,6 +51,7 @@ class WameedPosApp extends ConsumerWidget {
         ref.read(posOfflineSyncServiceProvider)
           ..startPeriodicDrain()
           ..drain();
+        ref.read(promotionSyncServiceProvider).syncFromServer().catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null));
         _checkForUpdate(ref);
       });
     }

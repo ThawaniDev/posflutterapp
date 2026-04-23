@@ -12563,6 +12563,46 @@ class AppLocalizationsBn extends AppLocalizations {
   String get enterCouponCode => 'কুপন কোড লিখুন';
 
   @override
+  String get promoManageCoupons => 'Manage Coupons';
+
+  @override
+  String get promoDuplicate => 'Duplicate';
+
+  @override
+  String get promoDuplicated => 'Promotion duplicated.';
+
+  @override
+  String get promoCouponsEmpty =>
+      'No coupons yet. Use Generate to create some.';
+
+  @override
+  String get promoCouponDeleted => 'Coupon deleted.';
+
+  @override
+  String promoCouponDeleteConfirm(String code) {
+    return 'Delete coupon \"$code\"?';
+  }
+
+  @override
+  String get promoApplyToCart => 'Apply Promotion / Coupon';
+
+  @override
+  String promoAppliedDiscount(int count, String amount) {
+    return 'Applied $count promotion(s) saving $amount';
+  }
+
+  @override
+  String get promoNoApplicable => 'No applicable promotions';
+
+  @override
+  String promoSyncSuccess(int count) {
+    return 'Synced $count promotion(s).';
+  }
+
+  @override
+  String get promoSyncNow => 'Sync Now';
+
+  @override
   String get promotionName => 'প্রচারণার নাম *';
 
   @override

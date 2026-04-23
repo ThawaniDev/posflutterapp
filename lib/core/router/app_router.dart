@@ -246,6 +246,7 @@ import 'package:wameedpos/features/accounting/pages/auto_export_settings_page.da
 // Promotions
 import 'package:wameedpos/features/promotions/pages/promotion_list_page.dart';
 import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
+import 'package:wameedpos/features/promotions/pages/coupon_management_page.dart';
 // Notifications
 import 'package:wameedpos/features/notifications/pages/notification_centre_page.dart';
 import 'package:wameedpos/features/notifications/pages/notification_preferences_page.dart';
@@ -1346,6 +1347,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '${Routes.promotionAnalytics}/:id',
             name: 'promotionAnalytics',
             builder: (context, state) => PromotionAnalyticsPage(promotionId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: '${Routes.promotionCoupons}/:id',
+            name: 'promotionCoupons',
+            builder: (context, state) => CouponManagementPage(
+              promotionId: state.pathParameters['id']!,
+              promotionName: (state.extra as Map?)?['name'] as String? ?? '',
+            ),
           ),
 
           // ─── Thawani Integration ───

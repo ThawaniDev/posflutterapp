@@ -188,6 +188,52 @@ class LocalModifierOptions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// ─── Promotions (offline mirror) ────────────────────────────
+
+class LocalPromotions extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get type => text()();
+  RealColumn get discountValue => real().nullable()();
+  IntColumn get buyQuantity => integer().nullable()();
+  IntColumn get getQuantity => integer().nullable()();
+  RealColumn get getDiscountPercent => real().nullable()();
+  RealColumn get bundlePrice => real().nullable()();
+  RealColumn get minOrderTotal => real().nullable()();
+  IntColumn get minItemQuantity => integer().nullable()();
+  DateTimeColumn get validFrom => dateTime().nullable()();
+  DateTimeColumn get validTo => dateTime().nullable()();
+  TextColumn get activeDaysJson => text().withDefault(const Constant('[]'))();
+  TextColumn get activeTimeFrom => text().nullable()();
+  TextColumn get activeTimeTo => text().nullable()();
+  IntColumn get maxUses => integer().nullable()();
+  IntColumn get maxUsesPerCustomer => integer().nullable()();
+  IntColumn get usageCount => integer().withDefault(const Constant(0))();
+  BoolColumn get isStackable => boolean().withDefault(const Constant(false))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  BoolColumn get isCoupon => boolean().withDefault(const Constant(false))();
+  TextColumn get productIdsJson => text().withDefault(const Constant('[]'))();
+  TextColumn get categoryIdsJson => text().withDefault(const Constant('[]'))();
+  TextColumn get customerGroupIdsJson => text().withDefault(const Constant('[]'))();
+  TextColumn get bundleProductsJson => text().withDefault(const Constant('[]'))();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalCouponCodes extends Table {
+  TextColumn get id => text()();
+  TextColumn get promotionId => text()();
+  TextColumn get code => text()();
+  IntColumn get maxUses => integer().nullable()();
+  IntColumn get usageCount => integer().withDefault(const Constant(0))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(tables: [
   LocalProducts,
   LocalInventory,
@@ -200,6 +246,8 @@ class LocalModifierOptions extends Table {
   LocalProductVariants,
   LocalModifierGroups,
   LocalModifierOptions,
+  LocalPromotions,
+  LocalCouponCodes,
 ])
 class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase() : super(_openConnection());
@@ -207,7 +255,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -220,6 +268,10 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
             await m.createTable(localProductVariants);
             await m.createTable(localModifierGroups);
             await m.createTable(localModifierOptions);
+          }
+          if (from < 3) {
+            await m.createTable(localPromotions);
+            await m.createTable(localCouponCodes);
           }
         },
       );
@@ -374,6 +426,34 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
             ..where((t) => t.groupId.equals(groupId) & t.isActive.equals(true))
             ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
           .get();
+
+  // ─── Promotions (offline mirror) ───────────────────────────
+
+  Future<void> upsertPromotions(List<LocalPromotionsCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localPromotions, rows));
+  }
+
+  Future<void> upsertCouponCodes(List<LocalCouponCodesCompanion> rows) async {
+    await batch((b) => b.insertAllOnConflictUpdate(localCouponCodes, rows));
+  }
+
+  Future<void> replacePromotionCoupons(String promotionId, List<LocalCouponCodesCompanion> rows) async {
+    await transaction(() async {
+      await (delete(localCouponCodes)..where((t) => t.promotionId.equals(promotionId))).go();
+      if (rows.isNotEmpty) {
+        await batch((b) => b.insertAllOnConflictUpdate(localCouponCodes, rows));
+      }
+    });
+  }
+
+  Future<List<LocalPromotion>> activePromotions() =>
+      (select(localPromotions)..where((t) => t.isActive.equals(true))).get();
+
+  Future<LocalCouponCode?> findCouponByCode(String code) =>
+      (select(localCouponCodes)..where((t) => t.code.equals(code.toUpperCase()))).getSingleOrNull();
+
+  Future<List<LocalCouponCode>> couponsForPromotion(String promotionId) =>
+      (select(localCouponCodes)..where((t) => t.promotionId.equals(promotionId))).get();
 }
 
 LazyDatabase _openConnection() {

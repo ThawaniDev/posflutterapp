@@ -213,12 +213,18 @@ class ApiEndpoints {
 
   // Promotions & Coupons
   static const String promotions = '/promotions';
+  static const String promotionEvaluate = '/promotions/evaluate';
   static String promotionById(String id) => '/promotions/$id';
   static String promotionToggle(String id) => '/promotions/$id/toggle';
+  static String promotionDuplicate(String id) => '/promotions/$id/duplicate';
   static String promotionGenerateCoupons(String id) => '/promotions/$id/generate-coupons';
+  static String promotionCoupons(String id) => '/promotions/$id/coupons';
   static String promotionAnalytics(String id) => '/promotions/$id/analytics';
   static const String couponValidate = '/coupons/validate';
   static const String couponRedeem = '/coupons/redeem';
+  static const String couponBatchGenerate = '/coupons/batch-generate';
+  static String couponById(String id) => '/coupons/$id';
+  static const String posPromotionsSync = '/pos/promotions/sync';
 
   // Accounting
   static const String accountingStatus = '/accounting/status';

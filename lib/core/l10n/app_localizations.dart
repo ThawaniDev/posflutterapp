@@ -23752,6 +23752,72 @@ abstract class AppLocalizations {
   /// **'Enter coupon code'**
   String get enterCouponCode;
 
+  /// No description provided for @promoManageCoupons.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Coupons'**
+  String get promoManageCoupons;
+
+  /// No description provided for @promoDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get promoDuplicate;
+
+  /// No description provided for @promoDuplicated.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotion duplicated.'**
+  String get promoDuplicated;
+
+  /// No description provided for @promoCouponsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No coupons yet. Use Generate to create some.'**
+  String get promoCouponsEmpty;
+
+  /// No description provided for @promoCouponDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon deleted.'**
+  String get promoCouponDeleted;
+
+  /// No description provided for @promoCouponDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete coupon \"{code}\"?'**
+  String promoCouponDeleteConfirm(String code);
+
+  /// No description provided for @promoApplyToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Promotion / Coupon'**
+  String get promoApplyToCart;
+
+  /// No description provided for @promoAppliedDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied {count} promotion(s) saving {amount}'**
+  String promoAppliedDiscount(int count, String amount);
+
+  /// No description provided for @promoNoApplicable.
+  ///
+  /// In en, this message translates to:
+  /// **'No applicable promotions'**
+  String get promoNoApplicable;
+
+  /// No description provided for @promoSyncSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced {count} promotion(s).'**
+  String promoSyncSuccess(int count);
+
+  /// No description provided for @promoSyncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Now'**
+  String get promoSyncNow;
+
   /// No description provided for @promotionName.
   ///
   /// In en, this message translates to:

@@ -14,6 +14,7 @@ import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_ser
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/features/promotions/services/promotion_evaluator.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
@@ -183,7 +184,40 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         }
       });
     } catch (e) {
-      setState(() => _couponError = e.toString());
+      // Offline fallback — use local evaluator
+      try {
+        final cart = ref.read(cartProvider);
+        final evaluator = ref.read(promotionEvaluatorProvider);
+        final items = cart.items
+            .map((ci) => EvalCartItem(
+                  productId: ci.product.id,
+                  categoryId: ci.product.categoryId,
+                  unitPrice: ci.unitPrice,
+                  quantity: ci.quantity.toInt(),
+                ))
+            .toList();
+        final result = await evaluator.evaluate(
+          items: items,
+          customerId: cart.customer?.id,
+          couponCode: code,
+        );
+        final applied = result.applied.where((a) => a.couponCode == code.toUpperCase()).toList();
+        if (applied.isEmpty) {
+          setState(() => _couponError = e.toString());
+        } else {
+          setState(() {
+            _appliedCouponCode = code;
+            _appliedCouponCodeId = null;
+            _couponDiscount = applied.fold(0.0, (s, a) => s + a.discount);
+            if (_legs.length == 1) {
+              _legs.first.amount = _totalAfterCoupon;
+              _legs.first.controller.text = _totalAfterCoupon.toStringAsFixed(2);
+            }
+          });
+        }
+      } catch (_) {
+        setState(() => _couponError = e.toString());
+      }
     } finally {
       setState(() => _couponLoading = false);
     }
