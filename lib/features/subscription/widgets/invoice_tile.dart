@@ -7,7 +7,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A list tile widget for displaying an invoice summary.
 class InvoiceTile extends StatelessWidget {
-
   const InvoiceTile({super.key, required this.invoice});
   final Invoice invoice;
 
@@ -44,7 +43,10 @@ class InvoiceTile extends StatelessWidget {
             AppSpacing.verticalXs,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(color: _statusColor(statusName).withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
+              decoration: BoxDecoration(
+                color: _statusColor(statusName).withValues(alpha: 0.15),
+                borderRadius: AppRadius.borderLg,
+              ),
               child: Text(
                 statusName,
                 style: TextStyle(fontSize: 11, color: _statusColor(statusName), fontWeight: FontWeight.w600),

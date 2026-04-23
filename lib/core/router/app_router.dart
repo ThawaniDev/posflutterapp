@@ -373,7 +373,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state, child) {
           final perm = permissionForRoute(state.matchedLocation);
           final guarded = perm != null ? PermissionGuardPage(permission: perm, child: child) : child;
-          return GlobalBarcodeScanHandler(child: SessionIdleWrapper(child: AppShell(child: guarded)));
+          return GlobalBarcodeScanHandler(
+            child: SessionIdleWrapper(child: AppShell(child: guarded)),
+          );
         },
         routes: [
           // ─── Main (protected) ─────────────────────────

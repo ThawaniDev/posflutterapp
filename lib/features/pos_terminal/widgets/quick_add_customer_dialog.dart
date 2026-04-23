@@ -51,10 +51,7 @@ class _QuickAddCustomerDialogState extends State<_QuickAddCustomerDialog> {
     });
     try {
       final api = widget.ref.read(posTerminalApiServiceProvider);
-      final customer = await api.quickAddCustomer({
-        'name': name,
-        if (_phone.text.trim().isNotEmpty) 'phone': _phone.text.trim(),
-      });
+      final customer = await api.quickAddCustomer({'name': name, if (_phone.text.trim().isNotEmpty) 'phone': _phone.text.trim()});
       if (!mounted) return;
       Navigator.pop(context, customer);
     } on DioException catch (e) {

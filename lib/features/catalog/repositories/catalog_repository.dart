@@ -16,7 +16,6 @@ final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
 /// Repository that orchestrates catalog API calls.
 /// Resolves the current store/org context from auth session.
 class CatalogRepository {
-
   CatalogRepository({required CatalogApiService apiService}) : _apiService = apiService;
   final CatalogApiService _apiService;
 
@@ -162,30 +161,20 @@ class CatalogRepository {
     return _apiService.importPreview(filePath, fileName);
   }
 
-  Future<ImportResult> bulkImport({
-    required String filePath,
-    required String fileName,
-    required Map<String, int> mapping,
-  }) {
-    return _apiService.bulkImport(
-      filePath: filePath,
-      fileName: fileName,
-      mapping: mapping,
-    );
+  Future<ImportResult> bulkImport({required String filePath, required String fileName, required Map<String, int> mapping}) {
+    return _apiService.bulkImport(filePath: filePath, fileName: fileName, mapping: mapping);
   }
 
   // ─── Combo Products ──────────────────────────────────────────
 
-  Future<ComboDefinition> getCombo(String productId) =>
-      _apiService.getCombo(productId);
+  Future<ComboDefinition> getCombo(String productId) => _apiService.getCombo(productId);
 
   Future<ComboDefinition> syncCombo(
     String productId, {
     String? name,
     double? comboPrice,
     required List<ComboItemPayload> items,
-  }) =>
-      _apiService.syncCombo(productId, name: name, comboPrice: comboPrice, items: items);
+  }) => _apiService.syncCombo(productId, name: name, comboPrice: comboPrice, items: items);
 
   Future<void> clearCombo(String productId) => _apiService.clearCombo(productId);
 }

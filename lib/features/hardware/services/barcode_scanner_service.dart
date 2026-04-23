@@ -6,14 +6,10 @@ import 'package:flutter_datawedge/flutter_datawedge.dart';
 import 'package:wameedpos/features/pos_terminal/utils/ean_weighted_parser.dart';
 
 /// Barcode scan result
-class BarcodeScanResult { // 'keyboard_wedge', 'serial', 'bluetooth'
+class BarcodeScanResult {
+  // 'keyboard_wedge', 'serial', 'bluetooth'
 
-  const BarcodeScanResult({
-    required this.barcode,
-    required this.scannedAt,
-    this.source = 'keyboard_wedge',
-    this.embedded,
-  });
+  const BarcodeScanResult({required this.barcode, required this.scannedAt, this.source = 'keyboard_wedge', this.embedded});
   final String barcode;
   final DateTime scannedAt;
   final String source;
@@ -24,7 +20,8 @@ class BarcodeScanResult { // 'keyboard_wedge', 'serial', 'bluetooth'
 }
 
 /// Scanner configuration
-class ScannerConfig { // for serial connection
+class ScannerConfig {
+  // for serial connection
 
   const ScannerConfig({
     this.connectionType = 'usb',
@@ -127,12 +124,14 @@ class BarcodeScannerService {
     if (barcode.length < _config.minBarcodeLength || barcode.length > _config.maxBarcodeLength) return;
 
     debugPrint('BarcodeScannerService: DataWedge scan: $barcode');
-    _scanController.add(BarcodeScanResult(
-      barcode: barcode,
-      scannedAt: DateTime.now(),
-      source: 'datawedge',
-      embedded: EanWeightedParser.tryParse(barcode),
-    ));
+    _scanController.add(
+      BarcodeScanResult(
+        barcode: barcode,
+        scannedAt: DateTime.now(),
+        source: 'datawedge',
+        embedded: EanWeightedParser.tryParse(barcode),
+      ),
+    );
   }
 
   /// Stop listening
@@ -219,24 +218,23 @@ class BarcodeScannerService {
     }
 
     debugPrint('BarcodeScannerService: Scanned barcode: $barcode');
-    _scanController.add(BarcodeScanResult(
-      barcode: barcode,
-      scannedAt: DateTime.now(),
-      source: 'keyboard_wedge',
-      embedded: EanWeightedParser.tryParse(barcode),
-    ));
+    _scanController.add(
+      BarcodeScanResult(
+        barcode: barcode,
+        scannedAt: DateTime.now(),
+        source: 'keyboard_wedge',
+        embedded: EanWeightedParser.tryParse(barcode),
+      ),
+    );
   }
 
   /// Manually submit a barcode (e.g., from manual entry field)
   void manualEntry(String barcode) {
     if (barcode.trim().isEmpty) return;
     final clean = barcode.trim();
-    _scanController.add(BarcodeScanResult(
-      barcode: clean,
-      scannedAt: DateTime.now(),
-      source: 'manual',
-      embedded: EanWeightedParser.tryParse(clean),
-    ));
+    _scanController.add(
+      BarcodeScanResult(barcode: clean, scannedAt: DateTime.now(), source: 'manual', embedded: EanWeightedParser.tryParse(clean)),
+    );
   }
 
   void dispose() {

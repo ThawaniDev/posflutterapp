@@ -36,7 +36,12 @@ class WameedPosApp extends ConsumerWidget {
           ..startPeriodicDrain()
           ..drain();
         // Best-effort promotion pull for offline evaluator
-        Future.microtask(() => ref.read(promotionSyncServiceProvider).syncFromServer().catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null)));
+        Future.microtask(
+          () => ref
+              .read(promotionSyncServiceProvider)
+              .syncFromServer()
+              .catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null)),
+        );
         _checkForUpdate(ref);
       }
     });
@@ -51,7 +56,10 @@ class WameedPosApp extends ConsumerWidget {
         ref.read(posOfflineSyncServiceProvider)
           ..startPeriodicDrain()
           ..drain();
-        ref.read(promotionSyncServiceProvider).syncFromServer().catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null));
+        ref
+            .read(promotionSyncServiceProvider)
+            .syncFromServer()
+            .catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null));
         _checkForUpdate(ref);
       });
     }

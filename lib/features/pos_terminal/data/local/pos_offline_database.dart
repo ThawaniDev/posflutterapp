@@ -234,21 +234,23 @@ class LocalCouponCodes extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [
-  LocalProducts,
-  LocalInventory,
-  LocalHeldCarts,
-  LocalTransactions,
-  LocalSyncQueue,
-  LocalCategories,
-  LocalSuppliers,
-  LocalProductSuppliers,
-  LocalProductVariants,
-  LocalModifierGroups,
-  LocalModifierOptions,
-  LocalPromotions,
-  LocalCouponCodes,
-])
+@DriftDatabase(
+  tables: [
+    LocalProducts,
+    LocalInventory,
+    LocalHeldCarts,
+    LocalTransactions,
+    LocalSyncQueue,
+    LocalCategories,
+    LocalSuppliers,
+    LocalProductSuppliers,
+    LocalProductVariants,
+    LocalModifierGroups,
+    LocalModifierOptions,
+    LocalPromotions,
+    LocalCouponCodes,
+  ],
+)
 class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase() : super(_openConnection());
 
@@ -259,22 +261,22 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (m) => m.createAll(),
-        onUpgrade: (m, from, to) async {
-          if (from < 2) {
-            await m.createTable(localCategories);
-            await m.createTable(localSuppliers);
-            await m.createTable(localProductSuppliers);
-            await m.createTable(localProductVariants);
-            await m.createTable(localModifierGroups);
-            await m.createTable(localModifierOptions);
-          }
-          if (from < 3) {
-            await m.createTable(localPromotions);
-            await m.createTable(localCouponCodes);
-          }
-        },
-      );
+    onCreate: (m) => m.createAll(),
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.createTable(localCategories);
+        await m.createTable(localSuppliers);
+        await m.createTable(localProductSuppliers);
+        await m.createTable(localProductVariants);
+        await m.createTable(localModifierGroups);
+        await m.createTable(localModifierOptions);
+      }
+      if (from < 3) {
+        await m.createTable(localPromotions);
+        await m.createTable(localCouponCodes);
+      }
+    },
+  );
 
   // ─── Products ──────────────────────────────────────────────
 
@@ -287,11 +289,10 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   Future<List<LocalProduct>> searchProducts(String query, {int limit = 50}) {
     final like = '%${query.toLowerCase()}%';
     return (select(localProducts)
-          ..where((t) =>
-              t.isActive.equals(true) &
-              (t.name.lower().like(like) |
-                  t.sku.lower().like(like) |
-                  t.barcode.lower().like(like)))
+          ..where(
+            (t) =>
+                t.isActive.equals(true) & (t.name.lower().like(like) | t.sku.lower().like(like) | t.barcode.lower().like(like)),
+          )
           ..limit(limit))
         .get();
   }
@@ -308,34 +309,31 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   }
 
   Future<double> stockOf(String productId, String storeId) async {
-    final row = await (select(localInventory)
-          ..where((t) => t.productId.equals(productId) & t.storeId.equals(storeId)))
-        .getSingleOrNull();
+    final row = await (select(
+      localInventory,
+    )..where((t) => t.productId.equals(productId) & t.storeId.equals(storeId))).getSingleOrNull();
     return row?.quantity ?? 0;
   }
 
   // ─── Held carts ────────────────────────────────────────────
 
-  Future<void> saveHeldCart(LocalHeldCartsCompanion row) =>
-      into(localHeldCarts).insertOnConflictUpdate(row);
+  Future<void> saveHeldCart(LocalHeldCartsCompanion row) => into(localHeldCarts).insertOnConflictUpdate(row);
 
   Future<List<LocalHeldCart>> activeHeldCarts(String storeId) =>
       (select(localHeldCarts)..where((t) => t.storeId.equals(storeId))).get();
 
-  Future<int> deleteHeldCart(String clientUuid) =>
-      (delete(localHeldCarts)..where((t) => t.clientUuid.equals(clientUuid))).go();
+  Future<int> deleteHeldCart(String clientUuid) => (delete(localHeldCarts)..where((t) => t.clientUuid.equals(clientUuid))).go();
 
   // ─── Transactions ──────────────────────────────────────────
 
-  Future<void> saveTransaction(LocalTransactionsCompanion row) =>
-      into(localTransactions).insertOnConflictUpdate(row);
+  Future<void> saveTransaction(LocalTransactionsCompanion row) => into(localTransactions).insertOnConflictUpdate(row);
 
   Future<List<LocalTransaction>> transactionsAwaitingSync() =>
       (select(localTransactions)..where((t) => t.serverId.isNull())).get();
 
-  Future<int> markTransactionSynced(String clientUuid, String serverId) =>
-      (update(localTransactions)..where((t) => t.clientUuid.equals(clientUuid)))
-          .write(LocalTransactionsCompanion(serverId: Value(serverId)));
+  Future<int> markTransactionSynced(String clientUuid, String serverId) => (update(
+    localTransactions,
+  )..where((t) => t.clientUuid.equals(clientUuid))).write(LocalTransactionsCompanion(serverId: Value(serverId)));
 
   // ─── Sync queue ────────────────────────────────────────────
 
@@ -361,10 +359,10 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
       );
 
   Future<int> incrementAttempts(int id) => customUpdate(
-        'UPDATE local_sync_queue SET attempts = attempts + 1 WHERE id = ?',
-        variables: [Variable.withInt(id)],
-        updates: {localSyncQueue},
-      );
+    'UPDATE local_sync_queue SET attempts = attempts + 1 WHERE id = ?',
+    variables: [Variable.withInt(id)],
+    updates: {localSyncQueue},
+  );
 
   // ─── Catalog: categories ───────────────────────────────────
 
@@ -384,8 +382,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
     await batch((b) => b.insertAllOnConflictUpdate(localSuppliers, rows));
   }
 
-  Future<List<LocalSupplier>> activeSuppliers() =>
-      (select(localSuppliers)..where((t) => t.isActive.equals(true))).get();
+  Future<List<LocalSupplier>> activeSuppliers() => (select(localSuppliers)..where((t) => t.isActive.equals(true))).get();
 
   Future<void> upsertProductSuppliers(List<LocalProductSuppliersCompanion> rows) async {
     await batch((b) => b.insertAllOnConflictUpdate(localProductSuppliers, rows));
@@ -401,9 +398,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   }
 
   Future<List<LocalProductVariant>> variantsFor(String productId) =>
-      (select(localProductVariants)
-            ..where((t) => t.productId.equals(productId) & t.isActive.equals(true)))
-          .get();
+      (select(localProductVariants)..where((t) => t.productId.equals(productId) & t.isActive.equals(true))).get();
 
   // ─── Catalog: modifiers ────────────────────────────────────
 
@@ -446,8 +441,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
     });
   }
 
-  Future<List<LocalPromotion>> activePromotions() =>
-      (select(localPromotions)..where((t) => t.isActive.equals(true))).get();
+  Future<List<LocalPromotion>> activePromotions() => (select(localPromotions)..where((t) => t.isActive.equals(true))).get();
 
   Future<LocalCouponCode?> findCouponByCode(String code) =>
       (select(localCouponCodes)..where((t) => t.code.equals(code.toUpperCase()))).getSingleOrNull();

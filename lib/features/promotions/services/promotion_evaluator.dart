@@ -5,23 +5,18 @@ import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.
 
 /// A single cart line passed into the offline evaluator.
 class EvalCartItem {
-  const EvalCartItem({
-    required this.productId,
-    this.categoryId,
-    required this.unitPrice,
-    required this.quantity,
-  });
+  const EvalCartItem({required this.productId, this.categoryId, required this.unitPrice, required this.quantity});
   final String? productId;
   final String? categoryId;
   final double unitPrice;
   final int quantity;
 
   Map<String, dynamic> toApiJson() => {
-        'product_id': productId,
-        'category_id': categoryId,
-        'unit_price': unitPrice,
-        'quantity': quantity,
-      };
+    'product_id': productId,
+    'category_id': categoryId,
+    'unit_price': unitPrice,
+    'quantity': quantity,
+  };
 }
 
 class AppliedPromotion {
@@ -42,20 +37,13 @@ class AppliedPromotion {
 }
 
 class EvaluationResult {
-  const EvaluationResult({
-    required this.subtotal,
-    required this.totalDiscount,
-    required this.totalAfter,
-    required this.applied,
-  });
+  const EvaluationResult({required this.subtotal, required this.totalDiscount, required this.totalAfter, required this.applied});
   final double subtotal;
   final double totalDiscount;
   final double totalAfter;
   final List<AppliedPromotion> applied;
 
-  static const empty = EvaluationResult(
-    subtotal: 0, totalDiscount: 0, totalAfter: 0, applied: [],
-  );
+  static const empty = EvaluationResult(subtotal: 0, totalDiscount: 0, totalAfter: 0, applied: []);
 }
 
 /// Offline mirror of the backend PromotionService::evaluateCart engine.
@@ -99,15 +87,22 @@ class PromotionEvaluator {
         final promo = active.firstWhere(
           (p) => p.id == coupon.promotionId,
           orElse: () => LocalPromotion(
-            id: '', name: '', type: 'percentage',
-            activeDaysJson: '[]', productIdsJson: '[]', categoryIdsJson: '[]',
-            customerGroupIdsJson: '[]', bundleProductsJson: '[]',
-            usageCount: 0, isStackable: false, isActive: false, isCoupon: false,
+            id: '',
+            name: '',
+            type: 'percentage',
+            activeDaysJson: '[]',
+            productIdsJson: '[]',
+            categoryIdsJson: '[]',
+            customerGroupIdsJson: '[]',
+            bundleProductsJson: '[]',
+            usageCount: 0,
+            isStackable: false,
+            isActive: false,
+            isCoupon: false,
             updatedAt: DateTime.now(),
           ),
         );
-        if (promo.id.isNotEmpty && promo.isActive &&
-            _isEligible(promo, items, subtotal, customerGroupIds, clock)) {
+        if (promo.id.isNotEmpty && promo.isActive && _isEligible(promo, items, subtotal, customerGroupIds, clock)) {
           final detail = _applyToCart(promo, items, couponCode: coupon.code);
           if (detail.discount > 0) {
             applied.add(detail);
@@ -126,8 +121,7 @@ class PromotionEvaluator {
     );
   }
 
-  bool _isEligible(LocalPromotion p, List<EvalCartItem> items, double subtotal,
-      List<String> customerGroupIds, DateTime clock) {
+  bool _isEligible(LocalPromotion p, List<EvalCartItem> items, double subtotal, List<String> customerGroupIds, DateTime clock) {
     if (p.validFrom != null && clock.isBefore(p.validFrom!)) return false;
     if (p.validTo != null && clock.isAfter(p.validTo!)) return false;
     if (p.maxUses != null && p.usageCount >= p.maxUses!) return false;
@@ -157,9 +151,11 @@ class PromotionEvaluator {
     final productIds = _decodeStringList(p.productIdsJson);
     final catIds = _decodeStringList(p.categoryIdsJson);
     if (productIds.isNotEmpty || catIds.isNotEmpty) {
-      final hasMatch = items.any((it) =>
-          (it.productId != null && productIds.contains(it.productId)) ||
-          (it.categoryId != null && catIds.contains(it.categoryId)));
+      final hasMatch = items.any(
+        (it) =>
+            (it.productId != null && productIds.contains(it.productId)) ||
+            (it.categoryId != null && catIds.contains(it.categoryId)),
+      );
       if (!hasMatch) return false;
     }
 
@@ -226,7 +222,10 @@ class PromotionEvaluator {
           for (final row in bundleRows) {
             final pid = row['product_id'] as String?;
             final qty = (row['quantity'] as num?)?.toInt() ?? 1;
-            if (pid == null) { bundlesPossible = 0; break; }
+            if (pid == null) {
+              bundlesPossible = 0;
+              break;
+            }
             final have = qtyByProduct[pid] ?? 0;
             bundlesPossible = bundlesPossible < (have ~/ qty) ? bundlesPossible : (have ~/ qty);
             regularPrice += (priceByProduct[pid] ?? 0) * qty;
@@ -271,8 +270,7 @@ class PromotionEvaluator {
     return const [];
   }
 
-  String _formatHm(DateTime d) =>
-      '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}';
+  String _formatHm(DateTime d) => '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}';
 
   double _round(double v) => (v * 100).roundToDouble() / 100;
 }

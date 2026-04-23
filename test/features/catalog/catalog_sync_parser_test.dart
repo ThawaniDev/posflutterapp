@@ -27,22 +27,8 @@ void main() {
           'max_select': 1,
           'sort_order': 0,
           'options': [
-            {
-              'id': 'o-1',
-              'name': 'Small',
-              'name_ar': 'صغير',
-              'price_adjustment': 0,
-              'sort_order': 0,
-              'is_active': true,
-            },
-            {
-              'id': 'o-2',
-              'name': 'Large',
-              'name_ar': null,
-              'price_adjustment': '2.50',
-              'sort_order': 1,
-              'is_active': true,
-            },
+            {'id': 'o-1', 'name': 'Small', 'name_ar': 'صغير', 'price_adjustment': 0, 'sort_order': 0, 'is_active': true},
+            {'id': 'o-2', 'name': 'Large', 'name_ar': null, 'price_adjustment': '2.50', 'sort_order': 1, 'is_active': true},
           ],
         },
       ];
@@ -83,11 +69,7 @@ void main() {
 
     test('falls back when min_select / sort_order missing', () {
       final raw = [
-        {
-          'id': 'g',
-          'name': 'X',
-          'options': const [],
-        },
+        {'id': 'g', 'name': 'X', 'options': const []},
       ];
 
       final parsed = parseModifierResponse('p', raw);

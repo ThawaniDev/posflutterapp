@@ -35,7 +35,10 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
   }
 
   Future<void> _load({int page = 1}) async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final repo = ref.read(promotionRepositoryProvider);
       final result = await repo.listPromotionCoupons(
@@ -49,7 +52,10 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
         _loading = false;
       });
     } catch (e) {
-      setState(() { _error = e.toString(); _loading = false; });
+      setState(() {
+        _error = e.toString();
+        _loading = false;
+      });
     }
   }
 
@@ -64,13 +70,7 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
       hasError: _error != null,
       errorMessage: _error,
       onRetry: _load,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: l10n.generateCoupons,
-          onPressed: () => _showGenerateDialog(),
-        ),
-      ],
+      actions: [IconButton(icon: const Icon(Icons.add), tooltip: l10n.generateCoupons, onPressed: () => _showGenerateDialog())],
       child: _buildBody(context),
     );
   }
@@ -78,10 +78,7 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
   Widget _buildBody(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     if (_coupons.isEmpty && !_loading) {
-      return PosEmptyState(
-        icon: Icons.confirmation_number_outlined,
-        title: l10n.promoCouponsEmpty,
-      );
+      return PosEmptyState(icon: Icons.confirmation_number_outlined, title: l10n.promoCouponsEmpty);
     }
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -97,16 +94,13 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
     final isActive = c.isActive ?? true;
     return PosCard(
       child: ListTile(
-        leading: Icon(Icons.confirmation_number_outlined,
-            color: isActive ? theme.colorScheme.primary : theme.colorScheme.outline),
+        leading: Icon(
+          Icons.confirmation_number_outlined,
+          color: isActive ? theme.colorScheme.primary : theme.colorScheme.outline,
+        ),
         title: Text(c.code, style: theme.textTheme.titleMedium),
-        subtitle: Text(
-          '${l10n.maxUses}: ${c.maxUses ?? "∞"}  •  ${c.usageCount ?? 0}',
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete_outline),
-          onPressed: () => _confirmDelete(c),
-        ),
+        subtitle: Text('${l10n.maxUses}: ${c.maxUses ?? "∞"}  •  ${c.usageCount ?? 0}'),
+        trailing: IconButton(icon: const Icon(Icons.delete_outline), onPressed: () => _confirmDelete(c)),
       ),
     );
   }
@@ -163,12 +157,9 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
               final maxUses = maxUsesCtrl.text.isEmpty ? null : int.tryParse(maxUsesCtrl.text);
               Navigator.pop(ctx);
               try {
-                await ref.read(promotionRepositoryProvider).batchGenerateCoupons(
-                      promotionId: widget.promotionId,
-                      count: count,
-                      prefix: prefix,
-                      maxUses: maxUses,
-                    );
+                await ref
+                    .read(promotionRepositoryProvider)
+                    .batchGenerateCoupons(promotionId: widget.promotionId, count: count, prefix: prefix, maxUses: maxUses);
                 if (!mounted) return;
                 showPosInfoSnackbar(context, l10n.generatingCoupons(count.toString()));
                 await _load(page: 1);

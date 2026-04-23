@@ -131,8 +131,7 @@ class CatalogSyncService {
     return companions.length;
   }
 
-  String _attributesJson(String groupId, String value) =>
-      '{"group_id":"$groupId","value":"${value.replaceAll('"', '\\"')}"}';
+  String _attributesJson(String groupId, String value) => '{"group_id":"$groupId","value":"${value.replaceAll('"', '\\"')}"}';
 
   // ─── Per-product: modifiers (groups + options) ───────────────
 
@@ -204,7 +203,8 @@ class CatalogSyncSummary {
   final int productSuppliers;
 
   @override
-  String toString() => 'CatalogSyncSummary('
+  String toString() =>
+      'CatalogSyncSummary('
       'categories: $categories, suppliers: $suppliers, '
       'variants: $variants, modifierGroups: $modifierGroups, '
       'modifierOptions: $modifierOptions, productSuppliers: $productSuppliers)';
@@ -232,16 +232,18 @@ ParsedModifiers parseModifierResponse(String productId, List<dynamic> raw) {
     final id = entry['id']?.toString();
     if (id == null) continue;
 
-    groupCompanions.add(LocalModifierGroupsCompanion(
-      id: Value(id),
-      productId: Value(productId),
-      name: Value(entry['name']?.toString() ?? ''),
-      nameAr: Value(entry['name_ar']?.toString()),
-      minSelect: Value((entry['min_select'] as num?)?.toInt() ?? 0),
-      maxSelect: Value((entry['max_select'] as num?)?.toInt()),
-      isRequired: Value(entry['is_required'] == true),
-      sortOrder: Value((entry['sort_order'] as num?)?.toInt() ?? 0),
-    ));
+    groupCompanions.add(
+      LocalModifierGroupsCompanion(
+        id: Value(id),
+        productId: Value(productId),
+        name: Value(entry['name']?.toString() ?? ''),
+        nameAr: Value(entry['name_ar']?.toString()),
+        minSelect: Value((entry['min_select'] as num?)?.toInt() ?? 0),
+        maxSelect: Value((entry['max_select'] as num?)?.toInt()),
+        isRequired: Value(entry['is_required'] == true),
+        sortOrder: Value((entry['sort_order'] as num?)?.toInt() ?? 0),
+      ),
+    );
 
     final options = entry['options'];
     if (options is! List) continue;
@@ -249,15 +251,17 @@ ParsedModifiers parseModifierResponse(String productId, List<dynamic> raw) {
       if (opt is! Map<String, dynamic>) continue;
       final optId = opt['id']?.toString();
       if (optId == null) continue;
-      optionCompanions.add(LocalModifierOptionsCompanion(
-        id: Value(optId),
-        groupId: Value(id),
-        name: Value(opt['name']?.toString() ?? ''),
-        nameAr: Value(opt['name_ar']?.toString()),
-        priceDelta: Value(_asDouble(opt['price_adjustment']) ?? 0),
-        sortOrder: Value((opt['sort_order'] as num?)?.toInt() ?? 0),
-        isActive: Value(opt['is_active'] != false),
-      ));
+      optionCompanions.add(
+        LocalModifierOptionsCompanion(
+          id: Value(optId),
+          groupId: Value(id),
+          name: Value(opt['name']?.toString() ?? ''),
+          nameAr: Value(opt['name_ar']?.toString()),
+          priceDelta: Value(_asDouble(opt['price_adjustment']) ?? 0),
+          sortOrder: Value((opt['sort_order'] as num?)?.toInt() ?? 0),
+          isActive: Value(opt['is_active'] != false),
+        ),
+      );
     }
   }
 

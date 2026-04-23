@@ -9,7 +9,6 @@ final promotionRepositoryProvider = Provider<PromotionRepository>((ref) {
 });
 
 class PromotionRepository {
-
   PromotionRepository({required PromotionApiService apiService}) : _apiService = apiService;
   final PromotionApiService _apiService;
 
@@ -63,25 +62,14 @@ class PromotionRepository {
     int perPage = 20,
     String? search,
     bool? isActive,
-  }) => _apiService.listPromotionCoupons(
-        promotionId,
-        page: page,
-        perPage: perPage,
-        search: search,
-        isActive: isActive,
-      );
+  }) => _apiService.listPromotionCoupons(promotionId, page: page, perPage: perPage, search: search, isActive: isActive);
 
   Future<List<CouponCode>> batchGenerateCoupons({
     required String promotionId,
     required int count,
     int? maxUses,
     String? prefix,
-  }) => _apiService.batchGenerateCoupons(
-        promotionId: promotionId,
-        count: count,
-        maxUses: maxUses,
-        prefix: prefix,
-      );
+  }) => _apiService.batchGenerateCoupons(promotionId: promotionId, count: count, maxUses: maxUses, prefix: prefix);
 
   Future<void> deleteCoupon(String couponId) => _apiService.deleteCoupon(couponId);
 
@@ -90,12 +78,8 @@ class PromotionRepository {
     String? customerId,
     List<String>? customerGroupIds,
     String? couponCode,
-  }) => _apiService.evaluateCart(
-        items: items,
-        customerId: customerId,
-        customerGroupIds: customerGroupIds,
-        couponCode: couponCode,
-      );
+  }) =>
+      _apiService.evaluateCart(items: items, customerId: customerId, customerGroupIds: customerGroupIds, couponCode: couponCode);
 
   Future<Map<String, dynamic>> posSync({DateTime? since}) => _apiService.posSync(since: since);
 }

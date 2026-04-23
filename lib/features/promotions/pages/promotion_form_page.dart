@@ -130,8 +130,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
     return TimeOfDay(hour: h, minute: m);
   }
 
-  String _formatTimeOfDay(TimeOfDay t) =>
-      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+  String _formatTimeOfDay(TimeOfDay t) => '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
@@ -222,31 +221,31 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
         PosTextField(
           controller: _discountValueController,
           decoration: InputDecoration(
-            labelText: _selectedType == PromotionType.percentage
-                ? l10n.discountPercentage
-                : l10n.discountAmount,
+            labelText: _selectedType == PromotionType.percentage ? l10n.discountPercentage : l10n.discountAmount,
             border: const OutlineInputBorder(),
           ),
           keyboardType: TextInputType.number,
         ),
       if (_selectedType == PromotionType.bogo) ...[
-        Row(children: [
-          Expanded(
-            child: PosTextField(
-              controller: _buyQtyController,
-              decoration: InputDecoration(labelText: l10n.buyQuantity, border: const OutlineInputBorder()),
-              keyboardType: TextInputType.number,
+        Row(
+          children: [
+            Expanded(
+              child: PosTextField(
+                controller: _buyQtyController,
+                decoration: InputDecoration(labelText: l10n.buyQuantity, border: const OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: PosTextField(
-              controller: _getQtyController,
-              decoration: InputDecoration(labelText: l10n.getQuantity, border: const OutlineInputBorder()),
-              keyboardType: TextInputType.number,
+            const SizedBox(width: 12),
+            Expanded(
+              child: PosTextField(
+                controller: _getQtyController,
+                decoration: InputDecoration(labelText: l10n.getQuantity, border: const OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
         const SizedBox(height: 12),
         PosTextField(
           controller: _getDiscountController,
@@ -265,25 +264,21 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
 
   Widget _buildValiditySection(AppLocalizations l10n) {
     return _section(l10n.promoValiditySection, [
-      Row(children: [
-        Expanded(
-          child: _dateField(l10n.validFrom, _validFrom, (d) => setState(() => _validFrom = d)),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _dateField(l10n.validTo, _validTo, (d) => setState(() => _validTo = d)),
-        ),
-      ]),
+      Row(
+        children: [
+          Expanded(child: _dateField(l10n.validFrom, _validFrom, (d) => setState(() => _validFrom = d))),
+          const SizedBox(width: 12),
+          Expanded(child: _dateField(l10n.validTo, _validTo, (d) => setState(() => _validTo = d))),
+        ],
+      ),
       const SizedBox(height: 12),
-      Row(children: [
-        Expanded(
-          child: _timeField(l10n.activeTimeFrom, _activeTimeFrom, (t) => setState(() => _activeTimeFrom = t)),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _timeField(l10n.activeTimeTo, _activeTimeTo, (t) => setState(() => _activeTimeTo = t)),
-        ),
-      ]),
+      Row(
+        children: [
+          Expanded(child: _timeField(l10n.activeTimeFrom, _activeTimeFrom, (t) => setState(() => _activeTimeFrom = t))),
+          const SizedBox(width: 12),
+          Expanded(child: _timeField(l10n.activeTimeTo, _activeTimeTo, (t) => setState(() => _activeTimeTo = t))),
+        ],
+      ),
       const SizedBox(height: 12),
       Text(l10n.activeDays, style: Theme.of(context).textTheme.bodyMedium),
       const SizedBox(height: 6),
@@ -341,7 +336,9 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
               ? const Icon(Icons.calendar_today)
               : IconButton(icon: const Icon(Icons.clear), onPressed: () => onChanged(null)),
         ),
-        child: Text(value == null ? '—' : '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}'),
+        child: Text(
+          value == null ? '—' : '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}',
+        ),
       ),
     );
   }
@@ -404,11 +401,15 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
         spacing: 6,
         runSpacing: 6,
         children: [
-          ...options.take(40).map((o) => FilterChip(
-                label: Text(o.label, overflow: TextOverflow.ellipsis),
-                selected: selected.contains(o.id),
-                onSelected: (v) => setState(() => v ? selected.add(o.id) : selected.remove(o.id)),
-              )),
+          ...options
+              .take(40)
+              .map(
+                (o) => FilterChip(
+                  label: Text(o.label, overflow: TextOverflow.ellipsis),
+                  selected: selected.contains(o.id),
+                  onSelected: (v) => setState(() => v ? selected.add(o.id) : selected.remove(o.id)),
+                ),
+              ),
           if (options.length > 40)
             TextButton.icon(
               icon: const Icon(Icons.search),
@@ -426,93 +427,101 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
       context: context,
       isScrollControlled: true,
       builder: (ctx) {
-        return StatefulBuilder(builder: (ctx, setSheet) {
-          final q = controller.text.toLowerCase();
-          final filtered = q.isEmpty ? options : options.where((o) => o.label.toLowerCase().contains(q)).toList();
-          return SafeArea(
-            child: SizedBox(
-              height: MediaQuery.of(ctx).size.height * 0.7,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(children: [
-                      Expanded(child: Text(title, style: Theme.of(ctx).textTheme.titleMedium)),
-                      IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(ctx)),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: PosTextField(
-                      controller: controller,
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.search), border: OutlineInputBorder()),
-                      onChanged: (_) => setSheet(() {}),
+        return StatefulBuilder(
+          builder: (ctx, setSheet) {
+            final q = controller.text.toLowerCase();
+            final filtered = q.isEmpty ? options : options.where((o) => o.label.toLowerCase().contains(q)).toList();
+            return SafeArea(
+              child: SizedBox(
+                height: MediaQuery.of(ctx).size.height * 0.7,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(title, style: Theme.of(ctx).textTheme.titleMedium)),
+                          IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(ctx)),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filtered.length,
-                      itemBuilder: (_, i) {
-                        final o = filtered[i];
-                        final isSel = selected.contains(o.id);
-                        return CheckboxListTile(
-                          title: Text(o.label),
-                          value: isSel,
-                          onChanged: (v) {
-                            setState(() => (v ?? false) ? selected.add(o.id) : selected.remove(o.id));
-                            setSheet(() {});
-                          },
-                        );
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: PosTextField(
+                        controller: controller,
+                        decoration: const InputDecoration(prefixIcon: Icon(Icons.search), border: OutlineInputBorder()),
+                        onChanged: (_) => setSheet(() {}),
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: filtered.length,
+                        itemBuilder: (_, i) {
+                          final o = filtered[i];
+                          final isSel = selected.contains(o.id);
+                          return CheckboxListTile(
+                            title: Text(o.label),
+                            value: isSel,
+                            onChanged: (v) {
+                              setState(() => (v ?? false) ? selected.add(o.id) : selected.remove(o.id));
+                              setSheet(() {});
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        });
+            );
+          },
+        );
       },
     );
   }
 
   Widget _buildLimitsSection(AppLocalizations l10n) {
     return _section(l10n.promoLimitsSection, [
-      Row(children: [
-        Expanded(
-          child: PosTextField(
-            controller: _minOrderTotalController,
-            decoration: InputDecoration(labelText: l10n.minOrderTotal, border: const OutlineInputBorder()),
-            keyboardType: TextInputType.number,
+      Row(
+        children: [
+          Expanded(
+            child: PosTextField(
+              controller: _minOrderTotalController,
+              decoration: InputDecoration(labelText: l10n.minOrderTotal, border: const OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: PosTextField(
-            controller: _minItemQuantityController,
-            decoration: InputDecoration(labelText: l10n.minItemQuantity, border: const OutlineInputBorder()),
-            keyboardType: TextInputType.number,
+          const SizedBox(width: 12),
+          Expanded(
+            child: PosTextField(
+              controller: _minItemQuantityController,
+              decoration: InputDecoration(labelText: l10n.minItemQuantity, border: const OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
       const SizedBox(height: 12),
-      Row(children: [
-        Expanded(
-          child: PosTextField(
-            controller: _maxUsesController,
-            decoration: InputDecoration(labelText: l10n.maxUses, border: const OutlineInputBorder()),
-            keyboardType: TextInputType.number,
+      Row(
+        children: [
+          Expanded(
+            child: PosTextField(
+              controller: _maxUsesController,
+              decoration: InputDecoration(labelText: l10n.maxUses, border: const OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: PosTextField(
-            controller: _maxUsesPerCustomerController,
-            decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: const OutlineInputBorder()),
-            keyboardType: TextInputType.number,
+          const SizedBox(width: 12),
+          Expanded(
+            child: PosTextField(
+              controller: _maxUsesPerCustomerController,
+              decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: const OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     ]);
   }
 
@@ -530,10 +539,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
     return _section(l10n.promoBundleSection, [
       ...List.generate(_bundleProducts.length, (i) {
         final entry = _bundleProducts[i];
-        final product = products.cast<dynamic>().firstWhere(
-              (p) => p.id == entry.productId,
-              orElse: () => null,
-            );
+        final product = products.cast<dynamic>().firstWhere((p) => p.id == entry.productId, orElse: () => null);
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Row(
@@ -552,10 +558,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                   },
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                onPressed: () => setState(() => _bundleProducts.removeAt(i)),
-              ),
+              IconButton(icon: const Icon(Icons.delete_outline), onPressed: () => setState(() => _bundleProducts.removeAt(i))),
             ],
           ),
         );
@@ -579,38 +582,41 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
     return showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
-      builder: (ctx) => StatefulBuilder(builder: (ctx, setSheet) {
-        final q = controller.text.toLowerCase();
-        final filtered = q.isEmpty ? options : options.where((o) => o.label.toLowerCase().contains(q)).toList();
-        return SafeArea(
-          child: SizedBox(
-            height: MediaQuery.of(ctx).size.height * 0.7,
-            child: Column(
-              children: [
-                Padding(padding: const EdgeInsets.all(16), child: Text(title, style: Theme.of(ctx).textTheme.titleMedium)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: PosTextField(
-                    controller: controller,
-                    decoration: const InputDecoration(prefixIcon: Icon(Icons.search), border: OutlineInputBorder()),
-                    onChanged: (_) => setSheet(() {}),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheet) {
+          final q = controller.text.toLowerCase();
+          final filtered = q.isEmpty ? options : options.where((o) => o.label.toLowerCase().contains(q)).toList();
+          return SafeArea(
+            child: SizedBox(
+              height: MediaQuery.of(ctx).size.height * 0.7,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(title, style: Theme.of(ctx).textTheme.titleMedium),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: filtered.length,
-                    itemBuilder: (_, i) => ListTile(
-                      title: Text(filtered[i].label),
-                      onTap: () => Navigator.pop(ctx, filtered[i].id),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: PosTextField(
+                      controller: controller,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.search), border: OutlineInputBorder()),
+                      onChanged: (_) => setSheet(() {}),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filtered.length,
+                      itemBuilder: (_, i) =>
+                          ListTile(title: Text(filtered[i].label), onTap: () => Navigator.pop(ctx, filtered[i].id)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 

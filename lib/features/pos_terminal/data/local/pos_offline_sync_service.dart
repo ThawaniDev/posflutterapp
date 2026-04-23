@@ -13,11 +13,7 @@ import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_ser
 /// Talks to the backend `POST /api/v2/pos/transactions/batch` and
 /// `POST /api/v2/pos/inventory/adjustments` for idempotent replay.
 class PosOfflineSyncService {
-  PosOfflineSyncService({
-    required this.db,
-    required this.api,
-    required this.connectivity,
-  }) {
+  PosOfflineSyncService({required this.db, required this.api, required this.connectivity}) {
     _connectivitySubscription = connectivity.onConnectivityChanged.listen(_handleConnectivity);
   }
 
@@ -59,31 +55,22 @@ class PosOfflineSyncService {
         final entries = await db.dueQueueEntries(limit: 50);
         if (entries.isEmpty) break;
 
-        final transactionEntries =
-            entries.where((e) => e.kind == 'transaction').toList();
-        final adjustmentEntries =
-            entries.where((e) => e.kind == 'inventory_adjustment').toList();
-        final customerEntries =
-            entries.where((e) => e.kind == 'customer').toList();
+        final transactionEntries = entries.where((e) => e.kind == 'transaction').toList();
+        final adjustmentEntries = entries.where((e) => e.kind == 'inventory_adjustment').toList();
+        final customerEntries = entries.where((e) => e.kind == 'customer').toList();
 
         if (transactionEntries.isNotEmpty) {
           await _flushBatch(
             entries: transactionEntries,
-            send: (payloads) => api.batchTransactions({
-              'register_id': payloads.first['register_id'],
-              'transactions': payloads,
-            }),
-            extractResults: (response) =>
-                (response['results'] as List).cast<Map<String, dynamic>>(),
+            send: (payloads) => api.batchTransactions({'register_id': payloads.first['register_id'], 'transactions': payloads}),
+            extractResults: (response) => (response['results'] as List).cast<Map<String, dynamic>>(),
           );
         }
         if (adjustmentEntries.isNotEmpty) {
           await _flushBatch(
             entries: adjustmentEntries,
-            send: (payloads) =>
-                api.applyInventoryAdjustments({'adjustments': payloads}),
-            extractResults: (response) =>
-                (response['results'] as List).cast<Map<String, dynamic>>(),
+            send: (payloads) => api.applyInventoryAdjustments({'adjustments': payloads}),
+            extractResults: (response) => (response['results'] as List).cast<Map<String, dynamic>>(),
           );
         }
         for (final entry in customerEntries) {
@@ -114,9 +101,7 @@ class PosOfflineSyncService {
       }
     });
 
-    final payloads = entries
-        .map((e) => jsonDecode(e.payloadJson) as Map<String, dynamic>)
-        .toList();
+    final payloads = entries.map((e) => jsonDecode(e.payloadJson) as Map<String, dynamic>).toList();
     try {
       final response = await send(payloads);
       final results = extractResults(response);

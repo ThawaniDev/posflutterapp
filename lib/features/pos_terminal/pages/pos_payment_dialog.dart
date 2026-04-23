@@ -167,11 +167,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     try {
       final api = ref.read(posTerminalApiServiceProvider);
       final cart = ref.read(cartProvider);
-      final result = await api.validateCoupon(
-        code: code,
-        customerId: cart.customer?.id,
-        orderTotal: _totalWithTip,
-      );
+      final result = await api.validateCoupon(code: code, customerId: cart.customer?.id, orderTotal: _totalWithTip);
       final discount = double.tryParse(result['discount_amount']?.toString() ?? '0') ?? 0;
       setState(() {
         _appliedCouponCode = code;
@@ -189,18 +185,16 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         final cart = ref.read(cartProvider);
         final evaluator = ref.read(promotionEvaluatorProvider);
         final items = cart.items
-            .map((ci) => EvalCartItem(
-                  productId: ci.product.id,
-                  categoryId: ci.product.categoryId,
-                  unitPrice: ci.unitPrice,
-                  quantity: ci.quantity.toInt(),
-                ))
+            .map(
+              (ci) => EvalCartItem(
+                productId: ci.product.id,
+                categoryId: ci.product.categoryId,
+                unitPrice: ci.unitPrice,
+                quantity: ci.quantity.toInt(),
+              ),
+            )
             .toList();
-        final result = await evaluator.evaluate(
-          items: items,
-          customerId: cart.customer?.id,
-          couponCode: code,
-        );
+        final result = await evaluator.evaluate(items: items, customerId: cart.customer?.id, couponCode: code);
         final applied = result.applied.where((a) => a.couponCode == code.toUpperCase()).toList();
         if (applied.isEmpty) {
           setState(() => _couponError = e.toString());
@@ -222,6 +216,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       setState(() => _couponLoading = false);
     }
   }
+
   Future<void> _openInstallmentPayment() async {
     final result = await showDialog<InstallmentPayment>(
       context: context,
@@ -562,7 +557,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                         AppSpacing.gapW8,
                         Expanded(
                           child: Text(
-                            AppLocalizations.of(context)!.posCouponApplied(_appliedCouponCode!, _couponDiscount.toStringAsFixed(2)),
+                            AppLocalizations.of(
+                              context,
+                            )!.posCouponApplied(_appliedCouponCode!, _couponDiscount.toStringAsFixed(2)),
                             style: AppTypography.bodySmall.copyWith(color: AppColors.success),
                           ),
                         ),
@@ -622,7 +619,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                         AppSpacing.gapW8,
                         Expanded(
                           child: Text(
-                            AppLocalizations.of(context)!.posGiftCardApplied(_giftCardCode!, (_giftCardBalance ?? 0).toStringAsFixed(2)),
+                            AppLocalizations.of(
+                              context,
+                            )!.posGiftCardApplied(_giftCardCode!, (_giftCardBalance ?? 0).toStringAsFixed(2)),
                             style: AppTypography.bodySmall.copyWith(color: AppColors.info),
                           ),
                         ),
@@ -995,8 +994,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         ),
       ReceiptLine.separator(),
       ReceiptLine.twoColumn('Subtotal', cart.subtotal.toStringAsFixed(2)),
-      if (cart.discountTotal > 0)
-        ReceiptLine.twoColumn('Discount', '-${cart.discountTotal.toStringAsFixed(2)}'),
+      if (cart.discountTotal > 0) ReceiptLine.twoColumn('Discount', '-${cart.discountTotal.toStringAsFixed(2)}'),
       if ((settings?.receiptShowTaxBreakdown ?? true) && cart.taxAmount > 0)
         ReceiptLine.twoColumn(settings?.taxLabel ?? 'Tax', cart.taxAmount.toStringAsFixed(2)),
       ReceiptLine.twoColumn('TOTAL', sale.totalAmount.toStringAsFixed(2), bold: true),

@@ -10,10 +10,7 @@ import 'package:wameedpos/features/catalog/pages/product_combo_page.dart';
 import 'package:wameedpos/features/catalog/repositories/catalog_repository.dart';
 
 class _FakeRepo extends CatalogRepository {
-  _FakeRepo({
-    required this.products,
-    required this.combo,
-  }) : super(apiService: CatalogApiService(Dio()));
+  _FakeRepo({required this.products, required this.combo}) : super(apiService: CatalogApiService(Dio()));
 
   final Map<String, Product> products;
   ComboDefinition combo;
@@ -48,14 +45,16 @@ class _FakeRepo extends CatalogRepository {
       name: name ?? products[productId]?.name,
       comboPrice: comboPrice,
       items: items
-          .map((it) => ComboItem(
-                id: 'i-${it.productId}',
-                productId: it.productId,
-                productName: products[it.productId]?.name,
-                productNameAr: products[it.productId]?.nameAr,
-                quantity: it.quantity,
-                isOptional: it.isOptional,
-              ))
+          .map(
+            (it) => ComboItem(
+              id: 'i-${it.productId}',
+              productId: it.productId,
+              productName: products[it.productId]?.name,
+              productNameAr: products[it.productId]?.nameAr,
+              quantity: it.quantity,
+              isOptional: it.isOptional,
+            ),
+          )
           .toList(),
     );
     lastSyncedCombo = combo;
@@ -65,13 +64,7 @@ class _FakeRepo extends CatalogRepository {
   @override
   Future<void> clearCombo(String productId) async {
     clearCalls++;
-    combo = const ComboDefinition(
-      isCombo: false,
-      id: null,
-      name: null,
-      comboPrice: null,
-      items: <ComboItem>[],
-    );
+    combo = const ComboDefinition(isCombo: false, id: null, name: null, comboPrice: null, items: <ComboItem>[]);
   }
 }
 
@@ -92,13 +85,7 @@ Widget _harness(Widget child, {required CatalogRepository repo}) {
 }
 
 void main() {
-  const burger = Product(
-    id: 'p-1',
-    organizationId: 'o-1',
-    name: 'Burger',
-    nameAr: 'برجر',
-    sellPrice: 10,
-  );
+  const burger = Product(id: 'p-1', organizationId: 'o-1', name: 'Burger', nameAr: 'برجر', sellPrice: 10);
 
   group('ProductComboPage', () {
     testWidgets('pre-fills name and existing items from getCombo', (tester) async {
@@ -110,22 +97,12 @@ void main() {
           name: 'Meal',
           comboPrice: 15.5,
           items: [
-            ComboItem(
-              id: 'i-1',
-              productId: 'p-2',
-              productName: 'Fries',
-              productNameAr: null,
-              quantity: 2,
-              isOptional: true,
-            ),
+            ComboItem(id: 'i-1', productId: 'p-2', productName: 'Fries', productNameAr: null, quantity: 2, isOptional: true),
           ],
         ),
       );
 
-      await tester.pumpWidget(_harness(
-        const ProductComboPage(productId: 'p-1'),
-        repo: repo,
-      ));
+      await tester.pumpWidget(_harness(const ProductComboPage(productId: 'p-1'), repo: repo));
       await tester.pumpAndSettle();
 
       // Name and price fields pre-filled.
@@ -145,22 +122,12 @@ void main() {
           name: 'Meal',
           comboPrice: 15.5,
           items: [
-            ComboItem(
-              id: 'i-1',
-              productId: 'p-2',
-              productName: 'Fries',
-              productNameAr: null,
-              quantity: 1,
-              isOptional: false,
-            ),
+            ComboItem(id: 'i-1', productId: 'p-2', productName: 'Fries', productNameAr: null, quantity: 1, isOptional: false),
           ],
         ),
       );
 
-      await tester.pumpWidget(_harness(
-        const ProductComboPage(productId: 'p-1'),
-        repo: repo,
-      ));
+      await tester.pumpWidget(_harness(const ProductComboPage(productId: 'p-1'), repo: repo));
       await tester.pumpAndSettle();
 
       // Tap the outline "Clear combo" button in the bottom bar.
@@ -181,19 +148,10 @@ void main() {
     testWidgets('save with empty items shows validation snack', (tester) async {
       final repo = _FakeRepo(
         products: const {'p-1': burger},
-        combo: const ComboDefinition(
-          isCombo: false,
-          id: null,
-          name: null,
-          comboPrice: null,
-          items: <ComboItem>[],
-        ),
+        combo: const ComboDefinition(isCombo: false, id: null, name: null, comboPrice: null, items: <ComboItem>[]),
       );
 
-      await tester.pumpWidget(_harness(
-        const ProductComboPage(productId: 'p-1'),
-        repo: repo,
-      ));
+      await tester.pumpWidget(_harness(const ProductComboPage(productId: 'p-1'), repo: repo));
       await tester.pumpAndSettle();
 
       // Hit Save with no items

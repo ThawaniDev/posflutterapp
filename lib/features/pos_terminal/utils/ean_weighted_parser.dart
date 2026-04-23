@@ -12,11 +12,7 @@
 library;
 
 class WeightEmbeddedBarcode {
-  const WeightEmbeddedBarcode({
-    required this.productReference,
-    this.weightKg,
-    this.priceMinor,
-  });
+  const WeightEmbeddedBarcode({required this.productReference, this.weightKg, this.priceMinor});
 
   final String productReference;
   final double? weightKg;
@@ -41,16 +37,10 @@ class EanWeightedParser {
     switch (prefix) {
       case '21':
       case '22':
-        return WeightEmbeddedBarcode(
-          productReference: ref,
-          weightKg: payloadInt / 1000.0,
-        );
+        return WeightEmbeddedBarcode(productReference: ref, weightKg: payloadInt / 1000.0);
       case '23':
       case '24':
-        return WeightEmbeddedBarcode(
-          productReference: ref,
-          priceMinor: payloadInt,
-        );
+        return WeightEmbeddedBarcode(productReference: ref, priceMinor: payloadInt);
       default:
         return null;
     }

@@ -778,7 +778,6 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _CategorySidebar extends StatelessWidget {
-
   const _CategorySidebar({required this.categories, required this.selectedCategoryId, required this.onCategorySelected});
   final List<Category> categories;
   final String? selectedCategoryId;
@@ -843,7 +842,6 @@ class _CategorySidebar extends StatelessWidget {
 }
 
 class _SidebarItem extends StatelessWidget {
-
   const _SidebarItem({required this.label, required this.icon, this.isSelected = false, this.depth = 0, this.onTap});
   final String label;
   final IconData icon;
@@ -897,7 +895,6 @@ class _SidebarItem extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _ProductGridCard extends StatelessWidget {
-
   const _ProductGridCard({required this.product, required this.onTap, required this.onDelete});
   final Product product;
   final VoidCallback onTap;

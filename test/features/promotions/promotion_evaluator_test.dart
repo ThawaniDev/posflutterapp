@@ -60,9 +60,7 @@ void main() {
   test('percentage discount on qualifying items', () async {
     await db.upsertPromotions([basePromo(id: 'p1', type: 'percentage', discountValue: 10)]);
 
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-1', unitPrice: 50, quantity: 2),
-    ]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-1', unitPrice: 50, quantity: 2)]);
 
     expect(res.subtotal, 100);
     expect(res.totalDiscount, 10);
@@ -73,39 +71,45 @@ void main() {
   test('fixed amount discount capped to qualifying total', () async {
     await db.upsertPromotions([basePromo(id: 'p2', type: 'fixed_amount', discountValue: 500)]);
 
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-1', unitPrice: 10, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-1', unitPrice: 10, quantity: 1)]);
 
     expect(res.totalDiscount, 10);
   });
 
   test('bogo discounts cheapest qualifying units', () async {
     await db.upsertPromotions([
-      basePromo(id: 'p3', type: 'bogo', buyQty: 1, getQty: 1, getPct: 100,
-          productIds: ['prod-a', 'prod-b']),
+      basePromo(id: 'p3', type: 'bogo', buyQty: 1, getQty: 1, getPct: 100, productIds: ['prod-a', 'prod-b']),
     ]);
 
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 1),
-      const EvalCartItem(productId: 'prod-b', unitPrice: 20, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(
+      items: [
+        const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 1),
+        const EvalCartItem(productId: 'prod-b', unitPrice: 20, quantity: 1),
+      ],
+    );
 
     expect(res.totalDiscount, 10);
   });
 
   test('bundle discount when all parts present', () async {
     await db.upsertPromotions([
-      basePromo(id: 'p4', type: 'bundle', bundlePrice: 30, bundleProducts: [
-        {'product_id': 'prod-a', 'quantity': 1},
-        {'product_id': 'prod-b', 'quantity': 1},
-      ]),
+      basePromo(
+        id: 'p4',
+        type: 'bundle',
+        bundlePrice: 30,
+        bundleProducts: [
+          {'product_id': 'prod-a', 'quantity': 1},
+          {'product_id': 'prod-b', 'quantity': 1},
+        ],
+      ),
     ]);
 
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 15, quantity: 1),
-      const EvalCartItem(productId: 'prod-b', unitPrice: 25, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(
+      items: [
+        const EvalCartItem(productId: 'prod-a', unitPrice: 15, quantity: 1),
+        const EvalCartItem(productId: 'prod-b', unitPrice: 25, quantity: 1),
+      ],
+    );
 
     // saving per bundle = 40 - 30 = 10, x 1 bundle possible
     expect(res.totalDiscount, 10);
@@ -113,25 +117,24 @@ void main() {
 
   test('bundle no discount when incomplete', () async {
     await db.upsertPromotions([
-      basePromo(id: 'p5', type: 'bundle', bundlePrice: 30, bundleProducts: [
-        {'product_id': 'prod-a', 'quantity': 1},
-        {'product_id': 'prod-b', 'quantity': 1},
-      ]),
+      basePromo(
+        id: 'p5',
+        type: 'bundle',
+        bundlePrice: 30,
+        bundleProducts: [
+          {'product_id': 'prod-a', 'quantity': 1},
+          {'product_id': 'prod-b', 'quantity': 1},
+        ],
+      ),
     ]);
 
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 15, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-a', unitPrice: 15, quantity: 1)]);
     expect(res.totalDiscount, 0);
   });
 
   test('min_order_total blocks evaluation', () async {
-    await db.upsertPromotions([
-      basePromo(id: 'p6', type: 'percentage', discountValue: 20, minOrderTotal: 100),
-    ]);
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 2),
-    ]);
+    await db.upsertPromotions([basePromo(id: 'p6', type: 'percentage', discountValue: 20, minOrderTotal: 100)]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 2)]);
     expect(res.totalDiscount, 0);
     expect(res.applied, isEmpty);
   });
@@ -141,9 +144,7 @@ void main() {
       basePromo(id: 'p7', type: 'percentage', discountValue: 10, isStackable: false),
       basePromo(id: 'p8', type: 'fixed_amount', discountValue: 5, isStackable: false),
     ]);
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 100, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-a', unitPrice: 100, quantity: 1)]);
     expect(res.applied.length, 1);
   });
 
@@ -152,24 +153,15 @@ void main() {
       basePromo(id: 'p9', type: 'percentage', discountValue: 10),
       basePromo(id: 'pa', type: 'fixed_amount', discountValue: 5),
     ]);
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 100, quantity: 1),
-    ]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-a', unitPrice: 100, quantity: 1)]);
     expect(res.applied.length, 2);
     expect(res.totalDiscount, 15);
   });
 
   test('coupon code resolves to promotion', () async {
-    await db.upsertPromotions([
-      basePromo(id: 'pc', type: 'percentage', discountValue: 25, isCoupon: true),
-    ]);
+    await db.upsertPromotions([basePromo(id: 'pc', type: 'percentage', discountValue: 25, isCoupon: true)]);
     await db.upsertCouponCodes([
-      LocalCouponCodesCompanion.insert(
-        id: 'cc1',
-        promotionId: 'pc',
-        code: 'SAVE25',
-        isActive: const Value(true),
-      ),
+      LocalCouponCodesCompanion.insert(id: 'cc1', promotionId: 'pc', code: 'SAVE25', isActive: const Value(true)),
     ]);
 
     final res = await evaluator.evaluate(
@@ -196,12 +188,8 @@ void main() {
   });
 
   test('discount cannot exceed subtotal', () async {
-    await db.upsertPromotions([
-      basePromo(id: 'pd', type: 'fixed_amount', discountValue: 9999),
-    ]);
-    final res = await evaluator.evaluate(items: [
-      const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 1),
-    ]);
+    await db.upsertPromotions([basePromo(id: 'pd', type: 'fixed_amount', discountValue: 9999)]);
+    final res = await evaluator.evaluate(items: [const EvalCartItem(productId: 'prod-a', unitPrice: 10, quantity: 1)]);
     expect(res.totalDiscount, lessThanOrEqualTo(res.subtotal));
   });
 }

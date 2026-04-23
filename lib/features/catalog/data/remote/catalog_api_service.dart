@@ -18,7 +18,6 @@ final catalogApiServiceProvider = Provider<CatalogApiService>((ref) {
 
 /// Remote API service for catalog endpoints (products, categories, suppliers).
 class CatalogApiService {
-
   CatalogApiService(this._dio);
   final Dio _dio;
 
@@ -202,11 +201,7 @@ class CatalogApiService {
   }) async {
     final response = await _dio.put(
       '${ApiEndpoints.products}/$productId/combo',
-      data: {
-        'name': ?name,
-        'combo_price': ?comboPrice,
-        'items': items.map((i) => i.toJson()).toList(),
-      },
+      data: {'name': ?name, 'combo_price': ?comboPrice, 'items': items.map((i) => i.toJson()).toList()},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
     return ComboDefinition.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -303,13 +298,8 @@ class CatalogApiService {
   /// import. Returns a record with `header`, `preview` (first 10 rows)
   /// and `totalRows`.
   Future<ImportPreview> importPreview(String filePath, String fileName) async {
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(filePath, filename: fileName),
-    });
-    final response = await _dio.post(
-      '${ApiEndpoints.products}/import-preview',
-      data: formData,
-    );
+    final formData = FormData.fromMap({'file': await MultipartFile.fromFile(filePath, filename: fileName)});
+    final response = await _dio.post('${ApiEndpoints.products}/import-preview', data: formData);
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
     return ImportPreview.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -319,53 +309,31 @@ class CatalogApiService {
   /// Streams the file to the server with a [mapping] of canonical
   /// product field name → 0-based CSV column index. Returns the
   /// import outcome including the list of failed rows.
-  Future<ImportResult> bulkImport({
-    required String filePath,
-    required String fileName,
-    required Map<String, int> mapping,
-  }) async {
+  Future<ImportResult> bulkImport({required String filePath, required String fileName, required Map<String, int> mapping}) async {
     final formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(filePath, filename: fileName),
       ...{for (final entry in mapping.entries) 'mapping[${entry.key}]': entry.value},
     });
-    final response = await _dio.post(
-      '${ApiEndpoints.products}/bulk-import',
-      data: formData,
-    );
+    final response = await _dio.post('${ApiEndpoints.products}/bulk-import', data: formData);
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
-    return ImportResult.fromJson(
-      apiResponse.data as Map<String, dynamic>,
-      message: apiResponse.message,
-    );
+    return ImportResult.fromJson(apiResponse.data as Map<String, dynamic>, message: apiResponse.message);
   }
 }
 
 class ImportPreview {
-  const ImportPreview({
-    required this.header,
-    required this.preview,
-    required this.totalRows,
-    required this.availableFields,
-  });
+  const ImportPreview({required this.header, required this.preview, required this.totalRows, required this.availableFields});
 
   factory ImportPreview.fromJson(Map<String, dynamic> map) {
     final rawHeader = map['header'];
     final rawPreview = map['preview'];
     final rawAvail = map['available_fields'];
     return ImportPreview(
-      header: rawHeader is List
-          ? rawHeader.map((e) => e?.toString() ?? '').toList()
-          : const <String>[],
+      header: rawHeader is List ? rawHeader.map((e) => e?.toString() ?? '').toList() : const <String>[],
       preview: rawPreview is List
-          ? rawPreview
-              .whereType<List>()
-              .map((row) => row.map((c) => c?.toString() ?? '').toList())
-              .toList()
+          ? rawPreview.whereType<List>().map((row) => row.map((c) => c?.toString() ?? '').toList()).toList()
           : const <List<String>>[],
       totalRows: _asInt(map['total_rows']) ?? 0,
-      availableFields: rawAvail is List
-          ? rawAvail.map((e) => e?.toString() ?? '').toList()
-          : const <String>[],
+      availableFields: rawAvail is List ? rawAvail.map((e) => e?.toString() ?? '').toList() : const <String>[],
     );
   }
 
@@ -376,12 +344,7 @@ class ImportPreview {
 }
 
 class ImportResult {
-  const ImportResult({
-    required this.created,
-    required this.failed,
-    required this.errors,
-    this.message,
-  });
+  const ImportResult({required this.created, required this.failed, required this.errors, this.message});
 
   factory ImportResult.fromJson(Map<String, dynamic> map, {String? message}) {
     final rawErrors = map['errors'];
@@ -389,10 +352,7 @@ class ImportResult {
       created: _asInt(map['created']) ?? 0,
       failed: _asInt(map['failed']) ?? 0,
       errors: rawErrors is List
-          ? rawErrors
-              .whereType<Map<String, dynamic>>()
-              .map(ImportError.fromJson)
-              .toList()
+          ? rawErrors.whereType<Map<String, dynamic>>().map(ImportError.fromJson).toList()
           : const <ImportError>[],
       message: message,
     );
@@ -407,10 +367,8 @@ class ImportResult {
 class ImportError {
   const ImportError({required this.row, required this.message});
 
-  factory ImportError.fromJson(Map<String, dynamic> json) => ImportError(
-        row: _asInt(json['row']) ?? 0,
-        message: json['message']?.toString() ?? '',
-      );
+  factory ImportError.fromJson(Map<String, dynamic> json) =>
+      ImportError(row: _asInt(json['row']) ?? 0, message: json['message']?.toString() ?? '');
 
   final int row;
   final String message;
@@ -432,13 +390,7 @@ class ComboDefinition {
   factory ComboDefinition.fromJson(Map<String, dynamic> json) {
     final combo = json['combo'];
     if (combo is! Map<String, dynamic>) {
-      return const ComboDefinition(
-        isCombo: false,
-        id: null,
-        name: null,
-        comboPrice: null,
-        items: <ComboItem>[],
-      );
+      return const ComboDefinition(isCombo: false, id: null, name: null, comboPrice: null, items: <ComboItem>[]);
     }
     final rawItems = combo['items'];
     final parsedItems = rawItems is List
@@ -471,13 +423,13 @@ class ComboItem {
   });
 
   factory ComboItem.fromJson(Map<String, dynamic> json) => ComboItem(
-        id: json['id']?.toString(),
-        productId: json['product_id']?.toString() ?? '',
-        productName: json['product_name']?.toString(),
-        productNameAr: json['product_name_ar']?.toString(),
-        quantity: _asDouble(json['quantity']) ?? 1,
-        isOptional: json['is_optional'] == true,
-      );
+    id: json['id']?.toString(),
+    productId: json['product_id']?.toString() ?? '',
+    productName: json['product_name']?.toString(),
+    productNameAr: json['product_name_ar']?.toString(),
+    quantity: _asDouble(json['quantity']) ?? 1,
+    isOptional: json['is_optional'] == true,
+  );
 
   final String? id;
   final String productId;
@@ -488,21 +440,13 @@ class ComboItem {
 }
 
 class ComboItemPayload {
-  const ComboItemPayload({
-    required this.productId,
-    required this.quantity,
-    this.isOptional = false,
-  });
+  const ComboItemPayload({required this.productId, required this.quantity, this.isOptional = false});
 
   final String productId;
   final double quantity;
   final bool isOptional;
 
-  Map<String, dynamic> toJson() => {
-        'product_id': productId,
-        'quantity': quantity,
-        'is_optional': isOptional,
-      };
+  Map<String, dynamic> toJson() => {'product_id': productId, 'quantity': quantity, 'is_optional': isOptional};
 }
 
 double? _asDouble(dynamic v) {
@@ -520,7 +464,6 @@ int? _asInt(dynamic v) {
 
 /// Generic paginated result for list endpoints.
 class PaginatedResult<T> {
-
   const PaginatedResult({
     required this.items,
     required this.total,

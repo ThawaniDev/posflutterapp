@@ -1,6 +1,5 @@
 /// Complete store settings model mapping all columns from the API.
 class StoreSettings {
-
   const StoreSettings({
     required this.id,
     required this.storeId,

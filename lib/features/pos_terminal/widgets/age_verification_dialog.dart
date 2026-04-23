@@ -36,10 +36,7 @@ class _AgeVerificationDialog extends StatelessWidget {
               Container(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.10),
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.10), shape: BoxShape.circle),
                 child: const Center(child: Icon(Icons.verified_user_outlined, color: AppColors.warning, size: 28)),
               ),
               AppSpacing.gapH16,
@@ -70,10 +67,7 @@ class _AgeVerificationDialog extends StatelessWidget {
                   ),
                   AppSpacing.gapW12,
                   Expanded(
-                    child: PosButton(
-                      label: l.posAgeVerifiedConfirm,
-                      onPressed: () => Navigator.pop(context, true),
-                    ),
+                    child: PosButton(label: l.posAgeVerifiedConfirm, onPressed: () => Navigator.pop(context, true)),
                   ),
                 ],
               ),

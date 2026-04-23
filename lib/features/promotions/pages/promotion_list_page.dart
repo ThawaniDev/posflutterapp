@@ -282,10 +282,7 @@ class _PromotionCard extends ConsumerWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => CouponManagementPage(
-              promotionId: promotion.id,
-              promotionName: promotion.name,
-            ),
+            builder: (_) => CouponManagementPage(promotionId: promotion.id, promotionName: promotion.name),
           ),
         );
       case 'generate':
@@ -373,4 +370,3 @@ class _PromotionCard extends ConsumerWidget {
     }
   }
 }
-

@@ -20,8 +20,7 @@ class ProductBulkImportPage extends ConsumerStatefulWidget {
   const ProductBulkImportPage({super.key});
 
   @override
-  ConsumerState<ProductBulkImportPage> createState() =>
-      _ProductBulkImportPageState();
+  ConsumerState<ProductBulkImportPage> createState() => _ProductBulkImportPageState();
 }
 
 class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
@@ -67,14 +66,9 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
     });
     try {
       final repo = ref.read(catalogRepositoryProvider);
-      final preview = await repo.importPreview(
-        filePath: file.path!,
-        fileName: file.name,
-      );
+      final preview = await repo.importPreview(filePath: file.path!, fileName: file.name);
       // auto-map by exact header match (case-insensitive)
-      final lowerHeader = preview.header
-          .map((h) => h.trim().toLowerCase())
-          .toList();
+      final lowerHeader = preview.header.map((h) => h.trim().toLowerCase()).toList();
       for (final field in preview.availableFields) {
         final i = lowerHeader.indexOf(field.toLowerCase());
         if (i != -1) _mapping[field] = i;
@@ -99,11 +93,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
     });
     try {
       final repo = ref.read(catalogRepositoryProvider);
-      final res = await repo.bulkImport(
-        filePath: file.path!,
-        fileName: file.name,
-        mapping: _mapping,
-      );
+      final res = await repo.bulkImport(filePath: file.path!, fileName: file.name, mapping: _mapping);
       setState(() {
         _result = res;
         _step = 3;
@@ -115,8 +105,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
     }
   }
 
-  bool get _mappingValid =>
-      _requiredFields.every((f) => _mapping.containsKey(f));
+  bool get _mappingValid => _requiredFields.every((f) => _mapping.containsKey(f));
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +159,9 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.catalogImportPickFileHeading,
-                style: AppTypography.titleMedium),
+            Text(l10n.catalogImportPickFileHeading, style: AppTypography.titleMedium),
             const SizedBox(height: AppSpacing.sm),
-            Text(l10n.catalogImportPickFileHint,
-                style: AppTypography.bodyMedium
-                    .copyWith(color: AppColors.textMutedLight)),
+            Text(l10n.catalogImportPickFileHint, style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight)),
             const SizedBox(height: AppSpacing.lg),
             DottedDropZone(
               file: _pickedFile,
@@ -185,9 +171,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
             ),
             if (_previewError != null) ...[
               const SizedBox(height: AppSpacing.md),
-              Text(_previewError!,
-                  style: AppTypography.bodySmall
-                      .copyWith(color: AppColors.error)),
+              Text(_previewError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
             ],
             const SizedBox(height: AppSpacing.lg),
             Container(
@@ -200,15 +184,9 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.info_outline,
-                      size: 18, color: AppColors.primary),
+                  const Icon(Icons.info_outline, size: 18, color: AppColors.primary),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      l10n.catalogImportFormatTip,
-                      style: AppTypography.bodySmall,
-                    ),
-                  ),
+                  Expanded(child: Text(l10n.catalogImportFormatTip, style: AppTypography.bodySmall)),
                 ],
               ),
             ),
@@ -225,8 +203,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
     final headerOptions = [
       const DropdownMenuItem<int?>(value: null, child: Text('—')),
       for (var i = 0; i < p.header.length; i++)
-        DropdownMenuItem<int?>(
-            value: i, child: Text(p.header[i].isEmpty ? 'Col ${i + 1}' : p.header[i])),
+        DropdownMenuItem<int?>(value: i, child: Text(p.header[i].isEmpty ? 'Col ${i + 1}' : p.header[i])),
     ];
 
     return PosCard(
@@ -235,12 +212,9 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.catalogImportMapHeading,
-                style: AppTypography.titleMedium),
+            Text(l10n.catalogImportMapHeading, style: AppTypography.titleMedium),
             const SizedBox(height: AppSpacing.sm),
-            Text(l10n.catalogImportMapHint,
-                style: AppTypography.bodyMedium
-                    .copyWith(color: AppColors.textMutedLight)),
+            Text(l10n.catalogImportMapHint, style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight)),
             const SizedBox(height: AppSpacing.lg),
             ...p.availableFields.map((field) {
               final isRequired = _requiredFields.contains(field);
@@ -255,8 +229,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
                           Text(field, style: AppTypography.bodyMedium),
                           if (isRequired) ...[
                             const SizedBox(width: 4),
-                            const Text('*',
-                                style: TextStyle(color: AppColors.error)),
+                            const Text('*', style: TextStyle(color: AppColors.error)),
                           ],
                         ],
                       ),
@@ -276,8 +249,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
                         decoration: const InputDecoration(
                           isDense: true,
                           border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         ),
                       ),
                     ),
@@ -303,37 +275,26 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.catalogImportPreviewHeading,
-                style: AppTypography.titleMedium),
+            Text(l10n.catalogImportPreviewHeading, style: AppTypography.titleMedium),
             const SizedBox(height: AppSpacing.sm),
             Text(
               l10n.catalogImportPreviewHint(p.totalRows),
-              style: AppTypography.bodyMedium
-                  .copyWith(color: AppColors.textMutedLight),
+              style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight),
             ),
             const SizedBox(height: AppSpacing.lg),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                columns: [
-                  for (final f in mappedFields) DataColumn(label: Text(f)),
-                ],
+                columns: [for (final f in mappedFields) DataColumn(label: Text(f))],
                 rows: [
                   for (final row in p.preview)
-                    DataRow(
-                      cells: [
-                        for (final f in mappedFields)
-                          DataCell(Text(_cellAt(row, _mapping[f]!))),
-                      ],
-                    ),
+                    DataRow(cells: [for (final f in mappedFields) DataCell(Text(_cellAt(row, _mapping[f]!)))]),
                 ],
               ),
             ),
             if (_importError != null) ...[
               const SizedBox(height: AppSpacing.md),
-              Text(_importError!,
-                  style: AppTypography.bodySmall
-                      .copyWith(color: AppColors.error)),
+              Text(_importError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
             ],
           ],
         ),
@@ -367,9 +328,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Text(
-                  hasErrors
-                      ? l10n.catalogImportPartialTitle
-                      : l10n.catalogImportSuccessTitle,
+                  hasErrors ? l10n.catalogImportPartialTitle : l10n.catalogImportSuccessTitle,
                   style: AppTypography.titleLarge,
                 ),
               ],
@@ -379,34 +338,29 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
               spacing: AppSpacing.lg,
               runSpacing: AppSpacing.md,
               children: [
+                _StatTile(label: l10n.catalogImportCreated, value: r.created.toString(), color: AppColors.success),
                 _StatTile(
-                    label: l10n.catalogImportCreated,
-                    value: r.created.toString(),
-                    color: AppColors.success),
-                _StatTile(
-                    label: l10n.catalogImportFailed,
-                    value: r.failed.toString(),
-                    color: r.failed > 0 ? AppColors.error : AppColors.textMutedLight),
+                  label: l10n.catalogImportFailed,
+                  value: r.failed.toString(),
+                  color: r.failed > 0 ? AppColors.error : AppColors.textMutedLight,
+                ),
               ],
             ),
             if (r.errors.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.lg),
-              Text(l10n.catalogImportErrorsHeading,
-                  style: AppTypography.titleSmall),
+              Text(l10n.catalogImportErrorsHeading, style: AppTypography.titleSmall),
               const SizedBox(height: AppSpacing.sm),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 240),
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemCount: r.errors.length,
-                  separatorBuilder: (_, _) =>
-                      const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, i) {
                     final e = r.errors[i];
                     return ListTile(
                       dense: true,
-                      leading: const Icon(Icons.error_outline,
-                          color: AppColors.error, size: 18),
+                      leading: const Icon(Icons.error_outline, color: AppColors.error, size: 18),
                       title: Text('Row ${e.row}: ${e.message}'),
                     );
                   },
@@ -426,19 +380,11 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        PosButton(
-          variant: PosButtonVariant.ghost,
-          label: l10n.commonCancel,
-          onPressed: () => context.go(Routes.products),
-        ),
+        PosButton(variant: PosButtonVariant.ghost, label: l10n.commonCancel, onPressed: () => context.go(Routes.products)),
         Row(
           children: [
             if (_step > 0 && _step < 3)
-              PosButton(
-                variant: PosButtonVariant.outline,
-                label: l10n.commonBack,
-                onPressed: () => setState(() => _step -= 1),
-              ),
+              PosButton(variant: PosButtonVariant.outline, label: l10n.commonBack, onPressed: () => setState(() => _step -= 1)),
             const SizedBox(width: AppSpacing.sm),
             _buildPrimaryAction(l10n),
           ],
@@ -456,22 +402,11 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
           onPressed: _pickedFile == null ? null : _loadPreview,
         );
       case 1:
-        return PosButton(
-          label: l10n.commonNext,
-          onPressed: _mappingValid ? () => setState(() => _step = 2) : null,
-        );
+        return PosButton(label: l10n.commonNext, onPressed: _mappingValid ? () => setState(() => _step = 2) : null);
       case 2:
-        return PosButton(
-          label: l10n.catalogImportRun,
-          icon: Icons.upload_rounded,
-          isLoading: _importing,
-          onPressed: _runImport,
-        );
+        return PosButton(label: l10n.catalogImportRun, icon: Icons.upload_rounded, isLoading: _importing, onPressed: _runImport);
       case 3:
-        return PosButton(
-          label: l10n.commonDone,
-          onPressed: () => context.go(Routes.products),
-        );
+        return PosButton(label: l10n.commonDone, onPressed: () => context.go(Routes.products));
       default:
         return const SizedBox.shrink();
     }
@@ -504,31 +439,19 @@ class DottedDropZone extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: isDark ? AppColors.borderDark : AppColors.borderLight,
-            width: 2,
-            style: BorderStyle.solid,
-          ),
+          border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight, width: 2, style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(AppRadius.md),
           color: AppColors.primary5,
         ),
         child: Column(
           children: [
-            Icon(
-              file == null ? Icons.upload_file : Icons.description,
-              size: 40,
-              color: AppColors.primary,
-            ),
+            Icon(file == null ? Icons.upload_file : Icons.description, size: 40, color: AppColors.primary),
             const SizedBox(height: AppSpacing.sm),
-            Text(
-              file?.name ?? labelEmpty,
-              style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600),
-            ),
+            Text(file?.name ?? labelEmpty, style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: AppSpacing.xs),
             Text(
               file == null ? '.csv, .xlsx, .xls' : labelChange,
-              style: AppTypography.bodySmall
-                  .copyWith(color: AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
             ),
           ],
         ),
@@ -546,8 +469,7 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppRadius.md),
@@ -556,8 +478,7 @@ class _StatTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(value,
-              style: AppTypography.headlineSmall.copyWith(color: color)),
+          Text(value, style: AppTypography.headlineSmall.copyWith(color: color)),
           const SizedBox(height: 2),
           Text(label, style: AppTypography.labelSmall),
         ],

@@ -241,16 +241,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         final db = ref.read(posOfflineDatabaseProvider);
         final available = await db.stockOf(product.id, session.session.storeId);
         final cart = ref.read(cartProvider);
-        final inCart = cart.items
-            .where((i) => i.product.id == product.id)
-            .fold<double>(0, (s, i) => s + i.quantity);
+        final inCart = cart.items.where((i) => i.product.id == product.id).fold<double>(0, (s, i) => s + i.quantity);
         final remaining = available - inCart - qty;
         if (remaining < 0 && !settings.allowNegativeStock && available > 0) {
           if (mounted) {
-            showPosErrorSnackbar(
-              context,
-              AppLocalizations.of(context)!.posInsufficientStock(available.toStringAsFixed(0)),
-            );
+            showPosErrorSnackbar(context, AppLocalizations.of(context)!.posInsufficientStock(available.toStringAsFixed(0)));
           }
           return;
         }
@@ -358,11 +353,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       final exceedsLimit = result > 0 && (requirePin || (maxPct < 100 && effectivePct > maxPct));
 
       if (exceedsLimit) {
-        final approval = await showPosManagerPinDialog(
-          context,
-          action: 'discount',
-          ref: ref,
-        );
+        final approval = await showPosManagerPinDialog(context, action: 'discount', ref: ref);
         if (approval == null) {
           if (mounted) {
             showPosErrorSnackbar(context, AppLocalizations.of(context)!.posManagerPinInvalid);
@@ -438,11 +429,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final details = await showPosTaxExemptDialog(context);
     if (details == null) return;
 
-    final approval = await showPosManagerPinDialog(
-      context,
-      action: 'tax_exempt',
-      ref: ref,
-    );
+    final approval = await showPosManagerPinDialog(context, action: 'tax_exempt', ref: ref);
     if (approval == null) {
       if (mounted) {
         showPosErrorSnackbar(context, AppLocalizations.of(context)!.posManagerPinInvalid);
@@ -510,11 +497,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: qtyCtrl,
-                    label: l10n.posOpenPriceQty,
-                    keyboardType: TextInputType.number,
-                  ),
+                  PosTextField(controller: qtyCtrl, label: l10n.posOpenPriceQty, keyboardType: TextInputType.number),
                   AppSpacing.gapH16,
                   Row(
                     children: [

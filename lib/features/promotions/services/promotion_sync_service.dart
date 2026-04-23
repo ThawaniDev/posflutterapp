@@ -10,10 +10,9 @@ import 'package:wameedpos/features/promotions/repositories/promotion_repository.
 /// into the Drift offline mirror so the terminal can evaluate promotions when
 /// the network is unavailable.
 class PromotionSyncService {
-  PromotionSyncService({
-    required PromotionRepository repository,
-    required PosOfflineDatabase db,
-  }) : _repository = repository, _db = db;
+  PromotionSyncService({required PromotionRepository repository, required PosOfflineDatabase db})
+    : _repository = repository,
+      _db = db;
 
   final PromotionRepository _repository;
   final PosOfflineDatabase _db;
@@ -36,8 +35,7 @@ class PromotionSyncService {
     final since = fullResync ? null : await _readLastSynced();
     final response = await _repository.posSync(since: since);
 
-    final promotions = (response['promotions'] as List? ?? [])
-        .cast<Map<String, dynamic>>();
+    final promotions = (response['promotions'] as List? ?? []).cast<Map<String, dynamic>>();
     final serverTime = response['server_time'] as String?;
 
     if (promotions.isNotEmpty) {
@@ -49,8 +47,7 @@ class PromotionSyncService {
 
       // Replace coupons per promotion to keep offline state in sync
       for (final p in promotions) {
-        final coupons = (p['coupon_codes'] as List? ?? [])
-            .cast<Map<String, dynamic>>();
+        final coupons = (p['coupon_codes'] as List? ?? []).cast<Map<String, dynamic>>();
         final couponRows = coupons.map(_toCouponCompanion).toList();
         await _db.replacePromotionCoupons(p['id'] as String, couponRows);
       }
@@ -130,8 +127,5 @@ class PromotionSyncResult {
 }
 
 final promotionSyncServiceProvider = Provider<PromotionSyncService>((ref) {
-  return PromotionSyncService(
-    repository: ref.watch(promotionRepositoryProvider),
-    db: ref.watch(posOfflineDatabaseProvider),
-  );
+  return PromotionSyncService(repository: ref.watch(promotionRepositoryProvider), db: ref.watch(posOfflineDatabaseProvider));
 });

@@ -42,7 +42,12 @@ class MockSubscriptionNotifier extends StateNotifier<SubscriptionState> implemen
   Future<void> loadCurrent() async {}
 
   @override
-  Future<void> subscribe(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly', String? paymentMethod}) async {}
+  Future<void> subscribe(
+    AppLocalizations l10n, {
+    required String planId,
+    String billingCycle = 'monthly',
+    String? paymentMethod,
+  }) async {}
 
   @override
   Future<void> changePlan(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly'}) async {}

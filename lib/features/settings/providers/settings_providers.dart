@@ -90,7 +90,6 @@ final currentStoreSettingsProvider = Provider<StoreSettings?>((ref) {
 });
 
 class StoreSettingsNotifier extends StateNotifier<StoreSettingsState> {
-
   StoreSettingsNotifier(this._repo) : super(const StoreSettingsInitial());
   final SettingsRepository _repo;
 
@@ -135,7 +134,6 @@ final workingHoursProvider = StateNotifierProvider<WorkingHoursNotifier, Working
 );
 
 class WorkingHoursNotifier extends StateNotifier<WorkingHoursState> {
-
   WorkingHoursNotifier(this._repo) : super(const WorkingHoursInitial());
   final SettingsRepository _repo;
 

@@ -17,19 +17,13 @@ final transactionExplorerApiProvider = Provider<TransactionExplorerApiService>((
 });
 
 class TransactionExplorerApiService {
-
   TransactionExplorerApiService(this._dio);
   final Dio _dio;
 
   Future<Map<String, dynamic>> getTransactionStats({String? branchId, String? dateFrom, String? dateTo, int? days}) async {
     final response = await _dio.get(
       ApiEndpoints.ownerDashboardFinancialSummary,
-      queryParameters: {
-        'branch_id': ?branchId,
-        'date_from': ?dateFrom,
-        'date_to': ?dateTo,
-        'days': ?days,
-      },
+      queryParameters: {'branch_id': ?branchId, 'date_from': ?dateFrom, 'date_to': ?dateTo, 'days': ?days},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -50,11 +44,7 @@ class TransactionExplorerApiService {
   Future<Map<String, dynamic>> getSalesTrend({String? dateFrom, String? dateTo, int? days}) async {
     final response = await _dio.get(
       ApiEndpoints.ownerDashboardSalesTrend,
-      queryParameters: {
-        'date_from': ?dateFrom,
-        'date_to': ?dateTo,
-        'days': ?days,
-      },
+      queryParameters: {'date_from': ?dateFrom, 'date_to': ?dateTo, 'days': ?days},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;

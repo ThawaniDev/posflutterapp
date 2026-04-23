@@ -7,11 +7,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Result returned from the void dialog: the reason text. `null` if cancelled.
 Future<String?> showPosVoidReasonDialog(BuildContext context) {
-  return showDialog<String>(
-    context: context,
-    barrierDismissible: false,
-    builder: (_) => const _VoidReasonDialog(),
-  );
+  return showDialog<String>(context: context, barrierDismissible: false, builder: (_) => const _VoidReasonDialog());
 }
 
 class _VoidReasonDialog extends StatefulWidget {
@@ -58,10 +54,7 @@ class _VoidReasonDialogState extends State<_VoidReasonDialog> {
                 width: 56,
                 height: 56,
                 margin: const EdgeInsets.symmetric(vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.error.withValues(alpha: 0.10),
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.10), shape: BoxShape.circle),
                 child: const Center(child: Icon(Icons.cancel_outlined, color: AppColors.error, size: 28)),
               ),
               AppSpacing.gapH16,
@@ -97,11 +90,7 @@ class _VoidReasonDialogState extends State<_VoidReasonDialog> {
                   ),
                   AppSpacing.gapW12,
                   Expanded(
-                    child: PosButton(
-                      label: l.posVoidConfirmAction,
-                      variant: PosButtonVariant.danger,
-                      onPressed: _submit,
-                    ),
+                    child: PosButton(label: l.posVoidConfirmAction, variant: PosButtonVariant.danger, onPressed: _submit),
                   ),
                 ],
               ),

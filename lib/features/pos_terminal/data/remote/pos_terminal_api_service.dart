@@ -112,10 +112,7 @@ class PosTerminalApiService {
   Future<Transaction> voidTransaction(String transactionId, {required String reason, String? approvalToken}) async {
     final response = await _dio.post(
       '${ApiEndpoints.transactions}/$transactionId/void',
-      data: {
-        'reason': reason,
-        if (approvalToken != null) 'approval_token': approvalToken,
-      },
+      data: {'reason': reason, if (approvalToken != null) 'approval_token': approvalToken},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -320,10 +317,7 @@ class PosTerminalApiService {
 
   /// Fetch product + inventory deltas since the supplied timestamp (ISO-8601).
   Future<Map<String, dynamic>> productChanges({required DateTime since}) async {
-    final response = await _dio.get(
-      '/pos/products/changes',
-      queryParameters: {'since': since.toUtc().toIso8601String()},
-    );
+    final response = await _dio.get('/pos/products/changes', queryParameters: {'since': since.toUtc().toIso8601String()});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Map<String, dynamic>.from(apiResponse.data as Map);
   }
@@ -356,16 +350,11 @@ class PosTerminalApiService {
     return Map<String, dynamic>.from(apiResponse.data as Map);
   }
 
-  Future<Map<String, dynamic>> validateCoupon({
-    required String code,
-    String? customerId,
-    double? orderTotal,
-  }) async {
-    final response = await _dio.post('/promotions/validate', data: {
-      'code': code,
-      if (customerId != null) 'customer_id': customerId,
-      if (orderTotal != null) 'order_total': orderTotal,
-    });
+  Future<Map<String, dynamic>> validateCoupon({required String code, String? customerId, double? orderTotal}) async {
+    final response = await _dio.post(
+      '/promotions/validate',
+      data: {'code': code, if (customerId != null) 'customer_id': customerId, if (orderTotal != null) 'order_total': orderTotal},
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Map<String, dynamic>.from(apiResponse.data as Map);
   }

@@ -84,10 +84,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.surfaceLight,
-      builder: (_) => _ProductPicker(
-        repository: repo,
-        excludeProductId: widget.productId,
-      ),
+      builder: (_) => _ProductPicker(repository: repo, excludeProductId: widget.productId),
     );
     if (picked == null || !mounted) return;
     if (_items.any((d) => d.productId == picked.id)) {
@@ -95,13 +92,9 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
       return;
     }
     setState(() {
-      _items.add(_ItemDraft(
-        productId: picked.id,
-        productName: picked.name,
-        productNameAr: picked.nameAr,
-        quantity: 1,
-        isOptional: false,
-      ));
+      _items.add(
+        _ItemDraft(productId: picked.id, productName: picked.name, productNameAr: picked.nameAr, quantity: 1, isOptional: false),
+      );
     });
   }
 
@@ -125,11 +118,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
         _showSnack(l10n.catalogComboInvalidQuantity);
         return;
       }
-      payload.add(ComboItemPayload(
-        productId: item.productId,
-        quantity: qty,
-        isOptional: item.isOptional,
-      ));
+      payload.add(ComboItemPayload(productId: item.productId, quantity: qty, isOptional: item.isOptional));
     }
     double? comboPrice;
     if (_priceController.text.trim().isNotEmpty) {
@@ -142,11 +131,11 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
 
     setState(() => _saving = true);
     try {
-      await ref.read(catalogRepositoryProvider).syncCombo(
+      await ref
+          .read(catalogRepositoryProvider)
+          .syncCombo(
             widget.productId,
-            name: _nameController.text.trim().isEmpty
-                ? null
-                : _nameController.text.trim(),
+            name: _nameController.text.trim().isEmpty ? null : _nameController.text.trim(),
             comboPrice: comboPrice,
             items: payload,
           );
@@ -169,12 +158,8 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
         title: Text(l10n.catalogComboClearConfirmTitle),
         content: Text(l10n.catalogComboClearConfirmBody),
         actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(l10n.commonCancel)),
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(l10n.commonDelete)),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n.commonCancel)),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(l10n.commonDelete)),
         ],
       ),
     );
@@ -194,8 +179,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -230,11 +214,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
-              child: PosButton(
-                label: l10n.commonSave,
-                onPressed: _saving ? null : _save,
-                isLoading: _saving,
-              ),
+              child: PosButton(label: l10n.commonSave, onPressed: _saving ? null : _save, isLoading: _saving),
             ),
           ],
         ),
@@ -252,22 +232,14 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
                   children: [
                     Text(l10n.catalogComboHeading, style: AppTypography.titleMedium),
                     const SizedBox(height: AppSpacing.md),
-                    PosTextField(
-                      controller: _nameController,
-                      label: l10n.catalogComboName,
-                      hint: l10n.catalogComboNameHint,
-                    ),
+                    PosTextField(controller: _nameController, label: l10n.catalogComboName, hint: l10n.catalogComboNameHint),
                     const SizedBox(height: AppSpacing.md),
                     PosTextField(
                       controller: _priceController,
                       label: l10n.catalogComboPrice,
                       hint: l10n.catalogComboPriceHint,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,2}')),
-                      ],
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
                     ),
                   ],
                 ),
@@ -276,10 +248,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
             const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
-                Expanded(
-                  child: Text(l10n.catalogComboItemsHeading,
-                      style: AppTypography.titleMedium),
-                ),
+                Expanded(child: Text(l10n.catalogComboItemsHeading, style: AppTypography.titleMedium)),
                 PosButton(
                   label: l10n.catalogComboAddItem,
                   onPressed: _saving ? null : _addItem,
@@ -296,9 +265,7 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
                   child: Center(
                     child: Text(
                       l10n.catalogComboNoItems,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                      style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
                     ),
                   ),
                 ),
@@ -330,13 +297,9 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.productName ?? item.productId,
-                      style: AppTypography.bodyMedium),
+                  Text(item.productName ?? item.productId, style: AppTypography.bodyMedium),
                   if (item.productNameAr != null)
-                    Text(item.productNameAr!,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                        )),
+                    Text(item.productNameAr!, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
                 ],
               ),
             ),
@@ -346,23 +309,15 @@ class _ProductComboPageState extends ConsumerState<ProductComboPage> {
               child: PosTextField(
                 controller: item.qtyController,
                 label: l10n.catalogComboQty,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d*\.?\d{0,3}')),
-                ],
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}'))],
               ),
             ),
             const SizedBox(width: AppSpacing.md),
             Column(
               children: [
-                Text(l10n.catalogComboOptional,
-                    style: AppTypography.bodySmall),
-                Switch(
-                  value: item.isOptional,
-                  onChanged: (v) => setState(() => item.isOptional = v),
-                ),
+                Text(l10n.catalogComboOptional, style: AppTypography.bodySmall),
+                Switch(value: item.isOptional, onChanged: (v) => setState(() => item.isOptional = v)),
               ],
             ),
             IconButton(
@@ -386,12 +341,12 @@ class _ItemDraft {
   }) : qtyController = TextEditingController(text: quantity.toString());
 
   factory _ItemDraft.fromExisting(ComboItem item) => _ItemDraft(
-        productId: item.productId,
-        productName: item.productName,
-        productNameAr: item.productNameAr,
-        quantity: item.quantity,
-        isOptional: item.isOptional,
-      );
+    productId: item.productId,
+    productName: item.productName,
+    productNameAr: item.productNameAr,
+    quantity: item.quantity,
+    isOptional: item.isOptional,
+  );
 
   final String productId;
   final String? productName;
@@ -439,9 +394,7 @@ class _ProductPickerState extends State<_ProductPicker> {
       );
       if (!mounted) return;
       setState(() {
-        _results = result.items
-            .where((p) => p.id != widget.excludeProductId)
-            .toList();
+        _results = result.items.where((p) => p.id != widget.excludeProductId).toList();
       });
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -462,14 +415,8 @@ class _ProductPickerState extends State<_ProductPicker> {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: Text(l10n.catalogComboPickItem,
-                      style: AppTypography.titleMedium),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.of(ctx).pop(),
-                ),
+                Expanded(child: Text(l10n.catalogComboPickItem, style: AppTypography.titleMedium)),
+                IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(ctx).pop()),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -486,16 +433,12 @@ class _ProductPickerState extends State<_ProductPicker> {
                   : ListView.separated(
                       controller: scrollController,
                       itemCount: _results.length,
-                      separatorBuilder: (_, _) =>
-                          const Divider(height: 1),
+                      separatorBuilder: (_, _) => const Divider(height: 1),
                       itemBuilder: (_, i) {
                         final p = _results[i];
                         return ListTile(
                           title: Text(p.name),
-                          subtitle: Text(
-                            '${p.sku ?? ''}  •  ${p.sellPrice.toStringAsFixed(2)}',
-                            style: AppTypography.bodySmall,
-                          ),
+                          subtitle: Text('${p.sku ?? ''}  •  ${p.sellPrice.toStringAsFixed(2)}', style: AppTypography.bodySmall),
                           onTap: () => Navigator.of(ctx).pop(p),
                         );
                       },

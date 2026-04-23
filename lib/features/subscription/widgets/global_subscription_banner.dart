@@ -21,8 +21,7 @@ class GlobalSubscriptionBanner extends ConsumerWidget {
     if (subscription == null) return const SizedBox.shrink();
 
     final status = subscription['status'] as String?;
-    final graceEndsRaw =
-        subscription['grace_period_ends_at'] as String? ?? subscription['expires_at'] as String?;
+    final graceEndsRaw = subscription['grace_period_ends_at'] as String? ?? subscription['expires_at'] as String?;
     if (graceEndsRaw == null) return const SizedBox.shrink();
 
     final endsAt = DateTime.tryParse(graceEndsRaw);

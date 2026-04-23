@@ -12,7 +12,6 @@ final promotionApiServiceProvider = Provider<PromotionApiService>((ref) {
 });
 
 class PromotionApiService {
-
   PromotionApiService(this._dio);
   final Dio _dio;
 
@@ -96,12 +95,7 @@ class PromotionApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.couponRedeem,
-      data: {
-        'coupon_code_id': couponCodeId,
-        'order_id': orderId,
-        'customer_id': ?customerId,
-        'discount_amount': discountAmount,
-      },
+      data: {'coupon_code_id': couponCodeId, 'order_id': orderId, 'customer_id': ?customerId, 'discount_amount': discountAmount},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -205,9 +199,7 @@ class PromotionApiService {
   Future<Map<String, dynamic>> posSync({DateTime? since}) async {
     final response = await _dio.get(
       ApiEndpoints.posPromotionsSync,
-      queryParameters: {
-        if (since != null) 'since': since.toUtc().toIso8601String(),
-      },
+      queryParameters: {if (since != null) 'since': since.toUtc().toIso8601String()},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;

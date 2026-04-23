@@ -178,10 +178,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
             width: 130,
             child: Text(
               label,
-              style: AppTypography.bodySmall.copyWith(
-                color: AppColors.mutedFor(context),
-                fontWeight: FontWeight.w500,
-              ),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context), fontWeight: FontWeight.w500),
             ),
           ),
           Expanded(
@@ -230,10 +227,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
               children: [
                 Text(item.productName, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600)),
                 if (item.barcode != null)
-                  Text(
-                    item.barcode!,
-                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
-                  ),
+                  Text(item.barcode!, style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
                 if (item.serialNumber != null)
                   Text('S/N: ${item.serialNumber}', style: AppTypography.micro.copyWith(color: AppColors.info)),
               ],

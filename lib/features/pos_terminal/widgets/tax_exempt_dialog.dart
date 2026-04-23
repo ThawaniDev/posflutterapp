@@ -8,12 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 /// Tax-exemption details captured at sale time. Wired into the
 /// `tax_exemption` nested object accepted by `POST /pos/transactions`.
 class TaxExemptionDetails {
-  const TaxExemptionDetails({
-    required this.exemptionType,
-    this.customerTaxId,
-    this.certificateNumber,
-    this.notes,
-  });
+  const TaxExemptionDetails({required this.exemptionType, this.customerTaxId, this.certificateNumber, this.notes});
 
   final String exemptionType;
   final String? customerTaxId;
@@ -21,11 +16,11 @@ class TaxExemptionDetails {
   final String? notes;
 
   Map<String, dynamic> toJson() => {
-        'exemption_type': exemptionType,
-        if (customerTaxId?.isNotEmpty == true) 'customer_tax_id': customerTaxId,
-        if (certificateNumber?.isNotEmpty == true) 'certificate_number': certificateNumber,
-        if (notes?.isNotEmpty == true) 'notes': notes,
-      };
+    'exemption_type': exemptionType,
+    if (customerTaxId?.isNotEmpty == true) 'customer_tax_id': customerTaxId,
+    if (certificateNumber?.isNotEmpty == true) 'certificate_number': certificateNumber,
+    if (notes?.isNotEmpty == true) 'notes': notes,
+  };
 }
 
 const _kExemptionTypes = <String, String>{
@@ -38,11 +33,7 @@ const _kExemptionTypes = <String, String>{
 };
 
 Future<TaxExemptionDetails?> showPosTaxExemptDialog(BuildContext context) {
-  return showDialog<TaxExemptionDetails>(
-    context: context,
-    barrierDismissible: false,
-    builder: (_) => const _TaxExemptDialog(),
-  );
+  return showDialog<TaxExemptionDetails>(context: context, barrierDismissible: false, builder: (_) => const _TaxExemptDialog());
 }
 
 class _TaxExemptDialog extends StatefulWidget {
@@ -103,9 +94,7 @@ class _TaxExemptDialogState extends State<_TaxExemptDialog> {
               DropdownButtonFormField<String>(
                 initialValue: _type,
                 decoration: InputDecoration(labelText: l.posTaxExemptType),
-                items: _kExemptionTypes.entries
-                    .map((e) => DropdownMenuItem(value: e.key, child: Text(e.value)))
-                    .toList(),
+                items: _kExemptionTypes.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value))).toList(),
                 onChanged: (v) => setState(() => _type = v ?? _type),
               ),
               AppSpacing.gapH12,

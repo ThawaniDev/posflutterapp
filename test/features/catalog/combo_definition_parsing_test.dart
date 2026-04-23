@@ -65,12 +65,7 @@ void main() {
     test('treats combo_price as null when missing', () {
       final json = {
         'is_combo': true,
-        'combo': {
-          'id': 'c',
-          'name': 'X',
-          'combo_price': null,
-          'items': const [],
-        },
+        'combo': {'id': 'c', 'name': 'X', 'combo_price': null, 'items': const []},
       };
       final combo = ComboDefinition.fromJson(json);
       expect(combo.comboPrice, isNull);
@@ -110,13 +105,7 @@ void main() {
           'name': 'X',
           'combo_price': null,
           'items': [
-            {
-              'id': 'i',
-              'product_id': 'p',
-              'product_name': 'P',
-              'product_name_ar': null,
-              'is_optional': false,
-            },
+            {'id': 'i', 'product_id': 'p', 'product_name': 'P', 'product_name_ar': null, 'is_optional': false},
           ],
         },
       };
@@ -129,12 +118,7 @@ void main() {
       // must not crash a release build if it ever does.
       final json = {
         'is_combo': true,
-        'combo': {
-          'id': 'c',
-          'name': 'X',
-          'combo_price': 0,
-          'items': null,
-        },
+        'combo': {'id': 'c', 'name': 'X', 'combo_price': 0, 'items': null},
       };
       final combo = ComboDefinition.fromJson(json);
       expect(combo.items, isEmpty);
@@ -148,20 +132,12 @@ void main() {
   group('ComboItemPayload.toJson', () {
     test('includes all three fields with safe defaults', () {
       const payload = ComboItemPayload(productId: 'p-1', quantity: 2);
-      expect(payload.toJson(), {
-        'product_id': 'p-1',
-        'quantity': 2,
-        'is_optional': false,
-      });
+      expect(payload.toJson(), {'product_id': 'p-1', 'quantity': 2, 'is_optional': false});
     });
 
     test('round-trips is_optional=true', () {
       const payload = ComboItemPayload(productId: 'p-2', quantity: 1.5, isOptional: true);
-      expect(payload.toJson(), {
-        'product_id': 'p-2',
-        'quantity': 1.5,
-        'is_optional': true,
-      });
+      expect(payload.toJson(), {'product_id': 'p-2', 'quantity': 1.5, 'is_optional': true});
     });
   });
 }

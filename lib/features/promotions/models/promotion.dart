@@ -9,7 +9,6 @@ class BundleProductEntry {
 }
 
 class Promotion {
-
   const Promotion({
     required this.id,
     required this.organizationId,
@@ -78,8 +77,11 @@ class Promotion {
       customerGroupIds: json['customer_group_ids'] != null ? List<String>.from(json['customer_group_ids'] as List) : const [],
       bundleProducts: json['bundle_products'] != null
           ? (json['bundle_products'] as List)
-              .map((e) => BundleProductEntry(productId: e['product_id'] as String, quantity: (e['quantity'] as num?)?.toInt() ?? 1))
-              .toList()
+                .map(
+                  (e) =>
+                      BundleProductEntry(productId: e['product_id'] as String, quantity: (e['quantity'] as num?)?.toInt() ?? 1),
+                )
+                .toList()
           : const [],
     );
   }

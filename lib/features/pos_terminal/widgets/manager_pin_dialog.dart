@@ -20,11 +20,7 @@ class ManagerApproval {
 /// Step-up authentication dialog. Returns a [ManagerApproval] when the
 /// supplied PIN is verified by the backend for the requested action,
 /// otherwise `null` if cancelled.
-Future<ManagerApproval?> showPosManagerPinDialog(
-  BuildContext context, {
-  required String action,
-  required WidgetRef ref,
-}) {
+Future<ManagerApproval?> showPosManagerPinDialog(BuildContext context, {required String action, required WidgetRef ref}) {
   return showDialog<ManagerApproval>(
     context: context,
     barrierDismissible: false,
@@ -115,10 +111,7 @@ class _ManagerPinDialogState extends State<_ManagerPinDialog> {
                 width: 56,
                 height: 56,
                 margin: const EdgeInsets.symmetric(vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.10),
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.10), shape: BoxShape.circle),
                 child: const Center(child: Icon(Icons.shield_outlined, color: AppColors.warning, size: 28)),
               ),
               AppSpacing.gapH16,

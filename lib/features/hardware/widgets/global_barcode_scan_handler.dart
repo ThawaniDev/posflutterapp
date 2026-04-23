@@ -91,9 +91,7 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
       // with an override quantity (weight) or unit price.
       final embedded = scanResult.embedded;
       if (isOnPosCashier && embedded != null) {
-        final product = await ref
-            .read(posProductsProvider.notifier)
-            .findByBarcode(embedded.productReference);
+        final product = await ref.read(posProductsProvider.notifier).findByBarcode(embedded.productReference);
         if (!mounted) return;
         if (product != null) {
           final qty = embedded.weightKg ?? 1.0;
@@ -103,9 +101,7 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
             final cart = ref.read(cartProvider);
             final idx = cart.items.lastIndexWhere((i) => i.product.id == product.id);
             if (idx >= 0) {
-              ref
-                  .read(cartProvider.notifier)
-                  .setItemDiscount(idx, 0); // ensure no stale discount
+              ref.read(cartProvider.notifier).setItemDiscount(idx, 0); // ensure no stale discount
             }
           }
           showPosSuccessSnackbar(context, '${product.name} added (${qty}kg)');
