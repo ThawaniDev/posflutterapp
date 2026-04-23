@@ -12,6 +12,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   printing
   screen_retriever_windows
   sentry_flutter
+  sqlite3_flutter_libs
   url_launcher_windows
   webview_win_floating
   window_manager

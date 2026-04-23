@@ -9,6 +9,7 @@ import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/core/theme/app_theme.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_sync_service.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/services/subscription_sync_service.dart';
 
@@ -30,6 +31,9 @@ class WameedPosApp extends ConsumerWidget {
         ref.read(pushNotificationServiceProvider).initialize();
         ref.read(featureGateServiceProvider).initialize();
         ref.read(subscriptionSyncServiceProvider).startSync();
+        ref.read(posOfflineSyncServiceProvider)
+          ..startPeriodicDrain()
+          ..drain();
         _checkForUpdate(ref);
       }
     });
@@ -41,6 +45,9 @@ class WameedPosApp extends ConsumerWidget {
         ref.read(pushNotificationServiceProvider).initialize();
         ref.read(featureGateServiceProvider).initialize();
         ref.read(subscriptionSyncServiceProvider).startSync();
+        ref.read(posOfflineSyncServiceProvider)
+          ..startPeriodicDrain()
+          ..drain();
         _checkForUpdate(ref);
       });
     }

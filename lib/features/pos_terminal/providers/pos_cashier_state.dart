@@ -2,16 +2,25 @@ import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
 import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 
-// ─── Cart State ─────────────────────────────────────────────────
+// ─── Cart State ──────────────────────────────────────
 
 class CartState {
-  const CartState({this.items = const [], this.customer, this.notes, this.manualDiscount, this.taxExempt = false});
+  const CartState({
+    this.items = const [],
+    this.customer,
+    this.notes,
+    this.manualDiscount,
+    this.taxExempt = false,
+    this.taxExemption,
+  });
   final List<CartItem> items;
   final Customer? customer;
   final String? notes;
   final double? manualDiscount;
   final bool taxExempt;
+  final TaxExemptionDetails? taxExemption;
 
   int get itemCount => items.fold(0, (sum, i) => sum + i.quantity.toInt());
 
@@ -34,6 +43,8 @@ class CartState {
     double? manualDiscount,
     bool clearCustomer = false,
     bool? taxExempt,
+    TaxExemptionDetails? taxExemption,
+    bool clearTaxExemption = false,
   }) {
     return CartState(
       items: items ?? this.items,
@@ -41,6 +52,7 @@ class CartState {
       notes: notes ?? this.notes,
       manualDiscount: manualDiscount ?? this.manualDiscount,
       taxExempt: taxExempt ?? this.taxExempt,
+      taxExemption: clearTaxExemption ? null : (taxExemption ?? this.taxExemption),
     );
   }
 
@@ -66,6 +78,7 @@ class CartState {
       if (notes != null) 'notes': notes,
       if (manualDiscount != null) 'manual_discount': manualDiscount,
       if (taxExempt) 'is_tax_exempt': true,
+      if (taxExemption != null) 'tax_exemption': taxExemption!.toJson(),
     };
   }
 }

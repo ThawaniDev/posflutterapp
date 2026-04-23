@@ -10,6 +10,7 @@ import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
 import 'package:wameedpos/features/pos_terminal/models/payment.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction_item.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/void_reason_dialog.dart';
 import 'package:wameedpos/features/transactions/providers/transaction_explorer_providers.dart';
 import 'package:wameedpos/features/transactions/providers/transaction_explorer_state.dart';
 
@@ -30,16 +31,9 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
   }
 
   Future<void> _handleVoid(AppLocalizations l10n) async {
-    final confirmed = await showPosConfirmDialog(
-      context,
-      title: l10n.txVoidConfirmTitle,
-      message: l10n.txVoidConfirmMessage,
-      confirmLabel: l10n.txVoidAction,
-      isDanger: true,
-    );
-    if (confirmed == true) {
-      await ref.read(transactionDetailProvider.notifier).voidTransaction(widget.transactionId);
-    }
+    final reason = await showPosVoidReasonDialog(context);
+    if (reason == null) return;
+    await ref.read(transactionDetailProvider.notifier).voidTransaction(widget.transactionId, reason: reason);
   }
 
   @override

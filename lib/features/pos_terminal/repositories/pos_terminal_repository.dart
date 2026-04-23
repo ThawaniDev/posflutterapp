@@ -42,7 +42,8 @@ class PosTerminalRepository {
   );
   Future<Transaction> createTransaction(Map<String, dynamic> data) => _apiService.createTransaction(data);
   Future<Transaction> getTransaction(String id) => _apiService.getTransaction(id);
-  Future<Transaction> voidTransaction(String id) => _apiService.voidTransaction(id);
+  Future<Transaction> voidTransaction(String id, {required String reason, String? approvalToken}) =>
+      _apiService.voidTransaction(id, reason: reason, approvalToken: approvalToken);
   Future<Transaction> getTransactionByNumber(String number) => _apiService.getTransactionByNumber(number);
   Future<Transaction> returnTransaction(Map<String, dynamic> data) => _apiService.returnTransaction(data);
 

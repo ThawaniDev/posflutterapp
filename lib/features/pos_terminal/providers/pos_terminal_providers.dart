@@ -102,9 +102,9 @@ class TransactionsNotifier extends StateNotifier<TransactionsState> {
     }
   }
 
-  Future<void> voidTransaction(String id) async {
+  Future<void> voidTransaction(String id, {required String reason, String? approvalToken}) async {
     try {
-      await _repo.voidTransaction(id);
+      await _repo.voidTransaction(id, reason: reason, approvalToken: approvalToken);
       await load();
     } on DioException catch (e) {
       state = TransactionsError(message: _extractError(e));

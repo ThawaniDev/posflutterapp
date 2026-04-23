@@ -24,6 +24,10 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_customer_search_dialog
 import 'package:wameedpos/features/pos_terminal/pages/pos_cash_event_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_shift_report_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_reprint_receipt_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/quick_add_customer_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
   const PosCashierPage({super.key});
@@ -187,14 +191,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
 
   Future<void> _addProductToCart(Product product) async {
     if (product.ageRestricted == true) {
-      final confirmed = await showPosConfirmDialog(
-        context,
-        title: AppLocalizations.of(context)!.catalogAgeRestricted,
-        message: AppLocalizations.of(context)!.catalogAgeRestriction,
-        confirmLabel: AppLocalizations.of(context)!.commonConfirm,
-        cancelLabel: AppLocalizations.of(context)!.commonCancel,
-      );
-      if (confirmed != true) return;
+      final verified = await showPosAgeVerificationDialog(context, minimumAge: 18);
+      if (verified != true) return;
     }
 
     double qty = 1;
@@ -214,6 +212,13 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     }
 
     ref.read(cartProvider.notifier).addProduct(product, qty: qty);
+    if (product.ageRestricted == true) {
+      final cart = ref.read(cartProvider);
+      final idx = cart.items.indexWhere((i) => i.product.id == product.id);
+      if (idx >= 0) {
+        ref.read(cartProvider.notifier).markAgeVerified(idx);
+      }
+    }
     if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
   }
 
@@ -279,6 +284,20 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       ),
     );
     if (result != null) {
+      // Discounts above 50 SAR require manager approval.
+      if (result > 50) {
+        final approval = await showPosManagerPinDialog(
+          context,
+          action: 'discount',
+          ref: ref,
+        );
+        if (approval == null) {
+          if (mounted) {
+            showPosErrorSnackbar(context, AppLocalizations.of(context)!.posManagerPinInvalid);
+          }
+          return;
+        }
+      }
       ref.read(cartProvider.notifier).setManualDiscount(result > 0 ? result : null);
     }
   }
@@ -333,6 +352,34 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     );
     if (result != null) {
       ref.read(cartProvider.notifier).setNotes(result.isEmpty ? null : result);
+    }
+  }
+
+  Future<void> _handleTaxExempt() async {
+    final cart = ref.read(cartProvider);
+    // Toggle off if currently exempt
+    if (cart.taxExempt) {
+      ref.read(cartProvider.notifier).setTaxExemption(null);
+      return;
+    }
+
+    final details = await showPosTaxExemptDialog(context);
+    if (details == null) return;
+
+    final approval = await showPosManagerPinDialog(
+      context,
+      action: 'tax_exempt',
+      ref: ref,
+    );
+    if (approval == null) {
+      if (mounted) {
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.posManagerPinInvalid);
+      }
+      return;
+    }
+    ref.read(cartProvider.notifier).setTaxExemption(details);
+    if (mounted) {
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posTaxExempt);
     }
   }
 
@@ -881,7 +928,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             icon: Icons.receipt_long_outlined,
             variant: cart.taxExempt ? PosButtonVariant.primary : PosButtonVariant.outline,
             size: PosButtonSize.md,
-            onPressed: cart.isNotEmpty ? () => ref.read(cartProvider.notifier).toggleTaxExempt() : null,
+            onPressed: cart.isNotEmpty ? _handleTaxExempt : null,
           ),
           AppSpacing.gapW12,
           Container(width: 1, height: 32, color: AppColors.borderFor(context)),

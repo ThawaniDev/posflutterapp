@@ -3,14 +3,24 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datawedge/flutter_datawedge.dart';
+import 'package:wameedpos/features/pos_terminal/utils/ean_weighted_parser.dart';
 
 /// Barcode scan result
 class BarcodeScanResult { // 'keyboard_wedge', 'serial', 'bluetooth'
 
-  const BarcodeScanResult({required this.barcode, required this.scannedAt, this.source = 'keyboard_wedge'});
+  const BarcodeScanResult({
+    required this.barcode,
+    required this.scannedAt,
+    this.source = 'keyboard_wedge',
+    this.embedded,
+  });
   final String barcode;
   final DateTime scannedAt;
   final String source;
+
+  /// Populated when the scanned code is a recognised weight- or
+  /// price-embedded EAN-13 (GS1 prefixes 21–24).
+  final WeightEmbeddedBarcode? embedded;
 }
 
 /// Scanner configuration
@@ -117,7 +127,12 @@ class BarcodeScannerService {
     if (barcode.length < _config.minBarcodeLength || barcode.length > _config.maxBarcodeLength) return;
 
     debugPrint('BarcodeScannerService: DataWedge scan: $barcode');
-    _scanController.add(BarcodeScanResult(barcode: barcode, scannedAt: DateTime.now(), source: 'datawedge'));
+    _scanController.add(BarcodeScanResult(
+      barcode: barcode,
+      scannedAt: DateTime.now(),
+      source: 'datawedge',
+      embedded: EanWeightedParser.tryParse(barcode),
+    ));
   }
 
   /// Stop listening
@@ -204,13 +219,24 @@ class BarcodeScannerService {
     }
 
     debugPrint('BarcodeScannerService: Scanned barcode: $barcode');
-    _scanController.add(BarcodeScanResult(barcode: barcode, scannedAt: DateTime.now(), source: 'keyboard_wedge'));
+    _scanController.add(BarcodeScanResult(
+      barcode: barcode,
+      scannedAt: DateTime.now(),
+      source: 'keyboard_wedge',
+      embedded: EanWeightedParser.tryParse(barcode),
+    ));
   }
 
   /// Manually submit a barcode (e.g., from manual entry field)
   void manualEntry(String barcode) {
     if (barcode.trim().isEmpty) return;
-    _scanController.add(BarcodeScanResult(barcode: barcode.trim(), scannedAt: DateTime.now(), source: 'manual'));
+    final clean = barcode.trim();
+    _scanController.add(BarcodeScanResult(
+      barcode: clean,
+      scannedAt: DateTime.now(),
+      source: 'manual',
+      embedded: EanWeightedParser.tryParse(clean),
+    ));
   }
 
   void dispose() {

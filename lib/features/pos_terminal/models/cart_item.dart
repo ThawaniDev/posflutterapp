@@ -11,6 +11,7 @@ class CartItem {
     this.discountType,
     this.discountValue,
     this.notes,
+    this.ageVerified = false,
   });
   final Product product;
   final double quantity;
@@ -19,6 +20,10 @@ class CartItem {
   final DiscountType? discountType;
   final double? discountValue;
   final String? notes;
+
+  /// Set to true once the cashier has verified the customer's age for an
+  /// age-restricted product. Persisted on the backend as `age_verified`.
+  final bool ageVerified;
 
   /// Raw tax rate as stored in DB (e.g. 15 for 15%).
   double get rawTaxRate => product.taxRate ?? 15.0;
@@ -43,6 +48,7 @@ class CartItem {
     DiscountType? discountType,
     double? discountValue,
     String? notes,
+    bool? ageVerified,
   }) {
     return CartItem(
       product: product ?? this.product,
@@ -52,6 +58,7 @@ class CartItem {
       discountType: discountType ?? this.discountType,
       discountValue: discountValue ?? this.discountValue,
       notes: notes ?? this.notes,
+      ageVerified: ageVerified ?? this.ageVerified,
     );
   }
 
@@ -70,6 +77,7 @@ class CartItem {
       'tax_rate': rawTaxRate,
       'tax_amount': taxAmount,
       'line_total': lineTotal,
+      if (ageVerified) 'age_verified': true,
     };
   }
 }

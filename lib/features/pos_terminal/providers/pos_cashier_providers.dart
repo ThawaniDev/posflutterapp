@@ -6,6 +6,7 @@ import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
 import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 
 // ─── Cart Provider ──────────────────────────────────────────────
 
@@ -86,6 +87,23 @@ class CartNotifier extends StateNotifier<CartState> {
 
   void toggleTaxExempt() {
     state = state.copyWith(taxExempt: !state.taxExempt);
+  }
+
+  /// Apply tax-exemption details captured from the dialog. Forces taxExempt=true.
+  void setTaxExemption(TaxExemptionDetails? details) {
+    if (details == null) {
+      state = state.copyWith(taxExempt: false, clearTaxExemption: true);
+    } else {
+      state = state.copyWith(taxExempt: true, taxExemption: details);
+    }
+  }
+
+  /// Mark a cart line as age-verified (used after the age-verification dialog).
+  void markAgeVerified(int index) {
+    if (index < 0 || index >= state.items.length) return;
+    final updated = List<CartItem>.from(state.items);
+    updated[index] = updated[index].copyWith(ageVerified: true);
+    state = state.copyWith(items: updated);
   }
 
   void clear() {
@@ -257,6 +275,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
     required CartState cart,
     required List<Map<String, dynamic>> payments,
     double tipAmount = 0,
+    String? approvalToken,
   }) async {
     state = const SaleProcessing();
     try {
@@ -273,6 +292,8 @@ class SaleNotifier extends StateNotifier<SaleState> {
         if (cart.customer != null) 'customer_id': cart.customer!.id,
         if (cart.notes != null) 'notes': cart.notes,
         if (cart.taxExempt) 'is_tax_exempt': true,
+        if (cart.taxExemption != null) 'tax_exemption': cart.taxExemption!.toJson(),
+        if (approvalToken != null) 'approval_token': approvalToken,
       };
       final transaction = await _repo.createTransaction(data);
       final change = payments

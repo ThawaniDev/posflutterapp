@@ -8,6 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/quick_add_customer_dialog.dart';
 
 class PosCustomerSearchDialog extends ConsumerStatefulWidget {
   const PosCustomerSearchDialog({super.key});
@@ -35,6 +36,15 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
     ref.read(cartProvider.notifier).setCustomer(customer);
     Navigator.pop(context);
     showPosSuccessSnackbar(context, 'Customer: ${customer.name}');
+  }
+
+  Future<void> _handleQuickAdd() async {
+    final created = await showPosQuickAddCustomerDialog(context, ref);
+    if (created != null && mounted) {
+      ref.read(cartProvider.notifier).setCustomer(created);
+      Navigator.pop(context);
+      showPosSuccessSnackbar(context, 'Customer: ${created.name}');
+    }
   }
 
   @override
@@ -82,11 +92,24 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
               Expanded(child: _buildResults(customersState, isDark, mutedColor)),
 
               AppSpacing.gapH12,
-              PosButton(
-                label: AppLocalizations.of(context)!.posCancel,
-                variant: PosButtonVariant.outline,
-                isFullWidth: true,
-                onPressed: () => Navigator.pop(context),
+              Row(
+                children: [
+                  Expanded(
+                    child: PosButton(
+                      label: AppLocalizations.of(context)!.posCancel,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: PosButton(
+                      label: AppLocalizations.of(context)!.posQuickAddCustomerTitle,
+                      icon: Icons.person_add_alt_1_outlined,
+                      onPressed: _handleQuickAdd,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -16069,4 +16069,100 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaEnterOtp => 'أدخل رمز OTP المكون من 6 أرقام';
+
+  @override
+  String get posVoidReasonTitle => 'إلغاء المعاملة';
+
+  @override
+  String get posVoidReasonHint => 'السبب (مطلوب، 5 أحرف كحد أدنى)';
+
+  @override
+  String get posVoidReasonError => 'يرجى إدخال سبب من 5 أحرف على الأقل';
+
+  @override
+  String get posVoidConfirmAction => 'إلغاء';
+
+  @override
+  String get posManagerPinTitle => 'يلزم موافقة المدير';
+
+  @override
+  String get posManagerPinHint => 'أدخل رمز PIN للمدير';
+
+  @override
+  String get posManagerPinInvalid => 'الرمز غير صحيح';
+
+  @override
+  String get posManagerPinSubmit => 'موافقة';
+
+  @override
+  String posManagerPinAction(String action) {
+    return 'الإجراء: $action';
+  }
+
+  @override
+  String get posAgeVerificationTitle => 'يلزم التحقق من العمر';
+
+  @override
+  String posAgeVerificationBody(int age) {
+    return 'هذا المنتج مخصص للعملاء بعمر $age سنة فأكثر. أكد أن العميل بالغ.';
+  }
+
+  @override
+  String get posAgeVerifiedConfirm => 'تم التحقق';
+
+  @override
+  String get posAgeVerifyDecline => 'إلغاء';
+
+  @override
+  String get posTaxExemptTitle => 'بيع معفى من الضريبة';
+
+  @override
+  String get posTaxExemptType => 'نوع الإعفاء';
+
+  @override
+  String get posTaxExemptCustomerTaxId => 'الرقم الضريبي للعميل';
+
+  @override
+  String get posTaxExemptCertificateNumber => 'رقم الشهادة';
+
+  @override
+  String get posTaxExemptNotes => 'ملاحظات';
+
+  @override
+  String get posTaxExemptSubmit => 'تطبيق الإعفاء';
+
+  @override
+  String get posOfflineQueued =>
+      'تم الحفظ بدون اتصال — ستتم المزامنة عند الاتصال.';
+
+  @override
+  String get posOfflineSyncing => 'جارٍ مزامنة المعاملات غير المتصلة...';
+
+  @override
+  String posOfflineSyncedCount(int count) {
+    return 'تمت مزامنة $count معاملة.';
+  }
+
+  @override
+  String get posCashDrawerOpenFailed => 'تعذر فتح درج النقود.';
+
+  @override
+  String get posCfdNotConnected => 'شاشة العميل غير متصلة.';
+
+  @override
+  String get posQuickAddCustomerTitle => 'إضافة عميل سريع';
+
+  @override
+  String get posQuickAddCustomerName => 'الاسم';
+
+  @override
+  String get posQuickAddCustomerPhone => 'الهاتف';
+
+  @override
+  String posBarcodeWeightDetected(String weight) {
+    return 'تم اكتشاف باركود وزن: $weight';
+  }
+
+  @override
+  String get posScaleNotConnected => 'الميزان غير متصل.';
 }

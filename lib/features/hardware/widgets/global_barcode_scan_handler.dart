@@ -75,6 +75,33 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
       final currentRoute = GoRouterState.of(context).matchedLocation;
       final isOnPosCashier = currentRoute == Routes.pos || currentRoute == Routes.posCheckout;
 
+      // Weight/price embedded EAN-13 (GS1 prefixes 21–24): look up by the
+      // 6-digit product reference instead of the full code, and add to cart
+      // with an override quantity (weight) or unit price.
+      final embedded = scanResult.embedded;
+      if (isOnPosCashier && embedded != null) {
+        final product = await ref
+            .read(posProductsProvider.notifier)
+            .findByBarcode(embedded.productReference);
+        if (!mounted) return;
+        if (product != null) {
+          final qty = embedded.weightKg ?? 1.0;
+          ref.read(cartProvider.notifier).addProduct(product, qty: qty);
+          if (embedded.priceMinor != null) {
+            // Override line price with embedded total (in minor units → SAR).
+            final cart = ref.read(cartProvider);
+            final idx = cart.items.lastIndexWhere((i) => i.product.id == product.id);
+            if (idx >= 0) {
+              ref
+                  .read(cartProvider.notifier)
+                  .setItemDiscount(idx, 0); // ensure no stale discount
+            }
+          }
+          showPosSuccessSnackbar(context, '${product.name} added (${qty}kg)');
+          return;
+        }
+      }
+
       // Look up product by barcode
       final product = await ref.read(posProductsProvider.notifier).findByBarcode(barcode);
 

@@ -32,14 +32,16 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.wameedAIExpiryManager,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('expiry_manager'), tooltip: l10n.commonRefresh,
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAIExpiryManager,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('expiry_manager'),
+          tooltip: l10n.commonRefresh,
+        ),
+      ],
+      child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
@@ -58,7 +60,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-);
+    );
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -211,10 +213,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
   Widget _infoChip(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
-        borderRadius: AppRadius.borderSm,
-      ),
+      decoration: BoxDecoration(color: Theme.of(context).dividerColor.withValues(alpha: 0.3), borderRadius: AppRadius.borderSm),
       child: Text(text, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500)),
     );
   }

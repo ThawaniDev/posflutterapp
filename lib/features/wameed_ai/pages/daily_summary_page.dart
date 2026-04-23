@@ -33,24 +33,28 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.wameedAIDailySummary,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.copy, onPressed: () {
-              final s = ref.read(aiFeatureResultProvider);
-              if (s is AIFeatureResultLoaded) {
-                final text = s.result.data?['narrative_ar']?.toString() ?? s.result.message ?? '';
-                Clipboard.setData(ClipboardData(text: text));
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied)));
-              }
-            }, tooltip: l10n.wameedAICopyResult,
-  ),
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('daily_summary'), tooltip: l10n.commonRefresh,
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAIDailySummary,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.copy,
+          onPressed: () {
+            final s = ref.read(aiFeatureResultProvider);
+            if (s is AIFeatureResultLoaded) {
+              final text = s.result.data?['narrative_ar']?.toString() ?? s.result.message ?? '';
+              Clipboard.setData(ClipboardData(text: text));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied)));
+            }
+          },
+          tooltip: l10n.wameedAICopyResult,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('daily_summary'),
+          tooltip: l10n.commonRefresh,
+        ),
+      ],
+      child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
@@ -69,7 +73,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-);
+    );
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {

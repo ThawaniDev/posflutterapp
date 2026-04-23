@@ -32,14 +32,16 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.wameedAISmartReorder,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('smart_reorder'), tooltip: l10n.commonRefresh,
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAISmartReorder,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('smart_reorder'),
+          tooltip: l10n.commonRefresh,
+        ),
+      ],
+      child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
@@ -58,7 +60,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-);
+    );
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {

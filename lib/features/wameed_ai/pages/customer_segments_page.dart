@@ -33,17 +33,19 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.wameedAICustomerSegments,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () {
-              setState(() => _selectedSegment = null);
-              ref.read(aiFeatureResultProvider.notifier).invoke('customer_segmentation');
-            }, tooltip: l10n.commonRefresh,
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAICustomerSegments,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () {
+            setState(() => _selectedSegment = null);
+            ref.read(aiFeatureResultProvider.notifier).invoke('customer_segmentation');
+          },
+          tooltip: l10n.commonRefresh,
+        ),
+      ],
+      child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
@@ -62,7 +64,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-);
+    );
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {

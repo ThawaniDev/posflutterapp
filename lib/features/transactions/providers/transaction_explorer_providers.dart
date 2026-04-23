@@ -211,9 +211,9 @@ class TransactionDetailNotifier extends StateNotifier<TransactionDetailState> {
     }
   }
 
-  Future<void> voidTransaction(String transactionId) async {
+  Future<void> voidTransaction(String transactionId, {required String reason, String? approvalToken}) async {
     try {
-      await _posApi.voidTransaction(transactionId);
+      await _posApi.voidTransaction(transactionId, reason: reason, approvalToken: approvalToken);
       await load(transactionId);
     } catch (e) {
       state = TransactionDetailError(e.toString());

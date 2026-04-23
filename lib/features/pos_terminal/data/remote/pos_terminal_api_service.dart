@@ -109,8 +109,14 @@ class PosTerminalApiService {
     return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
-  Future<Transaction> voidTransaction(String transactionId) async {
-    final response = await _dio.put('${ApiEndpoints.transactions}/$transactionId/void');
+  Future<Transaction> voidTransaction(String transactionId, {required String reason, String? approvalToken}) async {
+    final response = await _dio.post(
+      '${ApiEndpoints.transactions}/$transactionId/void',
+      data: {
+        'reason': reason,
+        if (approvalToken != null) 'approval_token': approvalToken,
+      },
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -298,6 +304,48 @@ class PosTerminalApiService {
 
   Future<Map<String, dynamic>> getReceipt(String transactionId) async {
     final response = await _dio.get('${ApiEndpoints.transactions}/$transactionId/receipt');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  // ─── Offline sync / step-up auth ────────────────────────────
+
+  /// Idempotently send a batch of queued transactions. Each entry must
+  /// include `client_uuid` so the backend dedupes retries.
+  Future<Map<String, dynamic>> batchTransactions(Map<String, dynamic> payload) async {
+    final response = await _dio.post('${ApiEndpoints.transactions}/batch', data: payload);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  /// Fetch product + inventory deltas since the supplied timestamp (ISO-8601).
+  Future<Map<String, dynamic>> productChanges({required DateTime since}) async {
+    final response = await _dio.get(
+      '/pos/products/changes',
+      queryParameters: {'since': since.toUtc().toIso8601String()},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  /// Apply a batch of inventory adjustments. Each entry needs `client_uuid`.
+  Future<Map<String, dynamic>> applyInventoryAdjustments(Map<String, dynamic> payload) async {
+    final response = await _dio.post('/pos/inventory/adjustments', data: payload);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  /// Quick-add walk-in customer from the POS register.
+  Future<Customer> quickAddCustomer(Map<String, dynamic> payload) async {
+    final response = await _dio.post(ApiEndpoints.posCustomers, data: payload);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Customer.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// Verify a manager PIN for a step-up action; returns
+  /// `{approval_token, approver_id, expires_in}`.
+  Future<Map<String, dynamic>> verifyManagerPin({required String pin, required String action}) async {
+    final response = await _dio.post('/pos/auth/verify-pin', data: {'pin': pin, 'action': action});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Map<String, dynamic>.from(apiResponse.data as Map);
   }

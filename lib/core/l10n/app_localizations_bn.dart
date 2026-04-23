@@ -16192,4 +16192,100 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get zatcaEnterOtp => '৬ সংখ্যার OTP লিখুন';
+
+  @override
+  String get posVoidReasonTitle => 'Void Transaction';
+
+  @override
+  String get posVoidReasonHint => 'Reason (required, min 5 chars)';
+
+  @override
+  String get posVoidReasonError =>
+      'Please provide a reason of at least 5 characters';
+
+  @override
+  String get posVoidConfirmAction => 'Void';
+
+  @override
+  String get posManagerPinTitle => 'Manager Approval Required';
+
+  @override
+  String get posManagerPinHint => 'Enter manager PIN';
+
+  @override
+  String get posManagerPinInvalid => 'Invalid PIN';
+
+  @override
+  String get posManagerPinSubmit => 'Approve';
+
+  @override
+  String posManagerPinAction(String action) {
+    return 'Action: $action';
+  }
+
+  @override
+  String get posAgeVerificationTitle => 'Age Verification Required';
+
+  @override
+  String posAgeVerificationBody(int age) {
+    return 'This product is restricted to customers aged $age+. Confirm the customer is of legal age.';
+  }
+
+  @override
+  String get posAgeVerifiedConfirm => 'Verified';
+
+  @override
+  String get posAgeVerifyDecline => 'Cancel';
+
+  @override
+  String get posTaxExemptTitle => 'Tax Exempt Sale';
+
+  @override
+  String get posTaxExemptType => 'Exemption Type';
+
+  @override
+  String get posTaxExemptCustomerTaxId => 'Customer Tax ID';
+
+  @override
+  String get posTaxExemptCertificateNumber => 'Certificate Number';
+
+  @override
+  String get posTaxExemptNotes => 'Notes';
+
+  @override
+  String get posTaxExemptSubmit => 'Apply Exemption';
+
+  @override
+  String get posOfflineQueued => 'Saved offline — will sync when online.';
+
+  @override
+  String get posOfflineSyncing => 'Syncing offline transactions...';
+
+  @override
+  String posOfflineSyncedCount(int count) {
+    return '$count transactions synced.';
+  }
+
+  @override
+  String get posCashDrawerOpenFailed => 'Failed to open cash drawer.';
+
+  @override
+  String get posCfdNotConnected => 'Customer-facing display not connected.';
+
+  @override
+  String get posQuickAddCustomerTitle => 'Quick Add Customer';
+
+  @override
+  String get posQuickAddCustomerName => 'Name';
+
+  @override
+  String get posQuickAddCustomerPhone => 'Phone';
+
+  @override
+  String posBarcodeWeightDetected(String weight) {
+    return 'Weight barcode detected: $weight';
+  }
+
+  @override
+  String get posScaleNotConnected => 'Scale not connected.';
 }

@@ -30397,6 +30397,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter 6-digit OTP'**
   String get zatcaEnterOtp;
+
+  /// No description provided for @posVoidReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Void Transaction'**
+  String get posVoidReasonTitle;
+
+  /// No description provided for @posVoidReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (required, min 5 chars)'**
+  String get posVoidReasonHint;
+
+  /// No description provided for @posVoidReasonError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a reason of at least 5 characters'**
+  String get posVoidReasonError;
+
+  /// No description provided for @posVoidConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get posVoidConfirmAction;
+
+  /// No description provided for @posManagerPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager Approval Required'**
+  String get posManagerPinTitle;
+
+  /// No description provided for @posManagerPinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manager PIN'**
+  String get posManagerPinHint;
+
+  /// No description provided for @posManagerPinInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid PIN'**
+  String get posManagerPinInvalid;
+
+  /// No description provided for @posManagerPinSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get posManagerPinSubmit;
+
+  /// No description provided for @posManagerPinAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Action: {action}'**
+  String posManagerPinAction(String action);
+
+  /// No description provided for @posAgeVerificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Age Verification Required'**
+  String get posAgeVerificationTitle;
+
+  /// No description provided for @posAgeVerificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This product is restricted to customers aged {age}+. Confirm the customer is of legal age.'**
+  String posAgeVerificationBody(int age);
+
+  /// No description provided for @posAgeVerifiedConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get posAgeVerifiedConfirm;
+
+  /// No description provided for @posAgeVerifyDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get posAgeVerifyDecline;
+
+  /// No description provided for @posTaxExemptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Exempt Sale'**
+  String get posTaxExemptTitle;
+
+  /// No description provided for @posTaxExemptType.
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption Type'**
+  String get posTaxExemptType;
+
+  /// No description provided for @posTaxExemptCustomerTaxId.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tax ID'**
+  String get posTaxExemptCustomerTaxId;
+
+  /// No description provided for @posTaxExemptCertificateNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate Number'**
+  String get posTaxExemptCertificateNumber;
+
+  /// No description provided for @posTaxExemptNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get posTaxExemptNotes;
+
+  /// No description provided for @posTaxExemptSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Exemption'**
+  String get posTaxExemptSubmit;
+
+  /// No description provided for @posOfflineQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved offline — will sync when online.'**
+  String get posOfflineQueued;
+
+  /// No description provided for @posOfflineSyncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing offline transactions...'**
+  String get posOfflineSyncing;
+
+  /// No description provided for @posOfflineSyncedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} transactions synced.'**
+  String posOfflineSyncedCount(int count);
+
+  /// No description provided for @posCashDrawerOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to open cash drawer.'**
+  String get posCashDrawerOpenFailed;
+
+  /// No description provided for @posCfdNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer-facing display not connected.'**
+  String get posCfdNotConnected;
+
+  /// No description provided for @posQuickAddCustomerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Add Customer'**
+  String get posQuickAddCustomerTitle;
+
+  /// No description provided for @posQuickAddCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get posQuickAddCustomerName;
+
+  /// No description provided for @posQuickAddCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get posQuickAddCustomerPhone;
+
+  /// No description provided for @posBarcodeWeightDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight barcode detected: {weight}'**
+  String posBarcodeWeightDetected(String weight);
+
+  /// No description provided for @posScaleNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Scale not connected.'**
+  String get posScaleNotConnected;
 }
 
 class _AppLocalizationsDelegate
