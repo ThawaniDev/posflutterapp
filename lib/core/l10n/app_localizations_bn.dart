@@ -5884,6 +5884,15 @@ class AppLocalizationsBn extends AppLocalizations {
   String get commonOk => 'OK';
 
   @override
+  String get commonNext => 'Next';
+
+  @override
+  String get commonBack => 'Back';
+
+  @override
+  String get commonDone => 'Done';
+
+  @override
   String get commonRefresh => 'রিফ্রেশ';
 
   @override
@@ -13657,6 +13666,75 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get catalogAddProduct => 'পণ্য যোগ করুন';
+
+  @override
+  String get catalogBulkImportTitle => 'Bulk Import Products';
+
+  @override
+  String get catalogBulkImportSubtitle =>
+      'Upload a CSV or Excel file to create products in bulk.';
+
+  @override
+  String get catalogImportStepFile => 'File';
+
+  @override
+  String get catalogImportStepMap => 'Map';
+
+  @override
+  String get catalogImportStepPreview => 'Preview';
+
+  @override
+  String get catalogImportStepResult => 'Result';
+
+  @override
+  String get catalogImportPickFileHeading => 'Choose a file';
+
+  @override
+  String get catalogImportPickFileHint =>
+      'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.';
+
+  @override
+  String get catalogImportSelectFile => 'Click to select a file';
+
+  @override
+  String get catalogImportChangeFile => 'Click to choose a different file';
+
+  @override
+  String get catalogImportFormatTip =>
+      'First row should contain column headers. Required: name, sell_price.';
+
+  @override
+  String get catalogImportMapHeading => 'Map columns';
+
+  @override
+  String get catalogImportMapHint =>
+      'Match each product field to a column from your file. Required fields are marked with *.';
+
+  @override
+  String get catalogImportPreviewHeading => 'Preview';
+
+  @override
+  String catalogImportPreviewHint(int count) {
+    return 'Showing the first rows of $count total. Click Run import to create products.';
+  }
+
+  @override
+  String get catalogImportRun => 'Run import';
+
+  @override
+  String get catalogImportSuccessTitle => 'Import complete';
+
+  @override
+  String get catalogImportPartialTitle => 'Import finished with errors';
+
+  @override
+  String get catalogImportCreated => 'Created';
+
+  @override
+  String get catalogImportFailed => 'Failed';
+
+  @override
+  String get catalogImportErrorsHeading => 'Errors';
 
   @override
   String get catalogSearchProductsShort => 'পণ্য খুঁজুন...';

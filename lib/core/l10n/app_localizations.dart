@@ -11380,6 +11380,24 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get commonOk;
 
+  /// No description provided for @commonNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get commonNext;
+
+  /// No description provided for @commonBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get commonBack;
+
+  /// No description provided for @commonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
   /// No description provided for @commonRefresh.
   ///
   /// In en, this message translates to:
@@ -25833,6 +25851,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Product'**
   String get catalogAddProduct;
+
+  /// No description provided for @catalogBulkImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Import Products'**
+  String get catalogBulkImportTitle;
+
+  /// No description provided for @catalogBulkImportSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a CSV or Excel file to create products in bulk.'**
+  String get catalogBulkImportSubtitle;
+
+  /// No description provided for @catalogImportStepFile.
+  ///
+  /// In en, this message translates to:
+  /// **'File'**
+  String get catalogImportStepFile;
+
+  /// No description provided for @catalogImportStepMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get catalogImportStepMap;
+
+  /// No description provided for @catalogImportStepPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get catalogImportStepPreview;
+
+  /// No description provided for @catalogImportStepResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get catalogImportStepResult;
+
+  /// No description provided for @catalogImportPickFileHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a file'**
+  String get catalogImportPickFileHeading;
+
+  /// No description provided for @catalogImportPickFileHint.
+  ///
+  /// In en, this message translates to:
+  /// **'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.'**
+  String get catalogImportPickFileHint;
+
+  /// No description provided for @catalogImportSelectFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to select a file'**
+  String get catalogImportSelectFile;
+
+  /// No description provided for @catalogImportChangeFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to choose a different file'**
+  String get catalogImportChangeFile;
+
+  /// No description provided for @catalogImportFormatTip.
+  ///
+  /// In en, this message translates to:
+  /// **'First row should contain column headers. Required: name, sell_price.'**
+  String get catalogImportFormatTip;
+
+  /// No description provided for @catalogImportMapHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Map columns'**
+  String get catalogImportMapHeading;
+
+  /// No description provided for @catalogImportMapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Match each product field to a column from your file. Required fields are marked with *.'**
+  String get catalogImportMapHint;
+
+  /// No description provided for @catalogImportPreviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get catalogImportPreviewHeading;
+
+  /// No description provided for @catalogImportPreviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the first rows of {count} total. Click Run import to create products.'**
+  String catalogImportPreviewHint(int count);
+
+  /// No description provided for @catalogImportRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Run import'**
+  String get catalogImportRun;
+
+  /// No description provided for @catalogImportSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import complete'**
+  String get catalogImportSuccessTitle;
+
+  /// No description provided for @catalogImportPartialTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import finished with errors'**
+  String get catalogImportPartialTitle;
+
+  /// No description provided for @catalogImportCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get catalogImportCreated;
+
+  /// No description provided for @catalogImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get catalogImportFailed;
+
+  /// No description provided for @catalogImportErrorsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get catalogImportErrorsHeading;
 
   /// No description provided for @catalogSearchProductsShort.
   ///

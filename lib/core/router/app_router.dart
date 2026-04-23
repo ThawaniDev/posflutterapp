@@ -38,6 +38,7 @@ import 'package:wameedpos/features/cashier_gamification/pages/gamification_anoma
 import 'package:wameedpos/features/cashier_gamification/pages/gamification_shift_reports_page.dart';
 import 'package:wameedpos/features/cashier_gamification/pages/gamification_settings_page.dart';
 import 'package:wameedpos/features/catalog/pages/category_list_page.dart';
+import 'package:wameedpos/features/catalog/pages/product_bulk_import_page.dart';
 import 'package:wameedpos/features/catalog/pages/product_form_page.dart';
 import 'package:wameedpos/features/catalog/pages/product_list_page.dart';
 import 'package:wameedpos/features/catalog/pages/supplier_list_page.dart';
@@ -383,6 +384,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.productsAdd,
             name: 'productsAdd',
             builder: (context, state) => ProductFormPage(initialBarcode: state.uri.queryParameters['barcode']),
+          ),
+          GoRoute(
+            path: Routes.productsImport,
+            name: 'productsImport',
+            builder: (context, state) => const ProductBulkImportPage(),
           ),
           GoRoute(
             path: '${Routes.products}/:id',

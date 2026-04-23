@@ -155,4 +155,22 @@ class CatalogRepository {
   Future<String> generateBarcode(String productId) {
     return _apiService.generateBarcode(productId);
   }
+
+  // ─── Bulk Import ──────────────────────────────────────────────
+
+  Future<ImportPreview> importPreview({required String filePath, required String fileName}) {
+    return _apiService.importPreview(filePath, fileName);
+  }
+
+  Future<ImportResult> bulkImport({
+    required String filePath,
+    required String fileName,
+    required Map<String, int> mapping,
+  }) {
+    return _apiService.bulkImport(
+      filePath: filePath,
+      fileName: fileName,
+      mapping: mapping,
+    );
+  }
 }

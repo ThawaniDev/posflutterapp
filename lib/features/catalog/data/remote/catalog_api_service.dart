@@ -260,6 +260,99 @@ class CatalogApiService {
   Future<void> deleteSupplier(String supplierId) async {
     await _dio.delete('${ApiEndpoints.suppliers}/$supplierId');
   }
+
+  // ─── Bulk Import ──────────────────────────────────────────────
+
+  /// POST /catalog/products/import-preview
+  ///
+  /// Uploads the file once to obtain header row + a small preview of
+  /// the data so the user can map columns before triggering the real
+  /// import. Returns a record with `header`, `preview` (first 10 rows)
+  /// and `totalRows`.
+  Future<ImportPreview> importPreview(String filePath, String fileName) async {
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath, filename: fileName),
+    });
+    final response = await _dio.post(
+      '${ApiEndpoints.products}/import-preview',
+      data: formData,
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    return ImportPreview(
+      header: List<String>.from((map['header'] as List).map((e) => e.toString())),
+      preview: (map['preview'] as List)
+          .map((row) => List<String>.from((row as List).map((c) => c?.toString() ?? '')))
+          .toList(),
+      totalRows: map['total_rows'] as int? ?? 0,
+      availableFields: List<String>.from((map['available_fields'] as List).map((e) => e.toString())),
+    );
+  }
+
+  /// POST /catalog/products/bulk-import
+  ///
+  /// Streams the file to the server with a [mapping] of canonical
+  /// product field name → 0-based CSV column index. Returns the
+  /// import outcome including the list of failed rows.
+  Future<ImportResult> bulkImport({
+    required String filePath,
+    required String fileName,
+    required Map<String, int> mapping,
+  }) async {
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath, filename: fileName),
+      ...{for (final entry in mapping.entries) 'mapping[${entry.key}]': entry.value},
+    });
+    final response = await _dio.post(
+      '${ApiEndpoints.products}/bulk-import',
+      data: formData,
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    return ImportResult(
+      created: map['created'] as int? ?? 0,
+      failed: map['failed'] as int? ?? 0,
+      errors: ((map['errors'] as List?) ?? const [])
+          .map((e) => ImportError(
+                row: (e as Map<String, dynamic>)['row'] as int? ?? 0,
+                message: e['message']?.toString() ?? '',
+              ))
+          .toList(),
+      message: apiResponse.message,
+    );
+  }
+}
+
+class ImportPreview {
+  const ImportPreview({
+    required this.header,
+    required this.preview,
+    required this.totalRows,
+    required this.availableFields,
+  });
+  final List<String> header;
+  final List<List<String>> preview;
+  final int totalRows;
+  final List<String> availableFields;
+}
+
+class ImportResult {
+  const ImportResult({
+    required this.created,
+    required this.failed,
+    required this.errors,
+    this.message,
+  });
+  final int created;
+  final int failed;
+  final List<ImportError> errors;
+  final String? message;
+}
+
+class ImportError {
+  const ImportError({required this.row, required this.message});
+  final int row;
+  final String message;
 }
 
 /// Generic paginated result for list endpoints.

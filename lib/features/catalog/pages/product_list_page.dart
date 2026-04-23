@@ -134,6 +134,12 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           onPressed: () => ref.read(productsProvider.notifier).load(),
           variant: PosButtonVariant.ghost,
         ),
+        PosButton.icon(
+          icon: Icons.upload_file,
+          tooltip: l10n.catalogBulkImportTitle,
+          onPressed: () => context.push(Routes.productsImport),
+          variant: PosButtonVariant.ghost,
+        ),
         PosButton(label: l10n.catalogAddProduct, icon: Icons.add, onPressed: () => context.push(Routes.productsAdd)),
       ],
       child: isMobile

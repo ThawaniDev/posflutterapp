@@ -5854,6 +5854,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonOk => 'موافق';
 
   @override
+  String get commonNext => 'التالي';
+
+  @override
+  String get commonBack => 'السابق';
+
+  @override
+  String get commonDone => 'تم';
+
+  @override
   String get commonRefresh => 'تحديث';
 
   @override
@@ -13548,6 +13557,75 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get catalogAddProduct => 'إضافة منتج';
+
+  @override
+  String get catalogBulkImportTitle => 'استيراد المنتجات بالجملة';
+
+  @override
+  String get catalogBulkImportSubtitle =>
+      'ارفع ملف CSV أو Excel لإنشاء منتجات دفعة واحدة.';
+
+  @override
+  String get catalogImportStepFile => 'الملف';
+
+  @override
+  String get catalogImportStepMap => 'المطابقة';
+
+  @override
+  String get catalogImportStepPreview => 'معاينة';
+
+  @override
+  String get catalogImportStepResult => 'النتيجة';
+
+  @override
+  String get catalogImportPickFileHeading => 'اختر ملفاً';
+
+  @override
+  String get catalogImportPickFileHint =>
+      'نقبل ملفات CSV (.csv) و Excel (.xlsx, .xls) بحجم حتى 10 ميغابايت.';
+
+  @override
+  String get catalogImportSelectFile => 'اضغط لاختيار ملف';
+
+  @override
+  String get catalogImportChangeFile => 'اضغط لاختيار ملف آخر';
+
+  @override
+  String get catalogImportFormatTip =>
+      'يجب أن يحتوي الصف الأول على عناوين الأعمدة. الحقول الإلزامية: name و sell_price.';
+
+  @override
+  String get catalogImportMapHeading => 'مطابقة الأعمدة';
+
+  @override
+  String get catalogImportMapHint =>
+      'اربط كل حقل منتج بعمود من ملفك. الحقول المطلوبة بعلامة *.';
+
+  @override
+  String get catalogImportPreviewHeading => 'معاينة';
+
+  @override
+  String catalogImportPreviewHint(int count) {
+    return 'عرض أول الصفوف من إجمالي $count. اضغط تشغيل الاستيراد لإنشاء المنتجات.';
+  }
+
+  @override
+  String get catalogImportRun => 'تشغيل الاستيراد';
+
+  @override
+  String get catalogImportSuccessTitle => 'اكتمل الاستيراد';
+
+  @override
+  String get catalogImportPartialTitle => 'اكتمل الاستيراد مع وجود أخطاء';
+
+  @override
+  String get catalogImportCreated => 'تم الإنشاء';
+
+  @override
+  String get catalogImportFailed => 'فشل';
+
+  @override
+  String get catalogImportErrorsHeading => 'الأخطاء';
 
   @override
   String get catalogSearchProductsShort => 'ابحث عن المنتجات...';
