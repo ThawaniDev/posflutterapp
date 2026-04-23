@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
 import 'package:wameedpos/features/payments/models/installment_payment.dart';
 import 'package:wameedpos/features/payments/pages/installment_payment_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
@@ -248,16 +249,46 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
     await ref
         .read(saleProvider.notifier)
-        .completeSale(sessionId: widget.sessionId, cart: cart, payments: payments, tipAmount: _tipAmount);
+        .completeSale(
+          sessionId: widget.sessionId,
+          cart: cart,
+          payments: payments,
+          tipAmount: _tipAmount,
+          saleType: ref.read(currentStoreSettingsProvider)?.defaultSaleType,
+        );
 
     final saleState = ref.read(saleProvider);
     if (saleState is SaleCompleted) {
       ref.read(cartProvider.notifier).clear();
 
+      final settings = ref.read(currentStoreSettingsProvider);
+
       // Auto-open cash drawer when a cash payment leg was used
       if (_legs.any((l) => l.method == PaymentMethod.cash)) {
         try {
           await ref.read(hardwareManagerProvider).cashDrawer.open();
+        } catch (_) {}
+      }
+
+      // Auto-print receipt when enabled in settings.
+      if (settings?.autoPrintReceipt ?? false) {
+        try {
+          final printer = ref.read(hardwareManagerProvider).receiptPrinter;
+          await printer.printReceipt(_buildSaleReceiptLines(saleState, cart, settings));
+        } catch (_) {
+          // Silent failure; user can re-print from receipt dialog.
+        }
+      }
+
+      // Send to kitchen display when enabled and the sale type matches a
+      // dine-in/takeaway/delivery flow that the KDS handles.
+      if ((settings?.enableKitchenDisplay ?? false)) {
+        try {
+          // Best-effort: emit a snackbar; backend ticket is created on the
+          // server when sale_type is provided. No client-side push needed.
+          if (mounted) {
+            showPosInfoSnackbar(context, AppLocalizations.of(context)!.posKdsTicketSent);
+          }
         } catch (_) {}
       }
 
@@ -727,7 +758,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (loyaltyPoints > 0) ...[
+        if ((settings?.enableLoyaltyPoints ?? true) && loyaltyPoints > 0) ...[
           Text(
             AppLocalizations.of(context)!.posLoyaltyPoints,
             style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
@@ -913,6 +944,34 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       PaymentMethod.tabby || PaymentMethod.tamara || PaymentMethod.mispay || PaymentMethod.madfu => Icons.credit_score_rounded,
       _ => Icons.payment_rounded,
     };
+  }
+
+  List<ReceiptLine> _buildSaleReceiptLines(SaleCompleted sale, CartState cart, StoreSettings? settings) {
+    final lines = <ReceiptLine>[
+      if ((settings?.receiptHeader ?? '').isNotEmpty)
+        ReceiptLine.text(settings!.receiptHeader!, alignment: PrintAlignment.center, bold: true),
+      ReceiptLine.text('# ${sale.transactionNumber}', alignment: PrintAlignment.center),
+      if (settings?.receiptShowDate ?? true)
+        ReceiptLine.text(DateTime.now().toString().substring(0, 19), alignment: PrintAlignment.center),
+      ReceiptLine.separator(),
+      for (final item in cart.items)
+        ReceiptLine.twoColumn(
+          '${item.product.name}  x${item.quantity.toStringAsFixed(item.quantity == item.quantity.floor() ? 0 : 2)}',
+          (item.unitPrice * item.quantity).toStringAsFixed(2),
+        ),
+      ReceiptLine.separator(),
+      ReceiptLine.twoColumn('Subtotal', cart.subtotal.toStringAsFixed(2)),
+      if (cart.discountTotal > 0)
+        ReceiptLine.twoColumn('Discount', '-${cart.discountTotal.toStringAsFixed(2)}'),
+      if ((settings?.receiptShowTaxBreakdown ?? true) && cart.taxAmount > 0)
+        ReceiptLine.twoColumn(settings?.taxLabel ?? 'Tax', cart.taxAmount.toStringAsFixed(2)),
+      ReceiptLine.twoColumn('TOTAL', sale.totalAmount.toStringAsFixed(2), bold: true),
+      ReceiptLine.separator(),
+      if ((settings?.receiptFooter ?? '').isNotEmpty)
+        ReceiptLine.text(settings!.receiptFooter!, alignment: PrintAlignment.center),
+      ReceiptLine.feed(2),
+    ];
+    return lines;
   }
 
   List<double> _quickDenominations() {

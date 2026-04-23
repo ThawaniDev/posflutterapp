@@ -16233,4 +16233,80 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posApplyCredit => 'تطبيق الرصيد';
+
+  @override
+  String get posCustomerRequired => 'العميل مطلوب لإكمال هذه العملية';
+
+  @override
+  String get posHoldOrdersDisabled => 'تعليق الطلبات معطّل في الإعدادات';
+
+  @override
+  String get posRefundsDisabled => 'المرتجعات معطّلة في الإعدادات';
+
+  @override
+  String get posExchangesDisabled => 'الاستبدال معطّل في الإعدادات';
+
+  @override
+  String get posOpenPriceItem => 'صنف بسعر مفتوح';
+
+  @override
+  String get posOpenPriceName => 'اسم الصنف';
+
+  @override
+  String get posOpenPricePrice => 'السعر';
+
+  @override
+  String get posOpenPriceQty => 'الكمية';
+
+  @override
+  String get posOpenPriceAdd => 'إضافة للسلة';
+
+  @override
+  String get posOpenPriceItemsDisabled => 'الأصناف بسعر مفتوح معطّلة';
+
+  @override
+  String get posQuickAddProduct => 'إضافة منتج سريع';
+
+  @override
+  String get posQuickAddProductsDisabled => 'الإضافة السريعة للمنتجات معطّلة';
+
+  @override
+  String get posOutOfStock => 'نفد المخزون';
+
+  @override
+  String posInsufficientStock(Object available) {
+    return 'المخزون غير كافٍ ($available متاح)';
+  }
+
+  @override
+  String posLowStockWarning(Object remaining, Object product) {
+    return 'مخزون منخفض: متبقي $remaining لـ $product';
+  }
+
+  @override
+  String get posSessionTimedOut => 'انتهت الجلسة بسبب عدم النشاط';
+
+  @override
+  String get posPrintingReceipt => 'جارِ طباعة الإيصال…';
+
+  @override
+  String get posPrintFailed => 'فشلت طباعة الإيصال';
+
+  @override
+  String get posCfdIdleMessage => 'أهلاً وسهلاً';
+
+  @override
+  String get posSaleType => 'نوع الطلب';
+
+  @override
+  String get posSaleTypeDineIn => 'صالة';
+
+  @override
+  String get posSaleTypeTakeaway => 'سفري';
+
+  @override
+  String get posSaleTypeDelivery => 'توصيل';
+
+  @override
+  String get posKdsTicketSent => 'أُرسل إلى المطبخ';
 }

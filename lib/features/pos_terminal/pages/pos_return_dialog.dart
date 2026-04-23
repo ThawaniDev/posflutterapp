@@ -11,6 +11,8 @@ import 'package:wameedpos/features/pos_terminal/models/transaction_item.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 class PosReturnDialog extends ConsumerStatefulWidget {
   const PosReturnDialog({super.key});
@@ -157,6 +159,16 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
 
   Future<void> _processReturn() async {
     if (_transaction == null || !_hasSelectedItems) return;
+
+    // Manager PIN gate (settings.requireManagerForRefund)
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (settings?.requireManagerForRefund ?? false) {
+      final approval = await showPosManagerPinDialog(context, action: 'refund', ref: ref);
+      if (approval == null) {
+        if (mounted) showPosErrorSnackbar(context, AppLocalizations.of(context)!.posManagerPinInvalid);
+        return;
+      }
+    }
 
     setState(() {
       _isProcessing = true;

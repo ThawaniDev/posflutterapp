@@ -77,6 +77,18 @@ final storeSettingsProvider = StateNotifierProvider<StoreSettingsNotifier, Store
   (ref) => StoreSettingsNotifier(ref.watch(settingsRepositoryProvider)),
 );
 
+/// Convenience provider returning the current [StoreSettings] (or null if not loaded yet).
+/// Re-emits whenever the underlying state changes (Loaded → Saved → Loaded).
+final currentStoreSettingsProvider = Provider<StoreSettings?>((ref) {
+  final state = ref.watch(storeSettingsProvider);
+  return switch (state) {
+    StoreSettingsLoaded(:final settings) => settings,
+    StoreSettingsSaved(:final settings) => settings,
+    StoreSettingsSaving(:final settings) => settings,
+    _ => null,
+  };
+});
+
 class StoreSettingsNotifier extends StateNotifier<StoreSettingsState> {
 
   StoreSettingsNotifier(this._repo) : super(const StoreSettingsInitial());

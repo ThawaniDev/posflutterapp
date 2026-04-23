@@ -276,12 +276,14 @@ class SaleNotifier extends StateNotifier<SaleState> {
     required List<Map<String, dynamic>> payments,
     double tipAmount = 0,
     String? approvalToken,
+    String? saleType,
   }) async {
     state = const SaleProcessing();
     try {
       final data = {
         'type': 'sale',
         'pos_session_id': sessionId,
+        if (saleType != null) 'sale_type': saleType,
         'subtotal': cart.subtotal,
         'discount_amount': cart.discountTotal > 0 ? cart.discountTotal : null,
         'tax_amount': cart.taxAmount,

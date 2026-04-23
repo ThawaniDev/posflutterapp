@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
@@ -11,6 +12,7 @@ import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/services/barcode_scanner_service.dart';
 import 'package:wameedpos/features/hardware/widgets/barcode_product_popup.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 /// Global barcode scan handler that listens for barcode scans across the entire app.
 ///
@@ -66,6 +68,15 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
     // Prevent concurrent processing
     if (_isProcessing) return;
     _isProcessing = true;
+
+    // Audible beep on every scan when enabled in settings.
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (settings?.barcodeScanSound ?? true) {
+      try {
+        await SystemSound.play(SystemSoundType.click);
+        HapticFeedback.lightImpact();
+      } catch (_) {}
+    }
 
     try {
       final barcode = scanResult.barcode;

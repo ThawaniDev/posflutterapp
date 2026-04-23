@@ -14,6 +14,7 @@ import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/router/route_permissions.dart';
 import 'package:wameedpos/features/hardware/widgets/global_barcode_scan_handler.dart';
+import 'package:wameedpos/features/auth/widgets/session_idle_wrapper.dart';
 import 'package:wameedpos/features/wameed_ai/pages/wameed_ai_home_page.dart';
 import 'package:wameedpos/features/wameed_ai/pages/ai_feature_detail_page.dart';
 import 'package:wameedpos/features/wameed_ai/pages/ai_suggestions_page.dart';
@@ -369,7 +370,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state, child) {
           final perm = permissionForRoute(state.matchedLocation);
           final guarded = perm != null ? PermissionGuardPage(permission: perm, child: child) : child;
-          return GlobalBarcodeScanHandler(child: AppShell(child: guarded));
+          return GlobalBarcodeScanHandler(child: SessionIdleWrapper(child: AppShell(child: guarded)));
         },
         routes: [
           // ─── Main (protected) ─────────────────────────

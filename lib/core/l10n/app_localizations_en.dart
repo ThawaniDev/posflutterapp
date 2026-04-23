@@ -16290,4 +16290,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get posApplyCredit => 'Apply Credit';
+
+  @override
+  String get posCustomerRequired =>
+      'Customer is required to complete this sale';
+
+  @override
+  String get posHoldOrdersDisabled => 'Hold orders are disabled in settings';
+
+  @override
+  String get posRefundsDisabled => 'Refunds are disabled in settings';
+
+  @override
+  String get posExchangesDisabled => 'Exchanges are disabled in settings';
+
+  @override
+  String get posOpenPriceItem => 'Open Price Item';
+
+  @override
+  String get posOpenPriceName => 'Item Name';
+
+  @override
+  String get posOpenPricePrice => 'Price';
+
+  @override
+  String get posOpenPriceQty => 'Quantity';
+
+  @override
+  String get posOpenPriceAdd => 'Add to Cart';
+
+  @override
+  String get posOpenPriceItemsDisabled => 'Open price items are disabled';
+
+  @override
+  String get posQuickAddProduct => 'Quick Add Product';
+
+  @override
+  String get posQuickAddProductsDisabled => 'Quick add products are disabled';
+
+  @override
+  String get posOutOfStock => 'Out of stock';
+
+  @override
+  String posInsufficientStock(Object available) {
+    return 'Insufficient stock ($available available)';
+  }
+
+  @override
+  String posLowStockWarning(Object remaining, Object product) {
+    return 'Low stock: $remaining remaining for $product';
+  }
+
+  @override
+  String get posSessionTimedOut => 'Session timed out due to inactivity';
+
+  @override
+  String get posPrintingReceipt => 'Printing receipt…';
+
+  @override
+  String get posPrintFailed => 'Failed to print receipt';
+
+  @override
+  String get posCfdIdleMessage => 'Welcome';
+
+  @override
+  String get posSaleType => 'Sale Type';
+
+  @override
+  String get posSaleTypeDineIn => 'Dine in';
+
+  @override
+  String get posSaleTypeTakeaway => 'Takeaway';
+
+  @override
+  String get posSaleTypeDelivery => 'Delivery';
+
+  @override
+  String get posKdsTicketSent => 'Sent to kitchen';
 }

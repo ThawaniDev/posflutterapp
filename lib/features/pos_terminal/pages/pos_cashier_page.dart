@@ -9,7 +9,9 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/repositories/catalog_repository.dart';
 import 'package:wameedpos/features/security/repositories/security_repository.dart';
+import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.dart';
 import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
 import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
@@ -26,9 +28,7 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_shift_report_dialog.da
 import 'package:wameedpos/features/pos_terminal/pages/pos_reprint_receipt_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
-import 'package:wameedpos/features/pos_terminal/widgets/quick_add_customer_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
-import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
@@ -65,16 +65,21 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     if (key == LogicalKeyboardKey.f2) {
       return KeyEventResult.handled;
     }
+    final settings = ref.read(currentStoreSettingsProvider);
     if (key == LogicalKeyboardKey.f4) {
       _handlePay();
       return KeyEventResult.handled;
     }
     if (key == LogicalKeyboardKey.f8) {
-      _handleHoldCart();
+      if (settings?.enableHoldOrders ?? true) {
+        _handleHoldCart();
+      }
       return KeyEventResult.handled;
     }
     if (key == LogicalKeyboardKey.f9) {
-      _handleRecallCart();
+      if (settings?.enableHoldOrders ?? true) {
+        _handleRecallCart();
+      }
       return KeyEventResult.handled;
     }
     return KeyEventResult.ignored;
@@ -86,6 +91,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final cart = ref.read(cartProvider);
     final session = ref.read(activeSessionProvider);
     if (cart.isEmpty || session is! ActiveSessionLoaded) return;
+    final settings = ref.read(currentStoreSettingsProvider);
+    if ((settings?.requireCustomerForSale ?? false) && cart.customer == null) {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posCustomerRequired);
+      return;
+    }
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -97,6 +107,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final cart = ref.read(cartProvider);
     final session = ref.read(activeSessionProvider);
     if (cart.isEmpty || session is! ActiveSessionLoaded) return;
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (!(settings?.enableHoldOrders ?? true)) {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posHoldOrdersDisabled);
+      return;
+    }
 
     final label = await _showLabelDialog();
     if (label == null) return;
@@ -166,6 +181,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   }
 
   void _handleReturn() {
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (!(settings?.enableRefunds ?? true)) {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posRefundsDisabled);
+      return;
+    }
     showDialog(context: context, barrierDismissible: false, builder: (_) => const PosReturnDialog());
   }
 
@@ -211,6 +231,47 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       );
       if (weight == null) return;
       qty = weight;
+    }
+
+    // ─── Stock enforcement (allowNegativeStock + lowStockAlert) ──
+    final settings = ref.read(currentStoreSettingsProvider);
+    final session = ref.read(activeSessionProvider);
+    if (settings != null && session is ActiveSessionLoaded) {
+      try {
+        final db = ref.read(posOfflineDatabaseProvider);
+        final available = await db.stockOf(product.id, session.session.storeId);
+        final cart = ref.read(cartProvider);
+        final inCart = cart.items
+            .where((i) => i.product.id == product.id)
+            .fold<double>(0, (s, i) => s + i.quantity);
+        final remaining = available - inCart - qty;
+        if (remaining < 0 && !settings.allowNegativeStock && available > 0) {
+          if (mounted) {
+            showPosErrorSnackbar(
+              context,
+              AppLocalizations.of(context)!.posInsufficientStock(available.toStringAsFixed(0)),
+            );
+          }
+          return;
+        }
+        if (remaining < 0 && !settings.allowNegativeStock && available <= 0) {
+          if (mounted) {
+            showPosErrorSnackbar(context, AppLocalizations.of(context)!.posOutOfStock);
+          }
+          return;
+        }
+        // Low-stock warning (non-blocking)
+        if (settings.lowStockAlert && remaining >= 0 && remaining <= settings.lowStockThreshold) {
+          if (mounted) {
+            showPosWarningSnackbar(
+              context,
+              AppLocalizations.of(context)!.posLowStockWarning(remaining.toStringAsFixed(0), product.name),
+            );
+          }
+        }
+      } catch (_) {
+        // Offline DB not seeded yet — fall back to allowing add
+      }
     }
 
     ref.read(cartProvider.notifier).addProduct(product, qty: qty);
@@ -411,6 +472,177 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     });
   }
 
+  // ─── Open-price + Quick-add product handlers ───────────────
+
+  Future<void> _handleOpenPriceItem() async {
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (!(settings?.enableOpenPriceItems ?? false)) {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posOpenPriceItemsDisabled);
+      return;
+    }
+    final session = ref.read(activeSessionProvider);
+    if (session is! ActiveSessionLoaded) return;
+
+    final nameCtrl = TextEditingController();
+    final priceCtrl = TextEditingController();
+    final qtyCtrl = TextEditingController(text: '1');
+
+    final result = await showDialog<Map<String, dynamic>?>(
+      context: context,
+      builder: (ctx) {
+        final l10n = AppLocalizations.of(ctx)!;
+        return Dialog(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Padding(
+              padding: AppSpacing.paddingAll24,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(l10n.posOpenPriceItem, style: AppTypography.headlineSmall),
+                  AppSpacing.gapH16,
+                  PosTextField(controller: nameCtrl, label: l10n.posOpenPriceName, autofocus: true),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: priceCtrl,
+                    label: l10n.posOpenPricePrice,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: qtyCtrl,
+                    label: l10n.posOpenPriceQty,
+                    keyboardType: TextInputType.number,
+                  ),
+                  AppSpacing.gapH16,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.commonCancel,
+                          variant: PosButtonVariant.outline,
+                          onPressed: () => Navigator.pop(ctx, null),
+                        ),
+                      ),
+                      AppSpacing.gapW12,
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.posOpenPriceAdd,
+                          onPressed: () {
+                            final name = nameCtrl.text.trim();
+                            final price = double.tryParse(priceCtrl.text.trim()) ?? 0;
+                            final qty = double.tryParse(qtyCtrl.text.trim()) ?? 1;
+                            if (name.isEmpty || price <= 0 || qty <= 0) return;
+                            Navigator.pop(ctx, {'name': name, 'price': price, 'qty': qty});
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    if (result == null) return;
+
+    final product = Product(
+      id: 'open-${DateTime.now().millisecondsSinceEpoch}',
+      organizationId: '',
+      name: result['name'] as String,
+      sellPrice: result['price'] as double,
+      isActive: true,
+    );
+    ref.read(cartProvider.notifier).addProduct(product, qty: result['qty'] as double);
+    if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
+  }
+
+  Future<void> _handleQuickAddProduct() async {
+    final settings = ref.read(currentStoreSettingsProvider);
+    if (!(settings?.enableQuickAddProducts ?? false)) {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posQuickAddProductsDisabled);
+      return;
+    }
+
+    final nameCtrl = TextEditingController();
+    final priceCtrl = TextEditingController();
+    final skuCtrl = TextEditingController();
+
+    final result = await showDialog<Map<String, dynamic>?>(
+      context: context,
+      builder: (ctx) {
+        final l10n = AppLocalizations.of(ctx)!;
+        return Dialog(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Padding(
+              padding: AppSpacing.paddingAll24,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(l10n.posQuickAddProduct, style: AppTypography.headlineSmall),
+                  AppSpacing.gapH16,
+                  PosTextField(controller: nameCtrl, label: l10n.posOpenPriceName, autofocus: true),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: priceCtrl,
+                    label: l10n.posOpenPricePrice,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(controller: skuCtrl, label: 'SKU'),
+                  AppSpacing.gapH16,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.commonCancel,
+                          variant: PosButtonVariant.outline,
+                          onPressed: () => Navigator.pop(ctx, null),
+                        ),
+                      ),
+                      AppSpacing.gapW12,
+                      Expanded(
+                        child: PosButton(
+                          label: l10n.posOpenPriceAdd,
+                          onPressed: () {
+                            final name = nameCtrl.text.trim();
+                            final price = double.tryParse(priceCtrl.text.trim()) ?? 0;
+                            if (name.isEmpty || price <= 0) return;
+                            Navigator.pop(ctx, {
+                              'name': name,
+                              'sell_price': price,
+                              if (skuCtrl.text.trim().isNotEmpty) 'sku': skuCtrl.text.trim(),
+                              'is_active': true,
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    if (result == null) return;
+
+    try {
+      final repo = ref.read(catalogRepositoryProvider);
+      final created = await repo.createProduct(result);
+      ref.read(cartProvider.notifier).addProduct(created);
+      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(created.name));
+    } catch (e) {
+      if (mounted) showPosErrorSnackbar(context, e.toString());
+    }
+  }
+
   Future<void> _handleLogout() async {
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showPosConfirmDialog(
@@ -491,6 +723,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
 
   Widget _buildMobileTopBar(bool isDark, PosSession session) {
     final user = ref.watch(currentUserProvider);
+    final settings = ref.watch(currentStoreSettingsProvider);
+    final showRefunds = settings?.enableRefunds ?? true;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -527,13 +761,14 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
           ),
-          IconButton(
-            icon: const Icon(Icons.assignment_return_outlined, size: 20),
-            tooltip: AppLocalizations.of(context)!.posReturn,
-            onPressed: _handleReturn,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-          ),
+          if (showRefunds)
+            IconButton(
+              icon: const Icon(Icons.assignment_return_outlined, size: 20),
+              tooltip: AppLocalizations.of(context)!.posReturn,
+              onPressed: _handleReturn,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, size: 22),
             padding: EdgeInsets.zero,
@@ -888,6 +1123,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   Widget _buildTopBar(bool isDark, PosSession session) {
     final user = ref.watch(currentUserProvider);
     final cart = ref.watch(cartProvider);
+    final settings = ref.watch(currentStoreSettingsProvider);
+    final showHold = settings?.enableHoldOrders ?? true;
+    final showRefunds = settings?.enableRefunds ?? true;
+    final showOpenPrice = settings?.enableOpenPriceItems ?? false;
+    final showQuickAdd = settings?.enableQuickAddProducts ?? false;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       decoration: BoxDecoration(
@@ -941,25 +1181,49 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             size: PosButtonSize.md,
             onPressed: cart.isNotEmpty ? _handleTaxExempt : null,
           ),
+          if (showOpenPrice) ...[
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posOpenPriceItem,
+              icon: Icons.price_change_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleOpenPriceItem,
+            ),
+          ],
+          if (showQuickAdd) ...[
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posQuickAddProduct,
+              icon: Icons.add_box_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleQuickAddProduct,
+            ),
+          ],
           AppSpacing.gapW12,
           Container(width: 1, height: 32, color: AppColors.borderFor(context)),
           AppSpacing.gapW12,
-          PosButton(
-            label: AppLocalizations.of(context)!.posReturn,
-            icon: Icons.assignment_return_outlined,
-            variant: PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: _handleReturn,
-          ),
-          AppSpacing.gapW8,
-          PosButton(
-            label: AppLocalizations.of(context)!.posHeldF9,
-            icon: Icons.pause_circle_outline,
-            variant: PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: _handleRecallCart,
-          ),
-          AppSpacing.gapW8,
+          if (showRefunds) ...[
+            PosButton(
+              label: AppLocalizations.of(context)!.posReturn,
+              icon: Icons.assignment_return_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleReturn,
+            ),
+            AppSpacing.gapW8,
+          ],
+          if (showHold) ...[
+            PosButton(
+              label: AppLocalizations.of(context)!.posHeldF9,
+              icon: Icons.pause_circle_outline,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleRecallCart,
+            ),
+            AppSpacing.gapW8,
+          ],
           PosButton(
             label: AppLocalizations.of(context)!.posEndShift,
             icon: Icons.logout_rounded,

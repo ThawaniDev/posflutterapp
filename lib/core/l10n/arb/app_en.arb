@@ -6962,5 +6962,31 @@
       "amount": {}
     }
   },
-  "posApplyCredit": "Apply Credit"
+  "posApplyCredit": "Apply Credit",
+  "posCustomerRequired": "Customer is required to complete this sale",
+  "posHoldOrdersDisabled": "Hold orders are disabled in settings",
+  "posRefundsDisabled": "Refunds are disabled in settings",
+  "posExchangesDisabled": "Exchanges are disabled in settings",
+  "posOpenPriceItem": "Open Price Item",
+  "posOpenPriceName": "Item Name",
+  "posOpenPricePrice": "Price",
+  "posOpenPriceQty": "Quantity",
+  "posOpenPriceAdd": "Add to Cart",
+  "posOpenPriceItemsDisabled": "Open price items are disabled",
+  "posQuickAddProduct": "Quick Add Product",
+  "posQuickAddProductsDisabled": "Quick add products are disabled",
+  "posOutOfStock": "Out of stock",
+  "posInsufficientStock": "Insufficient stock ({available} available)",
+  "@posInsufficientStock": { "placeholders": { "available": {} } },
+  "posLowStockWarning": "Low stock: {remaining} remaining for {product}",
+  "@posLowStockWarning": { "placeholders": { "remaining": {}, "product": {} } },
+  "posSessionTimedOut": "Session timed out due to inactivity",
+  "posPrintingReceipt": "Printing receipt…",
+  "posPrintFailed": "Failed to print receipt",
+  "posCfdIdleMessage": "Welcome",
+  "posSaleType": "Sale Type",
+  "posSaleTypeDineIn": "Dine in",
+  "posSaleTypeTakeaway": "Takeaway",
+  "posSaleTypeDelivery": "Delivery",
+  "posKdsTicketSent": "Sent to kitchen"
 }

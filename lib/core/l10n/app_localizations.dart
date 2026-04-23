@@ -30685,6 +30685,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply Credit'**
   String get posApplyCredit;
+
+  /// No description provided for @posCustomerRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer is required to complete this sale'**
+  String get posCustomerRequired;
+
+  /// No description provided for @posHoldOrdersDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold orders are disabled in settings'**
+  String get posHoldOrdersDisabled;
+
+  /// No description provided for @posRefundsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds are disabled in settings'**
+  String get posRefundsDisabled;
+
+  /// No description provided for @posExchangesDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchanges are disabled in settings'**
+  String get posExchangesDisabled;
+
+  /// No description provided for @posOpenPriceItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Price Item'**
+  String get posOpenPriceItem;
+
+  /// No description provided for @posOpenPriceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get posOpenPriceName;
+
+  /// No description provided for @posOpenPricePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get posOpenPricePrice;
+
+  /// No description provided for @posOpenPriceQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get posOpenPriceQty;
+
+  /// No description provided for @posOpenPriceAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get posOpenPriceAdd;
+
+  /// No description provided for @posOpenPriceItemsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Open price items are disabled'**
+  String get posOpenPriceItemsDisabled;
+
+  /// No description provided for @posQuickAddProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Add Product'**
+  String get posQuickAddProduct;
+
+  /// No description provided for @posQuickAddProductsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick add products are disabled'**
+  String get posQuickAddProductsDisabled;
+
+  /// No description provided for @posOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get posOutOfStock;
+
+  /// No description provided for @posInsufficientStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient stock ({available} available)'**
+  String posInsufficientStock(Object available);
+
+  /// No description provided for @posLowStockWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock: {remaining} remaining for {product}'**
+  String posLowStockWarning(Object remaining, Object product);
+
+  /// No description provided for @posSessionTimedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Session timed out due to inactivity'**
+  String get posSessionTimedOut;
+
+  /// No description provided for @posPrintingReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Printing receipt…'**
+  String get posPrintingReceipt;
+
+  /// No description provided for @posPrintFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to print receipt'**
+  String get posPrintFailed;
+
+  /// No description provided for @posCfdIdleMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get posCfdIdleMessage;
+
+  /// No description provided for @posSaleType.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale Type'**
+  String get posSaleType;
+
+  /// No description provided for @posSaleTypeDineIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Dine in'**
+  String get posSaleTypeDineIn;
+
+  /// No description provided for @posSaleTypeTakeaway.
+  ///
+  /// In en, this message translates to:
+  /// **'Takeaway'**
+  String get posSaleTypeTakeaway;
+
+  /// No description provided for @posSaleTypeDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get posSaleTypeDelivery;
+
+  /// No description provided for @posKdsTicketSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to kitchen'**
+  String get posKdsTicketSent;
 }
 
 class _AppLocalizationsDelegate
