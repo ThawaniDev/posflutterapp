@@ -1,6 +1,10 @@
 import 'dart:io';
 
+import 'package:barcode/barcode.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 /// Label size in millimeters and dots
 class LabelSize {
@@ -223,14 +227,105 @@ class LabelPrinterService {
     }
   }
 
-  /// Print product labels
+  /// Print product labels.
+  ///
+  /// When `connectionType == 'pdf'` (or `language == 'pdf'`), or when no
+  /// USB / network endpoint is configured, the labels are rendered as a PDF
+  /// and handed off to the system print dialog via the `printing` package
+  /// (spec rule #7 — image-based fallback for non-ZPL/TSPL printers).
   Future<bool> printProductLabels(List<ProductLabelData> products, {int copies = 1}) async {
+    final useFallback = _config.connectionType == 'pdf' ||
+        _config.language == 'pdf' ||
+        (_config.connectionType == 'network' && (_config.ipAddress == null || _config.ipAddress!.isEmpty)) ||
+        (_config.connectionType == 'usb' && (_config.usbDevicePath == null || _config.usbDevicePath!.isEmpty));
+
+    if (useFallback) {
+      return printProductLabelsPdf(products, copies: copies);
+    }
     final labelCodes = StringBuffer();
     for (final product in products) {
       final code = _config.language == 'tspl' ? generateTSPL(product) : generateZPL(product);
       labelCodes.writeln(code);
     }
     return printLabel(labelCodes.toString(), copies: copies);
+  }
+
+  /// PDF / raster fallback. Generates a multi-page PDF — one page per label
+  /// — sized to the configured label dimensions, and shows the system print
+  /// dialog. Useful for office printers that do not understand ZPL/TSPL.
+  Future<bool> printProductLabelsPdf(List<ProductLabelData> products, {int copies = 1}) async {
+    try {
+      final bytes = await buildLabelsPdf(products, copies: copies);
+      return Printing.layoutPdf(onLayout: (_) async => bytes);
+    } catch (e) {
+      debugPrint('LabelPrinterService PDF fallback error: $e');
+      return false;
+    }
+  }
+
+  /// Build a PDF document of all the labels (one per page) at the configured
+  /// physical label size. Exposed for testing.
+  Future<Uint8List> buildLabelsPdf(List<ProductLabelData> products, {int copies = 1}) async {
+    final pageFormat = PdfPageFormat(
+      _config.labelWidthMm * PdfPageFormat.mm,
+      _config.labelHeightMm * PdfPageFormat.mm,
+      marginAll: 0,
+    );
+    final doc = pw.Document();
+    final code128 = Barcode.code128();
+
+    for (final product in products) {
+      for (var i = 0; i < copies; i++) {
+        doc.addPage(
+          pw.Page(
+            pageFormat: pageFormat,
+            build: (ctx) => pw.Padding(
+              padding: const pw.EdgeInsets.all(4),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                children: [
+                  pw.Text(
+                    product.nameAr,
+                    style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold),
+                    textDirection: pw.TextDirection.rtl,
+                    maxLines: 1,
+                    overflow: pw.TextOverflow.clip,
+                  ),
+                  pw.Text(
+                    product.nameEn,
+                    style: const pw.TextStyle(fontSize: 8),
+                    maxLines: 1,
+                    overflow: pw.TextOverflow.clip,
+                  ),
+                  pw.SizedBox(height: 2),
+                  pw.Expanded(
+                    child: pw.BarcodeWidget(
+                      data: product.barcode,
+                      barcode: code128,
+                      drawText: true,
+                      textStyle: const pw.TextStyle(fontSize: 7),
+                    ),
+                  ),
+                  pw.SizedBox(height: 2),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (product.sku != null)
+                        pw.Text(product.sku!, style: const pw.TextStyle(fontSize: 6)),
+                      pw.Text(
+                        '${product.currency} ${product.price.toStringAsFixed(2)}',
+                        style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    }
+    return doc.save();
   }
 
   /// Print a test label

@@ -3,7 +3,7 @@ import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/services/label_printer_service.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
-import 'package:wameedpos/features/labels/repositories/label_repository.dart';
+import 'package:wameedpos/features/labels/services/offline_label_service.dart';
 
 /// Outcome of a quick-print attempt, surfaced to the UI for snackbars.
 enum QuickPrintResult {
@@ -108,14 +108,14 @@ Future<QuickPrintResult> quickPrintProductLabel(
     );
   }
 
-  // Always record print history server-side.
+  // Always record print history (local first, server flush opportunistic).
   try {
-    await ref.read(labelRepositoryProvider).recordPrint({
-      'template_id': template.id,
-      'printer_name': cfg.ipAddress ?? cfg.usbDevicePath ?? '',
-      'product_count': 1,
-      'total_labels': quantity,
-    });
+    await ref.read(offlineLabelServiceProvider).recordPrint(
+      templateId: template.id,
+      printerName: cfg.ipAddress ?? cfg.usbDevicePath ?? '',
+      productCount: 1,
+      totalLabels: quantity,
+    );
   } catch (_) {
     // Recording failure should not block the user — UI still surfaces print result.
   }

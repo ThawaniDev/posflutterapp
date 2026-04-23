@@ -10,7 +10,7 @@ import 'package:wameedpos/features/hardware/services/label_printer_service.dart'
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
 import 'package:wameedpos/features/labels/providers/label_state.dart';
-import 'package:wameedpos/features/labels/repositories/label_repository.dart';
+import 'package:wameedpos/features/labels/services/offline_label_service.dart';
 import 'package:wameedpos/features/labels/widgets/label_preview_widget.dart';
 import 'package:wameedpos/features/labels/widgets/label_product_picker_sheet.dart';
 
@@ -701,14 +701,15 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
         printOk = false;
       }
 
-      // 2. Always record print history server-side for audit/reporting.
+      // 2. Always record print history (local first, then opportunistic
+      // server flush) so audit data is preserved even when offline.
       final totalLabels = _queueItems.fold<int>(0, (sum, i) => sum + i.quantity) * _copies;
-      await ref.read(labelRepositoryProvider).recordPrint({
-        'template_id': _selectedTemplateId,
-        'printer_name': _printerName.isEmpty ? (config?.ipAddress ?? '') : _printerName,
-        'product_count': _queueItems.length,
-        'total_labels': totalLabels,
-      });
+      await ref.read(offlineLabelServiceProvider).recordPrint(
+        templateId: _selectedTemplateId,
+        printerName: _printerName.isEmpty ? (config?.ipAddress ?? '') : _printerName,
+        productCount: _queueItems.length,
+        totalLabels: totalLabels,
+      );
 
       if (!mounted) return;
       if (printOk) {

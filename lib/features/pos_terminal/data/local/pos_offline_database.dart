@@ -233,6 +233,37 @@ class LocalCouponCodes extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Cached label templates for offline label printing.
+class LocalLabelTemplates extends Table {
+  TextColumn get id => text()();
+  TextColumn get organizationId => text()();
+  TextColumn get name => text()();
+  RealColumn get labelWidthMm => real()();
+  RealColumn get labelHeightMm => real()();
+  TextColumn get layoutJson => text()(); // JSON-encoded layout
+  BoolColumn get isPreset => boolean().withDefault(const Constant(false))();
+  BoolColumn get isDefault => boolean().withDefault(const Constant(false))();
+  IntColumn get syncVersion => integer().withDefault(const Constant(1))();
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Local print-history records — pruned to 90 days per spec rule #8.
+class LocalLabelPrintHistory extends Table {
+  TextColumn get id => text()(); // client uuid
+  TextColumn get templateId => text().nullable()();
+  TextColumn get printerName => text().nullable()();
+  IntColumn get productCount => integer()();
+  IntColumn get totalLabels => integer()();
+  DateTimeColumn get printedAt => dateTime().withDefault(currentDateAndTime)();
+  BoolColumn get syncedToServer => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     LocalProducts,
@@ -248,6 +279,8 @@ class LocalCouponCodes extends Table {
     LocalModifierOptions,
     LocalPromotions,
     LocalCouponCodes,
+    LocalLabelTemplates,
+    LocalLabelPrintHistory,
   ],
 )
 class PosOfflineDatabase extends _$PosOfflineDatabase {
@@ -256,7 +289,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -273,6 +306,10 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
       if (from < 3) {
         await m.createTable(localPromotions);
         await m.createTable(localCouponCodes);
+      }
+      if (from < 4) {
+        await m.createTable(localLabelTemplates);
+        await m.createTable(localLabelPrintHistory);
       }
     },
   );

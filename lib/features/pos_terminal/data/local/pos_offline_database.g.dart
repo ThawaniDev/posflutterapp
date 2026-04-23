@@ -8519,6 +8519,1127 @@ class LocalCouponCodesCompanion extends UpdateCompanion<LocalCouponCode> {
   }
 }
 
+class $LocalLabelTemplatesTable extends LocalLabelTemplates
+    with TableInfo<$LocalLabelTemplatesTable, LocalLabelTemplate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalLabelTemplatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _organizationIdMeta = const VerificationMeta(
+    'organizationId',
+  );
+  @override
+  late final GeneratedColumn<String> organizationId = GeneratedColumn<String>(
+    'organization_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _labelWidthMmMeta = const VerificationMeta(
+    'labelWidthMm',
+  );
+  @override
+  late final GeneratedColumn<double> labelWidthMm = GeneratedColumn<double>(
+    'label_width_mm',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _labelHeightMmMeta = const VerificationMeta(
+    'labelHeightMm',
+  );
+  @override
+  late final GeneratedColumn<double> labelHeightMm = GeneratedColumn<double>(
+    'label_height_mm',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _layoutJsonMeta = const VerificationMeta(
+    'layoutJson',
+  );
+  @override
+  late final GeneratedColumn<String> layoutJson = GeneratedColumn<String>(
+    'layout_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isPresetMeta = const VerificationMeta(
+    'isPreset',
+  );
+  @override
+  late final GeneratedColumn<bool> isPreset = GeneratedColumn<bool>(
+    'is_preset',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_preset" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _syncVersionMeta = const VerificationMeta(
+    'syncVersion',
+  );
+  @override
+  late final GeneratedColumn<int> syncVersion = GeneratedColumn<int>(
+    'sync_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    organizationId,
+    name,
+    labelWidthMm,
+    labelHeightMm,
+    layoutJson,
+    isPreset,
+    isDefault,
+    syncVersion,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_label_templates';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalLabelTemplate> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('organization_id')) {
+      context.handle(
+        _organizationIdMeta,
+        organizationId.isAcceptableOrUnknown(
+          data['organization_id']!,
+          _organizationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_organizationIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('label_width_mm')) {
+      context.handle(
+        _labelWidthMmMeta,
+        labelWidthMm.isAcceptableOrUnknown(
+          data['label_width_mm']!,
+          _labelWidthMmMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_labelWidthMmMeta);
+    }
+    if (data.containsKey('label_height_mm')) {
+      context.handle(
+        _labelHeightMmMeta,
+        labelHeightMm.isAcceptableOrUnknown(
+          data['label_height_mm']!,
+          _labelHeightMmMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_labelHeightMmMeta);
+    }
+    if (data.containsKey('layout_json')) {
+      context.handle(
+        _layoutJsonMeta,
+        layoutJson.isAcceptableOrUnknown(data['layout_json']!, _layoutJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_layoutJsonMeta);
+    }
+    if (data.containsKey('is_preset')) {
+      context.handle(
+        _isPresetMeta,
+        isPreset.isAcceptableOrUnknown(data['is_preset']!, _isPresetMeta),
+      );
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    }
+    if (data.containsKey('sync_version')) {
+      context.handle(
+        _syncVersionMeta,
+        syncVersion.isAcceptableOrUnknown(
+          data['sync_version']!,
+          _syncVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalLabelTemplate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalLabelTemplate(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      labelWidthMm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}label_width_mm'],
+      )!,
+      labelHeightMm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}label_height_mm'],
+      )!,
+      layoutJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}layout_json'],
+      )!,
+      isPreset: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_preset'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      syncVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sync_version'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalLabelTemplatesTable createAlias(String alias) {
+    return $LocalLabelTemplatesTable(attachedDatabase, alias);
+  }
+}
+
+class LocalLabelTemplate extends DataClass
+    implements Insertable<LocalLabelTemplate> {
+  final String id;
+  final String organizationId;
+  final String name;
+  final double labelWidthMm;
+  final double labelHeightMm;
+  final String layoutJson;
+  final bool isPreset;
+  final bool isDefault;
+  final int syncVersion;
+  final DateTime updatedAt;
+  const LocalLabelTemplate({
+    required this.id,
+    required this.organizationId,
+    required this.name,
+    required this.labelWidthMm,
+    required this.labelHeightMm,
+    required this.layoutJson,
+    required this.isPreset,
+    required this.isDefault,
+    required this.syncVersion,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['organization_id'] = Variable<String>(organizationId);
+    map['name'] = Variable<String>(name);
+    map['label_width_mm'] = Variable<double>(labelWidthMm);
+    map['label_height_mm'] = Variable<double>(labelHeightMm);
+    map['layout_json'] = Variable<String>(layoutJson);
+    map['is_preset'] = Variable<bool>(isPreset);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['sync_version'] = Variable<int>(syncVersion);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  LocalLabelTemplatesCompanion toCompanion(bool nullToAbsent) {
+    return LocalLabelTemplatesCompanion(
+      id: Value(id),
+      organizationId: Value(organizationId),
+      name: Value(name),
+      labelWidthMm: Value(labelWidthMm),
+      labelHeightMm: Value(labelHeightMm),
+      layoutJson: Value(layoutJson),
+      isPreset: Value(isPreset),
+      isDefault: Value(isDefault),
+      syncVersion: Value(syncVersion),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory LocalLabelTemplate.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalLabelTemplate(
+      id: serializer.fromJson<String>(json['id']),
+      organizationId: serializer.fromJson<String>(json['organizationId']),
+      name: serializer.fromJson<String>(json['name']),
+      labelWidthMm: serializer.fromJson<double>(json['labelWidthMm']),
+      labelHeightMm: serializer.fromJson<double>(json['labelHeightMm']),
+      layoutJson: serializer.fromJson<String>(json['layoutJson']),
+      isPreset: serializer.fromJson<bool>(json['isPreset']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      syncVersion: serializer.fromJson<int>(json['syncVersion']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'organizationId': serializer.toJson<String>(organizationId),
+      'name': serializer.toJson<String>(name),
+      'labelWidthMm': serializer.toJson<double>(labelWidthMm),
+      'labelHeightMm': serializer.toJson<double>(labelHeightMm),
+      'layoutJson': serializer.toJson<String>(layoutJson),
+      'isPreset': serializer.toJson<bool>(isPreset),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'syncVersion': serializer.toJson<int>(syncVersion),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  LocalLabelTemplate copyWith({
+    String? id,
+    String? organizationId,
+    String? name,
+    double? labelWidthMm,
+    double? labelHeightMm,
+    String? layoutJson,
+    bool? isPreset,
+    bool? isDefault,
+    int? syncVersion,
+    DateTime? updatedAt,
+  }) => LocalLabelTemplate(
+    id: id ?? this.id,
+    organizationId: organizationId ?? this.organizationId,
+    name: name ?? this.name,
+    labelWidthMm: labelWidthMm ?? this.labelWidthMm,
+    labelHeightMm: labelHeightMm ?? this.labelHeightMm,
+    layoutJson: layoutJson ?? this.layoutJson,
+    isPreset: isPreset ?? this.isPreset,
+    isDefault: isDefault ?? this.isDefault,
+    syncVersion: syncVersion ?? this.syncVersion,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  LocalLabelTemplate copyWithCompanion(LocalLabelTemplatesCompanion data) {
+    return LocalLabelTemplate(
+      id: data.id.present ? data.id.value : this.id,
+      organizationId: data.organizationId.present
+          ? data.organizationId.value
+          : this.organizationId,
+      name: data.name.present ? data.name.value : this.name,
+      labelWidthMm: data.labelWidthMm.present
+          ? data.labelWidthMm.value
+          : this.labelWidthMm,
+      labelHeightMm: data.labelHeightMm.present
+          ? data.labelHeightMm.value
+          : this.labelHeightMm,
+      layoutJson: data.layoutJson.present
+          ? data.layoutJson.value
+          : this.layoutJson,
+      isPreset: data.isPreset.present ? data.isPreset.value : this.isPreset,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      syncVersion: data.syncVersion.present
+          ? data.syncVersion.value
+          : this.syncVersion,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalLabelTemplate(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('labelWidthMm: $labelWidthMm, ')
+          ..write('labelHeightMm: $labelHeightMm, ')
+          ..write('layoutJson: $layoutJson, ')
+          ..write('isPreset: $isPreset, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('syncVersion: $syncVersion, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    organizationId,
+    name,
+    labelWidthMm,
+    labelHeightMm,
+    layoutJson,
+    isPreset,
+    isDefault,
+    syncVersion,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalLabelTemplate &&
+          other.id == this.id &&
+          other.organizationId == this.organizationId &&
+          other.name == this.name &&
+          other.labelWidthMm == this.labelWidthMm &&
+          other.labelHeightMm == this.labelHeightMm &&
+          other.layoutJson == this.layoutJson &&
+          other.isPreset == this.isPreset &&
+          other.isDefault == this.isDefault &&
+          other.syncVersion == this.syncVersion &&
+          other.updatedAt == this.updatedAt);
+}
+
+class LocalLabelTemplatesCompanion extends UpdateCompanion<LocalLabelTemplate> {
+  final Value<String> id;
+  final Value<String> organizationId;
+  final Value<String> name;
+  final Value<double> labelWidthMm;
+  final Value<double> labelHeightMm;
+  final Value<String> layoutJson;
+  final Value<bool> isPreset;
+  final Value<bool> isDefault;
+  final Value<int> syncVersion;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const LocalLabelTemplatesCompanion({
+    this.id = const Value.absent(),
+    this.organizationId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.labelWidthMm = const Value.absent(),
+    this.labelHeightMm = const Value.absent(),
+    this.layoutJson = const Value.absent(),
+    this.isPreset = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.syncVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalLabelTemplatesCompanion.insert({
+    required String id,
+    required String organizationId,
+    required String name,
+    required double labelWidthMm,
+    required double labelHeightMm,
+    required String layoutJson,
+    this.isPreset = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.syncVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       organizationId = Value(organizationId),
+       name = Value(name),
+       labelWidthMm = Value(labelWidthMm),
+       labelHeightMm = Value(labelHeightMm),
+       layoutJson = Value(layoutJson);
+  static Insertable<LocalLabelTemplate> custom({
+    Expression<String>? id,
+    Expression<String>? organizationId,
+    Expression<String>? name,
+    Expression<double>? labelWidthMm,
+    Expression<double>? labelHeightMm,
+    Expression<String>? layoutJson,
+    Expression<bool>? isPreset,
+    Expression<bool>? isDefault,
+    Expression<int>? syncVersion,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (organizationId != null) 'organization_id': organizationId,
+      if (name != null) 'name': name,
+      if (labelWidthMm != null) 'label_width_mm': labelWidthMm,
+      if (labelHeightMm != null) 'label_height_mm': labelHeightMm,
+      if (layoutJson != null) 'layout_json': layoutJson,
+      if (isPreset != null) 'is_preset': isPreset,
+      if (isDefault != null) 'is_default': isDefault,
+      if (syncVersion != null) 'sync_version': syncVersion,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalLabelTemplatesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? organizationId,
+    Value<String>? name,
+    Value<double>? labelWidthMm,
+    Value<double>? labelHeightMm,
+    Value<String>? layoutJson,
+    Value<bool>? isPreset,
+    Value<bool>? isDefault,
+    Value<int>? syncVersion,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return LocalLabelTemplatesCompanion(
+      id: id ?? this.id,
+      organizationId: organizationId ?? this.organizationId,
+      name: name ?? this.name,
+      labelWidthMm: labelWidthMm ?? this.labelWidthMm,
+      labelHeightMm: labelHeightMm ?? this.labelHeightMm,
+      layoutJson: layoutJson ?? this.layoutJson,
+      isPreset: isPreset ?? this.isPreset,
+      isDefault: isDefault ?? this.isDefault,
+      syncVersion: syncVersion ?? this.syncVersion,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (organizationId.present) {
+      map['organization_id'] = Variable<String>(organizationId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (labelWidthMm.present) {
+      map['label_width_mm'] = Variable<double>(labelWidthMm.value);
+    }
+    if (labelHeightMm.present) {
+      map['label_height_mm'] = Variable<double>(labelHeightMm.value);
+    }
+    if (layoutJson.present) {
+      map['layout_json'] = Variable<String>(layoutJson.value);
+    }
+    if (isPreset.present) {
+      map['is_preset'] = Variable<bool>(isPreset.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (syncVersion.present) {
+      map['sync_version'] = Variable<int>(syncVersion.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalLabelTemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('labelWidthMm: $labelWidthMm, ')
+          ..write('labelHeightMm: $labelHeightMm, ')
+          ..write('layoutJson: $layoutJson, ')
+          ..write('isPreset: $isPreset, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('syncVersion: $syncVersion, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalLabelPrintHistoryTable extends LocalLabelPrintHistory
+    with TableInfo<$LocalLabelPrintHistoryTable, LocalLabelPrintHistoryData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalLabelPrintHistoryTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _templateIdMeta = const VerificationMeta(
+    'templateId',
+  );
+  @override
+  late final GeneratedColumn<String> templateId = GeneratedColumn<String>(
+    'template_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _printerNameMeta = const VerificationMeta(
+    'printerName',
+  );
+  @override
+  late final GeneratedColumn<String> printerName = GeneratedColumn<String>(
+    'printer_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _productCountMeta = const VerificationMeta(
+    'productCount',
+  );
+  @override
+  late final GeneratedColumn<int> productCount = GeneratedColumn<int>(
+    'product_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalLabelsMeta = const VerificationMeta(
+    'totalLabels',
+  );
+  @override
+  late final GeneratedColumn<int> totalLabels = GeneratedColumn<int>(
+    'total_labels',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printedAtMeta = const VerificationMeta(
+    'printedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> printedAt = GeneratedColumn<DateTime>(
+    'printed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _syncedToServerMeta = const VerificationMeta(
+    'syncedToServer',
+  );
+  @override
+  late final GeneratedColumn<bool> syncedToServer = GeneratedColumn<bool>(
+    'synced_to_server',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("synced_to_server" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    templateId,
+    printerName,
+    productCount,
+    totalLabels,
+    printedAt,
+    syncedToServer,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_label_print_history';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalLabelPrintHistoryData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('template_id')) {
+      context.handle(
+        _templateIdMeta,
+        templateId.isAcceptableOrUnknown(data['template_id']!, _templateIdMeta),
+      );
+    }
+    if (data.containsKey('printer_name')) {
+      context.handle(
+        _printerNameMeta,
+        printerName.isAcceptableOrUnknown(
+          data['printer_name']!,
+          _printerNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('product_count')) {
+      context.handle(
+        _productCountMeta,
+        productCount.isAcceptableOrUnknown(
+          data['product_count']!,
+          _productCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_productCountMeta);
+    }
+    if (data.containsKey('total_labels')) {
+      context.handle(
+        _totalLabelsMeta,
+        totalLabels.isAcceptableOrUnknown(
+          data['total_labels']!,
+          _totalLabelsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalLabelsMeta);
+    }
+    if (data.containsKey('printed_at')) {
+      context.handle(
+        _printedAtMeta,
+        printedAt.isAcceptableOrUnknown(data['printed_at']!, _printedAtMeta),
+      );
+    }
+    if (data.containsKey('synced_to_server')) {
+      context.handle(
+        _syncedToServerMeta,
+        syncedToServer.isAcceptableOrUnknown(
+          data['synced_to_server']!,
+          _syncedToServerMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalLabelPrintHistoryData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalLabelPrintHistoryData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      ),
+      printerName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_name'],
+      ),
+      productCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}product_count'],
+      )!,
+      totalLabels: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_labels'],
+      )!,
+      printedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}printed_at'],
+      )!,
+      syncedToServer: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}synced_to_server'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalLabelPrintHistoryTable createAlias(String alias) {
+    return $LocalLabelPrintHistoryTable(attachedDatabase, alias);
+  }
+}
+
+class LocalLabelPrintHistoryData extends DataClass
+    implements Insertable<LocalLabelPrintHistoryData> {
+  final String id;
+  final String? templateId;
+  final String? printerName;
+  final int productCount;
+  final int totalLabels;
+  final DateTime printedAt;
+  final bool syncedToServer;
+  const LocalLabelPrintHistoryData({
+    required this.id,
+    this.templateId,
+    this.printerName,
+    required this.productCount,
+    required this.totalLabels,
+    required this.printedAt,
+    required this.syncedToServer,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || templateId != null) {
+      map['template_id'] = Variable<String>(templateId);
+    }
+    if (!nullToAbsent || printerName != null) {
+      map['printer_name'] = Variable<String>(printerName);
+    }
+    map['product_count'] = Variable<int>(productCount);
+    map['total_labels'] = Variable<int>(totalLabels);
+    map['printed_at'] = Variable<DateTime>(printedAt);
+    map['synced_to_server'] = Variable<bool>(syncedToServer);
+    return map;
+  }
+
+  LocalLabelPrintHistoryCompanion toCompanion(bool nullToAbsent) {
+    return LocalLabelPrintHistoryCompanion(
+      id: Value(id),
+      templateId: templateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateId),
+      printerName: printerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(printerName),
+      productCount: Value(productCount),
+      totalLabels: Value(totalLabels),
+      printedAt: Value(printedAt),
+      syncedToServer: Value(syncedToServer),
+    );
+  }
+
+  factory LocalLabelPrintHistoryData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalLabelPrintHistoryData(
+      id: serializer.fromJson<String>(json['id']),
+      templateId: serializer.fromJson<String?>(json['templateId']),
+      printerName: serializer.fromJson<String?>(json['printerName']),
+      productCount: serializer.fromJson<int>(json['productCount']),
+      totalLabels: serializer.fromJson<int>(json['totalLabels']),
+      printedAt: serializer.fromJson<DateTime>(json['printedAt']),
+      syncedToServer: serializer.fromJson<bool>(json['syncedToServer']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'templateId': serializer.toJson<String?>(templateId),
+      'printerName': serializer.toJson<String?>(printerName),
+      'productCount': serializer.toJson<int>(productCount),
+      'totalLabels': serializer.toJson<int>(totalLabels),
+      'printedAt': serializer.toJson<DateTime>(printedAt),
+      'syncedToServer': serializer.toJson<bool>(syncedToServer),
+    };
+  }
+
+  LocalLabelPrintHistoryData copyWith({
+    String? id,
+    Value<String?> templateId = const Value.absent(),
+    Value<String?> printerName = const Value.absent(),
+    int? productCount,
+    int? totalLabels,
+    DateTime? printedAt,
+    bool? syncedToServer,
+  }) => LocalLabelPrintHistoryData(
+    id: id ?? this.id,
+    templateId: templateId.present ? templateId.value : this.templateId,
+    printerName: printerName.present ? printerName.value : this.printerName,
+    productCount: productCount ?? this.productCount,
+    totalLabels: totalLabels ?? this.totalLabels,
+    printedAt: printedAt ?? this.printedAt,
+    syncedToServer: syncedToServer ?? this.syncedToServer,
+  );
+  LocalLabelPrintHistoryData copyWithCompanion(
+    LocalLabelPrintHistoryCompanion data,
+  ) {
+    return LocalLabelPrintHistoryData(
+      id: data.id.present ? data.id.value : this.id,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
+      printerName: data.printerName.present
+          ? data.printerName.value
+          : this.printerName,
+      productCount: data.productCount.present
+          ? data.productCount.value
+          : this.productCount,
+      totalLabels: data.totalLabels.present
+          ? data.totalLabels.value
+          : this.totalLabels,
+      printedAt: data.printedAt.present ? data.printedAt.value : this.printedAt,
+      syncedToServer: data.syncedToServer.present
+          ? data.syncedToServer.value
+          : this.syncedToServer,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalLabelPrintHistoryData(')
+          ..write('id: $id, ')
+          ..write('templateId: $templateId, ')
+          ..write('printerName: $printerName, ')
+          ..write('productCount: $productCount, ')
+          ..write('totalLabels: $totalLabels, ')
+          ..write('printedAt: $printedAt, ')
+          ..write('syncedToServer: $syncedToServer')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    templateId,
+    printerName,
+    productCount,
+    totalLabels,
+    printedAt,
+    syncedToServer,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalLabelPrintHistoryData &&
+          other.id == this.id &&
+          other.templateId == this.templateId &&
+          other.printerName == this.printerName &&
+          other.productCount == this.productCount &&
+          other.totalLabels == this.totalLabels &&
+          other.printedAt == this.printedAt &&
+          other.syncedToServer == this.syncedToServer);
+}
+
+class LocalLabelPrintHistoryCompanion
+    extends UpdateCompanion<LocalLabelPrintHistoryData> {
+  final Value<String> id;
+  final Value<String?> templateId;
+  final Value<String?> printerName;
+  final Value<int> productCount;
+  final Value<int> totalLabels;
+  final Value<DateTime> printedAt;
+  final Value<bool> syncedToServer;
+  final Value<int> rowid;
+  const LocalLabelPrintHistoryCompanion({
+    this.id = const Value.absent(),
+    this.templateId = const Value.absent(),
+    this.printerName = const Value.absent(),
+    this.productCount = const Value.absent(),
+    this.totalLabels = const Value.absent(),
+    this.printedAt = const Value.absent(),
+    this.syncedToServer = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalLabelPrintHistoryCompanion.insert({
+    required String id,
+    this.templateId = const Value.absent(),
+    this.printerName = const Value.absent(),
+    required int productCount,
+    required int totalLabels,
+    this.printedAt = const Value.absent(),
+    this.syncedToServer = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       productCount = Value(productCount),
+       totalLabels = Value(totalLabels);
+  static Insertable<LocalLabelPrintHistoryData> custom({
+    Expression<String>? id,
+    Expression<String>? templateId,
+    Expression<String>? printerName,
+    Expression<int>? productCount,
+    Expression<int>? totalLabels,
+    Expression<DateTime>? printedAt,
+    Expression<bool>? syncedToServer,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (templateId != null) 'template_id': templateId,
+      if (printerName != null) 'printer_name': printerName,
+      if (productCount != null) 'product_count': productCount,
+      if (totalLabels != null) 'total_labels': totalLabels,
+      if (printedAt != null) 'printed_at': printedAt,
+      if (syncedToServer != null) 'synced_to_server': syncedToServer,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalLabelPrintHistoryCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? templateId,
+    Value<String?>? printerName,
+    Value<int>? productCount,
+    Value<int>? totalLabels,
+    Value<DateTime>? printedAt,
+    Value<bool>? syncedToServer,
+    Value<int>? rowid,
+  }) {
+    return LocalLabelPrintHistoryCompanion(
+      id: id ?? this.id,
+      templateId: templateId ?? this.templateId,
+      printerName: printerName ?? this.printerName,
+      productCount: productCount ?? this.productCount,
+      totalLabels: totalLabels ?? this.totalLabels,
+      printedAt: printedAt ?? this.printedAt,
+      syncedToServer: syncedToServer ?? this.syncedToServer,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (templateId.present) {
+      map['template_id'] = Variable<String>(templateId.value);
+    }
+    if (printerName.present) {
+      map['printer_name'] = Variable<String>(printerName.value);
+    }
+    if (productCount.present) {
+      map['product_count'] = Variable<int>(productCount.value);
+    }
+    if (totalLabels.present) {
+      map['total_labels'] = Variable<int>(totalLabels.value);
+    }
+    if (printedAt.present) {
+      map['printed_at'] = Variable<DateTime>(printedAt.value);
+    }
+    if (syncedToServer.present) {
+      map['synced_to_server'] = Variable<bool>(syncedToServer.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalLabelPrintHistoryCompanion(')
+          ..write('id: $id, ')
+          ..write('templateId: $templateId, ')
+          ..write('printerName: $printerName, ')
+          ..write('productCount: $productCount, ')
+          ..write('totalLabels: $totalLabels, ')
+          ..write('printedAt: $printedAt, ')
+          ..write('syncedToServer: $syncedToServer, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$PosOfflineDatabase extends GeneratedDatabase {
   _$PosOfflineDatabase(QueryExecutor e) : super(e);
   $PosOfflineDatabaseManager get managers => $PosOfflineDatabaseManager(this);
@@ -8546,6 +9667,10 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
   late final $LocalCouponCodesTable localCouponCodes = $LocalCouponCodesTable(
     this,
   );
+  late final $LocalLabelTemplatesTable localLabelTemplates =
+      $LocalLabelTemplatesTable(this);
+  late final $LocalLabelPrintHistoryTable localLabelPrintHistory =
+      $LocalLabelPrintHistoryTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -8564,6 +9689,8 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
     localModifierOptions,
     localPromotions,
     localCouponCodes,
+    localLabelTemplates,
+    localLabelPrintHistory,
   ];
 }
 
@@ -12817,6 +13944,594 @@ typedef $$LocalCouponCodesTableProcessedTableManager =
       LocalCouponCode,
       PrefetchHooks Function()
     >;
+typedef $$LocalLabelTemplatesTableCreateCompanionBuilder =
+    LocalLabelTemplatesCompanion Function({
+      required String id,
+      required String organizationId,
+      required String name,
+      required double labelWidthMm,
+      required double labelHeightMm,
+      required String layoutJson,
+      Value<bool> isPreset,
+      Value<bool> isDefault,
+      Value<int> syncVersion,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$LocalLabelTemplatesTableUpdateCompanionBuilder =
+    LocalLabelTemplatesCompanion Function({
+      Value<String> id,
+      Value<String> organizationId,
+      Value<String> name,
+      Value<double> labelWidthMm,
+      Value<double> labelHeightMm,
+      Value<String> layoutJson,
+      Value<bool> isPreset,
+      Value<bool> isDefault,
+      Value<int> syncVersion,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$LocalLabelTemplatesTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelTemplatesTable> {
+  $$LocalLabelTemplatesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get labelWidthMm => $composableBuilder(
+    column: $table.labelWidthMm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get labelHeightMm => $composableBuilder(
+    column: $table.labelHeightMm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get layoutJson => $composableBuilder(
+    column: $table.layoutJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPreset => $composableBuilder(
+    column: $table.isPreset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalLabelTemplatesTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelTemplatesTable> {
+  $$LocalLabelTemplatesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get labelWidthMm => $composableBuilder(
+    column: $table.labelWidthMm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get labelHeightMm => $composableBuilder(
+    column: $table.labelHeightMm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get layoutJson => $composableBuilder(
+    column: $table.layoutJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPreset => $composableBuilder(
+    column: $table.isPreset,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalLabelTemplatesTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelTemplatesTable> {
+  $$LocalLabelTemplatesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get labelWidthMm => $composableBuilder(
+    column: $table.labelWidthMm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get labelHeightMm => $composableBuilder(
+    column: $table.labelHeightMm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get layoutJson => $composableBuilder(
+    column: $table.layoutJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPreset =>
+      $composableBuilder(column: $table.isPreset, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$LocalLabelTemplatesTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalLabelTemplatesTable,
+          LocalLabelTemplate,
+          $$LocalLabelTemplatesTableFilterComposer,
+          $$LocalLabelTemplatesTableOrderingComposer,
+          $$LocalLabelTemplatesTableAnnotationComposer,
+          $$LocalLabelTemplatesTableCreateCompanionBuilder,
+          $$LocalLabelTemplatesTableUpdateCompanionBuilder,
+          (
+            LocalLabelTemplate,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalLabelTemplatesTable,
+              LocalLabelTemplate
+            >,
+          ),
+          LocalLabelTemplate,
+          PrefetchHooks Function()
+        > {
+  $$LocalLabelTemplatesTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalLabelTemplatesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalLabelTemplatesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalLabelTemplatesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$LocalLabelTemplatesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> organizationId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> labelWidthMm = const Value.absent(),
+                Value<double> labelHeightMm = const Value.absent(),
+                Value<String> layoutJson = const Value.absent(),
+                Value<bool> isPreset = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<int> syncVersion = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalLabelTemplatesCompanion(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                labelWidthMm: labelWidthMm,
+                labelHeightMm: labelHeightMm,
+                layoutJson: layoutJson,
+                isPreset: isPreset,
+                isDefault: isDefault,
+                syncVersion: syncVersion,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String organizationId,
+                required String name,
+                required double labelWidthMm,
+                required double labelHeightMm,
+                required String layoutJson,
+                Value<bool> isPreset = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<int> syncVersion = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalLabelTemplatesCompanion.insert(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                labelWidthMm: labelWidthMm,
+                labelHeightMm: labelHeightMm,
+                layoutJson: layoutJson,
+                isPreset: isPreset,
+                isDefault: isDefault,
+                syncVersion: syncVersion,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalLabelTemplatesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalLabelTemplatesTable,
+      LocalLabelTemplate,
+      $$LocalLabelTemplatesTableFilterComposer,
+      $$LocalLabelTemplatesTableOrderingComposer,
+      $$LocalLabelTemplatesTableAnnotationComposer,
+      $$LocalLabelTemplatesTableCreateCompanionBuilder,
+      $$LocalLabelTemplatesTableUpdateCompanionBuilder,
+      (
+        LocalLabelTemplate,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalLabelTemplatesTable,
+          LocalLabelTemplate
+        >,
+      ),
+      LocalLabelTemplate,
+      PrefetchHooks Function()
+    >;
+typedef $$LocalLabelPrintHistoryTableCreateCompanionBuilder =
+    LocalLabelPrintHistoryCompanion Function({
+      required String id,
+      Value<String?> templateId,
+      Value<String?> printerName,
+      required int productCount,
+      required int totalLabels,
+      Value<DateTime> printedAt,
+      Value<bool> syncedToServer,
+      Value<int> rowid,
+    });
+typedef $$LocalLabelPrintHistoryTableUpdateCompanionBuilder =
+    LocalLabelPrintHistoryCompanion Function({
+      Value<String> id,
+      Value<String?> templateId,
+      Value<String?> printerName,
+      Value<int> productCount,
+      Value<int> totalLabels,
+      Value<DateTime> printedAt,
+      Value<bool> syncedToServer,
+      Value<int> rowid,
+    });
+
+class $$LocalLabelPrintHistoryTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelPrintHistoryTable> {
+  $$LocalLabelPrintHistoryTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateId => $composableBuilder(
+    column: $table.templateId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerName => $composableBuilder(
+    column: $table.printerName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get productCount => $composableBuilder(
+    column: $table.productCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalLabels => $composableBuilder(
+    column: $table.totalLabels,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get printedAt => $composableBuilder(
+    column: $table.printedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get syncedToServer => $composableBuilder(
+    column: $table.syncedToServer,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalLabelPrintHistoryTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelPrintHistoryTable> {
+  $$LocalLabelPrintHistoryTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get templateId => $composableBuilder(
+    column: $table.templateId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerName => $composableBuilder(
+    column: $table.printerName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get productCount => $composableBuilder(
+    column: $table.productCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalLabels => $composableBuilder(
+    column: $table.totalLabels,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get printedAt => $composableBuilder(
+    column: $table.printedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get syncedToServer => $composableBuilder(
+    column: $table.syncedToServer,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalLabelPrintHistoryTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalLabelPrintHistoryTable> {
+  $$LocalLabelPrintHistoryTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get templateId => $composableBuilder(
+    column: $table.templateId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get printerName => $composableBuilder(
+    column: $table.printerName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get productCount => $composableBuilder(
+    column: $table.productCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalLabels => $composableBuilder(
+    column: $table.totalLabels,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get printedAt =>
+      $composableBuilder(column: $table.printedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get syncedToServer => $composableBuilder(
+    column: $table.syncedToServer,
+    builder: (column) => column,
+  );
+}
+
+class $$LocalLabelPrintHistoryTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalLabelPrintHistoryTable,
+          LocalLabelPrintHistoryData,
+          $$LocalLabelPrintHistoryTableFilterComposer,
+          $$LocalLabelPrintHistoryTableOrderingComposer,
+          $$LocalLabelPrintHistoryTableAnnotationComposer,
+          $$LocalLabelPrintHistoryTableCreateCompanionBuilder,
+          $$LocalLabelPrintHistoryTableUpdateCompanionBuilder,
+          (
+            LocalLabelPrintHistoryData,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalLabelPrintHistoryTable,
+              LocalLabelPrintHistoryData
+            >,
+          ),
+          LocalLabelPrintHistoryData,
+          PrefetchHooks Function()
+        > {
+  $$LocalLabelPrintHistoryTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalLabelPrintHistoryTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalLabelPrintHistoryTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$LocalLabelPrintHistoryTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$LocalLabelPrintHistoryTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> templateId = const Value.absent(),
+                Value<String?> printerName = const Value.absent(),
+                Value<int> productCount = const Value.absent(),
+                Value<int> totalLabels = const Value.absent(),
+                Value<DateTime> printedAt = const Value.absent(),
+                Value<bool> syncedToServer = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalLabelPrintHistoryCompanion(
+                id: id,
+                templateId: templateId,
+                printerName: printerName,
+                productCount: productCount,
+                totalLabels: totalLabels,
+                printedAt: printedAt,
+                syncedToServer: syncedToServer,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> templateId = const Value.absent(),
+                Value<String?> printerName = const Value.absent(),
+                required int productCount,
+                required int totalLabels,
+                Value<DateTime> printedAt = const Value.absent(),
+                Value<bool> syncedToServer = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalLabelPrintHistoryCompanion.insert(
+                id: id,
+                templateId: templateId,
+                printerName: printerName,
+                productCount: productCount,
+                totalLabels: totalLabels,
+                printedAt: printedAt,
+                syncedToServer: syncedToServer,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalLabelPrintHistoryTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalLabelPrintHistoryTable,
+      LocalLabelPrintHistoryData,
+      $$LocalLabelPrintHistoryTableFilterComposer,
+      $$LocalLabelPrintHistoryTableOrderingComposer,
+      $$LocalLabelPrintHistoryTableAnnotationComposer,
+      $$LocalLabelPrintHistoryTableCreateCompanionBuilder,
+      $$LocalLabelPrintHistoryTableUpdateCompanionBuilder,
+      (
+        LocalLabelPrintHistoryData,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalLabelPrintHistoryTable,
+          LocalLabelPrintHistoryData
+        >,
+      ),
+      LocalLabelPrintHistoryData,
+      PrefetchHooks Function()
+    >;
 
 class $PosOfflineDatabaseManager {
   final _$PosOfflineDatabase _db;
@@ -12847,4 +14562,11 @@ class $PosOfflineDatabaseManager {
       $$LocalPromotionsTableTableManager(_db, _db.localPromotions);
   $$LocalCouponCodesTableTableManager get localCouponCodes =>
       $$LocalCouponCodesTableTableManager(_db, _db.localCouponCodes);
+  $$LocalLabelTemplatesTableTableManager get localLabelTemplates =>
+      $$LocalLabelTemplatesTableTableManager(_db, _db.localLabelTemplates);
+  $$LocalLabelPrintHistoryTableTableManager get localLabelPrintHistory =>
+      $$LocalLabelPrintHistoryTableTableManager(
+        _db,
+        _db.localLabelPrintHistory,
+      );
 }
