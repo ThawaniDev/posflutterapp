@@ -6,11 +6,15 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/payments/models/installment_payment.dart';
 import 'package:wameedpos/features/payments/pages/installment_payment_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/features/settings/models/store_settings.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 /// A payment entry: method + amount. Supports split payments.
 class _PaymentLeg {
@@ -41,9 +45,25 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   final _tipController = TextEditingController();
   String? _error;
 
+  // Gift card
+  final _giftCardController = TextEditingController();
+  String? _giftCardCode;
+  double? _giftCardBalance;
+  bool _giftCardLoading = false;
+  String? _giftCardError;
+
+  // Coupon
+  final _couponController = TextEditingController();
+  String? _appliedCouponCode;
+  String? _appliedCouponCodeId;
+  double _couponDiscount = 0;
+  bool _couponLoading = false;
+  String? _couponError;
+
   double get _totalWithTip => widget.totalAmount + _tipAmount;
+  double get _totalAfterCoupon => (_totalWithTip - _couponDiscount).clamp(0, double.infinity);
   double get _totalPaid => _legs.fold(0.0, (s, l) => s + l.amount);
-  double get _remaining => _totalWithTip - _totalPaid;
+  double get _remaining => _totalAfterCoupon - _totalPaid;
   bool get _isFullyPaid => _remaining <= 0.005;
 
   @override
@@ -61,6 +81,8 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     }
     _cashTenderedController.dispose();
     _tipController.dispose();
+    _giftCardController.dispose();
+    _couponController.dispose();
     super.dispose();
   }
 
@@ -100,7 +122,71 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     }
     return 0;
   }
+  // ── Gift card ─────────────────────────────────────────────────
 
+  Future<void> _checkGiftCard() async {
+    final code = _giftCardController.text.trim();
+    if (code.isEmpty) return;
+    setState(() {
+      _giftCardLoading = true;
+      _giftCardError = null;
+    });
+    try {
+      final api = ref.read(posTerminalApiServiceProvider);
+      final result = await api.checkGiftCardBalance(code);
+      final balance = double.tryParse(result['balance']?.toString() ?? '0') ?? 0;
+      setState(() {
+        _giftCardCode = code;
+        _giftCardBalance = balance;
+      });
+      // Auto-add a gift card leg for the usable amount
+      final apply = balance.clamp(0, _remaining).toDouble();
+      if (apply > 0) {
+        setState(() {
+          _legs.add(_PaymentLeg(method: PaymentMethod.giftCard, amount: apply));
+        });
+      }
+    } catch (e) {
+      setState(() => _giftCardError = e.toString());
+    } finally {
+      setState(() => _giftCardLoading = false);
+    }
+  }
+
+  // ── Coupon ─────────────────────────────────────────────────────
+
+  Future<void> _applyCoupon() async {
+    final code = _couponController.text.trim();
+    if (code.isEmpty) return;
+    setState(() {
+      _couponLoading = true;
+      _couponError = null;
+    });
+    try {
+      final api = ref.read(posTerminalApiServiceProvider);
+      final cart = ref.read(cartProvider);
+      final result = await api.validateCoupon(
+        code: code,
+        customerId: cart.customer?.id,
+        orderTotal: _totalWithTip,
+      );
+      final discount = double.tryParse(result['discount_amount']?.toString() ?? '0') ?? 0;
+      setState(() {
+        _appliedCouponCode = code;
+        _appliedCouponCodeId = result['coupon_code_id'] as String?;
+        _couponDiscount = discount;
+        // Adjust first leg amount if single leg
+        if (_legs.length == 1) {
+          _legs.first.amount = _totalAfterCoupon;
+          _legs.first.controller.text = _totalAfterCoupon.toStringAsFixed(2);
+        }
+      });
+    } catch (e) {
+      setState(() => _couponError = e.toString());
+    } finally {
+      setState(() => _couponLoading = false);
+    }
+  }
   Future<void> _openInstallmentPayment() async {
     final result = await showDialog<InstallmentPayment>(
       context: context,
@@ -144,8 +230,21 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       if (_tipAmount > 0 && l == _legs.first) {
         map['tip_amount'] = _tipAmount;
       }
+      if (l.method == PaymentMethod.giftCard && _giftCardCode != null) {
+        map['gift_card_code'] = _giftCardCode;
+      }
+      if (l.method == PaymentMethod.loyaltyPoints) {
+        final pts = cart.customer?.loyaltyPoints ?? 0;
+        map['loyalty_points_used'] = pts;
+      }
       return map;
     }).toList();
+
+    // Attach coupon code ID to the first payment leg so the backend logs it
+    if (_appliedCouponCodeId != null && payments.isNotEmpty) {
+      payments.first['coupon_code'] = _appliedCouponCode;
+      payments.first['coupon_code_id'] = _appliedCouponCodeId;
+    }
 
     await ref
         .read(saleProvider.notifier)
@@ -154,6 +253,14 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final saleState = ref.read(saleProvider);
     if (saleState is SaleCompleted) {
       ref.read(cartProvider.notifier).clear();
+
+      // Auto-open cash drawer when a cash payment leg was used
+      if (_legs.any((l) => l.method == PaymentMethod.cash)) {
+        try {
+          await ref.read(hardwareManagerProvider).cashDrawer.open();
+        } catch (_) {}
+      }
+
       if (mounted) {
         Navigator.pop(context);
         _showReceiptDialog(saleState);
@@ -292,55 +399,193 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
                 AppSpacing.gapH16,
 
-                // Tip entry
-                Text(
-                  AppLocalizations.of(context)!.posTipAmount,
-                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
-                ),
-                AppSpacing.gapH4,
-                PosTextField(
-                  controller: _tipController,
-                  hint: '0.00',
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  prefixIcon: Icons.volunteer_activism_rounded,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-                  textAlign: TextAlign.end,
-                  onChanged: (v) {
-                    final tip = double.tryParse(v) ?? 0;
-                    setState(() {
-                      _tipAmount = tip;
-                      // Auto-update the first leg amount to cover total + tip
-                      if (_legs.length == 1) {
-                        _legs.first.amount = _totalWithTip;
-                        _legs.first.controller.text = _totalWithTip.toStringAsFixed(2);
-                        if (_legs.first.method == PaymentMethod.cash) {
-                          _cashTendered = _totalWithTip;
-                          _cashTenderedController.text = _totalWithTip.toStringAsFixed(2);
+                // Tip entry — only when store settings enable tips
+                if (() {
+                  final s = ref.read(storeSettingsProvider);
+                  return s is StoreSettingsLoaded ? s.settings.enableTips : false;
+                }()) ...[
+                  Text(
+                    AppLocalizations.of(context)!.posTipAmount,
+                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  AppSpacing.gapH4,
+                  PosTextField(
+                    controller: _tipController,
+                    hint: '0.00',
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    prefixIcon: Icons.volunteer_activism_rounded,
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+                    textAlign: TextAlign.end,
+                    onChanged: (v) {
+                      final tip = double.tryParse(v) ?? 0;
+                      setState(() {
+                        _tipAmount = tip;
+                        // Auto-update the first leg amount to cover total + tip
+                        if (_legs.length == 1) {
+                          _legs.first.amount = _totalWithTip;
+                          _legs.first.controller.text = _totalWithTip.toStringAsFixed(2);
+                          if (_legs.first.method == PaymentMethod.cash) {
+                            _cashTendered = _totalWithTip;
+                            _cashTenderedController.text = _totalWithTip.toStringAsFixed(2);
+                          }
                         }
-                      }
-                    });
-                  },
-                ),
-                if (_tipAmount > 0) ...[
-                  AppSpacing.gapH8,
+                      });
+                    },
+                  ),
+                  if (_tipAmount > 0) ...[
+                    AppSpacing.gapH8,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.posTotalWithTip,
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.amountWithSar(_totalWithTip.toStringAsFixed(2)),
+                            style: AppTypography.labelMedium.copyWith(color: AppColors.info, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ], // end tip section
+
+                AppSpacing.gapH16,
+
+                // ── Coupon / Voucher ──────────────────────────────────────
+                if (_appliedCouponCode == null) ...[
+                  Text(
+                    AppLocalizations.of(context)!.posCouponCode,
+                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  AppSpacing.gapH4,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosTextField(
+                          controller: _couponController,
+                          hint: AppLocalizations.of(context)!.posCouponHint,
+                          prefixIcon: Icons.discount_outlined,
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-_]'))],
+                          onSubmitted: (_) => _applyCoupon(),
+                        ),
+                      ),
+                      AppSpacing.gapW8,
+                      PosButton(
+                        label: AppLocalizations.of(context)!.posApply,
+                        isLoading: _couponLoading,
+                        onPressed: _couponLoading ? null : _applyCoupon,
+                      ),
+                    ],
+                  ),
+                  if (_couponError != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(_couponError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
+                    ),
+                ] else ...[
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                    decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          AppLocalizations.of(context)!.posTotalWithTip,
-                          style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                        const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
+                        AppSpacing.gapW8,
+                        Expanded(
+                          child: Text(
+                            AppLocalizations.of(context)!.posCouponApplied(_appliedCouponCode!, _couponDiscount.toStringAsFixed(2)),
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.success),
+                          ),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.amountWithSar(_totalWithTip.toStringAsFixed(2)),
-                          style: AppTypography.labelMedium.copyWith(color: AppColors.info, fontWeight: FontWeight.bold),
+                        IconButton(
+                          onPressed: () => setState(() {
+                            _appliedCouponCode = null;
+                            _appliedCouponCodeId = null;
+                            _couponDiscount = 0;
+                            _couponController.clear();
+                          }),
+                          icon: const Icon(Icons.close_rounded, size: 18),
+                          color: AppColors.mutedFor(context),
                         ),
                       ],
                     ),
                   ),
                 ],
+                AppSpacing.gapH12,
+
+                // ── Gift Card ──────────────────────────────────────────────
+                if (_giftCardCode == null) ...[
+                  Text(
+                    AppLocalizations.of(context)!.posGiftCard,
+                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  AppSpacing.gapH4,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosTextField(
+                          controller: _giftCardController,
+                          hint: AppLocalizations.of(context)!.posGiftCardHint,
+                          prefixIcon: Icons.card_giftcard_rounded,
+                          onSubmitted: (_) => _checkGiftCard(),
+                        ),
+                      ),
+                      AppSpacing.gapW8,
+                      PosButton(
+                        label: AppLocalizations.of(context)!.posCheck,
+                        isLoading: _giftCardLoading,
+                        onPressed: _giftCardLoading ? null : _checkGiftCard,
+                      ),
+                    ],
+                  ),
+                  if (_giftCardError != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(_giftCardError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
+                    ),
+                ] else ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.card_giftcard_rounded, color: AppColors.info, size: 18),
+                        AppSpacing.gapW8,
+                        Expanded(
+                          child: Text(
+                            AppLocalizations.of(context)!.posGiftCardApplied(_giftCardCode!, (_giftCardBalance ?? 0).toStringAsFixed(2)),
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => setState(() {
+                            _giftCardCode = null;
+                            _giftCardBalance = null;
+                            _giftCardController.clear();
+                            _legs.removeWhere((l) => l.method == PaymentMethod.giftCard);
+                          }),
+                          icon: const Icon(Icons.close_rounded, size: 18),
+                          color: AppColors.mutedFor(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+
+                // ── Loyalty / Store Credit (customer-attached) ─────────────
+                if (() {
+                  final cart = ref.read(cartProvider);
+                  return cart.customer != null &&
+                      ((cart.customer!.loyaltyPoints ?? 0) > 0 || (cart.customer!.storeCreditBalance ?? 0) > 0);
+                }()) ...[
+                  AppSpacing.gapH12,
+                  _buildCustomerBalance(),
+                ],
+
                 AppSpacing.gapH16,
 
                 // Cash tendered (only if any leg is cash)
@@ -465,6 +710,107 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCustomerBalance() {
+    final cart = ref.read(cartProvider);
+    final customer = cart.customer;
+    if (customer == null) return const SizedBox.shrink();
+
+    final settingsState = ref.read(storeSettingsProvider);
+    final settings = settingsState is StoreSettingsLoaded ? settingsState.settings : null;
+    final redeemValue = settings?.loyaltyRedemptionValue ?? 0.01;
+    final loyaltyPoints = customer.loyaltyPoints ?? 0;
+    final storeCredit = customer.storeCreditBalance ?? 0.0;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (loyaltyPoints > 0) ...[
+          Text(
+            AppLocalizations.of(context)!.posLoyaltyPoints,
+            style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+          ),
+          AppSpacing.gapH4,
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.warning.withValues(alpha: 0.08),
+              borderRadius: AppRadius.borderSm,
+              border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.posAvailablePoints(loyaltyPoints.toString()),
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.warning),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.posPointsValue((loyaltyPoints * redeemValue).toStringAsFixed(2)),
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.warning, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                if (!_legs.any((l) => l.method == PaymentMethod.loyaltyPoints))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: PosButton(
+                      label: AppLocalizations.of(context)!.posRedeemPoints,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () {
+                        final sarValue = (loyaltyPoints * redeemValue).clamp(0, _remaining).toDouble();
+                        setState(() {
+                          _legs.add(_PaymentLeg(method: PaymentMethod.loyaltyPoints, amount: sarValue));
+                        });
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          AppSpacing.gapH8,
+        ],
+        if (storeCredit > 0) ...[
+          Text(
+            AppLocalizations.of(context)!.posStoreCredit,
+            style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+          ),
+          AppSpacing.gapH4,
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.info.withValues(alpha: 0.08),
+              borderRadius: AppRadius.borderSm,
+              border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.posAvailableCredit(storeCredit.toStringAsFixed(2)),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                ),
+                if (!_legs.any((l) => l.method == PaymentMethod.storeCredit))
+                  PosButton(
+                    label: AppLocalizations.of(context)!.posApplyCredit,
+                    variant: PosButtonVariant.outline,
+                    onPressed: () {
+                      final apply = storeCredit.clamp(0, _remaining).toDouble();
+                      setState(() {
+                        _legs.add(_PaymentLeg(method: PaymentMethod.storeCredit, amount: apply));
+                      });
+                    },
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ],
     );
   }
 

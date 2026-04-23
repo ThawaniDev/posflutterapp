@@ -6655,5 +6655,19 @@
   "posQuickAddCustomerName": "الاسم",
   "posQuickAddCustomerPhone": "الهاتف",
   "posBarcodeWeightDetected": "تم اكتشاف باركود وزن: {weight}",
-  "posScaleNotConnected": "الميزان غير متصل."
+  "posScaleNotConnected": "الميزان غير متصل.",
+  "posCouponCode": "رمز الكوبون / القسيمة",
+  "posCouponHint": "أدخل رمز الكوبون",
+  "posCouponApplied": "تم تطبيق الكوبون \"{code}\" — خصم {amount} ريال",
+  "posGiftCard": "بطاقة هدية",
+  "posGiftCardHint": "أدخل رقم بطاقة الهدية",
+  "posGiftCardApplied": "بطاقة الهدية \"{code}\" — رصيد {balance} ريال",
+  "posCheck": "التحقق",
+  "posLoyaltyPoints": "نقاط الولاء",
+  "posAvailablePoints": "{points} نقطة متاحة",
+  "posPointsValue": "≈ {amount} ريال",
+  "posRedeemPoints": "استرداد النقاط",
+  "posStoreCredit": "رصيد المتجر",
+  "posAvailableCredit": "{amount} ريال متاحة",
+  "posApplyCredit": "تطبيق الرصيد"
 }

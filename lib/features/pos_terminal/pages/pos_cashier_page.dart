@@ -28,6 +28,8 @@ import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/quick_add_customer_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
+import 'package:wameedpos/features/settings/models/store_settings.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
   const PosCashierPage({super.key});
@@ -284,8 +286,17 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       ),
     );
     if (result != null) {
-      // Discounts above 50 SAR require manager approval.
-      if (result > 50) {
+      // Check whether manager approval is needed for this discount.
+      final settingsState = ref.read(storeSettingsProvider);
+      final settings = settingsState is StoreSettingsLoaded ? settingsState.settings : null;
+      final requirePin = settings?.requireManagerForDiscount ?? false;
+      final maxPct = settings?.maxDiscountPercent ?? 100;
+      final cart = ref.read(cartProvider);
+      final subtotal = cart.subtotal;
+      final effectivePct = subtotal > 0 ? (result / subtotal * 100) : 0;
+      final exceedsLimit = result > 0 && (requirePin || (maxPct < 100 && effectivePct > maxPct));
+
+      if (exceedsLimit) {
         final approval = await showPosManagerPinDialog(
           context,
           action: 'discount',

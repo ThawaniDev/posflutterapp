@@ -16165,4 +16165,56 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posScaleNotConnected => 'الميزان غير متصل.';
+
+  @override
+  String get posCouponCode => 'رمز الكوبون / القسيمة';
+
+  @override
+  String get posCouponHint => 'أدخل رمز الكوبون';
+
+  @override
+  String posCouponApplied(Object code, Object amount) {
+    return 'تم تطبيق الكوبون \"$code\" — خصم $amount ريال';
+  }
+
+  @override
+  String get posGiftCard => 'بطاقة هدية';
+
+  @override
+  String get posGiftCardHint => 'أدخل رقم بطاقة الهدية';
+
+  @override
+  String posGiftCardApplied(Object code, Object balance) {
+    return 'بطاقة الهدية \"$code\" — رصيد $balance ريال';
+  }
+
+  @override
+  String get posCheck => 'التحقق';
+
+  @override
+  String get posLoyaltyPoints => 'نقاط الولاء';
+
+  @override
+  String posAvailablePoints(Object points) {
+    return '$points نقطة متاحة';
+  }
+
+  @override
+  String posPointsValue(Object amount) {
+    return '≈ $amount ريال';
+  }
+
+  @override
+  String get posRedeemPoints => 'استرداد النقاط';
+
+  @override
+  String get posStoreCredit => 'رصيد المتجر';
+
+  @override
+  String posAvailableCredit(Object amount) {
+    return '$amount ريال متاحة';
+  }
+
+  @override
+  String get posApplyCredit => 'تطبيق الرصيد';
 }

@@ -30571,6 +30571,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scale not connected.'**
   String get posScaleNotConnected;
+
+  /// No description provided for @posCouponCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon / Voucher Code'**
+  String get posCouponCode;
+
+  /// No description provided for @posCouponHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter coupon code'**
+  String get posCouponHint;
+
+  /// No description provided for @posCouponApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon \"{code}\" applied — {amount} SAR off'**
+  String posCouponApplied(Object code, Object amount);
+
+  /// No description provided for @posGiftCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift Card'**
+  String get posGiftCard;
+
+  /// No description provided for @posGiftCardHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter gift card number'**
+  String get posGiftCardHint;
+
+  /// No description provided for @posGiftCardApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift card \"{code}\" — balance {balance} SAR'**
+  String posGiftCardApplied(Object code, Object balance);
+
+  /// No description provided for @posCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get posCheck;
+
+  /// No description provided for @posLoyaltyPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Points'**
+  String get posLoyaltyPoints;
+
+  /// No description provided for @posAvailablePoints.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} pts available'**
+  String posAvailablePoints(Object points);
+
+  /// No description provided for @posPointsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'≈ {amount} SAR'**
+  String posPointsValue(Object amount);
+
+  /// No description provided for @posRedeemPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem Points'**
+  String get posRedeemPoints;
+
+  /// No description provided for @posStoreCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Credit'**
+  String get posStoreCredit;
+
+  /// No description provided for @posAvailableCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} SAR available'**
+  String posAvailableCredit(Object amount);
+
+  /// No description provided for @posApplyCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Credit'**
+  String get posApplyCredit;
 }
 
 class _AppLocalizationsDelegate

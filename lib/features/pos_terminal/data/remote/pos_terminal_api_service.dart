@@ -349,4 +349,24 @@ class PosTerminalApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Map<String, dynamic>.from(apiResponse.data as Map);
   }
+
+  Future<Map<String, dynamic>> checkGiftCardBalance(String code) async {
+    final response = await _dio.get('/gift-cards/$code/balance');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  Future<Map<String, dynamic>> validateCoupon({
+    required String code,
+    String? customerId,
+    double? orderTotal,
+  }) async {
+    final response = await _dio.post('/promotions/validate', data: {
+      'code': code,
+      if (customerId != null) 'customer_id': customerId,
+      if (orderTotal != null) 'order_total': orderTotal,
+    });
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
 }

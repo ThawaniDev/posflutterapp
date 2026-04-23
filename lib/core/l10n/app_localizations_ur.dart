@@ -16261,4 +16261,56 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get posScaleNotConnected => 'Scale not connected.';
+
+  @override
+  String get posCouponCode => 'Coupon / Voucher Code';
+
+  @override
+  String get posCouponHint => 'Enter coupon code';
+
+  @override
+  String posCouponApplied(Object code, Object amount) {
+    return 'Coupon \"$code\" applied — $amount SAR off';
+  }
+
+  @override
+  String get posGiftCard => 'Gift Card';
+
+  @override
+  String get posGiftCardHint => 'Enter gift card number';
+
+  @override
+  String posGiftCardApplied(Object code, Object balance) {
+    return 'Gift card \"$code\" — balance $balance SAR';
+  }
+
+  @override
+  String get posCheck => 'Check';
+
+  @override
+  String get posLoyaltyPoints => 'Loyalty Points';
+
+  @override
+  String posAvailablePoints(Object points) {
+    return '$points pts available';
+  }
+
+  @override
+  String posPointsValue(Object amount) {
+    return '≈ $amount SAR';
+  }
+
+  @override
+  String get posRedeemPoints => 'Redeem Points';
+
+  @override
+  String get posStoreCredit => 'Store Credit';
+
+  @override
+  String posAvailableCredit(Object amount) {
+    return '$amount SAR available';
+  }
+
+  @override
+  String get posApplyCredit => 'Apply Credit';
 }

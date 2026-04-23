@@ -6916,5 +6916,46 @@
   "posQuickAddCustomerPhone": "Phone",
   "posBarcodeWeightDetected": "Weight barcode detected: {weight}",
   "@posBarcodeWeightDetected": {"placeholders": {"weight": {"type": "String"}}},
-  "posScaleNotConnected": "Scale not connected."
+  "posScaleNotConnected": "Scale not connected.",
+  "posCouponCode": "Coupon / Voucher Code",
+  "posCouponHint": "Enter coupon code",
+  "posCouponApplied": "Coupon \"{code}\" applied — {amount} SAR off",
+  "@posCouponApplied": {
+    "placeholders": {
+      "code": {},
+      "amount": {}
+    }
+  },
+  "posGiftCard": "Gift Card",
+  "posGiftCardHint": "Enter gift card number",
+  "posGiftCardApplied": "Gift card \"{code}\" — balance {balance} SAR",
+  "@posGiftCardApplied": {
+    "placeholders": {
+      "code": {},
+      "balance": {}
+    }
+  },
+  "posCheck": "Check",
+  "posLoyaltyPoints": "Loyalty Points",
+  "posAvailablePoints": "{points} pts available",
+  "@posAvailablePoints": {
+    "placeholders": {
+      "points": {}
+    }
+  },
+  "posPointsValue": "≈ {amount} SAR",
+  "@posPointsValue": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posRedeemPoints": "Redeem Points",
+  "posStoreCredit": "Store Credit",
+  "posAvailableCredit": "{amount} SAR available",
+  "@posAvailableCredit": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posApplyCredit": "Apply Credit"
 }
