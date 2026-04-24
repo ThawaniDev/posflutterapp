@@ -8,6 +8,7 @@ class LoyaltyConfig {
     this.minRedemptionPoints,
     this.pointsExpiryMonths,
     this.excludedCategoryIds,
+    this.doublePointsDays,
     this.isActive,
     this.createdAt,
     this.updatedAt,
@@ -24,6 +25,9 @@ class LoyaltyConfig {
       excludedCategoryIds: json['excluded_category_ids'] != null
           ? (json['excluded_category_ids'] as List).map((e) => e.toString()).toList()
           : null,
+      doublePointsDays: json['double_points_days'] != null
+          ? (json['double_points_days'] as List).map((e) => (e as num).toInt()).toList()
+          : null,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
@@ -36,6 +40,7 @@ class LoyaltyConfig {
   final int? minRedemptionPoints;
   final int? pointsExpiryMonths;
   final List<String>? excludedCategoryIds;
+  final List<int>? doublePointsDays;
   final bool? isActive;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -49,6 +54,7 @@ class LoyaltyConfig {
       'min_redemption_points': minRedemptionPoints,
       'points_expiry_months': pointsExpiryMonths,
       'excluded_category_ids': excludedCategoryIds,
+      'double_points_days': doublePointsDays,
       'is_active': isActive,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
@@ -63,6 +69,7 @@ class LoyaltyConfig {
     int? minRedemptionPoints,
     int? pointsExpiryMonths,
     List<String>? excludedCategoryIds,
+    List<int>? doublePointsDays,
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -75,6 +82,7 @@ class LoyaltyConfig {
       minRedemptionPoints: minRedemptionPoints ?? this.minRedemptionPoints,
       pointsExpiryMonths: pointsExpiryMonths ?? this.pointsExpiryMonths,
       excludedCategoryIds: excludedCategoryIds ?? this.excludedCategoryIds,
+      doublePointsDays: doublePointsDays ?? this.doublePointsDays,
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

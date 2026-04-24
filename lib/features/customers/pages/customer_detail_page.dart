@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
 import 'package:wameedpos/features/customers/providers/customer_state.dart';
+import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
 
 class CustomerDetailPage extends ConsumerStatefulWidget {
   const CustomerDetailPage({super.key, required this.customerId});
@@ -102,6 +103,78 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
     }
   }
 
+  Future<void> _sendReceiptForOrder(String orderId) async {
+    if (orderId.isEmpty) return;
+    final l10n = AppLocalizations.of(context)!;
+    final detailState = ref.read(customerDetailProvider(widget.customerId));
+    if (detailState is! CustomerDetailLoaded) return;
+    final customer = detailState.customer;
+
+    final channel = await showModalBottomSheet<String>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.email_outlined),
+              title: Text(l10n.customersReceiptViaEmail),
+              enabled: (customer.email ?? '').isNotEmpty,
+              onTap: () => Navigator.pop(ctx, 'email'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.chat_outlined),
+              title: Text(l10n.customersReceiptViaWhatsapp),
+              enabled: customer.phone.isNotEmpty,
+              onTap: () => Navigator.pop(ctx, 'whatsapp'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.sms_outlined),
+              title: Text(l10n.customersReceiptViaSms),
+              enabled: customer.phone.isNotEmpty,
+              onTap: () => Navigator.pop(ctx, 'sms'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (channel == null || !mounted) return;
+
+    final svc = ref.read(digitalReceiptServiceProvider);
+    try {
+      switch (channel) {
+        case 'email':
+          await svc.sendEmail(
+            customerId: widget.customerId,
+            orderId: orderId,
+            destination: customer.email,
+          );
+          break;
+        case 'whatsapp':
+          await svc.sendWhatsApp(
+            customerId: widget.customerId,
+            orderId: orderId,
+            phone: customer.phone,
+            receiptUrl: 'order:$orderId',
+          );
+          break;
+        case 'sms':
+          await svc.sendSms(
+            customerId: widget.customerId,
+            orderId: orderId,
+            phone: customer.phone,
+            body: 'order:$orderId',
+          );
+          break;
+      }
+      if (!mounted) return;
+      showPosSuccessSnackbar(context, l10n.customersSaved);
+    } catch (e) {
+      if (!mounted) return;
+      showPosErrorSnackbar(context, e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -164,9 +237,13 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
   }
 
   Widget _kpiRow(Customer c, AppLocalizations l10n) {
+    final visits = c.visitCount ?? 0;
+    final spend = c.totalSpend ?? 0;
+    final avgBasket = visits > 0 ? (spend / visits) : 0.0;
     return PosStatsGrid(children: [
-      PosKpiCard(label: l10n.customersTotalSpend, value: (c.totalSpend ?? 0).toStringAsFixed(2), icon: Icons.payments_outlined),
-      PosKpiCard(label: l10n.customersVisitCount, value: '${c.visitCount ?? 0}', icon: Icons.repeat),
+      PosKpiCard(label: l10n.customersTotalSpend, value: spend.toStringAsFixed(2), icon: Icons.payments_outlined),
+      PosKpiCard(label: l10n.customersVisitCount, value: '$visits', icon: Icons.repeat),
+      PosKpiCard(label: l10n.customersAvgBasket, value: avgBasket.toStringAsFixed(2), icon: Icons.shopping_basket_outlined),
       PosKpiCard(label: l10n.customersLoyaltyPoints, value: '${c.loyaltyPoints ?? 0}', icon: Icons.workspace_premium),
       PosKpiCard(
           label: l10n.customersStoreCredit,
@@ -205,6 +282,12 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
               PosBadge(label: status, variant: PosBadgeVariant.neutral),
               AppSpacing.gapW8,
               Text(total, style: const TextStyle(fontWeight: FontWeight.w700)),
+              AppSpacing.gapW8,
+              IconButton(
+                icon: const Icon(Icons.mail_outline),
+                tooltip: l10n.customersOrderSendReceipt,
+                onPressed: () => _sendReceiptForOrder(o['id']?.toString() ?? ''),
+              ),
             ],
           ),
         );

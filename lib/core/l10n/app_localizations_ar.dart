@@ -16814,4 +16814,62 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get customersChooseChannel => 'اختر قناة إرسال الإيصال';
+
+  @override
+  String get customersHasLoyalty => 'لديهم نقاط ولاء';
+
+  @override
+  String get customersWithoutLoyalty => 'بدون نقاط ولاء';
+
+  @override
+  String get customersLastVisitFrom => 'زاروا بعد';
+
+  @override
+  String get customersLastVisitTo => 'زاروا قبل';
+
+  @override
+  String get customersDateRange => 'النطاق الزمني';
+
+  @override
+  String get customersClearFilters => 'مسح المرشحات';
+
+  @override
+  String get customersBulkAddToGroup => 'إضافة لمجموعة';
+
+  @override
+  String get customersBulkRemoveGroup => 'إزالة من المجموعة';
+
+  @override
+  String get customersBulkExportCsv => 'تصدير CSV';
+
+  @override
+  String customersBulkUpdated(int count) {
+    return 'تم تحديث $count عميل';
+  }
+
+  @override
+  String customersExportSaved(String path) {
+    return 'تم التصدير إلى $path';
+  }
+
+  @override
+  String get customersAvgBasket => 'متوسط السلة';
+
+  @override
+  String get customersExcludedCategories => 'الفئات المستثناة';
+
+  @override
+  String get customersExcludedCategoriesHint =>
+      'المبيعات في هذه الفئات لا تكسب نقاطًا';
+
+  @override
+  String get customersDoublePointsDays => 'أيام النقاط المضاعفة';
+
+  @override
+  String customersSelectionCount(int count) {
+    return 'تم تحديد $count';
+  }
+
+  @override
+  String get customersOrderSendReceipt => 'إرسال إيصال هذا الطلب';
 }

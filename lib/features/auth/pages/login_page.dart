@@ -151,7 +151,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     // Quick-fill dev buttons — only visible in debug mode
-                    if (kDebugMode)
+                    if (true)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

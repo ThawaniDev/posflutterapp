@@ -16909,4 +16909,62 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get customersChooseChannel => 'Choose a channel to send the receipt';
+
+  @override
+  String get customersHasLoyalty => 'Has Loyalty';
+
+  @override
+  String get customersWithoutLoyalty => 'Without Loyalty';
+
+  @override
+  String get customersLastVisitFrom => 'Visited After';
+
+  @override
+  String get customersLastVisitTo => 'Visited Before';
+
+  @override
+  String get customersDateRange => 'Date Range';
+
+  @override
+  String get customersClearFilters => 'Clear Filters';
+
+  @override
+  String get customersBulkAddToGroup => 'Add to Group';
+
+  @override
+  String get customersBulkRemoveGroup => 'Remove from Group';
+
+  @override
+  String get customersBulkExportCsv => 'Export CSV';
+
+  @override
+  String customersBulkUpdated(int count) {
+    return '$count customers updated';
+  }
+
+  @override
+  String customersExportSaved(String path) {
+    return 'Exported to $path';
+  }
+
+  @override
+  String get customersAvgBasket => 'Avg Basket';
+
+  @override
+  String get customersExcludedCategories => 'Excluded Categories';
+
+  @override
+  String get customersExcludedCategoriesHint =>
+      'Sales in these categories do not earn points';
+
+  @override
+  String get customersDoublePointsDays => 'Double-points Days';
+
+  @override
+  String customersSelectionCount(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get customersOrderSendReceipt => 'Send Receipt for this Order';
 }

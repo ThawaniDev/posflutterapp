@@ -28,6 +28,9 @@ class CustomersLoaded extends CustomersState {
     required this.perPage,
     this.searchQuery,
     this.groupId,
+    this.hasLoyalty,
+    this.lastVisitFrom,
+    this.lastVisitTo,
   });
   final List<Customer> customers;
   final int total;
@@ -36,6 +39,9 @@ class CustomersLoaded extends CustomersState {
   final int perPage;
   final String? searchQuery;
   final String? groupId;
+  final bool? hasLoyalty;
+  final DateTime? lastVisitFrom;
+  final DateTime? lastVisitTo;
 
   bool get hasMore => currentPage < lastPage;
 
@@ -47,6 +53,9 @@ class CustomersLoaded extends CustomersState {
     int? perPage,
     String? searchQuery,
     String? groupId,
+    bool? hasLoyalty,
+    DateTime? lastVisitFrom,
+    DateTime? lastVisitTo,
   }) => CustomersLoaded(
     customers: customers ?? this.customers,
     total: total ?? this.total,
@@ -55,6 +64,9 @@ class CustomersLoaded extends CustomersState {
     perPage: perPage ?? this.perPage,
     searchQuery: searchQuery ?? this.searchQuery,
     groupId: groupId ?? this.groupId,
+    hasLoyalty: hasLoyalty ?? this.hasLoyalty,
+    lastVisitFrom: lastVisitFrom ?? this.lastVisitFrom,
+    lastVisitTo: lastVisitTo ?? this.lastVisitTo,
   );
 }
 

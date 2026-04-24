@@ -31771,6 +31771,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a channel to send the receipt'**
   String get customersChooseChannel;
+
+  /// No description provided for @customersHasLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Has Loyalty'**
+  String get customersHasLoyalty;
+
+  /// No description provided for @customersWithoutLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Without Loyalty'**
+  String get customersWithoutLoyalty;
+
+  /// No description provided for @customersLastVisitFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Visited After'**
+  String get customersLastVisitFrom;
+
+  /// No description provided for @customersLastVisitTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Visited Before'**
+  String get customersLastVisitTo;
+
+  /// No description provided for @customersDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get customersDateRange;
+
+  /// No description provided for @customersClearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get customersClearFilters;
+
+  /// No description provided for @customersBulkAddToGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Group'**
+  String get customersBulkAddToGroup;
+
+  /// No description provided for @customersBulkRemoveGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from Group'**
+  String get customersBulkRemoveGroup;
+
+  /// No description provided for @customersBulkExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get customersBulkExportCsv;
+
+  /// No description provided for @customersBulkUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} customers updated'**
+  String customersBulkUpdated(int count);
+
+  /// No description provided for @customersExportSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported to {path}'**
+  String customersExportSaved(String path);
+
+  /// No description provided for @customersAvgBasket.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Basket'**
+  String get customersAvgBasket;
+
+  /// No description provided for @customersExcludedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Excluded Categories'**
+  String get customersExcludedCategories;
+
+  /// No description provided for @customersExcludedCategoriesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales in these categories do not earn points'**
+  String get customersExcludedCategoriesHint;
+
+  /// No description provided for @customersDoublePointsDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Double-points Days'**
+  String get customersDoublePointsDays;
+
+  /// No description provided for @customersSelectionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String customersSelectionCount(int count);
+
+  /// No description provided for @customersOrderSendReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Receipt for this Order'**
+  String get customersOrderSendReceipt;
 }
 
 class _AppLocalizationsDelegate

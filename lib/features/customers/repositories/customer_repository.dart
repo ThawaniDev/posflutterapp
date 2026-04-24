@@ -23,8 +23,23 @@ class CustomerRepository {
     int perPage = 20,
     String? search,
     String? groupId,
+    bool? hasLoyalty,
+    DateTime? lastVisitFrom,
+    DateTime? lastVisitTo,
   }) =>
-      _api.listCustomers(page: page, perPage: perPage, search: search, groupId: groupId);
+      _api.listCustomers(
+        page: page,
+        perPage: perPage,
+        search: search,
+        groupId: groupId,
+        hasLoyalty: hasLoyalty,
+        lastVisitFrom: lastVisitFrom,
+        lastVisitTo: lastVisitTo,
+      );
+
+  /// Spec §4.1 bulk action.
+  Future<int> bulkAssignGroup({required List<String> customerIds, String? groupId}) =>
+      _api.bulkAssignGroup(customerIds: customerIds, groupId: groupId);
 
   Future<Customer> getCustomer(String id) => _api.getCustomer(id);
   Future<Customer> createCustomer(Map<String, dynamic> data) => _api.createCustomer(data);

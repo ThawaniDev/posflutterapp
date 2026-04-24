@@ -28,6 +28,9 @@ class CustomerApiService {
     int perPage = 20,
     String? search,
     String? groupId,
+    bool? hasLoyalty,
+    DateTime? lastVisitFrom,
+    DateTime? lastVisitTo,
   }) async {
     final response = await _dio.get(
       ApiEndpoints.customers,
@@ -36,6 +39,9 @@ class CustomerApiService {
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
         if (groupId != null) 'group_id': groupId,
+        if (hasLoyalty != null) 'has_loyalty': hasLoyalty ? 'true' : 'false',
+        if (lastVisitFrom != null) 'last_visit_from': lastVisitFrom.toIso8601String(),
+        if (lastVisitTo != null) 'last_visit_to': lastVisitTo.toIso8601String(),
       },
     );
     final api = ApiResponse.fromJson(response.data, (d) => d);
@@ -50,6 +56,23 @@ class CustomerApiService {
       lastPage: (map['last_page'] as num?)?.toInt() ?? 1,
       perPage: (map['per_page'] as num?)?.toInt() ?? perPage,
     );
+  }
+
+  /// Spec §4.1 — bulk action: assign many customers to one group.
+  Future<int> bulkAssignGroup({
+    required List<String> customerIds,
+    String? groupId,
+  }) async {
+    final r = await _dio.post(
+      '${ApiEndpoints.customers}/bulk/assign-group',
+      data: {
+        'customer_ids': customerIds,
+        if (groupId != null) 'group_id': groupId,
+      },
+    );
+    final api = ApiResponse.fromJson(r.data, (d) => d);
+    final map = api.data as Map<String, dynamic>;
+    return (map['updated'] as num?)?.toInt() ?? 0;
   }
 
   Future<Customer> getCustomer(String id) async {

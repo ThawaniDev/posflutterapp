@@ -18,10 +18,24 @@ class CustomersNotifier extends StateNotifier<CustomersState> {
   CustomersNotifier(this._repo) : super(const CustomersInitial());
   final CustomerRepository _repo;
 
-  Future<void> load({int page = 1, String? search, String? groupId}) async {
+  Future<void> load({
+    int page = 1,
+    String? search,
+    String? groupId,
+    bool? hasLoyalty,
+    DateTime? lastVisitFrom,
+    DateTime? lastVisitTo,
+  }) async {
     state = const CustomersLoading();
     try {
-      final result = await _repo.listCustomers(page: page, search: search, groupId: groupId);
+      final result = await _repo.listCustomers(
+        page: page,
+        search: search,
+        groupId: groupId,
+        hasLoyalty: hasLoyalty,
+        lastVisitFrom: lastVisitFrom,
+        lastVisitTo: lastVisitTo,
+      );
       state = CustomersLoaded(
         customers: result.items,
         total: result.total,
@@ -30,11 +44,26 @@ class CustomersNotifier extends StateNotifier<CustomersState> {
         perPage: result.perPage,
         searchQuery: search,
         groupId: groupId,
+        hasLoyalty: hasLoyalty,
+        lastVisitFrom: lastVisitFrom,
+        lastVisitTo: lastVisitTo,
       );
     } on DioException catch (e) {
       state = CustomersError(message: _extractError(e));
     } catch (e) {
       state = CustomersError(message: e.toString());
+    }
+  }
+
+  /// Spec \u00a74.1 bulk action: assign many customers to one group then refresh.
+  Future<int> bulkAssignGroup({required List<String> customerIds, String? groupId}) async {
+    try {
+      final n = await _repo.bulkAssignGroup(customerIds: customerIds, groupId: groupId);
+      await load();
+      return n;
+    } on DioException catch (e) {
+      state = CustomersError(message: _extractError(e));
+      return 0;
     }
   }
 
