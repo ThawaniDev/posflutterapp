@@ -7,6 +7,9 @@ import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/customers/services/customer_search_service.dart';
 
 // ─── Cart Provider ──────────────────────────────────────────────
 
@@ -236,12 +239,13 @@ class PosProductsNotifier extends StateNotifier<PosProductsState> {
 // ─── POS Customers Provider ─────────────────────────────────────
 
 final posCustomersProvider = StateNotifierProvider<PosCustomersNotifier, PosCustomersState>((ref) {
-  return PosCustomersNotifier(ref.watch(posTerminalRepositoryProvider));
+  return PosCustomersNotifier(ref.watch(customerSearchServiceProvider), ref);
 });
 
 class PosCustomersNotifier extends StateNotifier<PosCustomersState> {
-  PosCustomersNotifier(this._repo) : super(const PosCustomersInitial());
-  final PosTerminalRepository _repo;
+  PosCustomersNotifier(this._search, this._ref) : super(const PosCustomersInitial());
+  final CustomerSearchService _search;
+  final Ref _ref;
 
   Future<void> search(String query) async {
     if (query.isEmpty) {
@@ -250,8 +254,10 @@ class PosCustomersNotifier extends StateNotifier<PosCustomersState> {
     }
     state = const PosCustomersLoading();
     try {
-      final result = await _repo.listPosCustomers(search: query, perPage: 20);
-      state = PosCustomersLoaded(customers: result.items);
+      final auth = _ref.read(authProvider);
+      final orgId = auth is AuthAuthenticated ? (auth.user.organizationId ?? '') : '';
+      final results = await _search.search(orgId, query, limit: 20);
+      state = PosCustomersLoaded(customers: results);
     } on DioException catch (e) {
       state = PosCustomersError(message: _extractError(e));
     } catch (e) {

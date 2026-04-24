@@ -30,6 +30,7 @@ import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
+import 'package:wameedpos/features/customers/providers/customer_providers.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
   const PosCashierPage({super.key});
@@ -47,6 +48,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     super.initState();
     Future.microtask(() {
       ref.read(posProductsProvider.notifier).load();
+      // Background-sync customer directory so the lookup overlay can serve
+      // matches even when offline (spec §6.4 — Drift cache).
+      ref.read(customerSyncProvider.notifier).sync();
     });
   }
 
