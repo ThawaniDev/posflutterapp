@@ -4702,13 +4702,34 @@
   "promoCouponsEmpty": "No coupons yet. Use Generate to create some.",
   "promoCouponDeleted": "Coupon deleted.",
   "promoCouponDeleteConfirm": "Delete coupon \"{code}\"?",
-  "@promoCouponDeleteConfirm": { "placeholders": { "code": { "type": "String" } } },
+  "@promoCouponDeleteConfirm": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "promoApplyToCart": "Apply Promotion / Coupon",
   "promoAppliedDiscount": "Applied {count} promotion(s) saving {amount}",
-  "@promoAppliedDiscount": { "placeholders": { "count": { "type": "int" }, "amount": { "type": "String" } } },
+  "@promoAppliedDiscount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "promoNoApplicable": "No applicable promotions",
   "promoSyncSuccess": "Synced {count} promotion(s).",
-  "@promoSyncSuccess": { "placeholders": { "count": { "type": "int" } } },
+  "@promoSyncSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "promoSyncNow": "Sync Now",
   "promoNew": "New Promotion",
   "promoCreate": "Create Promotion",
@@ -5278,7 +5299,13 @@
   "catalogImportMapHeading": "Map columns",
   "catalogImportMapHint": "Match each product field to a column from your file. Required fields are marked with *.",
   "catalogImportPreviewHeading": "Preview",
-  "@catalogImportPreviewHint": {"placeholders": {"count": {"type": "int"}}},
+  "@catalogImportPreviewHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "catalogImportPreviewHint": "Showing the first rows of {count} total. Click Run import to create products.",
   "catalogImportRun": "Run import",
   "catalogImportSuccessTitle": "Import complete",
@@ -6961,7 +6988,9 @@
   "updateRequiredVersion": "Version {version} or later is required to continue.",
   "@updateRequiredVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "whatsNew": "What's New",
@@ -6970,7 +6999,9 @@
   "updateAvailableVersion": "Version {version} is available.",
   "@updateAvailableVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "updateLater": "Later",
@@ -7015,10 +7046,22 @@
   "posManagerPinInvalid": "Invalid PIN",
   "posManagerPinSubmit": "Approve",
   "posManagerPinAction": "Action: {action}",
-  "@posManagerPinAction": {"placeholders": {"action": {"type": "String"}}},
+  "@posManagerPinAction": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "posAgeVerificationTitle": "Age Verification Required",
   "posAgeVerificationBody": "This product is restricted to customers aged {age}+. Confirm the customer is of legal age.",
-  "@posAgeVerificationBody": {"placeholders": {"age": {"type": "int"}}},
+  "@posAgeVerificationBody": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
   "posAgeVerifiedConfirm": "Verified",
   "posAgeVerifyDecline": "Cancel",
   "posTaxExemptTitle": "Tax Exempt Sale",
@@ -7030,14 +7073,26 @@
   "posOfflineQueued": "Saved offline — will sync when online.",
   "posOfflineSyncing": "Syncing offline transactions...",
   "posOfflineSyncedCount": "{count} transactions synced.",
-  "@posOfflineSyncedCount": {"placeholders": {"count": {"type": "int"}}},
+  "@posOfflineSyncedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "posCashDrawerOpenFailed": "Failed to open cash drawer.",
   "posCfdNotConnected": "Customer-facing display not connected.",
   "posQuickAddCustomerTitle": "Quick Add Customer",
   "posQuickAddCustomerName": "Name",
   "posQuickAddCustomerPhone": "Phone",
   "posBarcodeWeightDetected": "Weight barcode detected: {weight}",
-  "@posBarcodeWeightDetected": {"placeholders": {"weight": {"type": "String"}}},
+  "@posBarcodeWeightDetected": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "posScaleNotConnected": "Scale not connected.",
   "posCouponCode": "Coupon / Voucher Code",
   "posCouponHint": "Enter coupon code",
@@ -7094,9 +7149,18 @@
   "posQuickAddProductsDisabled": "Quick add products are disabled",
   "posOutOfStock": "Out of stock",
   "posInsufficientStock": "Insufficient stock ({available} available)",
-  "@posInsufficientStock": { "placeholders": { "available": {} } },
+  "@posInsufficientStock": {
+    "placeholders": {
+      "available": {}
+    }
+  },
   "posLowStockWarning": "Low stock: {remaining} remaining for {product}",
-  "@posLowStockWarning": { "placeholders": { "remaining": {}, "product": {} } },
+  "@posLowStockWarning": {
+    "placeholders": {
+      "remaining": {},
+      "product": {}
+    }
+  },
   "posSessionTimedOut": "Session timed out due to inactivity",
   "posPrintingReceipt": "Printing receipt…",
   "posPrintFailed": "Failed to print receipt",
@@ -7174,14 +7238,49 @@
   "customersBulkRemoveGroup": "Remove from Group",
   "customersBulkExportCsv": "Export CSV",
   "customersBulkUpdated": "{count} customers updated",
-  "@customersBulkUpdated": {"placeholders": {"count": {"type": "int"}}},
+  "@customersBulkUpdated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "customersExportSaved": "Exported to {path}",
-  "@customersExportSaved": {"placeholders": {"path": {"type": "String"}}},
+  "@customersExportSaved": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "customersAvgBasket": "Avg Basket",
   "customersExcludedCategories": "Excluded Categories",
   "customersExcludedCategoriesHint": "Sales in these categories do not earn points",
   "customersDoublePointsDays": "Double-points Days",
   "customersSelectionCount": "{count} selected",
-  "@customersSelectionCount": {"placeholders": {"count": {"type": "int"}}},
-  "customersOrderSendReceipt": "Send Receipt for this Order"
+  "@customersSelectionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "customersOrderSendReceipt": "Send Receipt for this Order",
+  "zatcaDeviceActivation": "Device Activation",
+  "zatcaActivationCode": "Activation Code",
+  "zatcaActivateDevice": "Activate Device",
+  "zatcaProvisionDevice": "Provision New Device",
+  "zatcaNoDevices": "No registered devices",
+  "zatcaDeviceTampered": "This device's chain has been tampered. Submissions are blocked until reset.",
+  "zatcaResetTamper": "Reset Tamper",
+  "zatcaIcv": "ICV",
+  "zatcaUuid": "UUID",
+  "zatcaClearanceFlow": "Clearance",
+  "zatcaReportingFlow": "Reporting",
+  "zatcaSignedXml": "Signed XML",
+  "zatcaPih": "Previous Invoice Hash",
+  "zatcaCertificateExpired": "Certificate Expired",
+  "zatcaCertificateExpiringSoon": "Certificate Expiring Soon",
+  "zatcaSandboxMode": "Sandbox Mode",
+  "zatcaProductionMode": "Production Mode"
 }

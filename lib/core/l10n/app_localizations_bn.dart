@@ -16994,4 +16994,56 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get customersOrderSendReceipt => 'Send Receipt for this Order';
+
+  @override
+  String get zatcaDeviceActivation => 'ডিভাইস সক্রিয়করণ';
+
+  @override
+  String get zatcaActivationCode => 'সক্রিয়করণ কোড';
+
+  @override
+  String get zatcaActivateDevice => 'ডিভাইস সক্রিয় করুন';
+
+  @override
+  String get zatcaProvisionDevice => 'নতুন ডিভাইস প্রভিশন করুন';
+
+  @override
+  String get zatcaNoDevices => 'নিবন্ধিত ডিভাইস নেই';
+
+  @override
+  String get zatcaDeviceTampered => 'এই ডিভাইসের চেইন বিকৃত হয়েছে।';
+
+  @override
+  String get zatcaResetTamper => 'টেম্পার রিসেট';
+
+  @override
+  String get zatcaIcv => 'ICV';
+
+  @override
+  String get zatcaUuid => 'UUID';
+
+  @override
+  String get zatcaClearanceFlow => 'ক্লিয়ারেন্স';
+
+  @override
+  String get zatcaReportingFlow => 'রিপোর্টিং';
+
+  @override
+  String get zatcaSignedXml => 'সাইন করা XML';
+
+  @override
+  String get zatcaPih => 'পূর্ববর্তী ইনভয়েস হ্যাশ';
+
+  @override
+  String get zatcaCertificateExpired => 'সার্টিফিকেট মেয়াদোত্তীর্ণ';
+
+  @override
+  String get zatcaCertificateExpiringSoon =>
+      'সার্টিফিকেট শীঘ্রই মেয়াদোত্তীর্ণ';
+
+  @override
+  String get zatcaSandboxMode => 'স্যান্ডবক্স মোড';
+
+  @override
+  String get zatcaProductionMode => 'প্রোডাকশন মোড';
 }

@@ -6818,7 +6818,9 @@
   "updateRequiredVersion": "جاری رکھنے کے لیے {version} یا بعد کا ورژن ضروری ہے۔",
   "@updateRequiredVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "whatsNew": "نیا کیا ہے",
@@ -6827,7 +6829,9 @@
   "updateAvailableVersion": "ورژن {version} دستیاب ہے۔",
   "@updateAvailableVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "updateLater": "بعد میں",
@@ -6862,5 +6866,22 @@
   "aiLast30Days": "پچھلے 30 دن",
   "aiLast90Days": "پچھلے 90 دن",
   "aiImageRequired": "تصویر ضروری ہے",
-  "zatcaEnterOtp": "6 ہندسوں کا OTP درج کریں"
+  "zatcaEnterOtp": "6 ہندسوں کا OTP درج کریں",
+  "zatcaDeviceActivation": "ڈیوائس ایکٹیویشن",
+  "zatcaActivationCode": "ایکٹیویشن کوڈ",
+  "zatcaActivateDevice": "ڈیوائس ایکٹیویٹ کریں",
+  "zatcaProvisionDevice": "نئی ڈیوائس تیار کریں",
+  "zatcaNoDevices": "کوئی رجسٹرڈ ڈیوائس نہیں",
+  "zatcaDeviceTampered": "اس ڈیوائس کی چین سے چھیڑ چھاڑ ہوئی ہے۔",
+  "zatcaResetTamper": "ٹیمپر ری سیٹ",
+  "zatcaIcv": "ICV",
+  "zatcaUuid": "UUID",
+  "zatcaClearanceFlow": "کلیئرنس",
+  "zatcaReportingFlow": "رپورٹنگ",
+  "zatcaSignedXml": "دستخط شدہ XML",
+  "zatcaPih": "پچھلی انوائس ہیش",
+  "zatcaCertificateExpired": "سرٹیفکیٹ ختم ہو گیا",
+  "zatcaCertificateExpiringSoon": "سرٹیفکیٹ جلد ختم ہوگا",
+  "zatcaSandboxMode": "سینڈ باکس موڈ",
+  "zatcaProductionMode": "پروڈکشن موڈ"
 }

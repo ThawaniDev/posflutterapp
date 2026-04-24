@@ -209,6 +209,7 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_a
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_billing_page.dart';
 // POS Feature #20: ZATCA Compliance
 import 'package:wameedpos/features/zatca/pages/zatca_dashboard_page.dart';
+import 'package:wameedpos/features/zatca/pages/zatca_device_activation_page.dart';
 import 'package:wameedpos/features/sync/pages/sync_dashboard_page.dart';
 import 'package:wameedpos/features/hardware/pages/hardware_dashboard_page.dart';
 import 'package:wameedpos/features/settings/pages/localization_page.dart';
@@ -1090,6 +1091,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── ZATCA Compliance ───
           GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
+          GoRoute(path: Routes.zatcaDeviceActivation, name: 'zatcaDeviceActivation', builder: (context, state) => const ZatcaDeviceActivationPage()),
 
           // ─── Sync ───
           GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),

@@ -16872,4 +16872,56 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get customersOrderSendReceipt => 'إرسال إيصال هذا الطلب';
+
+  @override
+  String get zatcaDeviceActivation => 'تفعيل الجهاز';
+
+  @override
+  String get zatcaActivationCode => 'رمز التفعيل';
+
+  @override
+  String get zatcaActivateDevice => 'تفعيل الجهاز';
+
+  @override
+  String get zatcaProvisionDevice => 'تزويد جهاز جديد';
+
+  @override
+  String get zatcaNoDevices => 'لا توجد أجهزة مسجلة';
+
+  @override
+  String get zatcaDeviceTampered =>
+      'تم العبث بسلسلة هذا الجهاز. الإرسال متوقف حتى إعادة التعيين.';
+
+  @override
+  String get zatcaResetTamper => 'إعادة تعيين العبث';
+
+  @override
+  String get zatcaIcv => 'عداد الفاتورة';
+
+  @override
+  String get zatcaUuid => 'المعرّف الفريد';
+
+  @override
+  String get zatcaClearanceFlow => 'المقاصة';
+
+  @override
+  String get zatcaReportingFlow => 'الإبلاغ';
+
+  @override
+  String get zatcaSignedXml => 'XML الموقّعة';
+
+  @override
+  String get zatcaPih => 'تجزئة الفاتورة السابقة';
+
+  @override
+  String get zatcaCertificateExpired => 'الشهادة منتهية';
+
+  @override
+  String get zatcaCertificateExpiringSoon => 'الشهادة تنتهي قريبًا';
+
+  @override
+  String get zatcaSandboxMode => 'وضع التجربة';
+
+  @override
+  String get zatcaProductionMode => 'وضع الإنتاج';
 }

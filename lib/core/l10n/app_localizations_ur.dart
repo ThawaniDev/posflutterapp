@@ -16967,4 +16967,55 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get customersOrderSendReceipt => 'Send Receipt for this Order';
+
+  @override
+  String get zatcaDeviceActivation => 'ڈیوائس ایکٹیویشن';
+
+  @override
+  String get zatcaActivationCode => 'ایکٹیویشن کوڈ';
+
+  @override
+  String get zatcaActivateDevice => 'ڈیوائس ایکٹیویٹ کریں';
+
+  @override
+  String get zatcaProvisionDevice => 'نئی ڈیوائس تیار کریں';
+
+  @override
+  String get zatcaNoDevices => 'کوئی رجسٹرڈ ڈیوائس نہیں';
+
+  @override
+  String get zatcaDeviceTampered => 'اس ڈیوائس کی چین سے چھیڑ چھاڑ ہوئی ہے۔';
+
+  @override
+  String get zatcaResetTamper => 'ٹیمپر ری سیٹ';
+
+  @override
+  String get zatcaIcv => 'ICV';
+
+  @override
+  String get zatcaUuid => 'UUID';
+
+  @override
+  String get zatcaClearanceFlow => 'کلیئرنس';
+
+  @override
+  String get zatcaReportingFlow => 'رپورٹنگ';
+
+  @override
+  String get zatcaSignedXml => 'دستخط شدہ XML';
+
+  @override
+  String get zatcaPih => 'پچھلی انوائس ہیش';
+
+  @override
+  String get zatcaCertificateExpired => 'سرٹیفکیٹ ختم ہو گیا';
+
+  @override
+  String get zatcaCertificateExpiringSoon => 'سرٹیفکیٹ جلد ختم ہوگا';
+
+  @override
+  String get zatcaSandboxMode => 'سینڈ باکس موڈ';
+
+  @override
+  String get zatcaProductionMode => 'پروڈکشن موڈ';
 }

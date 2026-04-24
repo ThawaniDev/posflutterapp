@@ -302,6 +302,7 @@ class Routes {
   static const String zatcaEnrollment = '/zatca/enrollment';
   static const String zatcaInvoices = '/zatca/invoices';
   static const String zatcaVatReport = '/zatca/vat-report';
+  static const String zatcaDeviceActivation = '/zatca/devices';
 
   // ─── Sync ────────────────────────────────────────────────────
   static const String syncDashboard = '/sync';

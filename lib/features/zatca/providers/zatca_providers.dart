@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_device.dart';
 import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
 import 'package:wameedpos/features/zatca/repositories/zatca_repository.dart';
 import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
@@ -156,6 +157,74 @@ class ZatcaVatReportNotifier extends StateNotifier<ZatcaVatReportState> {
       );
     } catch (e) {
       state = ZatcaVatReportError(e.toString());
+    }
+  }
+}
+
+// ─── Device Provider ───────────────────────────────────────
+
+final zatcaDeviceProvider =
+    StateNotifierProvider<ZatcaDeviceNotifier, ZatcaDeviceState>((ref) {
+  return ZatcaDeviceNotifier(ref.watch(zatcaRepositoryProvider));
+});
+
+class ZatcaDeviceNotifier extends StateNotifier<ZatcaDeviceState> {
+  ZatcaDeviceNotifier(this._repo) : super(const ZatcaDeviceInitial());
+  final ZatcaRepository _repo;
+
+  Future<void> load() async {
+    state = const ZatcaDeviceLoading();
+    try {
+      final result = await _repo.listDevices();
+      final data = result['data'] as Map<String, dynamic>;
+      final list = (data['devices'] as List)
+          .map((e) => ZatcaDevice.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList();
+      state = ZatcaDeviceListLoaded(list);
+    } catch (e) {
+      state = ZatcaDeviceError(e.toString());
+    }
+  }
+
+  Future<void> provision({String environment = 'sandbox'}) async {
+    state = const ZatcaDeviceLoading();
+    try {
+      final result = await _repo.provisionDevice(environment: environment);
+      final data = result['data'] as Map<String, dynamic>;
+      state = ZatcaDeviceProvisioned(
+        deviceId: data['device_id'] as String,
+        deviceUuid: data['device_uuid'] as String,
+        activationCode: data['activation_code'] as String,
+      );
+    } catch (e) {
+      state = ZatcaDeviceError(e.toString());
+    }
+  }
+
+  Future<void> activate({
+    required String activationCode,
+    String? hardwareSerial,
+  }) async {
+    state = const ZatcaDeviceLoading();
+    try {
+      final result = await _repo.activateDevice(
+        activationCode: activationCode,
+        hardwareSerial: hardwareSerial,
+      );
+      final data = result['data'] as Map<String, dynamic>;
+      state = ZatcaDeviceActivated(ZatcaDevice.fromJson(data));
+    } catch (e) {
+      state = ZatcaDeviceError(e.toString());
+    }
+  }
+
+  Future<void> resetTamper(String deviceId) async {
+    state = const ZatcaDeviceLoading();
+    try {
+      await _repo.resetDeviceTamper(deviceId);
+      await load();
+    } catch (e) {
+      state = ZatcaDeviceError(e.toString());
     }
   }
 }

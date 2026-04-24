@@ -1,4 +1,5 @@
 import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_device.dart';
 import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
 
 // ─── Enrollment State ──────────────────────────────────────
@@ -120,5 +121,44 @@ final class ZatcaVatReportLoaded extends ZatcaVatReportState {
 
 final class ZatcaVatReportError extends ZatcaVatReportState {
   const ZatcaVatReportError(this.message);
+  final String message;
+}
+
+// ─── Device State ──────────────────────────────────────────
+sealed class ZatcaDeviceState {
+  const ZatcaDeviceState();
+}
+
+final class ZatcaDeviceInitial extends ZatcaDeviceState {
+  const ZatcaDeviceInitial();
+}
+
+final class ZatcaDeviceLoading extends ZatcaDeviceState {
+  const ZatcaDeviceLoading();
+}
+
+final class ZatcaDeviceListLoaded extends ZatcaDeviceState {
+  const ZatcaDeviceListLoaded(this.devices);
+  final List<ZatcaDevice> devices;
+}
+
+final class ZatcaDeviceProvisioned extends ZatcaDeviceState {
+  const ZatcaDeviceProvisioned({
+    required this.deviceId,
+    required this.deviceUuid,
+    required this.activationCode,
+  });
+  final String deviceId;
+  final String deviceUuid;
+  final String activationCode;
+}
+
+final class ZatcaDeviceActivated extends ZatcaDeviceState {
+  const ZatcaDeviceActivated(this.device);
+  final ZatcaDevice device;
+}
+
+final class ZatcaDeviceError extends ZatcaDeviceState {
+  const ZatcaDeviceError(this.message);
   final String message;
 }

@@ -6818,7 +6818,9 @@
   "updateRequiredVersion": "চালিয়ে যেতে {version} বা তার পরবর্তী সংস্করণ প্রয়োজন।",
   "@updateRequiredVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "whatsNew": "নতুন কী আছে",
@@ -6827,7 +6829,9 @@
   "updateAvailableVersion": "{version} সংস্করণ পাওয়া গেছে।",
   "@updateAvailableVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "updateLater": "পরে",
@@ -6862,5 +6866,22 @@
   "aiLast30Days": "গত ৩০ দিন",
   "aiLast90Days": "গত ৯০ দিন",
   "aiImageRequired": "ছবি প্রয়োজন",
-  "zatcaEnterOtp": "৬ সংখ্যার OTP লিখুন"
+  "zatcaEnterOtp": "৬ সংখ্যার OTP লিখুন",
+  "zatcaDeviceActivation": "ডিভাইস সক্রিয়করণ",
+  "zatcaActivationCode": "সক্রিয়করণ কোড",
+  "zatcaActivateDevice": "ডিভাইস সক্রিয় করুন",
+  "zatcaProvisionDevice": "নতুন ডিভাইস প্রভিশন করুন",
+  "zatcaNoDevices": "নিবন্ধিত ডিভাইস নেই",
+  "zatcaDeviceTampered": "এই ডিভাইসের চেইন বিকৃত হয়েছে।",
+  "zatcaResetTamper": "টেম্পার রিসেট",
+  "zatcaIcv": "ICV",
+  "zatcaUuid": "UUID",
+  "zatcaClearanceFlow": "ক্লিয়ারেন্স",
+  "zatcaReportingFlow": "রিপোর্টিং",
+  "zatcaSignedXml": "সাইন করা XML",
+  "zatcaPih": "পূর্ববর্তী ইনভয়েস হ্যাশ",
+  "zatcaCertificateExpired": "সার্টিফিকেট মেয়াদোত্তীর্ণ",
+  "zatcaCertificateExpiringSoon": "সার্টিফিকেট শীঘ্রই মেয়াদোত্তীর্ণ",
+  "zatcaSandboxMode": "স্যান্ডবক্স মোড",
+  "zatcaProductionMode": "প্রোডাকশন মোড"
 }

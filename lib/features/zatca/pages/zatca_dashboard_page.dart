@@ -11,6 +11,7 @@ import 'package:wameedpos/features/zatca/widgets/compliance_status_card.dart';
 import 'package:wameedpos/features/zatca/widgets/enrollment_wizard.dart';
 import 'package:wameedpos/features/zatca/widgets/invoice_list_widget.dart';
 import 'package:wameedpos/features/zatca/widgets/vat_report_card.dart';
+import 'package:wameedpos/features/zatca/widgets/zatca_tamper_banner.dart';
 
 class ZatcaDashboardPage extends ConsumerStatefulWidget {
   const ZatcaDashboardPage({super.key});
@@ -27,6 +28,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
       ref.read(zatcaComplianceSummaryProvider.notifier).load();
       ref.read(zatcaInvoiceListProvider.notifier).load(perPage: 10);
       ref.read(zatcaVatReportProvider.notifier).load();
+      ref.read(zatcaDeviceProvider.notifier).load();
     });
   }
 
@@ -49,9 +51,15 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
             return SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: AppSpacing.paddingAll20,
-              child: isWide
-                  ? _buildWideLayout(summaryState, invoiceState, vatState, enrollState, theme)
-                  : _buildNarrowLayout(summaryState, invoiceState, vatState, enrollState, theme),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildTamperBanner(),
+                  isWide
+                      ? _buildWideLayout(summaryState, invoiceState, vatState, enrollState, theme)
+                      : _buildNarrowLayout(summaryState, invoiceState, vatState, enrollState, theme),
+                ],
+              ),
             );
           },
         ),
@@ -176,7 +184,24 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
       ref.read(zatcaComplianceSummaryProvider.notifier).load(),
       ref.read(zatcaInvoiceListProvider.notifier).load(perPage: 10),
       ref.read(zatcaVatReportProvider.notifier).load(),
+      ref.read(zatcaDeviceProvider.notifier).load(),
     ]);
+  }
+
+  Widget _buildTamperBanner() {
+    final state = ref.watch(zatcaDeviceProvider);
+    if (state is! ZatcaDeviceListLoaded) return const SizedBox.shrink();
+    final tampered = state.devices.where((d) => d.isTampered).toList();
+    if (tampered.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: ZatcaTamperBanner(
+        device: tampered.first,
+        onReset: () => ref
+            .read(zatcaDeviceProvider.notifier)
+            .resetTamper(tampered.first.id),
+      ),
+    );
   }
 }
 

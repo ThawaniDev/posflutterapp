@@ -4445,13 +4445,34 @@
   "promoCouponsEmpty": "لا توجد قسائم بعد. استخدم إنشاء لإضافة قسائم.",
   "promoCouponDeleted": "تم حذف القسيمة.",
   "promoCouponDeleteConfirm": "هل تريد حذف القسيمة \"{code}\"؟",
-  "@promoCouponDeleteConfirm": { "placeholders": { "code": { "type": "String" } } },
+  "@promoCouponDeleteConfirm": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "promoApplyToCart": "تطبيق عرض / قسيمة",
   "promoAppliedDiscount": "تم تطبيق {count} عرضًا بتوفير {amount}",
-  "@promoAppliedDiscount": { "placeholders": { "count": { "type": "int" }, "amount": { "type": "String" } } },
+  "@promoAppliedDiscount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "promoNoApplicable": "لا توجد عروض قابلة للتطبيق",
   "promoSyncSuccess": "تمت مزامنة {count} عرضًا.",
-  "@promoSyncSuccess": { "placeholders": { "count": { "type": "int" } } },
+  "@promoSyncSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "promoSyncNow": "مزامنة الآن",
   "promoNew": "عرض جديد",
   "promoCreate": "إنشاء العرض",
@@ -5021,7 +5042,13 @@
   "catalogImportMapHeading": "مطابقة الأعمدة",
   "catalogImportMapHint": "اربط كل حقل منتج بعمود من ملفك. الحقول المطلوبة بعلامة *.",
   "catalogImportPreviewHeading": "معاينة",
-  "@catalogImportPreviewHint": {"placeholders": {"count": {"type": "int"}}},
+  "@catalogImportPreviewHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "catalogImportPreviewHint": "عرض أول الصفوف من إجمالي {count}. اضغط تشغيل الاستيراد لإنشاء المنتجات.",
   "catalogImportRun": "تشغيل الاستيراد",
   "catalogImportSuccessTitle": "اكتمل الاستيراد",
@@ -6704,7 +6731,9 @@
   "updateRequiredVersion": "الإصدار {version} أو أحدث مطلوب للمتابعة.",
   "@updateRequiredVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "whatsNew": "ما الجديد",
@@ -6713,7 +6742,9 @@
   "updateAvailableVersion": "الإصدار {version} متاح.",
   "@updateAvailableVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "updateLater": "لاحقاً",
@@ -6884,14 +6915,49 @@
   "customersBulkRemoveGroup": "إزالة من المجموعة",
   "customersBulkExportCsv": "تصدير CSV",
   "customersBulkUpdated": "تم تحديث {count} عميل",
-  "@customersBulkUpdated": {"placeholders": {"count": {"type": "int"}}},
+  "@customersBulkUpdated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "customersExportSaved": "تم التصدير إلى {path}",
-  "@customersExportSaved": {"placeholders": {"path": {"type": "String"}}},
+  "@customersExportSaved": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "customersAvgBasket": "متوسط السلة",
   "customersExcludedCategories": "الفئات المستثناة",
   "customersExcludedCategoriesHint": "المبيعات في هذه الفئات لا تكسب نقاطًا",
   "customersDoublePointsDays": "أيام النقاط المضاعفة",
   "customersSelectionCount": "تم تحديد {count}",
-  "@customersSelectionCount": {"placeholders": {"count": {"type": "int"}}},
-  "customersOrderSendReceipt": "إرسال إيصال هذا الطلب"
+  "@customersSelectionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "customersOrderSendReceipt": "إرسال إيصال هذا الطلب",
+  "zatcaDeviceActivation": "تفعيل الجهاز",
+  "zatcaActivationCode": "رمز التفعيل",
+  "zatcaActivateDevice": "تفعيل الجهاز",
+  "zatcaProvisionDevice": "تزويد جهاز جديد",
+  "zatcaNoDevices": "لا توجد أجهزة مسجلة",
+  "zatcaDeviceTampered": "تم العبث بسلسلة هذا الجهاز. الإرسال متوقف حتى إعادة التعيين.",
+  "zatcaResetTamper": "إعادة تعيين العبث",
+  "zatcaIcv": "عداد الفاتورة",
+  "zatcaUuid": "المعرّف الفريد",
+  "zatcaClearanceFlow": "المقاصة",
+  "zatcaReportingFlow": "الإبلاغ",
+  "zatcaSignedXml": "XML الموقّعة",
+  "zatcaPih": "تجزئة الفاتورة السابقة",
+  "zatcaCertificateExpired": "الشهادة منتهية",
+  "zatcaCertificateExpiringSoon": "الشهادة تنتهي قريبًا",
+  "zatcaSandboxMode": "وضع التجربة",
+  "zatcaProductionMode": "وضع الإنتاج"
 }

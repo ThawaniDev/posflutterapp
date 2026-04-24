@@ -16928,4 +16928,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get customersOrderSendReceipt => 'Send Receipt for this Order';
+
+  @override
+  String get zatcaDeviceActivation => 'Device Activation';
+
+  @override
+  String get zatcaActivationCode => 'Activation Code';
+
+  @override
+  String get zatcaActivateDevice => 'Activate Device';
+
+  @override
+  String get zatcaProvisionDevice => 'Provision New Device';
+
+  @override
+  String get zatcaNoDevices => 'No registered devices';
+
+  @override
+  String get zatcaDeviceTampered =>
+      'This device\'s chain has been tampered. Submissions are blocked until reset.';
+
+  @override
+  String get zatcaResetTamper => 'Reset Tamper';
+
+  @override
+  String get zatcaIcv => 'ICV';
+
+  @override
+  String get zatcaUuid => 'UUID';
+
+  @override
+  String get zatcaClearanceFlow => 'Clearance';
+
+  @override
+  String get zatcaReportingFlow => 'Reporting';
+
+  @override
+  String get zatcaSignedXml => 'Signed XML';
+
+  @override
+  String get zatcaPih => 'Previous Invoice Hash';
+
+  @override
+  String get zatcaCertificateExpired => 'Certificate Expired';
+
+  @override
+  String get zatcaCertificateExpiringSoon => 'Certificate Expiring Soon';
+
+  @override
+  String get zatcaSandboxMode => 'Sandbox Mode';
+
+  @override
+  String get zatcaProductionMode => 'Production Mode';
 }

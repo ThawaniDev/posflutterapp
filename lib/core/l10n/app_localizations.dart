@@ -31873,6 +31873,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send Receipt for this Order'**
   String get customersOrderSendReceipt;
+
+  /// No description provided for @zatcaDeviceActivation.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Activation'**
+  String get zatcaDeviceActivation;
+
+  /// No description provided for @zatcaActivationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation Code'**
+  String get zatcaActivationCode;
+
+  /// No description provided for @zatcaActivateDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Device'**
+  String get zatcaActivateDevice;
+
+  /// No description provided for @zatcaProvisionDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Provision New Device'**
+  String get zatcaProvisionDevice;
+
+  /// No description provided for @zatcaNoDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No registered devices'**
+  String get zatcaNoDevices;
+
+  /// No description provided for @zatcaDeviceTampered.
+  ///
+  /// In en, this message translates to:
+  /// **'This device\'s chain has been tampered. Submissions are blocked until reset.'**
+  String get zatcaDeviceTampered;
+
+  /// No description provided for @zatcaResetTamper.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Tamper'**
+  String get zatcaResetTamper;
+
+  /// No description provided for @zatcaIcv.
+  ///
+  /// In en, this message translates to:
+  /// **'ICV'**
+  String get zatcaIcv;
+
+  /// No description provided for @zatcaUuid.
+  ///
+  /// In en, this message translates to:
+  /// **'UUID'**
+  String get zatcaUuid;
+
+  /// No description provided for @zatcaClearanceFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Clearance'**
+  String get zatcaClearanceFlow;
+
+  /// No description provided for @zatcaReportingFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting'**
+  String get zatcaReportingFlow;
+
+  /// No description provided for @zatcaSignedXml.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed XML'**
+  String get zatcaSignedXml;
+
+  /// No description provided for @zatcaPih.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Invoice Hash'**
+  String get zatcaPih;
+
+  /// No description provided for @zatcaCertificateExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate Expired'**
+  String get zatcaCertificateExpired;
+
+  /// No description provided for @zatcaCertificateExpiringSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate Expiring Soon'**
+  String get zatcaCertificateExpiringSoon;
+
+  /// No description provided for @zatcaSandboxMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Sandbox Mode'**
+  String get zatcaSandboxMode;
+
+  /// No description provided for @zatcaProductionMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Production Mode'**
+  String get zatcaProductionMode;
 }
 
 class _AppLocalizationsDelegate

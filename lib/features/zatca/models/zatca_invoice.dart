@@ -1,3 +1,4 @@
+import 'package:wameedpos/features/zatca/enums/zatca_invoice_flow.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_invoice_type.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_submission_status.dart';
 
@@ -21,6 +22,19 @@ class ZatcaInvoice {
     this.zatcaResponseMessage,
     this.submittedAt,
     this.createdAt,
+    this.uuid,
+    this.icv,
+    this.deviceId,
+    this.customerId,
+    this.isB2b = false,
+    this.referenceInvoiceUuid,
+    this.adjustmentReason,
+    this.clearedXml,
+    this.tlvQrBase64,
+    this.flow,
+    this.submissionAttempts,
+    this.lastAttemptAt,
+    this.nextAttemptAt,
   });
 
   factory ZatcaInvoice.fromJson(Map<String, dynamic> json) {
@@ -42,6 +56,25 @@ class ZatcaInvoice {
       zatcaResponseMessage: json['zatca_response_message'] as String?,
       submittedAt: json['submitted_at'] != null ? DateTime.parse(json['submitted_at'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      uuid: json['uuid'] as String?,
+      icv: json['icv'] == null ? null : int.tryParse(json['icv'].toString()),
+      deviceId: json['device_id'] as String?,
+      customerId: json['customer_id'] as String?,
+      isB2b: (json['is_b2b'] as bool?) ?? false,
+      referenceInvoiceUuid: json['reference_invoice_uuid'] as String?,
+      adjustmentReason: json['adjustment_reason'] as String?,
+      clearedXml: json['cleared_xml'] as String?,
+      tlvQrBase64: json['tlv_qr_base64'] as String?,
+      flow: ZatcaInvoiceFlow.tryFromValue(json['flow'] as String?),
+      submissionAttempts: json['submission_attempts'] == null
+          ? null
+          : int.tryParse(json['submission_attempts'].toString()),
+      lastAttemptAt: json['last_attempt_at'] != null
+          ? DateTime.tryParse(json['last_attempt_at'] as String)
+          : null,
+      nextAttemptAt: json['next_attempt_at'] != null
+          ? DateTime.tryParse(json['next_attempt_at'] as String)
+          : null,
     );
   }
   final String id;
@@ -61,6 +94,19 @@ class ZatcaInvoice {
   final String? zatcaResponseMessage;
   final DateTime? submittedAt;
   final DateTime? createdAt;
+  final String? uuid;
+  final int? icv;
+  final String? deviceId;
+  final String? customerId;
+  final bool isB2b;
+  final String? referenceInvoiceUuid;
+  final String? adjustmentReason;
+  final String? clearedXml;
+  final String? tlvQrBase64;
+  final ZatcaInvoiceFlow? flow;
+  final int? submissionAttempts;
+  final DateTime? lastAttemptAt;
+  final DateTime? nextAttemptAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -81,6 +127,19 @@ class ZatcaInvoice {
       'zatca_response_message': zatcaResponseMessage,
       'submitted_at': submittedAt?.toIso8601String(),
       'created_at': createdAt?.toIso8601String(),
+      'uuid': uuid,
+      'icv': icv,
+      'device_id': deviceId,
+      'customer_id': customerId,
+      'is_b2b': isB2b,
+      'reference_invoice_uuid': referenceInvoiceUuid,
+      'adjustment_reason': adjustmentReason,
+      'cleared_xml': clearedXml,
+      'tlv_qr_base64': tlvQrBase64,
+      'flow': flow?.value,
+      'submission_attempts': submissionAttempts,
+      'last_attempt_at': lastAttemptAt?.toIso8601String(),
+      'next_attempt_at': nextAttemptAt?.toIso8601String(),
     };
   }
 

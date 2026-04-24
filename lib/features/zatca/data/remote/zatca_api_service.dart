@@ -111,4 +111,48 @@ class ZatcaApiService {
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
+
+  // ─── Phase 2 device + chain endpoints ─────────────────────
+
+  Future<Map<String, dynamic>> listDevices() async {
+    final response = await _dio.get(ApiEndpoints.zatcaDevices);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> provisionDevice({String environment = 'sandbox'}) async {
+    final response = await _dio.post(
+      ApiEndpoints.zatcaDevices,
+      data: {'environment': environment},
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> activateDevice({
+    required String activationCode,
+    String? hardwareSerial,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.zatcaDeviceActivate,
+      data: {
+        'activation_code': activationCode,
+        'hardware_serial': ?hardwareSerial,
+      },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> resetDeviceTamper(String deviceId) async {
+    final response = await _dio.post(ApiEndpoints.zatcaDeviceResetTamper(deviceId));
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> verifyChain(String deviceId) async {
+    final response = await _dio.get(ApiEndpoints.zatcaDeviceVerifyChain(deviceId));
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> dashboard() async {
+    final response = await _dio.get(ApiEndpoints.zatcaDashboard);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 }

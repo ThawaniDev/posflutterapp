@@ -72,4 +72,28 @@ class ZatcaRepository {
     String? dateTo,
   }) =>
       _apiService.vatReport(dateFrom: dateFrom, dateTo: dateTo);
+
+  // ─── Phase 2 device + chain ───────────────────────────────
+
+  Future<Map<String, dynamic>> listDevices() => _apiService.listDevices();
+
+  Future<Map<String, dynamic>> provisionDevice({String environment = 'sandbox'}) =>
+      _apiService.provisionDevice(environment: environment);
+
+  Future<Map<String, dynamic>> activateDevice({
+    required String activationCode,
+    String? hardwareSerial,
+  }) =>
+      _apiService.activateDevice(
+        activationCode: activationCode,
+        hardwareSerial: hardwareSerial,
+      );
+
+  Future<Map<String, dynamic>> resetDeviceTamper(String deviceId) =>
+      _apiService.resetDeviceTamper(deviceId);
+
+  Future<Map<String, dynamic>> verifyChain(String deviceId) =>
+      _apiService.verifyChain(deviceId);
+
+  Future<Map<String, dynamic>> dashboard() => _apiService.dashboard();
 }
