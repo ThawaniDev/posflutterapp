@@ -7,6 +7,8 @@ import 'package:wameedpos/core/widgets/pos_app_error_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:wameedpos/core/services/push_notification_service.dart';
+import 'package:wameedpos/features/delivery_integration/services/delivery_alert_service.dart';
+import 'package:wameedpos/features/delivery_integration/services/production_delivery_alert_sink.dart';
 import 'package:wameedpos/firebase_options.dart';
 
 void main() async {
@@ -23,5 +25,12 @@ void main() async {
   // Register the top-level background message handler
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  runApp(const ProviderScope(child: WameedPosApp()));
+  runApp(
+    ProviderScope(
+      overrides: [
+        deliveryAlertSinkProvider.overrideWithValue(ProductionDeliveryAlertSink()),
+      ],
+      child: const WameedPosApp(),
+    ),
+  );
 }
