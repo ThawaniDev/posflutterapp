@@ -16640,4 +16640,178 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posKdsTicketSent => 'أُرسل إلى المطبخ';
+
+  @override
+  String get customersAdd => 'إضافة عميل';
+
+  @override
+  String get customersEdit => 'تعديل عميل';
+
+  @override
+  String get customersDetail => 'ملف العميل';
+
+  @override
+  String get customersName => 'الاسم';
+
+  @override
+  String get customersPhone => 'الهاتف';
+
+  @override
+  String get customersEmail => 'البريد الإلكتروني';
+
+  @override
+  String get customersAddress => 'العنوان';
+
+  @override
+  String get customersDateOfBirth => 'تاريخ الميلاد';
+
+  @override
+  String get customersGroup => 'المجموعة';
+
+  @override
+  String get customersTaxNumber => 'الرقم الضريبي';
+
+  @override
+  String get customersNotes => 'ملاحظات';
+
+  @override
+  String get customersLoyaltyCode => 'رمز الولاء';
+
+  @override
+  String get customersLoyaltyPoints => 'نقاط الولاء';
+
+  @override
+  String get customersStoreCredit => 'رصيد المتجر';
+
+  @override
+  String get customersTotalSpend => 'إجمالي الإنفاق';
+
+  @override
+  String get customersVisitCount => 'الزيارات';
+
+  @override
+  String get customersLastVisit => 'آخر زيارة';
+
+  @override
+  String get customersDuplicatePhone => 'يوجد عميل آخر بهذا الهاتف';
+
+  @override
+  String get customersDeleteConfirm => 'حذف هذا العميل؟';
+
+  @override
+  String get customersDeleted => 'تم حذف العميل';
+
+  @override
+  String get customersSaved => 'تم حفظ العميل';
+
+  @override
+  String get customersBasicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get customersGroupAndB2B => 'المجموعة والعملاء التجاريون';
+
+  @override
+  String get customersGroupsTitle => 'مجموعات العملاء';
+
+  @override
+  String get customersGroupName => 'اسم المجموعة';
+
+  @override
+  String get customersGroupDiscount => 'نسبة الخصم %';
+
+  @override
+  String get customersGroupAdd => 'إضافة مجموعة';
+
+  @override
+  String get customersAdjustLoyalty => 'تعديل الولاء';
+
+  @override
+  String get customersRedeemPoints => 'استبدال النقاط';
+
+  @override
+  String get customersTopUpCredit => 'شحن الرصيد';
+
+  @override
+  String get customersAdjustCredit => 'تعديل الرصيد';
+
+  @override
+  String get customersSendReceipt => 'إرسال الإيصال';
+
+  @override
+  String get customersReceiptSent => 'تم إرسال الإيصال';
+
+  @override
+  String get customersReceiptViaEmail => 'البريد الإلكتروني';
+
+  @override
+  String get customersReceiptViaWhatsapp => 'واتساب';
+
+  @override
+  String get customersReceiptViaSms => 'رسالة قصيرة';
+
+  @override
+  String get customersLoyaltyConfig => 'إعدادات الولاء';
+
+  @override
+  String get customersPointsPerSar => 'عدد النقاط لكل ريال';
+
+  @override
+  String get customersSarPerPoint => 'قيمة النقطة بالريال';
+
+  @override
+  String get customersMinRedemption => 'الحد الأدنى للاستبدال';
+
+  @override
+  String get customersPointsExpiry => 'مدة صلاحية النقاط (شهور)';
+
+  @override
+  String get customersLoyaltyEnabled => 'نظام الولاء مفعّل';
+
+  @override
+  String get customersLookupTitle => 'بحث عن عميل';
+
+  @override
+  String get customersQuickAdd => 'إضافة سريعة';
+
+  @override
+  String get customersNoMatches => 'لا توجد نتائج';
+
+  @override
+  String get customersSync => 'مزامنة';
+
+  @override
+  String get customersSynced => 'تمت مزامنة العملاء';
+
+  @override
+  String get customersHistoryTab => 'سجل المشتريات';
+
+  @override
+  String get customersLoyaltyTab => 'سجل الولاء';
+
+  @override
+  String get customersCreditTab => 'سجل رصيد المتجر';
+
+  @override
+  String get customersAmount => 'المبلغ';
+
+  @override
+  String get customersBalance => 'الرصيد';
+
+  @override
+  String get customersTransactionType => 'النوع';
+
+  @override
+  String get customersDate => 'التاريخ';
+
+  @override
+  String get customersChannel => 'القناة';
+
+  @override
+  String get customersDestination => 'المرسَل إليه';
+
+  @override
+  String get customersPromptReceipt => 'إرسال إيصال رقمي؟';
+
+  @override
+  String get customersChooseChannel => 'اختر قناة إرسال الإيصال';
 }

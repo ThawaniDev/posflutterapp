@@ -9640,6 +9640,1415 @@ class LocalLabelPrintHistoryCompanion
   }
 }
 
+class $LocalCustomersTable extends LocalCustomers
+    with TableInfo<$LocalCustomersTable, LocalCustomer> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalCustomersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _organizationIdMeta = const VerificationMeta(
+    'organizationId',
+  );
+  @override
+  late final GeneratedColumn<String> organizationId = GeneratedColumn<String>(
+    'organization_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+    'phone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _addressMeta = const VerificationMeta(
+    'address',
+  );
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+    'address',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateOfBirthMeta = const VerificationMeta(
+    'dateOfBirth',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateOfBirth = GeneratedColumn<DateTime>(
+    'date_of_birth',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _loyaltyCodeMeta = const VerificationMeta(
+    'loyaltyCode',
+  );
+  @override
+  late final GeneratedColumn<String> loyaltyCode = GeneratedColumn<String>(
+    'loyalty_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _loyaltyPointsMeta = const VerificationMeta(
+    'loyaltyPoints',
+  );
+  @override
+  late final GeneratedColumn<int> loyaltyPoints = GeneratedColumn<int>(
+    'loyalty_points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _storeCreditBalanceMeta =
+      const VerificationMeta('storeCreditBalance');
+  @override
+  late final GeneratedColumn<double> storeCreditBalance =
+      GeneratedColumn<double>(
+        'store_credit_balance',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<String> groupId = GeneratedColumn<String>(
+    'group_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _taxRegistrationNumberMeta =
+      const VerificationMeta('taxRegistrationNumber');
+  @override
+  late final GeneratedColumn<String> taxRegistrationNumber =
+      GeneratedColumn<String>(
+        'tax_registration_number',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _totalSpendMeta = const VerificationMeta(
+    'totalSpend',
+  );
+  @override
+  late final GeneratedColumn<double> totalSpend = GeneratedColumn<double>(
+    'total_spend',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _visitCountMeta = const VerificationMeta(
+    'visitCount',
+  );
+  @override
+  late final GeneratedColumn<int> visitCount = GeneratedColumn<int>(
+    'visit_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastVisitAtMeta = const VerificationMeta(
+    'lastVisitAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastVisitAt = GeneratedColumn<DateTime>(
+    'last_visit_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _syncVersionMeta = const VerificationMeta(
+    'syncVersion',
+  );
+  @override
+  late final GeneratedColumn<int> syncVersion = GeneratedColumn<int>(
+    'sync_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    organizationId,
+    name,
+    phone,
+    email,
+    address,
+    dateOfBirth,
+    loyaltyCode,
+    loyaltyPoints,
+    storeCreditBalance,
+    groupId,
+    taxRegistrationNumber,
+    notes,
+    totalSpend,
+    visitCount,
+    lastVisitAt,
+    syncVersion,
+    updatedAt,
+    deletedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_customers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalCustomer> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('organization_id')) {
+      context.handle(
+        _organizationIdMeta,
+        organizationId.isAcceptableOrUnknown(
+          data['organization_id']!,
+          _organizationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_organizationIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+        _phoneMeta,
+        phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
+      );
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    }
+    if (data.containsKey('address')) {
+      context.handle(
+        _addressMeta,
+        address.isAcceptableOrUnknown(data['address']!, _addressMeta),
+      );
+    }
+    if (data.containsKey('date_of_birth')) {
+      context.handle(
+        _dateOfBirthMeta,
+        dateOfBirth.isAcceptableOrUnknown(
+          data['date_of_birth']!,
+          _dateOfBirthMeta,
+        ),
+      );
+    }
+    if (data.containsKey('loyalty_code')) {
+      context.handle(
+        _loyaltyCodeMeta,
+        loyaltyCode.isAcceptableOrUnknown(
+          data['loyalty_code']!,
+          _loyaltyCodeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('loyalty_points')) {
+      context.handle(
+        _loyaltyPointsMeta,
+        loyaltyPoints.isAcceptableOrUnknown(
+          data['loyalty_points']!,
+          _loyaltyPointsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('store_credit_balance')) {
+      context.handle(
+        _storeCreditBalanceMeta,
+        storeCreditBalance.isAcceptableOrUnknown(
+          data['store_credit_balance']!,
+          _storeCreditBalanceMeta,
+        ),
+      );
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    }
+    if (data.containsKey('tax_registration_number')) {
+      context.handle(
+        _taxRegistrationNumberMeta,
+        taxRegistrationNumber.isAcceptableOrUnknown(
+          data['tax_registration_number']!,
+          _taxRegistrationNumberMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('total_spend')) {
+      context.handle(
+        _totalSpendMeta,
+        totalSpend.isAcceptableOrUnknown(data['total_spend']!, _totalSpendMeta),
+      );
+    }
+    if (data.containsKey('visit_count')) {
+      context.handle(
+        _visitCountMeta,
+        visitCount.isAcceptableOrUnknown(data['visit_count']!, _visitCountMeta),
+      );
+    }
+    if (data.containsKey('last_visit_at')) {
+      context.handle(
+        _lastVisitAtMeta,
+        lastVisitAt.isAcceptableOrUnknown(
+          data['last_visit_at']!,
+          _lastVisitAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sync_version')) {
+      context.handle(
+        _syncVersionMeta,
+        syncVersion.isAcceptableOrUnknown(
+          data['sync_version']!,
+          _syncVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalCustomer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalCustomer(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      phone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone'],
+      ),
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      ),
+      address: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}address'],
+      ),
+      dateOfBirth: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_of_birth'],
+      ),
+      loyaltyCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}loyalty_code'],
+      ),
+      loyaltyPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}loyalty_points'],
+      )!,
+      storeCreditBalance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}store_credit_balance'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_id'],
+      ),
+      taxRegistrationNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tax_registration_number'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      totalSpend: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}total_spend'],
+      )!,
+      visitCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}visit_count'],
+      )!,
+      lastVisitAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_visit_at'],
+      ),
+      syncVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sync_version'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+    );
+  }
+
+  @override
+  $LocalCustomersTable createAlias(String alias) {
+    return $LocalCustomersTable(attachedDatabase, alias);
+  }
+}
+
+class LocalCustomer extends DataClass implements Insertable<LocalCustomer> {
+  final String id;
+  final String organizationId;
+  final String name;
+  final String? phone;
+  final String? email;
+  final String? address;
+  final DateTime? dateOfBirth;
+  final String? loyaltyCode;
+  final int loyaltyPoints;
+  final double storeCreditBalance;
+  final String? groupId;
+  final String? taxRegistrationNumber;
+  final String? notes;
+  final double totalSpend;
+  final int visitCount;
+  final DateTime? lastVisitAt;
+  final int syncVersion;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  const LocalCustomer({
+    required this.id,
+    required this.organizationId,
+    required this.name,
+    this.phone,
+    this.email,
+    this.address,
+    this.dateOfBirth,
+    this.loyaltyCode,
+    required this.loyaltyPoints,
+    required this.storeCreditBalance,
+    this.groupId,
+    this.taxRegistrationNumber,
+    this.notes,
+    required this.totalSpend,
+    required this.visitCount,
+    this.lastVisitAt,
+    required this.syncVersion,
+    required this.updatedAt,
+    this.deletedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['organization_id'] = Variable<String>(organizationId);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || address != null) {
+      map['address'] = Variable<String>(address);
+    }
+    if (!nullToAbsent || dateOfBirth != null) {
+      map['date_of_birth'] = Variable<DateTime>(dateOfBirth);
+    }
+    if (!nullToAbsent || loyaltyCode != null) {
+      map['loyalty_code'] = Variable<String>(loyaltyCode);
+    }
+    map['loyalty_points'] = Variable<int>(loyaltyPoints);
+    map['store_credit_balance'] = Variable<double>(storeCreditBalance);
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<String>(groupId);
+    }
+    if (!nullToAbsent || taxRegistrationNumber != null) {
+      map['tax_registration_number'] = Variable<String>(taxRegistrationNumber);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['total_spend'] = Variable<double>(totalSpend);
+    map['visit_count'] = Variable<int>(visitCount);
+    if (!nullToAbsent || lastVisitAt != null) {
+      map['last_visit_at'] = Variable<DateTime>(lastVisitAt);
+    }
+    map['sync_version'] = Variable<int>(syncVersion);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    return map;
+  }
+
+  LocalCustomersCompanion toCompanion(bool nullToAbsent) {
+    return LocalCustomersCompanion(
+      id: Value(id),
+      organizationId: Value(organizationId),
+      name: Value(name),
+      phone: phone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(phone),
+      email: email == null && nullToAbsent
+          ? const Value.absent()
+          : Value(email),
+      address: address == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address),
+      dateOfBirth: dateOfBirth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateOfBirth),
+      loyaltyCode: loyaltyCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(loyaltyCode),
+      loyaltyPoints: Value(loyaltyPoints),
+      storeCreditBalance: Value(storeCreditBalance),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
+      taxRegistrationNumber: taxRegistrationNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxRegistrationNumber),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      totalSpend: Value(totalSpend),
+      visitCount: Value(visitCount),
+      lastVisitAt: lastVisitAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastVisitAt),
+      syncVersion: Value(syncVersion),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+    );
+  }
+
+  factory LocalCustomer.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalCustomer(
+      id: serializer.fromJson<String>(json['id']),
+      organizationId: serializer.fromJson<String>(json['organizationId']),
+      name: serializer.fromJson<String>(json['name']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      email: serializer.fromJson<String?>(json['email']),
+      address: serializer.fromJson<String?>(json['address']),
+      dateOfBirth: serializer.fromJson<DateTime?>(json['dateOfBirth']),
+      loyaltyCode: serializer.fromJson<String?>(json['loyaltyCode']),
+      loyaltyPoints: serializer.fromJson<int>(json['loyaltyPoints']),
+      storeCreditBalance: serializer.fromJson<double>(
+        json['storeCreditBalance'],
+      ),
+      groupId: serializer.fromJson<String?>(json['groupId']),
+      taxRegistrationNumber: serializer.fromJson<String?>(
+        json['taxRegistrationNumber'],
+      ),
+      notes: serializer.fromJson<String?>(json['notes']),
+      totalSpend: serializer.fromJson<double>(json['totalSpend']),
+      visitCount: serializer.fromJson<int>(json['visitCount']),
+      lastVisitAt: serializer.fromJson<DateTime?>(json['lastVisitAt']),
+      syncVersion: serializer.fromJson<int>(json['syncVersion']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'organizationId': serializer.toJson<String>(organizationId),
+      'name': serializer.toJson<String>(name),
+      'phone': serializer.toJson<String?>(phone),
+      'email': serializer.toJson<String?>(email),
+      'address': serializer.toJson<String?>(address),
+      'dateOfBirth': serializer.toJson<DateTime?>(dateOfBirth),
+      'loyaltyCode': serializer.toJson<String?>(loyaltyCode),
+      'loyaltyPoints': serializer.toJson<int>(loyaltyPoints),
+      'storeCreditBalance': serializer.toJson<double>(storeCreditBalance),
+      'groupId': serializer.toJson<String?>(groupId),
+      'taxRegistrationNumber': serializer.toJson<String?>(
+        taxRegistrationNumber,
+      ),
+      'notes': serializer.toJson<String?>(notes),
+      'totalSpend': serializer.toJson<double>(totalSpend),
+      'visitCount': serializer.toJson<int>(visitCount),
+      'lastVisitAt': serializer.toJson<DateTime?>(lastVisitAt),
+      'syncVersion': serializer.toJson<int>(syncVersion),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+    };
+  }
+
+  LocalCustomer copyWith({
+    String? id,
+    String? organizationId,
+    String? name,
+    Value<String?> phone = const Value.absent(),
+    Value<String?> email = const Value.absent(),
+    Value<String?> address = const Value.absent(),
+    Value<DateTime?> dateOfBirth = const Value.absent(),
+    Value<String?> loyaltyCode = const Value.absent(),
+    int? loyaltyPoints,
+    double? storeCreditBalance,
+    Value<String?> groupId = const Value.absent(),
+    Value<String?> taxRegistrationNumber = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    double? totalSpend,
+    int? visitCount,
+    Value<DateTime?> lastVisitAt = const Value.absent(),
+    int? syncVersion,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+  }) => LocalCustomer(
+    id: id ?? this.id,
+    organizationId: organizationId ?? this.organizationId,
+    name: name ?? this.name,
+    phone: phone.present ? phone.value : this.phone,
+    email: email.present ? email.value : this.email,
+    address: address.present ? address.value : this.address,
+    dateOfBirth: dateOfBirth.present ? dateOfBirth.value : this.dateOfBirth,
+    loyaltyCode: loyaltyCode.present ? loyaltyCode.value : this.loyaltyCode,
+    loyaltyPoints: loyaltyPoints ?? this.loyaltyPoints,
+    storeCreditBalance: storeCreditBalance ?? this.storeCreditBalance,
+    groupId: groupId.present ? groupId.value : this.groupId,
+    taxRegistrationNumber: taxRegistrationNumber.present
+        ? taxRegistrationNumber.value
+        : this.taxRegistrationNumber,
+    notes: notes.present ? notes.value : this.notes,
+    totalSpend: totalSpend ?? this.totalSpend,
+    visitCount: visitCount ?? this.visitCount,
+    lastVisitAt: lastVisitAt.present ? lastVisitAt.value : this.lastVisitAt,
+    syncVersion: syncVersion ?? this.syncVersion,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+  );
+  LocalCustomer copyWithCompanion(LocalCustomersCompanion data) {
+    return LocalCustomer(
+      id: data.id.present ? data.id.value : this.id,
+      organizationId: data.organizationId.present
+          ? data.organizationId.value
+          : this.organizationId,
+      name: data.name.present ? data.name.value : this.name,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      email: data.email.present ? data.email.value : this.email,
+      address: data.address.present ? data.address.value : this.address,
+      dateOfBirth: data.dateOfBirth.present
+          ? data.dateOfBirth.value
+          : this.dateOfBirth,
+      loyaltyCode: data.loyaltyCode.present
+          ? data.loyaltyCode.value
+          : this.loyaltyCode,
+      loyaltyPoints: data.loyaltyPoints.present
+          ? data.loyaltyPoints.value
+          : this.loyaltyPoints,
+      storeCreditBalance: data.storeCreditBalance.present
+          ? data.storeCreditBalance.value
+          : this.storeCreditBalance,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      taxRegistrationNumber: data.taxRegistrationNumber.present
+          ? data.taxRegistrationNumber.value
+          : this.taxRegistrationNumber,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      totalSpend: data.totalSpend.present
+          ? data.totalSpend.value
+          : this.totalSpend,
+      visitCount: data.visitCount.present
+          ? data.visitCount.value
+          : this.visitCount,
+      lastVisitAt: data.lastVisitAt.present
+          ? data.lastVisitAt.value
+          : this.lastVisitAt,
+      syncVersion: data.syncVersion.present
+          ? data.syncVersion.value
+          : this.syncVersion,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCustomer(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('dateOfBirth: $dateOfBirth, ')
+          ..write('loyaltyCode: $loyaltyCode, ')
+          ..write('loyaltyPoints: $loyaltyPoints, ')
+          ..write('storeCreditBalance: $storeCreditBalance, ')
+          ..write('groupId: $groupId, ')
+          ..write('taxRegistrationNumber: $taxRegistrationNumber, ')
+          ..write('notes: $notes, ')
+          ..write('totalSpend: $totalSpend, ')
+          ..write('visitCount: $visitCount, ')
+          ..write('lastVisitAt: $lastVisitAt, ')
+          ..write('syncVersion: $syncVersion, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    organizationId,
+    name,
+    phone,
+    email,
+    address,
+    dateOfBirth,
+    loyaltyCode,
+    loyaltyPoints,
+    storeCreditBalance,
+    groupId,
+    taxRegistrationNumber,
+    notes,
+    totalSpend,
+    visitCount,
+    lastVisitAt,
+    syncVersion,
+    updatedAt,
+    deletedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalCustomer &&
+          other.id == this.id &&
+          other.organizationId == this.organizationId &&
+          other.name == this.name &&
+          other.phone == this.phone &&
+          other.email == this.email &&
+          other.address == this.address &&
+          other.dateOfBirth == this.dateOfBirth &&
+          other.loyaltyCode == this.loyaltyCode &&
+          other.loyaltyPoints == this.loyaltyPoints &&
+          other.storeCreditBalance == this.storeCreditBalance &&
+          other.groupId == this.groupId &&
+          other.taxRegistrationNumber == this.taxRegistrationNumber &&
+          other.notes == this.notes &&
+          other.totalSpend == this.totalSpend &&
+          other.visitCount == this.visitCount &&
+          other.lastVisitAt == this.lastVisitAt &&
+          other.syncVersion == this.syncVersion &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt);
+}
+
+class LocalCustomersCompanion extends UpdateCompanion<LocalCustomer> {
+  final Value<String> id;
+  final Value<String> organizationId;
+  final Value<String> name;
+  final Value<String?> phone;
+  final Value<String?> email;
+  final Value<String?> address;
+  final Value<DateTime?> dateOfBirth;
+  final Value<String?> loyaltyCode;
+  final Value<int> loyaltyPoints;
+  final Value<double> storeCreditBalance;
+  final Value<String?> groupId;
+  final Value<String?> taxRegistrationNumber;
+  final Value<String?> notes;
+  final Value<double> totalSpend;
+  final Value<int> visitCount;
+  final Value<DateTime?> lastVisitAt;
+  final Value<int> syncVersion;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<int> rowid;
+  const LocalCustomersCompanion({
+    this.id = const Value.absent(),
+    this.organizationId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.dateOfBirth = const Value.absent(),
+    this.loyaltyCode = const Value.absent(),
+    this.loyaltyPoints = const Value.absent(),
+    this.storeCreditBalance = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.taxRegistrationNumber = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.totalSpend = const Value.absent(),
+    this.visitCount = const Value.absent(),
+    this.lastVisitAt = const Value.absent(),
+    this.syncVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalCustomersCompanion.insert({
+    required String id,
+    required String organizationId,
+    required String name,
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.dateOfBirth = const Value.absent(),
+    this.loyaltyCode = const Value.absent(),
+    this.loyaltyPoints = const Value.absent(),
+    this.storeCreditBalance = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.taxRegistrationNumber = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.totalSpend = const Value.absent(),
+    this.visitCount = const Value.absent(),
+    this.lastVisitAt = const Value.absent(),
+    this.syncVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       organizationId = Value(organizationId),
+       name = Value(name);
+  static Insertable<LocalCustomer> custom({
+    Expression<String>? id,
+    Expression<String>? organizationId,
+    Expression<String>? name,
+    Expression<String>? phone,
+    Expression<String>? email,
+    Expression<String>? address,
+    Expression<DateTime>? dateOfBirth,
+    Expression<String>? loyaltyCode,
+    Expression<int>? loyaltyPoints,
+    Expression<double>? storeCreditBalance,
+    Expression<String>? groupId,
+    Expression<String>? taxRegistrationNumber,
+    Expression<String>? notes,
+    Expression<double>? totalSpend,
+    Expression<int>? visitCount,
+    Expression<DateTime>? lastVisitAt,
+    Expression<int>? syncVersion,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (organizationId != null) 'organization_id': organizationId,
+      if (name != null) 'name': name,
+      if (phone != null) 'phone': phone,
+      if (email != null) 'email': email,
+      if (address != null) 'address': address,
+      if (dateOfBirth != null) 'date_of_birth': dateOfBirth,
+      if (loyaltyCode != null) 'loyalty_code': loyaltyCode,
+      if (loyaltyPoints != null) 'loyalty_points': loyaltyPoints,
+      if (storeCreditBalance != null)
+        'store_credit_balance': storeCreditBalance,
+      if (groupId != null) 'group_id': groupId,
+      if (taxRegistrationNumber != null)
+        'tax_registration_number': taxRegistrationNumber,
+      if (notes != null) 'notes': notes,
+      if (totalSpend != null) 'total_spend': totalSpend,
+      if (visitCount != null) 'visit_count': visitCount,
+      if (lastVisitAt != null) 'last_visit_at': lastVisitAt,
+      if (syncVersion != null) 'sync_version': syncVersion,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalCustomersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? organizationId,
+    Value<String>? name,
+    Value<String?>? phone,
+    Value<String?>? email,
+    Value<String?>? address,
+    Value<DateTime?>? dateOfBirth,
+    Value<String?>? loyaltyCode,
+    Value<int>? loyaltyPoints,
+    Value<double>? storeCreditBalance,
+    Value<String?>? groupId,
+    Value<String?>? taxRegistrationNumber,
+    Value<String?>? notes,
+    Value<double>? totalSpend,
+    Value<int>? visitCount,
+    Value<DateTime?>? lastVisitAt,
+    Value<int>? syncVersion,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<int>? rowid,
+  }) {
+    return LocalCustomersCompanion(
+      id: id ?? this.id,
+      organizationId: organizationId ?? this.organizationId,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      address: address ?? this.address,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      loyaltyCode: loyaltyCode ?? this.loyaltyCode,
+      loyaltyPoints: loyaltyPoints ?? this.loyaltyPoints,
+      storeCreditBalance: storeCreditBalance ?? this.storeCreditBalance,
+      groupId: groupId ?? this.groupId,
+      taxRegistrationNumber:
+          taxRegistrationNumber ?? this.taxRegistrationNumber,
+      notes: notes ?? this.notes,
+      totalSpend: totalSpend ?? this.totalSpend,
+      visitCount: visitCount ?? this.visitCount,
+      lastVisitAt: lastVisitAt ?? this.lastVisitAt,
+      syncVersion: syncVersion ?? this.syncVersion,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (organizationId.present) {
+      map['organization_id'] = Variable<String>(organizationId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (dateOfBirth.present) {
+      map['date_of_birth'] = Variable<DateTime>(dateOfBirth.value);
+    }
+    if (loyaltyCode.present) {
+      map['loyalty_code'] = Variable<String>(loyaltyCode.value);
+    }
+    if (loyaltyPoints.present) {
+      map['loyalty_points'] = Variable<int>(loyaltyPoints.value);
+    }
+    if (storeCreditBalance.present) {
+      map['store_credit_balance'] = Variable<double>(storeCreditBalance.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<String>(groupId.value);
+    }
+    if (taxRegistrationNumber.present) {
+      map['tax_registration_number'] = Variable<String>(
+        taxRegistrationNumber.value,
+      );
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (totalSpend.present) {
+      map['total_spend'] = Variable<double>(totalSpend.value);
+    }
+    if (visitCount.present) {
+      map['visit_count'] = Variable<int>(visitCount.value);
+    }
+    if (lastVisitAt.present) {
+      map['last_visit_at'] = Variable<DateTime>(lastVisitAt.value);
+    }
+    if (syncVersion.present) {
+      map['sync_version'] = Variable<int>(syncVersion.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCustomersCompanion(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('dateOfBirth: $dateOfBirth, ')
+          ..write('loyaltyCode: $loyaltyCode, ')
+          ..write('loyaltyPoints: $loyaltyPoints, ')
+          ..write('storeCreditBalance: $storeCreditBalance, ')
+          ..write('groupId: $groupId, ')
+          ..write('taxRegistrationNumber: $taxRegistrationNumber, ')
+          ..write('notes: $notes, ')
+          ..write('totalSpend: $totalSpend, ')
+          ..write('visitCount: $visitCount, ')
+          ..write('lastVisitAt: $lastVisitAt, ')
+          ..write('syncVersion: $syncVersion, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalCustomerGroupsTable extends LocalCustomerGroups
+    with TableInfo<$LocalCustomerGroupsTable, LocalCustomerGroup> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalCustomerGroupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _organizationIdMeta = const VerificationMeta(
+    'organizationId',
+  );
+  @override
+  late final GeneratedColumn<String> organizationId = GeneratedColumn<String>(
+    'organization_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _discountPercentMeta = const VerificationMeta(
+    'discountPercent',
+  );
+  @override
+  late final GeneratedColumn<double> discountPercent = GeneratedColumn<double>(
+    'discount_percent',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    organizationId,
+    name,
+    discountPercent,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_customer_groups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalCustomerGroup> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('organization_id')) {
+      context.handle(
+        _organizationIdMeta,
+        organizationId.isAcceptableOrUnknown(
+          data['organization_id']!,
+          _organizationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_organizationIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('discount_percent')) {
+      context.handle(
+        _discountPercentMeta,
+        discountPercent.isAcceptableOrUnknown(
+          data['discount_percent']!,
+          _discountPercentMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalCustomerGroup map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalCustomerGroup(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      discountPercent: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_percent'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalCustomerGroupsTable createAlias(String alias) {
+    return $LocalCustomerGroupsTable(attachedDatabase, alias);
+  }
+}
+
+class LocalCustomerGroup extends DataClass
+    implements Insertable<LocalCustomerGroup> {
+  final String id;
+  final String organizationId;
+  final String name;
+  final double discountPercent;
+  const LocalCustomerGroup({
+    required this.id,
+    required this.organizationId,
+    required this.name,
+    required this.discountPercent,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['organization_id'] = Variable<String>(organizationId);
+    map['name'] = Variable<String>(name);
+    map['discount_percent'] = Variable<double>(discountPercent);
+    return map;
+  }
+
+  LocalCustomerGroupsCompanion toCompanion(bool nullToAbsent) {
+    return LocalCustomerGroupsCompanion(
+      id: Value(id),
+      organizationId: Value(organizationId),
+      name: Value(name),
+      discountPercent: Value(discountPercent),
+    );
+  }
+
+  factory LocalCustomerGroup.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalCustomerGroup(
+      id: serializer.fromJson<String>(json['id']),
+      organizationId: serializer.fromJson<String>(json['organizationId']),
+      name: serializer.fromJson<String>(json['name']),
+      discountPercent: serializer.fromJson<double>(json['discountPercent']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'organizationId': serializer.toJson<String>(organizationId),
+      'name': serializer.toJson<String>(name),
+      'discountPercent': serializer.toJson<double>(discountPercent),
+    };
+  }
+
+  LocalCustomerGroup copyWith({
+    String? id,
+    String? organizationId,
+    String? name,
+    double? discountPercent,
+  }) => LocalCustomerGroup(
+    id: id ?? this.id,
+    organizationId: organizationId ?? this.organizationId,
+    name: name ?? this.name,
+    discountPercent: discountPercent ?? this.discountPercent,
+  );
+  LocalCustomerGroup copyWithCompanion(LocalCustomerGroupsCompanion data) {
+    return LocalCustomerGroup(
+      id: data.id.present ? data.id.value : this.id,
+      organizationId: data.organizationId.present
+          ? data.organizationId.value
+          : this.organizationId,
+      name: data.name.present ? data.name.value : this.name,
+      discountPercent: data.discountPercent.present
+          ? data.discountPercent.value
+          : this.discountPercent,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCustomerGroup(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('discountPercent: $discountPercent')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, organizationId, name, discountPercent);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalCustomerGroup &&
+          other.id == this.id &&
+          other.organizationId == this.organizationId &&
+          other.name == this.name &&
+          other.discountPercent == this.discountPercent);
+}
+
+class LocalCustomerGroupsCompanion extends UpdateCompanion<LocalCustomerGroup> {
+  final Value<String> id;
+  final Value<String> organizationId;
+  final Value<String> name;
+  final Value<double> discountPercent;
+  final Value<int> rowid;
+  const LocalCustomerGroupsCompanion({
+    this.id = const Value.absent(),
+    this.organizationId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.discountPercent = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalCustomerGroupsCompanion.insert({
+    required String id,
+    required String organizationId,
+    required String name,
+    this.discountPercent = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       organizationId = Value(organizationId),
+       name = Value(name);
+  static Insertable<LocalCustomerGroup> custom({
+    Expression<String>? id,
+    Expression<String>? organizationId,
+    Expression<String>? name,
+    Expression<double>? discountPercent,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (organizationId != null) 'organization_id': organizationId,
+      if (name != null) 'name': name,
+      if (discountPercent != null) 'discount_percent': discountPercent,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalCustomerGroupsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? organizationId,
+    Value<String>? name,
+    Value<double>? discountPercent,
+    Value<int>? rowid,
+  }) {
+    return LocalCustomerGroupsCompanion(
+      id: id ?? this.id,
+      organizationId: organizationId ?? this.organizationId,
+      name: name ?? this.name,
+      discountPercent: discountPercent ?? this.discountPercent,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (organizationId.present) {
+      map['organization_id'] = Variable<String>(organizationId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (discountPercent.present) {
+      map['discount_percent'] = Variable<double>(discountPercent.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalCustomerGroupsCompanion(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('name: $name, ')
+          ..write('discountPercent: $discountPercent, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$PosOfflineDatabase extends GeneratedDatabase {
   _$PosOfflineDatabase(QueryExecutor e) : super(e);
   $PosOfflineDatabaseManager get managers => $PosOfflineDatabaseManager(this);
@@ -9671,6 +11080,9 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
       $LocalLabelTemplatesTable(this);
   late final $LocalLabelPrintHistoryTable localLabelPrintHistory =
       $LocalLabelPrintHistoryTable(this);
+  late final $LocalCustomersTable localCustomers = $LocalCustomersTable(this);
+  late final $LocalCustomerGroupsTable localCustomerGroups =
+      $LocalCustomerGroupsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -9691,6 +11103,8 @@ abstract class _$PosOfflineDatabase extends GeneratedDatabase {
     localCouponCodes,
     localLabelTemplates,
     localLabelPrintHistory,
+    localCustomers,
+    localCustomerGroups,
   ];
 }
 
@@ -14532,6 +15946,703 @@ typedef $$LocalLabelPrintHistoryTableProcessedTableManager =
       LocalLabelPrintHistoryData,
       PrefetchHooks Function()
     >;
+typedef $$LocalCustomersTableCreateCompanionBuilder =
+    LocalCustomersCompanion Function({
+      required String id,
+      required String organizationId,
+      required String name,
+      Value<String?> phone,
+      Value<String?> email,
+      Value<String?> address,
+      Value<DateTime?> dateOfBirth,
+      Value<String?> loyaltyCode,
+      Value<int> loyaltyPoints,
+      Value<double> storeCreditBalance,
+      Value<String?> groupId,
+      Value<String?> taxRegistrationNumber,
+      Value<String?> notes,
+      Value<double> totalSpend,
+      Value<int> visitCount,
+      Value<DateTime?> lastVisitAt,
+      Value<int> syncVersion,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<int> rowid,
+    });
+typedef $$LocalCustomersTableUpdateCompanionBuilder =
+    LocalCustomersCompanion Function({
+      Value<String> id,
+      Value<String> organizationId,
+      Value<String> name,
+      Value<String?> phone,
+      Value<String?> email,
+      Value<String?> address,
+      Value<DateTime?> dateOfBirth,
+      Value<String?> loyaltyCode,
+      Value<int> loyaltyPoints,
+      Value<double> storeCreditBalance,
+      Value<String?> groupId,
+      Value<String?> taxRegistrationNumber,
+      Value<String?> notes,
+      Value<double> totalSpend,
+      Value<int> visitCount,
+      Value<DateTime?> lastVisitAt,
+      Value<int> syncVersion,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<int> rowid,
+    });
+
+class $$LocalCustomersTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomersTable> {
+  $$LocalCustomersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get address => $composableBuilder(
+    column: $table.address,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get loyaltyCode => $composableBuilder(
+    column: $table.loyaltyCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get loyaltyPoints => $composableBuilder(
+    column: $table.loyaltyPoints,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get storeCreditBalance => $composableBuilder(
+    column: $table.storeCreditBalance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get taxRegistrationNumber => $composableBuilder(
+    column: $table.taxRegistrationNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get totalSpend => $composableBuilder(
+    column: $table.totalSpend,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get visitCount => $composableBuilder(
+    column: $table.visitCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastVisitAt => $composableBuilder(
+    column: $table.lastVisitAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalCustomersTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomersTable> {
+  $$LocalCustomersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get address => $composableBuilder(
+    column: $table.address,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get loyaltyCode => $composableBuilder(
+    column: $table.loyaltyCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get loyaltyPoints => $composableBuilder(
+    column: $table.loyaltyPoints,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get storeCreditBalance => $composableBuilder(
+    column: $table.storeCreditBalance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get taxRegistrationNumber => $composableBuilder(
+    column: $table.taxRegistrationNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get totalSpend => $composableBuilder(
+    column: $table.totalSpend,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get visitCount => $composableBuilder(
+    column: $table.visitCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastVisitAt => $composableBuilder(
+    column: $table.lastVisitAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalCustomersTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomersTable> {
+  $$LocalCustomersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get address =>
+      $composableBuilder(column: $table.address, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get loyaltyCode => $composableBuilder(
+    column: $table.loyaltyCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get loyaltyPoints => $composableBuilder(
+    column: $table.loyaltyPoints,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get storeCreditBalance => $composableBuilder(
+    column: $table.storeCreditBalance,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get groupId =>
+      $composableBuilder(column: $table.groupId, builder: (column) => column);
+
+  GeneratedColumn<String> get taxRegistrationNumber => $composableBuilder(
+    column: $table.taxRegistrationNumber,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<double> get totalSpend => $composableBuilder(
+    column: $table.totalSpend,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get visitCount => $composableBuilder(
+    column: $table.visitCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastVisitAt => $composableBuilder(
+    column: $table.lastVisitAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get syncVersion => $composableBuilder(
+    column: $table.syncVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+}
+
+class $$LocalCustomersTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalCustomersTable,
+          LocalCustomer,
+          $$LocalCustomersTableFilterComposer,
+          $$LocalCustomersTableOrderingComposer,
+          $$LocalCustomersTableAnnotationComposer,
+          $$LocalCustomersTableCreateCompanionBuilder,
+          $$LocalCustomersTableUpdateCompanionBuilder,
+          (
+            LocalCustomer,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalCustomersTable,
+              LocalCustomer
+            >,
+          ),
+          LocalCustomer,
+          PrefetchHooks Function()
+        > {
+  $$LocalCustomersTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalCustomersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalCustomersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalCustomersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LocalCustomersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> organizationId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> address = const Value.absent(),
+                Value<DateTime?> dateOfBirth = const Value.absent(),
+                Value<String?> loyaltyCode = const Value.absent(),
+                Value<int> loyaltyPoints = const Value.absent(),
+                Value<double> storeCreditBalance = const Value.absent(),
+                Value<String?> groupId = const Value.absent(),
+                Value<String?> taxRegistrationNumber = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<double> totalSpend = const Value.absent(),
+                Value<int> visitCount = const Value.absent(),
+                Value<DateTime?> lastVisitAt = const Value.absent(),
+                Value<int> syncVersion = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCustomersCompanion(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                phone: phone,
+                email: email,
+                address: address,
+                dateOfBirth: dateOfBirth,
+                loyaltyCode: loyaltyCode,
+                loyaltyPoints: loyaltyPoints,
+                storeCreditBalance: storeCreditBalance,
+                groupId: groupId,
+                taxRegistrationNumber: taxRegistrationNumber,
+                notes: notes,
+                totalSpend: totalSpend,
+                visitCount: visitCount,
+                lastVisitAt: lastVisitAt,
+                syncVersion: syncVersion,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String organizationId,
+                required String name,
+                Value<String?> phone = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> address = const Value.absent(),
+                Value<DateTime?> dateOfBirth = const Value.absent(),
+                Value<String?> loyaltyCode = const Value.absent(),
+                Value<int> loyaltyPoints = const Value.absent(),
+                Value<double> storeCreditBalance = const Value.absent(),
+                Value<String?> groupId = const Value.absent(),
+                Value<String?> taxRegistrationNumber = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<double> totalSpend = const Value.absent(),
+                Value<int> visitCount = const Value.absent(),
+                Value<DateTime?> lastVisitAt = const Value.absent(),
+                Value<int> syncVersion = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCustomersCompanion.insert(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                phone: phone,
+                email: email,
+                address: address,
+                dateOfBirth: dateOfBirth,
+                loyaltyCode: loyaltyCode,
+                loyaltyPoints: loyaltyPoints,
+                storeCreditBalance: storeCreditBalance,
+                groupId: groupId,
+                taxRegistrationNumber: taxRegistrationNumber,
+                notes: notes,
+                totalSpend: totalSpend,
+                visitCount: visitCount,
+                lastVisitAt: lastVisitAt,
+                syncVersion: syncVersion,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalCustomersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalCustomersTable,
+      LocalCustomer,
+      $$LocalCustomersTableFilterComposer,
+      $$LocalCustomersTableOrderingComposer,
+      $$LocalCustomersTableAnnotationComposer,
+      $$LocalCustomersTableCreateCompanionBuilder,
+      $$LocalCustomersTableUpdateCompanionBuilder,
+      (
+        LocalCustomer,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalCustomersTable,
+          LocalCustomer
+        >,
+      ),
+      LocalCustomer,
+      PrefetchHooks Function()
+    >;
+typedef $$LocalCustomerGroupsTableCreateCompanionBuilder =
+    LocalCustomerGroupsCompanion Function({
+      required String id,
+      required String organizationId,
+      required String name,
+      Value<double> discountPercent,
+      Value<int> rowid,
+    });
+typedef $$LocalCustomerGroupsTableUpdateCompanionBuilder =
+    LocalCustomerGroupsCompanion Function({
+      Value<String> id,
+      Value<String> organizationId,
+      Value<String> name,
+      Value<double> discountPercent,
+      Value<int> rowid,
+    });
+
+class $$LocalCustomerGroupsTableFilterComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomerGroupsTable> {
+  $$LocalCustomerGroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountPercent => $composableBuilder(
+    column: $table.discountPercent,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalCustomerGroupsTableOrderingComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomerGroupsTable> {
+  $$LocalCustomerGroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountPercent => $composableBuilder(
+    column: $table.discountPercent,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalCustomerGroupsTableAnnotationComposer
+    extends Composer<_$PosOfflineDatabase, $LocalCustomerGroupsTable> {
+  $$LocalCustomerGroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get discountPercent => $composableBuilder(
+    column: $table.discountPercent,
+    builder: (column) => column,
+  );
+}
+
+class $$LocalCustomerGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$PosOfflineDatabase,
+          $LocalCustomerGroupsTable,
+          LocalCustomerGroup,
+          $$LocalCustomerGroupsTableFilterComposer,
+          $$LocalCustomerGroupsTableOrderingComposer,
+          $$LocalCustomerGroupsTableAnnotationComposer,
+          $$LocalCustomerGroupsTableCreateCompanionBuilder,
+          $$LocalCustomerGroupsTableUpdateCompanionBuilder,
+          (
+            LocalCustomerGroup,
+            BaseReferences<
+              _$PosOfflineDatabase,
+              $LocalCustomerGroupsTable,
+              LocalCustomerGroup
+            >,
+          ),
+          LocalCustomerGroup,
+          PrefetchHooks Function()
+        > {
+  $$LocalCustomerGroupsTableTableManager(
+    _$PosOfflineDatabase db,
+    $LocalCustomerGroupsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalCustomerGroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalCustomerGroupsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$LocalCustomerGroupsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> organizationId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> discountPercent = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCustomerGroupsCompanion(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                discountPercent: discountPercent,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String organizationId,
+                required String name,
+                Value<double> discountPercent = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalCustomerGroupsCompanion.insert(
+                id: id,
+                organizationId: organizationId,
+                name: name,
+                discountPercent: discountPercent,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalCustomerGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$PosOfflineDatabase,
+      $LocalCustomerGroupsTable,
+      LocalCustomerGroup,
+      $$LocalCustomerGroupsTableFilterComposer,
+      $$LocalCustomerGroupsTableOrderingComposer,
+      $$LocalCustomerGroupsTableAnnotationComposer,
+      $$LocalCustomerGroupsTableCreateCompanionBuilder,
+      $$LocalCustomerGroupsTableUpdateCompanionBuilder,
+      (
+        LocalCustomerGroup,
+        BaseReferences<
+          _$PosOfflineDatabase,
+          $LocalCustomerGroupsTable,
+          LocalCustomerGroup
+        >,
+      ),
+      LocalCustomerGroup,
+      PrefetchHooks Function()
+    >;
 
 class $PosOfflineDatabaseManager {
   final _$PosOfflineDatabase _db;
@@ -14569,4 +16680,8 @@ class $PosOfflineDatabaseManager {
         _db,
         _db.localLabelPrintHistory,
       );
+  $$LocalCustomersTableTableManager get localCustomers =>
+      $$LocalCustomersTableTableManager(_db, _db.localCustomers);
+  $$LocalCustomerGroupsTableTableManager get localCustomerGroups =>
+      $$LocalCustomerGroupsTableTableManager(_db, _db.localCustomerGroups);
 }

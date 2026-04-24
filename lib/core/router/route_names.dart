@@ -58,6 +58,11 @@ class Routes {
 
   // Customers
   static const String customers = '/customers';
+  static const String customerCreate = '/customers/create';
+  static const String customerEdit = '/customers/:id/edit';
+  static const String customerDetail = '/customers/:id';
+  static const String customerGroups = '/customers/groups';
+  static const String loyaltyConfig = '/settings/loyalty';
 
   // Labels
   static const String labels = '/labels';

@@ -16734,4 +16734,179 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get posKdsTicketSent => 'Sent to kitchen';
+
+  @override
+  String get customersAdd => 'Add Customer';
+
+  @override
+  String get customersEdit => 'Edit Customer';
+
+  @override
+  String get customersDetail => 'Customer Profile';
+
+  @override
+  String get customersName => 'Name';
+
+  @override
+  String get customersPhone => 'Phone';
+
+  @override
+  String get customersEmail => 'Email';
+
+  @override
+  String get customersAddress => 'Address';
+
+  @override
+  String get customersDateOfBirth => 'Date of Birth';
+
+  @override
+  String get customersGroup => 'Group';
+
+  @override
+  String get customersTaxNumber => 'Tax Registration #';
+
+  @override
+  String get customersNotes => 'Notes';
+
+  @override
+  String get customersLoyaltyCode => 'Loyalty Code';
+
+  @override
+  String get customersLoyaltyPoints => 'Loyalty Points';
+
+  @override
+  String get customersStoreCredit => 'Store Credit';
+
+  @override
+  String get customersTotalSpend => 'Total Spend';
+
+  @override
+  String get customersVisitCount => 'Visits';
+
+  @override
+  String get customersLastVisit => 'Last Visit';
+
+  @override
+  String get customersDuplicatePhone =>
+      'A customer with this phone already exists';
+
+  @override
+  String get customersDeleteConfirm => 'Delete this customer?';
+
+  @override
+  String get customersDeleted => 'Customer deleted';
+
+  @override
+  String get customersSaved => 'Customer saved';
+
+  @override
+  String get customersBasicInfo => 'Basic Information';
+
+  @override
+  String get customersGroupAndB2B => 'Group & B2B';
+
+  @override
+  String get customersGroupsTitle => 'Customer Groups';
+
+  @override
+  String get customersGroupName => 'Group Name';
+
+  @override
+  String get customersGroupDiscount => 'Discount %';
+
+  @override
+  String get customersGroupAdd => 'Add Group';
+
+  @override
+  String get customersAdjustLoyalty => 'Adjust Loyalty';
+
+  @override
+  String get customersRedeemPoints => 'Redeem Points';
+
+  @override
+  String get customersTopUpCredit => 'Top Up Credit';
+
+  @override
+  String get customersAdjustCredit => 'Adjust Credit';
+
+  @override
+  String get customersSendReceipt => 'Send Receipt';
+
+  @override
+  String get customersReceiptSent => 'Receipt sent';
+
+  @override
+  String get customersReceiptViaEmail => 'Email';
+
+  @override
+  String get customersReceiptViaWhatsapp => 'WhatsApp';
+
+  @override
+  String get customersReceiptViaSms => 'SMS';
+
+  @override
+  String get customersLoyaltyConfig => 'Loyalty Configuration';
+
+  @override
+  String get customersPointsPerSar => 'Points per SAR earned';
+
+  @override
+  String get customersSarPerPoint => 'SAR value per point redeemed';
+
+  @override
+  String get customersMinRedemption => 'Minimum points to redeem';
+
+  @override
+  String get customersPointsExpiry => 'Points expire after (months)';
+
+  @override
+  String get customersLoyaltyEnabled => 'Loyalty Active';
+
+  @override
+  String get customersLookupTitle => 'Find Customer';
+
+  @override
+  String get customersQuickAdd => 'Quick Add';
+
+  @override
+  String get customersNoMatches => 'No matching customers';
+
+  @override
+  String get customersSync => 'Sync';
+
+  @override
+  String get customersSynced => 'Customers synced';
+
+  @override
+  String get customersHistoryTab => 'Purchase History';
+
+  @override
+  String get customersLoyaltyTab => 'Loyalty Log';
+
+  @override
+  String get customersCreditTab => 'Store Credit Log';
+
+  @override
+  String get customersAmount => 'Amount';
+
+  @override
+  String get customersBalance => 'Balance';
+
+  @override
+  String get customersTransactionType => 'Type';
+
+  @override
+  String get customersDate => 'Date';
+
+  @override
+  String get customersChannel => 'Channel';
+
+  @override
+  String get customersDestination => 'Destination';
+
+  @override
+  String get customersPromptReceipt => 'Send digital receipt?';
+
+  @override
+  String get customersChooseChannel => 'Choose a channel to send the receipt';
 }

@@ -44,6 +44,10 @@ import 'package:wameedpos/features/catalog/pages/product_form_page.dart';
 import 'package:wameedpos/features/catalog/pages/product_list_page.dart';
 import 'package:wameedpos/features/catalog/pages/supplier_list_page.dart';
 import 'package:wameedpos/features/customers/pages/customer_list_page.dart';
+import 'package:wameedpos/features/customers/pages/customer_form_page.dart';
+import 'package:wameedpos/features/customers/pages/customer_detail_page.dart';
+import 'package:wameedpos/features/customers/pages/customer_groups_page.dart';
+import 'package:wameedpos/features/customers/pages/loyalty_config_page.dart';
 import 'package:wameedpos/features/inventory/pages/goods_receipt_form_page.dart';
 import 'package:wameedpos/features/inventory/pages/goods_receipts_page.dart';
 import 'package:wameedpos/features/inventory/pages/inventory_page.dart';
@@ -491,6 +495,31 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Customers ────────────────────────────────
           GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
+          GoRoute(
+            path: Routes.customerCreate,
+            name: 'customerCreate',
+            builder: (context, state) => const CustomerFormPage(),
+          ),
+          GoRoute(
+            path: Routes.customerGroups,
+            name: 'customerGroups',
+            builder: (context, state) => const CustomerGroupsPage(),
+          ),
+          GoRoute(
+            path: Routes.loyaltyConfig,
+            name: 'loyaltyConfig',
+            builder: (context, state) => const LoyaltyConfigPage(),
+          ),
+          GoRoute(
+            path: Routes.customerEdit,
+            name: 'customerEdit',
+            builder: (context, state) => CustomerFormPage(customerId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: Routes.customerDetail,
+            name: 'customerDetail',
+            builder: (context, state) => CustomerDetailPage(customerId: state.pathParameters['id']!),
+          ),
 
           // ─── Labels ───────────────────────────────────
           GoRoute(path: Routes.labels, name: 'labels', builder: (context, state) => const LabelListPage()),

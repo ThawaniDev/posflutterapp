@@ -1,5 +1,8 @@
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/models/customer_group.dart';
+import 'package:wameedpos/features/customers/models/loyalty_config.dart';
+import 'package:wameedpos/features/customers/models/loyalty_transaction.dart';
+import 'package:wameedpos/features/customers/models/store_credit_transaction.dart';
 
 // ─── Customers State ────────────────────────────────────────────
 
@@ -116,5 +119,161 @@ class CustomerDetailSaved extends CustomerDetailState {
 
 class CustomerDetailError extends CustomerDetailState {
   const CustomerDetailError({required this.message});
+  final String message;
+}
+
+// ─── Customer Search State ──────────────────────────────────────
+
+sealed class CustomerSearchState {
+  const CustomerSearchState();
+}
+
+class CustomerSearchIdle extends CustomerSearchState {
+  const CustomerSearchIdle();
+}
+
+class CustomerSearchSearching extends CustomerSearchState {
+  const CustomerSearchSearching();
+}
+
+class CustomerSearchResults extends CustomerSearchState {
+  const CustomerSearchResults({required this.query, required this.results});
+  final String query;
+  final List<Customer> results;
+}
+
+class CustomerSearchError extends CustomerSearchState {
+  const CustomerSearchError({required this.message});
+  final String message;
+}
+
+// ─── Customer Sync State ────────────────────────────────────────
+
+sealed class CustomerSyncState {
+  const CustomerSyncState();
+}
+
+class CustomerSyncIdle extends CustomerSyncState {
+  const CustomerSyncIdle({this.lastSyncAt, this.lastMerged});
+  final DateTime? lastSyncAt;
+  final int? lastMerged;
+}
+
+class CustomerSyncRunning extends CustomerSyncState {
+  const CustomerSyncRunning();
+}
+
+class CustomerSyncFailure extends CustomerSyncState {
+  const CustomerSyncFailure({required this.message});
+  final String message;
+}
+
+// ─── Loyalty Config State ───────────────────────────────────────
+
+sealed class LoyaltyConfigState {
+  const LoyaltyConfigState();
+}
+
+class LoyaltyConfigInitial extends LoyaltyConfigState {
+  const LoyaltyConfigInitial();
+}
+
+class LoyaltyConfigLoading extends LoyaltyConfigState {
+  const LoyaltyConfigLoading();
+}
+
+class LoyaltyConfigLoaded extends LoyaltyConfigState {
+  const LoyaltyConfigLoaded({required this.config});
+  final LoyaltyConfig? config;
+}
+
+class LoyaltyConfigSaving extends LoyaltyConfigState {
+  const LoyaltyConfigSaving();
+}
+
+class LoyaltyConfigError extends LoyaltyConfigState {
+  const LoyaltyConfigError({required this.message});
+  final String message;
+}
+
+// ─── Loyalty Log State (per customer) ───────────────────────────
+
+sealed class LoyaltyLogState {
+  const LoyaltyLogState();
+}
+
+class LoyaltyLogInitial extends LoyaltyLogState {
+  const LoyaltyLogInitial();
+}
+
+class LoyaltyLogLoading extends LoyaltyLogState {
+  const LoyaltyLogLoading();
+}
+
+class LoyaltyLogLoaded extends LoyaltyLogState {
+  const LoyaltyLogLoaded({required this.transactions, required this.balance});
+  final List<LoyaltyTransaction> transactions;
+  final int balance;
+}
+
+class LoyaltyLogError extends LoyaltyLogState {
+  const LoyaltyLogError({required this.message});
+  final String message;
+}
+
+// ─── Store Credit Log State (per customer) ──────────────────────
+
+sealed class StoreCreditLogState {
+  const StoreCreditLogState();
+}
+
+class StoreCreditLogInitial extends StoreCreditLogState {
+  const StoreCreditLogInitial();
+}
+
+class StoreCreditLogLoading extends StoreCreditLogState {
+  const StoreCreditLogLoading();
+}
+
+class StoreCreditLogLoaded extends StoreCreditLogState {
+  const StoreCreditLogLoaded({required this.transactions, required this.balance});
+  final List<StoreCreditTransaction> transactions;
+  final double balance;
+}
+
+class StoreCreditLogError extends StoreCreditLogState {
+  const StoreCreditLogError({required this.message});
+  final String message;
+}
+
+// ─── Customer Orders State (per customer) ───────────────────────
+
+sealed class CustomerOrdersState {
+  const CustomerOrdersState();
+}
+
+class CustomerOrdersInitial extends CustomerOrdersState {
+  const CustomerOrdersInitial();
+}
+
+class CustomerOrdersLoading extends CustomerOrdersState {
+  const CustomerOrdersLoading();
+}
+
+class CustomerOrdersLoaded extends CustomerOrdersState {
+  const CustomerOrdersLoaded({
+    required this.orders,
+    required this.total,
+    required this.currentPage,
+    required this.lastPage,
+  });
+  final List<Map<String, dynamic>> orders;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+}
+
+class CustomerOrdersError extends CustomerOrdersState {
+  const CustomerOrdersError({required this.message});
   final String message;
 }

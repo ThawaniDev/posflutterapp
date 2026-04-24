@@ -17,6 +17,8 @@ import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart
 import 'package:wameedpos/features/promotions/services/promotion_evaluator.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
 
 /// A payment entry: method + amount. Supports split payments.
 class _PaymentLeg {
@@ -288,6 +290,8 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
     final saleState = ref.read(saleProvider);
     if (saleState is SaleCompleted) {
+      // Capture customer BEFORE clearing the cart so the receipt prompt can use it.
+      final customerForReceipt = ref.read(cartProvider).customer;
       ref.read(cartProvider.notifier).clear();
 
       final settings = ref.read(currentStoreSettingsProvider);
@@ -323,14 +327,14 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
       if (mounted) {
         Navigator.pop(context);
-        _showReceiptDialog(saleState);
+        _showReceiptDialog(saleState, customerForReceipt);
       }
     } else if (saleState is SaleError) {
       setState(() => _error = saleState.message);
     }
   }
 
-  void _showReceiptDialog(SaleCompleted state) {
+  void _showReceiptDialog(SaleCompleted state, Customer? customer) {
     showDialog(
       context: context,
       builder: (ctx) => Dialog(
@@ -364,6 +368,72 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   Text(
                     AppLocalizations.of(context)!.posChangeAmount(state.changeGiven!.toStringAsFixed(2)),
                     style: AppTypography.bodyMedium.copyWith(color: AppColors.success),
+                  ),
+                ],
+                if (customer != null) ...[
+                  AppSpacing.gapH16,
+                  Text(
+                    AppLocalizations.of(context)!.customersSendReceipt,
+                    style: AppTypography.bodyMedium,
+                  ),
+                  AppSpacing.gapH8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if ((customer.email ?? '').isNotEmpty)
+                        IconButton(
+                          tooltip: AppLocalizations.of(context)!.customersReceiptViaEmail,
+                          icon: const Icon(Icons.email_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref.read(digitalReceiptServiceProvider).sendEmail(
+                                    customerId: customer.id,
+                                    orderId: state.transactionId,
+                                    destination: customer.email,
+                                  );
+                              if (ctx.mounted) {
+                                showPosSuccessSnackbar(ctx, AppLocalizations.of(ctx)!.customersReceiptSent);
+                              }
+                            } catch (e) {
+                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
+                            }
+                          },
+                        ),
+                      if (customer.phone.isNotEmpty)
+                        IconButton(
+                          tooltip: AppLocalizations.of(context)!.customersReceiptViaWhatsapp,
+                          icon: const Icon(Icons.chat_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref.read(digitalReceiptServiceProvider).sendWhatsApp(
+                                    customerId: customer.id,
+                                    orderId: state.transactionId,
+                                    phone: customer.phone,
+                                    receiptUrl: 'Receipt #${state.transactionNumber}',
+                                  );
+                            } catch (e) {
+                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
+                            }
+                          },
+                        ),
+                      if (customer.phone.isNotEmpty)
+                        IconButton(
+                          tooltip: AppLocalizations.of(context)!.customersReceiptViaSms,
+                          icon: const Icon(Icons.sms_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref.read(digitalReceiptServiceProvider).sendSms(
+                                    customerId: customer.id,
+                                    orderId: state.transactionId,
+                                    phone: customer.phone,
+                                    body: 'Receipt #${state.transactionNumber}',
+                                  );
+                            } catch (e) {
+                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
+                            }
+                          },
+                        ),
+                    ],
                   ),
                 ],
                 AppSpacing.gapH24,

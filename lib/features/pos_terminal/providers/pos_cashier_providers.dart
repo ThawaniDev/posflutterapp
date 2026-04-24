@@ -302,6 +302,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
           .where((p) => p['method'] == 'cash' && p['change_given'] != null)
           .fold<double>(0, (sum, p) => sum + (double.tryParse(p['change_given'].toString()) ?? 0.0));
       state = SaleCompleted(
+        transactionId: transaction.id,
         transactionNumber: transaction.transactionNumber,
         totalAmount: transaction.totalAmount,
         changeGiven: change > 0 ? change : null,
@@ -341,7 +342,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
         'payments': payments,
       };
       final transaction = await _repo.returnTransaction(data);
-      state = SaleCompleted(transactionNumber: transaction.transactionNumber, totalAmount: transaction.totalAmount);
+      state = SaleCompleted(transactionId: transaction.id, transactionNumber: transaction.transactionNumber, totalAmount: transaction.totalAmount);
       return true;
     } on DioException catch (e) {
       state = SaleError(message: _extractError(e));

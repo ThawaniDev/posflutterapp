@@ -264,6 +264,42 @@ class LocalLabelPrintHistory extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Cached customer rows (delta-synced from `/pos/customers/sync`).
+class LocalCustomers extends Table {
+  TextColumn get id => text()();
+  TextColumn get organizationId => text()();
+  TextColumn get name => text()();
+  TextColumn get phone => text().nullable()();
+  TextColumn get email => text().nullable()();
+  TextColumn get address => text().nullable()();
+  DateTimeColumn get dateOfBirth => dateTime().nullable()();
+  TextColumn get loyaltyCode => text().nullable()();
+  IntColumn get loyaltyPoints => integer().withDefault(const Constant(0))();
+  RealColumn get storeCreditBalance => real().withDefault(const Constant(0))();
+  TextColumn get groupId => text().nullable()();
+  TextColumn get taxRegistrationNumber => text().nullable()();
+  TextColumn get notes => text().nullable()();
+  RealColumn get totalSpend => real().withDefault(const Constant(0))();
+  IntColumn get visitCount => integer().withDefault(const Constant(0))();
+  DateTimeColumn get lastVisitAt => dateTime().nullable()();
+  IntColumn get syncVersion => integer().withDefault(const Constant(1))();
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalCustomerGroups extends Table {
+  TextColumn get id => text()();
+  TextColumn get organizationId => text()();
+  TextColumn get name => text()();
+  RealColumn get discountPercent => real().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     LocalProducts,
@@ -281,6 +317,8 @@ class LocalLabelPrintHistory extends Table {
     LocalCouponCodes,
     LocalLabelTemplates,
     LocalLabelPrintHistory,
+    LocalCustomers,
+    LocalCustomerGroups,
   ],
 )
 class PosOfflineDatabase extends _$PosOfflineDatabase {
@@ -289,7 +327,7 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
   PosOfflineDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -310,6 +348,10 @@ class PosOfflineDatabase extends _$PosOfflineDatabase {
       if (from < 4) {
         await m.createTable(localLabelTemplates);
         await m.createTable(localLabelPrintHistory);
+      }
+      if (from < 5) {
+        await m.createTable(localCustomers);
+        await m.createTable(localCustomerGroups);
       }
     },
   );

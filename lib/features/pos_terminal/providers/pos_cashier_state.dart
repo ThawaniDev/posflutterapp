@@ -184,7 +184,8 @@ class SaleProcessing extends SaleState {
 }
 
 class SaleCompleted extends SaleState {
-  const SaleCompleted({required this.transactionNumber, required this.totalAmount, this.changeGiven});
+  const SaleCompleted({required this.transactionId, required this.transactionNumber, required this.totalAmount, this.changeGiven});
+  final String transactionId;
   final String transactionNumber;
   final double totalAmount;
   final double? changeGiven;

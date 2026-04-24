@@ -31423,6 +31423,354 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sent to kitchen'**
   String get posKdsTicketSent;
+
+  /// No description provided for @customersAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Customer'**
+  String get customersAdd;
+
+  /// No description provided for @customersEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer'**
+  String get customersEdit;
+
+  /// No description provided for @customersDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Profile'**
+  String get customersDetail;
+
+  /// No description provided for @customersName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get customersName;
+
+  /// No description provided for @customersPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get customersPhone;
+
+  /// No description provided for @customersEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get customersEmail;
+
+  /// No description provided for @customersAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customersAddress;
+
+  /// No description provided for @customersDateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get customersDateOfBirth;
+
+  /// No description provided for @customersGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get customersGroup;
+
+  /// No description provided for @customersTaxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Registration #'**
+  String get customersTaxNumber;
+
+  /// No description provided for @customersNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get customersNotes;
+
+  /// No description provided for @customersLoyaltyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Code'**
+  String get customersLoyaltyCode;
+
+  /// No description provided for @customersLoyaltyPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Points'**
+  String get customersLoyaltyPoints;
+
+  /// No description provided for @customersStoreCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Credit'**
+  String get customersStoreCredit;
+
+  /// No description provided for @customersTotalSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Spend'**
+  String get customersTotalSpend;
+
+  /// No description provided for @customersVisitCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Visits'**
+  String get customersVisitCount;
+
+  /// No description provided for @customersLastVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Visit'**
+  String get customersLastVisit;
+
+  /// No description provided for @customersDuplicatePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'A customer with this phone already exists'**
+  String get customersDuplicatePhone;
+
+  /// No description provided for @customersDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this customer?'**
+  String get customersDeleteConfirm;
+
+  /// No description provided for @customersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer deleted'**
+  String get customersDeleted;
+
+  /// No description provided for @customersSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer saved'**
+  String get customersSaved;
+
+  /// No description provided for @customersBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get customersBasicInfo;
+
+  /// No description provided for @customersGroupAndB2B.
+  ///
+  /// In en, this message translates to:
+  /// **'Group & B2B'**
+  String get customersGroupAndB2B;
+
+  /// No description provided for @customersGroupsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Groups'**
+  String get customersGroupsTitle;
+
+  /// No description provided for @customersGroupName.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Name'**
+  String get customersGroupName;
+
+  /// No description provided for @customersGroupDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount %'**
+  String get customersGroupDiscount;
+
+  /// No description provided for @customersGroupAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Group'**
+  String get customersGroupAdd;
+
+  /// No description provided for @customersAdjustLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Loyalty'**
+  String get customersAdjustLoyalty;
+
+  /// No description provided for @customersRedeemPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem Points'**
+  String get customersRedeemPoints;
+
+  /// No description provided for @customersTopUpCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up Credit'**
+  String get customersTopUpCredit;
+
+  /// No description provided for @customersAdjustCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Credit'**
+  String get customersAdjustCredit;
+
+  /// No description provided for @customersSendReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Receipt'**
+  String get customersSendReceipt;
+
+  /// No description provided for @customersReceiptSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt sent'**
+  String get customersReceiptSent;
+
+  /// No description provided for @customersReceiptViaEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get customersReceiptViaEmail;
+
+  /// No description provided for @customersReceiptViaWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get customersReceiptViaWhatsapp;
+
+  /// No description provided for @customersReceiptViaSms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get customersReceiptViaSms;
+
+  /// No description provided for @customersLoyaltyConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Configuration'**
+  String get customersLoyaltyConfig;
+
+  /// No description provided for @customersPointsPerSar.
+  ///
+  /// In en, this message translates to:
+  /// **'Points per SAR earned'**
+  String get customersPointsPerSar;
+
+  /// No description provided for @customersSarPerPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'SAR value per point redeemed'**
+  String get customersSarPerPoint;
+
+  /// No description provided for @customersMinRedemption.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum points to redeem'**
+  String get customersMinRedemption;
+
+  /// No description provided for @customersPointsExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Points expire after (months)'**
+  String get customersPointsExpiry;
+
+  /// No description provided for @customersLoyaltyEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Active'**
+  String get customersLoyaltyEnabled;
+
+  /// No description provided for @customersLookupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Customer'**
+  String get customersLookupTitle;
+
+  /// No description provided for @customersQuickAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Add'**
+  String get customersQuickAdd;
+
+  /// No description provided for @customersNoMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching customers'**
+  String get customersNoMatches;
+
+  /// No description provided for @customersSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync'**
+  String get customersSync;
+
+  /// No description provided for @customersSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers synced'**
+  String get customersSynced;
+
+  /// No description provided for @customersHistoryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase History'**
+  String get customersHistoryTab;
+
+  /// No description provided for @customersLoyaltyTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Log'**
+  String get customersLoyaltyTab;
+
+  /// No description provided for @customersCreditTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Credit Log'**
+  String get customersCreditTab;
+
+  /// No description provided for @customersAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get customersAmount;
+
+  /// No description provided for @customersBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get customersBalance;
+
+  /// No description provided for @customersTransactionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get customersTransactionType;
+
+  /// No description provided for @customersDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get customersDate;
+
+  /// No description provided for @customersChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get customersChannel;
+
+  /// No description provided for @customersDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get customersDestination;
+
+  /// No description provided for @customersPromptReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Send digital receipt?'**
+  String get customersPromptReceipt;
+
+  /// No description provided for @customersChooseChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a channel to send the receipt'**
+  String get customersChooseChannel;
 }
 
 class _AppLocalizationsDelegate

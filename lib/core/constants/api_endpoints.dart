@@ -52,8 +52,19 @@ class ApiEndpoints {
 
   // Customers
   static const String customers = '/customers';
+  static const String customersSearch = '/customers/search';
+  static const String customersSync = '/pos/customers/sync';
   static const String customerGroups = '/customers/groups/list';
+  static const String customerGroupsCrud = '/customers/groups';
   static const String loyalty = '/customers/loyalty';
+  static String customerOrders(String id) => '/customers/$id/orders';
+  static String customerReceipt(String id) => '/customers/$id/receipt';
+  static String customerLoyaltyLog(String id) => '/customers/$id/loyalty';
+  static String customerLoyaltyAdjust(String id) => '/customers/$id/loyalty/adjust';
+  static String customerLoyaltyRedeem(String id) => '/customers/$id/loyalty/redeem';
+  static String customerCreditLog(String id) => '/customers/$id/store-credit';
+  static String customerCreditTopUp(String id) => '/customers/$id/store-credit/top-up';
+  static String customerCreditAdjust(String id) => '/customers/$id/store-credit/adjust';
 
   // Labels
   static const String labelTemplates = '/labels/templates';
