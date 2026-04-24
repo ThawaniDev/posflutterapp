@@ -40,19 +40,13 @@ void main() {
   });
 
   test('templates are scoped by organisation', () async {
-    await dao.upsertTemplates([
-      sample(id: 'a', orgId: 'org-1'),
-      sample(id: 'b', orgId: 'org-2'),
-    ]);
+    await dao.upsertTemplates([sample(id: 'a', orgId: 'org-1'), sample(id: 'b', orgId: 'org-2')]);
     expect(await dao.listTemplates('org-1'), hasLength(1));
     expect(await dao.listTemplates('org-2'), hasLength(1));
   });
 
   test('getDefaultTemplate returns the flagged template only', () async {
-    await dao.upsertTemplates([
-      sample(id: 'a'),
-      sample(id: 'b', isDefault: true),
-    ]);
+    await dao.upsertTemplates([sample(id: 'a'), sample(id: 'b', isDefault: true)]);
     final def = await dao.getDefaultTemplate('org-1');
     expect(def, isNotNull);
     expect(def!.id, 'b');
@@ -62,10 +56,9 @@ void main() {
     await dao.recordLocalPrint(id: 'p1', productCount: 1, totalLabels: 1);
     await dao.recordLocalPrint(id: 'p2', productCount: 1, totalLabels: 1);
     // Manually age p1 by 100 days.
-    await db.customStatement(
-      "UPDATE local_label_print_history SET printed_at = ? WHERE id = 'p1'",
-      [DateTime.now().subtract(const Duration(days: 100)).millisecondsSinceEpoch ~/ 1000],
-    );
+    await db.customStatement("UPDATE local_label_print_history SET printed_at = ? WHERE id = 'p1'", [
+      DateTime.now().subtract(const Duration(days: 100)).millisecondsSinceEpoch ~/ 1000,
+    ]);
     final removed = await dao.pruneOldHistory();
     expect(removed, 1);
   });

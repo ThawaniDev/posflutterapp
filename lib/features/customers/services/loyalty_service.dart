@@ -19,8 +19,7 @@ class LoyaltyService {
     required String type, // ManualAdjustment | Earn | Redeem | VoidReversal
     String? notes,
     String? orderId,
-  }) =>
-      _repo.adjustLoyalty(customerId, points: points, type: type, notes: notes, orderId: orderId);
+  }) => _repo.adjustLoyalty(customerId, points: points, type: type, notes: notes, orderId: orderId);
 
   Future<LoyaltyTransaction> redeem(String customerId, {required int points, String? orderId}) =>
       _repo.redeemLoyalty(customerId, points: points, orderId: orderId);

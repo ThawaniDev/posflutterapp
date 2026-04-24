@@ -27,17 +27,13 @@ class ZatcaDevice {
       id: json['id'] as String,
       storeId: json['store_id'] as String? ?? '',
       deviceUuid: json['device_uuid'] as String,
-      status: ZatcaDeviceStatus.fromValue(
-          (json['status'] as String?) ?? 'pending'),
+      status: ZatcaDeviceStatus.fromValue((json['status'] as String?) ?? 'pending'),
       environment: (json['environment'] as String?) ?? 'sandbox',
       isTampered: (json['is_tampered'] as bool?) ?? false,
-      currentIcv:
-          int.tryParse((json['current_icv'] ?? 0).toString()) ?? 0,
+      currentIcv: int.tryParse((json['current_icv'] ?? 0).toString()) ?? 0,
       hardwareSerial: json['hardware_serial'] as String?,
       activationCode: json['activation_code'] as String?,
-      activatedAt: json['activated_at'] != null
-          ? DateTime.tryParse(json['activated_at'] as String)
-          : null,
+      activatedAt: json['activated_at'] != null ? DateTime.tryParse(json['activated_at'] as String) : null,
       tamperReason: json['tamper_reason'] as String?,
       currentPih: json['current_pih'] as String?,
       certificateId: json['certificate_id'] as String?,
@@ -59,20 +55,20 @@ class ZatcaDevice {
   final String? certificateId;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'store_id': storeId,
-        'device_uuid': deviceUuid,
-        'status': status.value,
-        'environment': environment,
-        'is_tampered': isTampered,
-        'current_icv': currentIcv,
-        'hardware_serial': hardwareSerial,
-        'activation_code': activationCode,
-        'activated_at': activatedAt?.toIso8601String(),
-        'tamper_reason': tamperReason,
-        'current_pih': currentPih,
-        'certificate_id': certificateId,
-      };
+    'id': id,
+    'store_id': storeId,
+    'device_uuid': deviceUuid,
+    'status': status.value,
+    'environment': environment,
+    'is_tampered': isTampered,
+    'current_icv': currentIcv,
+    'hardware_serial': hardwareSerial,
+    'activation_code': activationCode,
+    'activated_at': activatedAt?.toIso8601String(),
+    'tamper_reason': tamperReason,
+    'current_pih': currentPih,
+    'certificate_id': certificateId,
+  };
 
   ZatcaDevice copyWith({
     ZatcaDeviceStatus? status,
@@ -101,8 +97,7 @@ class ZatcaDevice {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) || (other is ZatcaDevice && other.id == id);
+  bool operator ==(Object other) => identical(this, other) || (other is ZatcaDevice && other.id == id);
 
   @override
   int get hashCode => id.hashCode;

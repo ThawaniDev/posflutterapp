@@ -9,10 +9,8 @@ void main() {
     test('fromValue parses all variants', () {
       expect(ZatcaDeviceStatus.fromValue('pending'), ZatcaDeviceStatus.pending);
       expect(ZatcaDeviceStatus.fromValue('active'), ZatcaDeviceStatus.active);
-      expect(ZatcaDeviceStatus.fromValue('suspended'),
-          ZatcaDeviceStatus.suspended);
-      expect(ZatcaDeviceStatus.fromValue('tampered'),
-          ZatcaDeviceStatus.tampered);
+      expect(ZatcaDeviceStatus.fromValue('suspended'), ZatcaDeviceStatus.suspended);
+      expect(ZatcaDeviceStatus.fromValue('tampered'), ZatcaDeviceStatus.tampered);
       expect(ZatcaDeviceStatus.fromValue('revoked'), ZatcaDeviceStatus.revoked);
     });
 
@@ -25,10 +23,8 @@ void main() {
 
   group('ZatcaInvoiceFlow enum', () {
     test('parses clearance and reporting', () {
-      expect(ZatcaInvoiceFlow.tryFromValue('clearance'),
-          ZatcaInvoiceFlow.clearance);
-      expect(ZatcaInvoiceFlow.tryFromValue('reporting'),
-          ZatcaInvoiceFlow.reporting);
+      expect(ZatcaInvoiceFlow.tryFromValue('clearance'), ZatcaInvoiceFlow.clearance);
+      expect(ZatcaInvoiceFlow.tryFromValue('reporting'), ZatcaInvoiceFlow.reporting);
     });
 
     test('null and unknown return null', () {
@@ -78,10 +74,7 @@ void main() {
     });
 
     test('fromJson defaults missing fields safely', () {
-      final d = ZatcaDevice.fromJson({
-        'id': 'd',
-        'device_uuid': 'u',
-      });
+      final d = ZatcaDevice.fromJson({'id': 'd', 'device_uuid': 'u'});
       expect(d.status, ZatcaDeviceStatus.pending);
       expect(d.environment, 'sandbox');
       expect(d.isTampered, false);

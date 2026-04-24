@@ -8,7 +8,6 @@ import 'package:printing/printing.dart';
 
 /// Label size in millimeters and dots
 class LabelSize {
-
   const LabelSize({required this.widthMm, required this.heightMm, this.dpi = 203});
   final double widthMm;
   final double heightMm;
@@ -25,7 +24,8 @@ class LabelSize {
 }
 
 /// Label printer configuration
-class LabelPrinterConfig { // print speed 1-14
+class LabelPrinterConfig {
+  // print speed 1-14
 
   const LabelPrinterConfig({
     this.connectionType = 'network',
@@ -87,7 +87,6 @@ class LabelPrinterConfig { // print speed 1-14
 
 /// Label data for a product label
 class ProductLabelData {
-
   const ProductLabelData({
     required this.nameAr,
     required this.nameEn,
@@ -234,7 +233,8 @@ class LabelPrinterService {
   /// and handed off to the system print dialog via the `printing` package
   /// (spec rule #7 — image-based fallback for non-ZPL/TSPL printers).
   Future<bool> printProductLabels(List<ProductLabelData> products, {int copies = 1}) async {
-    final useFallback = _config.connectionType == 'pdf' ||
+    final useFallback =
+        _config.connectionType == 'pdf' ||
         _config.language == 'pdf' ||
         (_config.connectionType == 'network' && (_config.ipAddress == null || _config.ipAddress!.isEmpty)) ||
         (_config.connectionType == 'usb' && (_config.usbDevicePath == null || _config.usbDevicePath!.isEmpty));
@@ -291,12 +291,7 @@ class LabelPrinterService {
                     maxLines: 1,
                     overflow: pw.TextOverflow.clip,
                   ),
-                  pw.Text(
-                    product.nameEn,
-                    style: const pw.TextStyle(fontSize: 8),
-                    maxLines: 1,
-                    overflow: pw.TextOverflow.clip,
-                  ),
+                  pw.Text(product.nameEn, style: const pw.TextStyle(fontSize: 8), maxLines: 1, overflow: pw.TextOverflow.clip),
                   pw.SizedBox(height: 2),
                   pw.Expanded(
                     child: pw.BarcodeWidget(
@@ -310,8 +305,7 @@ class LabelPrinterService {
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      if (product.sku != null)
-                        pw.Text(product.sku!, style: const pw.TextStyle(fontSize: 6)),
+                      if (product.sku != null) pw.Text(product.sku!, style: const pw.TextStyle(fontSize: 6)),
                       pw.Text(
                         '${product.currency} ${product.price.toStringAsFixed(2)}',
                         style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold),

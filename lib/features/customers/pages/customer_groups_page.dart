@@ -30,15 +30,18 @@ class _CustomerGroupsPageState extends ConsumerState<CustomerGroupsPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(group == null ? l10n.customersGroupAdd : l10n.commonEdit),
-        content: Column(mainAxisSize: MainAxisSize.min, children: [
-          PosTextField(controller: name, label: l10n.customersGroupName),
-          AppSpacing.gapH8,
-          PosTextField(
-            controller: discount,
-            label: l10n.customersGroupDiscount,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          ),
-        ]),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PosTextField(controller: name, label: l10n.customersGroupName),
+            AppSpacing.gapH8,
+            PosTextField(
+              controller: discount,
+              label: l10n.customersGroupDiscount,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            ),
+          ],
+        ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.commonSave)),
@@ -46,10 +49,7 @@ class _CustomerGroupsPageState extends ConsumerState<CustomerGroupsPage> {
       ),
     );
     if (ok == true) {
-      final data = {
-        'name': name.text.trim(),
-        'discount_percent': double.tryParse(discount.text.trim()) ?? 0,
-      };
+      final data = {'name': name.text.trim(), 'discount_percent': double.tryParse(discount.text.trim()) ?? 0};
       await ref.read(customerGroupsProvider.notifier).createGroup(data);
     }
   }
@@ -66,9 +66,7 @@ class _CustomerGroupsPageState extends ConsumerState<CustomerGroupsPage> {
       title: l10n.customersGroupsTitle,
       onBack: () => context.pop(),
       showSearch: false,
-      actions: [
-        PosButton(label: l10n.customersGroupAdd, icon: Icons.add, onPressed: () => _showForm()),
-      ],
+      actions: [PosButton(label: l10n.customersGroupAdd, icon: Icons.add, onPressed: () => _showForm())],
       child: PosDataTable<CustomerGroup>(
         items: groups,
         isLoading: isLoading,

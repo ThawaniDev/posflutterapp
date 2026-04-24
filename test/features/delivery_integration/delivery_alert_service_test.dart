@@ -62,8 +62,7 @@ void main() {
       expect(sink.notified.length, 1);
     });
 
-    test('disabled service does not fire alerts but still tracks ids',
-        () async {
+    test('disabled service does not fire alerts but still tracks ids', () async {
       final sink = _RecordingSink();
       final svc = DeliveryAlertService(sink: sink, enabled: false);
 

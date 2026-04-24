@@ -348,7 +348,11 @@ class SaleNotifier extends StateNotifier<SaleState> {
         'payments': payments,
       };
       final transaction = await _repo.returnTransaction(data);
-      state = SaleCompleted(transactionId: transaction.id, transactionNumber: transaction.transactionNumber, totalAmount: transaction.totalAmount);
+      state = SaleCompleted(
+        transactionId: transaction.id,
+        transactionNumber: transaction.transactionNumber,
+        totalAmount: transaction.totalAmount,
+      );
       return true;
     } on DioException catch (e) {
       state = SaleError(message: _extractError(e));

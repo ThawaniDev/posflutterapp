@@ -29,7 +29,9 @@ ResponseBody _json(String body, [int status = 200]) {
   return ResponseBody.fromString(
     body,
     status,
-    headers: {Headers.contentTypeHeader: ['application/json']},
+    headers: {
+      Headers.contentTypeHeader: ['application/json'],
+    },
   );
 }
 
@@ -71,12 +73,7 @@ void main() {
     });
 
     test('handles missing optional fields gracefully', () {
-      final m = DeliveryOrderMapping.fromJson({
-        'id': 'x',
-        'order_id': 'y',
-        'platform': 'marsool',
-        'external_order_id': 'M-1',
-      });
+      final m = DeliveryOrderMapping.fromJson({'id': 'x', 'order_id': 'y', 'platform': 'marsool', 'external_order_id': 'M-1'});
       expect(m.platform, DeliveryConfigPlatform.marsool);
       expect(m.deliveryStatus, isNull);
       expect(m.commissionAmount, isNull);
@@ -110,11 +107,7 @@ void main() {
     });
 
     test('defaults sensibly when fields missing', () {
-      final c = DeliveryPlatformConfig.fromJson({
-        'id': 'cfg-2',
-        'store_id': 'store-1',
-        'platform': 'jahez',
-      });
+      final c = DeliveryPlatformConfig.fromJson({'id': 'cfg-2', 'store_id': 'store-1', 'platform': 'jahez'});
       expect(c.apiKey, '');
       expect(c.isEnabled, isFalse);
       expect(c.autoAccept, isFalse);
@@ -207,14 +200,9 @@ void main() {
         params = opts.queryParameters;
         return _json('{"success":true,"data":{"data":[]}}');
       });
-      await DeliveryApiService(dio).getOrders(
-        platform: 'jahez',
-        status: 'accepted',
-        perPage: 25,
-        page: 2,
-        dateFrom: '2026-01-01',
-        dateTo: '2026-01-31',
-      );
+      await DeliveryApiService(
+        dio,
+      ).getOrders(platform: 'jahez', status: 'accepted', perPage: 25, page: 2, dateFrom: '2026-01-01', dateTo: '2026-01-31');
       expect(params, isNotNull);
       expect(params!['platform'], 'jahez');
       expect(params!['status'], 'accepted');

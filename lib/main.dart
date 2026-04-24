@@ -27,9 +27,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      overrides: [
-        deliveryAlertSinkProvider.overrideWithValue(ProductionDeliveryAlertSink()),
-      ],
+      overrides: [deliveryAlertSinkProvider.overrideWithValue(ProductionDeliveryAlertSink())],
       child: const WameedPosApp(),
     ),
   );

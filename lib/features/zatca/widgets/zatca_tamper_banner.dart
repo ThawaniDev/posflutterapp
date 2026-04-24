@@ -8,11 +8,7 @@ import 'package:wameedpos/features/zatca/models/zatca_device.dart';
 /// Red banner displayed when a ZATCA device's hash chain has been
 /// tampered with. POS submissions are blocked until reset.
 class ZatcaTamperBanner extends StatelessWidget {
-  const ZatcaTamperBanner({
-    super.key,
-    required this.device,
-    this.onReset,
-  });
+  const ZatcaTamperBanner({super.key, required this.device, this.onReset});
 
   final ZatcaDevice device;
   final VoidCallback? onReset;
@@ -38,17 +34,10 @@ class ZatcaTamperBanner extends StatelessWidget {
           Expanded(
             child: Text(
               l10n.zatcaDeviceTampered,
-              style: const TextStyle(
-                color: AppColors.error,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(color: AppColors.error, fontWeight: FontWeight.w600),
             ),
           ),
-          if (onReset != null)
-            TextButton(
-              onPressed: onReset,
-              child: Text(l10n.zatcaResetTamper),
-            ),
+          if (onReset != null) TextButton(onPressed: onReset, child: Text(l10n.zatcaResetTamper)),
         ],
       ),
     );

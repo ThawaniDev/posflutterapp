@@ -101,18 +101,9 @@ class _CustomerFormPageState extends ConsumerState<CustomerFormPage> {
       bottomBar: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          PosButton(
-            label: l10n.cancel,
-            variant: PosButtonVariant.ghost,
-            onPressed: () => context.pop(),
-          ),
+          PosButton(label: l10n.cancel, variant: PosButtonVariant.ghost, onPressed: () => context.pop()),
           AppSpacing.gapW8,
-          PosButton(
-            label: l10n.commonSave,
-            icon: Icons.save_outlined,
-            onPressed: isSaving ? null : _save,
-            isLoading: isSaving,
-          ),
+          PosButton(label: l10n.commonSave, icon: Icons.save_outlined, onPressed: isSaving ? null : _save, isLoading: isSaving),
         ],
       ),
       child: Form(
@@ -138,17 +129,9 @@ class _CustomerFormPageState extends ConsumerState<CustomerFormPage> {
                     validator: (v) => (v == null || v.trim().isEmpty) ? l10n.commonRequired : null,
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _email,
-                    label: l10n.customersEmail,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
+                  PosTextField(controller: _email, label: l10n.customersEmail, keyboardType: TextInputType.emailAddress),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _address,
-                    label: l10n.customersAddress,
-                    maxLines: 2,
-                  ),
+                  PosTextField(controller: _address, label: l10n.customersAddress, maxLines: 2),
                   AppSpacing.gapH12,
                   Row(
                     children: [
@@ -169,9 +152,11 @@ class _CustomerFormPageState extends ConsumerState<CustomerFormPage> {
                               labelText: l10n.customersDateOfBirth,
                               suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
                             ),
-                            child: Text(_dob != null
-                                ? '${_dob!.year}-${_dob!.month.toString().padLeft(2, '0')}-${_dob!.day.toString().padLeft(2, '0')}'
-                                : '-'),
+                            child: Text(
+                              _dob != null
+                                  ? '${_dob!.year}-${_dob!.month.toString().padLeft(2, '0')}-${_dob!.day.toString().padLeft(2, '0')}'
+                                  : '-',
+                            ),
                           ),
                         ),
                       ),

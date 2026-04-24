@@ -15,9 +15,9 @@ class CustomerSyncService {
     required CustomerRepository remote,
     required CustomerDao dao,
     required Future<SharedPreferences> Function() prefsFactory,
-  })  : _remote = remote,
-        _dao = dao,
-        _prefsFactory = prefsFactory;
+  }) : _remote = remote,
+       _dao = dao,
+       _prefsFactory = prefsFactory;
 
   final CustomerRepository _remote;
   final CustomerDao _dao;

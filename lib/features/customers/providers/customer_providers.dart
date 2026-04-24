@@ -14,7 +14,6 @@ final customersProvider = StateNotifierProvider<CustomersNotifier, CustomersStat
 });
 
 class CustomersNotifier extends StateNotifier<CustomersState> {
-
   CustomersNotifier(this._repo) : super(const CustomersInitial());
   final CustomerRepository _repo;
 
@@ -84,7 +83,6 @@ final customerGroupsProvider = StateNotifierProvider<CustomerGroupsNotifier, Cus
 });
 
 class CustomerGroupsNotifier extends StateNotifier<CustomerGroupsState> {
-
   CustomerGroupsNotifier(this._repo) : super(const CustomerGroupsInitial());
   final CustomerRepository _repo;
 
@@ -129,7 +127,6 @@ final customerDetailProvider = StateNotifierProvider.family<CustomerDetailNotifi
 });
 
 class CustomerDetailNotifier extends StateNotifier<CustomerDetailState> {
-
   CustomerDetailNotifier(this._repo, this._customerId) : super(const CustomerDetailInitial());
   final CustomerRepository _repo;
   final String? _customerId;
@@ -201,8 +198,7 @@ class CustomerSyncNotifier extends StateNotifier<CustomerSyncState> {
 
 // ─── Customer Search Provider (POS lookup) ──────────────────────
 
-final customerSearchProvider =
-    StateNotifierProvider<CustomerSearchNotifier, CustomerSearchState>((ref) {
+final customerSearchProvider = StateNotifierProvider<CustomerSearchNotifier, CustomerSearchState>((ref) {
   return CustomerSearchNotifier(ref.watch(customerSearchServiceProvider), ref);
 });
 
@@ -231,8 +227,7 @@ class CustomerSearchNotifier extends StateNotifier<CustomerSearchState> {
 
 // ─── Loyalty Config Provider ────────────────────────────────────
 
-final loyaltyConfigProvider =
-    StateNotifierProvider<LoyaltyConfigNotifier, LoyaltyConfigState>((ref) {
+final loyaltyConfigProvider = StateNotifierProvider<LoyaltyConfigNotifier, LoyaltyConfigState>((ref) {
   return LoyaltyConfigNotifier(ref.watch(loyaltyServiceProvider));
 });
 
@@ -267,8 +262,7 @@ class LoyaltyConfigNotifier extends StateNotifier<LoyaltyConfigState> {
 
 // ─── Loyalty Log Provider (family per customer) ─────────────────
 
-final loyaltyLogProvider =
-    StateNotifierProvider.family<LoyaltyLogNotifier, LoyaltyLogState, String>((ref, customerId) {
+final loyaltyLogProvider = StateNotifierProvider.family<LoyaltyLogNotifier, LoyaltyLogState, String>((ref, customerId) {
   return LoyaltyLogNotifier(ref.watch(loyaltyServiceProvider), customerId);
 });
 
@@ -312,8 +306,10 @@ class LoyaltyLogNotifier extends StateNotifier<LoyaltyLogState> {
 
 // ─── Store Credit Log Provider (family per customer) ────────────
 
-final storeCreditLogProvider = StateNotifierProvider.family<StoreCreditLogNotifier,
-    StoreCreditLogState, String>((ref, customerId) {
+final storeCreditLogProvider = StateNotifierProvider.family<StoreCreditLogNotifier, StoreCreditLogState, String>((
+  ref,
+  customerId,
+) {
   return StoreCreditLogNotifier(ref.watch(storeCreditServiceProvider), customerId);
 });
 
@@ -356,8 +352,10 @@ class StoreCreditLogNotifier extends StateNotifier<StoreCreditLogState> {
 
 // ─── Customer Orders Provider (family per customer) ─────────────
 
-final customerOrdersProvider = StateNotifierProvider.family<CustomerOrdersNotifier,
-    CustomerOrdersState, String>((ref, customerId) {
+final customerOrdersProvider = StateNotifierProvider.family<CustomerOrdersNotifier, CustomerOrdersState, String>((
+  ref,
+  customerId,
+) {
   return CustomerOrdersNotifier(ref.watch(customerRepositoryProvider), customerId);
 });
 

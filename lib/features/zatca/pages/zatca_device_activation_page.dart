@@ -15,12 +15,10 @@ class ZatcaDeviceActivationPage extends ConsumerStatefulWidget {
   const ZatcaDeviceActivationPage({super.key});
 
   @override
-  ConsumerState<ZatcaDeviceActivationPage> createState() =>
-      _ZatcaDeviceActivationPageState();
+  ConsumerState<ZatcaDeviceActivationPage> createState() => _ZatcaDeviceActivationPageState();
 }
 
-class _ZatcaDeviceActivationPageState
-    extends ConsumerState<ZatcaDeviceActivationPage> {
+class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivationPage> {
   final _activationCodeCtrl = TextEditingController();
   final _serialCtrl = TextEditingController();
 
@@ -63,26 +61,19 @@ class _ZatcaDeviceActivationPageState
     );
   }
 
-  Widget _buildProvisionSection(
-      BuildContext context, AppLocalizations l10n, ZatcaDeviceState state) {
+  Widget _buildProvisionSection(BuildContext context, AppLocalizations l10n, ZatcaDeviceState state) {
     return PosCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.zatcaProvisionDevice,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.zatcaProvisionDevice, style: Theme.of(context).textTheme.titleMedium),
           AppSpacing.gapH8,
           PosButton(
             label: l10n.zatcaProvisionDevice,
             isFullWidth: true,
-            onPressed: state is ZatcaDeviceLoading
-                ? null
-                : () => ref.read(zatcaDeviceProvider.notifier).provision(),
+            onPressed: state is ZatcaDeviceLoading ? null : () => ref.read(zatcaDeviceProvider.notifier).provision(),
           ),
-          if (state is ZatcaDeviceProvisioned) ...[
-            AppSpacing.gapH16,
-            _buildActivationCodeBanner(state),
-          ],
+          if (state is ZatcaDeviceProvisioned) ...[AppSpacing.gapH16, _buildActivationCodeBanner(state)],
         ],
       ),
     );
@@ -99,19 +90,14 @@ class _ZatcaDeviceActivationPageState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Activation Code',
-              style: Theme.of(context).textTheme.labelLarge),
+          Text('Activation Code', style: Theme.of(context).textTheme.labelLarge),
           AppSpacing.gapH4,
           SelectableText(
             state.activationCode,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 2),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 2),
           ),
           AppSpacing.gapH4,
-          Text('Device UUID: ${state.deviceUuid}',
-              style: Theme.of(context).textTheme.bodySmall),
+          Text('Device UUID: ${state.deviceUuid}', style: Theme.of(context).textTheme.bodySmall),
         ],
       ),
     );
@@ -122,35 +108,28 @@ class _ZatcaDeviceActivationPageState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n.zatcaActivationCode,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.zatcaActivationCode, style: Theme.of(context).textTheme.titleMedium),
           AppSpacing.gapH8,
           TextField(
             controller: _activationCodeCtrl,
-            decoration: InputDecoration(
-              labelText: l10n.zatcaActivationCode,
-              border: const OutlineInputBorder(),
-            ),
+            decoration: InputDecoration(labelText: l10n.zatcaActivationCode, border: const OutlineInputBorder()),
             textCapitalization: TextCapitalization.characters,
           ),
           AppSpacing.gapH8,
           TextField(
             controller: _serialCtrl,
-            decoration: const InputDecoration(
-              labelText: 'Hardware Serial (optional)',
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(labelText: 'Hardware Serial (optional)', border: OutlineInputBorder()),
           ),
           AppSpacing.gapH12,
           PosButton(
             label: l10n.zatcaActivateDevice,
             isFullWidth: true,
             onPressed: () {
-              ref.read(zatcaDeviceProvider.notifier).activate(
+              ref
+                  .read(zatcaDeviceProvider.notifier)
+                  .activate(
                     activationCode: _activationCodeCtrl.text.trim(),
-                    hardwareSerial: _serialCtrl.text.trim().isEmpty
-                        ? null
-                        : _serialCtrl.text.trim(),
+                    hardwareSerial: _serialCtrl.text.trim().isEmpty ? null : _serialCtrl.text.trim(),
                   );
             },
           ),
@@ -167,9 +146,7 @@ class _ZatcaDeviceActivationPageState
       return PosCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: state.devices
-              .map((d) => _buildDeviceTile(l10n, d))
-              .toList(growable: false),
+          children: state.devices.map((d) => _buildDeviceTile(l10n, d)).toList(growable: false),
         ),
       );
     }
@@ -178,8 +155,7 @@ class _ZatcaDeviceActivationPageState
     }
     if (state is ZatcaDeviceError) {
       return PosCard(
-        child: Text('Error: ${state.message}',
-            style: const TextStyle(color: AppColors.error)),
+        child: Text('Error: ${state.message}', style: const TextStyle(color: AppColors.error)),
       );
     }
     return const SizedBox.shrink();
@@ -188,25 +164,19 @@ class _ZatcaDeviceActivationPageState
   Widget _buildDeviceTile(AppLocalizations l10n, ZatcaDevice device) {
     final tampered = device.isTampered;
     return ListTile(
-      leading: Icon(
-        tampered ? Icons.warning_amber : Icons.verified_user,
-        color: tampered ? AppColors.error : AppColors.success,
-      ),
+      leading: Icon(tampered ? Icons.warning_amber : Icons.verified_user, color: tampered ? AppColors.error : AppColors.success),
       title: Text(device.deviceUuid),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('${l10n.zatcaIcv}: ${device.currentIcv}'),
           Text('Status: ${device.status.value}'),
-          if (device.hardwareSerial != null)
-            Text('Serial: ${device.hardwareSerial}'),
+          if (device.hardwareSerial != null) Text('Serial: ${device.hardwareSerial}'),
         ],
       ),
       trailing: tampered
           ? TextButton(
-              onPressed: () => ref
-                  .read(zatcaDeviceProvider.notifier)
-                  .resetTamper(device.id),
+              onPressed: () => ref.read(zatcaDeviceProvider.notifier).resetTamper(device.id),
               child: Text(l10n.zatcaResetTamper),
             )
           : null,

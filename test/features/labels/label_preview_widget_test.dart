@@ -10,7 +10,8 @@ LabelTemplate _template({Map<String, dynamic>? layout}) {
     name: 'Test',
     labelWidthMm: 50,
     labelHeightMm: 30,
-    layoutJson: layout ??
+    layoutJson:
+        layout ??
         {
           'elements': [
             {'type': 'product_name', 'x': 2.0, 'y': 2.0, 'width': 40.0, 'height': 6.0},
@@ -33,9 +34,7 @@ void main() {
     testWidgets('renders demo data when no data provided', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: LabelPreviewWidget(template: _template()),
-          ),
+          home: Scaffold(body: LabelPreviewWidget(template: _template())),
         ),
       );
       await tester.pump();
@@ -71,18 +70,20 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: LabelPreviewWidget(
-              template: _template(layout: {
-                'elements': [
-                  {
-                    'type': 'barcode',
-                    'x': 0.0,
-                    'y': 0.0,
-                    'width': 50.0,
-                    'height': 20.0,
-                    'config': {'format': 'ean13', 'show_text': true},
-                  },
-                ],
-              }),
+              template: _template(
+                layout: {
+                  'elements': [
+                    {
+                      'type': 'barcode',
+                      'x': 0.0,
+                      'y': 0.0,
+                      'width': 50.0,
+                      'height': 20.0,
+                      'config': {'format': 'ean13', 'show_text': true},
+                    },
+                  ],
+                },
+              ),
               data: const LabelPreviewData(
                 productName: 'p',
                 productNameAr: 'p',

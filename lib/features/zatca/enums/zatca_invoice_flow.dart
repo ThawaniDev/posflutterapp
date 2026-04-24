@@ -6,10 +6,7 @@ enum ZatcaInvoiceFlow {
   final String value;
 
   static ZatcaInvoiceFlow fromValue(String value) =>
-      ZatcaInvoiceFlow.values.firstWhere(
-        (e) => e.value == value,
-        orElse: () => ZatcaInvoiceFlow.reporting,
-      );
+      ZatcaInvoiceFlow.values.firstWhere((e) => e.value == value, orElse: () => ZatcaInvoiceFlow.reporting);
 
   static ZatcaInvoiceFlow? tryFromValue(String? value) {
     if (value == null) return null;

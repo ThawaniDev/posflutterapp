@@ -19,12 +19,10 @@ class ZatcaInvoiceDetailPage extends ConsumerStatefulWidget {
   final String invoiceId;
 
   @override
-  ConsumerState<ZatcaInvoiceDetailPage> createState() =>
-      _ZatcaInvoiceDetailPageState();
+  ConsumerState<ZatcaInvoiceDetailPage> createState() => _ZatcaInvoiceDetailPageState();
 }
 
-class _ZatcaInvoiceDetailPageState
-    extends ConsumerState<ZatcaInvoiceDetailPage> {
+class _ZatcaInvoiceDetailPageState extends ConsumerState<ZatcaInvoiceDetailPage> {
   @override
   void initState() {
     super.initState();
@@ -42,32 +40,27 @@ class _ZatcaInvoiceDetailPageState
       title: l10n.zatcaInvoiceDetail,
       showSearch: false,
       child: switch (state) {
-        ZatcaInvoiceDetailInitial() ||
-        ZatcaInvoiceDetailLoading() => const Center(
-            child: Padding(
-              padding: EdgeInsets.all(40),
-              child: CircularProgressIndicator(),
-            ),
-          ),
+        ZatcaInvoiceDetailInitial() || ZatcaInvoiceDetailLoading() => const Center(
+          child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()),
+        ),
         ZatcaInvoiceDetailError(:final message) => Padding(
-            padding: AppSpacing.paddingAll20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(message, style: TextStyle(color: AppColors.error)),
-                AppSpacing.gapH12,
-                PosButton(
-                  label: 'Retry',
-                  onPressed: () => ref
-                      .read(zatcaInvoiceDetailProvider(widget.invoiceId)
-                          .notifier)
-                      .load(),
-                ),
-              ],
-            ),
+          padding: AppSpacing.paddingAll20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(message, style: TextStyle(color: AppColors.error)),
+              AppSpacing.gapH12,
+              PosButton(label: 'Retry', onPressed: () => ref.read(zatcaInvoiceDetailProvider(widget.invoiceId).notifier).load()),
+            ],
           ),
-        ZatcaInvoiceDetailLoaded(:final detail, :final retrying, :final retryMessage) =>
-          _buildLoaded(context, l10n, detail, retrying, retryMessage),
+        ),
+        ZatcaInvoiceDetailLoaded(:final detail, :final retrying, :final retryMessage) => _buildLoaded(
+          context,
+          l10n,
+          detail,
+          retrying,
+          retryMessage,
+        ),
       },
     );
   }
@@ -80,18 +73,15 @@ class _ZatcaInvoiceDetailPageState
     String? retryMessage,
   ) {
     final invoice = detail.invoice;
-    final canRetry = invoice.submissionStatus != ZatcaSubmissionStatus.accepted &&
-        invoice.submissionStatus != ZatcaSubmissionStatus.reported;
+    final canRetry =
+        invoice.submissionStatus != ZatcaSubmissionStatus.accepted && invoice.submissionStatus != ZatcaSubmissionStatus.reported;
 
     return SingleChildScrollView(
       padding: AppSpacing.paddingAll20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (retryMessage == 'already_accepted') ...[
-            _banner(l10n.zatcaAlreadyAccepted, AppColors.success),
-            AppSpacing.gapH12,
-          ],
+          if (retryMessage == 'already_accepted') ...[_banner(l10n.zatcaAlreadyAccepted, AppColors.success), AppSpacing.gapH12],
           PosCard(
             padding: AppSpacing.paddingAll16,
             child: Column(
@@ -99,12 +89,7 @@ class _ZatcaInvoiceDetailPageState
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        invoice.invoiceNumber,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
+                    Expanded(child: Text(invoice.invoiceNumber, style: Theme.of(context).textTheme.titleLarge)),
                     _statusPill(invoice.submissionStatus),
                   ],
                 ),
@@ -112,35 +97,23 @@ class _ZatcaInvoiceDetailPageState
                 _kv(l10n.zatcaUuid, invoice.uuid ?? '—'),
                 _kv(l10n.zatcaIcv, '${invoice.icv ?? '—'}'),
                 if (invoice.flow != null)
-                  _kv(
-                    'Flow',
-                    invoice.flow == ZatcaInvoiceFlow.clearance
-                        ? l10n.zatcaClearanceFlow
-                        : l10n.zatcaReportingFlow,
-                  ),
+                  _kv('Flow', invoice.flow == ZatcaInvoiceFlow.clearance ? l10n.zatcaClearanceFlow : l10n.zatcaReportingFlow),
                 _kv('Total', invoice.totalAmount.toStringAsFixed(2)),
                 _kv('VAT', invoice.vatAmount.toStringAsFixed(2)),
-                if (invoice.submittedAt != null)
-                  _kv('Submitted',
-                      invoice.submittedAt!.toLocal().toString().split('.').first),
-                if (invoice.submissionAttempts != null)
-                  _kv(l10n.zatcaSubmissionAttempts, '${invoice.submissionAttempts}'),
+                if (invoice.submittedAt != null) _kv('Submitted', invoice.submittedAt!.toLocal().toString().split('.').first),
+                if (invoice.submissionAttempts != null) _kv(l10n.zatcaSubmissionAttempts, '${invoice.submissionAttempts}'),
               ],
             ),
           ),
           AppSpacing.gapH16,
-          if (invoice.zatcaResponseCode != null ||
-              invoice.zatcaResponseMessage != null)
+          if (invoice.zatcaResponseCode != null || invoice.zatcaResponseMessage != null)
             PosCard(
               padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (invoice.zatcaResponseCode != null)
-                    _kv(l10n.zatcaResponseCode, invoice.zatcaResponseCode!),
-                  if (invoice.zatcaResponseMessage != null)
-                    _kv(l10n.zatcaResponseMessage,
-                        invoice.zatcaResponseMessage!),
+                  if (invoice.zatcaResponseCode != null) _kv(l10n.zatcaResponseCode, invoice.zatcaResponseCode!),
+                  if (invoice.zatcaResponseMessage != null) _kv(l10n.zatcaResponseMessage, invoice.zatcaResponseMessage!),
                 ],
               ),
             ),
@@ -151,25 +124,14 @@ class _ZatcaInvoiceDetailPageState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.zatcaQrCode,
-                      style: Theme.of(context).textTheme.titleSmall),
+                  Text(l10n.zatcaQrCode, style: Theme.of(context).textTheme.titleSmall),
                   AppSpacing.gapH8,
-                  Center(
-                    child: Image.memory(
-                      base64Decode(detail.qrCodeBase64!),
-                      width: 180,
-                      height: 180,
-                      gaplessPlayback: true,
-                    ),
-                  ),
+                  Center(child: Image.memory(base64Decode(detail.qrCodeBase64!), width: 180, height: 180, gaplessPlayback: true)),
                 ],
               ),
             ),
           ],
-          if (detail.xml != null && detail.xml!.isNotEmpty) ...[
-            AppSpacing.gapH16,
-            _xmlCard(l10n.zatcaSignedXml, detail.xml!),
-          ],
+          if (detail.xml != null && detail.xml!.isNotEmpty) ...[AppSpacing.gapH16, _xmlCard(l10n.zatcaSignedXml, detail.xml!)],
           if (detail.clearedXml != null && detail.clearedXml!.isNotEmpty) ...[
             AppSpacing.gapH16,
             _xmlCard(l10n.zatcaClearedXml, detail.clearedXml!),
@@ -184,14 +146,9 @@ class _ZatcaInvoiceDetailPageState
                   : () async {
                       final messenger = ScaffoldMessenger.of(context);
                       final retryLabel = l10n.zatcaRetrySubmission;
-                      await ref
-                          .read(zatcaInvoiceDetailProvider(widget.invoiceId)
-                              .notifier)
-                          .retry();
+                      await ref.read(zatcaInvoiceDetailProvider(widget.invoiceId).notifier).retry();
                       if (!mounted) return;
-                      messenger.showSnackBar(
-                        SnackBar(content: Text(retryLabel)),
-                      );
+                      messenger.showSnackBar(SnackBar(content: Text(retryLabel)));
                     },
             ),
         ],
@@ -217,10 +174,7 @@ class _ZatcaInvoiceDetailPageState
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(20)),
       child: Text(
         status?.name ?? 'pending',
         style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 12),
@@ -236,8 +190,7 @@ class _ZatcaInvoiceDetailPageState
         children: [
           SizedBox(
             width: 140,
-            child: Text(k,
-                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+            child: Text(k, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           Expanded(child: SelectableText(v, style: const TextStyle(fontSize: 12))),
         ],
@@ -253,10 +206,7 @@ class _ZatcaInvoiceDetailPageState
         children: [
           Row(
             children: [
-              Expanded(
-                child: Text(title,
-                    style: Theme.of(context).textTheme.titleSmall),
-              ),
+              Expanded(child: Text(title, style: Theme.of(context).textTheme.titleSmall)),
               IconButton(
                 tooltip: 'Copy',
                 onPressed: () => Clipboard.setData(ClipboardData(text: xml)),
@@ -274,14 +224,7 @@ class _ZatcaInvoiceDetailPageState
             ),
             padding: const EdgeInsets.all(12),
             child: SingleChildScrollView(
-              child: SelectableText(
-                xml,
-                style: const TextStyle(
-                  fontFamily: 'monospace',
-                  fontSize: 11,
-                  height: 1.3,
-                ),
-              ),
+              child: SelectableText(xml, style: const TextStyle(fontFamily: 'monospace', fontSize: 11, height: 1.3)),
             ),
           ),
         ],
@@ -301,7 +244,9 @@ class _ZatcaInvoiceDetailPageState
         children: [
           Icon(Icons.info_outline, color: color),
           const SizedBox(width: 8),
-          Expanded(child: Text(message, style: TextStyle(color: color))),
+          Expanded(
+            child: Text(message, style: TextStyle(color: color)),
+          ),
         ],
       ),
     );

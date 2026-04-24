@@ -16,12 +16,10 @@ class ZatcaConnectionStatusCard extends ConsumerStatefulWidget {
   const ZatcaConnectionStatusCard({super.key});
 
   @override
-  ConsumerState<ZatcaConnectionStatusCard> createState() =>
-      _ZatcaConnectionStatusCardState();
+  ConsumerState<ZatcaConnectionStatusCard> createState() => _ZatcaConnectionStatusCardState();
 }
 
-class _ZatcaConnectionStatusCardState
-    extends ConsumerState<ZatcaConnectionStatusCard> {
+class _ZatcaConnectionStatusCardState extends ConsumerState<ZatcaConnectionStatusCard> {
   @override
   void initState() {
     super.initState();
@@ -40,37 +38,22 @@ class _ZatcaConnectionStatusCardState
       padding: AppSpacing.paddingAll20,
       child: switch (state) {
         ZatcaConnectionInitial() ||
-        ZatcaConnectionLoading() => const SizedBox(
-            height: 120,
-            child: Center(child: CircularProgressIndicator()),
-          ),
+        ZatcaConnectionLoading() => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator())),
         ZatcaConnectionError(:final message) => Row(
-            children: [
-              const Icon(Icons.error_outline, color: AppColors.error),
-              AppSpacing.gapH8,
-              Expanded(child: Text(message)),
-              IconButton(
-                onPressed: () =>
-                    ref.read(zatcaConnectionProvider.notifier).load(),
-                icon: const Icon(Icons.refresh),
-              ),
-            ],
-          ),
-        ZatcaConnectionLoaded(:final status) =>
-          _buildLoaded(context, theme, l10n, status),
+          children: [
+            const Icon(Icons.error_outline, color: AppColors.error),
+            AppSpacing.gapH8,
+            Expanded(child: Text(message)),
+            IconButton(onPressed: () => ref.read(zatcaConnectionProvider.notifier).load(), icon: const Icon(Icons.refresh)),
+          ],
+        ),
+        ZatcaConnectionLoaded(:final status) => _buildLoaded(context, theme, l10n, status),
       },
     );
   }
 
-  Widget _buildLoaded(
-    BuildContext context,
-    ThemeData theme,
-    AppLocalizations l10n,
-    ZatcaConnectionStatus status,
-  ) {
-    final healthColor = status.isHealthy
-        ? AppColors.success
-        : (status.connected ? AppColors.warning : AppColors.error);
+  Widget _buildLoaded(BuildContext context, ThemeData theme, AppLocalizations l10n, ZatcaConnectionStatus status) {
+    final healthColor = status.isHealthy ? AppColors.success : (status.connected ? AppColors.warning : AppColors.error);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,26 +61,19 @@ class _ZatcaConnectionStatusCardState
         Row(
           children: [
             Icon(
-              status.isHealthy
-                  ? Icons.check_circle
-                  : (status.connected ? Icons.warning_amber : Icons.cloud_off),
+              status.isHealthy ? Icons.check_circle : (status.connected ? Icons.warning_amber : Icons.cloud_off),
               color: healthColor,
               size: 28,
             ),
             AppSpacing.gapH8,
             Expanded(
-              child: Text(
-                l10n.zatcaConnectionStatus,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
-              ),
+              child: Text(l10n.zatcaConnectionStatus, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
             ),
             _envBadge(status.isProduction, l10n),
             const SizedBox(width: 6),
             IconButton(
               tooltip: 'Refresh',
-              onPressed: () =>
-                  ref.read(zatcaConnectionProvider.notifier).load(),
+              onPressed: () => ref.read(zatcaConnectionProvider.notifier).load(),
               icon: const Icon(Icons.refresh, size: 20),
             ),
           ],
@@ -110,18 +86,12 @@ class _ZatcaConnectionStatusCardState
               status.connected ? AppColors.success : AppColors.error,
             ),
             const SizedBox(width: 8),
-            _pill(
-              status.isHealthy ? l10n.zatcaHealthy : l10n.zatcaUnhealthy,
-              healthColor,
-            ),
+            _pill(status.isHealthy ? l10n.zatcaHealthy : l10n.zatcaUnhealthy, healthColor),
           ],
         ),
         AppSpacing.gapH16,
         if (status.certificate == null)
-          Text(
-            l10n.zatcaNoCertificate,
-            style: TextStyle(color: AppColors.error),
-          )
+          Text(l10n.zatcaNoCertificate, style: TextStyle(color: AppColors.error))
         else
           _buildCertRow(theme, l10n, status.certificate!),
         AppSpacing.gapH12,
@@ -132,11 +102,7 @@ class _ZatcaConnectionStatusCardState
             _stat('${status.queueDepth}', l10n.zatcaQueueDepth, AppColors.info),
             _stat('${status.devices.active}', 'Active devices', AppColors.success),
             if (status.devices.tampered > 0)
-              _stat(
-                '${status.devices.tampered}',
-                l10n.zatcaTamperedDevices(status.devices.tampered),
-                AppColors.error,
-              ),
+              _stat('${status.devices.tampered}', l10n.zatcaTamperedDevices(status.devices.tampered), AppColors.error),
           ],
         ),
         if (status.lastSuccess != null) ...[
@@ -182,10 +148,7 @@ class _ZatcaConnectionStatusCardState
   Widget _pill(String text, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(20)),
       child: Text(
         text,
         style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 12),
@@ -197,18 +160,16 @@ class _ZatcaConnectionStatusCardState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(value,
-            style: TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style: TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         Text(label, style: const TextStyle(fontSize: 11)),
       ],
     );
   }
 
-  Widget _buildCertRow(
-    ThemeData theme,
-    AppLocalizations l10n,
-    ZatcaConnectionCertificate cert,
-  ) {
+  Widget _buildCertRow(ThemeData theme, AppLocalizations l10n, ZatcaConnectionCertificate cert) {
     final days = cert.daysUntilExpiry;
     Color color = AppColors.success;
     String label;
@@ -217,9 +178,7 @@ class _ZatcaConnectionStatusCardState
       label = l10n.zatcaCertificateExpired;
     } else if (cert.expiringSoon) {
       color = AppColors.warning;
-      label = days != null
-          ? l10n.zatcaCertificateExpiresIn(days)
-          : l10n.zatcaCertificateExpiringSoon;
+      label = days != null ? l10n.zatcaCertificateExpiresIn(days) : l10n.zatcaCertificateExpiringSoon;
     } else if (days != null) {
       label = l10n.zatcaCertificateExpiresIn(days);
     } else {
@@ -239,8 +198,7 @@ class _ZatcaConnectionStatusCardState
     );
   }
 
-  Widget _eventRow(ThemeData theme, IconData icon, Color color, String label,
-      String value) {
+  Widget _eventRow(ThemeData theme, IconData icon, Color color, String label, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

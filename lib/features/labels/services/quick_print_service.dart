@@ -29,11 +29,7 @@ enum QuickPrintResult {
 ///   C     = EAN-13 checksum
 ///
 /// Returns the full 13-digit barcode.
-String buildWeighableEan13({
-  required int prefix,
-  required int plu,
-  required int payload,
-}) {
+String buildWeighableEan13({required int prefix, required int plu, required int payload}) {
   assert(prefix >= 0 && prefix <= 99, 'prefix must be a 1- or 2-digit number');
   final p = prefix.toString().padLeft(2, '0');
   final n = plu.toString().padLeft(5, '0');
@@ -91,7 +87,8 @@ Future<QuickPrintResult> quickPrintProductLabel(
 
   final printer = ref.read(hardwareManagerProvider).labelPrinter;
   final cfg = printer.config;
-  final connected = (cfg.connectionType == 'network' && (cfg.ipAddress?.isNotEmpty ?? false)) ||
+  final connected =
+      (cfg.connectionType == 'network' && (cfg.ipAddress?.isNotEmpty ?? false)) ||
       (cfg.connectionType == 'usb' && (cfg.usbDevicePath?.isNotEmpty ?? false));
 
   bool printedOk = true;
@@ -103,19 +100,19 @@ Future<QuickPrintResult> quickPrintProductLabel(
       price: product.sellPrice,
       sku: product.sku,
     );
-    printedOk = await printer.printProductLabels(
-      List<ProductLabelData>.filled(quantity, data),
-    );
+    printedOk = await printer.printProductLabels(List<ProductLabelData>.filled(quantity, data));
   }
 
   // Always record print history (local first, server flush opportunistic).
   try {
-    await ref.read(offlineLabelServiceProvider).recordPrint(
-      templateId: template.id,
-      printerName: cfg.ipAddress ?? cfg.usbDevicePath ?? '',
-      productCount: 1,
-      totalLabels: quantity,
-    );
+    await ref
+        .read(offlineLabelServiceProvider)
+        .recordPrint(
+          templateId: template.id,
+          printerName: cfg.ipAddress ?? cfg.usbDevicePath ?? '',
+          productCount: 1,
+          totalLabels: quantity,
+        );
   } catch (_) {
     // Recording failure should not block the user — UI still surfaces print result.
   }

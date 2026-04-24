@@ -372,10 +372,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                 ],
                 if (customer != null) ...[
                   AppSpacing.gapH16,
-                  Text(
-                    AppLocalizations.of(context)!.customersSendReceipt,
-                    style: AppTypography.bodyMedium,
-                  ),
+                  Text(AppLocalizations.of(context)!.customersSendReceipt, style: AppTypography.bodyMedium),
                   AppSpacing.gapH8,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -386,11 +383,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                           icon: const Icon(Icons.email_outlined),
                           onPressed: () async {
                             try {
-                              await ref.read(digitalReceiptServiceProvider).sendEmail(
-                                    customerId: customer.id,
-                                    orderId: state.transactionId,
-                                    destination: customer.email,
-                                  );
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendEmail(customerId: customer.id, orderId: state.transactionId, destination: customer.email);
                               if (ctx.mounted) {
                                 showPosSuccessSnackbar(ctx, AppLocalizations.of(ctx)!.customersReceiptSent);
                               }
@@ -405,7 +400,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                           icon: const Icon(Icons.chat_outlined),
                           onPressed: () async {
                             try {
-                              await ref.read(digitalReceiptServiceProvider).sendWhatsApp(
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendWhatsApp(
                                     customerId: customer.id,
                                     orderId: state.transactionId,
                                     phone: customer.phone,
@@ -422,7 +419,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                           icon: const Icon(Icons.sms_outlined),
                           onPressed: () async {
                             try {
-                              await ref.read(digitalReceiptServiceProvider).sendSms(
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendSms(
                                     customerId: customer.id,
                                     orderId: state.transactionId,
                                     phone: customer.phone,

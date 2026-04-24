@@ -16,7 +16,6 @@ import 'package:wameedpos/features/labels/providers/label_state.dart';
 /// - Preview the label in real-time
 /// - Save as new template or update existing
 class LabelDesignerPage extends ConsumerStatefulWidget {
-
   const LabelDesignerPage({super.key, this.templateId, this.duplicateId});
   final String? templateId;
   final String? duplicateId;
@@ -331,17 +330,11 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
-                                  Icons.touch_app_rounded,
-                                  size: 48,
-                                  color: AppColors.mutedFor(context),
-                                ),
+                                Icon(Icons.touch_app_rounded, size: 48, color: AppColors.mutedFor(context)),
                                 const SizedBox(height: AppSpacing.md),
                                 Text(
                                   l10n.labelSelectElement,
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.mutedFor(context),
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
                                 ),
                               ],
                             ),
@@ -614,7 +607,6 @@ class _ElementType {
 }
 
 class _LabelElement {
-
   const _LabelElement({
     required this.type,
     required this.x,
@@ -645,7 +637,6 @@ class _LabelElement {
 // ─── Widgets ───────────────────────────────────────────────────
 
 class _ElementPaletteItem extends StatelessWidget {
-
   const _ElementPaletteItem({required this.elementType, required this.onTap});
   final _ElementType elementType;
   final VoidCallback onTap;
@@ -676,7 +667,6 @@ class _ElementPaletteItem extends StatelessWidget {
 }
 
 class _CanvasElement extends StatelessWidget {
-
   const _CanvasElement({required this.element, required this.scale, required this.isSelected});
   final _LabelElement element;
   final double scale;
@@ -721,7 +711,6 @@ class _CanvasElement extends StatelessWidget {
 }
 
 class _ElementPropertiesPanel extends StatelessWidget {
-
   const _ElementPropertiesPanel({required this.element, required this.onUpdate, required this.onDelete, required this.l10n});
   final _LabelElement element;
   final ValueChanged<_LabelElement> onUpdate;
@@ -889,7 +878,6 @@ class _ElementPropertiesPanel extends StatelessWidget {
 // ─── Grid Painter ──────────────────────────────────────────────
 
 class _GridPainter extends CustomPainter {
-
   _GridPainter({required this.scale});
   final double scale;
 

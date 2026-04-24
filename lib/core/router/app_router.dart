@@ -498,21 +498,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Customers ────────────────────────────────
           GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
-          GoRoute(
-            path: Routes.customerCreate,
-            name: 'customerCreate',
-            builder: (context, state) => const CustomerFormPage(),
-          ),
-          GoRoute(
-            path: Routes.customerGroups,
-            name: 'customerGroups',
-            builder: (context, state) => const CustomerGroupsPage(),
-          ),
-          GoRoute(
-            path: Routes.loyaltyConfig,
-            name: 'loyaltyConfig',
-            builder: (context, state) => const LoyaltyConfigPage(),
-          ),
+          GoRoute(path: Routes.customerCreate, name: 'customerCreate', builder: (context, state) => const CustomerFormPage()),
+          GoRoute(path: Routes.customerGroups, name: 'customerGroups', builder: (context, state) => const CustomerGroupsPage()),
+          GoRoute(path: Routes.loyaltyConfig, name: 'loyaltyConfig', builder: (context, state) => const LoyaltyConfigPage()),
           GoRoute(
             path: Routes.customerEdit,
             name: 'customerEdit',
@@ -1093,13 +1081,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── ZATCA Compliance ───
           GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
-          GoRoute(path: Routes.zatcaDeviceActivation, name: 'zatcaDeviceActivation', builder: (context, state) => const ZatcaDeviceActivationPage()),
+          GoRoute(
+            path: Routes.zatcaDeviceActivation,
+            name: 'zatcaDeviceActivation',
+            builder: (context, state) => const ZatcaDeviceActivationPage(),
+          ),
           GoRoute(
             path: Routes.zatcaInvoiceDetail,
             name: 'zatcaInvoiceDetail',
-            builder: (context, state) => ZatcaInvoiceDetailPage(
-              invoiceId: state.pathParameters['id']!,
-            ),
+            builder: (context, state) => ZatcaInvoiceDetailPage(invoiceId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: Routes.zatcaAdminOverview,

@@ -1,5 +1,4 @@
 class LoyaltyConfig {
-
   const LoyaltyConfig({
     required this.id,
     required this.organizationId,

@@ -44,12 +44,7 @@ class LabelPreviewWidget extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
-          for (final raw in elements)
-            _LabelElementView(
-              element: raw as Map<String, dynamic>,
-              data: preview,
-              scale: scale,
-            ),
+          for (final raw in elements) _LabelElementView(element: raw as Map<String, dynamic>, data: preview, scale: scale),
         ],
       ),
     );
@@ -70,14 +65,14 @@ class LabelPreviewData {
   });
 
   const LabelPreviewData.demo()
-      : productName = 'Product Name',
-        productNameAr = 'اسم المنتج',
-        barcode = '1234567890128',
-        price = 9.999,
-        currency = '\u0081',
-        sku = 'SKU-001',
-        expiryDate = null,
-        weight = null;
+    : productName = 'Product Name',
+      productNameAr = 'اسم المنتج',
+      barcode = '1234567890128',
+      price = 9.999,
+      currency = '\u0081',
+      sku = 'SKU-001',
+      expiryDate = null,
+      weight = null;
 
   final String productName;
   final String productNameAr;
@@ -135,11 +130,7 @@ class _LabelElementView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             (config['use_arabic'] as bool? ?? false) ? data.productNameAr : data.productName,
-            style: TextStyle(
-              fontSize: _toDouble(config['font_size'], 10),
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
+            style: TextStyle(fontSize: _toDouble(config['font_size'], 10), fontWeight: FontWeight.w600, color: Colors.black),
           ),
         );
       case 'price':
@@ -149,21 +140,14 @@ class _LabelElementView extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             showCurrency ? '$priceText ${data.currency}' : priceText,
-            style: TextStyle(
-              fontSize: _toDouble(config['font_size'], 12),
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: TextStyle(fontSize: _toDouble(config['font_size'], 12), fontWeight: FontWeight.bold, color: Colors.black),
           ),
         );
       case 'sku':
         return FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
-            'SKU: ${data.sku ?? '-'}',
-            style: const TextStyle(fontSize: 8, color: Colors.black87),
-          ),
+          child: Text('SKU: ${data.sku ?? '-'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
         );
       case 'custom_text':
         return FittedBox(
@@ -178,8 +162,7 @@ class _LabelElementView extends StatelessWidget {
         return FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text('EXP: ${data.expiryDate ?? '--/--/--'}',
-              style: const TextStyle(fontSize: 8, color: Colors.black87)),
+          child: Text('EXP: ${data.expiryDate ?? '--/--/--'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
         );
       case 'weight':
         return FittedBox(
@@ -248,12 +231,7 @@ class _BarcodePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = Colors.black;
     try {
-      final ops = barcode.make(
-        value,
-        width: size.width,
-        height: showText ? size.height * 0.8 : size.height,
-        drawText: false,
-      );
+      final ops = barcode.make(value, width: size.width, height: showText ? size.height * 0.8 : size.height, drawText: false);
       for (final op in ops) {
         if (op is BarcodeBar && op.black) {
           canvas.drawRect(Rect.fromLTWH(op.left, op.top, op.width, op.height), paint);
@@ -261,7 +239,10 @@ class _BarcodePainter extends CustomPainter {
       }
       if (showText && size.height > 12) {
         final tp = TextPainter(
-          text: TextSpan(text: value, style: const TextStyle(fontSize: 8, color: Colors.black)),
+          text: TextSpan(
+            text: value,
+            style: const TextStyle(fontSize: 8, color: Colors.black),
+          ),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center,
         );

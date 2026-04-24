@@ -24,12 +24,7 @@ void main() {
         },
         'devices': {'total': 2, 'active': 2, 'tampered': 0},
         'queue_depth': 0,
-        'last_success': {
-          'id': 'inv-1',
-          'invoice_number': 'INV-1',
-          'submitted_at': '2024-06-01T12:00:00Z',
-          'flow': 'reporting',
-        },
+        'last_success': {'id': 'inv-1', 'invoice_number': 'INV-1', 'submitted_at': '2024-06-01T12:00:00Z', 'flow': 'reporting'},
         'last_error': null,
       };
 
@@ -138,11 +133,11 @@ void main() {
   group('ZatcaConnectionState pattern matching', () {
     test('exhaustive switch returns expected branches', () {
       String describe(ZatcaConnectionState s) => switch (s) {
-            ZatcaConnectionInitial() => 'initial',
-            ZatcaConnectionLoading() => 'loading',
-            ZatcaConnectionLoaded() => 'loaded',
-            ZatcaConnectionError() => 'error',
-          };
+        ZatcaConnectionInitial() => 'initial',
+        ZatcaConnectionLoading() => 'loading',
+        ZatcaConnectionLoaded() => 'loaded',
+        ZatcaConnectionError() => 'error',
+      };
       expect(describe(const ZatcaConnectionInitial()), 'initial');
       expect(describe(const ZatcaConnectionLoading()), 'loading');
       expect(describe(const ZatcaConnectionError('x')), 'error');

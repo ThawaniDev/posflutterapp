@@ -111,11 +111,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     }
     final templates = state is LabelTemplatesLoaded ? state.templates : const <dynamic>[];
 
-    final result = await quickPrintProductLabel(
-      ref,
-      product: product,
-      templates: List.from(templates),
-    );
+    final result = await quickPrintProductLabel(ref, product: product, templates: List.from(templates));
     if (!mounted) return;
     switch (result) {
       case QuickPrintResult.success:

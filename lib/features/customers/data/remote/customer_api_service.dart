@@ -46,9 +46,7 @@ class CustomerApiService {
     );
     final api = ApiResponse.fromJson(response.data, (d) => d);
     final map = api.data as Map<String, dynamic>;
-    final items = (map['data'] as List)
-        .map((j) => Customer.fromJson(j as Map<String, dynamic>))
-        .toList();
+    final items = (map['data'] as List).map((j) => Customer.fromJson(j as Map<String, dynamic>)).toList();
     return PaginatedResult(
       items: items,
       total: (map['total'] as num?)?.toInt() ?? items.length,
@@ -59,16 +57,10 @@ class CustomerApiService {
   }
 
   /// Spec §4.1 — bulk action: assign many customers to one group.
-  Future<int> bulkAssignGroup({
-    required List<String> customerIds,
-    String? groupId,
-  }) async {
+  Future<int> bulkAssignGroup({required List<String> customerIds, String? groupId}) async {
     final r = await _dio.post(
       '${ApiEndpoints.customers}/bulk/assign-group',
-      data: {
-        'customer_ids': customerIds,
-        if (groupId != null) 'group_id': groupId,
-      },
+      data: {'customer_ids': customerIds, if (groupId != null) 'group_id': groupId},
     );
     final api = ApiResponse.fromJson(r.data, (d) => d);
     final map = api.data as Map<String, dynamic>;
@@ -100,48 +92,25 @@ class CustomerApiService {
   // ─── Search & Sync ────────────────────────────────────────────
 
   Future<List<Customer>> searchCustomers(String query, {int limit = 10}) async {
-    final r = await _dio.get(
-      ApiEndpoints.customersSearch,
-      queryParameters: {'q': query, 'limit': limit},
-    );
+    final r = await _dio.get(ApiEndpoints.customersSearch, queryParameters: {'q': query, 'limit': limit});
     final api = ApiResponse.fromJson(r.data, (d) => d);
-    return api.dataList
-        .map((j) => Customer.fromJson(j as Map<String, dynamic>))
-        .toList();
+    return api.dataList.map((j) => Customer.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   /// `since` is an ISO 8601 timestamp. Returns the raw envelope so the sync
   /// service can grab `server_time` (used to advance the local cursor).
-  Future<({List<Customer> data, String serverTime, int count})> syncDelta({
-    String? since,
-    int limit = 500,
-  }) async {
-    final r = await _dio.get(
-      ApiEndpoints.customersSync,
-      queryParameters: {
-        if (since != null) 'since': since,
-        'limit': limit,
-      },
-    );
+  Future<({List<Customer> data, String serverTime, int count})> syncDelta({String? since, int limit = 500}) async {
+    final r = await _dio.get(ApiEndpoints.customersSync, queryParameters: {if (since != null) 'since': since, 'limit': limit});
     final api = ApiResponse.fromJson(r.data, (d) => d);
     final map = api.data as Map<String, dynamic>;
-    final items = (map['data'] as List? ?? [])
-        .map((j) => Customer.fromJson(j as Map<String, dynamic>))
-        .toList();
-    return (
-      data: items,
-      serverTime: map['server_time'] as String? ?? '',
-      count: (map['count'] as num?)?.toInt() ?? items.length,
-    );
+    final items = (map['data'] as List? ?? []).map((j) => Customer.fromJson(j as Map<String, dynamic>)).toList();
+    return (data: items, serverTime: map['server_time'] as String? ?? '', count: (map['count'] as num?)?.toInt() ?? items.length);
   }
 
   // ─── Orders & Receipts ────────────────────────────────────────
 
   Future<Map<String, dynamic>> getCustomerOrders(String id, {int perPage = 20}) async {
-    final r = await _dio.get(
-      ApiEndpoints.customerOrders(id),
-      queryParameters: {'per_page': perPage},
-    );
+    final r = await _dio.get(ApiEndpoints.customerOrders(id), queryParameters: {'per_page': perPage});
     final api = ApiResponse.fromJson(r.data, (d) => d);
     return api.data as Map<String, dynamic>;
   }
@@ -169,9 +138,7 @@ class CustomerApiService {
   Future<List<CustomerGroup>> listGroups() async {
     final r = await _dio.get(ApiEndpoints.customerGroups);
     final api = ApiResponse.fromJson(r.data, (d) => d);
-    return api.dataList
-        .map((j) => CustomerGroup.fromJson(j as Map<String, dynamic>))
-        .toList();
+    return api.dataList.map((j) => CustomerGroup.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   Future<CustomerGroup> createGroup(Map<String, dynamic> data) async {
@@ -210,9 +177,7 @@ class CustomerApiService {
   Future<List<LoyaltyTransaction>> getLoyaltyLog(String customerId) async {
     final r = await _dio.get(ApiEndpoints.customerLoyaltyLog(customerId));
     final api = ApiResponse.fromJson(r.data, (d) => d);
-    return api.dataList
-        .map((j) => LoyaltyTransaction.fromJson(j as Map<String, dynamic>))
-        .toList();
+    return api.dataList.map((j) => LoyaltyTransaction.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   Future<LoyaltyTransaction> adjustLoyalty(
@@ -224,28 +189,16 @@ class CustomerApiService {
   }) async {
     final r = await _dio.post(
       ApiEndpoints.customerLoyaltyAdjust(customerId),
-      data: {
-        'points': points,
-        'type': type,
-        if (notes != null) 'notes': notes,
-        if (orderId != null) 'order_id': orderId,
-      },
+      data: {'points': points, 'type': type, if (notes != null) 'notes': notes, if (orderId != null) 'order_id': orderId},
     );
     final api = ApiResponse.fromJson(r.data, (d) => d);
     return LoyaltyTransaction.fromJson(api.data as Map<String, dynamic>);
   }
 
-  Future<LoyaltyTransaction> redeemLoyalty(
-    String customerId, {
-    required int points,
-    String? orderId,
-  }) async {
+  Future<LoyaltyTransaction> redeemLoyalty(String customerId, {required int points, String? orderId}) async {
     final r = await _dio.post(
       ApiEndpoints.customerLoyaltyRedeem(customerId),
-      data: {
-        'points': points,
-        if (orderId != null) 'order_id': orderId,
-      },
+      data: {'points': points, if (orderId != null) 'order_id': orderId},
     );
     final api = ApiResponse.fromJson(r.data, (d) => d);
     return LoyaltyTransaction.fromJson(api.data as Map<String, dynamic>);
@@ -256,38 +209,22 @@ class CustomerApiService {
   Future<List<StoreCreditTransaction>> getStoreCreditLog(String customerId) async {
     final r = await _dio.get(ApiEndpoints.customerCreditLog(customerId));
     final api = ApiResponse.fromJson(r.data, (d) => d);
-    return api.dataList
-        .map((j) => StoreCreditTransaction.fromJson(j as Map<String, dynamic>))
-        .toList();
+    return api.dataList.map((j) => StoreCreditTransaction.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  Future<StoreCreditTransaction> topUpCredit(
-    String customerId, {
-    required double amount,
-    String? notes,
-  }) async {
+  Future<StoreCreditTransaction> topUpCredit(String customerId, {required double amount, String? notes}) async {
     final r = await _dio.post(
       ApiEndpoints.customerCreditTopUp(customerId),
-      data: {
-        'amount': amount,
-        if (notes != null) 'notes': notes,
-      },
+      data: {'amount': amount, if (notes != null) 'notes': notes},
     );
     final api = ApiResponse.fromJson(r.data, (d) => d);
     return StoreCreditTransaction.fromJson(api.data as Map<String, dynamic>);
   }
 
-  Future<StoreCreditTransaction> adjustCredit(
-    String customerId, {
-    required double amount,
-    String? notes,
-  }) async {
+  Future<StoreCreditTransaction> adjustCredit(String customerId, {required double amount, String? notes}) async {
     final r = await _dio.post(
       ApiEndpoints.customerCreditAdjust(customerId),
-      data: {
-        'amount': amount,
-        if (notes != null) 'notes': notes,
-      },
+      data: {'amount': amount, if (notes != null) 'notes': notes},
     );
     final api = ApiResponse.fromJson(r.data, (d) => d);
     return StoreCreditTransaction.fromJson(api.data as Map<String, dynamic>);

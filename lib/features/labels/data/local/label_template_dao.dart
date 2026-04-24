@@ -45,30 +45,29 @@ class LabelTemplateDao {
   }
 
   Future<List<LabelTemplate>> listTemplates(String organizationId) async {
-    final rows = await (_db.select(_db.localLabelTemplates)
-          ..where((t) => t.organizationId.equals(organizationId))
-          ..orderBy([(t) => OrderingTerm.asc(t.name)]))
-        .get();
+    final rows =
+        await (_db.select(_db.localLabelTemplates)
+              ..where((t) => t.organizationId.equals(organizationId))
+              ..orderBy([(t) => OrderingTerm.asc(t.name)]))
+            .get();
     return rows.map(_rowToTemplate).toList();
   }
 
   Future<LabelTemplate?> getTemplate(String id) async {
-    final row = await (_db.select(_db.localLabelTemplates)
-          ..where((t) => t.id.equals(id)))
-        .getSingleOrNull();
+    final row = await (_db.select(_db.localLabelTemplates)..where((t) => t.id.equals(id))).getSingleOrNull();
     return row == null ? null : _rowToTemplate(row);
   }
 
   Future<LabelTemplate?> getDefaultTemplate(String organizationId) async {
-    final row = await (_db.select(_db.localLabelTemplates)
-          ..where((t) => t.organizationId.equals(organizationId) & t.isDefault.equals(true))
-          ..limit(1))
-        .getSingleOrNull();
+    final row =
+        await (_db.select(_db.localLabelTemplates)
+              ..where((t) => t.organizationId.equals(organizationId) & t.isDefault.equals(true))
+              ..limit(1))
+            .getSingleOrNull();
     return row == null ? null : _rowToTemplate(row);
   }
 
-  Future<int> deleteTemplate(String id) =>
-      (_db.delete(_db.localLabelTemplates)..where((t) => t.id.equals(id))).go();
+  Future<int> deleteTemplate(String id) => (_db.delete(_db.localLabelTemplates)..where((t) => t.id.equals(id))).go();
 
   // ─── Print history ─────────────────────────────────────────
 
@@ -79,7 +78,9 @@ class LabelTemplateDao {
     required int productCount,
     required int totalLabels,
   }) async {
-    await _db.into(_db.localLabelPrintHistory).insert(
+    await _db
+        .into(_db.localLabelPrintHistory)
+        .insert(
           LocalLabelPrintHistoryCompanion.insert(
             id: id,
             templateId: Value(templateId),
@@ -91,33 +92,31 @@ class LabelTemplateDao {
   }
 
   Future<void> markSynced(String id) async {
-    await (_db.update(_db.localLabelPrintHistory)
-          ..where((t) => t.id.equals(id)))
-        .write(const LocalLabelPrintHistoryCompanion(syncedToServer: Value(true)));
+    await (_db.update(
+      _db.localLabelPrintHistory,
+    )..where((t) => t.id.equals(id))).write(const LocalLabelPrintHistoryCompanion(syncedToServer: Value(true)));
   }
 
   /// Hard-delete records older than 90 days. Spec rule #8.
   Future<int> pruneOldHistory({DateTime? now}) {
     final cutoff = (now ?? DateTime.now()).subtract(historyRetention);
-    return (_db.delete(_db.localLabelPrintHistory)
-          ..where((t) => t.printedAt.isSmallerThanValue(cutoff)))
-        .go();
+    return (_db.delete(_db.localLabelPrintHistory)..where((t) => t.printedAt.isSmallerThanValue(cutoff))).go();
   }
 
   // ─── Mapping ───────────────────────────────────────────────
 
   LabelTemplate _rowToTemplate(LocalLabelTemplate r) => LabelTemplate(
-        id: r.id,
-        organizationId: r.organizationId,
-        name: r.name,
-        labelWidthMm: r.labelWidthMm,
-        labelHeightMm: r.labelHeightMm,
-        layoutJson: jsonDecode(r.layoutJson) as Map<String, dynamic>,
-        isPreset: r.isPreset,
-        isDefault: r.isDefault,
-        syncVersion: r.syncVersion,
-        updatedAt: r.updatedAt,
-      );
+    id: r.id,
+    organizationId: r.organizationId,
+    name: r.name,
+    labelWidthMm: r.labelWidthMm,
+    labelHeightMm: r.labelHeightMm,
+    layoutJson: jsonDecode(r.layoutJson) as Map<String, dynamic>,
+    isPreset: r.isPreset,
+    isDefault: r.isDefault,
+    syncVersion: r.syncVersion,
+    updatedAt: r.updatedAt,
+  );
 }
 
 final labelTemplateDaoProvider = Provider<LabelTemplateDao>((ref) {

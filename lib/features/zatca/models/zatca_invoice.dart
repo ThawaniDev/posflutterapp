@@ -3,7 +3,6 @@ import 'package:wameedpos/features/zatca/enums/zatca_invoice_type.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_submission_status.dart';
 
 class ZatcaInvoice {
-
   const ZatcaInvoice({
     required this.id,
     required this.storeId,
@@ -66,15 +65,9 @@ class ZatcaInvoice {
       clearedXml: json['cleared_xml'] as String?,
       tlvQrBase64: json['tlv_qr_base64'] as String?,
       flow: ZatcaInvoiceFlow.tryFromValue(json['flow'] as String?),
-      submissionAttempts: json['submission_attempts'] == null
-          ? null
-          : int.tryParse(json['submission_attempts'].toString()),
-      lastAttemptAt: json['last_attempt_at'] != null
-          ? DateTime.tryParse(json['last_attempt_at'] as String)
-          : null,
-      nextAttemptAt: json['next_attempt_at'] != null
-          ? DateTime.tryParse(json['next_attempt_at'] as String)
-          : null,
+      submissionAttempts: json['submission_attempts'] == null ? null : int.tryParse(json['submission_attempts'].toString()),
+      lastAttemptAt: json['last_attempt_at'] != null ? DateTime.tryParse(json['last_attempt_at'] as String) : null,
+      nextAttemptAt: json['next_attempt_at'] != null ? DateTime.tryParse(json['next_attempt_at'] as String) : null,
     );
   }
   final String id;

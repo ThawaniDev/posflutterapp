@@ -96,9 +96,7 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
     if (ok == true) {
       final amt = double.tryParse(controller.text.trim()) ?? 0;
       if (amt <= 0) return;
-      await ref
-          .read(storeCreditLogProvider(widget.customerId).notifier)
-          .topUp(amount: amt, notes: notes.text.trim());
+      await ref.read(storeCreditLogProvider(widget.customerId).notifier).topUp(amount: amt, notes: notes.text.trim());
       await ref.read(customerDetailProvider(widget.customerId).notifier).load();
     }
   }
@@ -144,11 +142,7 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
     try {
       switch (channel) {
         case 'email':
-          await svc.sendEmail(
-            customerId: widget.customerId,
-            orderId: orderId,
-            destination: customer.email,
-          );
+          await svc.sendEmail(customerId: widget.customerId, orderId: orderId, destination: customer.email);
           break;
         case 'whatsapp':
           await svc.sendWhatsApp(
@@ -159,12 +153,7 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
           );
           break;
         case 'sms':
-          await svc.sendSms(
-            customerId: widget.customerId,
-            orderId: orderId,
-            phone: customer.phone,
-            body: 'order:$orderId',
-          );
+          await svc.sendSms(customerId: widget.customerId, orderId: orderId, phone: customer.phone, body: 'order:$orderId');
           break;
       }
       if (!mounted) return;
@@ -240,16 +229,19 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
     final visits = c.visitCount ?? 0;
     final spend = c.totalSpend ?? 0;
     final avgBasket = visits > 0 ? (spend / visits) : 0.0;
-    return PosStatsGrid(children: [
-      PosKpiCard(label: l10n.customersTotalSpend, value: spend.toStringAsFixed(2), icon: Icons.payments_outlined),
-      PosKpiCard(label: l10n.customersVisitCount, value: '$visits', icon: Icons.repeat),
-      PosKpiCard(label: l10n.customersAvgBasket, value: avgBasket.toStringAsFixed(2), icon: Icons.shopping_basket_outlined),
-      PosKpiCard(label: l10n.customersLoyaltyPoints, value: '${c.loyaltyPoints ?? 0}', icon: Icons.workspace_premium),
-      PosKpiCard(
+    return PosStatsGrid(
+      children: [
+        PosKpiCard(label: l10n.customersTotalSpend, value: spend.toStringAsFixed(2), icon: Icons.payments_outlined),
+        PosKpiCard(label: l10n.customersVisitCount, value: '$visits', icon: Icons.repeat),
+        PosKpiCard(label: l10n.customersAvgBasket, value: avgBasket.toStringAsFixed(2), icon: Icons.shopping_basket_outlined),
+        PosKpiCard(label: l10n.customersLoyaltyPoints, value: '${c.loyaltyPoints ?? 0}', icon: Icons.workspace_premium),
+        PosKpiCard(
           label: l10n.customersStoreCredit,
           value: (c.storeCreditBalance ?? 0).toStringAsFixed(2),
-          icon: Icons.account_balance_wallet_outlined),
-    ]);
+          icon: Icons.account_balance_wallet_outlined,
+        ),
+      ],
+    );
   }
 
   Widget _ordersTab(AppLocalizations l10n) {
@@ -320,10 +312,7 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
               ),
               Text(
                 (t.points >= 0 ? '+' : '') + t.points.toString(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: t.points >= 0 ? Colors.green : Colors.red,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700, color: t.points >= 0 ? Colors.green : Colors.red),
               ),
               AppSpacing.gapW8,
               Text('= ${t.balanceAfter}', style: Theme.of(context).textTheme.bodySmall),
@@ -359,10 +348,7 @@ class _CustomerDetailPageState extends ConsumerState<CustomerDetailPage> {
               ),
               Text(
                 (t.amount >= 0 ? '+' : '') + t.amount.toStringAsFixed(2),
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: t.amount >= 0 ? Colors.green : Colors.red,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700, color: t.amount >= 0 ? Colors.green : Colors.red),
               ),
               AppSpacing.gapW8,
               Text('= ${t.balanceAfter.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodySmall),

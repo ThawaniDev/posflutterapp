@@ -58,11 +58,7 @@ class ProductionDeliveryAlertSink implements DeliveryAlertSink {
             priority: Priority.high,
             playSound: true,
           ),
-          iOS: DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-          ),
+          iOS: DarwinNotificationDetails(presentAlert: true, presentBadge: true, presentSound: true),
         ),
       );
     } catch (e, st) {

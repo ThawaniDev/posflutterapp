@@ -25,9 +25,7 @@ class NoopDeliveryAlertSink implements DeliveryAlertSink {
 ///
 /// Pure logic — no platform channels — so it is fully unit-testable.
 class DeliveryAlertService {
-  DeliveryAlertService({required DeliveryAlertSink sink, bool enabled = true})
-    : _sink = sink,
-      _enabled = enabled;
+  DeliveryAlertService({required DeliveryAlertSink sink, bool enabled = true}) : _sink = sink, _enabled = enabled;
 
   final DeliveryAlertSink _sink;
   final Set<String> _seenIds = <String>{};
@@ -55,9 +53,7 @@ class DeliveryAlertService {
   /// Compares [orders] against the seen-set and returns the list of orders
   /// that are new in this tick. Fires the alert sink for each new one when
   /// the service is enabled.
-  Future<List<Map<String, dynamic>>> ingest(
-    Iterable<Map<String, dynamic>> orders,
-  ) async {
+  Future<List<Map<String, dynamic>>> ingest(Iterable<Map<String, dynamic>> orders) async {
     if (!_primed) {
       prime(orders);
       return const [];
@@ -94,9 +90,7 @@ class DeliveryAlertService {
 
 /// Riverpod provider — singleton per app instance. Tests override
 /// [deliveryAlertSinkProvider] to inject a fake.
-final deliveryAlertSinkProvider = Provider<DeliveryAlertSink>(
-  (ref) => const NoopDeliveryAlertSink(),
-);
+final deliveryAlertSinkProvider = Provider<DeliveryAlertSink>((ref) => const NoopDeliveryAlertSink());
 
 final deliveryAlertServiceProvider = Provider<DeliveryAlertService>((ref) {
   final svc = DeliveryAlertService(sink: ref.watch(deliveryAlertSinkProvider));

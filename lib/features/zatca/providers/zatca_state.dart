@@ -41,12 +41,7 @@ final class ZatcaInvoiceListLoading extends ZatcaInvoiceListState {
 }
 
 final class ZatcaInvoiceListLoaded extends ZatcaInvoiceListState {
-  const ZatcaInvoiceListLoaded({
-    required this.invoices,
-    required this.currentPage,
-    required this.lastPage,
-    required this.total,
-  });
+  const ZatcaInvoiceListLoaded({required this.invoices, required this.currentPage, required this.lastPage, required this.total});
   final List<ZatcaInvoice> invoices;
   final int currentPage;
   final int lastPage;
@@ -72,7 +67,6 @@ final class ZatcaComplianceSummaryLoading extends ZatcaComplianceSummaryState {
 }
 
 final class ZatcaComplianceSummaryLoaded extends ZatcaComplianceSummaryState {
-
   const ZatcaComplianceSummaryLoaded({
     required this.totalInvoices,
     required this.accepted,
@@ -108,7 +102,6 @@ final class ZatcaVatReportLoading extends ZatcaVatReportState {
 }
 
 final class ZatcaVatReportLoaded extends ZatcaVatReportState {
-
   const ZatcaVatReportLoaded({
     required this.standardInvoices,
     required this.simplifiedInvoices,
@@ -145,11 +138,7 @@ final class ZatcaDeviceListLoaded extends ZatcaDeviceState {
 }
 
 final class ZatcaDeviceProvisioned extends ZatcaDeviceState {
-  const ZatcaDeviceProvisioned({
-    required this.deviceId,
-    required this.deviceUuid,
-    required this.activationCode,
-  });
+  const ZatcaDeviceProvisioned({required this.deviceId, required this.deviceUuid, required this.activationCode});
   final String deviceId;
   final String deviceUuid;
   final String activationCode;

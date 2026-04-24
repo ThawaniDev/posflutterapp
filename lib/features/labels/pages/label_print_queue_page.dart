@@ -22,7 +22,6 @@ import 'package:wameedpos/features/labels/widgets/label_product_picker_sheet.dar
 /// - Preview labels before printing
 /// - Submit the print job
 class LabelPrintQueuePage extends ConsumerStatefulWidget {
-
   const LabelPrintQueuePage({super.key, this.templateId});
   final String? templateId;
 
@@ -179,17 +178,11 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
-                                  Icons.queue_rounded,
-                                  size: 40,
-                                  color: AppColors.mutedFor(context),
-                                ),
+                                Icon(Icons.queue_rounded, size: 40, color: AppColors.mutedFor(context)),
                                 const SizedBox(height: AppSpacing.sm),
                                 Text(
                                   l10n.labelEmptyQueue,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.mutedFor(context),
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                 ),
                               ],
                             ),
@@ -317,7 +310,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
             const SizedBox(height: AppSpacing.md),
             Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: AppSpacing.md),
-            Center(child: _buildPreviewSurface(templates: ref.read(labelTemplatesProvider) is LabelTemplatesLoaded ? (ref.read(labelTemplatesProvider) as LabelTemplatesLoaded).templates : <LabelTemplate>[])),
+            Center(
+              child: _buildPreviewSurface(
+                templates: ref.read(labelTemplatesProvider) is LabelTemplatesLoaded
+                    ? (ref.read(labelTemplatesProvider) as LabelTemplatesLoaded).templates
+                    : <LabelTemplate>[],
+              ),
+            ),
             const SizedBox(height: AppSpacing.md),
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
@@ -470,17 +469,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(
-                                        Icons.queue_rounded,
-                                        size: 48,
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      Icon(Icons.queue_rounded, size: 48, color: AppColors.mutedFor(context)),
                                       const SizedBox(height: AppSpacing.md),
                                       Text(
                                         l10n.labelEmptyQueue,
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: AppColors.mutedFor(context),
-                                        ),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
                                       ),
                                     ],
                                   ),
@@ -657,7 +652,8 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
   LabelPrinterConfig? _resolvePrinterConfig() {
     final printer = ref.read(hardwareManagerProvider).labelPrinter;
     final cfg = printer.config;
-    final connected = (cfg.connectionType == 'network' && (cfg.ipAddress?.isNotEmpty ?? false)) ||
+    final connected =
+        (cfg.connectionType == 'network' && (cfg.ipAddress?.isNotEmpty ?? false)) ||
         (cfg.connectionType == 'usb' && (cfg.usbDevicePath?.isNotEmpty ?? false));
     return connected ? cfg : null;
   }
@@ -704,12 +700,14 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
       // 2. Always record print history (local first, then opportunistic
       // server flush) so audit data is preserved even when offline.
       final totalLabels = _queueItems.fold<int>(0, (sum, i) => sum + i.quantity) * _copies;
-      await ref.read(offlineLabelServiceProvider).recordPrint(
-        templateId: _selectedTemplateId,
-        printerName: _printerName.isEmpty ? (config?.ipAddress ?? '') : _printerName,
-        productCount: _queueItems.length,
-        totalLabels: totalLabels,
-      );
+      await ref
+          .read(offlineLabelServiceProvider)
+          .recordPrint(
+            templateId: _selectedTemplateId,
+            printerName: _printerName.isEmpty ? (config?.ipAddress ?? '') : _printerName,
+            productCount: _queueItems.length,
+            totalLabels: totalLabels,
+          );
 
       if (!mounted) return;
       if (printOk) {

@@ -9,18 +9,11 @@ final zatcaApiServiceProvider = Provider<ZatcaApiService>((ref) {
 });
 
 class ZatcaApiService {
-
   ZatcaApiService(this._dio);
   final Dio _dio;
 
-  Future<Map<String, dynamic>> enroll({
-    required String otp,
-    required String environment,
-  }) async {
-    final response = await _dio.post(
-      ApiEndpoints.zatcaEnroll,
-      data: {'otp': otp, 'environment': environment},
-    );
+  Future<Map<String, dynamic>> enroll({required String otp, required String environment}) async {
+    final response = await _dio.post(ApiEndpoints.zatcaEnroll, data: {'otp': otp, 'environment': environment});
     return Map<String, dynamic>.from(response.data as Map);
   }
 
@@ -55,13 +48,8 @@ class ZatcaApiService {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> submitBatch({
-    required List<Map<String, dynamic>> invoices,
-  }) async {
-    final response = await _dio.post(
-      ApiEndpoints.zatcaSubmitBatch,
-      data: {'invoices': invoices},
-    );
+  Future<Map<String, dynamic>> submitBatch({required List<Map<String, dynamic>> invoices}) async {
+    final response = await _dio.post(ApiEndpoints.zatcaSubmitBatch, data: {'invoices': invoices});
     return Map<String, dynamic>.from(response.data as Map);
   }
 
@@ -86,10 +74,7 @@ class ZatcaApiService {
   }
 
   Future<String> getInvoiceXml(String invoiceId) async {
-    final response = await _dio.get(
-      ApiEndpoints.zatcaInvoiceXml(invoiceId),
-      options: Options(responseType: ResponseType.plain),
-    );
+    final response = await _dio.get(ApiEndpoints.zatcaInvoiceXml(invoiceId), options: Options(responseType: ResponseType.plain));
     return response.data as String;
   }
 
@@ -98,17 +83,8 @@ class ZatcaApiService {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> vatReport({
-    String? dateFrom,
-    String? dateTo,
-  }) async {
-    final response = await _dio.get(
-      ApiEndpoints.zatcaVatReport,
-      queryParameters: {
-        'date_from': ?dateFrom,
-        'date_to': ?dateTo,
-      },
-    );
+  Future<Map<String, dynamic>> vatReport({String? dateFrom, String? dateTo}) async {
+    final response = await _dio.get(ApiEndpoints.zatcaVatReport, queryParameters: {'date_from': ?dateFrom, 'date_to': ?dateTo});
     return Map<String, dynamic>.from(response.data as Map);
   }
 
@@ -120,23 +96,14 @@ class ZatcaApiService {
   }
 
   Future<Map<String, dynamic>> provisionDevice({String environment = 'sandbox'}) async {
-    final response = await _dio.post(
-      ApiEndpoints.zatcaDevices,
-      data: {'environment': environment},
-    );
+    final response = await _dio.post(ApiEndpoints.zatcaDevices, data: {'environment': environment});
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> activateDevice({
-    required String activationCode,
-    String? hardwareSerial,
-  }) async {
+  Future<Map<String, dynamic>> activateDevice({required String activationCode, String? hardwareSerial}) async {
     final response = await _dio.post(
       ApiEndpoints.zatcaDeviceActivate,
-      data: {
-        'activation_code': activationCode,
-        'hardware_serial': ?hardwareSerial,
-      },
+      data: {'activation_code': activationCode, 'hardware_serial': ?hardwareSerial},
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

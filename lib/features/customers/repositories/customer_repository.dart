@@ -26,16 +26,15 @@ class CustomerRepository {
     bool? hasLoyalty,
     DateTime? lastVisitFrom,
     DateTime? lastVisitTo,
-  }) =>
-      _api.listCustomers(
-        page: page,
-        perPage: perPage,
-        search: search,
-        groupId: groupId,
-        hasLoyalty: hasLoyalty,
-        lastVisitFrom: lastVisitFrom,
-        lastVisitTo: lastVisitTo,
-      );
+  }) => _api.listCustomers(
+    page: page,
+    perPage: perPage,
+    search: search,
+    groupId: groupId,
+    hasLoyalty: hasLoyalty,
+    lastVisitFrom: lastVisitFrom,
+    lastVisitTo: lastVisitTo,
+  );
 
   /// Spec §4.1 bulk action.
   Future<int> bulkAssignGroup({required List<String> customerIds, String? groupId}) =>
@@ -50,11 +49,13 @@ class CustomerRepository {
       _api.syncDelta(since: since, limit: limit);
 
   // History & receipts
-  Future<Map<String, dynamic>> getCustomerOrders(String id, {int perPage = 20}) =>
-      _api.getCustomerOrders(id, perPage: perPage);
-  Future<DigitalReceiptLog> sendReceipt(String customerId,
-          {required String orderId, required String channel, String? destination}) =>
-      _api.sendReceipt(customerId, orderId: orderId, channel: channel, destination: destination);
+  Future<Map<String, dynamic>> getCustomerOrders(String id, {int perPage = 20}) => _api.getCustomerOrders(id, perPage: perPage);
+  Future<DigitalReceiptLog> sendReceipt(
+    String customerId, {
+    required String orderId,
+    required String channel,
+    String? destination,
+  }) => _api.sendReceipt(customerId, orderId: orderId, channel: channel, destination: destination);
 
   // Groups
   Future<List<CustomerGroup>> listGroups() => _api.listGroups();
@@ -66,9 +67,13 @@ class CustomerRepository {
   Future<LoyaltyConfig?> getLoyaltyConfig() => _api.getLoyaltyConfig();
   Future<LoyaltyConfig> saveLoyaltyConfig(Map<String, dynamic> data) => _api.saveLoyaltyConfig(data);
   Future<List<LoyaltyTransaction>> getLoyaltyLog(String customerId) => _api.getLoyaltyLog(customerId);
-  Future<LoyaltyTransaction> adjustLoyalty(String customerId,
-          {required int points, required String type, String? notes, String? orderId}) =>
-      _api.adjustLoyalty(customerId, points: points, type: type, notes: notes, orderId: orderId);
+  Future<LoyaltyTransaction> adjustLoyalty(
+    String customerId, {
+    required int points,
+    required String type,
+    String? notes,
+    String? orderId,
+  }) => _api.adjustLoyalty(customerId, points: points, type: type, notes: notes, orderId: orderId);
   Future<LoyaltyTransaction> redeemLoyalty(String customerId, {required int points, String? orderId}) =>
       _api.redeemLoyalty(customerId, points: points, orderId: orderId);
 

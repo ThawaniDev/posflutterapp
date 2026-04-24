@@ -120,12 +120,7 @@ class _LoyaltyConfigPageState extends ConsumerState<LoyaltyConfigPage> {
       bottomBar: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          PosButton(
-            label: l10n.commonSave,
-            icon: Icons.save_outlined,
-            isLoading: isSaving,
-            onPressed: isSaving ? null : _save,
-          ),
+          PosButton(label: l10n.commonSave, icon: Icons.save_outlined, isLoading: isSaving, onPressed: isSaving ? null : _save),
         ],
       ),
       child: Form(
@@ -162,11 +157,7 @@ class _LoyaltyConfigPageState extends ConsumerState<LoyaltyConfigPage> {
                     keyboardType: TextInputType.number,
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _expiryMonths,
-                    label: l10n.customersPointsExpiry,
-                    keyboardType: TextInputType.number,
-                  ),
+                  PosTextField(controller: _expiryMonths, label: l10n.customersPointsExpiry, keyboardType: TextInputType.number),
                 ],
               ),
             ),
@@ -194,10 +185,7 @@ class _LoyaltyConfigPageState extends ConsumerState<LoyaltyConfigPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    l10n.customersExcludedCategoriesHint,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  Text(l10n.customersExcludedCategoriesHint, style: Theme.of(context).textTheme.bodySmall),
                   AppSpacing.gapH8,
                   if (categories.isEmpty)
                     Text(l10n.noData)
@@ -211,9 +199,7 @@ class _LoyaltyConfigPageState extends ConsumerState<LoyaltyConfigPage> {
                             label: Text(c.name),
                             selected: _excludedCategoryIds.contains(c.id),
                             onSelected: (sel) => setState(() {
-                              sel
-                                  ? _excludedCategoryIds.add(c.id)
-                                  : _excludedCategoryIds.remove(c.id);
+                              sel ? _excludedCategoryIds.add(c.id) : _excludedCategoryIds.remove(c.id);
                             }),
                           ),
                       ],

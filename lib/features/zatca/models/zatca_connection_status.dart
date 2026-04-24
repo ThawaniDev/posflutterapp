@@ -1,5 +1,4 @@
 class ZatcaConnectionStatus {
-
   const ZatcaConnectionStatus({
     required this.environment,
     required this.isProduction,
@@ -19,23 +18,15 @@ class ZatcaConnectionStatus {
       isHealthy: json['is_healthy'] as bool? ?? false,
       connected: json['connected'] as bool? ?? false,
       certificate: json['certificate'] != null
-          ? ZatcaConnectionCertificate.fromJson(
-              Map<String, dynamic>.from(json['certificate'] as Map),
-            )
+          ? ZatcaConnectionCertificate.fromJson(Map<String, dynamic>.from(json['certificate'] as Map))
           : null,
-      devices: ZatcaConnectionDevices.fromJson(
-        Map<String, dynamic>.from(json['devices'] as Map),
-      ),
+      devices: ZatcaConnectionDevices.fromJson(Map<String, dynamic>.from(json['devices'] as Map)),
       queueDepth: json['queue_depth'] as int? ?? 0,
       lastSuccess: json['last_success'] != null
-          ? ZatcaConnectionEvent.fromJson(
-              Map<String, dynamic>.from(json['last_success'] as Map),
-            )
+          ? ZatcaConnectionEvent.fromJson(Map<String, dynamic>.from(json['last_success'] as Map))
           : null,
       lastError: json['last_error'] != null
-          ? ZatcaConnectionEvent.fromJson(
-              Map<String, dynamic>.from(json['last_error'] as Map),
-            )
+          ? ZatcaConnectionEvent.fromJson(Map<String, dynamic>.from(json['last_error'] as Map))
           : null,
     );
   }
@@ -89,11 +80,7 @@ class ZatcaConnectionCertificate {
 }
 
 class ZatcaConnectionDevices {
-  const ZatcaConnectionDevices({
-    required this.total,
-    required this.active,
-    required this.tampered,
-  });
+  const ZatcaConnectionDevices({required this.total, required this.active, required this.tampered});
 
   factory ZatcaConnectionDevices.fromJson(Map<String, dynamic> json) {
     return ZatcaConnectionDevices(
@@ -124,18 +111,12 @@ class ZatcaConnectionEvent {
     return ZatcaConnectionEvent(
       id: json['id'] as String,
       invoiceNumber: json['invoice_number'] as String?,
-      submittedAt: json['submitted_at'] != null
-          ? DateTime.tryParse(json['submitted_at'] as String)
-          : null,
-      lastAttemptAt: json['last_attempt_at'] != null
-          ? DateTime.tryParse(json['last_attempt_at'] as String)
-          : null,
+      submittedAt: json['submitted_at'] != null ? DateTime.tryParse(json['submitted_at'] as String) : null,
+      lastAttemptAt: json['last_attempt_at'] != null ? DateTime.tryParse(json['last_attempt_at'] as String) : null,
       flow: json['flow'] as String?,
       responseCode: json['response_code'] as String?,
       message: json['message'] as String?,
-      errors: json['errors'] is List
-          ? List<dynamic>.from(json['errors'] as List)
-          : null,
+      errors: json['errors'] is List ? List<dynamic>.from(json['errors'] as List) : null,
     );
   }
 

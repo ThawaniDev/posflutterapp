@@ -61,11 +61,14 @@ class _CustomerLookupSheetState extends ConsumerState<CustomerLookupSheet> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.customersQuickAdd),
-        content: Column(mainAxisSize: MainAxisSize.min, children: [
-          PosTextField(controller: name, label: l10n.customersName),
-          AppSpacing.gapH8,
-          PosTextField(controller: phone, label: l10n.customersPhone, keyboardType: TextInputType.phone),
-        ]),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PosTextField(controller: name, label: l10n.customersName),
+            AppSpacing.gapH8,
+            PosTextField(controller: phone, label: l10n.customersPhone, keyboardType: TextInputType.phone),
+          ],
+        ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.commonSave)),
@@ -76,10 +79,7 @@ class _CustomerLookupSheetState extends ConsumerState<CustomerLookupSheet> {
     if (name.text.trim().isEmpty || phone.text.trim().isEmpty) return;
     try {
       final repo = ref.read(customerRepositoryProvider);
-      final created = await repo.createCustomer({
-        'name': name.text.trim(),
-        'phone': phone.text.trim(),
-      });
+      final created = await repo.createCustomer({'name': name.text.trim(), 'phone': phone.text.trim()});
       if (mounted) Navigator.of(context).pop(created);
     } catch (e) {
       if (mounted) showPosErrorSnackbar(context, e.toString());
@@ -97,40 +97,35 @@ class _CustomerLookupSheetState extends ConsumerState<CustomerLookupSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          PosSearchField(
-            controller: _searchController,
-            hint: l10n.commonSearch,
-            autofocus: true,
-            onChanged: _onChanged,
-          ),
+          PosSearchField(controller: _searchController, hint: l10n.commonSearch, autofocus: true, onChanged: _onChanged),
           AppSpacing.gapH12,
           SizedBox(
             height: 320,
             child: switch (state) {
               CustomerSearchIdle() => Center(
-                  child: Text(l10n.customersLookupTitle,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ),
+                child: Text(l10n.customersLookupTitle, style: Theme.of(context).textTheme.bodyMedium),
+              ),
               CustomerSearchSearching() => const PosLoading(),
               CustomerSearchError(message: final m) => Center(child: Text(m)),
-              CustomerSearchResults(results: final r) => r.isEmpty
-                  ? Center(child: Text(l10n.customersNoMatches))
-                  : ListView.separated(
-                      itemCount: r.length,
-                      separatorBuilder: (_, __) => const Divider(height: 1),
-                      itemBuilder: (ctx, i) {
-                        final c = r[i];
-                        return ListTile(
-                          leading: PosAvatar(name: c.name, radius: 16),
-                          title: Text(c.name),
-                          subtitle: Text(c.phone),
-                          trailing: c.loyaltyPoints != null
-                              ? PosBadge(label: '${c.loyaltyPoints} pts', variant: PosBadgeVariant.info)
-                              : null,
-                          onTap: () => Navigator.of(context).pop(c),
-                        );
-                      },
-                    ),
+              CustomerSearchResults(results: final r) =>
+                r.isEmpty
+                    ? Center(child: Text(l10n.customersNoMatches))
+                    : ListView.separated(
+                        itemCount: r.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (ctx, i) {
+                          final c = r[i];
+                          return ListTile(
+                            leading: PosAvatar(name: c.name, radius: 16),
+                            title: Text(c.name),
+                            subtitle: Text(c.phone),
+                            trailing: c.loyaltyPoints != null
+                                ? PosBadge(label: '${c.loyaltyPoints} pts', variant: PosBadgeVariant.info)
+                                : null,
+                            onTap: () => Navigator.of(context).pop(c),
+                          );
+                        },
+                      ),
             },
           ),
           AppSpacing.gapH12,

@@ -20,9 +20,9 @@ class OfflineLabelService {
     required LabelRepository remote,
     required LabelTemplateDao dao,
     required Future<SharedPreferences> Function() prefsFactory,
-  })  : _remote = remote,
-        _dao = dao,
-        _prefsFactory = prefsFactory;
+  }) : _remote = remote,
+       _dao = dao,
+       _prefsFactory = prefsFactory;
 
   final LabelRepository _remote;
   final LabelTemplateDao _dao;
@@ -35,8 +35,7 @@ class OfflineLabelService {
 
   /// Returns the currently cached templates immediately. Caller may listen to
   /// [refreshTemplates] for an updated list once network responds.
-  Future<List<LabelTemplate>> cachedTemplates(String organizationId) =>
-      _dao.listTemplates(organizationId);
+  Future<List<LabelTemplate>> cachedTemplates(String organizationId) => _dao.listTemplates(organizationId);
 
   /// Pulls templates from the API, replaces the cache for the org and
   /// returns the fresh list. Falls back to the cache on network failure.
@@ -51,8 +50,7 @@ class OfflineLabelService {
     }
   }
 
-  Future<LabelTemplate?> defaultTemplate(String organizationId) =>
-      _dao.getDefaultTemplate(organizationId);
+  Future<LabelTemplate?> defaultTemplate(String organizationId) => _dao.getDefaultTemplate(organizationId);
 
   // ─── Printer preference ────────────────────────────────────
 
@@ -80,12 +78,7 @@ class OfflineLabelService {
 
   /// Record a print job locally (always succeeds, even offline) and try to
   /// flush to the server. The local row is marked synced on success.
-  Future<void> recordPrint({
-    String? templateId,
-    String? printerName,
-    required int productCount,
-    required int totalLabels,
-  }) async {
+  Future<void> recordPrint({String? templateId, String? printerName, required int productCount, required int totalLabels}) async {
     final id = const Uuid().v4();
     await _dao.recordLocalPrint(
       id: id,

@@ -10,20 +10,15 @@ import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 
 // ─── Enrollment Provider ───────────────────────────────────────
 
-final zatcaEnrollmentProvider =
-    StateNotifierProvider<ZatcaEnrollmentNotifier, ZatcaEnrollmentState>((ref) {
+final zatcaEnrollmentProvider = StateNotifierProvider<ZatcaEnrollmentNotifier, ZatcaEnrollmentState>((ref) {
   return ZatcaEnrollmentNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
 class ZatcaEnrollmentNotifier extends StateNotifier<ZatcaEnrollmentState> {
-
   ZatcaEnrollmentNotifier(this._repo) : super(const ZatcaEnrollmentInitial());
   final ZatcaRepository _repo;
 
-  Future<void> enroll({
-    required String otp,
-    required String environment,
-  }) async {
+  Future<void> enroll({required String otp, required String environment}) async {
     state = const ZatcaEnrollmentLoading();
     try {
       final result = await _repo.enroll(otp: otp, environment: environment);
@@ -48,25 +43,15 @@ class ZatcaEnrollmentNotifier extends StateNotifier<ZatcaEnrollmentState> {
 
 // ─── Invoice List Provider ─────────────────────────────────────
 
-final zatcaInvoiceListProvider =
-    StateNotifierProvider<ZatcaInvoiceListNotifier, ZatcaInvoiceListState>(
-        (ref) {
+final zatcaInvoiceListProvider = StateNotifierProvider<ZatcaInvoiceListNotifier, ZatcaInvoiceListState>((ref) {
   return ZatcaInvoiceListNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
 class ZatcaInvoiceListNotifier extends StateNotifier<ZatcaInvoiceListState> {
-
-  ZatcaInvoiceListNotifier(this._repo)
-      : super(const ZatcaInvoiceListInitial());
+  ZatcaInvoiceListNotifier(this._repo) : super(const ZatcaInvoiceListInitial());
   final ZatcaRepository _repo;
 
-  Future<void> load({
-    String? status,
-    String? invoiceType,
-    String? dateFrom,
-    String? dateTo,
-    int? perPage,
-  }) async {
+  Future<void> load({String? status, String? invoiceType, String? dateFrom, String? dateTo, int? perPage}) async {
     state = const ZatcaInvoiceListLoading();
     try {
       final result = await _repo.listInvoices(
@@ -77,9 +62,7 @@ class ZatcaInvoiceListNotifier extends StateNotifier<ZatcaInvoiceListState> {
         perPage: perPage,
       );
       final data = result['data'] as Map<String, dynamic>;
-      final items = (data['data'] as List)
-          .map((e) => ZatcaInvoice.fromJson(e as Map<String, dynamic>))
-          .toList();
+      final items = (data['data'] as List).map((e) => ZatcaInvoice.fromJson(e as Map<String, dynamic>)).toList();
       final meta = data['meta'] as Map<String, dynamic>;
       state = ZatcaInvoiceListLoaded(
         invoices: items,
@@ -95,16 +78,12 @@ class ZatcaInvoiceListNotifier extends StateNotifier<ZatcaInvoiceListState> {
 
 // ─── Compliance Summary Provider ───────────────────────────────
 
-final zatcaComplianceSummaryProvider = StateNotifierProvider<
-    ZatcaComplianceSummaryNotifier, ZatcaComplianceSummaryState>((ref) {
+final zatcaComplianceSummaryProvider = StateNotifierProvider<ZatcaComplianceSummaryNotifier, ZatcaComplianceSummaryState>((ref) {
   return ZatcaComplianceSummaryNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
-class ZatcaComplianceSummaryNotifier
-    extends StateNotifier<ZatcaComplianceSummaryState> {
-
-  ZatcaComplianceSummaryNotifier(this._repo)
-      : super(const ZatcaComplianceSummaryInitial());
+class ZatcaComplianceSummaryNotifier extends StateNotifier<ZatcaComplianceSummaryState> {
+  ZatcaComplianceSummaryNotifier(this._repo) : super(const ZatcaComplianceSummaryInitial());
   final ZatcaRepository _repo;
 
   Future<void> load() async {
@@ -119,9 +98,7 @@ class ZatcaComplianceSummaryNotifier
         rejected: data['rejected'] as int,
         pending: data['pending'] as int,
         successRate: double.tryParse(data['success_rate'].toString()) ?? 0.0,
-        certificate: certData != null
-            ? ZatcaCertificate.fromJson(certData)
-            : null,
+        certificate: certData != null ? ZatcaCertificate.fromJson(certData) : null,
       );
     } catch (e) {
       state = ZatcaComplianceSummaryError(e.toString());
@@ -131,29 +108,22 @@ class ZatcaComplianceSummaryNotifier
 
 // ─── VAT Report Provider ───────────────────────────────────────
 
-final zatcaVatReportProvider =
-    StateNotifierProvider<ZatcaVatReportNotifier, ZatcaVatReportState>((ref) {
+final zatcaVatReportProvider = StateNotifierProvider<ZatcaVatReportNotifier, ZatcaVatReportState>((ref) {
   return ZatcaVatReportNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
 class ZatcaVatReportNotifier extends StateNotifier<ZatcaVatReportState> {
-
   ZatcaVatReportNotifier(this._repo) : super(const ZatcaVatReportInitial());
   final ZatcaRepository _repo;
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
     state = const ZatcaVatReportLoading();
     try {
-      final result = await _repo.vatReport(
-        dateFrom: dateFrom,
-        dateTo: dateTo,
-      );
+      final result = await _repo.vatReport(dateFrom: dateFrom, dateTo: dateTo);
       final data = result['data'] as Map<String, dynamic>;
       state = ZatcaVatReportLoaded(
-        standardInvoices:
-            Map<String, dynamic>.from(data['standard_invoices'] as Map),
-        simplifiedInvoices:
-            Map<String, dynamic>.from(data['simplified_invoices'] as Map),
+        standardInvoices: Map<String, dynamic>.from(data['standard_invoices'] as Map),
+        simplifiedInvoices: Map<String, dynamic>.from(data['simplified_invoices'] as Map),
         totalVatCollected: double.tryParse(data['total_vat_collected'].toString()) ?? 0.0,
         totalAmount: double.tryParse(data['total_amount'].toString()) ?? 0.0,
       );
@@ -165,8 +135,7 @@ class ZatcaVatReportNotifier extends StateNotifier<ZatcaVatReportState> {
 
 // ─── Device Provider ───────────────────────────────────────
 
-final zatcaDeviceProvider =
-    StateNotifierProvider<ZatcaDeviceNotifier, ZatcaDeviceState>((ref) {
+final zatcaDeviceProvider = StateNotifierProvider<ZatcaDeviceNotifier, ZatcaDeviceState>((ref) {
   return ZatcaDeviceNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
@@ -179,9 +148,7 @@ class ZatcaDeviceNotifier extends StateNotifier<ZatcaDeviceState> {
     try {
       final result = await _repo.listDevices();
       final data = result['data'] as Map<String, dynamic>;
-      final list = (data['devices'] as List)
-          .map((e) => ZatcaDevice.fromJson(Map<String, dynamic>.from(e as Map)))
-          .toList();
+      final list = (data['devices'] as List).map((e) => ZatcaDevice.fromJson(Map<String, dynamic>.from(e as Map))).toList();
       state = ZatcaDeviceListLoaded(list);
     } catch (e) {
       state = ZatcaDeviceError(e.toString());
@@ -203,16 +170,10 @@ class ZatcaDeviceNotifier extends StateNotifier<ZatcaDeviceState> {
     }
   }
 
-  Future<void> activate({
-    required String activationCode,
-    String? hardwareSerial,
-  }) async {
+  Future<void> activate({required String activationCode, String? hardwareSerial}) async {
     state = const ZatcaDeviceLoading();
     try {
-      final result = await _repo.activateDevice(
-        activationCode: activationCode,
-        hardwareSerial: hardwareSerial,
-      );
+      final result = await _repo.activateDevice(activationCode: activationCode, hardwareSerial: hardwareSerial);
       final data = result['data'] as Map<String, dynamic>;
       state = ZatcaDeviceActivated(ZatcaDevice.fromJson(data));
     } catch (e) {
@@ -233,8 +194,7 @@ class ZatcaDeviceNotifier extends StateNotifier<ZatcaDeviceState> {
 
 // ─── Connection Status Provider ────────────────────────────
 
-final zatcaConnectionProvider =
-    StateNotifierProvider<ZatcaConnectionNotifier, ZatcaConnectionState>((ref) {
+final zatcaConnectionProvider = StateNotifierProvider<ZatcaConnectionNotifier, ZatcaConnectionState>((ref) {
   return ZatcaConnectionNotifier(ref.watch(zatcaRepositoryProvider));
 });
 
@@ -256,14 +216,15 @@ class ZatcaConnectionNotifier extends StateNotifier<ZatcaConnectionState> {
 
 // ─── Invoice Detail Provider ───────────────────────────────
 
-final zatcaInvoiceDetailProvider = StateNotifierProvider.family<
-    ZatcaInvoiceDetailNotifier, ZatcaInvoiceDetailState, String>((ref, id) {
+final zatcaInvoiceDetailProvider = StateNotifierProvider.family<ZatcaInvoiceDetailNotifier, ZatcaInvoiceDetailState, String>((
+  ref,
+  id,
+) {
   return ZatcaInvoiceDetailNotifier(ref.watch(zatcaRepositoryProvider), id);
 });
 
 class ZatcaInvoiceDetailNotifier extends StateNotifier<ZatcaInvoiceDetailState> {
-  ZatcaInvoiceDetailNotifier(this._repo, this._invoiceId)
-      : super(const ZatcaInvoiceDetailInitial());
+  ZatcaInvoiceDetailNotifier(this._repo, this._invoiceId) : super(const ZatcaInvoiceDetailInitial());
   final ZatcaRepository _repo;
   final String _invoiceId;
 
@@ -290,10 +251,7 @@ class ZatcaInvoiceDetailNotifier extends StateNotifier<ZatcaInvoiceDetailState> 
       // Re-fetch to refresh statuses + cleared XML.
       final detailResult = await _repo.getInvoiceDetail(_invoiceId);
       final data = Map<String, dynamic>.from(detailResult['data'] as Map);
-      state = ZatcaInvoiceDetailLoaded(
-        ZatcaInvoiceDetail.fromJson(data),
-        retryMessage: message,
-      );
+      state = ZatcaInvoiceDetailLoaded(ZatcaInvoiceDetail.fromJson(data), retryMessage: message);
     } catch (e) {
       state = ZatcaInvoiceDetailError(e.toString());
     }

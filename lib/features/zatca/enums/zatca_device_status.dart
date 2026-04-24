@@ -9,10 +9,7 @@ enum ZatcaDeviceStatus {
   final String value;
 
   static ZatcaDeviceStatus fromValue(String value) =>
-      ZatcaDeviceStatus.values.firstWhere(
-        (e) => e.value == value,
-        orElse: () => ZatcaDeviceStatus.pending,
-      );
+      ZatcaDeviceStatus.values.firstWhere((e) => e.value == value, orElse: () => ZatcaDeviceStatus.pending);
 
   static ZatcaDeviceStatus? tryFromValue(String? value) {
     if (value == null) return null;

@@ -72,16 +72,17 @@ class CustomerDao {
     int limit = 50,
     int offset = 0,
   }) async {
-    final query = _db.select(_db.localCustomers)
-      ..where((t) => t.organizationId.equals(organizationId) & t.deletedAt.isNull());
+    final query = _db.select(_db.localCustomers)..where((t) => t.organizationId.equals(organizationId) & t.deletedAt.isNull());
 
     if (search != null && search.trim().isNotEmpty) {
       final like = '%${search.toLowerCase()}%';
-      query.where((t) =>
-          t.name.lower().like(like) |
-          t.phone.lower().like(like) |
-          t.email.lower().like(like) |
-          t.loyaltyCode.lower().like(like));
+      query.where(
+        (t) =>
+            t.name.lower().like(like) |
+            t.phone.lower().like(like) |
+            t.email.lower().like(like) |
+            t.loyaltyCode.lower().like(like),
+      );
     }
     if (groupId != null) {
       query.where((t) => t.groupId.equals(groupId));
@@ -97,51 +98,39 @@ class CustomerDao {
   Future<int> countCustomers(String organizationId) async {
     final q = _db.selectOnly(_db.localCustomers)
       ..addColumns([_db.localCustomers.id.count()])
-      ..where(_db.localCustomers.organizationId.equals(organizationId) &
-          _db.localCustomers.deletedAt.isNull());
+      ..where(_db.localCustomers.organizationId.equals(organizationId) & _db.localCustomers.deletedAt.isNull());
     final row = await q.getSingle();
     return row.read(_db.localCustomers.id.count()) ?? 0;
   }
 
   Future<Customer?> getById(String id) async {
-    final row = await (_db.select(_db.localCustomers)
-          ..where((t) => t.id.equals(id)))
-        .getSingleOrNull();
+    final row = await (_db.select(_db.localCustomers)..where((t) => t.id.equals(id))).getSingleOrNull();
     return row == null ? null : _rowToCustomer(row);
   }
 
   Future<Customer?> getByPhone(String organizationId, String phone) async {
-    final row = await (_db.select(_db.localCustomers)
-          ..where((t) =>
-              t.organizationId.equals(organizationId) &
-              t.phone.equals(phone) &
-              t.deletedAt.isNull()))
-        .getSingleOrNull();
+    final row = await (_db.select(
+      _db.localCustomers,
+    )..where((t) => t.organizationId.equals(organizationId) & t.phone.equals(phone) & t.deletedAt.isNull())).getSingleOrNull();
     return row == null ? null : _rowToCustomer(row);
   }
 
   Future<Customer?> getByLoyaltyCode(String organizationId, String code) async {
-    final row = await (_db.select(_db.localCustomers)
-          ..where((t) =>
-              t.organizationId.equals(organizationId) &
-              t.loyaltyCode.equals(code) &
-              t.deletedAt.isNull()))
-        .getSingleOrNull();
+    final row =
+        await (_db.select(_db.localCustomers)
+              ..where((t) => t.organizationId.equals(organizationId) & t.loyaltyCode.equals(code) & t.deletedAt.isNull()))
+            .getSingleOrNull();
     return row == null ? null : _rowToCustomer(row);
   }
 
   Future<List<CustomerGroup>> listGroups(String organizationId) async {
-    final rows = await (_db.select(_db.localCustomerGroups)
-          ..where((t) => t.organizationId.equals(organizationId))
-          ..orderBy([(t) => OrderingTerm.asc(t.name)]))
-        .get();
+    final rows =
+        await (_db.select(_db.localCustomerGroups)
+              ..where((t) => t.organizationId.equals(organizationId))
+              ..orderBy([(t) => OrderingTerm.asc(t.name)]))
+            .get();
     return rows
-        .map((r) => CustomerGroup(
-              id: r.id,
-              organizationId: r.organizationId,
-              name: r.name,
-              discountPercent: r.discountPercent,
-            ))
+        .map((r) => CustomerGroup(id: r.id, organizationId: r.organizationId, name: r.name, discountPercent: r.discountPercent))
         .toList();
   }
 
@@ -154,8 +143,9 @@ class CustomerDao {
   }
 
   Future<int> markDeleted(String id) async {
-    return (_db.update(_db.localCustomers)..where((t) => t.id.equals(id)))
-        .write(LocalCustomersCompanion(deletedAt: Value(DateTime.now())));
+    return (_db.update(
+      _db.localCustomers,
+    )..where((t) => t.id.equals(id))).write(LocalCustomersCompanion(deletedAt: Value(DateTime.now())));
   }
 
   /// Hard reset (used by tests / org switch).
@@ -167,26 +157,26 @@ class CustomerDao {
   // ─── Mapping ───────────────────────────────────────────────
 
   Customer _rowToCustomer(LocalCustomer r) => Customer(
-        id: r.id,
-        organizationId: r.organizationId,
-        name: r.name,
-        phone: r.phone ?? '',
-        email: r.email,
-        address: r.address,
-        dateOfBirth: r.dateOfBirth,
-        loyaltyCode: r.loyaltyCode,
-        loyaltyPoints: r.loyaltyPoints,
-        storeCreditBalance: r.storeCreditBalance,
-        groupId: r.groupId,
-        taxRegistrationNumber: r.taxRegistrationNumber,
-        notes: r.notes,
-        totalSpend: r.totalSpend,
-        visitCount: r.visitCount,
-        lastVisitAt: r.lastVisitAt,
-        syncVersion: r.syncVersion,
-        updatedAt: r.updatedAt,
-        deletedAt: r.deletedAt,
-      );
+    id: r.id,
+    organizationId: r.organizationId,
+    name: r.name,
+    phone: r.phone ?? '',
+    email: r.email,
+    address: r.address,
+    dateOfBirth: r.dateOfBirth,
+    loyaltyCode: r.loyaltyCode,
+    loyaltyPoints: r.loyaltyPoints,
+    storeCreditBalance: r.storeCreditBalance,
+    groupId: r.groupId,
+    taxRegistrationNumber: r.taxRegistrationNumber,
+    notes: r.notes,
+    totalSpend: r.totalSpend,
+    visitCount: r.visitCount,
+    lastVisitAt: r.lastVisitAt,
+    syncVersion: r.syncVersion,
+    updatedAt: r.updatedAt,
+    deletedAt: r.deletedAt,
+  );
 }
 
 final customerDaoProvider = Provider<CustomerDao>((ref) {

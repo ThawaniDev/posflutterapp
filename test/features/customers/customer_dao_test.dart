@@ -45,10 +45,7 @@ void main() {
     });
 
     test('list isolates by organization', () async {
-      await dao.upsertCustomers([
-        sample(id: 'c-1', orgId: 'org-1'),
-        sample(id: 'c-2', orgId: 'org-2', name: 'Bob'),
-      ]);
+      await dao.upsertCustomers([sample(id: 'c-1', orgId: 'org-1'), sample(id: 'c-2', orgId: 'org-2', name: 'Bob')]);
       final org1 = await dao.listCustomers('org-1');
       final org2 = await dao.listCustomers('org-2');
       expect(org1, hasLength(1));
@@ -75,12 +72,7 @@ void main() {
     });
 
     test('upsertGroups + listGroups round-trip', () async {
-      final g = CustomerGroup(
-        id: 'g-1',
-        organizationId: 'org-1',
-        name: 'VIP',
-        discountPercent: 10.0,
-      );
+      final g = CustomerGroup(id: 'g-1', organizationId: 'org-1', name: 'VIP', discountPercent: 10.0);
       await dao.upsertGroups([g]);
       final groups = await dao.listGroups('org-1');
       expect(groups, hasLength(1));

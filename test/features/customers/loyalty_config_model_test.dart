@@ -32,10 +32,7 @@ void main() {
     });
 
     test('handles null double_points_days', () {
-      final cfg = LoyaltyConfig.fromJson({
-        'id': 'cfg-2',
-        'organization_id': 'org-1',
-      });
+      final cfg = LoyaltyConfig.fromJson({'id': 'cfg-2', 'organization_id': 'org-1'});
       expect(cfg.doublePointsDays, isNull);
       expect(cfg.excludedCategoryIds, isNull);
     });

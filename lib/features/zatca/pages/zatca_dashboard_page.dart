@@ -159,12 +159,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
           ZatcaInvoiceListInitial() || ZatcaInvoiceListLoading() => const PosLoading(),
           ZatcaInvoiceListLoaded(:final invoices, :final total) => Column(
             children: [
-              InvoiceListWidget(
-                invoices: invoices,
-                onTap: (invoice) => context.push(
-                  Routes.zatcaInvoiceDetailFor(invoice.id),
-                ),
-              ),
+              InvoiceListWidget(invoices: invoices, onTap: (invoice) => context.push(Routes.zatcaInvoiceDetailFor(invoice.id))),
               if (total > invoices.length)
                 Padding(
                   padding: AppSpacing.paddingAll12,
@@ -207,16 +202,13 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
       padding: const EdgeInsets.only(bottom: 16),
       child: ZatcaTamperBanner(
         device: tampered.first,
-        onReset: () => ref
-            .read(zatcaDeviceProvider.notifier)
-            .resetTamper(tampered.first.id),
+        onReset: () => ref.read(zatcaDeviceProvider.notifier).resetTamper(tampered.first.id),
       ),
     );
   }
 }
 
 class _ErrorCard extends StatelessWidget {
-
   const _ErrorCard({required this.message, required this.onRetry});
   final String message;
   final VoidCallback onRetry;

@@ -8,11 +8,7 @@ import 'package:wameedpos/features/customers/repositories/customer_repository.da
 /// Hybrid lookup: local DAO first, then a remote `searchCustomers` call to
 /// catch records that weren't synced yet. Results are deduplicated by id.
 class CustomerSearchService {
-  CustomerSearchService({
-    required CustomerRepository remote,
-    required CustomerDao dao,
-  })  : _remote = remote,
-        _dao = dao;
+  CustomerSearchService({required CustomerRepository remote, required CustomerDao dao}) : _remote = remote, _dao = dao;
 
   final CustomerRepository _remote;
   final CustomerDao _dao;
@@ -49,8 +45,5 @@ class CustomerSearchService {
 }
 
 final customerSearchServiceProvider = Provider<CustomerSearchService>((ref) {
-  return CustomerSearchService(
-    remote: ref.watch(customerRepositoryProvider),
-    dao: ref.watch(customerDaoProvider),
-  );
+  return CustomerSearchService(remote: ref.watch(customerRepositoryProvider), dao: ref.watch(customerDaoProvider));
 });

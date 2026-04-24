@@ -15,11 +15,7 @@ class DigitalReceiptService {
   DigitalReceiptService(this._repo);
   final CustomerRepository _repo;
 
-  Future<DigitalReceiptLog> sendEmail({
-    required String customerId,
-    required String orderId,
-    String? destination,
-  }) =>
+  Future<DigitalReceiptLog> sendEmail({required String customerId, required String orderId, String? destination}) =>
       _repo.sendReceipt(customerId, orderId: orderId, channel: 'email', destination: destination);
 
   Future<DigitalReceiptLog> sendWhatsApp({
@@ -28,12 +24,7 @@ class DigitalReceiptService {
     required String phone,
     required String receiptUrl,
   }) async {
-    final log = await _repo.sendReceipt(
-      customerId,
-      orderId: orderId,
-      channel: 'whatsapp',
-      destination: phone,
-    );
+    final log = await _repo.sendReceipt(customerId, orderId: orderId, channel: 'whatsapp', destination: phone);
     final digits = phone.replaceAll(RegExp(r'[^0-9]'), '');
     final uri = Uri.parse('https://wa.me/$digits?text=${Uri.encodeComponent(receiptUrl)}');
     if (await canLaunchUrl(uri)) {
@@ -48,12 +39,7 @@ class DigitalReceiptService {
     required String phone,
     required String body,
   }) async {
-    final log = await _repo.sendReceipt(
-      customerId,
-      orderId: orderId,
-      channel: 'sms',
-      destination: phone,
-    );
+    final log = await _repo.sendReceipt(customerId, orderId: orderId, channel: 'sms', destination: phone);
     final uri = Uri.parse('sms:$phone?body=${Uri.encodeComponent(body)}');
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);

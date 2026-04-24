@@ -19,7 +19,6 @@ class CustomersLoading extends CustomersState {
 }
 
 class CustomersLoaded extends CustomersState {
-
   const CustomersLoaded({
     required this.customers,
     required this.total,
@@ -273,12 +272,7 @@ class CustomerOrdersLoading extends CustomerOrdersState {
 }
 
 class CustomerOrdersLoaded extends CustomerOrdersState {
-  const CustomerOrdersLoaded({
-    required this.orders,
-    required this.total,
-    required this.currentPage,
-    required this.lastPage,
-  });
+  const CustomerOrdersLoaded({required this.orders, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> orders;
   final int total;
   final int currentPage;
