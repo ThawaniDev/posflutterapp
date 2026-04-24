@@ -372,7 +372,6 @@ class _PlatformBreakdownTile extends StatelessWidget {
     final orders = data['orders'] as int? ?? 0;
     final revenue = (data['revenue'] != null ? double.tryParse(data['revenue'].toString()) : null) ?? 0.0;
     final isActive = data['is_active'] == true;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return Container(
@@ -452,7 +451,6 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chipColor = color ?? AppColors.primary;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     return GestureDetector(
       onTap: onTap,

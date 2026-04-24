@@ -23,7 +23,6 @@ class DeliveryPlatformCard extends StatelessWidget {
     final dailyCount = config['daily_order_count'] as int? ?? 0;
     final status = config['status'] as String? ?? 'inactive';
     final lastOrderAt = config['last_order_received_at'] as String?;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     final platformColor = platform?.color ?? mutedColor;
@@ -125,7 +124,6 @@ class _StatusDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     return Container(
       width: 8,
@@ -142,7 +140,6 @@ class _InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

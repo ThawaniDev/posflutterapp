@@ -22,7 +22,6 @@ class MenuSyncStatusCard extends StatelessWidget {
     final itemsFailed = syncLog['items_failed'] as int? ?? 0;
     final createdAt = syncLog['created_at'] as String?;
     final errorMessage = syncLog['error_message'] as String?;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     final (statusColor, statusIcon, statusVariant) = switch (status) {
@@ -118,7 +117,6 @@ class _MetricChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     return Row(
       mainAxisSize: MainAxisSize.min,

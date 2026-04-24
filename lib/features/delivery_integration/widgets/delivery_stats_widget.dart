@@ -26,7 +26,6 @@ class DeliveryStatsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return PosStatsGrid(

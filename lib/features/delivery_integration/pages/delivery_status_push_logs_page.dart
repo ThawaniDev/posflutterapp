@@ -128,7 +128,6 @@ class _StatusPushLogCard extends StatelessWidget {
     final pushedAt = log['pushed_at'] as String?;
 
     final enumPlatform = DeliveryConfigPlatform.tryFromValue(platform);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     final platformColor = enumPlatform?.color ?? mutedColor;
     final platformLabel = enumPlatform?.label ?? platform;
@@ -212,7 +211,6 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
@@ -242,7 +240,6 @@ class _JsonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final jsonStr = data is Map || data is List ? _prettyJson(data) : '$data';
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return Column(
@@ -304,7 +301,6 @@ class _PaginationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return Container(

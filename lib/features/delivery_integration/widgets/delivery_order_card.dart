@@ -25,7 +25,6 @@ class DeliveryOrderCard extends StatelessWidget {
     final totalAmount = (order['total_amount'] != null ? double.tryParse(order['total_amount'].toString()) : null);
     final itemsCount = order['items_count'] as int?;
     final createdAt = order['created_at'] as String?;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
