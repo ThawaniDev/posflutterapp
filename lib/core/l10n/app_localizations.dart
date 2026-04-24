@@ -31975,6 +31975,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Production Mode'**
   String get zatcaProductionMode;
+
+  /// No description provided for @zatcaConnectionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Status'**
+  String get zatcaConnectionStatus;
+
+  /// No description provided for @zatcaConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get zatcaConnected;
+
+  /// No description provided for @zatcaDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Connected'**
+  String get zatcaDisconnected;
+
+  /// No description provided for @zatcaHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get zatcaHealthy;
+
+  /// No description provided for @zatcaUnhealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs Attention'**
+  String get zatcaUnhealthy;
+
+  /// No description provided for @zatcaQueueDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Queue'**
+  String get zatcaQueueDepth;
+
+  /// No description provided for @zatcaLastSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Successful Submission'**
+  String get zatcaLastSuccess;
+
+  /// No description provided for @zatcaLastError.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Error'**
+  String get zatcaLastError;
+
+  /// No description provided for @zatcaCertificateExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {days} days'**
+  String zatcaCertificateExpiresIn(int days);
+
+  /// No description provided for @zatcaInvoiceDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Detail'**
+  String get zatcaInvoiceDetail;
+
+  /// No description provided for @zatcaRetrySubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry Submission'**
+  String get zatcaRetrySubmission;
+
+  /// No description provided for @zatcaResponseCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Code'**
+  String get zatcaResponseCode;
+
+  /// No description provided for @zatcaResponseMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Message'**
+  String get zatcaResponseMessage;
+
+  /// No description provided for @zatcaErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get zatcaErrors;
+
+  /// No description provided for @zatcaSubmissionAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempts'**
+  String get zatcaSubmissionAttempts;
+
+  /// No description provided for @zatcaClearedXml.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared XML'**
+  String get zatcaClearedXml;
+
+  /// No description provided for @zatcaAlreadyAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice already accepted'**
+  String get zatcaAlreadyAccepted;
+
+  /// No description provided for @zatcaViewDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'View Detail'**
+  String get zatcaViewDetail;
+
+  /// No description provided for @zatcaNoCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'No active certificate'**
+  String get zatcaNoCertificate;
+
+  /// No description provided for @zatcaTamperedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tampered devices'**
+  String zatcaTamperedDevices(int count);
 }
 
 class _AppLocalizationsDelegate

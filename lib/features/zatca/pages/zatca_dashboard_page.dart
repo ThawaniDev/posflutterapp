@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -11,6 +13,7 @@ import 'package:wameedpos/features/zatca/widgets/compliance_status_card.dart';
 import 'package:wameedpos/features/zatca/widgets/enrollment_wizard.dart';
 import 'package:wameedpos/features/zatca/widgets/invoice_list_widget.dart';
 import 'package:wameedpos/features/zatca/widgets/vat_report_card.dart';
+import 'package:wameedpos/features/zatca/widgets/zatca_connection_status_card.dart';
 import 'package:wameedpos/features/zatca/widgets/zatca_tamper_banner.dart';
 
 class ZatcaDashboardPage extends ConsumerStatefulWidget {
@@ -55,6 +58,8 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _buildTamperBanner(),
+                  const ZatcaConnectionStatusCard(),
+                  AppSpacing.gapH16,
                   isWide
                       ? _buildWideLayout(summaryState, invoiceState, vatState, enrollState, theme)
                       : _buildNarrowLayout(summaryState, invoiceState, vatState, enrollState, theme),
@@ -154,7 +159,12 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
           ZatcaInvoiceListInitial() || ZatcaInvoiceListLoading() => const PosLoading(),
           ZatcaInvoiceListLoaded(:final invoices, :final total) => Column(
             children: [
-              InvoiceListWidget(invoices: invoices),
+              InvoiceListWidget(
+                invoices: invoices,
+                onTap: (invoice) => context.push(
+                  Routes.zatcaInvoiceDetailFor(invoice.id),
+                ),
+              ),
               if (total > invoices.length)
                 Padding(
                   padding: AppSpacing.paddingAll12,

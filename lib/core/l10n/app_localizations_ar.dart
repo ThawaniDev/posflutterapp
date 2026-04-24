@@ -16924,4 +16924,68 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaProductionMode => 'وضع الإنتاج';
+
+  @override
+  String get zatcaConnectionStatus => 'حالة الاتصال';
+
+  @override
+  String get zatcaConnected => 'متصل';
+
+  @override
+  String get zatcaDisconnected => 'غير متصل';
+
+  @override
+  String get zatcaHealthy => 'يعمل بشكل صحيح';
+
+  @override
+  String get zatcaUnhealthy => 'يحتاج إلى انتباه';
+
+  @override
+  String get zatcaQueueDepth => 'قائمة الانتظار';
+
+  @override
+  String get zatcaLastSuccess => 'آخر إرسال ناجح';
+
+  @override
+  String get zatcaLastError => 'آخر خطأ';
+
+  @override
+  String zatcaCertificateExpiresIn(int days) {
+    return 'تنتهي خلال $days يوم';
+  }
+
+  @override
+  String get zatcaInvoiceDetail => 'تفاصيل الفاتورة';
+
+  @override
+  String get zatcaRetrySubmission => 'إعادة الإرسال';
+
+  @override
+  String get zatcaResponseCode => 'رمز الاستجابة';
+
+  @override
+  String get zatcaResponseMessage => 'رسالة الاستجابة';
+
+  @override
+  String get zatcaErrors => 'الأخطاء';
+
+  @override
+  String get zatcaSubmissionAttempts => 'المحاولات';
+
+  @override
+  String get zatcaClearedXml => 'XML المعتمد';
+
+  @override
+  String get zatcaAlreadyAccepted => 'الفاتورة مقبولة بالفعل';
+
+  @override
+  String get zatcaViewDetail => 'عرض التفاصيل';
+
+  @override
+  String get zatcaNoCertificate => 'لا توجد شهادة نشطة';
+
+  @override
+  String zatcaTamperedDevices(int count) {
+    return '$count جهاز معبث';
+  }
 }

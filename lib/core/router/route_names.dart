@@ -301,8 +301,11 @@ class Routes {
   static const String zatcaDashboard = '/zatca';
   static const String zatcaEnrollment = '/zatca/enrollment';
   static const String zatcaInvoices = '/zatca/invoices';
+  static const String zatcaInvoiceDetail = '/zatca/invoices/:id';
+  static String zatcaInvoiceDetailFor(String id) => '/zatca/invoices/$id';
   static const String zatcaVatReport = '/zatca/vat-report';
   static const String zatcaDeviceActivation = '/zatca/devices';
+  static const String zatcaAdminOverview = '/admin/zatca';
 
   // ─── Sync ────────────────────────────────────────────────────
   static const String syncDashboard = '/sync';

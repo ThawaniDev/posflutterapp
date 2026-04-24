@@ -538,14 +538,18 @@ class ApiEndpoints {
   static const String zatcaSubmitInvoice = '/zatca/submit-invoice';
   static const String zatcaSubmitBatch = '/zatca/submit-batch';
   static const String zatcaInvoices = '/zatca/invoices';
+  static String zatcaInvoiceDetail(String id) => '/zatca/invoices/$id';
   static String zatcaInvoiceXml(String id) => '/zatca/invoices/$id/xml';
+  static String zatcaInvoiceRetry(String id) => '/zatca/invoices/$id/retry';
   static const String zatcaComplianceSummary = '/zatca/compliance-summary';
+  static const String zatcaConnection = '/zatca/connection';
   static const String zatcaVatReport = '/zatca/vat-report';
   static const String zatcaDevices = '/zatca/devices';
   static const String zatcaDeviceActivate = '/zatca/devices/activate';
   static String zatcaDeviceResetTamper(String id) => '/zatca/devices/$id/reset-tamper';
   static String zatcaDeviceVerifyChain(String id) => '/zatca/devices/$id/verify-chain';
   static const String zatcaDashboard = '/zatca/dashboard';
+  static const String zatcaAdminOverview = '/admin/zatca/overview';
 
   // ─── POS Feature #21: Offline/Online Sync ────────────────
   static const String syncPush = '/sync/push';

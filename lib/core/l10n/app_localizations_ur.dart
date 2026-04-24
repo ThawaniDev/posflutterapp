@@ -2303,7 +2303,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get zatcaPhase => 'زاٹکا Phase';
 
   @override
-  String get zatcaQrCode => 'کیو آر کوڈ';
+  String get zatcaQrCode => 'QR کوڈ';
 
   @override
   String get zatcaInvoiceHash => 'انوائس ہیش';
@@ -17018,4 +17018,68 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get zatcaProductionMode => 'پروڈکشن موڈ';
+
+  @override
+  String get zatcaConnectionStatus => 'کنکشن کی حالت';
+
+  @override
+  String get zatcaConnected => 'منسلک';
+
+  @override
+  String get zatcaDisconnected => 'منسلک نہیں';
+
+  @override
+  String get zatcaHealthy => 'درست';
+
+  @override
+  String get zatcaUnhealthy => 'توجہ درکار';
+
+  @override
+  String get zatcaQueueDepth => 'قطار میں';
+
+  @override
+  String get zatcaLastSuccess => 'آخری کامیاب جمع';
+
+  @override
+  String get zatcaLastError => 'آخری خرابی';
+
+  @override
+  String zatcaCertificateExpiresIn(int days) {
+    return '$days دن میں ختم';
+  }
+
+  @override
+  String get zatcaInvoiceDetail => 'انوائس کی تفصیل';
+
+  @override
+  String get zatcaRetrySubmission => 'دوبارہ بھیجیں';
+
+  @override
+  String get zatcaResponseCode => 'رسپانس کوڈ';
+
+  @override
+  String get zatcaResponseMessage => 'رسپانس پیغام';
+
+  @override
+  String get zatcaErrors => 'خرابیاں';
+
+  @override
+  String get zatcaSubmissionAttempts => 'کوششیں';
+
+  @override
+  String get zatcaClearedXml => 'کلیئرڈ XML';
+
+  @override
+  String get zatcaAlreadyAccepted => 'انوائس پہلے ہی قبول شدہ';
+
+  @override
+  String get zatcaViewDetail => 'تفصیل دیکھیں';
+
+  @override
+  String get zatcaNoCertificate => 'کوئی فعال سرٹیفکیٹ نہیں';
+
+  @override
+  String zatcaTamperedDevices(int count) {
+    return '$count ٹیمپرڈ ڈیوائسز';
+  }
 }

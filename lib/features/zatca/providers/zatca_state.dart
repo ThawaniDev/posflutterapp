@@ -1,6 +1,8 @@
 import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_connection_status.dart';
 import 'package:wameedpos/features/zatca/models/zatca_device.dart';
 import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice_detail.dart';
 
 // ─── Enrollment State ──────────────────────────────────────
 sealed class ZatcaEnrollmentState {
@@ -160,5 +162,53 @@ final class ZatcaDeviceActivated extends ZatcaDeviceState {
 
 final class ZatcaDeviceError extends ZatcaDeviceState {
   const ZatcaDeviceError(this.message);
+  final String message;
+}
+
+// ─── Connection Status State ───────────────────────────────
+sealed class ZatcaConnectionState {
+  const ZatcaConnectionState();
+}
+
+final class ZatcaConnectionInitial extends ZatcaConnectionState {
+  const ZatcaConnectionInitial();
+}
+
+final class ZatcaConnectionLoading extends ZatcaConnectionState {
+  const ZatcaConnectionLoading();
+}
+
+final class ZatcaConnectionLoaded extends ZatcaConnectionState {
+  const ZatcaConnectionLoaded(this.status);
+  final ZatcaConnectionStatus status;
+}
+
+final class ZatcaConnectionError extends ZatcaConnectionState {
+  const ZatcaConnectionError(this.message);
+  final String message;
+}
+
+// ─── Invoice Detail State ──────────────────────────────────
+sealed class ZatcaInvoiceDetailState {
+  const ZatcaInvoiceDetailState();
+}
+
+final class ZatcaInvoiceDetailInitial extends ZatcaInvoiceDetailState {
+  const ZatcaInvoiceDetailInitial();
+}
+
+final class ZatcaInvoiceDetailLoading extends ZatcaInvoiceDetailState {
+  const ZatcaInvoiceDetailLoading();
+}
+
+final class ZatcaInvoiceDetailLoaded extends ZatcaInvoiceDetailState {
+  const ZatcaInvoiceDetailLoaded(this.detail, {this.retrying = false, this.retryMessage});
+  final ZatcaInvoiceDetail detail;
+  final bool retrying;
+  final String? retryMessage;
+}
+
+final class ZatcaInvoiceDetailError extends ZatcaInvoiceDetailState {
+  const ZatcaInvoiceDetailError(this.message);
   final String message;
 }

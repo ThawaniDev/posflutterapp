@@ -2308,7 +2308,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get zatcaPhase => 'জাটকা Phase';
 
   @override
-  String get zatcaQrCode => 'কিউআর কোড';
+  String get zatcaQrCode => 'QR কোড';
 
   @override
   String get zatcaInvoiceHash => 'চালান হ্যাশ';
@@ -17046,4 +17046,68 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get zatcaProductionMode => 'প্রোডাকশন মোড';
+
+  @override
+  String get zatcaConnectionStatus => 'সংযোগ অবস্থা';
+
+  @override
+  String get zatcaConnected => 'সংযুক্ত';
+
+  @override
+  String get zatcaDisconnected => 'সংযুক্ত নয়';
+
+  @override
+  String get zatcaHealthy => 'সুস্থ';
+
+  @override
+  String get zatcaUnhealthy => 'মনোযোগ প্রয়োজন';
+
+  @override
+  String get zatcaQueueDepth => 'অপেক্ষমাণ সারি';
+
+  @override
+  String get zatcaLastSuccess => 'সর্বশেষ সফল জমা';
+
+  @override
+  String get zatcaLastError => 'সর্বশেষ ত্রুটি';
+
+  @override
+  String zatcaCertificateExpiresIn(int days) {
+    return '$days দিনে মেয়াদোত্তীর্ণ';
+  }
+
+  @override
+  String get zatcaInvoiceDetail => 'ইনভয়েসের বিবরণ';
+
+  @override
+  String get zatcaRetrySubmission => 'পুনরায় জমা দিন';
+
+  @override
+  String get zatcaResponseCode => 'প্রতিক্রিয়া কোড';
+
+  @override
+  String get zatcaResponseMessage => 'প্রতিক্রিয়া বার্তা';
+
+  @override
+  String get zatcaErrors => 'ত্রুটি';
+
+  @override
+  String get zatcaSubmissionAttempts => 'প্রচেষ্টা';
+
+  @override
+  String get zatcaClearedXml => 'ক্লিয়ারড XML';
+
+  @override
+  String get zatcaAlreadyAccepted => 'ইনভয়েস ইতিমধ্যে গৃহীত';
+
+  @override
+  String get zatcaViewDetail => 'বিস্তারিত দেখুন';
+
+  @override
+  String get zatcaNoCertificate => 'সক্রিয় সার্টিফিকেট নেই';
+
+  @override
+  String zatcaTamperedDevices(int count) {
+    return '$count টি টেম্পার্ড ডিভাইস';
+  }
 }

@@ -155,4 +155,26 @@ class ZatcaApiService {
     final response = await _dio.get(ApiEndpoints.zatcaDashboard);
     return Map<String, dynamic>.from(response.data as Map);
   }
+
+  // ─── Phase 2 production-visibility endpoints ──────────────
+
+  Future<Map<String, dynamic>> getInvoiceDetail(String invoiceId) async {
+    final response = await _dio.get(ApiEndpoints.zatcaInvoiceDetail(invoiceId));
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> retrySubmission(String invoiceId) async {
+    final response = await _dio.post(ApiEndpoints.zatcaInvoiceRetry(invoiceId));
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> connectionStatus() async {
+    final response = await _dio.get(ApiEndpoints.zatcaConnection);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> adminOverview() async {
+    final response = await _dio.get(ApiEndpoints.zatcaAdminOverview);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 }

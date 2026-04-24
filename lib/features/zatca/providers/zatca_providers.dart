@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_connection_status.dart';
 import 'package:wameedpos/features/zatca/models/zatca_device.dart';
 import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice_detail.dart';
 import 'package:wameedpos/features/zatca/repositories/zatca_repository.dart';
 import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 
@@ -225,6 +227,75 @@ class ZatcaDeviceNotifier extends StateNotifier<ZatcaDeviceState> {
       await load();
     } catch (e) {
       state = ZatcaDeviceError(e.toString());
+    }
+  }
+}
+
+// ─── Connection Status Provider ────────────────────────────
+
+final zatcaConnectionProvider =
+    StateNotifierProvider<ZatcaConnectionNotifier, ZatcaConnectionState>((ref) {
+  return ZatcaConnectionNotifier(ref.watch(zatcaRepositoryProvider));
+});
+
+class ZatcaConnectionNotifier extends StateNotifier<ZatcaConnectionState> {
+  ZatcaConnectionNotifier(this._repo) : super(const ZatcaConnectionInitial());
+  final ZatcaRepository _repo;
+
+  Future<void> load() async {
+    state = const ZatcaConnectionLoading();
+    try {
+      final result = await _repo.connectionStatus();
+      final data = Map<String, dynamic>.from(result['data'] as Map);
+      state = ZatcaConnectionLoaded(ZatcaConnectionStatus.fromJson(data));
+    } catch (e) {
+      state = ZatcaConnectionError(e.toString());
+    }
+  }
+}
+
+// ─── Invoice Detail Provider ───────────────────────────────
+
+final zatcaInvoiceDetailProvider = StateNotifierProvider.family<
+    ZatcaInvoiceDetailNotifier, ZatcaInvoiceDetailState, String>((ref, id) {
+  return ZatcaInvoiceDetailNotifier(ref.watch(zatcaRepositoryProvider), id);
+});
+
+class ZatcaInvoiceDetailNotifier extends StateNotifier<ZatcaInvoiceDetailState> {
+  ZatcaInvoiceDetailNotifier(this._repo, this._invoiceId)
+      : super(const ZatcaInvoiceDetailInitial());
+  final ZatcaRepository _repo;
+  final String _invoiceId;
+
+  Future<void> load() async {
+    state = const ZatcaInvoiceDetailLoading();
+    try {
+      final result = await _repo.getInvoiceDetail(_invoiceId);
+      final data = Map<String, dynamic>.from(result['data'] as Map);
+      state = ZatcaInvoiceDetailLoaded(ZatcaInvoiceDetail.fromJson(data));
+    } catch (e) {
+      state = ZatcaInvoiceDetailError(e.toString());
+    }
+  }
+
+  Future<void> retry() async {
+    final current = state;
+    if (current is! ZatcaInvoiceDetailLoaded) {
+      return;
+    }
+    state = ZatcaInvoiceDetailLoaded(current.detail, retrying: true);
+    try {
+      final result = await _repo.retrySubmission(_invoiceId);
+      final message = result['message'] as String?;
+      // Re-fetch to refresh statuses + cleared XML.
+      final detailResult = await _repo.getInvoiceDetail(_invoiceId);
+      final data = Map<String, dynamic>.from(detailResult['data'] as Map);
+      state = ZatcaInvoiceDetailLoaded(
+        ZatcaInvoiceDetail.fromJson(data),
+        retryMessage: message,
+      );
+    } catch (e) {
+      state = ZatcaInvoiceDetailError(e.toString());
     }
   }
 }

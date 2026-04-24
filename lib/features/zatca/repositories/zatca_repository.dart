@@ -96,4 +96,17 @@ class ZatcaRepository {
       _apiService.verifyChain(deviceId);
 
   Future<Map<String, dynamic>> dashboard() => _apiService.dashboard();
+
+  // ─── Phase 2 production-visibility ────────────────────────
+
+  Future<Map<String, dynamic>> getInvoiceDetail(String invoiceId) =>
+      _apiService.getInvoiceDetail(invoiceId);
+
+  Future<Map<String, dynamic>> retrySubmission(String invoiceId) =>
+      _apiService.retrySubmission(invoiceId);
+
+  Future<Map<String, dynamic>> connectionStatus() =>
+      _apiService.connectionStatus();
+
+  Future<Map<String, dynamic>> adminOverview() => _apiService.adminOverview();
 }

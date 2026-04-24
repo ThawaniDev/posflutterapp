@@ -16980,4 +16980,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zatcaProductionMode => 'Production Mode';
+
+  @override
+  String get zatcaConnectionStatus => 'Connection Status';
+
+  @override
+  String get zatcaConnected => 'Connected';
+
+  @override
+  String get zatcaDisconnected => 'Not Connected';
+
+  @override
+  String get zatcaHealthy => 'Healthy';
+
+  @override
+  String get zatcaUnhealthy => 'Needs Attention';
+
+  @override
+  String get zatcaQueueDepth => 'Pending Queue';
+
+  @override
+  String get zatcaLastSuccess => 'Last Successful Submission';
+
+  @override
+  String get zatcaLastError => 'Last Error';
+
+  @override
+  String zatcaCertificateExpiresIn(int days) {
+    return 'Expires in $days days';
+  }
+
+  @override
+  String get zatcaInvoiceDetail => 'Invoice Detail';
+
+  @override
+  String get zatcaRetrySubmission => 'Retry Submission';
+
+  @override
+  String get zatcaResponseCode => 'Response Code';
+
+  @override
+  String get zatcaResponseMessage => 'Response Message';
+
+  @override
+  String get zatcaErrors => 'Errors';
+
+  @override
+  String get zatcaSubmissionAttempts => 'Attempts';
+
+  @override
+  String get zatcaClearedXml => 'Cleared XML';
+
+  @override
+  String get zatcaAlreadyAccepted => 'Invoice already accepted';
+
+  @override
+  String get zatcaViewDetail => 'View Detail';
+
+  @override
+  String get zatcaNoCertificate => 'No active certificate';
+
+  @override
+  String zatcaTamperedDevices(int count) {
+    return '$count tampered devices';
+  }
 }

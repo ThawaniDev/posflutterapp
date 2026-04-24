@@ -210,6 +210,8 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_a
 // POS Feature #20: ZATCA Compliance
 import 'package:wameedpos/features/zatca/pages/zatca_dashboard_page.dart';
 import 'package:wameedpos/features/zatca/pages/zatca_device_activation_page.dart';
+import 'package:wameedpos/features/zatca/pages/zatca_invoice_detail_page.dart';
+import 'package:wameedpos/features/zatca/pages/zatca_admin_overview_page.dart';
 import 'package:wameedpos/features/sync/pages/sync_dashboard_page.dart';
 import 'package:wameedpos/features/hardware/pages/hardware_dashboard_page.dart';
 import 'package:wameedpos/features/settings/pages/localization_page.dart';
@@ -1092,6 +1094,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           // ─── ZATCA Compliance ───
           GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
           GoRoute(path: Routes.zatcaDeviceActivation, name: 'zatcaDeviceActivation', builder: (context, state) => const ZatcaDeviceActivationPage()),
+          GoRoute(
+            path: Routes.zatcaInvoiceDetail,
+            name: 'zatcaInvoiceDetail',
+            builder: (context, state) => ZatcaInvoiceDetailPage(
+              invoiceId: state.pathParameters['id']!,
+            ),
+          ),
+          GoRoute(
+            path: Routes.zatcaAdminOverview,
+            name: 'zatcaAdminOverview',
+            builder: (context, state) => const ZatcaAdminOverviewPage(),
+          ),
 
           // ─── Sync ───
           GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
