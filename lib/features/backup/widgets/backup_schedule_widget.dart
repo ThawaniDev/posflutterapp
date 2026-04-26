@@ -41,15 +41,17 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
   Future<void> _save(AppLocalizations l10n) async {
     setState(() => _isSaving = true);
     try {
-      await ref.read(backupScheduleProvider.notifier).update(
-        autoBackupEnabled: _autoEnabled ?? true,
-        frequency: _frequency ?? 'daily',
-        retentionDays: _retentionDays ?? 30,
-        encryptBackups: _encryptBackups ?? false,
-        localBackupEnabled: _localEnabled ?? true,
-        cloudBackupEnabled: _cloudEnabled ?? true,
-        backupHour: _backupHour ?? 2,
-      );
+      await ref
+          .read(backupScheduleProvider.notifier)
+          .update(
+            autoBackupEnabled: _autoEnabled ?? true,
+            frequency: _frequency ?? 'daily',
+            retentionDays: _retentionDays ?? 30,
+            encryptBackups: _encryptBackups ?? false,
+            localBackupEnabled: _localEnabled ?? true,
+            cloudBackupEnabled: _cloudEnabled ?? true,
+            backupHour: _backupHour ?? 2,
+          );
       if (mounted) {
         setState(() => _isDirty = false);
         showPosSuccessSnackbar(context, l10n.backupScheduleSaved);
@@ -94,9 +96,7 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                   context,
                   icon: Icons.history_rounded,
                   label: l10n.backupLastBackup,
-                  value: settings.lastBackup != null
-                      ? _formatBackupRef(settings.lastBackup!)
-                      : '—',
+                  value: settings.lastBackup != null ? _formatBackupRef(settings.lastBackup!) : '—',
                   iconColor: AppColors.info,
                 ),
               ),
@@ -106,9 +106,7 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                   context,
                   icon: Icons.schedule_rounded,
                   label: l10n.backupNextScheduled,
-                  value: settings.nextScheduled != null
-                      ? _formatDate(settings.nextScheduled!)
-                      : '—',
+                  value: settings.nextScheduled != null ? _formatDate(settings.nextScheduled!) : '—',
                   iconColor: AppColors.success,
                 ),
               ),
@@ -155,7 +153,11 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                     DropdownMenuItem(value: 'weekly', child: Text(l10n.backupFrequencyWeekly)),
                   ],
                   onChanged: (v) {
-                    if (v != null) setState(() { _frequency = v; _isDirty = true; });
+                    if (v != null)
+                      setState(() {
+                        _frequency = v;
+                        _isDirty = true;
+                      });
                   },
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -173,7 +175,10 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                             min: 1,
                             max: 365,
                             step: 1,
-                            onChanged: (v) => setState(() { _retentionDays = v; _isDirty = true; }),
+                            onChanged: (v) => setState(() {
+                              _retentionDays = v;
+                              _isDirty = true;
+                            }),
                           ),
                         ],
                       ),
@@ -190,7 +195,10 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                             min: 0,
                             max: 23,
                             step: 1,
-                            onChanged: (v) => setState(() { _backupHour = v; _isDirty = true; }),
+                            onChanged: (v) => setState(() {
+                              _backupHour = v;
+                              _isDirty = true;
+                            }),
                           ),
                         ],
                       ),
@@ -205,19 +213,28 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                 PosToggle(
                   label: l10n.backupLocalEnabled,
                   value: _localEnabled ?? true,
-                  onChanged: (v) => setState(() { _localEnabled = v; _isDirty = true; }),
+                  onChanged: (v) => setState(() {
+                    _localEnabled = v;
+                    _isDirty = true;
+                  }),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 PosToggle(
                   label: l10n.backupCloudEnabled,
                   value: _cloudEnabled ?? true,
-                  onChanged: (v) => setState(() { _cloudEnabled = v; _isDirty = true; }),
+                  onChanged: (v) => setState(() {
+                    _cloudEnabled = v;
+                    _isDirty = true;
+                  }),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 PosToggle(
                   label: l10n.backupEncrypt,
                   value: _encryptBackups ?? false,
-                  onChanged: (v) => setState(() { _encryptBackups = v; _isDirty = true; }),
+                  onChanged: (v) => setState(() {
+                    _encryptBackups = v;
+                    _isDirty = true;
+                  }),
                 ),
                 const SizedBox(height: AppSpacing.xl),
 
@@ -239,7 +256,8 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
     );
   }
 
-  Widget _infoCard(BuildContext context, {
+  Widget _infoCard(
+    BuildContext context, {
     required IconData icon,
     required String label,
     required String value,
@@ -251,10 +269,7 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.10),
-              borderRadius: AppRadius.borderMd,
-            ),
+            decoration: BoxDecoration(color: iconColor.withValues(alpha: 0.10), borderRadius: AppRadius.borderMd),
             child: Icon(icon, color: iconColor, size: 20),
           ),
           const SizedBox(width: AppSpacing.md),
@@ -290,4 +305,3 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
     return '${(bytes / 1048576).toStringAsFixed(1)} MB';
   }
 }
-

@@ -19,7 +19,6 @@ class SubscriptionFormPage extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -100,11 +99,11 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.floristEditSubscription : l10n.floristNewSubscription,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.floristUpdateSubscription : l10n.floristCreateSubscription,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.floristUpdateSubscription : l10n.floristCreateSubscription,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -155,7 +154,12 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               clearable: false,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _deliveryAddressCtrl, label: l10n.floristDeliveryAddress, hint: l10n.floristDeliveryAddressHint, maxLines: 2),
+            PosTextField(
+              controller: _deliveryAddressCtrl,
+              label: l10n.floristDeliveryAddress,
+              hint: l10n.floristDeliveryAddressHint,
+              maxLines: 2,
+            ),
             const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _pricePerDeliveryCtrl,

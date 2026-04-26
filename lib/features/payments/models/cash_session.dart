@@ -3,7 +3,6 @@ import 'package:wameedpos/features/payments/models/expense.dart';
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class CashSession {
-
   const CashSession({
     required this.id,
     required this.storeId,
@@ -37,12 +36,8 @@ class CashSession {
       openedAt: json['opened_at'] != null ? DateTime.parse(json['opened_at'] as String) : null,
       closedAt: json['closed_at'] != null ? DateTime.parse(json['closed_at'] as String) : null,
       closeNotes: json['close_notes'] as String?,
-      cashEvents: (json['cash_events'] as List<dynamic>?)
-          ?.map((e) => CashEvent.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      expenses: (json['expenses'] as List<dynamic>?)
-          ?.map((e) => Expense.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      cashEvents: (json['cash_events'] as List<dynamic>?)?.map((e) => CashEvent.fromJson(e as Map<String, dynamic>)).toList(),
+      expenses: (json['expenses'] as List<dynamic>?)?.map((e) => Expense.fromJson(e as Map<String, dynamic>)).toList(),
     );
   }
   final String id;

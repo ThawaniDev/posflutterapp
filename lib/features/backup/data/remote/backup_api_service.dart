@@ -8,7 +8,6 @@ final backupApiServiceProvider = Provider<BackupApiService>((ref) {
 });
 
 class BackupApiService {
-
   BackupApiService(this._dio);
   final Dio _dio;
 

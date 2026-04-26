@@ -27,6 +27,5 @@ class ElectronicsRepository {
       _apiService.listTradeIns(customerId: customerId, search: search, perPage: perPage);
   Future<TradeInRecord> createTradeIn(Map<String, dynamic> data) => _apiService.createTradeIn(data);
 
-  Future<({bool valid, bool exists})> validateImei(String imei) =>
-      _apiService.validateImei(imei);
+  Future<({bool valid, bool exists})> validateImei(String imei) => _apiService.validateImei(imei);
 }

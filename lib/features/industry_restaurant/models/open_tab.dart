@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/industry_restaurant/enums/open_tab_status.dart';
 
 class OpenTab {
-
   const OpenTab({
     required this.id,
     required this.storeId,

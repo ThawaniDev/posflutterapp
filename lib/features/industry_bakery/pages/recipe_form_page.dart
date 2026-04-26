@@ -18,7 +18,6 @@ class RecipeFormPage extends ConsumerStatefulWidget {
 }
 
 class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _isEditing = false;
@@ -90,11 +89,11 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.bakeryEditRecipe : l10n.bakeryNewRecipe,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.bakeryUpdateRecipe : l10n.bakeryCreateRecipe,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.bakeryUpdateRecipe : l10n.bakeryCreateRecipe,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -147,12 +146,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(
-              controller: _instructionsCtrl,
-              label: l10n.instructions,
-              hint: l10n.bakeryInstructionsHint,
-              maxLines: 5,
-            ),
+            PosTextField(controller: _instructionsCtrl, label: l10n.instructions, hint: l10n.bakeryInstructionsHint, maxLines: 5),
           ],
         ),
       ),

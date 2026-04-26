@@ -11,7 +11,6 @@ final labelApiServiceProvider = Provider<LabelApiService>((ref) {
 });
 
 class LabelApiService {
-
   LabelApiService(this._dio);
   final Dio _dio;
 

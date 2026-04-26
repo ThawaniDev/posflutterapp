@@ -14,7 +14,6 @@ final class SyncStatusLoading extends SyncStatusState {
 }
 
 final class SyncStatusLoaded extends SyncStatusState {
-
   const SyncStatusLoaded({
     required this.serverOnline,
     required this.serverTimestamp,
@@ -75,7 +74,6 @@ final class SyncConflictListLoading extends SyncConflictListState {
 }
 
 final class SyncConflictListLoaded extends SyncConflictListState {
-
   const SyncConflictListLoaded({required this.conflicts, required this.currentPage, required this.lastPage, required this.total});
   final List<SyncConflict> conflicts;
   final int currentPage;
@@ -102,12 +100,7 @@ final class SyncLogsLoading extends SyncLogsState {
 }
 
 final class SyncLogsLoaded extends SyncLogsState {
-  const SyncLogsLoaded({
-    required this.logs,
-    required this.currentPage,
-    required this.lastPage,
-    required this.total,
-  });
+  const SyncLogsLoaded({required this.logs, required this.currentPage, required this.lastPage, required this.total});
   final List<Map<String, dynamic>> logs;
   final int currentPage;
   final int lastPage;

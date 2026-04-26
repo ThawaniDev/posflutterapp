@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/industry_restaurant/enums/kitchen_ticket_status.dart';
 
 class KitchenTicket {
-
   const KitchenTicket({
     required this.id,
     required this.storeId,

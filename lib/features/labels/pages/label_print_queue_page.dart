@@ -62,23 +62,24 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
     return PermissionGuardPage(
       permission: Permissions.labelsPrint,
       child: PosListPage(
-      title: l10n.labelPrintQueue,
-      showSearch: false,
-      onBack: () => context.pop(),
-      actions: [
-        PosButton(
-          label: l10n.labelPrint,
-          icon: Icons.print_rounded,
-          variant: PosButtonVariant.primary,
-          size: PosButtonSize.sm,
-          isLoading: _isPrinting,
-          onPressed: _queueItems.isNotEmpty ? _handlePrint : null,
-        ),
-      ],
-      child: context.isPhone
-          ? _buildMobileBody(context, l10n, isDark, templates)
-          : _buildDesktopBody(context, l10n, isDark, templates),
-    ));
+        title: l10n.labelPrintQueue,
+        showSearch: false,
+        onBack: () => context.pop(),
+        actions: [
+          PosButton(
+            label: l10n.labelPrint,
+            icon: Icons.print_rounded,
+            variant: PosButtonVariant.primary,
+            size: PosButtonSize.sm,
+            isLoading: _isPrinting,
+            onPressed: _queueItems.isNotEmpty ? _handlePrint : null,
+          ),
+        ],
+        child: context.isPhone
+            ? _buildMobileBody(context, l10n, isDark, templates)
+            : _buildDesktopBody(context, l10n, isDark, templates),
+      ),
+    );
   }
 
   Widget _buildMobileBody(BuildContext context, AppLocalizations l10n, bool isDark, List<LabelTemplate> templates) {

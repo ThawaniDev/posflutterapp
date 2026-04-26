@@ -10,7 +10,6 @@ final labelTemplatesProvider = StateNotifierProvider<LabelTemplatesNotifier, Lab
 });
 
 class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
-
   LabelTemplatesNotifier(this._repo) : super(const LabelTemplatesInitial());
   final LabelRepository _repo;
 
@@ -87,7 +86,6 @@ final labelDetailProvider = StateNotifierProvider.family<LabelDetailNotifier, La
 });
 
 class LabelDetailNotifier extends StateNotifier<LabelDetailState> {
-
   LabelDetailNotifier(this._repo, this._templateId) : super(const LabelDetailInitial());
   final LabelRepository _repo;
   final String? _templateId;

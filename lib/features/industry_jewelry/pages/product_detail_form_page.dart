@@ -20,7 +20,6 @@ class ProductDetailFormPage extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -108,11 +107,11 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.jewelryEditProductDetail : l10n.jewelryNewProductDetail,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.jewelryUpdateDetail : l10n.jewelryCreateDetail,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.jewelryUpdateDetail : l10n.jewelryCreateDetail,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -210,7 +209,11 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               ],
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _certificateNumberCtrl, label: l10n.jewelryCertificateOptional, hint: l10n.jewelryCertificateHint),
+            PosTextField(
+              controller: _certificateNumberCtrl,
+              label: l10n.jewelryCertificateOptional,
+              hint: l10n.jewelryCertificateHint,
+            ),
           ],
         ),
       ),

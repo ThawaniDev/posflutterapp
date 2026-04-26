@@ -29,33 +29,29 @@ class _SyncLogsPageState extends ConsumerState<SyncLogsPage> {
   }
 
   void _load({int page = 1}) {
-    ref.read(syncLogsProvider.notifier).load(
-          direction: _directionFilter,
-          status: _statusFilter,
-          page: page,
-        );
+    ref.read(syncLogsProvider.notifier).load(direction: _directionFilter, status: _statusFilter, page: page);
   }
 
   Color _statusColor(String status) => switch (status) {
-        'success' => AppColors.success,
-        'partial' => AppColors.warning,
-        'failed' => AppColors.error,
-        _ => AppColors.textSecondary,
-      };
+    'success' => AppColors.success,
+    'partial' => AppColors.warning,
+    'failed' => AppColors.error,
+    _ => AppColors.textSecondary,
+  };
 
   IconData _directionIcon(String direction) => switch (direction) {
-        'push' => Icons.cloud_upload_outlined,
-        'pull' => Icons.cloud_download_outlined,
-        'full' => Icons.sync,
-        _ => Icons.sync,
-      };
+    'push' => Icons.cloud_upload_outlined,
+    'pull' => Icons.cloud_download_outlined,
+    'full' => Icons.sync,
+    _ => Icons.sync,
+  };
 
   Color _directionColor(String direction) => switch (direction) {
-        'push' => AppColors.primary,
-        'pull' => AppColors.info,
-        'full' => AppColors.success,
-        _ => AppColors.textSecondary,
-      };
+    'push' => AppColors.primary,
+    'pull' => AppColors.info,
+    'full' => AppColors.success,
+    _ => AppColors.textSecondary,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +61,7 @@ class _SyncLogsPageState extends ConsumerState<SyncLogsPage> {
     return PosListPage(
       title: l10n.syncLogsTitle,
       showSearch: false,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          onPressed: _load,
-          tooltip: l10n.retry,
-        ),
-      ],
+      actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _load, tooltip: l10n.retry)],
       child: Column(
         children: [
           _buildFilters(l10n),
@@ -79,19 +69,14 @@ class _SyncLogsPageState extends ConsumerState<SyncLogsPage> {
             child: switch (logsState) {
               SyncLogsInitial() || SyncLogsLoading() => const Center(child: PosLoading()),
               SyncLogsError(:final message) => Center(
-                  child: _ErrorCard(
-                    message: message,
-                    onRetry: _load,
-                  ),
-                ),
+                child: _ErrorCard(message: message, onRetry: _load),
+              ),
               SyncLogsLoaded(:final logs, :final currentPage, :final lastPage, :final total) =>
                 logs.isEmpty
                     ? Center(child: _EmptyState(l10n: l10n))
                     : Column(
                         children: [
-                          Expanded(
-                            child: _buildLogsTable(logs, l10n),
-                          ),
+                          Expanded(child: _buildLogsTable(logs, l10n)),
                           _buildPagination(currentPage, lastPage, total, l10n),
                         ],
                       ),
@@ -192,45 +177,34 @@ class _SyncLogsPageState extends ConsumerState<SyncLogsPage> {
 
         return switch (colIndex) {
           0 => Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(_directionIcon(direction), size: 14, color: _directionColor(direction)),
-                AppSpacing.gapW4,
-                Text(direction.toUpperCase(), style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
-              ],
-            ),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(_directionIcon(direction), size: 14, color: _directionColor(direction)),
+              AppSpacing.gapW4,
+              Text(direction.toUpperCase(), style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+            ],
+          ),
           1 => Tooltip(
-              message: errorMessage ?? '',
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: _statusColor(status).withValues(alpha: 0.15),
-                  borderRadius: AppRadius.borderFull,
-                ),
-                child: Text(
-                  status.isEmpty ? '—' : status[0].toUpperCase() + status.substring(1),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: _statusColor(status),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+            message: errorMessage ?? '',
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.15), borderRadius: AppRadius.borderFull),
+              child: Text(
+                status.isEmpty ? '—' : status[0].toUpperCase() + status.substring(1),
+                style: theme.textTheme.labelSmall?.copyWith(color: _statusColor(status), fontWeight: FontWeight.w600),
               ),
             ),
+          ),
           2 => Text(records.toString()),
           3 => Tooltip(
-              message: terminalId,
-              child: Text(
-                shortTerminal,
-                style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
-              ),
-            ),
+            message: terminalId,
+            child: Text(shortTerminal, style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace')),
+          ),
           4 => Text('${durationMs}ms'),
           _ => Text(
-              startedAt != null
-                  ? DateTime.tryParse(startedAt)?.toLocal().toString().substring(0, 16) ?? startedAt
-                  : '—',
-              style: theme.textTheme.bodySmall,
-            ),
+            startedAt != null ? DateTime.tryParse(startedAt)?.toLocal().toString().substring(0, 16) ?? startedAt : '—',
+            style: theme.textTheme.bodySmall,
+          ),
         };
       },
     );

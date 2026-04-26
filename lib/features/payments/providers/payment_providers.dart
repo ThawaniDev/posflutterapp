@@ -21,14 +21,7 @@ class PaymentsNotifier extends StateNotifier<PaymentsState> {
   String? _endDate;
   String? _search;
 
-  Future<void> load({
-    int page = 1,
-    String? method,
-    String? status,
-    String? startDate,
-    String? endDate,
-    String? search,
-  }) async {
+  Future<void> load({int page = 1, String? method, String? status, String? startDate, String? endDate, String? search}) async {
     _method = method;
     _status = status;
     _startDate = startDate;
@@ -179,23 +172,13 @@ class ExpensesNotifier extends StateNotifier<ExpensesState> {
   String? _endDate;
   String? _category;
 
-  Future<void> load({
-    int page = 1,
-    String? startDate,
-    String? endDate,
-    String? category,
-  }) async {
+  Future<void> load({int page = 1, String? startDate, String? endDate, String? category}) async {
     _startDate = startDate;
     _endDate = endDate;
     _category = category;
     state = const ExpensesLoading();
     try {
-      final result = await _repo.listExpenses(
-        page: page,
-        startDate: _startDate,
-        endDate: _endDate,
-        category: _category,
-      );
+      final result = await _repo.listExpenses(page: page, startDate: _startDate, endDate: _endDate, category: _category);
       state = ExpensesLoaded(
         expenses: result.items,
         total: result.total,
@@ -403,13 +386,7 @@ class RefundsNotifier extends StateNotifier<RefundsState> {
   String? _status;
   String? _method;
 
-  Future<void> load({
-    int page = 1,
-    String? startDate,
-    String? endDate,
-    String? status,
-    String? method,
-  }) async {
+  Future<void> load({int page = 1, String? startDate, String? endDate, String? status, String? method}) async {
     _startDate = startDate;
     _endDate = endDate;
     _status = status;
@@ -537,4 +514,3 @@ String _extractError(DioException e) {
   }
   return e.message ?? 'Unknown error';
 }
-

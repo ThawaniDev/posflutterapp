@@ -15,7 +15,6 @@ class TableFormPage extends ConsumerStatefulWidget {
 }
 
 class _TableFormPageState extends ConsumerState<TableFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -83,11 +82,11 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.restaurantEditTable : l10n.restaurantNewTable,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.restaurantUpdateTable : l10n.restaurantCreateTable,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.restaurantUpdateTable : l10n.restaurantCreateTable,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -96,11 +95,20 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _tableNumberCtrl, label: l10n.restaurantTableNumber, hint: l10n.restaurantTableNumberHint),
+                  child: PosTextField(
+                    controller: _tableNumberCtrl,
+                    label: l10n.restaurantTableNumber,
+                    hint: l10n.restaurantTableNumberHint,
+                  ),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _seatsCtrl, label: l10n.restaurantSeats, hint: '4', keyboardType: TextInputType.number),
+                  child: PosTextField(
+                    controller: _seatsCtrl,
+                    label: l10n.restaurantSeats,
+                    hint: '4',
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
               ],
             ),
@@ -112,11 +120,21 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _posXCtrl, label: l10n.positionX, hint: '0', keyboardType: TextInputType.number),
+                  child: PosTextField(
+                    controller: _posXCtrl,
+                    label: l10n.positionX,
+                    hint: '0',
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _posYCtrl, label: l10n.positionY, hint: '0', keyboardType: TextInputType.number),
+                  child: PosTextField(
+                    controller: _posYCtrl,
+                    label: l10n.positionY,
+                    hint: '0',
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
               ],
             ),

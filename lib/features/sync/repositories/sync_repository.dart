@@ -33,13 +33,7 @@ class SyncRepository {
     String? terminalId,
     int page = 1,
     int perPage = 25,
-  }) => _api.listLogs(
-        direction: direction,
-        status: status,
-        terminalId: terminalId,
-        page: page,
-        perPage: perPage,
-      );
+  }) => _api.listLogs(direction: direction, status: status, terminalId: terminalId, page: page, perPage: perPage);
 }
 
 final syncRepositoryProvider = Provider<SyncRepository>((ref) {

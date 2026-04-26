@@ -123,7 +123,10 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     return Expanded(
       child: Column(
         children: [
-          Text(value, style: AppTypography.titleMedium.copyWith(color: color, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: AppTypography.titleMedium.copyWith(color: color, fontWeight: FontWeight.bold),
+          ),
           AppSpacing.gapH4,
           Text(
             label,
@@ -265,10 +268,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
             ),
           if (log.createdAt != null) ...[
             AppSpacing.gapH4,
-            Text(
-              _formatDateTime(log.createdAt!),
-              style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
-            ),
+            Text(_formatDateTime(log.createdAt!), style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
           ],
         ],
       ),

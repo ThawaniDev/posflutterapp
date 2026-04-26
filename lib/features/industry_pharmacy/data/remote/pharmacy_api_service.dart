@@ -39,11 +39,7 @@ class PharmacyApiService {
   Future<List<DrugSchedule>> listDrugSchedules({String? scheduleType, String? productId, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.pharmacyDrugSchedules,
-      queryParameters: {
-        'per_page': perPage,
-        'schedule_type': ?scheduleType,
-        'product_id': ?productId,
-      },
+      queryParameters: {'per_page': perPage, 'schedule_type': ?scheduleType, 'product_id': ?productId},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -63,14 +59,10 @@ class PharmacyApiService {
   }
 
   Future<({List<Map<String, dynamic>> alerts, int days})> getExpiryAlerts({int days = 90}) async {
-    final response = await _dio.get(
-      ApiEndpoints.pharmacyExpiryAlerts,
-      queryParameters: {'days': days},
-    );
+    final response = await _dio.get(ApiEndpoints.pharmacyExpiryAlerts, queryParameters: {'days': days});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data as Map<String, dynamic>);
     final payload = apiResponse.data ?? {};
-    final alertsList = (payload['data'] as List? ?? [])
-        .cast<Map<String, dynamic>>();
+    final alertsList = (payload['data'] as List? ?? []).cast<Map<String, dynamic>>();
     final returnedDays = (payload['days'] as num?)?.toInt() ?? days;
     return (alerts: alertsList, days: returnedDays);
   }

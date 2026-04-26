@@ -136,6 +136,5 @@ class Payment {
   int get hashCode => id.hashCode;
 
   @override
-  String toString() =>
-      'Payment(id: $id, transactionId: $transactionId, method: $method, amount: $amount, status: $status)';
+  String toString() => 'Payment(id: $id, transactionId: $transactionId, method: $method, amount: $amount, status: $status)';
 }

@@ -1,5 +1,4 @@
 class LabelPrintHistory {
-
   const LabelPrintHistory({
     required this.id,
     required this.storeId,
@@ -80,13 +79,12 @@ class LabelPrintHistory {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LabelPrintHistory && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LabelPrintHistory && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LabelPrintHistory(id: $id, storeId: $storeId, templateId: $templateId, printedBy: $printedBy, productCount: $productCount, totalLabels: $totalLabels, ...)';
+  String toString() =>
+      'LabelPrintHistory(id: $id, storeId: $storeId, templateId: $templateId, printedBy: $printedBy, productCount: $productCount, totalLabels: $totalLabels, ...)';
 }

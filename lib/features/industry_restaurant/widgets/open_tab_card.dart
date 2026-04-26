@@ -11,7 +11,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
 class OpenTabCard extends ConsumerWidget {
-
   const OpenTabCard({super.key, required this.tab, this.onTap, this.onClose});
   final OpenTab tab;
   final VoidCallback? onTap;
@@ -38,9 +37,7 @@ class OpenTabCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: (isOpen ? AppColors.success : (AppColors.mutedFor(context))).withValues(
-                    alpha: 0.1,
-                  ),
+                  color: (isOpen ? AppColors.success : (AppColors.mutedFor(context))).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
                 child: Icon(
@@ -75,14 +72,17 @@ class OpenTabCard extends ConsumerWidget {
                     label: isOpen ? 'Open' : 'Closed',
                     variant: isOpen ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.neutral,
                   ),
-                  if (isOpen && onClose != null) ...[                    
+                  if (isOpen && onClose != null) ...[
                     if (canSplitBill) ...[
-                    AppSpacing.gapH4,
-                    GestureDetector(
-                      onTap: () => showSplitBillDialog(context),
-                      child: Text(l10n.restaurantSplitBill, style: AppTypography.labelSmall.copyWith(color: Theme.of(context).colorScheme.primary)),
-                    ),
-                    AppSpacing.gapH4,
+                      AppSpacing.gapH4,
+                      GestureDetector(
+                        onTap: () => showSplitBillDialog(context),
+                        child: Text(
+                          l10n.restaurantSplitBill,
+                          style: AppTypography.labelSmall.copyWith(color: Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                      AppSpacing.gapH4,
                     ],
                     GestureDetector(
                       onTap: onClose,

@@ -30,9 +30,7 @@ class BackupStorageWidget extends ConsumerWidget {
     final d = data['data'] as Map<String, dynamic>? ?? data;
     final totalBytes = (d['total_backup_bytes'] as num?)?.toInt() ?? 0;
     final quotaBytes = (d['quota_bytes'] as num?)?.toInt() ?? 1;
-    final usagePct = (d['usage_percentage'] != null
-        ? double.tryParse(d['usage_percentage'].toString())
-        : null) ?? 0.0;
+    final usagePct = (d['usage_percentage'] != null ? double.tryParse(d['usage_percentage'].toString()) : null) ?? 0.0;
     final backupCount = (d['backup_count'] as num?)?.toInt() ?? 0;
     final byTypeRaw = d['by_type'] as List? ?? [];
     final byTypeList = byTypeRaw.whereType<Map<String, dynamic>>().toList();
@@ -142,13 +140,7 @@ class BackupStorageWidget extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                     child: Row(
                       children: [
-                        SizedBox(
-                          width: 100,
-                          child: Text(
-                            _typeLabel(context, typeName),
-                            style: AppTypography.bodyMedium,
-                          ),
-                        ),
+                        SizedBox(width: 100, child: Text(_typeLabel(context, typeName), style: AppTypography.bodyMedium)),
                         Expanded(
                           child: ClipRRect(
                             borderRadius: AppRadius.borderMd,
@@ -191,9 +183,7 @@ class BackupStorageWidget extends ConsumerWidget {
                   final type = b['backup_type'] as String? ?? 'manual';
                   final status = b['status'] as String? ?? '';
                   final size = (b['file_size_bytes'] as num?)?.toInt() ?? 0;
-                  final createdAt = b['created_at'] != null
-                      ? DateTime.tryParse(b['created_at'] as String)
-                      : null;
+                  final createdAt = b['created_at'] != null ? DateTime.tryParse(b['created_at'] as String) : null;
                   final statusColor = status == 'completed'
                       ? AppColors.success
                       : status == 'failed'
@@ -202,17 +192,11 @@ class BackupStorageWidget extends ConsumerWidget {
                   return Column(
                     children: [
                       ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                          vertical: AppSpacing.xs,
-                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
                         leading: Container(
                           width: 36,
                           height: 36,
-                          decoration: BoxDecoration(
-                            color: statusColor.withValues(alpha: 0.10),
-                            borderRadius: AppRadius.borderMd,
-                          ),
+                          decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.10), borderRadius: AppRadius.borderMd),
                           child: Icon(Icons.backup_rounded, color: statusColor, size: 18),
                         ),
                         title: Text(
@@ -226,10 +210,7 @@ class BackupStorageWidget extends ConsumerWidget {
                         trailing: Container(
                           width: 10,
                           height: 10,
-                          decoration: BoxDecoration(
-                            color: statusColor,
-                            shape: BoxShape.circle,
-                          ),
+                          decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
                         ),
                       ),
                       if (!isLast) PosDivider(),
@@ -246,10 +227,14 @@ class BackupStorageWidget extends ConsumerWidget {
 
   String _typeLabel(BuildContext context, String type) {
     switch (type) {
-      case 'auto': return AppLocalizations.of(context)!.backupTypeAuto;
-      case 'manual': return AppLocalizations.of(context)!.backupTypeManual;
-      case 'pre_update': return AppLocalizations.of(context)!.backupTypePreUpdate;
-      default: return type;
+      case 'auto':
+        return AppLocalizations.of(context)!.backupTypeAuto;
+      case 'manual':
+        return AppLocalizations.of(context)!.backupTypeManual;
+      case 'pre_update':
+        return AppLocalizations.of(context)!.backupTypePreUpdate;
+      default:
+        return type;
     }
   }
 
@@ -265,4 +250,3 @@ class BackupStorageWidget extends ConsumerWidget {
     return '${(bytes / 1073741824).toStringAsFixed(2)} GB';
   }
 }
-

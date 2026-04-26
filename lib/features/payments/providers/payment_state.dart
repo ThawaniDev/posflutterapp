@@ -256,4 +256,3 @@ class ReconciliationError extends ReconciliationState {
   const ReconciliationError({required this.message});
   final String message;
 }
-

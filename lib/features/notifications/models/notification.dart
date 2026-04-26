@@ -1,5 +1,4 @@
 class Notification {
-
   const Notification({
     required this.id,
     this.userId,

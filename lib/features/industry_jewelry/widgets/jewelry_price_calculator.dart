@@ -9,22 +9,17 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Shows the jewelry price calculator as a bottom sheet / dialog.
 void showJewelryPriceCalculator(BuildContext context) {
-  showDialog<void>(
-    context: context,
-    builder: (_) => const JewelryPriceCalculatorDialog(),
-  );
+  showDialog<void>(context: context, builder: (_) => const JewelryPriceCalculatorDialog());
 }
 
 class JewelryPriceCalculatorDialog extends ConsumerStatefulWidget {
   const JewelryPriceCalculatorDialog({super.key});
 
   @override
-  ConsumerState<JewelryPriceCalculatorDialog> createState() =>
-      _JewelryPriceCalculatorDialogState();
+  ConsumerState<JewelryPriceCalculatorDialog> createState() => _JewelryPriceCalculatorDialogState();
 }
 
-class _JewelryPriceCalculatorDialogState
-    extends ConsumerState<JewelryPriceCalculatorDialog> {
+class _JewelryPriceCalculatorDialogState extends ConsumerState<JewelryPriceCalculatorDialog> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
 
   final _netWeightCtrl = TextEditingController();
@@ -34,8 +29,7 @@ class _JewelryPriceCalculatorDialogState
   String _makingChargesType = 'percentage'; // percentage | flat | per_gram
 
   double get _netWeight => double.tryParse(_netWeightCtrl.text) ?? 0.0;
-  double get _makingChargesValue =>
-      double.tryParse(_makingChargesCtrl.text) ?? 0.0;
+  double get _makingChargesValue => double.tryParse(_makingChargesCtrl.text) ?? 0.0;
 
   double get _calculatedPrice {
     if (_selectedRate == null || _netWeight <= 0) return 0.0;
@@ -62,8 +56,7 @@ class _JewelryPriceCalculatorDialogState
 
     return AlertDialog(
       title: Text(l10n.jewelryPriceCalculator),
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       content: SizedBox(
         width: 420,
         child: Column(
@@ -75,11 +68,12 @@ class _JewelryPriceCalculatorDialogState
               label: l10n.jewelrySelectRate,
               hint: l10n.jewelrySelectRate,
               items: rates
-                  .map((r) => PosDropdownItem(
-                        value: r,
-                        label:
-                            '${r.metalType.value} ${r.karat ?? ''} — ${r.ratePerGram.toStringAsFixed(3)} ${l10n.sarPerGram}',
-                      ))
+                  .map(
+                    (r) => PosDropdownItem(
+                      value: r,
+                      label: '${r.metalType.value} ${r.karat ?? ''} — ${r.ratePerGram.toStringAsFixed(3)} ${l10n.sarPerGram}',
+                    ),
+                  )
                   .toList(),
               selectedValue: _selectedRate,
               onChanged: (v) => setState(() => _selectedRate = v),
@@ -91,8 +85,7 @@ class _JewelryPriceCalculatorDialogState
               controller: _netWeightCtrl,
               label: l10n.jewelryNetWeightG,
               hint: '0.000',
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -102,15 +95,12 @@ class _JewelryPriceCalculatorDialogState
               label: l10n.jewelryMakingChargesType,
               hint: l10n.jewelryMakingChargesType,
               items: [
-                PosDropdownItem(
-                    value: 'percentage', label: l10n.jewelryPercentage),
+                PosDropdownItem(value: 'percentage', label: l10n.jewelryPercentage),
                 PosDropdownItem(value: 'flat', label: l10n.jewelryFlat),
-                PosDropdownItem(
-                    value: 'per_gram', label: l10n.jewelryPerGram),
+                PosDropdownItem(value: 'per_gram', label: l10n.jewelryPerGram),
               ],
               selectedValue: _makingChargesType,
-              onChanged: (v) =>
-                  setState(() => _makingChargesType = v ?? 'percentage'),
+              onChanged: (v) => setState(() => _makingChargesType = v ?? 'percentage'),
             ),
             const SizedBox(height: AppSpacing.md),
 
@@ -119,8 +109,7 @@ class _JewelryPriceCalculatorDialogState
               controller: _makingChargesCtrl,
               label: l10n.jewelryMakingChargesValue,
               hint: '0.00',
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -136,16 +125,14 @@ class _JewelryPriceCalculatorDialogState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.jewelryCalculatedPrice,
-                      style: Theme.of(context).textTheme.labelMedium),
+                  Text(l10n.jewelryCalculatedPrice, style: Theme.of(context).textTheme.labelMedium),
                   const SizedBox(height: 4),
                   Text(
                     '${_calculatedPrice.toStringAsFixed(3)} SAR',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
                   ),
                 ],
               ),
@@ -153,12 +140,7 @@ class _JewelryPriceCalculatorDialogState
           ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.close),
-        ),
-      ],
+      actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.close))],
     );
   }
 }

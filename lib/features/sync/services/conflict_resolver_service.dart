@@ -22,7 +22,6 @@ enum ConflictResolutionStrategy {
 
 /// A detected sync conflict between local and cloud data.
 class SyncConflict {
-
   const SyncConflict({
     required this.id,
     required this.table,
@@ -54,7 +53,6 @@ class SyncConflict {
 
 /// Result of a conflict resolution attempt.
 class ConflictResolution {
-
   const ConflictResolution({
     required this.conflictId,
     required this.resolved,

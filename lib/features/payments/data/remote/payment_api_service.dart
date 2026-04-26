@@ -96,10 +96,7 @@ class PaymentApiService {
   }
 
   Future<PaginatedResult<Refund>> listPaymentRefunds(String paymentId, {int page = 1}) async {
-    final response = await _dio.get(
-      ApiEndpoints.paymentRefundsById(paymentId),
-      queryParameters: {'page': page},
-    );
+    final response = await _dio.get(ApiEndpoints.paymentRefundsById(paymentId), queryParameters: {'page': page});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final map = apiResponse.data as Map<String, dynamic>;
     final items = (map['data'] as List).map((j) => Refund.fromJson(j as Map<String, dynamic>)).toList();
@@ -209,18 +206,10 @@ class PaymentApiService {
 
   // ─── Gift Cards ───────────────────────────────────────────────
 
-  Future<PaginatedResult<GiftCard>> listGiftCards({
-    int page = 1,
-    int perPage = 20,
-    String? status,
-  }) async {
+  Future<PaginatedResult<GiftCard>> listGiftCards({int page = 1, int perPage = 20, String? status}) async {
     final response = await _dio.get(
       ApiEndpoints.giftCards,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        if (status != null) 'status': status,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, if (status != null) 'status': status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final map = apiResponse.data as Map<String, dynamic>;
@@ -261,12 +250,7 @@ class PaymentApiService {
   // ─── Financial Reports ────────────────────────────────────────
 
   Future<Map<String, dynamic>> dailySummary({String? date}) async {
-    final response = await _dio.get(
-      ApiEndpoints.financeDailySummary,
-      queryParameters: {
-        if (date != null) 'date': date,
-      },
-    );
+    final response = await _dio.get(ApiEndpoints.financeDailySummary, queryParameters: {if (date != null) 'date': date});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
@@ -274,13 +258,9 @@ class PaymentApiService {
   Future<Map<String, dynamic>> reconciliation({String? startDate, String? endDate}) async {
     final response = await _dio.get(
       ApiEndpoints.financeReconciliation,
-      queryParameters: {
-        if (startDate != null) 'start_date': startDate,
-        if (endDate != null) 'end_date': endDate,
-      },
+      queryParameters: {if (startDate != null) 'start_date': startDate, if (endDate != null) 'end_date': endDate},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
 }
-

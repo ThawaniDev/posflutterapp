@@ -14,11 +14,7 @@ class SyncApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.syncPush,
-      data: {
-        'terminal_id': terminalId,
-        'changes': changes,
-        if (syncToken != null) 'sync_token': syncToken,
-      },
+      data: {'terminal_id': terminalId, 'changes': changes, if (syncToken != null) 'sync_token': syncToken},
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -52,10 +48,7 @@ class SyncApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.syncResolveConflict(conflictId),
-      data: {
-        'resolution': resolution,
-        if (mergedData != null) 'merged_data': mergedData,
-      },
+      data: {'resolution': resolution, if (mergedData != null) 'merged_data': mergedData},
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -75,10 +68,7 @@ class SyncApiService {
   Future<Map<String, dynamic>> heartbeat({String? terminalId, List<Map<String, dynamic>>? changes}) async {
     final response = await _dio.post(
       ApiEndpoints.syncHeartbeat,
-      data: {
-        if (terminalId != null) 'terminal_id': terminalId,
-        if (changes != null && changes.isNotEmpty) 'changes': changes,
-      },
+      data: {if (terminalId != null) 'terminal_id': terminalId, if (changes != null && changes.isNotEmpty) 'changes': changes},
     );
     return response.data['data'] as Map<String, dynamic>;
   }

@@ -1,5 +1,4 @@
 class FlowerArrangement {
-
   const FlowerArrangement({
     required this.id,
     required this.storeId,
@@ -68,13 +67,12 @@ class FlowerArrangement {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is FlowerArrangement && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is FlowerArrangement && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'FlowerArrangement(id: $id, storeId: $storeId, name: $name, occasion: $occasion, itemsJson: $itemsJson, totalPrice: $totalPrice, ...)';
+  String toString() =>
+      'FlowerArrangement(id: $id, storeId: $storeId, name: $name, occasion: $occasion, itemsJson: $itemsJson, totalPrice: $totalPrice, ...)';
 }

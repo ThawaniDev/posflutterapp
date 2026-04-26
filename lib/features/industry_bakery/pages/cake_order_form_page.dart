@@ -15,7 +15,6 @@ class CakeOrderFormPage extends ConsumerStatefulWidget {
 }
 
 class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -97,11 +96,11 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.bakeryEditCakeOrder : l10n.bakeryNewCakeOrder,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.bakeryUpdateOrder : l10n.bakeryCreateOrder,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.bakeryUpdateOrder : l10n.bakeryCreateOrder,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(

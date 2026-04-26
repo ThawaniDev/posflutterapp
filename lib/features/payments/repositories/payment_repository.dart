@@ -27,17 +27,16 @@ class PaymentRepository {
     String? startDate,
     String? endDate,
     String? search,
-  }) =>
-      _apiService.listPayments(
-        page: page,
-        perPage: perPage,
-        method: method,
-        transactionId: transactionId,
-        status: status,
-        startDate: startDate,
-        endDate: endDate,
-        search: search,
-      );
+  }) => _apiService.listPayments(
+    page: page,
+    perPage: perPage,
+    method: method,
+    transactionId: transactionId,
+    status: status,
+    startDate: startDate,
+    endDate: endDate,
+    search: search,
+  );
 
   Future<Payment> createPayment(Map<String, dynamic> data) => _apiService.createPayment(data);
 
@@ -50,21 +49,19 @@ class PaymentRepository {
     String? endDate,
     String? status,
     String? method,
-  }) =>
-      _apiService.listRefunds(
-        page: page,
-        perPage: perPage,
-        startDate: startDate,
-        endDate: endDate,
-        status: status,
-        method: method,
-      );
+  }) => _apiService.listRefunds(
+    page: page,
+    perPage: perPage,
+    startDate: startDate,
+    endDate: endDate,
+    status: status,
+    method: method,
+  );
 
   Future<PaginatedResult<Refund>> listPaymentRefunds(String paymentId, {int page = 1}) =>
       _apiService.listPaymentRefunds(paymentId, page: page);
 
-  Future<Refund> createRefund(String paymentId, Map<String, dynamic> data) =>
-      _apiService.createRefund(paymentId, data);
+  Future<Refund> createRefund(String paymentId, Map<String, dynamic> data) => _apiService.createRefund(paymentId, data);
 
   // ─── Cash Sessions ────────────────────────────────────────────
 
@@ -75,8 +72,7 @@ class PaymentRepository {
 
   Future<CashSession> getCashSession(String id) => _apiService.getCashSession(id);
 
-  Future<CashSession> closeCashSession(String id, Map<String, dynamic> data) =>
-      _apiService.closeCashSession(id, data);
+  Future<CashSession> closeCashSession(String id, Map<String, dynamic> data) => _apiService.closeCashSession(id, data);
 
   // ─── Cash Events ──────────────────────────────────────────────
 
@@ -90,14 +86,7 @@ class PaymentRepository {
     String? startDate,
     String? endDate,
     String? category,
-  }) =>
-      _apiService.listExpenses(
-        page: page,
-        perPage: perPage,
-        startDate: startDate,
-        endDate: endDate,
-        category: category,
-      );
+  }) => _apiService.listExpenses(page: page, perPage: perPage, startDate: startDate, endDate: endDate, category: category);
 
   Future<Expense> createExpense(Map<String, dynamic> data) => _apiService.createExpense(data);
 
@@ -125,4 +114,3 @@ class PaymentRepository {
   Future<Map<String, dynamic>> getReconciliation({String? startDate, String? endDate}) =>
       _apiService.reconciliation(startDate: startDate, endDate: endDate);
 }
-

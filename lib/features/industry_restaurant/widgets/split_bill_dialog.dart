@@ -4,10 +4,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Shows a split bill dialog, returning the list of per-person amounts (or null on dismiss).
-Future<List<double>?> showSplitBillDialog(
-  BuildContext context, {
-  double? initialTotal,
-}) {
+Future<List<double>?> showSplitBillDialog(BuildContext context, {double? initialTotal}) {
   return showDialog<List<double>>(
     context: context,
     builder: (_) => SplitBillDialog(initialTotal: initialTotal),
@@ -34,26 +31,20 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
   final _numPeopleCtrl = TextEditingController(text: '2');
 
   // Custom mode: one controller per person
-  List<TextEditingController> _customCtrls = [
-    TextEditingController(),
-    TextEditingController(),
-  ];
+  List<TextEditingController> _customCtrls = [TextEditingController(), TextEditingController()];
 
   double get _total => double.tryParse(_totalCtrl.text) ?? 0.0;
   int get _numPeople => int.tryParse(_numPeopleCtrl.text) ?? 2;
   double get _perPerson => _numPeople > 0 ? _total / _numPeople : 0.0;
 
-  double get _customSum =>
-      _customCtrls.fold(0.0, (s, c) => s + (double.tryParse(c.text) ?? 0.0));
+  double get _customSum => _customCtrls.fold(0.0, (s, c) => s + (double.tryParse(c.text) ?? 0.0));
 
-  bool get _customValid =>
-      (_total - _customSum).abs() < 0.01 && _customSum > 0;
+  bool get _customValid => (_total - _customSum).abs() < 0.01 && _customSum > 0;
 
   @override
   void initState() {
     super.initState();
-    _totalCtrl.text =
-        widget.initialTotal != null ? widget.initialTotal!.toStringAsFixed(2) : '';
+    _totalCtrl.text = widget.initialTotal != null ? widget.initialTotal!.toStringAsFixed(2) : '';
   }
 
   @override
@@ -69,9 +60,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
   void _confirm() {
     final amounts = _mode == _modeEqual
         ? List.filled(_numPeople, _perPerson)
-        : _customCtrls
-            .map((c) => double.tryParse(c.text) ?? 0.0)
-            .toList();
+        : _customCtrls.map((c) => double.tryParse(c.text) ?? 0.0).toList();
     Navigator.of(context).pop(amounts);
   }
 
@@ -85,8 +74,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(l10n.restaurantSplitBill),
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       content: SingleChildScrollView(
         child: SizedBox(
           width: 400,
@@ -99,8 +87,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                 controller: _totalCtrl,
                 label: l10n.restaurantBillTotal,
                 hint: '0.00',
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -129,10 +116,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primaryContainer
-                          .withValues(alpha: 0.6),
+                      color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -141,10 +125,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                         Text(l10n.restaurantPerPerson),
                         Text(
                           '${_perPerson.toStringAsFixed(2)} SAR',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -155,12 +136,10 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(l10n.restaurantCustomAmounts,
-                        style: Theme.of(context).textTheme.labelMedium),
+                    Text(l10n.restaurantCustomAmounts, style: Theme.of(context).textTheme.labelMedium),
                     IconButton(
                       icon: const Icon(Icons.add_circle_outline, size: 20),
-                      onPressed: () => setState(
-                          () => _customCtrls.add(TextEditingController())),
+                      onPressed: () => setState(() => _customCtrls.add(TextEditingController())),
                     ),
                   ],
                 ),
@@ -175,16 +154,13 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                             controller: e.value,
                             label: '${l10n.restaurantPerson} ${idx + 1}',
                             hint: '0.00',
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             onChanged: (_) => setState(() {}),
                           ),
                         ),
                         if (_customCtrls.length > 2)
                           IconButton(
-                            icon: Icon(Icons.remove_circle_outline,
-                                size: 18,
-                                color: Theme.of(context).colorScheme.error),
+                            icon: Icon(Icons.remove_circle_outline, size: 18, color: Theme.of(context).colorScheme.error),
                             onPressed: () => setState(() {
                               e.value.dispose();
                               _customCtrls.removeAt(idx);
@@ -199,15 +175,12 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(l10n.restaurantSumEntered,
-                          style: Theme.of(context).textTheme.bodySmall),
+                      Text(l10n.restaurantSumEntered, style: Theme.of(context).textTheme.bodySmall),
                       Text(
                         '${_customSum.toStringAsFixed(2)} / ${_total.toStringAsFixed(2)} SAR',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: _customValid
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(context).colorScheme.error,
-                            ),
+                          color: _customValid ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ],
                   ),
@@ -218,14 +191,8 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
-        ),
-        PosButton(
-          label: l10n.restaurantConfirmSplit,
-          onPressed: _canConfirm ? _confirm : null,
-        ),
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
+        PosButton(label: l10n.restaurantConfirmSplit, onPressed: _canConfirm ? _confirm : null),
       ],
     );
   }

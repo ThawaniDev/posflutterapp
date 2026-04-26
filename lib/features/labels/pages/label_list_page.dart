@@ -42,137 +42,134 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
     return PermissionGuardPage(
       permission: Permissions.labelsView,
       child: PosListPage(
-      title: l10n.labelTemplates,
-      showSearch: false,
-      isLoading: isLoading,
-      hasError: error != null,
-      errorMessage: error,
-      onRetry: () => ref.read(labelTemplatesProvider.notifier).load(),
-      actions: [
-        PosButton.icon(icon: Icons.info_outline, tooltip: l10n.featureInfoTooltip, onPressed: () => showLabelListInfo(context)),
-        PosButton(
-          label: l10n.labelDesigner,
-          icon: Icons.design_services_rounded,
-          variant: PosButtonVariant.primary,
-          size: PosButtonSize.sm,
-          onPressed: () => context.push(Routes.labelDesigner),
-        ),
-        PosButton(
-          label: l10n.labelPrintHistory,
-          icon: Icons.history_rounded,
-          variant: PosButtonVariant.outline,
-          size: PosButtonSize.sm,
-          onPressed: () => context.push(Routes.labelHistory),
-        ),
-      ],
-      child: PosDataTable<LabelTemplate>(
-        columns: [
-          PosTableColumn(title: l10n.name),
-          PosTableColumn(title: l10n.labelSize),
-          PosTableColumn(title: l10n.txColType),
-          PosTableColumn(title: l10n.status),
-        ],
-        items: templates,
+        title: l10n.labelTemplates,
+        showSearch: false,
         isLoading: isLoading,
-        error: error,
+        hasError: error != null,
+        errorMessage: error,
         onRetry: () => ref.read(labelTemplatesProvider.notifier).load(),
-        emptyConfig: PosTableEmptyConfig(
-          icon: Icons.label_outlined,
-          title: l10n.labelNoTemplates,
-          subtitle: l10n.labelNoTemplatesSubtitle,
-          actionLabel: l10n.labelCreateTemplate,
-          action: () => context.push(Routes.labelDesigner),
-        ),
         actions: [
-          PosTableRowAction<LabelTemplate>(
-            label: l10n.labelEdit,
-            icon: Icons.edit_outlined,
-            onTap: (t) => context.push('${Routes.labelDesigner}?id=${t.id}'),
+          PosButton.icon(icon: Icons.info_outline, tooltip: l10n.featureInfoTooltip, onPressed: () => showLabelListInfo(context)),
+          PosButton(
+            label: l10n.labelDesigner,
+            icon: Icons.design_services_rounded,
+            variant: PosButtonVariant.primary,
+            size: PosButtonSize.sm,
+            onPressed: () => context.push(Routes.labelDesigner),
           ),
-          PosTableRowAction<LabelTemplate>(
-            label: l10n.labelDuplicate,
-            icon: Icons.copy_outlined,
-            onTap: (t) => _handleDuplicate(t),
-          ),
-          PosTableRowAction<LabelTemplate>(
-            label: l10n.labelSetAsDefault,
-            icon: Icons.star_outline_rounded,
-            isVisible: (t) => t.isDefault != true,
-            onTap: (t) => _handleSetDefault(t),
-          ),
-          PosTableRowAction<LabelTemplate>(
-            label: l10n.labelPrintQueue,
-            icon: Icons.print_outlined,
-            onTap: (t) => context.push('${Routes.labelPrintQueue}?templateId=${t.id}'),
-          ),
-          PosTableRowAction<LabelTemplate>(
-            label: l10n.labelDelete,
-            icon: Icons.delete_outline,
-            isDestructive: true,
-            isVisible: (t) => t.isPreset != true,
-            onTap: (t) => _handleDelete(t),
+          PosButton(
+            label: l10n.labelPrintHistory,
+            icon: Icons.history_rounded,
+            variant: PosButtonVariant.outline,
+            size: PosButtonSize.sm,
+            onPressed: () => context.push(Routes.labelHistory),
           ),
         ],
-        cellBuilder: (template, colIndex, col) {
-          switch (colIndex) {
-            case 0: // Name
-              return Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      borderRadius: AppRadius.borderMd,
+        child: PosDataTable<LabelTemplate>(
+          columns: [
+            PosTableColumn(title: l10n.name),
+            PosTableColumn(title: l10n.labelSize),
+            PosTableColumn(title: l10n.txColType),
+            PosTableColumn(title: l10n.status),
+          ],
+          items: templates,
+          isLoading: isLoading,
+          error: error,
+          onRetry: () => ref.read(labelTemplatesProvider.notifier).load(),
+          emptyConfig: PosTableEmptyConfig(
+            icon: Icons.label_outlined,
+            title: l10n.labelNoTemplates,
+            subtitle: l10n.labelNoTemplatesSubtitle,
+            actionLabel: l10n.labelCreateTemplate,
+            action: () => context.push(Routes.labelDesigner),
+          ),
+          actions: [
+            PosTableRowAction<LabelTemplate>(
+              label: l10n.labelEdit,
+              icon: Icons.edit_outlined,
+              onTap: (t) => context.push('${Routes.labelDesigner}?id=${t.id}'),
+            ),
+            PosTableRowAction<LabelTemplate>(
+              label: l10n.labelDuplicate,
+              icon: Icons.copy_outlined,
+              onTap: (t) => _handleDuplicate(t),
+            ),
+            PosTableRowAction<LabelTemplate>(
+              label: l10n.labelSetAsDefault,
+              icon: Icons.star_outline_rounded,
+              isVisible: (t) => t.isDefault != true,
+              onTap: (t) => _handleSetDefault(t),
+            ),
+            PosTableRowAction<LabelTemplate>(
+              label: l10n.labelPrintQueue,
+              icon: Icons.print_outlined,
+              onTap: (t) => context.push('${Routes.labelPrintQueue}?templateId=${t.id}'),
+            ),
+            PosTableRowAction<LabelTemplate>(
+              label: l10n.labelDelete,
+              icon: Icons.delete_outline,
+              isDestructive: true,
+              isVisible: (t) => t.isPreset != true,
+              onTap: (t) => _handleDelete(t),
+            ),
+          ],
+          cellBuilder: (template, colIndex, col) {
+            switch (colIndex) {
+              case 0: // Name
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.borderMd,
+                      ),
+                      child: const Icon(Icons.label_rounded, size: 18, color: AppColors.primary),
                     ),
-                    child: const Icon(Icons.label_rounded, size: 18, color: AppColors.primary),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Flexible(
-                    child: Text(
-                      template.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                    const SizedBox(width: AppSpacing.sm),
+                    Flexible(
+                      child: Text(
+                        template.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                ],
-              );
-            case 1: // Size
-              return Text('${template.labelWidthMm.toStringAsFixed(0)} × ${template.labelHeightMm.toStringAsFixed(0)} mm');
-            case 2: // Type
-              return PosBadge(
-                label: template.isPreset == true ? l10n.labelPreset : l10n.labelCustom,
-                variant: template.isPreset == true ? PosBadgeVariant.info : PosBadgeVariant.neutral,
-              );
-            case 3: // Status
-              return PosBadge(
-                label: template.isDefault == true ? l10n.labelDefault : l10n.labelActive,
-                variant: template.isDefault == true ? PosBadgeVariant.primary : PosBadgeVariant.success,
-              );
-            default:
-              return const SizedBox.shrink();
-          }
-        },
+                  ],
+                );
+              case 1: // Size
+                return Text('${template.labelWidthMm.toStringAsFixed(0)} × ${template.labelHeightMm.toStringAsFixed(0)} mm');
+              case 2: // Type
+                return PosBadge(
+                  label: template.isPreset == true ? l10n.labelPreset : l10n.labelCustom,
+                  variant: template.isPreset == true ? PosBadgeVariant.info : PosBadgeVariant.neutral,
+                );
+              case 3: // Status
+                return PosBadge(
+                  label: template.isDefault == true ? l10n.labelDefault : l10n.labelActive,
+                  variant: template.isDefault == true ? PosBadgeVariant.primary : PosBadgeVariant.success,
+                );
+              default:
+                return const SizedBox.shrink();
+            }
+          },
+        ),
       ),
-    ));
+    );
   }
 
   Future<void> _handleDuplicate(LabelTemplate template) async {
     final success = await ref.read(labelTemplatesProvider.notifier).duplicateTemplate(template.id);
     if (success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.labelDuplicateSuccess)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelDuplicateSuccess)));
     }
   }
 
   Future<void> _handleSetDefault(LabelTemplate template) async {
     final success = await ref.read(labelTemplatesProvider.notifier).setDefaultTemplate(template.id);
     if (success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.labelSetAsDefaultSuccess)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelSetAsDefaultSuccess)));
     }
   }
 

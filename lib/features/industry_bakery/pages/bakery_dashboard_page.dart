@@ -141,9 +141,6 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.bakeryView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.bakeryView, child: content);
   }
 }

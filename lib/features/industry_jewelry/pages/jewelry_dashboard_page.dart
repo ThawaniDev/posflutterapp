@@ -56,7 +56,11 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
       errorMessage: hasError ? state.message : null,
       onRetry: () => ref.read(jewelryProvider.notifier).load(),
       actions: [
-        PosButton(label: l10n.jewelryPriceCalculator, icon: Icons.calculate_outlined, onPressed: () => showJewelryPriceCalculator(context)),
+        PosButton(
+          label: l10n.jewelryPriceCalculator,
+          icon: Icons.calculate_outlined,
+          onPressed: () => showJewelryPriceCalculator(context),
+        ),
         const SizedBox(width: 8),
         PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed),
       ],
@@ -136,9 +140,6 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.jewelryView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.jewelryView, child: content);
   }
 }

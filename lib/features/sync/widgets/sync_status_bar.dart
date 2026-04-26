@@ -4,7 +4,6 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class SyncStatusBar extends StatelessWidget {
-
   const SyncStatusBar({
     super.key,
     required this.serverOnline,

@@ -1,5 +1,4 @@
 class LabelTemplate {
-
   const LabelTemplate({
     required this.id,
     required this.organizationId,
@@ -98,13 +97,12 @@ class LabelTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LabelTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LabelTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LabelTemplate(id: $id, organizationId: $organizationId, name: $name, labelWidthMm: $labelWidthMm, labelHeightMm: $labelHeightMm, layoutJson: $layoutJson, ...)';
+  String toString() =>
+      'LabelTemplate(id: $id, organizationId: $organizationId, name: $name, labelWidthMm: $labelWidthMm, labelHeightMm: $labelHeightMm, layoutJson: $layoutJson, ...)';
 }

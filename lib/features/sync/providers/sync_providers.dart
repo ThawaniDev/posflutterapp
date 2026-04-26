@@ -67,9 +67,7 @@ final wsConnectionStateProvider = StreamProvider<WebSocketConnectionState>((ref)
 
 final syncQueueManagerProvider = Provider<SyncQueueManager?>((ref) {
   final pathAsync = ref.watch(queueStoragePathProvider);
-  return pathAsync.whenOrNull(
-    data: (path) => SyncQueueManager(storagePath: path),
-  );
+  return pathAsync.whenOrNull(data: (path) => SyncQueueManager(storagePath: path));
 });
 
 // ─── Sync Engine Provider ──────────────────────────────────
@@ -259,13 +257,7 @@ class SyncLogsNotifier extends StateNotifier<SyncLogsState> {
   SyncLogsNotifier(this._repo) : super(const SyncLogsInitial());
   final SyncRepository _repo;
 
-  Future<void> load({
-    String? direction,
-    String? status,
-    String? terminalId,
-    int page = 1,
-    int perPage = 25,
-  }) async {
+  Future<void> load({String? direction, String? status, String? terminalId, int page = 1, int perPage = 25}) async {
     if (page == 1) state = const SyncLogsLoading();
     try {
       final data = await _repo.listLogs(

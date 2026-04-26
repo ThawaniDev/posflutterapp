@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
 
 class NotificationPreference {
-
   const NotificationPreference({
     required this.id,
     required this.userId,

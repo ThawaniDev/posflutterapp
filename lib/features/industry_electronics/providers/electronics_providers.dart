@@ -90,8 +90,7 @@ String _extractError(DioException e) {
 
 /// One-shot IMEI server-side validation provider.
 /// Pass the IMEI string as the family argument.
-final imeiValidationProvider = FutureProvider.autoDispose
-    .family<({bool valid, bool exists}), String>((ref, imei) async {
+final imeiValidationProvider = FutureProvider.autoDispose.family<({bool valid, bool exists}), String>((ref, imei) async {
   final repo = ref.watch(electronicsRepositoryProvider);
   return repo.validateImei(imei);
 });

@@ -15,7 +15,6 @@ class PrescriptionFormPage extends ConsumerStatefulWidget {
 }
 
 class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -88,17 +87,21 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.pharmacyEditPrescription : l10n.pharmacyNewPrescription,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.pharmacyUpdatePrescription : l10n.pharmacyCreatePrescription,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.pharmacyUpdatePrescription : l10n.pharmacyCreatePrescription,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _prescriptionNumberCtrl, label: l10n.pharmacyPrescriptionNumber, hint: l10n.pharmacyPrescriptionNumberHint),
+            PosTextField(
+              controller: _prescriptionNumberCtrl,
+              label: l10n.pharmacyPrescriptionNumber,
+              hint: l10n.pharmacyPrescriptionNumberHint,
+            ),
             const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _patientNameCtrl, label: l10n.pharmacyPatientName, hint: l10n.pharmacyFullNameHint),
             const SizedBox(height: AppSpacing.md),
@@ -113,14 +116,22 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _doctorLicenseCtrl, label: l10n.pharmacyLicenseNo, hint: l10n.pharmacyLicenseHint),
+                  child: PosTextField(
+                    controller: _doctorLicenseCtrl,
+                    label: l10n.pharmacyLicenseNo,
+                    hint: l10n.pharmacyLicenseHint,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(l10n.pharmacyInsurance, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: AppSpacing.sm),
-            PosTextField(controller: _insuranceProviderCtrl, label: l10n.pharmacyInsuranceProvider, hint: l10n.pharmacyInsuranceHint),
+            PosTextField(
+              controller: _insuranceProviderCtrl,
+              label: l10n.pharmacyInsuranceProvider,
+              hint: l10n.pharmacyInsuranceHint,
+            ),
             const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _insuranceClaimCtrl,

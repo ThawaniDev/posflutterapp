@@ -53,9 +53,13 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
       errorMessage: hasError ? state.message : null,
       onRetry: () => ref.read(pharmacyProvider.notifier).load(),
       actions: [
-        PosButton(label: l10n.pharmacyExpiryAlerts, icon: Icons.warning_amber_rounded, onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PharmacyExpiryAlertsPage()));
-        }),
+        PosButton(
+          label: l10n.pharmacyExpiryAlerts,
+          icon: Icons.warning_amber_rounded,
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PharmacyExpiryAlertsPage()));
+          },
+        ),
         const SizedBox(width: 8),
         PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed),
       ],
@@ -121,9 +125,6 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.pharmacyView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.pharmacyView, child: content);
   }
 }

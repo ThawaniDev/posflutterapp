@@ -27,9 +27,7 @@ class BackupScheduleSettings {
       backupHour: (json['backup_hour'] as num?)?.toInt() ?? 2,
       totalBackups: (json['total_backups'] as num?)?.toInt() ?? 0,
       totalSizeBytes: (json['total_size_bytes'] as num?)?.toInt() ?? 0,
-      nextScheduled: json['next_scheduled'] != null
-          ? DateTime.tryParse(json['next_scheduled'] as String)
-          : null,
+      nextScheduled: json['next_scheduled'] != null ? DateTime.tryParse(json['next_scheduled'] as String) : null,
       lastBackup: json['last_backup'] as Map<String, dynamic>?,
       lastAutoBackup: json['last_auto_backup'] as Map<String, dynamic>?,
     );

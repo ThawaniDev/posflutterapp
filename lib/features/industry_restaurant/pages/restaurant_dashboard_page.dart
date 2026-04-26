@@ -162,9 +162,6 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.restaurantView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.restaurantView, child: content);
   }
 }

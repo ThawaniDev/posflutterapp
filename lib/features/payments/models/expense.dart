@@ -94,6 +94,5 @@ class Expense {
   int get hashCode => id.hashCode;
 
   @override
-  String toString() =>
-      'Expense(id: $id, amount: $amount, category: $category, expenseDate: $expenseDate)';
+  String toString() => 'Expense(id: $id, amount: $amount, category: $category, expenseDate: $expenseDate)';
 }

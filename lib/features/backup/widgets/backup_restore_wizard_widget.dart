@@ -13,12 +13,10 @@ class BackupRestoreWizardWidget extends ConsumerStatefulWidget {
   const BackupRestoreWizardWidget({super.key});
 
   @override
-  ConsumerState<BackupRestoreWizardWidget> createState() =>
-      _BackupRestoreWizardWidgetState();
+  ConsumerState<BackupRestoreWizardWidget> createState() => _BackupRestoreWizardWidgetState();
 }
 
-class _BackupRestoreWizardWidgetState
-    extends ConsumerState<BackupRestoreWizardWidget> {
+class _BackupRestoreWizardWidgetState extends ConsumerState<BackupRestoreWizardWidget> {
   int _step = 0;
   BackupHistory? _selected;
   bool _createPreBackup = true;
@@ -33,8 +31,7 @@ class _BackupRestoreWizardWidgetState
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => ref.read(backupListProvider.notifier).load(status: 'completed'));
+    Future.microtask(() => ref.read(backupListProvider.notifier).load(status: 'completed'));
   }
 
   @override
@@ -71,26 +68,18 @@ class _BackupRestoreWizardWidgetState
       l10n.backupRestoreStep5,
     ];
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
       child: Row(
         children: List.generate(_totalSteps * 2 - 1, (i) {
           if (i.isOdd) {
             final stepIdx = i ~/ 2;
             final isCompleted = _step > stepIdx;
-            return Expanded(
-              child: Container(
-                height: 2,
-                color: isCompleted ? AppColors.primary : AppColors.borderFor(context),
-              ),
-            );
+            return Expanded(child: Container(height: 2, color: isCompleted ? AppColors.primary : AppColors.borderFor(context)));
           }
           final stepIdx = i ~/ 2;
           final isActive = _step == stepIdx;
           final isCompleted = _step > stepIdx;
-          final color = isCompleted || isActive
-              ? AppColors.primary
-              : AppColors.borderFor(context);
+          final color = isCompleted || isActive ? AppColors.primary : AppColors.borderFor(context);
           return Column(
             children: [
               Container(
@@ -100,8 +89,8 @@ class _BackupRestoreWizardWidgetState
                   color: isCompleted
                       ? AppColors.primary
                       : isActive
-                          ? AppColors.primary.withValues(alpha: 0.15)
-                          : AppColors.borderFor(context),
+                      ? AppColors.primary.withValues(alpha: 0.15)
+                      : AppColors.borderFor(context),
                   shape: BoxShape.circle,
                   border: Border.all(color: color, width: 2),
                 ),
@@ -134,11 +123,7 @@ class _BackupRestoreWizardWidgetState
 
   // ── Step 1: Select Backup ────────────────────────────────
 
-  Widget _buildStepSelectBackup(
-    BuildContext context,
-    AppLocalizations l10n,
-    BackupListState listState,
-  ) {
+  Widget _buildStepSelectBackup(BuildContext context, AppLocalizations l10n, BackupListState listState) {
     if (listState is BackupListLoading || listState is BackupListInitial) {
       return const PosLoading();
     }
@@ -150,14 +135,10 @@ class _BackupRestoreWizardWidgetState
     }
 
     final data = (listState as BackupListLoaded).data;
-    final rawBackups =
-        data['data']?['backups'] as List? ?? (data['backups'] as List? ?? []);
-    final backups = rawBackups
-        .whereType<Map<String, dynamic>>()
-        .map(BackupHistory.fromJson)
-        .where((b) => b.status == 'completed')
-        .toList()
-      ..sort((a, b) => (b.createdAt ?? DateTime(0)).compareTo(a.createdAt ?? DateTime(0)));
+    final rawBackups = data['data']?['backups'] as List? ?? (data['backups'] as List? ?? []);
+    final backups =
+        rawBackups.whereType<Map<String, dynamic>>().map(BackupHistory.fromJson).where((b) => b.status == 'completed').toList()
+          ..sort((a, b) => (b.createdAt ?? DateTime(0)).compareTo(a.createdAt ?? DateTime(0)));
 
     if (backups.isEmpty) {
       return PosEmptyState(
@@ -173,8 +154,7 @@ class _BackupRestoreWizardWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(l10n.backupSelectForRestore, style: AppTypography.titleMedium),
-          Text(l10n.backupOnlyCompletedRestore,
-              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
+          Text(l10n.backupOnlyCompletedRestore, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
           const SizedBox(height: AppSpacing.lg),
           ...backups.map((b) {
             final isSelected = _selected?.id == b.id;
@@ -186,9 +166,7 @@ class _BackupRestoreWizardWidgetState
                 decoration: BoxDecoration(
                   color: isSelected
                       ? AppColors.primary.withValues(alpha: 0.07)
-                      : (Theme.of(context).brightness == Brightness.dark
-                          ? AppColors.cardDark
-                          : AppColors.cardLight),
+                      : (Theme.of(context).brightness == Brightness.dark ? AppColors.cardDark : AppColors.cardLight),
                   borderRadius: AppRadius.borderLg,
                   border: Border.all(
                     color: isSelected ? AppColors.primary : AppColors.borderFor(context),
@@ -209,11 +187,7 @@ class _BackupRestoreWizardWidgetState
                         children: [
                           Row(
                             children: [
-                              PosBadge(
-                                label: b.backupType,
-                                variant: PosBadgeVariant.primary,
-                                isSmall: true,
-                              ),
+                              PosBadge(label: b.backupType, variant: PosBadgeVariant.primary, isSmall: true),
                               const SizedBox(width: AppSpacing.sm),
                               if (b.isVerified)
                                 PosBadge(
@@ -225,10 +199,7 @@ class _BackupRestoreWizardWidgetState
                             ],
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            b.createdAt != null ? _formatDate(b.createdAt!) : '—',
-                            style: AppTypography.bodyMedium,
-                          ),
+                          Text(b.createdAt != null ? _formatDate(b.createdAt!) : '—', style: AppTypography.bodyMedium),
                           Text(
                             '${_formatBytes(b.fileSizeBytes)} • ${b.recordsCount} ${l10n.backupRecordsCount(b.recordsCount.toString()).replaceAll(b.recordsCount.toString(), '').trim()}',
                             style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
@@ -258,20 +229,13 @@ class _BackupRestoreWizardWidgetState
           children: [
             Text(l10n.backupVerifyStep, style: AppTypography.titleLarge),
             const SizedBox(height: AppSpacing.sm),
-            Text(
-              l10n.backupChecksum,
-              style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
-            ),
+            Text(l10n.backupChecksum, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
             const SizedBox(height: AppSpacing.xl),
 
-            _infoRow(context, l10n.backupChecksum,
-                _selected?.checksum?.substring(0, 16) ?? '—'),
-            _infoRow(context, l10n.backupDbVersion,
-                '${_selected?.dbVersion ?? '—'}'),
-            _infoRow(context, l10n.backupColSize,
-                _formatBytes(_selected?.fileSizeBytes ?? 0)),
-            _infoRow(context, l10n.backupEncrypted,
-                _selected?.isEncrypted == true ? l10n.commonYes : l10n.commonNo),
+            _infoRow(context, l10n.backupChecksum, _selected?.checksum?.substring(0, 16) ?? '—'),
+            _infoRow(context, l10n.backupDbVersion, '${_selected?.dbVersion ?? '—'}'),
+            _infoRow(context, l10n.backupColSize, _formatBytes(_selected?.fileSizeBytes ?? 0)),
+            _infoRow(context, l10n.backupEncrypted, _selected?.isEncrypted == true ? l10n.commonYes : l10n.commonNo),
 
             const SizedBox(height: AppSpacing.xl),
 
@@ -287,8 +251,7 @@ class _BackupRestoreWizardWidgetState
                   children: [
                     const Icon(Icons.check_circle, color: AppColors.success, size: 20),
                     const SizedBox(width: AppSpacing.sm),
-                    Text(l10n.backupVerifySuccess,
-                        style: AppTypography.bodyMedium.copyWith(color: AppColors.success)),
+                    Text(l10n.backupVerifySuccess, style: AppTypography.bodyMedium.copyWith(color: AppColors.success)),
                   ],
                 ),
               )
@@ -312,7 +275,10 @@ class _BackupRestoreWizardWidgetState
     final opState = ref.read(backupOperationProvider);
     if (mounted) {
       if (opState is BackupOperationSuccess) {
-        setState(() { _verifyDone = true; _isVerifying = false; });
+        setState(() {
+          _verifyDone = true;
+          _isVerifying = false;
+        });
       } else if (opState is BackupOperationError) {
         setState(() => _isVerifying = false);
         showPosErrorSnackbar(context, opState.message);
@@ -341,10 +307,7 @@ class _BackupRestoreWizardWidgetState
                 const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 24),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
-                  child: Text(
-                    l10n.backupRestoreWarning,
-                    style: AppTypography.bodyMedium.copyWith(color: AppColors.error),
-                  ),
+                  child: Text(l10n.backupRestoreWarning, style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
                 ),
               ],
             ),
@@ -356,8 +319,7 @@ class _BackupRestoreWizardWidgetState
             child: Column(
               children: [
                 _infoRow(context, l10n.backupColType, _selected?.backupType ?? '—'),
-                _infoRow(context, l10n.backupColDate,
-                    _selected?.createdAt != null ? _formatDate(_selected!.createdAt!) : '—'),
+                _infoRow(context, l10n.backupColDate, _selected?.createdAt != null ? _formatDate(_selected!.createdAt!) : '—'),
                 _infoRow(context, l10n.backupColSize, _formatBytes(_selected?.fileSizeBytes ?? 0)),
                 _infoRow(context, l10n.backupRecordsCount(''), '${_selected?.recordsCount ?? 0}'),
                 _infoRow(context, l10n.backupDbVersion, '${_selected?.dbVersion ?? '—'}'),
@@ -379,9 +341,7 @@ class _BackupRestoreWizardWidgetState
   // ── Step 4: Progress ─────────────────────────────────────
 
   Widget _buildStepProgress(BuildContext context, AppLocalizations l10n) {
-    final estimated = _selected != null
-        ? (_selected!.recordsCount / 2000).ceil().clamp(5, 300)
-        : 30;
+    final estimated = _selected != null ? (_selected!.recordsCount / 2000).ceil().clamp(5, 300) : 30;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.xxxl),
@@ -403,11 +363,7 @@ class _BackupRestoreWizardWidgetState
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                Text(
-                  l10n.backupRestoreProgress,
-                  style: AppTypography.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
+                Text(l10n.backupRestoreProgress, style: AppTypography.titleMedium, textAlign: TextAlign.center),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   '${l10n.backupEstimatedDuration}: ${l10n.backupEstimatedDurationSeconds('$estimated')}',
@@ -438,10 +394,7 @@ class _BackupRestoreWizardWidgetState
           Container(
             width: 80,
             height: 80,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.10),
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.10), shape: BoxShape.circle),
             child: Icon(icon, color: color, size: 40),
           ),
           const SizedBox(height: AppSpacing.xl),
@@ -489,8 +442,7 @@ class _BackupRestoreWizardWidgetState
     };
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
       child: Row(
         children: [
           if (_step > 0 && _step < 3)
@@ -514,14 +466,25 @@ class _BackupRestoreWizardWidgetState
 
   Future<void> _handleNext(AppLocalizations l10n) async {
     if (_step == 2) {
-      setState(() { _step = 3; _isRestoring = true; });
+      setState(() {
+        _step = 3;
+        _isRestoring = true;
+      });
       await ref.read(backupOperationProvider.notifier).restoreBackup(_selected!.id);
       final opState = ref.read(backupOperationProvider);
       if (mounted) {
         if (opState is BackupOperationSuccess) {
-          setState(() { _restoreResult = opState.data; _isRestoring = false; _step = 4; });
+          setState(() {
+            _restoreResult = opState.data;
+            _isRestoring = false;
+            _step = 4;
+          });
         } else if (opState is BackupOperationError) {
-          setState(() { _restoreError = opState.message; _isRestoring = false; _step = 4; });
+          setState(() {
+            _restoreError = opState.message;
+            _isRestoring = false;
+            _step = 4;
+          });
         }
       }
     } else {
@@ -538,13 +501,9 @@ class _BackupRestoreWizardWidgetState
         children: [
           Expanded(
             flex: 2,
-            child: Text(label,
-                style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
+            child: Text(label, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
           ),
-          Expanded(
-            flex: 3,
-            child: Text(value, style: AppTypography.bodyMedium),
-          ),
+          Expanded(flex: 3, child: Text(value, style: AppTypography.bodyMedium)),
         ],
       ),
     );

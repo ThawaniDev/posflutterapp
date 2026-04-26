@@ -1,5 +1,4 @@
 class StoreSettings {
-
   const StoreSettings({
     this.id,
     this.storeId,

@@ -12,8 +12,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 final _expiryAlertsDaysProvider = StateProvider<int>((ref) => 90);
 
-final pharmacyExpiryAlertsProvider = FutureProvider.autoDispose
-    .family<List<Map<String, dynamic>>, int>((ref, days) async {
+final pharmacyExpiryAlertsProvider = FutureProvider.autoDispose.family<List<Map<String, dynamic>>, int>((ref, days) async {
   final repo = ref.watch(pharmacyRepositoryProvider);
   final result = await repo.getExpiryAlerts(days: days);
   return result.alerts;
@@ -35,31 +34,22 @@ class PharmacyExpiryAlertsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.pharmacyExpiryAlerts),
-        actions: [
-          _DaysFilterButton(days: days, onChanged: (d) => ref.read(_expiryAlertsDaysProvider.notifier).state = d),
-        ],
+        actions: [_DaysFilterButton(days: days, onChanged: (d) => ref.read(_expiryAlertsDaysProvider.notifier).state = d)],
       ),
       body: alertsAsync.when(
         data: (alerts) {
           if (alerts.isEmpty) {
-            return PosEmptyState(
-              title: l10n.pharmacyNoExpiryAlerts,
-              icon: Icons.check_circle_outline,
-            );
+            return PosEmptyState(title: l10n.pharmacyNoExpiryAlerts, icon: Icons.check_circle_outline);
           }
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: alerts.length,
             separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, i) =>
-                _ExpiryAlertCard(alert: alerts[i], l10n: l10n),
+            itemBuilder: (context, i) => _ExpiryAlertCard(alert: alerts[i], l10n: l10n),
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => PosErrorState(
-          message: e.toString(),
-          onRetry: () => ref.invalidate(pharmacyExpiryAlertsProvider(days)),
-        ),
+        error: (e, _) => PosErrorState(message: e.toString(), onRetry: () => ref.invalidate(pharmacyExpiryAlertsProvider(days))),
       ),
     );
   }
@@ -85,9 +75,7 @@ class _DaysFilterButton extends StatelessWidget {
       tooltip: l10n.pharmacyDaysFilter,
       icon: const Icon(Icons.filter_list),
       onSelected: onChanged,
-      itemBuilder: (_) => _options
-          .map((d) => PopupMenuItem(value: d, child: Text('$d ${l10n.pharmacyDaysFilter}')))
-          .toList(),
+      itemBuilder: (_) => _options.map((d) => PopupMenuItem(value: d, child: Text('$d ${l10n.pharmacyDaysFilter}'))).toList(),
     );
   }
 }
@@ -133,11 +121,7 @@ class _ExpiryAlertCard extends StatelessWidget {
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor.withValues(alpha: 0.06),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
+          BoxShadow(color: Theme.of(context).shadowColor.withValues(alpha: 0.06), blurRadius: 4, offset: const Offset(0, 2)),
         ],
       ),
       child: Padding(
@@ -150,16 +134,10 @@ class _ExpiryAlertCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(productName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(fontWeight: FontWeight.w600)),
+                  Text(productName, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 2),
-                  Text(l10n.pharmacyExpiryDate(expiryDate),
-                      style: Theme.of(context).textTheme.bodySmall),
-                  Text(l10n.pharmacyQtyAvailable(qty),
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(l10n.pharmacyExpiryDate(expiryDate), style: Theme.of(context).textTheme.bodySmall),
+                  Text(l10n.pharmacyQtyAvailable(qty), style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
             ),
@@ -168,27 +146,16 @@ class _ExpiryAlertCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
                   child: Text(
                     _severityLabel(severity),
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(color: color, fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color, fontWeight: FontWeight.w700),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  daysUntil < 0
-                      ? l10n.pharmacySeverityExpired
-                      : l10n.pharmacyDaysUntilExpiry(daysUntil),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: color, fontWeight: FontWeight.w600),
+                  daysUntil < 0 ? l10n.pharmacySeverityExpired : l10n.pharmacyDaysUntilExpiry(daysUntil),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color, fontWeight: FontWeight.w600),
                 ),
               ],
             ),

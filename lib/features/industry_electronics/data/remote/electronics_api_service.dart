@@ -18,11 +18,7 @@ class ElectronicsApiService {
   Future<List<DeviceImeiRecord>> listImeiRecords({String? status, String? search, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.electronicsImeiRecords,
-      queryParameters: {
-        'per_page': perPage,
-        'status': ?status,
-        if (search != null && search.isNotEmpty) 'search': search,
-      },
+      queryParameters: {'per_page': perPage, 'status': ?status, if (search != null && search.isNotEmpty) 'search': search},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -44,11 +40,7 @@ class ElectronicsApiService {
   Future<List<RepairJob>> listRepairJobs({String? status, String? search, int perPage = 20}) async {
     final response = await _dio.get(
       ApiEndpoints.electronicsRepairJobs,
-      queryParameters: {
-        'per_page': perPage,
-        'status': ?status,
-        if (search != null && search.isNotEmpty) 'search': search,
-      },
+      queryParameters: {'per_page': perPage, 'status': ?status, if (search != null && search.isNotEmpty) 'search': search},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;
@@ -95,15 +87,9 @@ class ElectronicsApiService {
 
   /// Returns `{valid: bool, exists: bool}` for the given IMEI string.
   Future<({bool valid, bool exists})> validateImei(String imei) async {
-    final response = await _dio.post(
-      ApiEndpoints.electronicsImeiValidate,
-      data: {'imei': imei},
-    );
+    final response = await _dio.post(ApiEndpoints.electronicsImeiValidate, data: {'imei': imei});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data as Map<String, dynamic>);
     final payload = apiResponse.data ?? {};
-    return (
-      valid: payload['valid'] as bool? ?? false,
-      exists: payload['exists'] as bool? ?? false,
-    );
+    return (valid: payload['valid'] as bool? ?? false, exists: payload['exists'] as bool? ?? false);
   }
 }

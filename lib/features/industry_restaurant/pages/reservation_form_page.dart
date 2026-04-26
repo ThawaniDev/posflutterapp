@@ -17,7 +17,6 @@ class ReservationFormPage extends ConsumerStatefulWidget {
 }
 
 class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -111,11 +110,11 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.editReservation : l10n.restaurantNewReservation,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.restaurantUpdateReservation : l10n.restaurantCreateReservation,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.restaurantUpdateReservation : l10n.restaurantCreateReservation,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -130,7 +129,12 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _partySizeCtrl, label: l10n.restaurantPartySize, hint: '2', keyboardType: TextInputType.number),
+            PosTextField(
+              controller: _partySizeCtrl,
+              label: l10n.restaurantPartySize,
+              hint: '2',
+              keyboardType: TextInputType.number,
+            ),
             const SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
@@ -170,7 +174,12 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               showSearch: true,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.restaurantSpecialRequestsHint, maxLines: 3),
+            PosTextField(
+              controller: _notesCtrl,
+              label: l10n.notesOptional,
+              hint: l10n.restaurantSpecialRequestsHint,
+              maxLines: 3,
+            ),
           ],
         ),
       ),

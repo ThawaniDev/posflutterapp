@@ -22,7 +22,6 @@ class ImeiRecordFormPage extends ConsumerStatefulWidget {
 }
 
 class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -68,7 +67,10 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   Future<void> _checkImeiOnServer() async {
     final imei = _imeiCtrl.text.trim();
     if (!ImeiValidator.isValid(imei)) return;
-    setState(() { _checkingImei = true; _imeiServerResult = null; });
+    setState(() {
+      _checkingImei = true;
+      _imeiServerResult = null;
+    });
     try {
       final result = await ref.read(electronicsRepositoryProvider).validateImei(imei);
       setState(() => _imeiServerResult = result);
@@ -137,11 +139,11 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.electronicsEditImeiRecord : l10n.electronicsNewImeiRecord,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.electronicsUpdateRecord : l10n.electronicsCreateRecord,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.electronicsUpdateRecord : l10n.electronicsCreateRecord,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -203,7 +205,9 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             PosSearchableDropdown<ConditionGrade>(
               hint: l10n.selectGrade,
               label: l10n.electronicsConditionGrade,
-              items: ConditionGrade.values.map((g) => PosDropdownItem(value: g, label: l10n.electronicsGradeValue(g.value))).toList(),
+              items: ConditionGrade.values
+                  .map((g) => PosDropdownItem(value: g, label: l10n.electronicsGradeValue(g.value)))
+                  .toList(),
               selectedValue: _conditionGrade,
               onChanged: (v) => setState(() => _conditionGrade = v),
               showSearch: false,

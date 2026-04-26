@@ -19,7 +19,6 @@ class DrugScheduleFormPage extends ConsumerStatefulWidget {
 }
 
 class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -90,11 +89,11 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.pharmacyEditDrugSchedule : l10n.pharmacyNewDrugSchedule,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.pharmacyUpdateSchedule : l10n.pharmacyCreateSchedule,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.pharmacyUpdateSchedule : l10n.pharmacyCreateSchedule,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -135,7 +134,11 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
               clearable: false,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _activeIngredientCtrl, label: l10n.pharmacyActiveIngredient, hint: l10n.pharmacyDrugNameHint),
+            PosTextField(
+              controller: _activeIngredientCtrl,
+              label: l10n.pharmacyActiveIngredient,
+              hint: l10n.pharmacyDrugNameHint,
+            ),
             const SizedBox(height: AppSpacing.md),
             Row(
               children: [

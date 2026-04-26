@@ -505,22 +505,13 @@ void showPosInfoSnackbar(BuildContext context, String message, {String? actionLa
 }
 
 /// Info dialog — shows a title and message with an OK button.
-Future<void> showPosInfoDialog(
-  BuildContext context, {
-  required String title,
-  String? message,
-}) {
+Future<void> showPosInfoDialog(BuildContext context, {required String title, String? message}) {
   return showDialog<void>(
     context: context,
     builder: (_) => AlertDialog(
       title: Text(title),
       content: message != null ? Text(message) : null,
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-          child: const Text('OK'),
-        ),
-      ],
+      actions: [TextButton(onPressed: () => Navigator.of(context, rootNavigator: true).pop(), child: const Text('OK'))],
     ),
   );
 }

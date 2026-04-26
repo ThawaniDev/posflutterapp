@@ -14,12 +14,10 @@ class KitchenTicketFormPage extends ConsumerStatefulWidget {
   const KitchenTicketFormPage({super.key});
 
   @override
-  ConsumerState<KitchenTicketFormPage> createState() =>
-      _KitchenTicketFormPageState();
+  ConsumerState<KitchenTicketFormPage> createState() => _KitchenTicketFormPageState();
 }
 
-class _KitchenTicketFormPageState
-    extends ConsumerState<KitchenTicketFormPage> {
+class _KitchenTicketFormPageState extends ConsumerState<KitchenTicketFormPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
 
   final _formKey = GlobalKey<FormState>();
@@ -70,11 +68,9 @@ class _KitchenTicketFormPageState
     final data = <String, dynamic>{
       'order_id': _selectedOrderId ?? '',
       'items_json': _buildItemsJson,
-      if (_selectedTableId != null && _selectedTableId!.isNotEmpty)
-        'table_id': _selectedTableId,
+      if (_selectedTableId != null && _selectedTableId!.isNotEmpty) 'table_id': _selectedTableId,
       if (_stationCtrl.text.isNotEmpty) 'station': _stationCtrl.text.trim(),
-      if (_courseCtrl.text.isNotEmpty)
-        'course_number': int.tryParse(_courseCtrl.text.trim()),
+      if (_courseCtrl.text.isNotEmpty) 'course_number': int.tryParse(_courseCtrl.text.trim()),
       if (_fireAt != null) 'fire_at': _fireAt!.toIso8601String(),
     };
 
@@ -93,23 +89,17 @@ class _KitchenTicketFormPageState
       lastDate: now.add(const Duration(days: 7)),
     );
     if (date == null || !mounted) return;
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(now),
-    );
+    final time = await showTimePicker(context: context, initialTime: TimeOfDay.fromDateTime(now));
     if (time == null || !mounted) return;
-    setState(() => _fireAt =
-        DateTime(date.year, date.month, date.day, time.hour, time.minute));
+    setState(() => _fireAt = DateTime(date.year, date.month, date.day, time.hour, time.minute));
   }
 
   @override
   Widget build(BuildContext context) {
     final restState = ref.watch(restaurantProvider);
-    final tables =
-        restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
+    final tables = restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
     final ordersState = ref.watch(ordersProvider);
-    final orders =
-        ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
+    final orders = ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
 
     return PosFormPage(
       title: l10n.restaurantNewKitchenTicket,
@@ -128,13 +118,9 @@ class _KitchenTicketFormPageState
             PosSearchableDropdown<String>(
               hint: l10n.selectOrder,
               label: l10n.wameedAIOrder,
-              items: orders
-                  .map((o) =>
-                      PosDropdownItem(value: o.id, label: o.orderNumber))
-                  .toList(),
+              items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
               selectedValue: _selectedOrderId,
-              validator: (v) =>
-                  (v == null || v.isEmpty) ? l10n.fieldRequired : null,
+              validator: (v) => (v == null || v.isEmpty) ? l10n.fieldRequired : null,
               onChanged: (v) => setState(() => _selectedOrderId = v),
               showSearch: true,
             ),
@@ -144,12 +130,7 @@ class _KitchenTicketFormPageState
             PosSearchableDropdown<String>(
               hint: l10n.selectTable,
               label: l10n.tableOptional,
-              items: tables
-                  .map((t) => PosDropdownItem(
-                      value: t.id,
-                      label:
-                          t.displayName ?? 'Table ${t.tableNumber}'))
-                  .toList(),
+              items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
               selectedValue: _selectedTableId,
               onChanged: (v) => setState(() => _selectedTableId = v),
               showSearch: true,
@@ -157,11 +138,7 @@ class _KitchenTicketFormPageState
             const SizedBox(height: AppSpacing.md),
 
             // Station (optional)
-            PosTextField(
-              controller: _stationCtrl,
-              label: l10n.restaurantStationLabel,
-              hint: l10n.restaurantStationHint,
-            ),
+            PosTextField(controller: _stationCtrl, label: l10n.restaurantStationLabel, hint: l10n.restaurantStationHint),
             const SizedBox(height: AppSpacing.md),
 
             // Course number (optional)
@@ -186,8 +163,7 @@ class _KitchenTicketFormPageState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(l10n.restaurantTicketItems,
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(l10n.restaurantTicketItems, style: Theme.of(context).textTheme.titleSmall),
                 IconButton(
                   icon: const Icon(Icons.add_circle_outline),
                   tooltip: l10n.add,
@@ -211,8 +187,7 @@ class _KitchenTicketFormPageState
                         controller: item.nameCtrl,
                         label: idx == 0 ? l10n.restaurantItemName : null,
                         hint: l10n.restaurantItemNameHint,
-                        validator: (v) =>
-                            (v == null || v.isEmpty) ? l10n.fieldRequired : null,
+                        validator: (v) => (v == null || v.isEmpty) ? l10n.fieldRequired : null,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -255,12 +230,7 @@ class _TicketItem {
 }
 
 class _FireAtPicker extends StatelessWidget {
-  const _FireAtPicker({
-    required this.value,
-    required this.label,
-    required this.onTap,
-    required this.onClear,
-  });
+  const _FireAtPicker({required this.value, required this.label, required this.onTap, required this.onClear});
 
   final DateTime? value;
   final String label;
@@ -277,22 +247,12 @@ class _FireAtPicker extends StatelessWidget {
           labelText: label,
           border: const OutlineInputBorder(),
           suffixIcon: value != null
-              ? IconButton(
-                  icon: const Icon(Icons.clear, size: 18),
-                  onPressed: onClear,
-                )
+              ? IconButton(icon: const Icon(Icons.clear, size: 18), onPressed: onClear)
               : const Icon(Icons.schedule),
         ),
         child: Text(
-          value != null
-              ? '${value!.toLocal()}'.substring(0, 16)
-              : '—',
-          style: value == null
-              ? Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Theme.of(context).hintColor)
-              : null,
+          value != null ? '${value!.toLocal()}'.substring(0, 16) : '—',
+          style: value == null ? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).hintColor) : null,
         ),
       ),
     );

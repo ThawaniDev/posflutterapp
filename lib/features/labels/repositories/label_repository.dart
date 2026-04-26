@@ -8,7 +8,6 @@ final labelRepositoryProvider = Provider<LabelRepository>((ref) {
 });
 
 class LabelRepository {
-
   LabelRepository({required LabelApiService apiService}) : _apiService = apiService;
   final LabelApiService _apiService;
 

@@ -1,5 +1,4 @@
 class BackupHistory {
-
   const BackupHistory({
     required this.id,
     required this.storeId,
@@ -30,15 +29,15 @@ class BackupHistory {
       cloudKey: json['cloud_key'] as String?,
       fileSizeBytes: (json['file_size_bytes'] as num?)?.toInt() ?? 0,
       checksum: json['checksum'] as String?,
-      dbVersion: json['db_version'] is num ? (json['db_version'] as num).toInt() : (int.tryParse(json['db_version']?.toString() ?? '') ?? 1),
+      dbVersion: json['db_version'] is num
+          ? (json['db_version'] as num).toInt()
+          : (int.tryParse(json['db_version']?.toString() ?? '') ?? 1),
       recordsCount: (json['records_count'] as num?)?.toInt() ?? 0,
       isVerified: json['is_verified'] == true || json['is_verified'] == 1,
       isEncrypted: json['is_encrypted'] == true || json['is_encrypted'] == 1,
       status: json['status'] as String? ?? 'completed',
       errorMessage: json['error_message'] as String?,
-      createdAt: json['created_at'] != null
-          ? DateTime.tryParse(json['created_at'] as String)
-          : null,
+      createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at'] as String) : null,
     );
   }
   final String id;
@@ -123,4 +122,3 @@ class BackupHistory {
   @override
   int get hashCode => id.hashCode;
 }
-

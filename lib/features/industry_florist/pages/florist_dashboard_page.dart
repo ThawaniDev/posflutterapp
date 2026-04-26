@@ -134,9 +134,6 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.flowersView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.flowersView, child: content);
   }
 }

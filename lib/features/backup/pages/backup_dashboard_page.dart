@@ -110,15 +110,9 @@ class _BackupDashboardPageState extends ConsumerState<BackupDashboardPage> {
         builder: (ctx, setDialogState) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PosBottomSheetHeader(
-              title: l10n.backupNowTitle,
-              subtitle: l10n.backupNowHint,
-              showClose: true,
-            ),
+            PosBottomSheetHeader(title: l10n.backupNowTitle, subtitle: l10n.backupNowHint, showClose: true),
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.xl, AppSpacing.lg, AppSpacing.xl, AppSpacing.xl,
-              ),
+              padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.lg, AppSpacing.xl, AppSpacing.xl),
               child: Column(
                 children: [
                   PosTextField(
@@ -182,12 +176,8 @@ class _BackupDashboardPageState extends ConsumerState<BackupDashboardPage> {
       return;
     }
 
-    await ref.read(backupOperationProvider.notifier).createBackup(
-      terminalId: terminalId,
-      backupType: backupType,
-      encrypt: encrypt,
-    );
+    await ref
+        .read(backupOperationProvider.notifier)
+        .createBackup(terminalId: terminalId, backupType: backupType, encrypt: encrypt);
   }
 }
-
-

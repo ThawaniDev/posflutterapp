@@ -42,7 +42,9 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
   }
 
   void _reload() {
-    ref.read(paymentsProvider.notifier).load(
+    ref
+        .read(paymentsProvider.notifier)
+        .load(
           method: _selectedMethod,
           status: _selectedStatus,
           startDate: _startDate != null ? _fmt(_startDate!) : null,
@@ -51,8 +53,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
         );
   }
 
-  String _fmt(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _fmt(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
@@ -141,9 +142,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
                             _startDate != null && _endDate != null
                                 ? '${_fmt(_startDate!)} – ${_fmt(_endDate!)}'
                                 : l10n.paymentListDateRange,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: _startDate != null ? null : theme.hintColor,
-                            ),
+                            style: theme.textTheme.bodySmall?.copyWith(color: _startDate != null ? null : theme.hintColor),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -248,10 +247,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
           );
         }
         final payment = payments[index];
-        return _PaymentRow(
-          payment: payment,
-          onTap: () => _showPaymentDetail(context, payment),
-        );
+        return _PaymentRow(payment: payment, onTap: () => _showPaymentDetail(context, payment));
       },
     );
   }
@@ -261,9 +257,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (_) => _PaymentDetailSheet(payment: payment),
     );
   }
@@ -273,9 +267,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
       context: context,
       firstDate: DateTime(2024),
       lastDate: DateTime.now(),
-      initialDateRange: _startDate != null && _endDate != null
-          ? DateTimeRange(start: _startDate!, end: _endDate!)
-          : null,
+      initialDateRange: _startDate != null && _endDate != null ? DateTimeRange(start: _startDate!, end: _endDate!) : null,
     );
     if (picked != null) {
       setState(() {
@@ -315,10 +307,7 @@ class _PaymentRow extends StatelessWidget {
             Container(
               width: 42,
               height: 42,
-              decoration: BoxDecoration(
-                color: methodColor.withValues(alpha: 0.12),
-                borderRadius: AppRadius.borderMd,
-              ),
+              decoration: BoxDecoration(color: methodColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
               child: Icon(_methodIcon(payment.method), color: methodColor, size: 20),
             ),
             AppSpacing.gapW12,
@@ -369,29 +358,29 @@ class _PaymentRow extends StatelessWidget {
   }
 
   Color _methodColor(String method) => switch (method) {
-        'cash' => AppColors.success,
-        'card_mada' => const Color(0xFF00897B),
-        'card_visa' => const Color(0xFF1A237E),
-        'card_mastercard' => const Color(0xFFE65100),
-        'store_credit' => AppColors.info,
-        'gift_card' => AppColors.warning,
-        _ => AppColors.primary,
-      };
+    'cash' => AppColors.success,
+    'card_mada' => const Color(0xFF00897B),
+    'card_visa' => const Color(0xFF1A237E),
+    'card_mastercard' => const Color(0xFFE65100),
+    'store_credit' => AppColors.info,
+    'gift_card' => AppColors.warning,
+    _ => AppColors.primary,
+  };
 
   IconData _methodIcon(PaymentMethodKey method) => switch (method) {
-        PaymentMethodKey.cash => Icons.payments,
-        PaymentMethodKey.cardMada || PaymentMethodKey.card => Icons.credit_card,
-        PaymentMethodKey.cardVisa => Icons.credit_card,
-        PaymentMethodKey.cardMastercard => Icons.credit_card,
-        PaymentMethodKey.mada => Icons.credit_card,
-        PaymentMethodKey.applePay => Icons.phone_iphone,
-        PaymentMethodKey.stcPay => Icons.phone_android,
-        PaymentMethodKey.giftCard => Icons.card_giftcard,
-        PaymentMethodKey.storeCredit => Icons.account_balance_wallet,
-        PaymentMethodKey.loyaltyPoints => Icons.stars,
-        PaymentMethodKey.bankTransfer => Icons.account_balance,
-        _ => Icons.payment,
-      };
+    PaymentMethodKey.cash => Icons.payments,
+    PaymentMethodKey.cardMada || PaymentMethodKey.card => Icons.credit_card,
+    PaymentMethodKey.cardVisa => Icons.credit_card,
+    PaymentMethodKey.cardMastercard => Icons.credit_card,
+    PaymentMethodKey.mada => Icons.credit_card,
+    PaymentMethodKey.applePay => Icons.phone_iphone,
+    PaymentMethodKey.stcPay => Icons.phone_android,
+    PaymentMethodKey.giftCard => Icons.card_giftcard,
+    PaymentMethodKey.storeCredit => Icons.account_balance_wallet,
+    PaymentMethodKey.loyaltyPoints => Icons.stars,
+    PaymentMethodKey.bankTransfer => Icons.account_balance,
+    _ => Icons.payment,
+  };
 
   String _formatDateTime(DateTime dt) {
     return '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year} '
@@ -417,11 +406,11 @@ class _StatusChip extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadius.borderFull,
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderFull),
+      child: Text(
+        label,
+        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600)),
     );
   }
 }
@@ -518,11 +507,11 @@ class _PaymentDetailSheetState extends ConsumerState<_PaymentDetailSheet> {
                         (l10n.paymentDetailTip, '${payment.tipAmount!.toStringAsFixed(2)} \u0631'),
                       (l10n.paymentDetailStatus, payment.status ?? 'completed'),
                       (l10n.paymentDetailTransactionId, payment.transactionId),
-                      if (payment.cardBrand != null) (l10n.paymentDetailCard, '${payment.cardBrand} **** ${payment.cardLastFour ?? ''}'),
+                      if (payment.cardBrand != null)
+                        (l10n.paymentDetailCard, '${payment.cardBrand} **** ${payment.cardLastFour ?? ''}'),
                       if (payment.nearpayTransactionId != null) ('NearPay ID', payment.nearpayTransactionId!),
                       if (payment.giftCardCode != null) (l10n.paymentDetailGiftCard, payment.giftCardCode!),
-                      if (payment.createdAt != null)
-                        (l10n.paymentDetailDate, _formatDateTime(payment.createdAt!)),
+                      if (payment.createdAt != null) (l10n.paymentDetailDate, _formatDateTime(payment.createdAt!)),
                     ],
                   ),
                   AppSpacing.gapH16,
@@ -616,19 +605,12 @@ class _PaymentDetailSheetState extends ConsumerState<_PaymentDetailSheet> {
                   clearable: false,
                 ),
                 AppSpacing.gapH16,
-                PosTextField(
-                  controller: refController,
-                  label: l10n.refundReference,
-                ),
+                PosTextField(controller: refController, label: l10n.refundReference),
               ],
             ),
           ),
           actions: [
-            PosButton(
-              onPressed: () => Navigator.pop(ctx),
-              variant: PosButtonVariant.ghost,
-              label: l10n.cancel,
-            ),
+            PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
             PosButton(
               isLoading: isLoading,
               onPressed: isLoading

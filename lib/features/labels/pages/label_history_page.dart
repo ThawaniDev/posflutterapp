@@ -89,9 +89,7 @@ class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
           cellBuilder: (item, colIndex, col) {
             switch (colIndex) {
               case 0: // Date
-                return Text(
-                  item.printedAt != null ? _dateFormatter.format(item.printedAt!) : '—',
-                );
+                return Text(item.printedAt != null ? _dateFormatter.format(item.printedAt!) : '—');
               case 1: // Template
                 return Row(
                   mainAxisSize: MainAxisSize.min,
@@ -99,10 +97,7 @@ class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
                     Container(
                       width: 28,
                       height: 28,
-                      decoration: BoxDecoration(
-                        color: AppColors.info.withValues(alpha: 0.1),
-                        borderRadius: AppRadius.borderSm,
-                      ),
+                      decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
                       child: const Icon(Icons.label_rounded, size: 14, color: AppColors.info),
                     ),
                     const SizedBox(width: AppSpacing.sm),

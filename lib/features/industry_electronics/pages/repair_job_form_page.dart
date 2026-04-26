@@ -92,11 +92,11 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.electronicsEditRepairJob : l10n.electronicsNewRepair,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.electronicsUpdateJob : l10n.electronicsCreateJob,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.electronicsUpdateJob : l10n.electronicsCreateJob,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -116,12 +116,19 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _issueDescCtrl, label: l10n.electronicsIssueDescription, hint: l10n.electronicsIssueHint, maxLines: 3),
+            PosTextField(
+              controller: _issueDescCtrl,
+              label: l10n.electronicsIssueDescription,
+              hint: l10n.electronicsIssueHint,
+              maxLines: 3,
+            ),
             const SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
               hint: l10n.selectTechnician,
               label: l10n.electronicsAssignedTech,
-              items: staffList.map((s) => PosDropdownItem(value: s.id, label: l10n.electronicsStaffFullName(s.firstName, s.lastName))).toList(),
+              items: staffList
+                  .map((s) => PosDropdownItem(value: s.id, label: l10n.electronicsStaffFullName(s.firstName, s.lastName)))
+                  .toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
@@ -150,9 +157,19 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
             ),
             if (_isEditing) ...[
               const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: _diagnosisNotesCtrl, label: l10n.electronicsDiagnosisNotes, hint: l10n.electronicsDiagnosisHint, maxLines: 3),
+              PosTextField(
+                controller: _diagnosisNotesCtrl,
+                label: l10n.electronicsDiagnosisNotes,
+                hint: l10n.electronicsDiagnosisHint,
+                maxLines: 3,
+              ),
               const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: _repairNotesCtrl, label: l10n.electronicsRepairNotes, hint: l10n.electronicsRepairHint, maxLines: 3),
+              PosTextField(
+                controller: _repairNotesCtrl,
+                label: l10n.electronicsRepairNotes,
+                hint: l10n.electronicsRepairHint,
+                maxLines: 3,
+              ),
             ],
           ],
         ),

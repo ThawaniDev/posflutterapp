@@ -130,224 +130,225 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
     return PermissionGuardPage(
       permission: Permissions.labelsManage,
       child: Scaffold(
-      appBar: PosAppBar(
-        title: _loadedTemplateId != null ? l10n.labelEditTemplate : l10n.labelCreateTemplate,
-        showBackButton: true,
-        onBackPressed: () => context.pop(),
-        actions: [
-          PosButton(
-            label: l10n.labelSave,
-            icon: Icons.save_rounded,
-            variant: PosButtonVariant.primary,
-            size: PosButtonSize.sm,
-            isLoading: _isLoading,
-            onPressed: _handleSave,
-          ),
-        ],
-      ),
-      body: context.isPhone
-          ? _buildMobileBody(l10n, isDark, canvasWidth, canvasHeight, scale)
-          : Row(
-              children: [
-                // ─── Left Panel: Element Palette ───────────────
-                SizedBox(
-                  width: 240,
-                  child: PosCard(
-                    padding: const EdgeInsets.all(AppSpacing.base),
+        appBar: PosAppBar(
+          title: _loadedTemplateId != null ? l10n.labelEditTemplate : l10n.labelCreateTemplate,
+          showBackButton: true,
+          onBackPressed: () => context.pop(),
+          actions: [
+            PosButton(
+              label: l10n.labelSave,
+              icon: Icons.save_rounded,
+              variant: PosButtonVariant.primary,
+              size: PosButtonSize.sm,
+              isLoading: _isLoading,
+              onPressed: _handleSave,
+            ),
+          ],
+        ),
+        body: context.isPhone
+            ? _buildMobileBody(l10n, isDark, canvasWidth, canvasHeight, scale)
+            : Row(
+                children: [
+                  // ─── Left Panel: Element Palette ───────────────
+                  SizedBox(
+                    width: 240,
+                    child: PosCard(
+                      padding: const EdgeInsets.all(AppSpacing.base),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.labelElements,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Expanded(
+                            child: ListView.separated(
+                              itemCount: LabelDesignerPage._availableElements.length,
+                              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.xs),
+                              itemBuilder: (context, index) {
+                                final el = LabelDesignerPage._availableElements[index];
+                                return _ElementPaletteItem(elementType: el, onTap: () => _addElement(el));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // ─── Center: Canvas ────────────────────────────
+                  Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          l10n.labelElements,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                        // Label dimensions bar
+                        Padding(
+                          padding: const EdgeInsets.all(AppSpacing.md),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  decoration: InputDecoration(
+                                    labelText: l10n.labelTemplateName,
+                                    border: const OutlineInputBorder(),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.md),
+                              SizedBox(
+                                width: 80,
+                                child: TextFormField(
+                                  controller: _widthController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.labelWidth} (mm)',
+                                    border: const OutlineInputBorder(),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                                child: Text('×', style: TextStyle(fontSize: 18)),
+                              ),
+                              SizedBox(
+                                width: 80,
+                                child: TextFormField(
+                                  controller: _heightController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.labelHeight} (mm)',
+                                    border: const OutlineInputBorder(),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                              ),
+                              const Spacer(),
+                              PosButton.icon(
+                                icon: Icons.zoom_in_rounded,
+                                variant: PosButtonVariant.ghost,
+                                onPressed: () => setState(() => _zoom = (_zoom * 1.2).clamp(0.5, 4.0)),
+                              ),
+                              PosButton.icon(
+                                icon: Icons.zoom_out_rounded,
+                                variant: PosButtonVariant.ghost,
+                                onPressed: () => setState(() => _zoom = (_zoom / 1.2).clamp(0.5, 4.0)),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: AppSpacing.md),
+
+                        // Canvas area
                         Expanded(
-                          child: ListView.separated(
-                            itemCount: LabelDesignerPage._availableElements.length,
-                            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.xs),
-                            itemBuilder: (context, index) {
-                              final el = LabelDesignerPage._availableElements[index];
-                              return _ElementPaletteItem(elementType: el, onTap: () => _addElement(el));
-                            },
+                          child: Center(
+                            child: Container(
+                              width: canvasWidth * scale,
+                              height: canvasHeight * scale,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.08),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                children: [
+                                  // Grid lines
+                                  CustomPaint(
+                                    size: Size(canvasWidth * scale, canvasHeight * scale),
+                                    painter: _GridPainter(scale: scale),
+                                  ),
+                                  // Placed elements
+                                  for (int i = 0; i < _elements.length; i++)
+                                    Positioned(
+                                      left: _elements[i].x * scale,
+                                      top: _elements[i].y * scale,
+                                      child: GestureDetector(
+                                        onTap: () => setState(() => _selectedElement = _elements[i]),
+                                        onPanUpdate: (details) {
+                                          setState(() {
+                                            _elements[i] = _elements[i].copyWith(
+                                              x: (_elements[i].x + details.delta.dx / scale).clamp(
+                                                0,
+                                                canvasWidth - _elements[i].width,
+                                              ),
+                                              y: (_elements[i].y + details.delta.dy / scale).clamp(
+                                                0,
+                                                canvasHeight - _elements[i].height,
+                                              ),
+                                            );
+                                            _selectedElement = _elements[i];
+                                          });
+                                        },
+                                        child: _CanvasElement(
+                                          element: _elements[i],
+                                          scale: scale,
+                                          isSelected: _selectedElement == _elements[i],
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
 
-                // ─── Center: Canvas ────────────────────────────
-                Expanded(
-                  child: Column(
-                    children: [
-                      // Label dimensions bar
-                      Padding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 200,
-                              child: TextFormField(
-                                controller: _nameController,
-                                decoration: InputDecoration(
-                                  labelText: l10n.labelTemplateName,
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.md),
-                            SizedBox(
-                              width: 80,
-                              child: TextFormField(
-                                controller: _widthController,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: '${l10n.labelWidth} (mm)',
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                ),
-                                onChanged: (_) => setState(() {}),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-                              child: Text('×', style: TextStyle(fontSize: 18)),
-                            ),
-                            SizedBox(
-                              width: 80,
-                              child: TextFormField(
-                                controller: _heightController,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: '${l10n.labelHeight} (mm)',
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                ),
-                                onChanged: (_) => setState(() {}),
-                              ),
-                            ),
-                            const Spacer(),
-                            PosButton.icon(
-                              icon: Icons.zoom_in_rounded,
-                              variant: PosButtonVariant.ghost,
-                              onPressed: () => setState(() => _zoom = (_zoom * 1.2).clamp(0.5, 4.0)),
-                            ),
-                            PosButton.icon(
-                              icon: Icons.zoom_out_rounded,
-                              variant: PosButtonVariant.ghost,
-                              onPressed: () => setState(() => _zoom = (_zoom / 1.2).clamp(0.5, 4.0)),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Canvas area
-                      Expanded(
-                        child: Center(
-                          child: Container(
-                            width: canvasWidth * scale,
-                            height: canvasHeight * scale,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.08),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Stack(
-                              children: [
-                                // Grid lines
-                                CustomPaint(
-                                  size: Size(canvasWidth * scale, canvasHeight * scale),
-                                  painter: _GridPainter(scale: scale),
-                                ),
-                                // Placed elements
-                                for (int i = 0; i < _elements.length; i++)
-                                  Positioned(
-                                    left: _elements[i].x * scale,
-                                    top: _elements[i].y * scale,
-                                    child: GestureDetector(
-                                      onTap: () => setState(() => _selectedElement = _elements[i]),
-                                      onPanUpdate: (details) {
-                                        setState(() {
-                                          _elements[i] = _elements[i].copyWith(
-                                            x: (_elements[i].x + details.delta.dx / scale).clamp(
-                                              0,
-                                              canvasWidth - _elements[i].width,
-                                            ),
-                                            y: (_elements[i].y + details.delta.dy / scale).clamp(
-                                              0,
-                                              canvasHeight - _elements[i].height,
-                                            ),
-                                          );
-                                          _selectedElement = _elements[i];
-                                        });
-                                      },
-                                      child: _CanvasElement(
-                                        element: _elements[i],
-                                        scale: scale,
-                                        isSelected: _selectedElement == _elements[i],
-                                      ),
-                                    ),
+                  // ─── Right Panel: Properties ───────────────────
+                  SizedBox(
+                    width: 260,
+                    child: PosCard(
+                      padding: const EdgeInsets.all(AppSpacing.base),
+                      child: _selectedElement != null
+                          ? _ElementPropertiesPanel(
+                              element: _selectedElement!,
+                              onUpdate: (updated) {
+                                setState(() {
+                                  final index = _elements.indexOf(_selectedElement!);
+                                  if (index >= 0) {
+                                    _elements[index] = updated;
+                                    _selectedElement = updated;
+                                  }
+                                });
+                              },
+                              onDelete: () {
+                                setState(() {
+                                  _elements.remove(_selectedElement);
+                                  _selectedElement = null;
+                                });
+                              },
+                              l10n: l10n,
+                            )
+                          : Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.touch_app_rounded, size: 48, color: AppColors.mutedFor(context)),
+                                  const SizedBox(height: AppSpacing.md),
+                                  Text(
+                                    l10n.labelSelectElement,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
                                   ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-
-                // ─── Right Panel: Properties ───────────────────
-                SizedBox(
-                  width: 260,
-                  child: PosCard(
-                    padding: const EdgeInsets.all(AppSpacing.base),
-                    child: _selectedElement != null
-                        ? _ElementPropertiesPanel(
-                            element: _selectedElement!,
-                            onUpdate: (updated) {
-                              setState(() {
-                                final index = _elements.indexOf(_selectedElement!);
-                                if (index >= 0) {
-                                  _elements[index] = updated;
-                                  _selectedElement = updated;
-                                }
-                              });
-                            },
-                            onDelete: () {
-                              setState(() {
-                                _elements.remove(_selectedElement);
-                                _selectedElement = null;
-                              });
-                            },
-                            l10n: l10n,
-                          )
-                        : Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.touch_app_rounded, size: 48, color: AppColors.mutedFor(context)),
-                                const SizedBox(height: AppSpacing.md),
-                                Text(
-                                  l10n.labelSelectElement,
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                ),
-              ],
-            ),
-    ));
+                ],
+              ),
+      ),
+    );
   }
 
   void _addElement(_ElementType type) {

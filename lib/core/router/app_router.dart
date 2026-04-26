@@ -1103,16 +1103,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Sync ───
           GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
-          GoRoute(
-            path: Routes.syncConflicts,
-            name: 'syncConflicts',
-            builder: (context, state) => const ConflictResolutionPage(),
-          ),
-          GoRoute(
-            path: '/sync/logs',
-            name: 'syncLogs',
-            builder: (context, state) => const SyncLogsPage(),
-          ),
+          GoRoute(path: Routes.syncConflicts, name: 'syncConflicts', builder: (context, state) => const ConflictResolutionPage()),
+          GoRoute(path: '/sync/logs', name: 'syncLogs', builder: (context, state) => const SyncLogsPage()),
 
           // ─── Hardware ───
           GoRoute(

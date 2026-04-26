@@ -29,11 +29,12 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
     Future.microtask(() => ref.read(expensesProvider.notifier).load());
   }
 
-  String _fmt(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _fmt(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   void _reload() {
-    ref.read(expensesProvider.notifier).load(
+    ref
+        .read(expensesProvider.notifier)
+        .load(
           startDate: _startDate != null ? _fmt(_startDate!) : null,
           endDate: _endDate != null ? _fmt(_endDate!) : null,
           category: _selectedCategory?.value,
@@ -200,10 +201,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 background: Container(
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.15),
-                    borderRadius: AppRadius.borderMd,
-                  ),
+                  decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.15), borderRadius: AppRadius.borderMd),
                   child: const Icon(Icons.delete_outline, color: AppColors.error),
                 ),
                 confirmDismiss: (_) => _confirmDelete(context, expense),
@@ -446,9 +444,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
       context: context,
       firstDate: DateTime(2024),
       lastDate: DateTime.now(),
-      initialDateRange: _startDate != null && _endDate != null
-          ? DateTimeRange(start: _startDate!, end: _endDate!)
-          : null,
+      initialDateRange: _startDate != null && _endDate != null ? DateTimeRange(start: _startDate!, end: _endDate!) : null,
     );
     if (picked != null) {
       setState(() {

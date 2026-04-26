@@ -46,7 +46,9 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
               tabs: [
                 PosTabItem(label: l10n.issue, icon: Icons.card_giftcard),
                 PosTabItem(label: l10n.checkBalance, icon: Icons.search),
-                PosTabItem(label: l10n.redeem, icon: Icons.redeem),                PosTabItem(label: l10n.giftCardManage, icon: Icons.list_alt),              ],
+                PosTabItem(label: l10n.redeem, icon: Icons.redeem),
+                PosTabItem(label: l10n.giftCardManage, icon: Icons.list_alt),
+              ],
             ),
           ),
           Expanded(
@@ -55,7 +57,9 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
               children: [
                 _IssueTab(theme: theme),
                 _CheckBalanceTab(theme: theme),
-                _RedeemTab(theme: theme),                const _ManageTab(),              ],
+                _RedeemTab(theme: theme),
+                const _ManageTab(),
+              ],
             ),
           ),
         ],
@@ -448,42 +452,45 @@ class _ManageTabState extends ConsumerState<_ManageTab> {
           child: switch (state) {
             GiftCardListInitial() || GiftCardListLoading() => const Center(child: CircularProgressIndicator()),
             GiftCardListError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH12,
-                    PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _reload),
-                  ],
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(message, style: TextStyle(color: AppColors.error)),
+                  AppSpacing.gapH12,
+                  PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _reload),
+                ],
               ),
-            GiftCardListLoaded(:final cards, :final hasMore) => cards.isEmpty
-                ? Center(child: Text(l10n.giftCardManageEmpty, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)))
-                : ListView.separated(
-                    padding: AppSpacing.paddingAll16,
-                    itemCount: cards.length + (hasMore ? 1 : 0),
-                    separatorBuilder: (_, __) => AppSpacing.gapH8,
-                    itemBuilder: (context, index) {
-                      if (index == cards.length) {
-                        return Padding(
-                          padding: AppSpacing.paddingAll16,
-                          child: Center(
-                            child: PosButton(
-                              label: 'Load more',
-                              variant: PosButtonVariant.outline,
-                              onPressed: () => ref.read(giftCardListProvider.notifier).loadMore(),
+            ),
+            GiftCardListLoaded(:final cards, :final hasMore) =>
+              cards.isEmpty
+                  ? Center(
+                      child: Text(l10n.giftCardManageEmpty, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                    )
+                  : ListView.separated(
+                      padding: AppSpacing.paddingAll16,
+                      itemCount: cards.length + (hasMore ? 1 : 0),
+                      separatorBuilder: (_, __) => AppSpacing.gapH8,
+                      itemBuilder: (context, index) {
+                        if (index == cards.length) {
+                          return Padding(
+                            padding: AppSpacing.paddingAll16,
+                            child: Center(
+                              child: PosButton(
+                                label: 'Load more',
+                                variant: PosButtonVariant.outline,
+                                onPressed: () => ref.read(giftCardListProvider.notifier).loadMore(),
+                              ),
                             ),
-                          ),
+                          );
+                        }
+                        final card = cards[index];
+                        return _GiftCardManageRow(
+                          card: card,
+                          theme: theme,
+                          onDeactivate: () => _confirmDeactivate(context, card),
                         );
-                      }
-                      final card = cards[index];
-                      return _GiftCardManageRow(
-                        card: card,
-                        theme: theme,
-                        onDeactivate: () => _confirmDeactivate(context, card),
-                      );
-                    },
-                  ),
+                      },
+                    ),
           },
         ),
       ],
@@ -527,10 +534,7 @@ class _GiftCardManageRow extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.12),
-                borderRadius: AppRadius.borderMd,
-              ),
+              decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
               child: const Icon(Icons.card_giftcard, color: AppColors.warning, size: 20),
             ),
             AppSpacing.gapW12,
@@ -590,9 +594,7 @@ class _GiftCardManageRow extends StatelessWidget {
 
 // ─── Shared Widgets ─────────────────────────────────────────────
 
-
 class _GiftCardResultCard extends StatelessWidget {
-
   const _GiftCardResultCard({required this.card, required this.theme});
   final dynamic card;
   final ThemeData theme;

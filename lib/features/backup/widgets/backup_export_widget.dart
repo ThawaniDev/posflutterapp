@@ -29,8 +29,7 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
   bool _includeImages = false;
   Map<String, dynamic>? _result;
 
-  List<String> get _activeTables =>
-      _selectedTables.entries.where((e) => e.value).map((e) => e.key).toList();
+  List<String> get _activeTables => _selectedTables.entries.where((e) => e.value).map((e) => e.key).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -54,20 +53,13 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
             padding: AppSpacing.paddingAll16,
             child: Column(
               children: [
-                _tableCheckbox(l10n, 'products', l10n.backupExportTableProducts,
-                    Icons.inventory_2_outlined),
-                _tableCheckbox(l10n, 'customers', l10n.backupExportTableCustomers,
-                    Icons.people_outline),
-                _tableCheckbox(l10n, 'orders', l10n.backupExportTableOrders,
-                    Icons.receipt_long_outlined),
-                _tableCheckbox(l10n, 'inventory', l10n.backupExportTableInventory,
-                    Icons.warehouse_outlined),
-                _tableCheckbox(l10n, 'settings', l10n.backupExportTableSettings,
-                    Icons.settings_outlined),
-                _tableCheckbox(l10n, 'staff', l10n.backupExportTableStaff,
-                    Icons.badge_outlined),
-                _tableCheckbox(l10n, 'categories', l10n.backupExportTableCategories,
-                    Icons.category_outlined),
+                _tableCheckbox(l10n, 'products', l10n.backupExportTableProducts, Icons.inventory_2_outlined),
+                _tableCheckbox(l10n, 'customers', l10n.backupExportTableCustomers, Icons.people_outline),
+                _tableCheckbox(l10n, 'orders', l10n.backupExportTableOrders, Icons.receipt_long_outlined),
+                _tableCheckbox(l10n, 'inventory', l10n.backupExportTableInventory, Icons.warehouse_outlined),
+                _tableCheckbox(l10n, 'settings', l10n.backupExportTableSettings, Icons.settings_outlined),
+                _tableCheckbox(l10n, 'staff', l10n.backupExportTableStaff, Icons.badge_outlined),
+                _tableCheckbox(l10n, 'categories', l10n.backupExportTableCategories, Icons.category_outlined),
               ],
             ),
           ),
@@ -78,11 +70,9 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
-              _formatOption(context, l10n, 'json', l10n.backupExportFormatJson,
-                  Icons.data_object_rounded),
+              _formatOption(context, l10n, 'json', l10n.backupExportFormatJson, Icons.data_object_rounded),
               const SizedBox(width: AppSpacing.md),
-              _formatOption(context, l10n, 'csv', l10n.backupExportFormatCsv,
-                  Icons.table_chart_outlined),
+              _formatOption(context, l10n, 'csv', l10n.backupExportFormatCsv, Icons.table_chart_outlined),
             ],
           ),
           const SizedBox(height: AppSpacing.xl),
@@ -118,12 +108,7 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
     );
   }
 
-  Widget _tableCheckbox(
-    AppLocalizations l10n,
-    String key,
-    String label,
-    IconData icon,
-  ) {
+  Widget _tableCheckbox(AppLocalizations l10n, String key, String label, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: PosCheckboxTile(
@@ -134,13 +119,7 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
     );
   }
 
-  Widget _formatOption(
-    BuildContext context,
-    AppLocalizations l10n,
-    String value,
-    String label,
-    IconData icon,
-  ) {
+  Widget _formatOption(BuildContext context, AppLocalizations l10n, String value, String label, IconData icon) {
     final isSelected = _format == value;
     return Expanded(
       child: GestureDetector(
@@ -151,30 +130,17 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
           decoration: BoxDecoration(
             color: isSelected
                 ? AppColors.primary.withValues(alpha: 0.08)
-                : (Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.cardDark
-                    : AppColors.cardLight),
+                : (Theme.of(context).brightness == Brightness.dark ? AppColors.cardDark : AppColors.cardLight),
             borderRadius: AppRadius.borderLg,
-            border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.borderFor(context),
-              width: isSelected ? 2 : 1,
-            ),
+            border: Border.all(color: isSelected ? AppColors.primary : AppColors.borderFor(context), width: isSelected ? 2 : 1),
           ),
           child: Row(
             children: [
-              Icon(icon,
-                  color: isSelected ? AppColors.primary : AppColors.mutedFor(context),
-                  size: 22),
+              Icon(icon, color: isSelected ? AppColors.primary : AppColors.mutedFor(context), size: 22),
               const SizedBox(width: AppSpacing.sm),
-              Text(
-                label,
-                style: AppTypography.titleSmall.copyWith(
-                  color: isSelected ? AppColors.primary : null,
-                ),
-              ),
+              Text(label, style: AppTypography.titleSmall.copyWith(color: isSelected ? AppColors.primary : null)),
               const Spacer(),
-              if (isSelected)
-                const Icon(Icons.check_circle, color: AppColors.primary, size: 18),
+              if (isSelected) const Icon(Icons.check_circle, color: AppColors.primary, size: 18),
             ],
           ),
         ),
@@ -183,11 +149,9 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
   }
 
   Future<void> _export(AppLocalizations l10n) async {
-    await ref.read(backupOperationProvider.notifier).exportData(
-          tables: _activeTables,
-          format: _format,
-          includeImages: _includeImages,
-        );
+    await ref
+        .read(backupOperationProvider.notifier)
+        .exportData(tables: _activeTables, format: _format, includeImages: _includeImages);
     if (!mounted) return;
     final opState = ref.read(backupOperationProvider);
     if (opState is BackupOperationSuccess) {
@@ -197,11 +161,7 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
     }
   }
 
-  Widget _buildResultView(
-    BuildContext context,
-    AppLocalizations l10n,
-    Map<String, dynamic> result,
-  ) {
+  Widget _buildResultView(BuildContext context, AppLocalizations l10n, Map<String, dynamic> result) {
     final exportData = result['data'] as Map<String, dynamic>? ?? result;
     final exportId = exportData['export_id'] as String? ?? '—';
     final filePath = exportData['file_path'] as String? ?? '—';
@@ -229,10 +189,11 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.backupExportSuccess,
-                          style: AppTypography.titleMedium.copyWith(color: AppColors.success)),
-                      Text('${l10n.backupExportTotalRecords}: $totalRecords',
-                          style: AppTypography.bodySmall.copyWith(color: AppColors.success)),
+                      Text(l10n.backupExportSuccess, style: AppTypography.titleMedium.copyWith(color: AppColors.success)),
+                      Text(
+                        '${l10n.backupExportTotalRecords}: $totalRecords',
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.success),
+                      ),
                     ],
                   ),
                 ),
@@ -268,12 +229,12 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                     child: Row(
                       children: [
-                        Text(tbl['table'] as String? ?? '—',
-                            style: AppTypography.bodyMedium),
+                        Text(tbl['table'] as String? ?? '—', style: AppTypography.bodyMedium),
                         const Spacer(),
-                        Text('${tbl['records_count'] ?? 0} records',
-                            style: AppTypography.bodySmall.copyWith(
-                                color: AppColors.mutedFor(context))),
+                        Text(
+                          '${tbl['records_count'] ?? 0} records',
+                          style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                        ),
                       ],
                     ),
                   );
@@ -307,13 +268,9 @@ class _BackupExportWidgetState extends ConsumerState<BackupExportWidget> {
         children: [
           Expanded(
             flex: 2,
-            child: Text(label,
-                style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
+            child: Text(label, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
           ),
-          Expanded(
-            flex: 3,
-            child: Text(value, style: AppTypography.bodyMedium),
-          ),
+          Expanded(flex: 3, child: Text(value, style: AppTypography.bodyMedium)),
         ],
       ),
     );

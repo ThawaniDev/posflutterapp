@@ -155,12 +155,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
           icon: Icons.account_balance,
           iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
         ),
-        PosKpiCard(
-          label: l10n.dailySummaryTransactions,
-          value: '$txCount',
-          icon: Icons.receipt,
-          iconColor: AppColors.info,
-        ),
+        PosKpiCard(label: l10n.dailySummaryTransactions, value: '$txCount', icon: Icons.receipt, iconColor: AppColors.info),
       ],
     );
   }
@@ -280,10 +275,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               ),
             ),
             AppSpacing.gapH16,
-            Text(
-              l10n.dailySummarySessions(sessionsClosed),
-              style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
-            ),
+            Text(l10n.dailySummarySessions(sessionsClosed), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
           ],
         ),
       ),
@@ -338,9 +330,13 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             AppSpacing.gapH4,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: ['00', '06', '12', '18', '23']
-                  .map((h) => Text(h, style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)))
-                  .toList(),
+              children: [
+                '00',
+                '06',
+                '12',
+                '18',
+                '23',
+              ].map((h) => Text(h, style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor))).toList(),
             ),
           ],
         ),
@@ -380,7 +376,10 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   final cat = e['category'] as String? ?? '';
                   final amt = _toDouble(e['amount']);
                   return Chip(
-                    label: Text('${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631', style: const TextStyle(fontSize: 12)),
+                    label: Text(
+                      '${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631',
+                      style: const TextStyle(fontSize: 12),
+                    ),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   );
@@ -534,10 +533,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                     padding: const pw.EdgeInsets.only(bottom: 4),
                     child: pw.Row(
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      children: [
-                        pw.Text(method),
-                        pw.Text('${amount.toStringAsFixed(2)} SAR'),
-                      ],
+                      children: [pw.Text(method), pw.Text('${amount.toStringAsFixed(2)} SAR')],
                     ),
                   );
                 }),
@@ -560,4 +556,3 @@ void showDailySummaryInfo(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   showPosInfoDialog(context, title: l10n.dailySummaryTitle, message: l10n.dailySummaryInfoMessage);
 }
-

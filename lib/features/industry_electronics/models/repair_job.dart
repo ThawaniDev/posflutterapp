@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/industry_electronics/enums/repair_job_status.dart';
 
 class RepairJob {
-
   const RepairJob({
     required this.id,
     required this.storeId,

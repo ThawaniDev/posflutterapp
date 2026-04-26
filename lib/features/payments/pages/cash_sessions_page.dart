@@ -78,11 +78,7 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
           );
         }
         final session = sessions[index];
-        return _SessionRow(
-          session: session,
-          theme: theme,
-          onTap: () => _showSessionDetail(context, session),
-        );
+        return _SessionRow(session: session, theme: theme, onTap: () => _showSessionDetail(context, session));
       },
     );
   }
@@ -92,9 +88,7 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (_) => _SessionDetailSheet(session: session),
     );
   }
@@ -124,10 +118,7 @@ class _SessionRow extends StatelessWidget {
             Container(
               width: 42,
               height: 42,
-              decoration: BoxDecoration(
-                color: statusColor.withValues(alpha: 0.12),
-                borderRadius: AppRadius.borderMd,
-              ),
+              decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
               child: Icon(Icons.point_of_sale, color: statusColor, size: 20),
             ),
             AppSpacing.gapW12,
@@ -210,11 +201,11 @@ class _StatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadius.borderFull,
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderFull),
+      child: Text(
+        label,
+        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600)),
     );
   }
 }
@@ -229,8 +220,7 @@ class _SessionDetailSheet extends ConsumerStatefulWidget {
   ConsumerState<_SessionDetailSheet> createState() => _SessionDetailSheetState();
 }
 
-class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet>
-    with SingleTickerProviderStateMixin {
+class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet> with SingleTickerProviderStateMixin {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
@@ -310,18 +300,32 @@ class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet>
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                Expanded(child: _KpiCell(theme: theme, label: l10n.cashSessionOpenFloat, value: '${session.openingFloat.toStringAsFixed(2)} \u0631')),
+                Expanded(
+                  child: _KpiCell(
+                    theme: theme,
+                    label: l10n.cashSessionOpenFloat,
+                    value: '${session.openingFloat.toStringAsFixed(2)} \u0631',
+                  ),
+                ),
                 AppSpacing.gapW8,
                 if (session.expectedCash != null)
-                  Expanded(child: _KpiCell(theme: theme, label: l10n.cashSessionExpectedCash, value: '${session.expectedCash!.toStringAsFixed(2)} \u0631')),
+                  Expanded(
+                    child: _KpiCell(
+                      theme: theme,
+                      label: l10n.cashSessionExpectedCash,
+                      value: '${session.expectedCash!.toStringAsFixed(2)} \u0631',
+                    ),
+                  ),
                 AppSpacing.gapW8,
                 if (session.variance != null)
-                  Expanded(child: _KpiCell(
-                    theme: theme,
-                    label: l10n.cashSessionVariance,
-                    value: '${session.variance! >= 0 ? '+' : ''}${session.variance!.toStringAsFixed(2)} \u0631',
-                    valueColor: session.variance! >= 0 ? AppColors.success : AppColors.error,
-                  )),
+                  Expanded(
+                    child: _KpiCell(
+                      theme: theme,
+                      label: l10n.cashSessionVariance,
+                      value: '${session.variance! >= 0 ? '+' : ''}${session.variance!.toStringAsFixed(2)} \u0631',
+                      valueColor: session.variance! >= 0 ? AppColors.success : AppColors.error,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -362,14 +366,10 @@ class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet>
             child: _loadingDetail
                 ? const Center(child: CircularProgressIndicator())
                 : _detailError != null
-                    ? Center(child: Text(_detailError!, style: const TextStyle(color: AppColors.error)))
-                    : TabBarView(
-                        controller: _tabController,
-                        children: [
-                          _buildCashEventsTab(theme),
-                          _buildExpensesTab(theme),
-                        ],
-                      ),
+                ? Center(
+                    child: Text(_detailError!, style: const TextStyle(color: AppColors.error)),
+                  )
+                : TabBarView(controller: _tabController, children: [_buildCashEventsTab(theme), _buildExpensesTab(theme)]),
           ),
         ],
       ),
@@ -378,7 +378,9 @@ class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet>
 
   Widget _buildCashEventsTab(ThemeData theme) {
     if (_cashEvents.isEmpty) {
-      return Center(child: Text(l10n.cashSessionNoEvents, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
+      return Center(
+        child: Text(l10n.cashSessionNoEvents, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+      );
     }
     return ListView.separated(
       padding: AppSpacing.paddingAll16,
@@ -431,7 +433,9 @@ class _SessionDetailSheetState extends ConsumerState<_SessionDetailSheet>
 
   Widget _buildExpensesTab(ThemeData theme) {
     if (_expenses.isEmpty) {
-      return Center(child: Text(l10n.cashSessionNoExpenses, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
+      return Center(
+        child: Text(l10n.cashSessionNoExpenses, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+      );
     }
     return ListView.separated(
       padding: AppSpacing.paddingAll16,
@@ -492,10 +496,7 @@ class _KpiCell extends StatelessWidget {
             AppSpacing.gapH2,
             Text(
               value,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: valueColor,
-              ),
+              style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: valueColor),
             ),
           ],
         ),

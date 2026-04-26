@@ -15,7 +15,6 @@ class ArrangementFormPage extends ConsumerStatefulWidget {
 }
 
 class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -72,11 +71,11 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
     return PosFormPage(
       title: _isEditing ? l10n.floristEditArrangement : l10n.floristNewArrangementTitle,
       bottomBar: PosButton(
-          label: _isEditing ? l10n.floristUpdateArrangement : l10n.floristCreateArrangement,
-          onPressed: _saving ? null : _handleSave,
-          isLoading: _saving,
-          isFullWidth: true,
-        ),
+        label: _isEditing ? l10n.floristUpdateArrangement : l10n.floristCreateArrangement,
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
+      ),
       child: Form(
         key: _formKey,
         child: Column(

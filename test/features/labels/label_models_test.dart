@@ -179,13 +179,7 @@ void main() {
     });
 
     test('copyWith preserves all new fields', () {
-      const base = LabelPrintHistory(
-        id: 'hist-1',
-        storeId: 'store-1',
-        printedBy: 'user-1',
-        productCount: 1,
-        totalLabels: 1,
-      );
+      const base = LabelPrintHistory(id: 'hist-1', storeId: 'store-1', printedBy: 'user-1', productCount: 1, totalLabels: 1);
 
       final copy = base.copyWith(templateName: 'My Template', printedByName: 'Bob');
       expect(copy.templateName, 'My Template');
@@ -194,20 +188,8 @@ void main() {
     });
 
     test('equality is based on id', () {
-      const a = LabelPrintHistory(
-        id: 'same',
-        storeId: 'store-1',
-        printedBy: 'user-1',
-        productCount: 1,
-        totalLabels: 1,
-      );
-      const b = LabelPrintHistory(
-        id: 'same',
-        storeId: 'store-99',
-        printedBy: 'user-99',
-        productCount: 99,
-        totalLabels: 99,
-      );
+      const a = LabelPrintHistory(id: 'same', storeId: 'store-1', printedBy: 'user-1', productCount: 1, totalLabels: 1);
+      const b = LabelPrintHistory(id: 'same', storeId: 'store-99', printedBy: 'user-99', productCount: 99, totalLabels: 99);
       expect(a, equals(b));
     });
   });

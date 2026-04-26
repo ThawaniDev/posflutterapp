@@ -131,9 +131,6 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
         ],
       ),
     );
-    return PermissionGuardPage(
-      permission: Permissions.mobileView,
-      child: content,
-    );
+    return PermissionGuardPage(permission: Permissions.mobileView, child: content);
   }
 }

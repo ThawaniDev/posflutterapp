@@ -6,7 +6,6 @@ final backupRepositoryProvider = Provider<BackupRepository>((ref) {
 });
 
 class BackupRepository {
-
   BackupRepository(this._api);
   final BackupApiService _api;
 

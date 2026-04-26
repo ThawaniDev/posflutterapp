@@ -30,8 +30,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     Future.microtask(_reload);
   }
 
-  String _fmt(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _fmt(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   void _reload() {
     ref.read(reconciliationProvider.notifier).load(startDate: _fmt(_startDate), endDate: _fmt(_endDate));
@@ -294,7 +293,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                   final cat = e['category'] as String? ?? '';
                   final amt = _toDouble(e['amount']);
                   return Chip(
-                    label: Text('${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631', style: const TextStyle(fontSize: 12)),
+                    label: Text(
+                      '${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631',
+                      style: const TextStyle(fontSize: 12),
+                    ),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   );
@@ -361,7 +363,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           children: [
             Icon(icon, color: color, size: 20),
             AppSpacing.gapH8,
-            Text(value, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color)),
+            Text(
+              value,
+              style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color),
+            ),
             AppSpacing.gapH2,
             Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
           ],
@@ -384,7 +389,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-                Text(value, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color)),
+                Text(
+                  value,
+                  style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color),
+                ),
               ],
             ),
           ),
@@ -397,7 +405,13 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     if (context.isPhone) {
       return Column(
         children: [
-          _summaryTileFullWidth(theme, l10n.finReconTotalRevenue, '${totalRevenue.toStringAsFixed(2)} \u0631', Icons.trending_up, AppColors.success),
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconTotalRevenue,
+            '${totalRevenue.toStringAsFixed(2)} \u0631',
+            Icons.trending_up,
+            AppColors.success,
+          ),
           AppSpacing.gapH8,
           _summaryTileFullWidth(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
           AppSpacing.gapH8,
@@ -413,7 +427,13 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     }
     return Row(
       children: [
-        _summaryTile(theme, l10n.finReconTotalRevenue, '${totalRevenue.toStringAsFixed(2)} \u0631', Icons.trending_up, AppColors.success),
+        _summaryTile(
+          theme,
+          l10n.finReconTotalRevenue,
+          '${totalRevenue.toStringAsFixed(2)} \u0631',
+          Icons.trending_up,
+          AppColors.success,
+        ),
         AppSpacing.gapW16,
         _summaryTile(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
         AppSpacing.gapW16,
@@ -428,26 +448,68 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildCashReconTiles(ThemeData theme, AppLocalizations l10n, double totalExpected, double totalActual, double totalVariance) {
+  Widget _buildCashReconTiles(
+    ThemeData theme,
+    AppLocalizations l10n,
+    double totalExpected,
+    double totalActual,
+    double totalVariance,
+  ) {
     final varianceColor = totalVariance.abs() > 5 ? AppColors.error : AppColors.success;
     if (context.isPhone) {
       return Column(
         children: [
-          _summaryTileFullWidth(theme, l10n.finReconExpectedCash, '${totalExpected.toStringAsFixed(2)} \u0631', Icons.calculate, AppColors.info),
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconExpectedCash,
+            '${totalExpected.toStringAsFixed(2)} \u0631',
+            Icons.calculate,
+            AppColors.info,
+          ),
           AppSpacing.gapH8,
-          _summaryTileFullWidth(theme, l10n.finReconActualCash, '${totalActual.toStringAsFixed(2)} \u0631', Icons.payments, AppColors.primary),
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconActualCash,
+            '${totalActual.toStringAsFixed(2)} \u0631',
+            Icons.payments,
+            AppColors.primary,
+          ),
           AppSpacing.gapH8,
-          _summaryTileFullWidth(theme, l10n.finReconVariance, '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631', Icons.compare_arrows, varianceColor),
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconVariance,
+            '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631',
+            Icons.compare_arrows,
+            varianceColor,
+          ),
         ],
       );
     }
     return Row(
       children: [
-        _summaryTile(theme, l10n.finReconExpectedCash, '${totalExpected.toStringAsFixed(2)} \u0631', Icons.calculate, AppColors.info),
+        _summaryTile(
+          theme,
+          l10n.finReconExpectedCash,
+          '${totalExpected.toStringAsFixed(2)} \u0631',
+          Icons.calculate,
+          AppColors.info,
+        ),
         AppSpacing.gapW16,
-        _summaryTile(theme, l10n.finReconActualCash, '${totalActual.toStringAsFixed(2)} \u0631', Icons.payments, AppColors.primary),
+        _summaryTile(
+          theme,
+          l10n.finReconActualCash,
+          '${totalActual.toStringAsFixed(2)} \u0631',
+          Icons.payments,
+          AppColors.primary,
+        ),
         AppSpacing.gapW16,
-        _summaryTile(theme, l10n.finReconVariance, '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631', Icons.compare_arrows, varianceColor),
+        _summaryTile(
+          theme,
+          l10n.finReconVariance,
+          '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631',
+          Icons.compare_arrows,
+          varianceColor,
+        ),
       ],
     );
   }
@@ -521,20 +583,16 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                     padding: const pw.EdgeInsets.only(bottom: 4),
                     child: pw.Row(
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      children: [
-                        pw.Text(method.replaceAll('_', ' ')),
-                        pw.Text('${amount.toStringAsFixed(2)} SAR'),
-                      ],
+                      children: [pw.Text(method.replaceAll('_', ' ')), pw.Text('${amount.toStringAsFixed(2)} SAR')],
                     ),
                   );
                 }),
                 pw.SizedBox(height: 12),
-                pw.Text(
-                  l10n.finReconPhysicalCashCount,
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
+                pw.Text(l10n.finReconPhysicalCashCount, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 6),
-                pw.Text('${l10n.finReconCountedTotal}: ${PaymentCalculationService.calculateDenominationTotal(_denominationCounts).toStringAsFixed(2)} SAR'),
+                pw.Text(
+                  '${l10n.finReconCountedTotal}: ${PaymentCalculationService.calculateDenominationTotal(_denominationCounts).toStringAsFixed(2)} SAR',
+                ),
               ],
             ),
           ),
@@ -567,4 +625,3 @@ void showFinancialReconciliationInfo(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   showPosInfoDialog(context, title: l10n.finReconTitle, message: l10n.finReconInfoMessage);
 }
-

@@ -180,17 +180,19 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
               ),
             )
           else
-            ...conflicts.take(3).map(
-              (c) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: ConflictCard(
-                  conflict: c,
-                  onResolve: (resolution) {
-                    ref.read(syncConflictListProvider.notifier).resolveConflict(conflictId: c.id, resolution: resolution);
-                  },
+            ...conflicts
+                .take(3)
+                .map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ConflictCard(
+                      conflict: c,
+                      onResolve: (resolution) {
+                        ref.read(syncConflictListProvider.notifier).resolveConflict(conflictId: c.id, resolution: resolution);
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
         ],
       ),
       SyncConflictListError(:final message) => _ErrorCard(
@@ -230,7 +232,6 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
 }
 
 class _ErrorCard extends StatelessWidget {
-
   const _ErrorCard({required this.message, required this.onRetry});
   final String message;
   final VoidCallback onRetry;

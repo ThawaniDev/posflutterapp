@@ -27,10 +27,7 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
   }
 
   void _load() {
-    ref.read(backupListProvider.notifier).load(
-      backupType: _filterType,
-      status: _filterStatus,
-    );
+    ref.read(backupListProvider.notifier).load(backupType: _filterType, status: _filterStatus);
   }
 
   @override
@@ -45,10 +42,7 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
           child: switch (state) {
             BackupListInitial() => const PosLoading(),
             BackupListLoading() => const PosLoading(),
-            BackupListError(:final message) => PosErrorState(
-              message: message,
-              onRetry: _load,
-            ),
+            BackupListError(:final message) => PosErrorState(message: message, onRetry: _load),
             BackupListLoaded(:final data) => _buildTable(context, l10n, data),
           },
         ),
@@ -119,10 +113,7 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
 
   Widget _buildTable(BuildContext context, AppLocalizations l10n, Map<String, dynamic> data) {
     final rawBackups = data['data']?['backups'] as List? ?? (data['backups'] as List? ?? []);
-    final backups = rawBackups
-        .whereType<Map<String, dynamic>>()
-        .map(BackupHistory.fromJson)
-        .toList();
+    final backups = rawBackups.whereType<Map<String, dynamic>>().map(BackupHistory.fromJson).toList();
 
     ref.watch(backupOperationProvider);
 
@@ -136,11 +127,7 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
         PosTableColumn(title: l10n.backupColVerified, width: 90),
       ],
       items: backups,
-      emptyConfig: PosTableEmptyConfig(
-        icon: Icons.cloud_upload_outlined,
-        title: l10n.noBackupsYet,
-        subtitle: l10n.backupNowHint,
-      ),
+      emptyConfig: PosTableEmptyConfig(icon: Icons.cloud_upload_outlined, title: l10n.noBackupsYet, subtitle: l10n.backupNowHint),
       actions: [
         PosTableRowAction<BackupHistory>(
           label: l10n.backupRestore,
@@ -166,15 +153,9 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
           case 0:
             return _typeBadge(context, l10n, b.backupType);
           case 1:
-            return Text(
-              b.createdAt != null ? _formatDate(b.createdAt!) : '—',
-              style: AppTypography.bodyMedium,
-            );
+            return Text(b.createdAt != null ? _formatDate(b.createdAt!) : '—', style: AppTypography.bodyMedium);
           case 2:
-            return Text(
-              _formatBytes(b.fileSizeBytes),
-              style: AppTypography.bodyMedium,
-            );
+            return Text(_formatBytes(b.fileSizeBytes), style: AppTypography.bodyMedium);
           case 3:
             return _locationBadge(context, l10n, b.storageLocation);
           case 4:
@@ -312,4 +293,3 @@ class _BackupListWidgetState extends ConsumerState<BackupListWidget> {
     return '${(bytes / 1073741824).toStringAsFixed(2)} GB';
   }
 }
-
