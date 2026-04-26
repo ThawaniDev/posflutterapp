@@ -22,7 +22,6 @@ class StaffPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
@@ -54,11 +53,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: 'staff_performance',
-              filters: _filters,
-            ),
+            onPressed: () => showReportExportSheet(context: context, reportType: 'staff_performance', filters: _filters),
           ),
         ],
         filterPanel: ReportFilterPanel(
@@ -83,7 +78,6 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
 }
 
 class _StaffList extends StatelessWidget {
-
   const _StaffList({required this.staff});
   final List<Map<String, dynamic>> staff;
 
@@ -100,7 +94,12 @@ class _StaffList extends StatelessWidget {
         // Top KPIs
         ReportKpiGrid(
           cards: [
-            ReportKpiCard(label: l10n.staffMembers, value: '${staff.length}', icon: Icons.people_rounded, color: AppColors.primary),
+            ReportKpiCard(
+              label: l10n.staffMembers,
+              value: '${staff.length}',
+              icon: Icons.people_rounded,
+              color: AppColors.primary,
+            ),
             ReportKpiCard(
               label: l10n.totalRevenue,
               value: formatCurrency(totalRevenue),
@@ -198,7 +197,11 @@ class _StaffList extends StatelessWidget {
                                       ),
                                       child: Text(
                                         '#${i + 1}',
-                                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary),
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.primary,
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(width: 6),

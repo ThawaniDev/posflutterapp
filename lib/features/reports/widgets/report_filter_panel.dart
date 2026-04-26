@@ -10,7 +10,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 /// Comprehensive filter panel with date presets, branch selector,
 /// and advanced filter options. Responsive: collapsible on mobile.
 class ReportFilterPanel extends ConsumerStatefulWidget {
-
   const ReportFilterPanel({
     super.key,
     required this.filters,
@@ -186,11 +185,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
                 color: isActive ? AppColors.primary : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
               ),
-              side: BorderSide(
-                color: isActive
-                    ? AppColors.primary.withValues(alpha: 0.3)
-                    : (AppColors.borderFor(context)),
-              ),
+              side: BorderSide(color: isActive ? AppColors.primary.withValues(alpha: 0.3) : (AppColors.borderFor(context))),
               visualDensity: VisualDensity.compact,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
@@ -258,18 +253,12 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         decoration: BoxDecoration(
           color: _expanded ? AppColors.primary.withValues(alpha: 0.1) : (isDark ? AppColors.cardDark : AppColors.backgroundLight),
           borderRadius: AppRadius.borderSm,
-          border: Border.all(
-            color: _expanded ? AppColors.primary.withValues(alpha: 0.3) : (AppColors.borderFor(context)),
-          ),
+          border: Border.all(color: _expanded ? AppColors.primary.withValues(alpha: 0.3) : (AppColors.borderFor(context))),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.tune_rounded,
-              size: 16,
-              color: _expanded ? AppColors.primary : (AppColors.mutedFor(context)),
-            ),
+            Icon(Icons.tune_rounded, size: 16, color: _expanded ? AppColors.primary : (AppColors.mutedFor(context))),
             const SizedBox(width: 6),
             Text(
               l10n.reportFilters,
@@ -311,11 +300,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
       onSelected: (val) => _update(widget.filters.copyWith(compare: val)),
       selectedColor: AppColors.info.withValues(alpha: 0.15),
       checkmarkColor: AppColors.info,
-      side: BorderSide(
-        color: widget.filters.compare
-            ? AppColors.info.withValues(alpha: 0.3)
-            : (AppColors.borderFor(context)),
-      ),
+      side: BorderSide(color: widget.filters.compare ? AppColors.info.withValues(alpha: 0.3) : (AppColors.borderFor(context))),
       visualDensity: VisualDensity.compact,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
@@ -466,11 +451,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             selected: isActive,
             onSelected: (_) => _update(widget.filters.copyWith(granularity: () => g)),
             selectedColor: AppColors.primary.withValues(alpha: 0.15),
-            side: BorderSide(
-              color: isActive
-                  ? AppColors.primary.withValues(alpha: 0.3)
-                  : (AppColors.borderFor(context)),
-            ),
+            side: BorderSide(color: isActive ? AppColors.primary.withValues(alpha: 0.3) : (AppColors.borderFor(context))),
             visualDensity: VisualDensity.compact,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
@@ -584,7 +565,6 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
 /// Simple dropdown option model.
 class DropdownOption {
-
   const DropdownOption({required this.value, required this.label});
   final String value;
   final String label;

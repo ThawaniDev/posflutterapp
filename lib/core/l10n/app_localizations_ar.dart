@@ -186,12 +186,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminFinOpsRetryExport => 'إعادة محاولة التصدير';
 
   @override
-  String get adminFinOpsCreateAutoExportConfig =>
-      'إنشاء إعدادات التصدير التلقائي';
+  String get adminFinOpsCreateAutoExportConfig => 'إنشاء إعدادات التصدير التلقائي';
 
   @override
-  String get adminFinOpsDeleteAutoExportConfig =>
-      'حذف إعدادات التصدير التلقائي';
+  String get adminFinOpsDeleteAutoExportConfig => 'حذف إعدادات التصدير التلقائي';
 
   @override
   String get adminFinOpsReconcile => 'تسوية المدفوعات';
@@ -712,8 +710,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get branchesDeleteBranch => 'حذف الفرع';
 
   @override
-  String get branchesDeleteConfirm =>
-      'هل أنت متأكد من حذف هذا الفرع؟ لا يمكن التراجع عن هذا الإجراء.';
+  String get branchesDeleteConfirm => 'هل أنت متأكد من حذف هذا الفرع؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get branchesBranchDetail => 'تفاصيل الفرع';
@@ -999,8 +996,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get branchesCannotDeleteMain => 'لا يمكن حذف الفرع الرئيسي';
 
   @override
-  String get branchesCannotDeleteWithTransactions =>
-      'لا يمكن حذف فرع يحتوي على معاملات';
+  String get branchesCannotDeleteWithTransactions => 'لا يمكن حذف فرع يحتوي على معاملات';
 
   @override
   String get deliveryIntegration => 'التكامل مع التوصيل';
@@ -1035,8 +1031,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deliveryNoPlatforms => 'لا توجد منصات متصلة';
 
   @override
-  String get deliveryConfigurePlatform =>
-      'قم بإعداد منصة توصيل من تبويب نظرة عامة';
+  String get deliveryConfigurePlatform => 'قم بإعداد منصة توصيل من تبويب نظرة عامة';
 
   @override
   String get deliveryNoOrders => 'لا توجد طلبات توصيل بعد';
@@ -1180,8 +1175,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deliverySyncOnChange => 'مزامنة عند تغيير المنتج';
 
   @override
-  String get deliverySyncOnChangeDesc =>
-      'مزامنة القائمة تلقائياً عند تحديث المنتجات';
+  String get deliverySyncOnChangeDesc => 'مزامنة القائمة تلقائياً عند تحديث المنتجات';
 
   @override
   String get deliverySyncing => 'جارٍ المزامنة...';
@@ -1370,15 +1364,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get thawaniAutoSyncProducts => 'مزامنة تلقائية للمنتجات';
 
   @override
-  String get thawaniAutoSyncProductsDesc =>
-      'مزامنة المنتجات تلقائياً مع سوق ثواني';
+  String get thawaniAutoSyncProductsDesc => 'مزامنة المنتجات تلقائياً مع سوق ثواني';
 
   @override
   String get thawaniAutoSyncInventory => 'مزامنة تلقائية للمخزون';
 
   @override
-  String get thawaniAutoSyncInventoryDesc =>
-      'الحفاظ على مستويات المخزون متزامنة في الوقت الفعلي';
+  String get thawaniAutoSyncInventoryDesc => 'الحفاظ على مستويات المخزون متزامنة في الوقت الفعلي';
 
   @override
   String get thawaniAutoAcceptOrders => 'قبول تلقائي للطلبات';
@@ -1405,8 +1397,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsLocalization => 'التعريب';
 
   @override
-  String get settingsLocalizationDesc =>
-      'اللغات والترجمات والإعدادات الإقليمية';
+  String get settingsLocalizationDesc => 'اللغات والترجمات والإعدادات الإقليمية';
 
   @override
   String get settingsStoreProfile => 'ملف المتجر';
@@ -1469,8 +1460,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPosBehavior => 'سلوك نقطة البيع';
 
   @override
-  String get settingsPosBehaviorDesc =>
-      'إعدادات المبيعات والمرتجعات والمخزون والولاء';
+  String get settingsPosBehaviorDesc => 'إعدادات المبيعات والمرتجعات والمخزون والولاء';
 
   @override
   String get settingsSaved => 'تم حفظ الإعدادات';
@@ -1506,8 +1496,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPricesIncludeTax => 'الأسعار شاملة الضريبة';
 
   @override
-  String get settingsPricesIncludeTaxDesc =>
-      'أسعار المنتجات تشمل الضريبة بالفعل';
+  String get settingsPricesIncludeTaxDesc => 'أسعار المنتجات تشمل الضريبة بالفعل';
 
   @override
   String get settingsTaxConfig => 'إعدادات الضريبة';
@@ -1633,19 +1622,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPosManagerRefund => 'موافقة المدير على الاسترداد';
 
   @override
-  String get settingsPosManagerRefundDesc =>
-      'طلب رمز المدير لمعاملات الاسترداد';
+  String get settingsPosManagerRefundDesc => 'طلب رمز المدير لمعاملات الاسترداد';
 
   @override
   String get settingsPosManagerDiscount => 'موافقة المدير على الخصومات';
 
   @override
-  String get settingsPosManagerDiscountDesc =>
-      'طلب رمز المدير عند تطبيق الخصومات';
+  String get settingsPosManagerDiscountDesc => 'طلب رمز المدير عند تطبيق الخصومات';
 
   @override
-  String get settingsPosReturnWithoutReceiptPolicy =>
-      'سياسة الإرجاع بدون إيصال';
+  String get settingsPosReturnWithoutReceiptPolicy => 'سياسة الإرجاع بدون إيصال';
 
   @override
   String get settingsPosReturnPolicyDeny => 'رفض (لا إرجاع بدون إيصال)';
@@ -1925,8 +1911,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accessibilityScreenReader => 'دعم قارئ الشاشة';
 
   @override
-  String get accessibilityScreenReaderDesc =>
-      'تحسين التوافق مع برامج قراءة الشاشة';
+  String get accessibilityScreenReaderDesc => 'تحسين التوافق مع برامج قراءة الشاشة';
 
   @override
   String get accessibilityVisual => 'مرئي';
@@ -1941,8 +1926,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accessibilityReducedMotion => 'تقليل الحركة';
 
   @override
-  String get accessibilityReducedMotionDesc =>
-      'تقليل الرسوم المتحركة والانتقالات';
+  String get accessibilityReducedMotionDesc => 'تقليل الرسوم المتحركة والانتقالات';
 
   @override
   String get accessibilityAudio => 'الصوت';
@@ -1957,15 +1941,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accessibilityLargeTouchTargets => 'أهداف لمس كبيرة';
 
   @override
-  String get accessibilityLargeTouchTargetsDesc =>
-      'تكبير حجم الأزرار وعناصر التحكم';
+  String get accessibilityLargeTouchTargetsDesc => 'تكبير حجم الأزرار وعناصر التحكم';
 
   @override
   String get accessibilityVisibleFocus => 'مؤشرات التركيز المرئية';
 
   @override
-  String get accessibilityVisibleFocusDesc =>
-      'إظهار حدود تركيز واضحة على عناصر التحكم';
+  String get accessibilityVisibleFocusDesc => 'إظهار حدود تركيز واضحة على عناصر التحكم';
 
   @override
   String get accessibilityShortcutsPOS => 'نقطة البيع';
@@ -1995,8 +1977,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get companionConnectionGuide => 'دليل الاتصال';
 
   @override
-  String get companionConnectionGuideDesc =>
-      'افتح تطبيق المرافق على جهازك المحمول وامسح رمز QR أو أدخل معرف الجلسة للاتصال.';
+  String get companionConnectionGuideDesc => 'افتح تطبيق المرافق على جهازك المحمول وامسح رمز QR أو أدخل معرف الجلسة للاتصال.';
 
   @override
   String get companionSessionActive => 'الجلسة نشطة';
@@ -2911,8 +2892,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffCreateUserAccount => 'إنشاء حساب مستخدم';
 
   @override
-  String get staffCreateUserAccountDesc =>
-      'إنشاء حساب تسجيل دخول لهذا الموظف للوصول إلى نظام نقاط البيع';
+  String get staffCreateUserAccountDesc => 'إنشاء حساب تسجيل دخول لهذا الموظف للوصول إلى نظام نقاط البيع';
 
   @override
   String get staffUserAccountLinked => 'حساب المستخدم مرتبط';
@@ -2927,8 +2907,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffPasswordHelper => '8 أحرف على الأقل';
 
   @override
-  String get staffPasswordMinLength =>
-      'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+  String get staffPasswordMinLength => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
 
   @override
   String get staffOverview => 'نظرة عامة';
@@ -2985,8 +2964,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffSystemName => 'اسم النظام';
 
   @override
-  String get staffSystemNameHelper =>
-      'يتم إنشاؤه تلقائياً، يجب أن يكون فريداً وبأحرف صغيرة';
+  String get staffSystemNameHelper => 'يتم إنشاؤه تلقائياً، يجب أن يكون فريداً وبأحرف صغيرة';
 
   @override
   String get staffSystemNameNoChange => 'لا يمكن تغييره بعد الإنشاء';
@@ -3002,12 +2980,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String staffPermissionCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'صلاحيات',
-      one: 'صلاحية',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: 'صلاحيات', one: 'صلاحية');
     return '$count $_temp0';
   }
 
@@ -3066,8 +3039,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffDeleteShift => 'حذف الوردية';
 
   @override
-  String get staffDeleteShiftConfirm =>
-      'حذف هذه الوردية؟ لا يمكن التراجع عن هذا.';
+  String get staffDeleteShiftConfirm => 'حذف هذه الوردية؟ لا يمكن التراجع عن هذا.';
 
   @override
   String get staffShiftsTab => 'الورديات';
@@ -3088,8 +3060,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffDeleteTemplate => 'حذف القالب';
 
   @override
-  String get staffDeleteTemplateConfirm =>
-      'حذف هذا القالب؟ لا يمكن التراجع عن هذا.';
+  String get staffDeleteTemplateConfirm => 'حذف هذا القالب؟ لا يمكن التراجع عن هذا.';
 
   @override
   String get staffTemplateCreated => 'تم إنشاء القالب';
@@ -3295,8 +3266,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get subscriptionCancelConfirmTitle => 'إلغاء الاشتراك؟';
 
   @override
-  String get subscriptionCancelConfirmMessage =>
-      'هل أنت متأكد من إلغاء الاشتراك؟ قد تفقد الوصول إلى الميزات المتقدمة.';
+  String get subscriptionCancelConfirmMessage => 'هل أنت متأكد من إلغاء الاشتراك؟ قد تفقد الوصول إلى الميزات المتقدمة.';
 
   @override
   String get subscriptionCancelReasonLabel => 'السبب (اختياري)';
@@ -3349,11 +3319,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String subscriptionSubscribeConfirm(
-    String planName,
-    String billingCycle,
-    String price,
-  ) {
+  String subscriptionSubscribeConfirm(String planName, String billingCycle, String price) {
     return 'سيتم اشتراكك في $planName على أساس $billingCycle.\n\nالسعر: $price /$billingCycle';
   }
 
@@ -3397,15 +3363,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get subscriptionGracePeriodEndsToday =>
-      'تنتهي فترة السماح اليوم. جدد فوراً.';
+  String get subscriptionGracePeriodEndsToday => 'تنتهي فترة السماح اليوم. جدد فوراً.';
 
   @override
   String get subscriptionExpired => 'انتهى الاشتراك';
 
   @override
-  String get subscriptionExpiredMessage =>
-      'انتهى اشتراكك. جدد الآن لاستعادة الوصول.';
+  String get subscriptionExpiredMessage => 'انتهى اشتراكك. جدد الآن لاستعادة الوصول.';
 
   @override
   String get subscriptionRenewNow => 'جدد الآن';
@@ -3564,8 +3528,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get subscriptionFeatureGated => 'الميزة غير متاحة';
 
   @override
-  String get subscriptionFeatureGatedMessage =>
-      'هذه الميزة تتطلب باقة أعلى. قم بالترقية للوصول إليها.';
+  String get subscriptionFeatureGatedMessage => 'هذه الميزة تتطلب باقة أعلى. قم بالترقية للوصول إليها.';
 
   @override
   String get subscriptionLimitReached => 'تم الوصول للحد';
@@ -3587,8 +3550,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get subscriptionSyncFailed => 'فشل مزامنة بيانات الاشتراك';
 
   @override
-  String get subscriptionEntitlementsCached =>
-      'يتم استخدام بيانات الاشتراك المحفوظة';
+  String get subscriptionEntitlementsCached => 'يتم استخدام بيانات الاشتراك المحفوظة';
 
   @override
   String get reportsInventory => 'تقارير المخزون';
@@ -3651,8 +3613,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffUnlinkTitle => 'إلغاء ربط حساب المستخدم';
 
   @override
-  String get staffUnlinkConfirm =>
-      'هل أنت متأكد من إلغاء ربط حساب المستخدم بهذا الموظف؟';
+  String get staffUnlinkConfirm => 'هل أنت متأكد من إلغاء ربط حساب المستخدم بهذا الموظف؟';
 
   @override
   String get staffLinkSuccess => 'تم ربط حساب المستخدم بنجاح';
@@ -3661,8 +3622,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffUnlinkSuccess => 'تم إلغاء ربط حساب المستخدم بنجاح';
 
   @override
-  String get staffLinkNone =>
-      'لا يوجد حساب مستخدم مرتبط. قم بربط حساب مستخدم للسماح لهذا الموظف بتسجيل الدخول.';
+  String get staffLinkNone => 'لا يوجد حساب مستخدم مرتبط. قم بربط حساب مستخدم للسماح لهذا الموظف بتسجيل الدخول.';
 
   @override
   String get staffLinkNoUsers => 'لا يوجد مستخدمون متاحون للربط';
@@ -3689,8 +3649,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get layoutNoTemplates => 'لا توجد قوالب تخطيط';
 
   @override
-  String get layoutNoTemplatesSubtitle =>
-      'أنشئ قالب تخطيط للبدء أو تصفح السوق.';
+  String get layoutNoTemplatesSubtitle => 'أنشئ قالب تخطيط للبدء أو تصفح السوق.';
 
   @override
   String get layoutDefault => 'افتراضي';
@@ -3959,8 +3918,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelNoHistory => 'لا يوجد سجل طباعة';
 
   @override
-  String get labelNoHistorySubtitle =>
-      'سيظهر سجل الطباعة هنا بعد طباعة الملصقات';
+  String get labelNoHistorySubtitle => 'سيظهر سجل الطباعة هنا بعد طباعة الملصقات';
 
   @override
   String get marketplaceTitle => 'سوق القوالب';
@@ -4047,8 +4005,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get marketplacePurchaseConfirm => 'تأكيد الشراء';
 
   @override
-  String get marketplacePurchaseFreeConfirm =>
-      'هل تريد إضافة هذا القالب المجاني؟';
+  String get marketplacePurchaseFreeConfirm => 'هل تريد إضافة هذا القالب المجاني؟';
 
   @override
   String get marketplacePurchaseChargeConfirm => 'سيتم خصم';
@@ -4072,8 +4029,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get marketplaceNoInvoices => 'لا توجد فواتير';
 
   @override
-  String get marketplaceNoInvoicesSubtitle =>
-      'ستظهر الفواتير عند إجراء عملية شراء.';
+  String get marketplaceNoInvoicesSubtitle => 'ستظهر الفواتير عند إجراء عملية شراء.';
 
   @override
   String get marketplaceTemplateName => 'اسم القالب';
@@ -4106,8 +4062,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get marketplaceCancelPurchase => 'إلغاء الشراء';
 
   @override
-  String get marketplaceCancelConfirm =>
-      'هل أنت متأكد من إلغاء هذه العملية الشرائية؟';
+  String get marketplaceCancelConfirm => 'هل أنت متأكد من إلغاء هذه العملية الشرائية؟';
 
   @override
   String get marketplacePurchaseId => 'الشراء';
@@ -4440,8 +4395,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get confirmReconciliationTitle => 'تأكيد التسوية';
 
   @override
-  String get confirmReconciliationMessage =>
-      'سيتم إنهاء التسوية لهذا اليوم. سيتم تمييز جميع جلسات النقد على أنها تمت تسويتها.';
+  String get confirmReconciliationMessage => 'سيتم إنهاء التسوية لهذا اليوم. سيتم تمييز جميع جلسات النقد على أنها تمت تسويتها.';
 
   @override
   String get reconciliationConfirmed => 'تم تأكيد التسوية';
@@ -4528,8 +4482,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentBankTransfer => 'تحويل بنكي';
 
   @override
-  String get offlineChangesSynced =>
-      'غير متصل — سيتم مزامنة التغييرات عند الاتصال';
+  String get offlineChangesSynced => 'غير متصل — سيتم مزامنة التغييرات عند الاتصال';
 
   @override
   String get syncing => 'جاري المزامنة...';
@@ -4584,8 +4537,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get checkingConnectivity => 'جاري فحص الاتصال...';
 
   @override
-  String get noInternetPrompt =>
-      'لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مرة أخرى.';
+  String get noInternetPrompt => 'لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مرة أخرى.';
 
   @override
   String get downloadingData => 'جاري تحميل البيانات...';
@@ -4617,8 +4569,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminTerminals => 'إدارة — الأجهزة';
 
   @override
-  String get adminTerminalsSubtitle =>
-      'إدارة جميع أجهزة نقاط البيع وإعدادات SoftPOS';
+  String get adminTerminalsSubtitle => 'إدارة جميع أجهزة نقاط البيع وإعدادات SoftPOS';
 
   @override
   String get addTerminal => 'إضافة جهاز';
@@ -4702,8 +4653,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get softposDeactivated => 'تم إلغاء تفعيل SoftPOS.';
 
   @override
-  String get softposActivationFailed =>
-      'فشل التفعيل. تأكد من إعداد TID والمعالج.';
+  String get softposActivationFailed => 'فشل التفعيل. تأكد من إعداد TID والمعالج.';
 
   @override
   String get softposActive => 'SoftPOS نشط';
@@ -4847,8 +4797,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posSelectRegister => 'اختر السجل';
 
   @override
-  String get posNoRegisters =>
-      'لم يتم العثور على صناديق. يرجى إضافة واحد أولاً.';
+  String get posNoRegisters => 'لم يتم العثور على صناديق. يرجى إضافة واحد أولاً.';
 
   @override
   String get posCountOpeningCash => 'عدّ النقد الافتتاحي للبدء';
@@ -4997,8 +4946,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posTotalWithTip => 'الإجمالي مع البقشيش';
 
   @override
-  String get posPaymentTotalInsufficient =>
-      'إجمالي المدفوعات لا يغطي المبلغ المطلوب';
+  String get posPaymentTotalInsufficient => 'إجمالي المدفوعات لا يغطي المبلغ المطلوب';
 
   @override
   String posReturnQtyExceedsOriginal(String product, String max) {
@@ -5250,8 +5198,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posPleaseSelectRegister => 'الرجاء اختيار سجل';
 
   @override
-  String get posNoRegistersFound =>
-      'لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.';
+  String get posNoRegistersFound => 'لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.';
 
   @override
   String posChangeGiven(Object amount) {
@@ -5295,8 +5242,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posOpenPosSession => 'فتح جلسة نقاط البيع';
 
   @override
-  String get posOpenPosSessionSubtitle =>
-      'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
+  String get posOpenPosSessionSubtitle => 'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
 
   @override
   String get posOpeningCashLabel => 'النقد الافتتاحي';
@@ -5311,8 +5257,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posCloseSession => 'إغلاق الجلسة';
 
   @override
-  String get posCloseSessionSubtitle =>
-      'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
+  String get posCloseSessionSubtitle => 'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
 
   @override
   String get posSessionClosed => 'تم إغلاق الجلسة.';
@@ -5354,8 +5299,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posNoSessionsFound => 'لم يتم العثور على جلسات';
 
   @override
-  String get posOpenSessionSubtitle =>
-      'افتح جلسة نقاط البيع لبدء معالجة المعاملات.';
+  String get posOpenSessionSubtitle => 'افتح جلسة نقاط البيع لبدء معالجة المعاملات.';
 
   @override
   String get posEditTerminal => 'تعديل الجهاز';
@@ -5548,8 +5492,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posNoActiveCashSession => 'لا توجد جلسة نقدية نشطة';
 
   @override
-  String get posOpenCashSessionDescription =>
-      'افتح جلسة لبدء قبول المدفوعات النقدية';
+  String get posOpenCashSessionDescription => 'افتح جلسة لبدء قبول المدفوعات النقدية';
 
   @override
   String get posOpenCashSession => 'فتح جلسة نقدية';
@@ -5649,16 +5592,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pinLoginEnterPin => 'أدخل الرقم السري';
 
   @override
-  String get pinLoginSubtitle =>
-      'تبديل سريع — أدخل رقمك السري المكون من 4 أرقام';
+  String get pinLoginSubtitle => 'تبديل سريع — أدخل رقمك السري المكون من 4 أرقام';
 
   @override
-  String get pinLoginNoStoreSession =>
-      'لم يتم العثور على جلسة متجر. الرجاء تسجيل الدخول بالبريد الإلكتروني.';
+  String get pinLoginNoStoreSession => 'لم يتم العثور على جلسة متجر. الرجاء تسجيل الدخول بالبريد الإلكتروني.';
 
   @override
-  String get pinLoginSignInWithEmail =>
-      'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
+  String get pinLoginSignInWithEmail => 'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
 
   @override
   String securityError(String message) {
@@ -5698,12 +5638,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stockMaxLevelHint => 'مثال: 100';
 
   @override
-  String get stockNoLowStockProducts =>
-      'لا توجد منتجات أقل من نقطة إعادة الطلب.';
+  String get stockNoLowStockProducts => 'لا توجد منتجات أقل من نقطة إعادة الطلب.';
 
   @override
-  String get stockLevelsEmptySubtitle =>
-      'ستظهر مستويات المخزون بمجرد استلام المنتجات.';
+  String get stockLevelsEmptySubtitle => 'ستظهر مستويات المخزون بمجرد استلام المنتجات.';
 
   @override
   String get stockAdjustReasonDamaged => 'تالف';
@@ -5730,12 +5668,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stockAdjustReasonOther => 'أخرى';
 
   @override
-  String get stockTransferApproveConfirm =>
-      'هل تريد الموافقة على هذا التحويل؟ سيتم خصم المخزون من المتجر المصدر.';
+  String get stockTransferApproveConfirm => 'هل تريد الموافقة على هذا التحويل؟ سيتم خصم المخزون من المتجر المصدر.';
 
   @override
-  String get stockTransferReceiveConfirm =>
-      'هل تريد تأكيد استلام هذا التحويل؟ سيتم إضافة المخزون إلى المتجر الوجهة.';
+  String get stockTransferReceiveConfirm => 'هل تريد تأكيد استلام هذا التحويل؟ سيتم إضافة المخزون إلى المتجر الوجهة.';
 
   @override
   String get stockTransferCancelConfirm => 'هل تريد إلغاء هذا التحويل؟';
@@ -5879,8 +5815,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cashMgmtNoActiveSession => 'لا توجد جلسة نشطة';
 
   @override
-  String get cashMgmtNoActiveSessionSubtitle =>
-      'افتح جلسة نقدية لبدء معالجة المعاملات';
+  String get cashMgmtNoActiveSessionSubtitle => 'افتح جلسة نقدية لبدء معالجة المعاملات';
 
   @override
   String get cashMgmtNoSessions => 'لا توجد جلسات';
@@ -6089,8 +6024,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryGoodsReceipts => 'إيصالات الاستلام';
 
   @override
-  String get inventoryGoodsReceiptsSubtitle =>
-      'استلام والتحقق من شحنات المخزون الواردة';
+  String get inventoryGoodsReceiptsSubtitle => 'استلام والتحقق من شحنات المخزون الواردة';
 
   @override
   String get inventoryIncrease => 'زيادة';
@@ -6149,8 +6083,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryNoGoodsReceipts => 'لا توجد إيصالات استلام';
 
   @override
-  String get inventoryNoGoodsReceiptsHint =>
-      'أنشئ إيصال استلام لتتبع المخزون الوارد.';
+  String get inventoryNoGoodsReceiptsHint => 'أنشئ إيصال استلام لتتبع المخزون الوارد.';
 
   @override
   String get inventoryNoMovements => 'لا توجد حركات';
@@ -6204,8 +6137,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryPurchaseOrders => 'أوامر الشراء';
 
   @override
-  String get inventoryPurchaseOrdersSubtitle =>
-      'إنشاء وإدارة أوامر شراء الموردين';
+  String get inventoryPurchaseOrdersSubtitle => 'إنشاء وإدارة أوامر شراء الموردين';
 
   @override
   String get inventoryQuantity => 'الكمية';
@@ -6289,22 +6221,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryStockLevels => 'مستويات المخزون';
 
   @override
-  String get inventoryStockLevelsSubtitle =>
-      'مراقبة المخزون الحالي لجميع المنتجات';
+  String get inventoryStockLevelsSubtitle => 'مراقبة المخزون الحالي لجميع المنتجات';
 
   @override
   String get inventoryStockMovements => 'حركات المخزون';
 
   @override
-  String get inventoryStockMovementsSubtitle =>
-      'تتبع جميع حركات المخزون الواردة والصادرة';
+  String get inventoryStockMovementsSubtitle => 'تتبع جميع حركات المخزون الواردة والصادرة';
 
   @override
   String get inventoryStockTransfers => 'عمليات نقل المخزون';
 
   @override
-  String get inventoryStockTransfersSubtitle =>
-      'نقل المخزون بين المتاجر أو المستودعات';
+  String get inventoryStockTransfersSubtitle => 'نقل المخزون بين المتاجر أو المستودعات';
 
   @override
   String get inventorySupplier => 'المورد';
@@ -6346,8 +6275,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsInventoryAlerts => 'تنبيهات المخزون';
 
   @override
-  String get notificationsInventoryAlertsSubtitle =>
-      'إشعارات انخفاض المخزون وإعادة الطلب';
+  String get notificationsInventoryAlertsSubtitle => 'إشعارات انخفاض المخزون وإعادة الطلب';
 
   @override
   String get notificationsMarkAllAsRead => 'تعليم الكل كمقروء';
@@ -6365,8 +6293,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsOrderUpdates => 'تحديثات الطلبات';
 
   @override
-  String get notificationsOrderUpdatesSubtitle =>
-      'استلام تنبيهات للطلبات الجديدة وتغييرات الحالة';
+  String get notificationsOrderUpdatesSubtitle => 'استلام تنبيهات للطلبات الجديدة وتغييرات الحالة';
 
   @override
   String get notificationsPreferences => 'تفضيلات الإشعارات';
@@ -6375,8 +6302,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsPromotions => 'العروض';
 
   @override
-  String get notificationsPromotionsSubtitle =>
-      'تنبيهات نشاط العروض واستخدام القسائم';
+  String get notificationsPromotionsSubtitle => 'تنبيهات نشاط العروض واستخدام القسائم';
 
   @override
   String get notificationsPush => 'إشعارات فورية';
@@ -6388,8 +6314,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsQuietHours => 'أوقات الهدوء';
 
   @override
-  String get notificationsQuietHoursSubtitle =>
-      'إيقاف الإشعارات خلال هذه الساعات';
+  String get notificationsQuietHoursSubtitle => 'إيقاف الإشعارات خلال هذه الساعات';
 
   @override
   String get notificationsQuietStart => 'البداية';
@@ -6401,8 +6326,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsSystemUpdates => 'تحديثات النظام';
 
   @override
-  String get notificationsSystemUpdatesSubtitle =>
-      'تحديثات التطبيق وإشعارات الصيانة';
+  String get notificationsSystemUpdatesSubtitle => 'تحديثات التطبيق وإشعارات الصيانة';
 
   @override
   String get notificationsTitle => 'الإشعارات';
@@ -6442,15 +6366,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsSoundEnabled => 'تفعيل الصوت';
 
   @override
-  String get notificationsSoundEnabledSubtitle =>
-      'تشغيل أصوات للإشعارات الواردة';
+  String get notificationsSoundEnabledSubtitle => 'تشغيل أصوات للإشعارات الواردة';
 
   @override
   String get notificationsEmailDigest => 'ملخص البريد';
 
   @override
-  String get notificationsEmailDigestSubtitle =>
-      'استلم ملخص الإشعارات عبر البريد الإلكتروني';
+  String get notificationsEmailDigestSubtitle => 'استلم ملخص الإشعارات عبر البريد الإلكتروني';
 
   @override
   String get notificationsDigestNone => 'بلا';
@@ -6599,8 +6521,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifPrefPaymentAlerts => 'تنبيهات الدفع';
 
   @override
-  String get notifPrefPaymentAlertsSubtitle =>
-      'إشعارات تأكيد الدفع والمبالغ المستردة';
+  String get notifPrefPaymentAlertsSubtitle => 'إشعارات تأكيد الدفع والمبالغ المستردة';
 
   @override
   String get notifPrefStaffEvents => 'أحداث الموظفين';
@@ -6636,8 +6557,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifScheduleCancelConfirmTitle => 'إلغاء الجدولة';
 
   @override
-  String get notifScheduleCancelConfirmMessage =>
-      'هل أنت متأكد من إلغاء هذا الإشعار المجدول؟';
+  String get notifScheduleCancelConfirmMessage => 'هل أنت متأكد من إلغاء هذا الإشعار المجدول؟';
 
   @override
   String get notifScheduleType => 'نوع الجدولة';
@@ -6751,8 +6671,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get posEnterReceiptNumberHint =>
-      'أدخل رقم الإيصال للعثور على المعاملة';
+  String get posEnterReceiptNumberHint => 'أدخل رقم الإيصال للعثور على المعاملة';
 
   @override
   String get posHeldCartFallback => 'سلة محتفظة';
@@ -6980,8 +6899,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get securitySessionMaxHours => 'الحد الأقصى لساعات الجلسة';
 
   @override
-  String get securityForceLogoutOnRoleChange =>
-      'تسجيل خروج إجباري عند تغيير الدور';
+  String get securityForceLogoutOnRoleChange => 'تسجيل خروج إجباري عند تغيير الدور';
 
   @override
   String get securityPinOverrideVoid => 'تجاوز الرقم السري: إلغاء';
@@ -7050,8 +6968,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get securityPinOverrideTitle => 'مطلوب تفويض المدير';
 
   @override
-  String get securityManagerAuthorization =>
-      'أدخل رمز PIN للمدير للموافقة على هذا الإجراء.';
+  String get securityManagerAuthorization => 'أدخل رمز PIN للمدير للموافقة على هذا الإجراء.';
 
   @override
   String get securityEnterPin => 'أدخل رمز PIN';
@@ -7060,12 +6977,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get securityPinOverrideError => 'فشل التفويض. يرجى المحاولة مرة أخرى.';
 
   @override
-  String get securityPinOverrideInvalidPin =>
-      'رمز PIN غير صحيح. يرجى المحاولة مرة أخرى.';
+  String get securityPinOverrideInvalidPin => 'رمز PIN غير صحيح. يرجى المحاولة مرة أخرى.';
 
   @override
-  String get securityPinOverrideLockout =>
-      'محاولات كثيرة جداً. يرجى الانتظار قبل المحاولة مرة أخرى.';
+  String get securityPinOverrideLockout => 'محاولات كثيرة جداً. يرجى الانتظار قبل المحاولة مرة أخرى.';
 
   @override
   String get securityPolicyUpdated => 'تم تحديث سياسة الأمان بنجاح.';
@@ -7140,8 +7055,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sessionsCloseSession => 'إغلاق الجلسة';
 
   @override
-  String get sessionsCloseSessionDescription =>
-      'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
+  String get sessionsCloseSessionDescription => 'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
 
   @override
   String get sessionsClosingCash => 'النقد الختامي';
@@ -7177,8 +7091,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sessionsNoSessions => 'لم يتم العثور على جلسات';
 
   @override
-  String get sessionsNoSessionsSubtitle =>
-      'افتح جلسة نقاط بيع لبدء معالجة المعاملات.';
+  String get sessionsNoSessionsSubtitle => 'افتح جلسة نقاط بيع لبدء معالجة المعاملات.';
 
   @override
   String get sessionsOpenPosSession => 'فتح جلسة نقاط بيع';
@@ -7187,8 +7100,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sessionsOpenSession => 'فتح الجلسة';
 
   @override
-  String get sessionsOpenSessionDescription =>
-      'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
+  String get sessionsOpenSessionDescription => 'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
 
   @override
   String get sessionsOpeningCash => 'النقد الافتتاحي';
@@ -7895,8 +7807,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get finReconConfirmRecon => 'تأكيد التسوية';
 
   @override
-  String get finReconConfirmMessage =>
-      'سيتم إنهاء التسوية لهذا اليوم. سيتم تحديد جميع جلسات النقدية كمُسوّاة.';
+  String get finReconConfirmMessage => 'سيتم إنهاء التسوية لهذا اليوم. سيتم تحديد جميع جلسات النقدية كمُسوّاة.';
 
   @override
   String get finReconConfirmed => 'تم تأكيد التسوية';
@@ -7920,8 +7831,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get receiptTemplatesEmpty => 'لا توجد قوالب إيصالات';
 
   @override
-  String get receiptTemplatesEmptySubtitle =>
-      'لا توجد قوالب تخطيط إيصالات متاحة لخطتك.';
+  String get receiptTemplatesEmptySubtitle => 'لا توجد قوالب تخطيط إيصالات متاحة لخطتك.';
 
   @override
   String get receiptTemplateDetail => 'تفاصيل قالب الإيصال';
@@ -7957,8 +7867,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cfdThemesEmpty => 'لا توجد سمات';
 
   @override
-  String get cfdThemesEmptySubtitle =>
-      'لا توجد سمات شاشة عرض العميل متاحة لخطتك.';
+  String get cfdThemesEmptySubtitle => 'لا توجد سمات شاشة عرض العميل متاحة لخطتك.';
 
   @override
   String get cfdThemeDetail => 'تفاصيل سمة شاشة العميل';
@@ -8033,8 +7942,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelLayoutTemplatesEmpty => 'لا توجد قوالب ملصقات';
 
   @override
-  String get labelLayoutTemplatesEmptySubtitle =>
-      'ستظهر قوالب تخطيط الملصقات هنا بمجرد إنشائها بواسطة المسؤول';
+  String get labelLayoutTemplatesEmptySubtitle => 'ستظهر قوالب تخطيط الملصقات هنا بمجرد إنشائها بواسطة المسؤول';
 
   @override
   String get labelLayoutTemplateDetail => 'تفاصيل قالب الملصق';
@@ -8278,8 +8186,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get supplierReturnNoReturns => 'لا توجد مرتجعات';
 
   @override
-  String get supplierReturnNoReturnsHint =>
-      'أنشئ مرتجع لإرسال منتجات إلى المورد.';
+  String get supplierReturnNoReturnsHint => 'أنشئ مرتجع لإرسال منتجات إلى المورد.';
 
   @override
   String get supplierReturnNoItems => 'لا توجد أصناف في هذا المرتجع';
@@ -8556,8 +8463,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get receivablesNoReceivables => 'لا توجد مستحقات';
 
   @override
-  String get receivablesNoReceivablesSubtitle =>
-      'ستظهر المستحقات هنا بمجرد إنشائها.';
+  String get receivablesNoReceivablesSubtitle => 'ستظهر المستحقات هنا بمجرد إنشائها.';
 
   @override
   String get receivablesSearchHint => 'بحث بالمرجع، العميل، الوصف...';
@@ -9090,8 +8996,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get txNoTransactions => 'لا توجد معاملات';
 
   @override
-  String get txNoTransactionsSubtitle =>
-      'عدّل الفلاتر أو نطاق التاريخ للعثور على المعاملات';
+  String get txNoTransactionsSubtitle => 'عدّل الفلاتر أو نطاق التاريخ للعثور على المعاملات';
 
   @override
   String get txStatsTotalSales => 'إجمالي المبيعات';
@@ -9208,8 +9113,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get txVoidConfirmTitle => 'إلغاء المعاملة';
 
   @override
-  String get txVoidConfirmMessage =>
-      'هل أنت متأكد من إلغاء هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.';
+  String get txVoidConfirmMessage => 'هل أنت متأكد من إلغاء هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get txVoidAction => 'إلغاء';
@@ -9326,8 +9230,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noInstallmentProvidersAvailable => 'لا يوجد مزودو تقسيط متاحون';
 
   @override
-  String get noInstallmentProvidersForAmount =>
-      'لا يوجد مزودو تقسيط متاحون لهذا المبلغ';
+  String get noInstallmentProvidersForAmount => 'لا يوجد مزودو تقسيط متاحون لهذا المبلغ';
 
   @override
   String get selectInstallmentProvider => 'اختر مزود التقسيط';
@@ -9336,8 +9239,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payWithInstallments => 'الدفع بالتقسيط';
 
   @override
-  String get installmentCredentialsNote =>
-      'يتم تشفير بيانات الاعتماد وتخزينها بشكل آمن';
+  String get installmentCredentialsNote => 'يتم تشفير بيانات الاعتماد وتخزينها بشكل آمن';
 
   @override
   String get months => 'أشهر';
@@ -9394,8 +9296,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get endMaintenance => 'إنهاء الصيانة';
 
   @override
-  String get endMaintenanceConfirm =>
-      'سيكون المزود متاحاً مرة أخرى. هل تريد المتابعة؟';
+  String get endMaintenanceConfirm => 'سيكون المزود متاحاً مرة أخرى. هل تريد المتابعة؟';
 
   @override
   String get maintenanceMessage => 'رسالة الصيانة (EN)';
@@ -9597,8 +9498,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAINoSuggestions => 'لا توجد اقتراحات بعد';
 
   @override
-  String get wameedAINoSuggestionsSubtitle =>
-      'ستظهر اقتراحات AI هنا عند إنشائها';
+  String get wameedAINoSuggestionsSubtitle => 'ستظهر اقتراحات AI هنا عند إنشائها';
 
   @override
   String get wameedAISuggestionBody => 'التفاصيل';
@@ -9676,8 +9576,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAIExpiringProducts => 'المنتجات قاربت على الانتهاء';
 
   @override
-  String get wameedAINoExpiringProducts =>
-      'لم يتم العثور على منتجات منتهية الصلاحية';
+  String get wameedAINoExpiringProducts => 'لم يتم العثور على منتجات منتهية الصلاحية';
 
   @override
   String get wameedAIExpiringToday => 'تنتهي اليوم';
@@ -9749,8 +9648,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAIGallery => 'المعرض';
 
   @override
-  String get wameedAIUploadInvoicePrompt =>
-      'التقط صورة أو اختر صورة فاتورة لاستخراج البيانات';
+  String get wameedAIUploadInvoicePrompt => 'التقط صورة أو اختر صورة فاتورة لاستخراج البيانات';
 
   @override
   String get wameedAIExtractData => 'استخراج بيانات الفاتورة';
@@ -9768,8 +9666,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAIProcessingInvoice => 'جاري تحليل الفاتورة...';
 
   @override
-  String get wameedAIOCRProcessingHint =>
-      'يقوم الذكاء الاصطناعي بقراءة واستخراج البيانات من فاتورتك. قد يستغرق ذلك بضع ثوانٍ.';
+  String get wameedAIOCRProcessingHint => 'يقوم الذكاء الاصطناعي بقراءة واستخراج البيانات من فاتورتك. قد يستغرق ذلك بضع ثوانٍ.';
 
   @override
   String get wameedAICameraTakePhoto => 'التقط صورة للفاتورة';
@@ -9946,8 +9843,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAIAssistant => 'مساعد وميض الذكي';
 
   @override
-  String get wameedAIWelcomeSubtitle =>
-      'اسأل أي شيء عن عملك — المبيعات والمخزون والعملاء والمزيد.';
+  String get wameedAIWelcomeSubtitle => 'اسأل أي شيء عن عملك — المبيعات والمخزون والعملاء والمزيد.';
 
   @override
   String get wameedAIMenu => 'القائمة';
@@ -9959,19 +9855,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAIFiles => 'الملفات';
 
   @override
-  String get wameedAIBrowseCapabilities =>
-      'استعرض جميع إمكانيات الذكاء الاصطناعي';
+  String get wameedAIBrowseCapabilities => 'استعرض جميع إمكانيات الذكاء الاصطناعي';
 
   @override
   String get wameedAITodaySummary => 'ملخص اليوم';
 
   @override
-  String get wameedAITodaySummarySubtitle =>
-      'الإيرادات وأفضل المنتجات والاتجاهات';
+  String get wameedAITodaySummarySubtitle => 'الإيرادات وأفضل المنتجات والاتجاهات';
 
   @override
-  String get wameedAISmartReorderSubtitle =>
-      'قائمة شراء مقترحة بالذكاء الاصطناعي';
+  String get wameedAISmartReorderSubtitle => 'قائمة شراء مقترحة بالذكاء الاصطناعي';
 
   @override
   String get wameedAICustomerSegmentsSubtitle => 'تجميع العملاء حسب السلوك';
@@ -9983,23 +9876,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAISuggTodaySalesTitle => 'ملخص مبيعات اليوم';
 
   @override
-  String get wameedAISuggTodaySalesSubtitle =>
-      'عرض الإيرادات وأفضل المنتجات والاتجاهات';
+  String get wameedAISuggTodaySalesSubtitle => 'عرض الإيرادات وأفضل المنتجات والاتجاهات';
 
   @override
-  String get wameedAISuggTodaySalesPrompt =>
-      'اعرض ملخص مبيعات اليوم مع أفضل المنتجات والاتجاهات';
+  String get wameedAISuggTodaySalesPrompt => 'اعرض ملخص مبيعات اليوم مع أفضل المنتجات والاتجاهات';
 
   @override
   String get wameedAISuggReorderTitle => 'اقترح إعادة طلب';
 
   @override
-  String get wameedAISuggReorderSubtitle =>
-      'للمنتجات قليلة المخزون وسريعة الحركة';
+  String get wameedAISuggReorderSubtitle => 'للمنتجات قليلة المخزون وسريعة الحركة';
 
   @override
-  String get wameedAISuggReorderPrompt =>
-      'اقترح قائمة إعادة طلب للمنتجات التي على وشك النفاد أو سريعة البيع';
+  String get wameedAISuggReorderPrompt => 'اقترح قائمة إعادة طلب للمنتجات التي على وشك النفاد أو سريعة البيع';
 
   @override
   String get wameedAISuggSlowMoversTitle => 'ابحث عن المنتجات بطيئة الحركة';
@@ -10008,8 +9897,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAISuggSlowMoversSubtitle => 'المنتجات التي لا تباع جيدًا';
 
   @override
-  String get wameedAISuggSlowMoversPrompt =>
-      'اعرض أبطأ المنتجات حركة في مخزوني هذا الشهر';
+  String get wameedAISuggSlowMoversPrompt => 'اعرض أبطأ المنتجات حركة في مخزوني هذا الشهر';
 
   @override
   String get wameedAISuggSegmentsTitle => 'شرائح العملاء';
@@ -10027,8 +9915,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wameedAINoChats => 'لا توجد محادثات بعد';
 
   @override
-  String get wameedAINoChatsSubtitle =>
-      'اضغط \"محادثة جديدة\" لبدء محادثة مع وميض الذكي';
+  String get wameedAINoChatsSubtitle => 'اضغط \"محادثة جديدة\" لبدء محادثة مع وميض الذكي';
 
   @override
   String get wameedAIMessages => 'رسائل';
@@ -10254,8 +10141,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gamificationAll => 'الكل';
 
   @override
-  String get gamificationNoAnomalies =>
-      'لم يتم اكتشاف حالات شاذة — كل شيء على ما يرام!';
+  String get gamificationNoAnomalies => 'لم يتم اكتشاف حالات شاذة — كل شيء على ما يرام!';
 
   @override
   String get gamificationNoReports => 'لم يتم إنشاء تقارير ورديات بعد.';
@@ -10270,8 +10156,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gamificationLeaderboard => 'لوحة المتصدرين';
 
   @override
-  String get gamificationLeaderboardDesc =>
-      'عرض ترتيب الصرافين في الوقت الفعلي';
+  String get gamificationLeaderboardDesc => 'عرض ترتيب الصرافين في الوقت الفعلي';
 
   @override
   String get gamificationBadgesDesc => 'منح شارات الأداء للصرافين';
@@ -10280,8 +10165,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gamificationAnomalyDetection => 'كشف الحالات الشاذة';
 
   @override
-  String get gamificationAnomalyDetectionDesc =>
-      'كشف أنماط النشاط المشبوه للصرافين';
+  String get gamificationAnomalyDetectionDesc => 'كشف أنماط النشاط المشبوه للصرافين';
 
   @override
   String get gamificationShiftReportsDesc => 'إنشاء تقارير أداء نهاية الوردية';
@@ -10290,8 +10174,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gamificationAutoGenerate => 'إنشاء تلقائي عند إغلاق الجلسة';
 
   @override
-  String get gamificationAutoGenerateDesc =>
-      'تشغيل التحليل تلقائياً عند إغلاق جلسة نقطة البيع';
+  String get gamificationAutoGenerateDesc => 'تشغيل التحليل تلقائياً عند إغلاق جلسة نقطة البيع';
 
   @override
   String get gamificationFeatureToggles => 'تبديل الميزات';
@@ -10349,8 +10232,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoProductsAddStep1Title => 'اضغط على زر إضافة منتج';
 
   @override
-  String get featureInfoProductsAddStep1Desc =>
-      'اضغط على الزر العائم (أيقونة +) أسفل الشاشة لفتح نموذج المنتج.';
+  String get featureInfoProductsAddStep1Desc => 'اضغط على الزر العائم (أيقونة +) أسفل الشاشة لفتح نموذج المنتج.';
 
   @override
   String get featureInfoProductsAddStep2Title => 'أدخل المعلومات الأساسية';
@@ -10370,8 +10252,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoProductsAddStep4Title => 'أضف الوسائط';
 
   @override
-  String get featureInfoProductsAddStep4Desc =>
-      'انتقل إلى تبويب الوسائط لإضافة رابط صورة المنتج. ستظهر معاينة مباشرة للصورة.';
+  String get featureInfoProductsAddStep4Desc => 'انتقل إلى تبويب الوسائط لإضافة رابط صورة المنتج. ستظهر معاينة مباشرة للصورة.';
 
   @override
   String get featureInfoProductsAddStep5Title => 'احفظ المنتج';
@@ -10422,16 +10303,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'سيظهر مربع حوار للتأكيد. يتم حذف المنتجات حذفاً ناعماً ويمكن استرجاعها. أكد للمتابعة.';
 
   @override
-  String get featureInfoProductsTip1 =>
-      'استخدم زر التبديل بين الشبكة/القائمة (سطح المكتب) للتبديل بين عرض الجدول والبطاقات.';
+  String get featureInfoProductsTip1 => 'استخدم زر التبديل بين الشبكة/القائمة (سطح المكتب) للتبديل بين عرض الجدول والبطاقات.';
 
   @override
-  String get featureInfoProductsTip2 =>
-      'يمكنك تكرار المنتجات باستخدام إجراء \'تكرار\' لإنشاء عناصر مماثلة بسرعة.';
+  String get featureInfoProductsTip2 => 'يمكنك تكرار المنتجات باستخدام إجراء \'تكرار\' لإنشاء عناصر مماثلة بسرعة.';
 
   @override
-  String get featureInfoProductsTip3 =>
-      'الإجراءات الجماعية (تفعيل، إلغاء التفعيل، حذف) متاحة عند تحديد منتجات متعددة.';
+  String get featureInfoProductsTip3 => 'الإجراءات الجماعية (تفعيل، إلغاء التفعيل، حذف) متاحة عند تحديد منتجات متعددة.';
 
   @override
   String get featureInfoCategoriesTitle => 'إدارة الفئات';
@@ -10447,8 +10325,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCategoriesAddStep1Title => 'اضغط على زر فئة جديدة';
 
   @override
-  String get featureInfoCategoriesAddStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار إنشاء الفئة.';
+  String get featureInfoCategoriesAddStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار إنشاء الفئة.';
 
   @override
   String get featureInfoCategoriesAddStep2Title => 'أدخل تفاصيل الفئة';
@@ -10468,8 +10345,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCategoriesAddStep4Title => 'احفظ الفئة';
 
   @override
-  String get featureInfoCategoriesAddStep4Desc =>
-      'اضغط \'حفظ\' لإنشاء الفئة. ستظهر في الشجرة تحت الفئة الأم.';
+  String get featureInfoCategoriesAddStep4Desc => 'اضغط \'حفظ\' لإنشاء الفئة. ستظهر في الشجرة تحت الفئة الأم.';
 
   @override
   String get featureInfoCategoriesEditTitle => 'تعديل فئة';
@@ -10506,12 +10382,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'راجع التحذير بشأن الفئات الفرعية وأكد. قد يتم إعادة تعيين أو حذف الفئات الفرعية حسب الإعدادات.';
 
   @override
-  String get featureInfoCategoriesTip1 =>
-      'استخدم أزرار \'توسيع الكل\' و\'طي الكل\' في شريط التطبيق للتنقل بسرعة في شجرة الفئات.';
+  String get featureInfoCategoriesTip1 => 'استخدم أزرار \'توسيع الكل\' و\'طي الكل\' في شريط التطبيق للتنقل بسرعة في شجرة الفئات.';
 
   @override
-  String get featureInfoCategoriesTip2 =>
-      'يمكنك إضافة فئات فرعية مباشرة من أي عقدة في الشجرة باستخدام إجراء \'إضافة فرعية\'.';
+  String get featureInfoCategoriesTip2 => 'يمكنك إضافة فئات فرعية مباشرة من أي عقدة في الشجرة باستخدام إجراء \'إضافة فرعية\'.';
 
   @override
   String get featureInfoSuppliersTitle => 'إدارة الموردين';
@@ -10527,15 +10401,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSuppliersAddStep1Title => 'اضغط على زر مورد جديد';
 
   @override
-  String get featureInfoSuppliersAddStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار نموذج المورد.';
+  String get featureInfoSuppliersAddStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار نموذج المورد.';
 
   @override
   String get featureInfoSuppliersAddStep2Title => 'أدخل المعلومات الأساسية';
 
   @override
-  String get featureInfoSuppliersAddStep2Desc =>
-      'أدخل اسم المورد (مطلوب) وشخص الاتصال والفئة.';
+  String get featureInfoSuppliersAddStep2Desc => 'أدخل اسم المورد (مطلوب) وشخص الاتصال والفئة.';
 
   @override
   String get featureInfoSuppliersAddStep3Title => 'أضف تفاصيل الاتصال والبنك';
@@ -10548,15 +10420,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSuppliersAddStep4Title => 'احفظ المورد';
 
   @override
-  String get featureInfoSuppliersAddStep4Desc =>
-      'اضغط \'حفظ\' لإضافة المورد إلى الدليل.';
+  String get featureInfoSuppliersAddStep4Desc => 'اضغط \'حفظ\' لإضافة المورد إلى الدليل.';
 
   @override
   String get featureInfoSuppliersEditTitle => 'تعديل مورد';
 
   @override
-  String get featureInfoSuppliersEditStep1Title =>
-      'انقر على تعديل في صف المورد';
+  String get featureInfoSuppliersEditStep1Title => 'انقر على تعديل في صف المورد';
 
   @override
   String get featureInfoSuppliersEditStep1Desc =>
@@ -10566,19 +10436,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSuppliersEditStep2Title => 'حدّث واحفظ';
 
   @override
-  String get featureInfoSuppliersEditStep2Desc =>
-      'عدّل أي حقل واضغط \'حفظ\' لتحديث المورد.';
+  String get featureInfoSuppliersEditStep2Desc => 'عدّل أي حقل واضغط \'حفظ\' لتحديث المورد.';
 
   @override
   String get featureInfoSuppliersDeleteTitle => 'حذف مورد';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Title =>
-      'انقر على حذف في صف المورد';
+  String get featureInfoSuppliersDeleteStep1Title => 'انقر على حذف في صف المورد';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Desc =>
-      'ابحث عن المورد في الجدول وانقر على إجراء \'حذف\'.';
+  String get featureInfoSuppliersDeleteStep1Desc => 'ابحث عن المورد في الجدول وانقر على إجراء \'حذف\'.';
 
   @override
   String get featureInfoSuppliersDeleteStep2Title => 'أكد الحذف';
@@ -10592,8 +10459,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'اضغط على صف المورد لمشاهدة إحصائيات تفصيلية تشمل أوامر الشراء وإيصالات البضائع والمرتجعات والرصيد المستحق.';
 
   @override
-  String get featureInfoSuppliersTip2 =>
-      'استخدم شريط البحث للعثور على الموردين بسرعة بالاسم.';
+  String get featureInfoSuppliersTip2 => 'استخدم شريط البحث للعثور على الموردين بسرعة بالاسم.';
 
   @override
   String get featureInfoCustomersTitle => 'دليل العملاء';
@@ -10616,12 +10482,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCustomersViewStep2Title => 'تحقق من تفاصيل العميل';
 
   @override
-  String get featureInfoCustomersViewStep2Desc =>
-      'كل بطاقة عميل تعرض الاسم ومعلومات الاتصال ونقاط الولاء المتراكمة.';
+  String get featureInfoCustomersViewStep2Desc => 'كل بطاقة عميل تعرض الاسم ومعلومات الاتصال ونقاط الولاء المتراكمة.';
 
   @override
-  String get featureInfoCustomersTip1 =>
-      'يمكن ربط العملاء بالطلبات من شاشة أمين الصندوق أثناء الدفع باستخدام زر بحث العملاء.';
+  String get featureInfoCustomersTip1 => 'يمكن ربط العملاء بالطلبات من شاشة أمين الصندوق أثناء الدفع باستخدام زر بحث العملاء.';
 
   @override
   String get featureInfoOrdersTitle => 'إدارة الطلبات';
@@ -10644,8 +10508,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoOrdersViewStep2Title => 'ابحث برقم الطلب';
 
   @override
-  String get featureInfoOrdersViewStep2Desc =>
-      'استخدم شريط البحث للعثور على طلب محدد برقمه.';
+  String get featureInfoOrdersViewStep2Desc => 'استخدم شريط البحث للعثور على طلب محدد برقمه.';
 
   @override
   String get featureInfoOrdersViewStep3Title => 'صفّ حسب الحالة';
@@ -10661,8 +10524,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoOrdersVoidStep1Title => 'ابحث عن الطلب لإلغائه';
 
   @override
-  String get featureInfoOrdersVoidStep1Desc =>
-      'حدد الطلب في القائمة. إجراء الإلغاء متاح فقط للطلبات غير الملغاة.';
+  String get featureInfoOrdersVoidStep1Desc => 'حدد الطلب في القائمة. إجراء الإلغاء متاح فقط للطلبات غير الملغاة.';
 
   @override
   String get featureInfoOrdersVoidStep2Title => 'أكد الإلغاء';
@@ -10672,12 +10534,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'انقر على إجراء \'إلغاء\' في صف الطلب وأكد في المربع الحواري. هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get featureInfoOrdersTip1 =>
-      'استخدم أدوات التنقل بين الصفحات في الأسفل للتنقل بين الصفحات.';
+  String get featureInfoOrdersTip1 => 'استخدم أدوات التنقل بين الصفحات في الأسفل للتنقل بين الصفحات.';
 
   @override
-  String get featureInfoOrdersTip2 =>
-      'اسحب للأسفل لتحديث قائمة الطلبات على الجوال.';
+  String get featureInfoOrdersTip2 => 'اسحب للأسفل لتحديث قائمة الطلبات على الجوال.';
 
   @override
   String get featureInfoStaffTitle => 'إدارة الموظفين';
@@ -10693,16 +10553,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStaffAddStep1Title => 'اضغط على زر الإضافة';
 
   @override
-  String get featureInfoStaffAddStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الموظف.';
+  String get featureInfoStaffAddStep1Desc => 'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الموظف.';
 
   @override
-  String get featureInfoStaffAddStep2Title =>
-      'حدد الفرع وأدخل المعلومات الشخصية';
+  String get featureInfoStaffAddStep2Title => 'حدد الفرع وأدخل المعلومات الشخصية';
 
   @override
-  String get featureInfoStaffAddStep2Desc =>
-      'اختر الفرع من القائمة المنسدلة. أدخل الاسم الأول (مطلوب) والاسم الأخير (مطلوب).';
+  String get featureInfoStaffAddStep2Desc => 'اختر الفرع من القائمة المنسدلة. أدخل الاسم الأول (مطلوب) والاسم الأخير (مطلوب).';
 
   @override
   String get featureInfoStaffAddStep3Title => 'أدخل تفاصيل الاتصال والتوظيف';
@@ -10715,8 +10572,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStaffAddStep4Title => 'أعِد رمز PIN الأمني';
 
   @override
-  String get featureInfoStaffAddStep4Desc =>
-      'حدد رمز PIN من 4-6 أرقام سيستخدمه الموظف لتسجيل الدخول إلى محطة نقاط البيع.';
+  String get featureInfoStaffAddStep4Desc => 'حدد رمز PIN من 4-6 أرقام سيستخدمه الموظف لتسجيل الدخول إلى محطة نقاط البيع.';
 
   @override
   String get featureInfoStaffAddStep5Title => 'أنشئ حساب مستخدم (اختياري)';
@@ -10749,27 +10605,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStaffDeleteStep1Title => 'افتح القائمة المنبثقة للموظف';
 
   @override
-  String get featureInfoStaffDeleteStep1Desc =>
-      'ابحث عن بطاقة الموظف واضغط على أيقونة النقاط الثلاث.';
+  String get featureInfoStaffDeleteStep1Desc => 'ابحث عن بطاقة الموظف واضغط على أيقونة النقاط الثلاث.';
 
   @override
   String get featureInfoStaffDeleteStep2Title => 'اختر حذف وأكد';
 
   @override
-  String get featureInfoStaffDeleteStep2Desc =>
-      'اختر \'حذف\' من القائمة وأكد في المربع الحواري.';
+  String get featureInfoStaffDeleteStep2Desc => 'اختر \'حذف\' من القائمة وأكد في المربع الحواري.';
 
   @override
-  String get featureInfoStaffTip1 =>
-      'استخدم محدد الفرع في الأعلى لعرض الموظفين لفرع محدد.';
+  String get featureInfoStaffTip1 => 'استخدم محدد الفرع في الأعلى لعرض الموظفين لفرع محدد.';
 
   @override
-  String get featureInfoStaffTip2 =>
-      'شرائح التصفية تتيح لك التصفية السريعة حسب الحالة (نشط، غير نشط، في إجازة) أو نوع التوظيف.';
+  String get featureInfoStaffTip2 => 'شرائح التصفية تتيح لك التصفية السريعة حسب الحالة (نشط، غير نشط، في إجازة) أو نوع التوظيف.';
 
   @override
-  String get featureInfoStaffTip3 =>
-      'رمز PIN ضروري للوصول إلى محطة نقاط البيع — تأكد من أن كل موظف لديه رمز PIN فريد.';
+  String get featureInfoStaffTip3 => 'رمز PIN ضروري للوصول إلى محطة نقاط البيع — تأكد من أن كل موظف لديه رمز PIN فريد.';
 
   @override
   String get featureInfoRolesTitle => 'الأدوار والصلاحيات';
@@ -10785,8 +10636,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoRolesCreateStep1Title => 'اضغط على زر دور جديد';
 
   @override
-  String get featureInfoRolesCreateStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الدور.';
+  String get featureInfoRolesCreateStep1Desc => 'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الدور.';
 
   @override
   String get featureInfoRolesCreateStep2Title => 'أدخل اسم الدور والوصف';
@@ -10806,8 +10656,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoRolesCreateStep4Title => 'احفظ الدور';
 
   @override
-  String get featureInfoRolesCreateStep4Desc =>
-      'اضغط \'إنشاء\' في شريط التطبيق. الدور متاح الآن لتعيينه للموظفين.';
+  String get featureInfoRolesCreateStep4Desc => 'اضغط \'إنشاء\' في شريط التطبيق. الدور متاح الآن لتعيينه للموظفين.';
 
   @override
   String get featureInfoRolesDeleteTitle => 'حذف دور مخصص';
@@ -10827,8 +10676,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'اضغط على أيقونة الحذف وأكد. تأكد من عدم وجود موظفين معيّنين لهذا الدور قبل الحذف.';
 
   @override
-  String get featureInfoRolesTip1 =>
-      'بعض الصلاحيات مميزة بـ \'يتطلب تجاوز PIN\' — هذه تحتاج تحقق إضافي في نقاط البيع.';
+  String get featureInfoRolesTip1 => 'بعض الصلاحيات مميزة بـ \'يتطلب تجاوز PIN\' — هذه تحتاج تحقق إضافي في نقاط البيع.';
 
   @override
   String get featureInfoRolesTip2 =>
@@ -10859,12 +10707,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'كل وحدة تحتوي على زر معلومات (ℹ) خاص بها مع تعليمات مفصلة لتلك الميزة المحددة.';
 
   @override
-  String get featureInfoInventoryTip1 =>
-      'مستويات المخزون تعرض الكميات الحالية وحالة إعادة الطلب بنظرة واحدة.';
+  String get featureInfoInventoryTip1 => 'مستويات المخزون تعرض الكميات الحالية وحالة إعادة الطلب بنظرة واحدة.';
 
   @override
-  String get featureInfoInventoryTip2 =>
-      'حركات المخزون للقراءة فقط — تسجل تلقائياً جميع تغييرات المخزون عبر النظام.';
+  String get featureInfoInventoryTip2 => 'حركات المخزون للقراءة فقط — تسجل تلقائياً جميع تغييرات المخزون عبر النظام.';
 
   @override
   String get featureInfoStockAdjTitle => 'تعديلات المخزون';
@@ -10880,8 +10726,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStockAdjCreateStep1Title => 'اضغط على زر تعديل جديد';
 
   @override
-  String get featureInfoStockAdjCreateStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار التعديل.';
+  String get featureInfoStockAdjCreateStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار التعديل.';
 
   @override
   String get featureInfoStockAdjCreateStep2Title => 'حدد نوع التعديل';
@@ -10908,16 +10753,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStockAdjCreateStep5Title => 'أرسل التعديل';
 
   @override
-  String get featureInfoStockAdjCreateStep5Desc =>
-      'اضغط \'إنشاء\' لتسجيل التعديل. سيتم تحديث مستوى المخزون فوراً.';
+  String get featureInfoStockAdjCreateStep5Desc => 'اضغط \'إنشاء\' لتسجيل التعديل. سيتم تحديث مستوى المخزون فوراً.';
 
   @override
-  String get featureInfoStockAdjTip1 =>
-      'اختر دائماً السبب الصحيح — يساعد في إعداد التقارير ومسارات التدقيق.';
+  String get featureInfoStockAdjTip1 => 'اختر دائماً السبب الصحيح — يساعد في إعداد التقارير ومسارات التدقيق.';
 
   @override
-  String get featureInfoStockAdjTip2 =>
-      'استخدم \'تصحيح\' عند إصلاح فروق العد المكتشفة أثناء الجرد الفعلي.';
+  String get featureInfoStockAdjTip2 => 'استخدم \'تصحيح\' عند إصلاح فروق العد المكتشفة أثناء الجرد الفعلي.';
 
   @override
   String get featureInfoPOTitle => 'أوامر الشراء';
@@ -10933,29 +10775,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPOCreateStep1Title => 'اضغط على زر أمر شراء جديد';
 
   @override
-  String get featureInfoPOCreateStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار إنشاء أمر الشراء.';
+  String get featureInfoPOCreateStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار إنشاء أمر الشراء.';
 
   @override
   String get featureInfoPOCreateStep2Title => 'حدد مورداً';
 
   @override
-  String get featureInfoPOCreateStep2Desc =>
-      'استخدم القائمة المنسدلة القابلة للبحث للعثور على المورد واختياره.';
+  String get featureInfoPOCreateStep2Desc => 'استخدم القائمة المنسدلة القابلة للبحث للعثور على المورد واختياره.';
 
   @override
   String get featureInfoPOCreateStep3Title => 'أضف المنتج والكميات';
 
   @override
-  String get featureInfoPOCreateStep3Desc =>
-      'أدخل رقم مرجع اختيارياً. حدد المنتج وأدخل الكمية وتكلفة الوحدة.';
+  String get featureInfoPOCreateStep3Desc => 'أدخل رقم مرجع اختيارياً. حدد المنتج وأدخل الكمية وتكلفة الوحدة.';
 
   @override
   String get featureInfoPOCreateStep4Title => 'أنشئ الأمر';
 
   @override
-  String get featureInfoPOCreateStep4Desc =>
-      'اضغط \'إنشاء\' لحفظ أمر الشراء كمسودة.';
+  String get featureInfoPOCreateStep4Desc => 'اضغط \'إنشاء\' لحفظ أمر الشراء كمسودة.';
 
   @override
   String get featureInfoPOManageTitle => 'إدارة أوامر الشراء';
@@ -10978,16 +10816,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPOManageStep3Title => 'ألغِ إذا لزم الأمر';
 
   @override
-  String get featureInfoPOManageStep3Desc =>
-      'يمكن إلغاء أوامر المسودة أو المُرسلة باستخدام إجراء \'إلغاء\' مع مربع حوار تأكيد.';
+  String get featureInfoPOManageStep3Desc => 'يمكن إلغاء أوامر المسودة أو المُرسلة باستخدام إجراء \'إلغاء\' مع مربع حوار تأكيد.';
 
   @override
   String get featureInfoPOTip1 =>
       'استخدم زر التصفية لعرض الأوامر حسب الحالة (مسودة، مُرسل، مُستلم جزئياً، مُستلم بالكامل، ملغي).';
 
   @override
-  String get featureInfoPOTip2 =>
-      'يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ التسليم المتوقع.';
+  String get featureInfoPOTip2 => 'يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ التسليم المتوقع.';
 
   @override
   String get featureInfoTransfersTitle => 'تحويلات المخزون';
@@ -11003,8 +10839,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoTransfersCreateStep1Title => 'اضغط على زر تحويل جديد';
 
   @override
-  String get featureInfoTransfersCreateStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار إنشاء التحويل.';
+  String get featureInfoTransfersCreateStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار إنشاء التحويل.';
 
   @override
   String get featureInfoTransfersCreateStep2Title => 'حدد المصدر والوجهة';
@@ -11017,15 +10852,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoTransfersCreateStep3Title => 'أضف تفاصيل المنتج';
 
   @override
-  String get featureInfoTransfersCreateStep3Desc =>
-      'حدد المنتج المراد تحويله وأدخل الكمية وأضف ملاحظات اختيارياً.';
+  String get featureInfoTransfersCreateStep3Desc => 'حدد المنتج المراد تحويله وأدخل الكمية وأضف ملاحظات اختيارياً.';
 
   @override
   String get featureInfoTransfersCreateStep4Title => 'أنشئ التحويل';
 
   @override
-  String get featureInfoTransfersCreateStep4Desc =>
-      'اضغط \'إنشاء\' لتقديم طلب التحويل بحالة معلق.';
+  String get featureInfoTransfersCreateStep4Desc => 'اضغط \'إنشاء\' لتقديم طلب التحويل بحالة معلق.';
 
   @override
   String get featureInfoTransfersManageTitle => 'إدارة تحويلات المخزون';
@@ -11034,8 +10867,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoTransfersManageStep1Title => 'وافق على التحويل';
 
   @override
-  String get featureInfoTransfersManageStep1Desc =>
-      'استخدم إجراء \'موافقة\' على التحويلات المعلقة. يتغير الحالة إلى في الطريق.';
+  String get featureInfoTransfersManageStep1Desc => 'استخدم إجراء \'موافقة\' على التحويلات المعلقة. يتغير الحالة إلى في الطريق.';
 
   @override
   String get featureInfoTransfersManageStep2Title => 'استلم التحويل';
@@ -11052,8 +10884,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'يمكن إلغاء التحويلات المعلقة باستخدام إجراء \'إلغاء\'. التحويلات في الطريق لا يمكن إلغاؤها.';
 
   @override
-  String get featureInfoTransfersTip1 =>
-      'يعرض الجدول رقم المرجع والفرع المصدر والفرع الوجهة والحالة وتاريخ الإنشاء.';
+  String get featureInfoTransfersTip1 => 'يعرض الجدول رقم المرجع والفرع المصدر والفرع الوجهة والحالة وتاريخ الإنشاء.';
 
   @override
   String get featureInfoGRTitle => 'إيصالات البضائع';
@@ -11069,22 +10900,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoGRCreateStep1Title => 'اضغط على زر إيصال جديد';
 
   @override
-  String get featureInfoGRCreateStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى صفحة نموذج إيصال البضائع.';
+  String get featureInfoGRCreateStep1Desc => 'اضغط على الزر العائم للانتقال إلى صفحة نموذج إيصال البضائع.';
 
   @override
   String get featureInfoGRCreateStep2Title => 'أدخل تفاصيل الإيصال';
 
   @override
-  String get featureInfoGRCreateStep2Desc =>
-      'حدد المورد وأدخل رقم المرجع وأضف المنتجات المستلمة مع الكميات والتكاليف.';
+  String get featureInfoGRCreateStep2Desc => 'حدد المورد وأدخل رقم المرجع وأضف المنتجات المستلمة مع الكميات والتكاليف.';
 
   @override
   String get featureInfoGRCreateStep3Title => 'احفظ كمسودة';
 
   @override
-  String get featureInfoGRCreateStep3Desc =>
-      'احفظ الإيصال. سيتم إنشاؤه كمسودة يمكن مراجعتها قبل التأكيد.';
+  String get featureInfoGRCreateStep3Desc => 'احفظ الإيصال. سيتم إنشاؤه كمسودة يمكن مراجعتها قبل التأكيد.';
 
   @override
   String get featureInfoGRConfirmTitle => 'تأكيد إيصال بضائع';
@@ -11093,8 +10921,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoGRConfirmStep1Title => 'ابحث عن إيصال المسودة';
 
   @override
-  String get featureInfoGRConfirmStep1Desc =>
-      'حدد إيصال المسودة في الجدول. يمكن تأكيد إيصالات المسودة فقط.';
+  String get featureInfoGRConfirmStep1Desc => 'حدد إيصال المسودة في الجدول. يمكن تأكيد إيصالات المسودة فقط.';
 
   @override
   String get featureInfoGRConfirmStep2Title => 'أكد الإيصال';
@@ -11104,8 +10931,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'انقر على إجراء \'تأكيد\' وتحقق في المربع الحواري. سيتم تحديث مستويات المخزون بالكميات المستلمة.';
 
   @override
-  String get featureInfoGRTip1 =>
-      'يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ الاستلام مع ترقيم الصفحات.';
+  String get featureInfoGRTip1 => 'يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ الاستلام مع ترقيم الصفحات.';
 
   @override
   String get featureInfoSRTitle => 'مرتجعات الموردين';
@@ -11121,22 +10947,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSRCreateStep1Title => 'اضغط على زر مرتجع جديد';
 
   @override
-  String get featureInfoSRCreateStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى صفحة نموذج مرتجع المورد.';
+  String get featureInfoSRCreateStep1Desc => 'اضغط على الزر العائم للانتقال إلى صفحة نموذج مرتجع المورد.';
 
   @override
   String get featureInfoSRCreateStep2Title => 'أدخل تفاصيل المرتجع';
 
   @override
-  String get featureInfoSRCreateStep2Desc =>
-      'حدد المورد وأدخل سبب المرتجع وأضف المنتجات المُعادة مع الكميات والتكاليف.';
+  String get featureInfoSRCreateStep2Desc => 'حدد المورد وأدخل سبب المرتجع وأضف المنتجات المُعادة مع الكميات والتكاليف.';
 
   @override
   String get featureInfoSRCreateStep3Title => 'احفظ كمسودة';
 
   @override
-  String get featureInfoSRCreateStep3Desc =>
-      'احفظ المرتجع. يبدأ كمسودة يمكنك مراجعتها وتعديلها قبل التقديم.';
+  String get featureInfoSRCreateStep3Desc => 'احفظ المرتجع. يبدأ كمسودة يمكنك مراجعتها وتعديلها قبل التقديم.';
 
   @override
   String get featureInfoSRManageTitle => 'إدارة مرتجعات الموردين';
@@ -11145,15 +10968,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSRManageStep1Title => 'قدّم المرتجع';
 
   @override
-  String get featureInfoSRManageStep1Desc =>
-      'استخدم إجراء \'تقديم\' على مرتجع المسودة لإرساله للموافقة.';
+  String get featureInfoSRManageStep1Desc => 'استخدم إجراء \'تقديم\' على مرتجع المسودة لإرساله للموافقة.';
 
   @override
   String get featureInfoSRManageStep2Title => 'وافق على المرتجع';
 
   @override
-  String get featureInfoSRManageStep2Desc =>
-      'استخدم إجراء \'موافقة\' على مرتجع مُقدم لتفويض المرتجع.';
+  String get featureInfoSRManageStep2Desc => 'استخدم إجراء \'موافقة\' على مرتجع مُقدم لتفويض المرتجع.';
 
   @override
   String get featureInfoSRManageStep3Title => 'أكمل المرتجع';
@@ -11166,12 +10987,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoSRManageStep4Title => 'ألغِ أو احذف إذا لزم الأمر';
 
   @override
-  String get featureInfoSRManageStep4Desc =>
-      'يمكن إلغاء مرتجعات المسودة والمُقدمة. يمكن أيضاً حذف مرتجعات المسودة نهائياً.';
+  String get featureInfoSRManageStep4Desc => 'يمكن إلغاء مرتجعات المسودة والمُقدمة. يمكن أيضاً حذف مرتجعات المسودة نهائياً.';
 
   @override
-  String get featureInfoSRTip1 =>
-      'استخدم شريط البحث والقائمة المنسدلة لتصفية الحالة للعثور على مرتجعات محددة بسرعة.';
+  String get featureInfoSRTip1 => 'استخدم شريط البحث والقائمة المنسدلة لتصفية الحالة للعثور على مرتجعات محددة بسرعة.';
 
   @override
   String get featureInfoRecipesTitle => 'الوصفات';
@@ -11187,8 +11006,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoRecipesCreateStep1Title => 'اضغط على زر وصفة جديدة';
 
   @override
-  String get featureInfoRecipesCreateStep1Desc =>
-      'اضغط على الزر العائم لفتح مربع حوار إنشاء الوصفة.';
+  String get featureInfoRecipesCreateStep1Desc => 'اضغط على الزر العائم لفتح مربع حوار إنشاء الوصفة.';
 
   @override
   String get featureInfoRecipesCreateStep2Title => 'حدد المنتج الناتج';
@@ -11201,8 +11019,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoRecipesCreateStep3Title => 'حدد كمية الإنتاج';
 
   @override
-  String get featureInfoRecipesCreateStep3Desc =>
-      'أدخل عدد وحدات المنتج الناتج التي تنتجها هذه الوصفة (الافتراضي 1).';
+  String get featureInfoRecipesCreateStep3Desc => 'أدخل عدد وحدات المنتج الناتج التي تنتجها هذه الوصفة (الافتراضي 1).';
 
   @override
   String get featureInfoRecipesCreateStep4Title => 'أضف المكونات';
@@ -11218,19 +11035,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoRecipesDeleteStep1Title => 'ابحث عن الوصفة في الجدول';
 
   @override
-  String get featureInfoRecipesDeleteStep1Desc =>
-      'حدد الوصفة التي تريد حذفها في القائمة التي تعرض اسم المنتج والإنتاج والحالة.';
+  String get featureInfoRecipesDeleteStep1Desc => 'حدد الوصفة التي تريد حذفها في القائمة التي تعرض اسم المنتج والإنتاج والحالة.';
 
   @override
   String get featureInfoRecipesDeleteStep2Title => 'احذف وأكد';
 
   @override
-  String get featureInfoRecipesDeleteStep2Desc =>
-      'انقر على إجراء \'حذف\' وأكد في المربع الحواري. هذا يزيل تعريف الوصفة.';
+  String get featureInfoRecipesDeleteStep2Desc => 'انقر على إجراء \'حذف\' وأكد في المربع الحواري. هذا يزيل تعريف الوصفة.';
 
   @override
-  String get featureInfoRecipesTip1 =>
-      'حدد نسبة الهدر لمراعاة المواد المفقودة أثناء الإنتاج (مثل القص والتبخر).';
+  String get featureInfoRecipesTip1 => 'حدد نسبة الهدر لمراعاة المواد المفقودة أثناء الإنتاج (مثل القص والتبخر).';
 
   @override
   String get featureInfoStockLevelsTitle => 'مستويات المخزون';
@@ -11250,8 +11064,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'عرض اسم المنتج والكمية والمخزون المحجوز ومتوسط التكلفة ونقطة إعادة الطلب والحالة (مخزون منخفض أو جيد) في الجدول.';
 
   @override
-  String get featureInfoStockLevelsViewStep2Title =>
-      'صفّ العناصر منخفضة المخزون';
+  String get featureInfoStockLevelsViewStep2Title => 'صفّ العناصر منخفضة المخزون';
 
   @override
   String get featureInfoStockLevelsViewStep2Desc =>
@@ -11261,8 +11074,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoStockLevelsReorderTitle => 'تعيين نقاط إعادة الطلب';
 
   @override
-  String get featureInfoStockLevelsReorderStep1Title =>
-      'انقر على \'تعيين نقطة إعادة الطلب\'';
+  String get featureInfoStockLevelsReorderStep1Title => 'انقر على \'تعيين نقطة إعادة الطلب\'';
 
   @override
   String get featureInfoStockLevelsReorderStep1Desc =>
@@ -11300,8 +11112,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPromotionsCreateStep1Title => 'اضغط على زر الإضافة';
 
   @override
-  String get featureInfoPromotionsCreateStep1Desc =>
-      'اضغط على الزر العائم لفتح نموذج إنشاء العرض.';
+  String get featureInfoPromotionsCreateStep1Desc => 'اضغط على الزر العائم لفتح نموذج إنشاء العرض.';
 
   @override
   String get featureInfoPromotionsCreateStep2Title => 'أدخل تفاصيل العرض';
@@ -11328,8 +11139,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPromotionsCreateStep5Title => 'احفظ العرض';
 
   @override
-  String get featureInfoPromotionsCreateStep5Desc =>
-      'اضغط \'حفظ\' لإنشاء العرض. يمكن تفعيله أو إلغاء تفعيله في أي وقت.';
+  String get featureInfoPromotionsCreateStep5Desc => 'اضغط \'حفظ\' لإنشاء العرض. يمكن تفعيله أو إلغاء تفعيله في أي وقت.';
 
   @override
   String get featureInfoPromotionsManageTitle => 'إدارة العروض';
@@ -11338,8 +11148,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPromotionsManageStep1Title => 'تبديل التفعيل/الإلغاء';
 
   @override
-  String get featureInfoPromotionsManageStep1Desc =>
-      'استخدم المفتاح على كل بطاقة عرض لتفعيله أو إلغاء تفعيله فوراً.';
+  String get featureInfoPromotionsManageStep1Desc => 'استخدم المفتاح على كل بطاقة عرض لتفعيله أو إلغاء تفعيله فوراً.';
 
   @override
   String get featureInfoPromotionsManageStep2Title => 'إنشاء القسائم';
@@ -11352,16 +11161,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoPromotionsManageStep3Title => 'عرض التحليلات';
 
   @override
-  String get featureInfoPromotionsManageStep3Desc =>
-      'اختر \'التحليلات\' من القائمة المنبثقة لمشاهدة بيانات أداء العرض.';
+  String get featureInfoPromotionsManageStep3Desc => 'اختر \'التحليلات\' من القائمة المنبثقة لمشاهدة بيانات أداء العرض.';
 
   @override
-  String get featureInfoPromotionsTip1 =>
-      'استخدم شريط البحث وزر التصفية للعثور على العروض بالاسم أو النوع أو الحالة.';
+  String get featureInfoPromotionsTip1 => 'استخدم شريط البحث وزر التصفية للعثور على العروض بالاسم أو النوع أو الحالة.';
 
   @override
-  String get featureInfoPromotionsTip2 =>
-      'عروض الساعة السعيدة تُطبّق تلقائياً خلال النوافذ الزمنية المُعدّة.';
+  String get featureInfoPromotionsTip2 => 'عروض الساعة السعيدة تُطبّق تلقائياً خلال النوافذ الزمنية المُعدّة.';
 
   @override
   String get featureInfoBranchesTitle => 'إدارة الفروع';
@@ -11377,8 +11183,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoBranchesCreateStep1Title => 'اضغط على زر إنشاء فرع';
 
   @override
-  String get featureInfoBranchesCreateStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الفرع.';
+  String get featureInfoBranchesCreateStep1Desc => 'اضغط على الزر العائم للانتقال إلى نموذج إنشاء الفرع.';
 
   @override
   String get featureInfoBranchesCreateStep2Title => 'أدخل المعلومات الأساسية';
@@ -11398,8 +11203,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoBranchesCreateStep4Title => 'أضف معلومات الاتصال';
 
   @override
-  String get featureInfoBranchesCreateStep4Desc =>
-      'أدخل الهاتف والهاتف الثانوي والبريد الإلكتروني وشخص الاتصال للفرع.';
+  String get featureInfoBranchesCreateStep4Desc => 'أدخل الهاتف والهاتف الثانوي والبريد الإلكتروني وشخص الاتصال للفرع.';
 
   @override
   String get featureInfoBranchesCreateStep5Title => 'اضبط الإعدادات التشغيلية';
@@ -11409,8 +11213,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'حدد تواريخ الافتتاح/الإغلاق والحد الأقصى لأجهزة الكاشير والموظفين ومساحة الطابق وسعة الجلوس وارفع الشعار/صور الغلاف.';
 
   @override
-  String get featureInfoBranchesCreateStep6Title =>
-      'أضف المعلومات القانونية والاجتماعية';
+  String get featureInfoBranchesCreateStep6Title => 'أضف المعلومات القانونية والاجتماعية';
 
   @override
   String get featureInfoBranchesCreateStep6Desc =>
@@ -11430,16 +11233,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoBranchesEditStep2Title => 'عدّل واحفظ';
 
   @override
-  String get featureInfoBranchesEditStep2Desc =>
-      'عدّل أي حقول عبر التبويبات الستة واضغط \'حفظ\' للتحديث.';
+  String get featureInfoBranchesEditStep2Desc => 'عدّل أي حقول عبر التبويبات الستة واضغط \'حفظ\' للتحديث.';
 
   @override
   String get featureInfoBranchesTip1 =>
       'صف الإحصائيات في الأعلى يعرض إجمالي الفروع والعدد النشط والعدد غير النشط وعدد المستودعات.';
 
   @override
-  String get featureInfoBranchesTip2 =>
-      'استخدم تصفية الحالة (الكل/نشط/غير نشط) لتضييق قائمة الفروع بسرعة.';
+  String get featureInfoBranchesTip2 => 'استخدم تصفية الحالة (الكل/نشط/غير نشط) لتضييق قائمة الفروع بسرعة.';
 
   @override
   String get featureInfoDebitsTitle => 'إدارة المديونيات';
@@ -11455,8 +11256,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDebitsCreateStep1Title => 'اضغط على زر الإضافة';
 
   @override
-  String get featureInfoDebitsCreateStep1Desc =>
-      'اضغط على الزر العائم للانتقال إلى نموذج إنشاء المديونية.';
+  String get featureInfoDebitsCreateStep1Desc => 'اضغط على الزر العائم للانتقال إلى نموذج إنشاء المديونية.';
 
   @override
   String get featureInfoDebitsCreateStep2Title => 'حدد العميل والنوع';
@@ -11476,8 +11276,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDebitsCreateStep4Title => 'احفظ المديونية';
 
   @override
-  String get featureInfoDebitsCreateStep4Desc =>
-      'اضغط \'حفظ\' لإنشاء المديونية بحالة معلقة.';
+  String get featureInfoDebitsCreateStep4Desc => 'اضغط \'حفظ\' لإنشاء المديونية بحالة معلقة.';
 
   @override
   String get featureInfoDebitsAllocateTitle => 'تخصيص مديونية لطلب';
@@ -11510,23 +11309,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDebitsReverseStep1Title => 'انقر على إجراء العكس';
 
   @override
-  String get featureInfoDebitsReverseStep1Desc =>
-      'على مديونية مؤهلة، انقر على إجراء \'عكس\' لفتح مربع حوار العكس.';
+  String get featureInfoDebitsReverseStep1Desc => 'على مديونية مؤهلة، انقر على إجراء \'عكس\' لفتح مربع حوار العكس.';
 
   @override
   String get featureInfoDebitsReverseStep2Title => 'أدخل السبب وأكد';
 
   @override
-  String get featureInfoDebitsReverseStep2Desc =>
-      'اكتب سبب العكس وأكد. المديونيات المعكوسة لا يمكن تخصيصها.';
+  String get featureInfoDebitsReverseStep2Desc => 'اكتب سبب العكس وأكد. المديونيات المعكوسة لا يمكن تخصيصها.';
 
   @override
-  String get featureInfoDebitsTip1 =>
-      'بطاقات الملخص في الأعلى تعرض إجمالي المديونيات والمبلغ المعلق والمُخصص وغير المُخصص.';
+  String get featureInfoDebitsTip1 => 'بطاقات الملخص في الأعلى تعرض إجمالي المديونيات والمبلغ المعلق والمُخصص وغير المُخصص.';
 
   @override
-  String get featureInfoDebitsTip2 =>
-      'استخدم شريط البحث للعثور على المديونيات برقم المرجع.';
+  String get featureInfoDebitsTip2 => 'استخدم شريط البحث للعثور على المديونيات برقم المرجع.';
 
   @override
   String get featureInfoExpensesTitle => 'تتبع المصروفات';
@@ -11542,33 +11337,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoExpensesCreateStep1Title => 'اضغط على زر مصروف جديد';
 
   @override
-  String get featureInfoExpensesCreateStep1Desc =>
-      'انقر على زر \'مصروف جديد\' في شريط التطبيق لفتح مربع حوار المصروف.';
+  String get featureInfoExpensesCreateStep1Desc => 'انقر على زر \'مصروف جديد\' في شريط التطبيق لفتح مربع حوار المصروف.';
 
   @override
   String get featureInfoExpensesCreateStep2Title => 'أدخل المبلغ';
 
   @override
-  String get featureInfoExpensesCreateStep2Desc =>
-      'اكتب مبلغ المصروف في الحقل الرقمي.';
+  String get featureInfoExpensesCreateStep2Desc => 'اكتب مبلغ المصروف في الحقل الرقمي.';
 
   @override
   String get featureInfoExpensesCreateStep3Title => 'حدد فئة';
 
   @override
-  String get featureInfoExpensesCreateStep3Desc =>
-      'اختر من: مستلزمات، طعام، نقل، صيانة، مرافق، أو أخرى.';
+  String get featureInfoExpensesCreateStep3Desc => 'اختر من: مستلزمات، طعام، نقل، صيانة، مرافق، أو أخرى.';
 
   @override
   String get featureInfoExpensesCreateStep4Title => 'أضف الوصف واحفظ';
 
   @override
-  String get featureInfoExpensesCreateStep4Desc =>
-      'اختيارياً أضف وصفاً يشرح المصروف. اضغط \'إنشاء\' لتسجيله.';
+  String get featureInfoExpensesCreateStep4Desc => 'اختيارياً أضف وصفاً يشرح المصروف. اضغط \'إنشاء\' لتسجيله.';
 
   @override
-  String get featureInfoExpensesTip1 =>
-      'يتم تجميع المصروفات حسب التاريخ. كل مجموعة تاريخ تعرض إجمالي المصروفات لذلك اليوم.';
+  String get featureInfoExpensesTip1 => 'يتم تجميع المصروفات حسب التاريخ. كل مجموعة تاريخ تعرض إجمالي المصروفات لذلك اليوم.';
 
   @override
   String get featureInfoCashMgmtTitle => 'إدارة النقدية';
@@ -11584,22 +11374,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCashMgmtOpenStep1Title => 'اضغط \'فتح جلسة\'';
 
   @override
-  String get featureInfoCashMgmtOpenStep1Desc =>
-      'إذا لم تكن هناك جلسة نشطة، اضغط على زر \'فتح جلسة\' للبدء.';
+  String get featureInfoCashMgmtOpenStep1Desc => 'إذا لم تكن هناك جلسة نشطة، اضغط على زر \'فتح جلسة\' للبدء.';
 
   @override
   String get featureInfoCashMgmtOpenStep2Title => 'أدخل الرصيد الافتتاحي';
 
   @override
-  String get featureInfoCashMgmtOpenStep2Desc =>
-      'أدخل مبلغ النقد في الدرج في بداية الجلسة (الرصيد الافتتاحي) وأكد.';
+  String get featureInfoCashMgmtOpenStep2Desc => 'أدخل مبلغ النقد في الدرج في بداية الجلسة (الرصيد الافتتاحي) وأكد.';
 
   @override
   String get featureInfoCashMgmtCashInOutTitle => 'تسجيل إدخال/سحب نقدي';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep1Title =>
-      'اضغط إدخال نقدي أو سحب نقدي';
+  String get featureInfoCashMgmtCashInOutStep1Title => 'اضغط إدخال نقدي أو سحب نقدي';
 
   @override
   String get featureInfoCashMgmtCashInOutStep1Desc =>
@@ -11616,8 +11403,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCashMgmtCashInOutStep3Title => 'أرسل العملية';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep3Desc =>
-      'أكد حدث النقد. يتحدث رصيد النقد المتوقع فوراً.';
+  String get featureInfoCashMgmtCashInOutStep3Desc => 'أكد حدث النقد. يتحدث رصيد النقد المتوقع فوراً.';
 
   @override
   String get featureInfoCashMgmtCloseTitle => 'إغلاق جلسة نقدية';
@@ -11633,23 +11419,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCashMgmtCloseStep2Title => 'اضغط \'إغلاق الجلسة\'';
 
   @override
-  String get featureInfoCashMgmtCloseStep2Desc =>
-      'راجع الإجمالي المعدود ومبلغ النقد المتوقع. أضف ملاحظات الإغلاق اختيارياً.';
+  String get featureInfoCashMgmtCloseStep2Desc => 'راجع الإجمالي المعدود ومبلغ النقد المتوقع. أضف ملاحظات الإغلاق اختيارياً.';
 
   @override
   String get featureInfoCashMgmtCloseStep3Title => 'أكد الإغلاق';
 
   @override
-  String get featureInfoCashMgmtCloseStep3Desc =>
-      'أكد لإغلاق الجلسة. يتم تسجيل أي فرق بين النقد المعدود والمتوقع.';
+  String get featureInfoCashMgmtCloseStep3Desc => 'أكد لإغلاق الجلسة. يتم تسجيل أي فرق بين النقد المعدود والمتوقع.';
 
   @override
-  String get featureInfoCashMgmtTip1 =>
-      'عداد العملات يساعدك في عد النقد المادي بدقة قبل إغلاق الجلسة.';
+  String get featureInfoCashMgmtTip1 => 'عداد العملات يساعدك في عد النقد المادي بدقة قبل إغلاق الجلسة.';
 
   @override
-  String get featureInfoCashMgmtTip2 =>
-      'سجل الجلسات في الأسفل يعرض الجلسات السابقة مع الرصيد الافتتاحي والتوقيت والفرق.';
+  String get featureInfoCashMgmtTip2 => 'سجل الجلسات في الأسفل يعرض الجلسات السابقة مع الرصيد الافتتاحي والتوقيت والفرق.';
 
   @override
   String get featureInfoGiftCardsTitle => 'بطاقات الهدايا';
@@ -11672,8 +11454,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoGiftCardsIssueStep2Title => 'أضف المستلم (اختياري)';
 
   @override
-  String get featureInfoGiftCardsIssueStep2Desc =>
-      'أدخل اسم المستلم إذا أردت تخصيص بطاقة الهدايا.';
+  String get featureInfoGiftCardsIssueStep2Desc => 'أدخل اسم المستلم إذا أردت تخصيص بطاقة الهدايا.';
 
   @override
   String get featureInfoGiftCardsIssueStep3Title => 'أصدر البطاقة';
@@ -11689,15 +11470,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoGiftCardsCheckStep1Title => 'أدخل رمز بطاقة الهدايا';
 
   @override
-  String get featureInfoGiftCardsCheckStep1Desc =>
-      'في تبويب \'التحقق من الرصيد\'، أدخل رمز بطاقة الهدايا.';
+  String get featureInfoGiftCardsCheckStep1Desc => 'في تبويب \'التحقق من الرصيد\'، أدخل رمز بطاقة الهدايا.';
 
   @override
   String get featureInfoGiftCardsCheckStep2Title => 'عرض تفاصيل الرصيد';
 
   @override
-  String get featureInfoGiftCardsCheckStep2Desc =>
-      'اضغط \'تحقق\'. يتم عرض الرصيد المتبقي والحالة وتاريخ الانتهاء.';
+  String get featureInfoGiftCardsCheckStep2Desc => 'اضغط \'تحقق\'. يتم عرض الرصيد المتبقي والحالة وتاريخ الانتهاء.';
 
   @override
   String get featureInfoGiftCardsRedeemTitle => 'استرداد بطاقة هدايا';
@@ -11706,26 +11485,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoGiftCardsRedeemStep1Title => 'أدخل رمز بطاقة الهدايا';
 
   @override
-  String get featureInfoGiftCardsRedeemStep1Desc =>
-      'في تبويب \'استرداد\'، أدخل رمز بطاقة الهدايا.';
+  String get featureInfoGiftCardsRedeemStep1Desc => 'في تبويب \'استرداد\'، أدخل رمز بطاقة الهدايا.';
 
   @override
   String get featureInfoGiftCardsRedeemStep2Title => 'أدخل مبلغ الاسترداد';
 
   @override
-  String get featureInfoGiftCardsRedeemStep2Desc =>
-      'أدخل المبلغ للاسترداد (يجب ألا يتجاوز الرصيد المتبقي).';
+  String get featureInfoGiftCardsRedeemStep2Desc => 'أدخل المبلغ للاسترداد (يجب ألا يتجاوز الرصيد المتبقي).';
 
   @override
   String get featureInfoGiftCardsRedeemStep3Title => 'أكمل الاسترداد';
 
   @override
-  String get featureInfoGiftCardsRedeemStep3Desc =>
-      'اضغط \'استرداد\'. تظهر بطاقة تأكيد تعرض الرصيد المحدّث.';
+  String get featureInfoGiftCardsRedeemStep3Desc => 'اضغط \'استرداد\'. تظهر بطاقة تأكيد تعرض الرصيد المحدّث.';
 
   @override
-  String get featureInfoGiftCardsTip1 =>
-      'يمكن أيضاً تطبيق بطاقات الهدايا كطريقة دفع مباشرة في محطة نقاط البيع أثناء الدفع.';
+  String get featureInfoGiftCardsTip1 => 'يمكن أيضاً تطبيق بطاقات الهدايا كطريقة دفع مباشرة في محطة نقاط البيع أثناء الدفع.';
 
   @override
   String get featureInfoCashSessionsTitle => 'سجل جلسات النقدية';
@@ -11748,12 +11523,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoCashSessionsViewStep2Title => 'تحقق من تفاصيل الجلسة';
 
   @override
-  String get featureInfoCashSessionsViewStep2Desc =>
-      'كل إدخال جلسة يعرض المعلومات الأساسية عن فترة جلسة النقدية.';
+  String get featureInfoCashSessionsViewStep2Desc => 'كل إدخال جلسة يعرض المعلومات الأساسية عن فترة جلسة النقدية.';
 
   @override
-  String get featureInfoCashSessionsTip1 =>
-      'لإدارة الجلسات النشطة (الفتح، أحداث النقد، الإغلاق)، استخدم صفحة إدارة النقدية.';
+  String get featureInfoCashSessionsTip1 => 'لإدارة الجلسات النشطة (الفتح، أحداث النقد، الإغلاق)، استخدم صفحة إدارة النقدية.';
 
   @override
   String get featureInfoDailySummaryTitle => 'الملخص المالي اليومي';
@@ -11783,8 +11556,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDailySummaryReviewTitle => 'قراءة الملخص';
 
   @override
-  String get featureInfoDailySummaryReviewStep1Title =>
-      'تحقق من بطاقات المؤشرات';
+  String get featureInfoDailySummaryReviewStep1Title => 'تحقق من بطاقات المؤشرات';
 
   @override
   String get featureInfoDailySummaryReviewStep1Desc =>
@@ -11805,8 +11577,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'قسم \'فرق النقد\' يقارن النقد المتوقع بالفعلي. يُظهر تسامح ±5 — الفروقات الأكبر تكون مُبرزة.';
 
   @override
-  String get featureInfoDailySummaryTip1 =>
-      'مخطط النشاط بالساعة يساعد في تحديد ساعات الذروة لقرارات التوظيف.';
+  String get featureInfoDailySummaryTip1 => 'مخطط النشاط بالساعة يساعد في تحديد ساعات الذروة لقرارات التوظيف.';
 
   @override
   String get featureInfoFinReconTitle => 'المطابقة المالية';
@@ -11822,8 +11593,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoFinReconStep1Title => 'حدد التاريخ';
 
   @override
-  String get featureInfoFinReconStep1Desc =>
-      'استخدم منتقي التاريخ في شريط التطبيق لاختيار اليوم الذي تريد مطابقته.';
+  String get featureInfoFinReconStep1Desc => 'استخدم منتقي التاريخ في شريط التطبيق لاختيار اليوم الذي تريد مطابقته.';
 
   @override
   String get featureInfoFinReconStep2Title => 'راجع ملخص الإيرادات';
@@ -11836,8 +11606,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoFinReconStep3Title => 'راجع المصروفات';
 
   @override
-  String get featureInfoFinReconStep3Desc =>
-      'تحقق من إجمالي المصروفات وشاهد التفصيل حسب الفئة (معروض كشرائح ملونة).';
+  String get featureInfoFinReconStep3Desc => 'تحقق من إجمالي المصروفات وشاهد التفصيل حسب الفئة (معروض كشرائح ملونة).';
 
   @override
   String get featureInfoFinReconStep4Title => 'عُد النقد المادي';
@@ -11854,12 +11623,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'راجع فرق النقد (الفرق بين المعدود والمتوقع). اضغط \'تأكيد المطابقة\' وتحقق في مربع حوار التأكيد.';
 
   @override
-  String get featureInfoFinReconTip1 =>
-      'فرق النقد ملوّن: أخضر للمطابقة، أحمر للفروقات.';
+  String get featureInfoFinReconTip1 => 'فرق النقد ملوّن: أخضر للمطابقة، أحمر للفروقات.';
 
   @override
-  String get featureInfoFinReconTip2 =>
-      'يمكنك أيضاً طباعة التقرير أو تصديره كـ PDF باستخدام أزرار الإجراءات.';
+  String get featureInfoFinReconTip2 => 'يمكنك أيضاً طباعة التقرير أو تصديره كـ PDF باستخدام أزرار الإجراءات.';
 
   @override
   String get featureInfoTxExplorerTitle => 'مستكشف المعاملات';
@@ -11875,12 +11642,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoTxExplorerSearchStep1Title => 'استخدم شريط البحث';
 
   @override
-  String get featureInfoTxExplorerSearchStep1Desc =>
-      'اكتب رقم معاملة أو كلمة مفتاحية في حقل البحث لتصفية النتائج.';
+  String get featureInfoTxExplorerSearchStep1Desc => 'اكتب رقم معاملة أو كلمة مفتاحية في حقل البحث لتصفية النتائج.';
 
   @override
-  String get featureInfoTxExplorerSearchStep2Title =>
-      'طبّق فلاتر النوع والحالة';
+  String get featureInfoTxExplorerSearchStep2Title => 'طبّق فلاتر النوع والحالة';
 
   @override
   String get featureInfoTxExplorerSearchStep2Desc =>
@@ -11904,16 +11669,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'انقر على أيقونة التحليلات في شريط التطبيق لإظهار أو إخفاء لوحة التحليلات فوق قائمة المعاملات.';
 
   @override
-  String get featureInfoTxExplorerAnalyticsStep2Title =>
-      'راجع المؤشرات والرسوم';
+  String get featureInfoTxExplorerAnalyticsStep2Title => 'راجع المؤشرات والرسوم';
 
   @override
   String get featureInfoTxExplorerAnalyticsStep2Desc =>
       'لوحة التحليلات تعرض بطاقات إحصائية ورسوم بيانية للمعاملات وخط اتجاه يومي لمساعدتك في تحديد الأنماط.';
 
   @override
-  String get featureInfoTxExplorerTip1 =>
-      'اضغط على أي صف معاملة للانتقال إلى صفحة تفاصيل المعاملة الكاملة.';
+  String get featureInfoTxExplorerTip1 => 'اضغط على أي صف معاملة للانتقال إلى صفحة تفاصيل المعاملة الكاملة.';
 
   @override
   String get featureInfoReportsTitle => 'التقارير والتحليلات';
@@ -11940,16 +11703,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'عرض المنتجات الأكثر مبيعاً اليوم مع رسم بياني شريطي وقائمة مرتبة تعرض الكميات والإيرادات.';
 
   @override
-  String get featureInfoReportsNavigateStep3Title =>
-      'انتقل إلى التقارير الفرعية';
+  String get featureInfoReportsNavigateStep3Title => 'انتقل إلى التقارير الفرعية';
 
   @override
   String get featureInfoReportsNavigateStep3Desc =>
       'استخدم الشبكة 3×3 للانتقال إلى: ملخص المبيعات، أداء المنتجات، تفصيل الفئات، أداء الموظفين، المبيعات بالساعة، طرق الدفع، تقرير المخزون، التقرير المالي، وتقرير العملاء.';
 
   @override
-  String get featureInfoReportsTip1 =>
-      'استخدم زر التحديث في شريط التطبيق ولوحة الفلاتر لتخصيص عرض البيانات.';
+  String get featureInfoReportsTip1 => 'استخدم زر التحديث في شريط التطبيق ولوحة الفلاتر لتخصيص عرض البيانات.';
 
   @override
   String get featureInfoLabelsTitle => 'قوالب الملصقات';
@@ -11965,15 +11726,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoLabelsCreateStep1Title => 'انقر على \'مصمم الملصقات\'';
 
   @override
-  String get featureInfoLabelsCreateStep1Desc =>
-      'اضغط على زر \'مصمم الملصقات\' في شريط التطبيق لفتح المصمم WYSIWYG.';
+  String get featureInfoLabelsCreateStep1Desc => 'اضغط على زر \'مصمم الملصقات\' في شريط التطبيق لفتح المصمم WYSIWYG.';
 
   @override
   String get featureInfoLabelsCreateStep2Title => 'حدد أبعاد القالب';
 
   @override
-  String get featureInfoLabelsCreateStep2Desc =>
-      'أدخل اسم القالب والعرض (مم) والارتفاع (مم) للملصق.';
+  String get featureInfoLabelsCreateStep2Desc => 'أدخل اسم القالب والعرض (مم) والارتفاع (مم) للملصق.';
 
   @override
   String get featureInfoLabelsCreateStep3Title => 'أضف ورتّب العناصر';
@@ -11986,15 +11745,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoLabelsCreateStep4Title => 'احفظ القالب';
 
   @override
-  String get featureInfoLabelsCreateStep4Desc =>
-      'انقر \'حفظ\' لتخزين القالب. سيظهر في قائمة القوالب.';
+  String get featureInfoLabelsCreateStep4Desc => 'انقر \'حفظ\' لتخزين القالب. سيظهر في قائمة القوالب.';
 
   @override
   String get featureInfoLabelsPrintTitle => 'طباعة الملصقات';
 
   @override
-  String get featureInfoLabelsPrintStep1Title =>
-      'اختر \'قائمة الطباعة\' على قالب';
+  String get featureInfoLabelsPrintStep1Title => 'اختر \'قائمة الطباعة\' على قالب';
 
   @override
   String get featureInfoLabelsPrintStep1Desc =>
@@ -12004,12 +11761,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoLabelsPrintStep2Title => 'اضبط واطبع';
 
   @override
-  String get featureInfoLabelsPrintStep2Desc =>
-      'حدد المنتجات وعيّن الكميات وأرسل إلى الطابعة.';
+  String get featureInfoLabelsPrintStep2Desc => 'حدد المنتجات وعيّن الكميات وأرسل إلى الطابعة.';
 
   @override
-  String get featureInfoLabelsTip1 =>
-      'يمكنك تكرار القوالب الموجودة (بما في ذلك المُعدّة مسبقاً) وتخصيصها لإنشاء أسرع.';
+  String get featureInfoLabelsTip1 => 'يمكنك تكرار القوالب الموجودة (بما في ذلك المُعدّة مسبقاً) وتخصيصها لإنشاء أسرع.';
 
   @override
   String get featureInfoDeliveryTitle => 'تكامل التوصيل';
@@ -12022,12 +11777,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDeliveryPlatformsTitle => 'إدارة منصات التوصيل';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Title =>
-      'انتقل إلى تبويب المنصات';
+  String get featureInfoDeliveryPlatformsStep1Title => 'انتقل إلى تبويب المنصات';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Desc =>
-      'انتقل إلى تبويب \'المنصات\' لمشاهدة جميع منصات التوصيل المُعدّة.';
+  String get featureInfoDeliveryPlatformsStep1Desc => 'انتقل إلى تبويب \'المنصات\' لمشاهدة جميع منصات التوصيل المُعدّة.';
 
   @override
   String get featureInfoDeliveryPlatformsStep2Title => 'فعّل أو اضبط المنصات';
@@ -12057,19 +11810,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoDeliveryOrdersStep2Title => 'اقبل أو ارفض الطلبات';
 
   @override
-  String get featureInfoDeliveryOrdersStep2Desc =>
-      'استخدم زر \'قبول\' لقبول طلب معلق. استخدم \'رفض\' للرفض مع سبب.';
+  String get featureInfoDeliveryOrdersStep2Desc => 'استخدم زر \'قبول\' لقبول طلب معلق. استخدم \'رفض\' للرفض مع سبب.';
 
   @override
   String get featureInfoDeliveryOrdersStep3Title => 'أكمل الطلبات';
 
   @override
-  String get featureInfoDeliveryOrdersStep3Desc =>
-      'عند توصيل الطلب، استخدم زر \'إكمال\' لإنهائه.';
+  String get featureInfoDeliveryOrdersStep3Desc => 'عند توصيل الطلب، استخدم زر \'إكمال\' لإنهائه.';
 
   @override
-  String get featureInfoDeliveryTip1 =>
-      'استخدم زر مزامنة القائمة في شريط التطبيق لمزامنة كتالوج المنتجات مع منصات التوصيل.';
+  String get featureInfoDeliveryTip1 => 'استخدم زر مزامنة القائمة في شريط التطبيق لمزامنة كتالوج المنتجات مع منصات التوصيل.';
 
   @override
   String get featureInfoNotificationsTitle => 'مركز الإشعارات';
@@ -12085,8 +11835,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoNotificationsManageStep1Title => 'صفّ الإشعارات';
 
   @override
-  String get featureInfoNotificationsManageStep1Desc =>
-      'استخدم شرائح تصفية الفئة والأولوية لتضييق الإشعارات إلى أنواع محددة.';
+  String get featureInfoNotificationsManageStep1Desc => 'استخدم شرائح تصفية الفئة والأولوية لتضييق الإشعارات إلى أنواع محددة.';
 
   @override
   String get featureInfoNotificationsManageStep2Title => 'حدد كمقروء';
@@ -12106,12 +11855,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureInfoNotificationsManageStep4Title => 'اسحب للتحديث';
 
   @override
-  String get featureInfoNotificationsManageStep4Desc =>
-      'اسحب لأسفل على القائمة لتحديث وتحميل إشعارات جديدة.';
+  String get featureInfoNotificationsManageStep4Desc => 'اسحب لأسفل على القائمة لتحديث وتحميل إشعارات جديدة.';
 
   @override
-  String get featureInfoNotificationsTip1 =>
-      'شارة عدد غير المقروء في شريط التطبيق تعرض عدد الإشعارات غير المقروءة.';
+  String get featureInfoNotificationsTip1 => 'شارة عدد غير المقروء في شريط التطبيق تعرض عدد الإشعارات غير المقروءة.';
 
   @override
   String get sidebarGroupPlatformAdmin => 'إدارة المنصة';
@@ -12274,8 +12021,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminWameedAIGenerateInvoicesHint => 'قم بإنشاء فواتير لعرضها هنا';
 
   @override
-  String get adminWameedAINoStoresMessage =>
-      'لا توجد متاجر مع فوترة الذكاء الاصطناعي';
+  String get adminWameedAINoStoresMessage => 'لا توجد متاجر مع فوترة الذكاء الاصطناعي';
 
   @override
   String get adminWameedAICacheHitRate => 'معدل إصابة الذاكرة المؤقتة';
@@ -12287,8 +12033,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminWameedAITopModel => 'أبرز نموذج';
 
   @override
-  String get adminWameedAIUniqueStoresUsing =>
-      'متاجر فريدة تستخدم الذكاء الاصطناعي';
+  String get adminWameedAIUniqueStoresUsing => 'متاجر فريدة تستخدم الذكاء الاصطناعي';
 
   @override
   String get actions => 'إجراءات';
@@ -12444,8 +12189,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get withKeys => 'بمفاتيح';
 
   @override
-  String get deleteModelConfirm =>
-      'هل أنت متأكد من حذف هذا النموذج؟ لا يمكن التراجع عن هذا الإجراء.';
+  String get deleteModelConfirm => 'هل أنت متأكد من حذف هذا النموذج؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get successful => 'ناجح';
@@ -12466,8 +12210,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get providerPaymentCancelTitle => 'إلغاء الدفع؟';
 
   @override
-  String get providerPaymentCancelBody =>
-      'هل أنت متأكد من إلغاء الدفع؟ يمكنك إعادة المحاولة لاحقاً.';
+  String get providerPaymentCancelBody => 'هل أنت متأكد من إلغاء الدفع؟ يمكنك إعادة المحاولة لاحقاً.';
 
   @override
   String get providerPaymentContinue => 'متابعة الدفع';
@@ -12614,12 +12357,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pinLoginTitle => 'أدخل رمز PIN';
 
   @override
-  String get pinLoginNoStore =>
-      'لم يتم العثور على جلسة متجر. يرجى تسجيل الدخول بالبريد الإلكتروني.';
+  String get pinLoginNoStore => 'لم يتم العثور على جلسة متجر. يرجى تسجيل الدخول بالبريد الإلكتروني.';
 
   @override
-  String get pinLoginEmailInstead =>
-      'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
+  String get pinLoginEmailInstead => 'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
 
   @override
   String get categoryMappings => 'تعيينات الفئات';
@@ -12649,12 +12390,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retryOnFailure => 'إعادة المحاولة عند الفشل';
 
   @override
-  String get automaticallyRetryFailedExports =>
-      'إعادة محاولة التصدير الفاشل تلقائياً';
+  String get automaticallyRetryFailedExports => 'إعادة محاولة التصدير الفاشل تلقائياً';
 
   @override
-  String get mapPosAccountsToProviderAccounts =>
-      'ربط حسابات نقاط البيع بحسابات المزود';
+  String get mapPosAccountsToProviderAccounts => 'ربط حسابات نقاط البيع بحسابات المزود';
 
   @override
   String get viewAndManageExports => 'عرض وإدارة التصادير';
@@ -12723,8 +12462,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get promoDuplicated => 'تم تكرار العرض.';
 
   @override
-  String get promoCouponsEmpty =>
-      'لا توجد قسائم بعد. استخدم إنشاء لإضافة قسائم.';
+  String get promoCouponsEmpty => 'لا توجد قسائم بعد. استخدم إنشاء لإضافة قسائم.';
 
   @override
   String get promoCouponDeleted => 'تم حذف القسيمة.';
@@ -12877,8 +12615,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get prefixOptional => 'البادئة (اختياري)';
 
   @override
-  String get maxUsesPerCouponOptional =>
-      'الحد الأقصى للاستخدام لكل قسيمة (اختياري)';
+  String get maxUsesPerCouponOptional => 'الحد الأقصى للاستخدام لكل قسيمة (اختياري)';
 
   @override
   String get expandAll => 'توسيع الكل';
@@ -12896,8 +12633,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noAppointments => 'لا توجد مواعيد';
 
   @override
-  String get enterACustomerIdToViewWishlist =>
-      'أدخل معرف العميل لعرض قائمة الرغبات';
+  String get enterACustomerIdToViewWishlist => 'أدخل معرف العميل لعرض قائمة الرغبات';
 
   @override
   String get wishlistIsEmpty => 'قائمة الرغبات فارغة';
@@ -13497,15 +13233,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentsPrefixOptional => 'البادئة (اختياري)';
 
   @override
-  String get paymentsMaxUsesPerCoupon =>
-      'الحد الأقصى لاستخدام كل قسيمة (اختياري)';
+  String get paymentsMaxUsesPerCoupon => 'الحد الأقصى لاستخدام كل قسيمة (اختياري)';
 
   @override
   String get accountingDayOfMonth => 'يوم من الشهر';
 
   @override
-  String get accountingNotificationEmail =>
-      'البريد الإلكتروني للإشعارات (اختياري)';
+  String get accountingNotificationEmail => 'البريد الإلكتروني للإشعارات (اختياري)';
 
   @override
   String get jewelrySetMetalRate => 'تعيين سعر المعدن';
@@ -13805,8 +13539,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accessDenied => 'الوصول مرفوض';
 
   @override
-  String get accessDeniedMessage =>
-      'ليس لديك إذن لعرض هذه الصفحة.\nاتصل بالمسؤول لطلب الوصول.';
+  String get accessDeniedMessage => 'ليس لديك إذن لعرض هذه الصفحة.\nاتصل بالمسؤول لطلب الوصول.';
 
   @override
   String get catalogTabBasicInfo => 'المعلومات الأساسية';
@@ -13973,8 +13706,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogBulkImportTitle => 'استيراد المنتجات بالجملة';
 
   @override
-  String get catalogBulkImportSubtitle =>
-      'ارفع ملف CSV أو Excel لإنشاء منتجات دفعة واحدة.';
+  String get catalogBulkImportSubtitle => 'ارفع ملف CSV أو Excel لإنشاء منتجات دفعة واحدة.';
 
   @override
   String get catalogImportStepFile => 'الملف';
@@ -13992,8 +13724,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogImportPickFileHeading => 'اختر ملفاً';
 
   @override
-  String get catalogImportPickFileHint =>
-      'نقبل ملفات CSV (.csv) و Excel (.xlsx, .xls) بحجم حتى 10 ميغابايت.';
+  String get catalogImportPickFileHint => 'نقبل ملفات CSV (.csv) و Excel (.xlsx, .xls) بحجم حتى 10 ميغابايت.';
 
   @override
   String get catalogImportSelectFile => 'اضغط لاختيار ملف';
@@ -14002,15 +13733,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogImportChangeFile => 'اضغط لاختيار ملف آخر';
 
   @override
-  String get catalogImportFormatTip =>
-      'يجب أن يحتوي الصف الأول على عناوين الأعمدة. الحقول الإلزامية: name و sell_price.';
+  String get catalogImportFormatTip => 'يجب أن يحتوي الصف الأول على عناوين الأعمدة. الحقول الإلزامية: name و sell_price.';
 
   @override
   String get catalogImportMapHeading => 'مطابقة الأعمدة';
 
   @override
-  String get catalogImportMapHint =>
-      'اربط كل حقل منتج بعمود من ملفك. الحقول المطلوبة بعلامة *.';
+  String get catalogImportMapHint => 'اربط كل حقل منتج بعمود من ملفك. الحقول المطلوبة بعلامة *.';
 
   @override
   String get catalogImportPreviewHeading => 'معاينة';
@@ -14063,8 +13792,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogComboAddItem => 'إضافة صنف';
 
   @override
-  String get catalogComboNoItems =>
-      'لا توجد أصناف. أضف صنفاً واحداً على الأقل.';
+  String get catalogComboNoItems => 'لا توجد أصناف. أضف صنفاً واحداً على الأقل.';
 
   @override
   String get catalogComboQty => 'الكمية';
@@ -14088,8 +13816,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogComboClearConfirmTitle => 'مسح المجموعة؟';
 
   @override
-  String get catalogComboClearConfirmBody =>
-      'سيتم حذف جميع الأصناف وإلغاء وضع علامة المجموعة.';
+  String get catalogComboClearConfirmBody => 'سيتم حذف جميع الأصناف وإلغاء وضع علامة المجموعة.';
 
   @override
   String get catalogComboPickItem => 'اختر منتجاً';
@@ -14098,19 +13825,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogComboSearchHint => 'ابحث بالاسم أو SKU أو الباركود';
 
   @override
-  String get catalogComboItemAlreadyAdded =>
-      'هذا المنتج موجود مسبقاً في المجموعة';
+  String get catalogComboItemAlreadyAdded => 'هذا المنتج موجود مسبقاً في المجموعة';
 
   @override
-  String get catalogComboNeedsAtLeastOneItem =>
-      'أضف صنفاً واحداً على الأقل قبل الحفظ';
+  String get catalogComboNeedsAtLeastOneItem => 'أضف صنفاً واحداً على الأقل قبل الحفظ';
 
   @override
   String get catalogComboInvalidQuantity => 'يجب أن تكون الكمية رقماً موجباً';
 
   @override
-  String get catalogComboInvalidPrice =>
-      'سعر المجموعة يجب أن يكون صفراً أو أكثر';
+  String get catalogComboInvalidPrice => 'سعر المجموعة يجب أن يكون صفراً أو أكثر';
 
   @override
   String get commonSearch => 'بحث';
@@ -14119,8 +13843,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catalogSearchProductsShort => 'ابحث عن المنتجات...';
 
   @override
-  String get catalogSearchProductsFull =>
-      'ابحث عن المنتجات بالاسم أو SKU أو الباركود...';
+  String get catalogSearchProductsFull => 'ابحث عن المنتجات بالاسم أو SKU أو الباركود...';
 
   @override
   String get catalogClearSelection => 'مسح التحديد';
@@ -14260,8 +13983,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get electronicsImei => 'IMEI';
 
   @override
-  String get electronicsInvalidImei =>
-      'رقم IMEI غير صحيح (يجب أن يكون 15 رقمًا ويجتاز التحقق)';
+  String get electronicsInvalidImei => 'رقم IMEI غير صحيح (يجب أن يكون 15 رقمًا ويجتاز التحقق)';
 
   @override
   String get electronicsCheckImeiServer => 'تحقق من التكرار';
@@ -14389,8 +14111,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get floristIsTemplate => 'قالب';
 
   @override
-  String get floristTemplateSubtitle =>
-      'قالب ترتيب قابل لإعادة الاستخدام للاشتراكات';
+  String get floristTemplateSubtitle => 'قالب ترتيب قابل لإعادة الاستخدام للاشتراكات';
 
   @override
   String get floristFreshness => 'النضارة';
@@ -15116,8 +14837,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminDeleteRole => 'حذف الدور';
 
   @override
-  String get adminDeleteRoleConfirm =>
-      'هل أنت متأكد من حذف هذا الدور؟ لا يمكن التراجع.';
+  String get adminDeleteRoleConfirm => 'هل أنت متأكد من حذف هذا الدور؟ لا يمكن التراجع.';
 
   @override
   String get adminStatusWarning => 'تحذير';
@@ -15376,8 +15096,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get subSubscriptionExpired => 'انتهى الاشتراك';
 
   @override
-  String get subExpiredRenewMessage =>
-      'انتهى اشتراكك. جدد الآن لاستعادة الوصول.';
+  String get subExpiredRenewMessage => 'انتهى اشتراكك. جدد الآن لاستعادة الوصول.';
 
   @override
   String subGraceDaysRemaining(int days) {
@@ -15612,8 +15331,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pcCloneProductSuccess => 'تم استنساخ المنتج بنجاح';
 
   @override
-  String get pcCloneAllSuccess =>
-      'تم استنساخ جميع المنتجات المحددة مسبقاً بنجاح';
+  String get pcCloneAllSuccess => 'تم استنساخ جميع المنتجات المحددة مسبقاً بنجاح';
 
   @override
   String get pcCloneAllProducts => 'استنساخ جميع المنتجات';
@@ -15639,8 +15357,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pcNoPredefinedCategories => 'لم يتم العثور على فئات محددة مسبقاً';
 
   @override
-  String get predefinedNoCategoriesForBusiness =>
-      'لا توجد فئات محددة مسبقاً متاحة لنوع عملك';
+  String get predefinedNoCategoriesForBusiness => 'لا توجد فئات محددة مسبقاً متاحة لنوع عملك';
 
   @override
   String get pcCloneToMyStore => 'استنساخ إلى متجري';
@@ -15823,8 +15540,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get labelsNoPrinterConfigured =>
-      'لا توجد طابعة ملصقات مهيأة. يرجى تهيئة طابعة من إعدادات الأجهزة.';
+  String get labelsNoPrinterConfigured => 'لا توجد طابعة ملصقات مهيأة. يرجى تهيئة طابعة من إعدادات الأجهزة.';
 
   @override
   String get labelsQueueEmpty => 'القائمة فارغة. أضف منتجات لطباعة الملصقات.';
@@ -15839,8 +15555,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelsPrintLabel => 'طباعة ملصق';
 
   @override
-  String get labelsNoTemplateConfigured =>
-      'لا يوجد قالب ملصق مهيأ. أنشئ قالباً من قسم الملصقات.';
+  String get labelsNoTemplateConfigured => 'لا يوجد قالب ملصق مهيأ. أنشئ قالباً من قسم الملصقات.';
 
   @override
   String get labelsProductName => 'اسم المنتج';
@@ -15933,8 +15648,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingSkipSetup => 'تخطي الإعداد';
 
   @override
-  String get onboardingTaxIncludedNote =>
-      'عند التفعيل، تُعرض أسعار المنتجات شاملة الضريبة.';
+  String get onboardingTaxIncludedNote => 'عند التفعيل، تُعرض أسعار المنتجات شاملة الضريبة.';
 
   @override
   String get onboardingAllSet => 'أنت جاهز!';
@@ -16066,8 +15780,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupEnableAutoBackup => 'تفعيل النسخ الاحتياطي التلقائي';
 
   @override
-  String get backupEnableAutoBackupHint =>
-      'إنشاء نسخ احتياطية تلقائياً وفق جدول زمني محدد.';
+  String get backupEnableAutoBackupHint => 'إنشاء نسخ احتياطية تلقائياً وفق جدول زمني محدد.';
 
   @override
   String get backupNoLoaded => 'لم يتم تحميل نسخ احتياطية';
@@ -16241,8 +15954,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupSelectForRestore => 'اختر نسخة احتياطية للاستعادة';
 
   @override
-  String get backupOnlyCompletedRestore =>
-      'يمكن استعادة النسخ المكتملة والمتحقق منها فقط';
+  String get backupOnlyCompletedRestore => 'يمكن استعادة النسخ المكتملة والمتحقق منها فقط';
 
   @override
   String get backupVerifyStep => 'التحقق من السلامة';
@@ -16264,8 +15976,7 @@ class AppLocalizationsAr extends AppLocalizations {
       '⚠️ سيؤدي هذا إلى الكتابة فوق جميع البيانات الحالية. لا يمكن التراجع عن هذا الإجراء. ننصح بشدة بإنشاء نسخة احتياطية قبل الاستعادة.';
 
   @override
-  String get backupCreatePreRestoreBackup =>
-      'إنشاء نسخة احتياطية قبل الاستعادة';
+  String get backupCreatePreRestoreBackup => 'إنشاء نسخة احتياطية قبل الاستعادة';
 
   @override
   String get backupEstimatedDuration => 'الوقت المقدر';
@@ -16285,8 +15996,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupRestoreFailed => 'فشلت الاستعادة';
 
   @override
-  String get backupRestoreInitiated =>
-      'تم بدء الاستعادة. سيقوم النظام بتطبيق النسخة الاحتياطية.';
+  String get backupRestoreInitiated => 'تم بدء الاستعادة. سيقوم النظام بتطبيق النسخة الاحتياطية.';
 
   @override
   String get backupRequiresMigration => 'تتطلب هذه النسخة ترحيل قاعدة بيانات';
@@ -16334,8 +16044,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupExportIncludeImages => 'تضمين الصور';
 
   @override
-  String get backupExportIncludeImagesDesc =>
-      'إرفاق ملفات الصور (يزيد من حجم التصدير)';
+  String get backupExportIncludeImagesDesc => 'إرفاق ملفات الصور (يزيد من حجم التصدير)';
 
   @override
   String get backupExportResult => 'نتيجة التصدير';
@@ -16362,8 +16071,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupDeleteConfirmTitle => 'حذف النسخة الاحتياطية؟';
 
   @override
-  String get backupDeleteConfirmMessage =>
-      'سيؤدي هذا إلى حذف ملف النسخة الاحتياطية نهائياً. لا يمكن التراجع عن هذا الإجراء.';
+  String get backupDeleteConfirmMessage => 'سيؤدي هذا إلى حذف ملف النسخة الاحتياطية نهائياً. لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get backupDeleteSuccess => 'تم حذف النسخة الاحتياطية';
@@ -16639,8 +16347,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminForcePasswordChange => 'فرض تغيير كلمة المرور';
 
   @override
-  String get adminForcePasswordChangeDesc =>
-      'طلب من المستخدم تغيير كلمة المرور عند تسجيل الدخول التالي';
+  String get adminForcePasswordChangeDesc => 'طلب من المستخدم تغيير كلمة المرور عند تسجيل الدخول التالي';
 
   @override
   String get adminNoRoleTemplates => 'لا توجد قوالب أدوار';
@@ -16661,8 +16368,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminNoAbTestsLinked => 'لا توجد اختبارات A/B مرتبطة بهذه العلامة';
 
   @override
-  String get staffPredefinedRoleNote =>
-      'هذا دور معرّف مسبقاً. لا يمكن تغيير اسمه، ولكن يمكنك تخصيص أذوناته.';
+  String get staffPredefinedRoleNote => 'هذا دور معرّف مسبقاً. لا يمكن تغيير اسمه، ولكن يمكنك تخصيص أذوناته.';
 
   @override
   String staffCountSelected(int count) {
@@ -16699,12 +16405,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get softPosRemaining => 'المتبقي';
 
   @override
-  String subAddOnConfirmMessage(
-    String name,
-    String price,
-    String currency,
-    String cycle,
-  ) {
+  String subAddOnConfirmMessage(String name, String price, String currency, String cycle) {
     return 'إضافة $name مقابل $price $currency/$cycle؟';
   }
 
@@ -16719,12 +16420,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String subConfirmSubscriptionMessage(
-    String planName,
-    String billingCycle,
-    String price,
-    String currency,
-  ) {
+  String subConfirmSubscriptionMessage(String planName, String billingCycle, String price, String currency) {
     return 'الاشتراك في $planName ($billingCycle) مقابل $price $currency؟';
   }
 
@@ -17114,8 +16810,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posTaxExemptSubmit => 'تطبيق الإعفاء';
 
   @override
-  String get posOfflineQueued =>
-      'تم الحفظ بدون اتصال — ستتم المزامنة عند الاتصال.';
+  String get posOfflineQueued => 'تم الحفظ بدون اتصال — ستتم المزامنة عند الاتصال.';
 
   @override
   String get posOfflineSyncing => 'جارٍ مزامنة المعاملات غير المتصلة...';
@@ -17494,8 +17189,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get customersExcludedCategories => 'الفئات المستثناة';
 
   @override
-  String get customersExcludedCategoriesHint =>
-      'المبيعات في هذه الفئات لا تكسب نقاطًا';
+  String get customersExcludedCategoriesHint => 'المبيعات في هذه الفئات لا تكسب نقاطًا';
 
   @override
   String get customersDoublePointsDays => 'أيام النقاط المضاعفة';
@@ -17524,8 +17218,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zatcaNoDevices => 'لا توجد أجهزة مسجلة';
 
   @override
-  String get zatcaDeviceTampered =>
-      'تم العبث بسلسلة هذا الجهاز. الإرسال متوقف حتى إعادة التعيين.';
+  String get zatcaDeviceTampered => 'تم العبث بسلسلة هذا الجهاز. الإرسال متوقف حتى إعادة التعيين.';
 
   @override
   String get zatcaResetTamper => 'إعادة تعيين العبث';
@@ -17681,8 +17374,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reportsScheduledFrequency => 'التكرار';
 
   @override
-  String get reportsScheduledRecipients =>
-      'المستلمون (رسائل بريد إلكتروني مفصولة بفواصل)';
+  String get reportsScheduledRecipients => 'المستلمون (رسائل بريد إلكتروني مفصولة بفواصل)';
 
   @override
   String get reportsScheduledDaily => 'يومي';
@@ -17781,8 +17473,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get reportsSubscriptionRequired =>
-      'مطلوب ترقية للوصول إلى هذا التقرير';
+  String get reportsSubscriptionRequired => 'مطلوب ترقية للوصول إلى هذا التقرير';
 
   @override
   String get reportsUpgradeRequired => 'هذه الميزة متاحة في الخطط الأعلى';
@@ -17966,8 +17657,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentListRefund => 'استرداد';
 
   @override
-  String get paymentListInfoMessage =>
-      'تصفح وفلترة جميع معاملات الدفع. اضغط على صف لعرض التفاصيل أو معالجة استرداد.';
+  String get paymentListInfoMessage => 'تصفح وفلترة جميع معاملات الدفع. اضغط على صف لعرض التفاصيل أو معالجة استرداد.';
 
   @override
   String get paymentStatusCompleted => 'مكتمل';
@@ -18089,8 +17779,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get expenseUpdatedSuccess => 'تم تحديث المصروف';
 
   @override
-  String get expensesInfoMessage =>
-      'تتبع وإدارة جميع مصروفات المتجر. اسحب لليسار للحذف، اضغط أيقونة التعديل للتحديث.';
+  String get expensesInfoMessage => 'تتبع وإدارة جميع مصروفات المتجر. اسحب لليسار للحذف، اضغط أيقونة التعديل للتحديث.';
 
   @override
   String get cashSessionDetailTitle => 'تفاصيل الجلسة';
@@ -18123,8 +17812,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cashSessionClosedAt => 'أُغلقت';
 
   @override
-  String get cashSessionsInfoMessage =>
-      'عرض جميع جلسات النقد وتفاصيلها. اضغط على جلسة لرؤية أحداث النقد والمصروفات.';
+  String get cashSessionsInfoMessage => 'عرض جميع جلسات النقد وتفاصيلها. اضغط على جلسة لرؤية أحداث النقد والمصروفات.';
 
   @override
   String get dailySummaryExpensesBreakdown => 'المصروفات حسب الفئة';
@@ -18133,12 +17821,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dailySummaryNoExpenses => 'لا توجد مصروفات مسجلة';
 
   @override
-  String get dailySummaryInfoMessage =>
-      'عرض ملخص مبيعات اليوم بما يشمل الإيرادات والمصروفات وبيانات الجلسات.';
+  String get dailySummaryInfoMessage => 'عرض ملخص مبيعات اليوم بما يشمل الإيرادات والمصروفات وبيانات الجلسات.';
 
   @override
-  String get finReconInfoMessage =>
-      'مراجعة وتأكيد التسوية المالية لفترة زمنية. تصدير PDF للسجلات.';
+  String get finReconInfoMessage => 'مراجعة وتأكيد التسوية المالية لفترة زمنية. تصدير PDF للسجلات.';
 
   @override
   String get allCategories => 'جميع الفئات';
@@ -18150,8 +17836,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get syncCheckingConnectivity => 'جارٍ التحقق من الاتصال...';
 
   @override
-  String get syncNoInternet =>
-      'لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مجددًا.';
+  String get syncNoInternet => 'لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مجددًا.';
 
   @override
   String get syncDownloadingData => 'جارٍ تنزيل البيانات...';

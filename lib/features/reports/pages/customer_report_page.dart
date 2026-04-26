@@ -59,45 +59,48 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> {
     return PermissionGuardPage(
       permission: Permissions.reportsCustomers,
       child: PosListPage(
-      title: l10n.customerReportsTitle,
-      showSearch: false,
-      actions: [
-        if (_exportType != null)
-          PosButton.icon(
-            icon: Icons.download_rounded,
-            tooltip: l10n.reportsExportFormatTitle,
-            variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: _exportType!,
-              filters: _filters,
+        title: l10n.customerReportsTitle,
+        showSearch: false,
+        actions: [
+          if (_exportType != null)
+            PosButton.icon(
+              icon: Icons.download_rounded,
+              tooltip: l10n.reportsExportFormatTitle,
+              variant: PosButtonVariant.ghost,
+              onPressed: () => showReportExportSheet(context: context, reportType: _exportType!, filters: _filters),
             ),
-          ),
-      ],
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: PosTabs(
-              selectedIndex: _currentTab,
-              onChanged: (i) => setState(() {
-                _currentTab = i;
-                _onTabChanged(i);
-              }),
-              tabs: [
-                PosTabItem(label: l10n.customerReportsTopCustomers),
-                PosTabItem(label: l10n.customerReportsRetention),
-                PosTabItem(label: l10n.customerReportsNewVsReturning),
-                PosTabItem(label: l10n.customerReportsLoyalty),
-              ],
-            ),
-          ),
-          ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: () => _onTabChanged(_currentTab)),
-          Expanded(
-            child: IndexedStack(index: _currentTab, children: const [_TopCustomersTab(), _RetentionTab(), _NewVsReturningTab(), _LoyaltyTab()]),
-          ),
         ],
-      ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: PosTabs(
+                selectedIndex: _currentTab,
+                onChanged: (i) => setState(() {
+                  _currentTab = i;
+                  _onTabChanged(i);
+                }),
+                tabs: [
+                  PosTabItem(label: l10n.customerReportsTopCustomers),
+                  PosTabItem(label: l10n.customerReportsRetention),
+                  PosTabItem(label: l10n.customerReportsNewVsReturning),
+                  PosTabItem(label: l10n.customerReportsLoyalty),
+                ],
+              ),
+            ),
+            ReportFilterPanel(
+              filters: _filters,
+              onFiltersChanged: _onFiltersChanged,
+              onRefresh: () => _onTabChanged(_currentTab),
+            ),
+            Expanded(
+              child: IndexedStack(
+                index: _currentTab,
+                children: const [_TopCustomersTab(), _RetentionTab(), _NewVsReturningTab(), _LoyaltyTab()],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -338,7 +341,10 @@ class _NewVsReturningTab extends ConsumerWidget {
             child: ReportPieChart(
               data: [
                 {'label': l10n.reportsNew30d, 'value': data['new_customers_30d'] ?? 0},
-                {'label': l10n.reportsReturning30d, 'value': data['returning_customers_30d'] ?? data['active_customers_30d'] ?? 0},
+                {
+                  'label': l10n.reportsReturning30d,
+                  'value': data['returning_customers_30d'] ?? data['active_customers_30d'] ?? 0,
+                },
               ],
               labelKey: 'label',
               valueKey: 'value',
@@ -391,8 +397,14 @@ class _LoyaltyTab extends ConsumerWidget {
           ReportDataCard(
             child: Column(
               children: [
-                ReportStatRow(label: l10n.reportsLoyaltyBalance, value: formatCompact((data['total_loyalty_points'] as num?) ?? 0)),
-                ReportStatRow(label: l10n.reportsLoyaltyRedeemed, value: formatCompact((data['loyalty_points_redeemed'] as num?) ?? 0)),
+                ReportStatRow(
+                  label: l10n.reportsLoyaltyBalance,
+                  value: formatCompact((data['total_loyalty_points'] as num?) ?? 0),
+                ),
+                ReportStatRow(
+                  label: l10n.reportsLoyaltyRedeemed,
+                  value: formatCompact((data['loyalty_points_redeemed'] as num?) ?? 0),
+                ),
                 ReportStatRow(
                   label: l10n.reportsAvgLoyaltyPoints,
                   value: '${(data['avg_loyalty_points'] as num?)?.toStringAsFixed(0) ?? '0'} pts',

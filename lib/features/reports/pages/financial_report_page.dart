@@ -53,13 +53,8 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
   }
 
   // null = payment_methods and cash_variance have no backend export type
-  String? get _exportType => const [
-    'financial_pl',
-    'financial_expenses',
-    null,
-    'financial_delivery_commission',
-    null,
-  ][_currentTab];
+  String? get _exportType =>
+      const ['financial_pl', 'financial_expenses', null, 'financial_delivery_commission', null][_currentTab];
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +69,7 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
               icon: Icons.download_rounded,
               tooltip: l10n.reportsExportFormatTitle,
               variant: PosButtonVariant.ghost,
-              onPressed: () => showReportExportSheet(
-                context: context,
-                reportType: _exportType!,
-                filters: _filters,
-              ),
+              onPressed: () => showReportExportSheet(context: context, reportType: _exportType!, filters: _filters),
             ),
         ],
         child: Column(
@@ -110,7 +101,13 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
             Expanded(
               child: IndexedStack(
                 index: _currentTab,
-                children: const [_DailyPlTab(), _ExpensesTab(), _PaymentMethodSummaryTab(), _DeliveryCommissionTab(), _CashVarianceTab()],
+                children: const [
+                  _DailyPlTab(),
+                  _ExpensesTab(),
+                  _PaymentMethodSummaryTab(),
+                  _DeliveryCommissionTab(),
+                  _CashVarianceTab(),
+                ],
               ),
             ),
           ],
@@ -299,9 +296,7 @@ class _ExpensesTab extends ConsumerWidget {
                                     ),
                                     Text(
                                       l10n.reportNTransactions(txCount.toString()),
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                     ),
                                   ],
                                 ),
@@ -408,10 +403,7 @@ class _CashVarianceTab extends ConsumerWidget {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: color.withValues(alpha: 0.1),
-                                borderRadius: AppRadius.borderMd,
-                              ),
+                              decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                               child: Icon(
                                 isShort ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
                                 color: color,
@@ -478,25 +470,19 @@ class _DeliveryCommissionTab extends ConsumerWidget {
                 ),
                 ReportKpiCard(
                   label: l10n.reportsDeliveryGross,
-                  value: formatCurrency(
-                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_gross'] ?? 0,
-                  ),
+                  value: formatCurrency((data['totals'] as Map?)?.cast<String, dynamic>()['total_gross'] ?? 0),
                   icon: Icons.attach_money_rounded,
                   color: AppColors.primary,
                 ),
                 ReportKpiCard(
                   label: l10n.reportsDeliveryFee,
-                  value: formatCurrency(
-                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_commission'] ?? 0,
-                  ),
+                  value: formatCurrency((data['totals'] as Map?)?.cast<String, dynamic>()['total_commission'] ?? 0),
                   icon: Icons.percent_rounded,
                   color: AppColors.warning,
                 ),
                 ReportKpiCard(
                   label: l10n.reportsDeliveryNet,
-                  value: formatCurrency(
-                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_net'] ?? 0,
-                  ),
+                  value: formatCurrency((data['totals'] as Map?)?.cast<String, dynamic>()['total_net'] ?? 0),
                   icon: Icons.account_balance_wallet_rounded,
                   color: AppColors.success,
                 ),
@@ -510,65 +496,70 @@ class _DeliveryCommissionTab extends ConsumerWidget {
               ReportDataCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
-                  children: List.generate(
-                    (data['platforms'] as List).length,
-                    (i) {
-                      final p = (data['platforms'] as List).cast<Map<String, dynamic>>()[i];
-                      final gross = (p['gross_sales'] as num?)?.toDouble() ?? 0;
-                      final commission = (p['total_commission'] as num?)?.toDouble() ?? 0;
-                      final net = (p['net_settlement'] as num?)?.toDouble() ?? 0;
-                      final rate = (p['commission_rate'] as num?)?.toDouble() ?? 0;
-                      final orders = (p['order_count'] as num?)?.toInt() ?? 0;
+                  children: List.generate((data['platforms'] as List).length, (i) {
+                    final p = (data['platforms'] as List).cast<Map<String, dynamic>>()[i];
+                    final gross = (p['gross_sales'] as num?)?.toDouble() ?? 0;
+                    final commission = (p['total_commission'] as num?)?.toDouble() ?? 0;
+                    final net = (p['net_settlement'] as num?)?.toDouble() ?? 0;
+                    final rate = (p['commission_rate'] as num?)?.toDouble() ?? 0;
+                    final orders = (p['order_count'] as num?)?.toInt() ?? 0;
 
-                      return Column(
-                        children: [
-                          if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary.withValues(alpha: 0.1),
-                                        borderRadius: AppRadius.borderMd,
-                                      ),
-                                      child: const Icon(Icons.delivery_dining_rounded, color: AppColors.primary, size: 18),
+                    return Column(
+                      children: [
+                        if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary.withValues(alpha: 0.1),
+                                      borderRadius: AppRadius.borderMd,
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            p['platform'] as String? ?? '',
-                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-                                          ),
-                                          Text(
-                                            l10n.reportNTransactions(orders.toString()),
-                                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              color: AppColors.mutedFor(context),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                    child: const Icon(Icons.delivery_dining_rounded, color: AppColors.primary, size: 18),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          p['platform'] as String? ?? '',
+                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          l10n.reportNTransactions(orders.toString()),
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                                        ),
+                                      ],
                                     ),
-                                    ReportBadge(label: formatPercent(rate), color: AppColors.warning),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                ReportStatRow(label: l10n.reportsDeliveryGross, value: formatCurrency(gross)),
-                                ReportStatRow(label: l10n.reportsDeliveryFee, value: '-${formatCurrency(commission)}', valueColor: AppColors.error),
-                                ReportStatRow(label: l10n.reportsDeliveryNet, value: formatCurrency(net), valueColor: AppColors.success),
-                              ],
-                            ),
+                                  ),
+                                  ReportBadge(label: formatPercent(rate), color: AppColors.warning),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              ReportStatRow(label: l10n.reportsDeliveryGross, value: formatCurrency(gross)),
+                              ReportStatRow(
+                                label: l10n.reportsDeliveryFee,
+                                value: '-${formatCurrency(commission)}',
+                                valueColor: AppColors.error,
+                              ),
+                              ReportStatRow(
+                                label: l10n.reportsDeliveryNet,
+                                value: formatCurrency(net),
+                                valueColor: AppColors.success,
+                              ),
+                            ],
                           ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
               ),
           ],
@@ -625,10 +616,7 @@ class _PaymentMethodSummaryTab extends ConsumerWidget {
                       Icon(Icons.payment_rounded, size: 18, color: AppColors.primary),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: Text(
-                          method,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-                        ),
+                        child: Text(method, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
                       ),
                       Text(
                         formatCurrency(amount),

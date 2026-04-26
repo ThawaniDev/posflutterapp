@@ -18,7 +18,6 @@ final salesSummaryProvider = StateNotifierProvider<SalesSummaryNotifier, SalesSu
 });
 
 class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
-
   SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
   final ReportRepository _repo;
 
@@ -44,7 +43,6 @@ final productPerformanceProvider = StateNotifierProvider<ProductPerformanceNotif
 });
 
 class ProductPerformanceNotifier extends StateNotifier<ProductPerformanceState> {
-
   ProductPerformanceNotifier(this._repo) : super(const ProductPerformanceInitial());
   final ReportRepository _repo;
 
@@ -66,7 +64,6 @@ final categoryBreakdownProvider = StateNotifierProvider<CategoryBreakdownNotifie
 });
 
 class CategoryBreakdownNotifier extends StateNotifier<CategoryBreakdownState> {
-
   CategoryBreakdownNotifier(this._repo) : super(const CategoryBreakdownInitial());
   final ReportRepository _repo;
 
@@ -88,7 +85,6 @@ final staffPerformanceProvider = StateNotifierProvider<StaffPerformanceNotifier,
 });
 
 class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
-
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
   final ReportRepository _repo;
 
@@ -110,7 +106,6 @@ final hourlySalesProvider = StateNotifierProvider<HourlySalesNotifier, HourlySal
 });
 
 class HourlySalesNotifier extends StateNotifier<HourlySalesState> {
-
   HourlySalesNotifier(this._repo) : super(const HourlySalesInitial());
   final ReportRepository _repo;
 
@@ -132,7 +127,6 @@ final paymentMethodsProvider = StateNotifierProvider<PaymentMethodsNotifier, Pay
 });
 
 class PaymentMethodsNotifier extends StateNotifier<PaymentMethodsState> {
-
   PaymentMethodsNotifier(this._repo) : super(const PaymentMethodsInitial());
   final ReportRepository _repo;
 
@@ -154,7 +148,6 @@ final dashboardProvider = StateNotifierProvider<DashboardNotifier, DashboardStat
 });
 
 class DashboardNotifier extends StateNotifier<DashboardState> {
-
   DashboardNotifier(this._repo) : super(const DashboardInitial());
   final ReportRepository _repo;
 
@@ -180,7 +173,6 @@ final inventoryValuationProvider = StateNotifierProvider<InventoryValuationNotif
 });
 
 class InventoryValuationNotifier extends StateNotifier<InventoryValuationState> {
-
   InventoryValuationNotifier(this._repo) : super(const InventoryValuationInitial());
   final ReportRepository _repo;
 
@@ -202,7 +194,6 @@ final inventoryTurnoverProvider = StateNotifierProvider<InventoryTurnoverNotifie
 });
 
 class InventoryTurnoverNotifier extends StateNotifier<InventoryTurnoverState> {
-
   InventoryTurnoverNotifier(this._repo) : super(const InventoryTurnoverInitial());
   final ReportRepository _repo;
 
@@ -224,7 +215,6 @@ final inventoryShrinkageProvider = StateNotifierProvider<InventoryShrinkageNotif
 });
 
 class InventoryShrinkageNotifier extends StateNotifier<InventoryShrinkageState> {
-
   InventoryShrinkageNotifier(this._repo) : super(const InventoryShrinkageInitial());
   final ReportRepository _repo;
 
@@ -246,7 +236,6 @@ final inventoryLowStockProvider = StateNotifierProvider<InventoryLowStockNotifie
 });
 
 class InventoryLowStockNotifier extends StateNotifier<InventoryLowStockState> {
-
   InventoryLowStockNotifier(this._repo) : super(const InventoryLowStockInitial());
   final ReportRepository _repo;
 
@@ -268,7 +257,6 @@ final financialDailyPlProvider = StateNotifierProvider<FinancialDailyPlNotifier,
 });
 
 class FinancialDailyPlNotifier extends StateNotifier<FinancialDailyPlState> {
-
   FinancialDailyPlNotifier(this._repo) : super(const FinancialDailyPlInitial());
   final ReportRepository _repo;
 
@@ -293,7 +281,6 @@ final financialExpensesProvider = StateNotifierProvider<FinancialExpensesNotifie
 });
 
 class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
-
   FinancialExpensesNotifier(this._repo) : super(const FinancialExpensesInitial());
   final ReportRepository _repo;
 
@@ -318,7 +305,6 @@ final cashVarianceProvider = StateNotifierProvider<CashVarianceNotifier, CashVar
 });
 
 class CashVarianceNotifier extends StateNotifier<CashVarianceState> {
-
   CashVarianceNotifier(this._repo) : super(const CashVarianceInitial());
   final ReportRepository _repo;
 
@@ -340,7 +326,6 @@ final topCustomersProvider = StateNotifierProvider<TopCustomersNotifier, TopCust
 });
 
 class TopCustomersNotifier extends StateNotifier<TopCustomersState> {
-
   TopCustomersNotifier(this._repo) : super(const TopCustomersInitial());
   final ReportRepository _repo;
 
@@ -362,7 +347,6 @@ final customerRetentionProvider = StateNotifierProvider<CustomerRetentionNotifie
 });
 
 class CustomerRetentionNotifier extends StateNotifier<CustomerRetentionState> {
-
   CustomerRetentionNotifier(this._repo) : super(const CustomerRetentionInitial());
   final ReportRepository _repo;
 
@@ -384,7 +368,6 @@ final inventoryExpiryProvider = StateNotifierProvider<InventoryExpiryNotifier, I
 });
 
 class InventoryExpiryNotifier extends StateNotifier<InventoryExpiryState> {
-
   InventoryExpiryNotifier(this._repo) : super(const InventoryExpiryInitial());
   final ReportRepository _repo;
 
@@ -406,7 +389,6 @@ final deliveryCommissionProvider = StateNotifierProvider<DeliveryCommissionNotif
 });
 
 class DeliveryCommissionNotifier extends StateNotifier<DeliveryCommissionState> {
-
   DeliveryCommissionNotifier(this._repo) : super(const DeliveryCommissionInitial());
   final ReportRepository _repo;
 
@@ -428,15 +410,10 @@ final reportExportProvider = StateNotifierProvider<ReportExportNotifier, ReportE
 });
 
 class ReportExportNotifier extends StateNotifier<ReportExportState> {
-
   ReportExportNotifier(this._repo) : super(const ReportExportInitial());
   final ReportRepository _repo;
 
-  Future<void> export({
-    required String reportType,
-    required String format,
-    ReportFilters filters = const ReportFilters(),
-  }) async {
+  Future<void> export({required String reportType, required String format, ReportFilters filters = const ReportFilters()}) async {
     state = const ReportExportLoading();
     try {
       await _repo.exportReport(reportType: reportType, format: format, filters: filters);
@@ -456,7 +433,6 @@ final scheduledReportsProvider = StateNotifierProvider<ScheduledReportsNotifier,
 });
 
 class ScheduledReportsNotifier extends StateNotifier<ScheduledReportsState> {
-
   ScheduledReportsNotifier(this._repo) : super(const ScheduledReportsInitial());
   final ReportRepository _repo;
 
@@ -496,9 +472,7 @@ class ScheduledReportsNotifier extends StateNotifier<ScheduledReportsState> {
       await _repo.deleteScheduledReport(id);
       if (state is ScheduledReportsLoaded) {
         final current = (state as ScheduledReportsLoaded).schedules;
-        state = ScheduledReportsLoaded(
-          schedules: current.where((s) => s['id'] != id).toList(),
-        );
+        state = ScheduledReportsLoaded(schedules: current.where((s) => s['id'] != id).toList());
       }
     } catch (e) {
       state = ScheduledReportsError(message: _reportErrorMessage(e));

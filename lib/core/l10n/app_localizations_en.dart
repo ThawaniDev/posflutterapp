@@ -633,8 +633,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportCloseTicket => 'Close Ticket';
 
   @override
-  String get supportCloseConfirmation =>
-      'Are you sure you want to close this ticket?';
+  String get supportCloseConfirmation => 'Are you sure you want to close this ticket?';
 
   @override
   String get supportCancel => 'Cancel';
@@ -711,8 +710,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get branchesDeleteBranch => 'Delete Branch';
 
   @override
-  String get branchesDeleteConfirm =>
-      'Are you sure you want to delete this branch? This action cannot be undone.';
+  String get branchesDeleteConfirm => 'Are you sure you want to delete this branch? This action cannot be undone.';
 
   @override
   String get branchesBranchDetail => 'Branch Details';
@@ -886,8 +884,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get branchesCopyWorkingHours => 'Copy Working Hours';
 
   @override
-  String get branchesCopyWorkingHoursFrom =>
-      'Copy working hours from another branch';
+  String get branchesCopyWorkingHoursFrom => 'Copy working hours from another branch';
 
   @override
   String get branchesSelectSource => 'Select Source Branch';
@@ -999,8 +996,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get branchesCannotDeleteMain => 'Cannot delete the main branch';
 
   @override
-  String get branchesCannotDeleteWithTransactions =>
-      'Cannot delete a branch with existing transactions';
+  String get branchesCannotDeleteWithTransactions => 'Cannot delete a branch with existing transactions';
 
   @override
   String get deliveryIntegration => 'Delivery Integration';
@@ -1035,8 +1031,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryNoPlatforms => 'No platforms connected';
 
   @override
-  String get deliveryConfigurePlatform =>
-      'Configure a delivery platform from the Overview tab';
+  String get deliveryConfigurePlatform => 'Configure a delivery platform from the Overview tab';
 
   @override
   String get deliveryNoOrders => 'No delivery orders yet';
@@ -1072,8 +1067,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryAutoAccept => 'Auto Accept Orders';
 
   @override
-  String get deliveryAutoAcceptDesc =>
-      'Automatically accept incoming delivery orders';
+  String get deliveryAutoAcceptDesc => 'Automatically accept incoming delivery orders';
 
   @override
   String get deliveryCreated => 'Created';
@@ -1181,8 +1175,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliverySyncOnChange => 'Sync on Product Change';
 
   @override
-  String get deliverySyncOnChangeDesc =>
-      'Automatically sync menu when products are updated';
+  String get deliverySyncOnChangeDesc => 'Automatically sync menu when products are updated';
 
   @override
   String get deliverySyncing => 'Syncing...';
@@ -1200,8 +1193,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryTriggerSync => 'Trigger Menu Sync';
 
   @override
-  String get deliveryTriggerSyncDesc =>
-      'Sync your product menu with delivery platforms';
+  String get deliveryTriggerSyncDesc => 'Sync your product menu with delivery platforms';
 
   @override
   String get deliveryViewPending => 'View Pending';
@@ -1372,22 +1364,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thawaniAutoSyncProducts => 'Auto-sync Products';
 
   @override
-  String get thawaniAutoSyncProductsDesc =>
-      'Automatically sync products to Thawani marketplace';
+  String get thawaniAutoSyncProductsDesc => 'Automatically sync products to Thawani marketplace';
 
   @override
   String get thawaniAutoSyncInventory => 'Auto-sync Inventory';
 
   @override
-  String get thawaniAutoSyncInventoryDesc =>
-      'Keep stock levels synced in real-time';
+  String get thawaniAutoSyncInventoryDesc => 'Keep stock levels synced in real-time';
 
   @override
   String get thawaniAutoAcceptOrders => 'Auto-accept Orders';
 
   @override
-  String get thawaniAutoAcceptOrdersDesc =>
-      'Automatically accept incoming Thawani orders';
+  String get thawaniAutoAcceptOrdersDesc => 'Automatically accept incoming Thawani orders';
 
   @override
   String get thawaniCommissionRate => 'Commission Rate';
@@ -1399,8 +1388,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thawaniOrdersPlaceholder => 'Thawani Orders';
 
   @override
-  String get thawaniOrdersDesc =>
-      'Orders from Thawani marketplace will appear here';
+  String get thawaniOrdersDesc => 'Orders from Thawani marketplace will appear here';
 
   @override
   String get settingsGeneral => 'General';
@@ -1409,8 +1397,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLocalization => 'Localization';
 
   @override
-  String get settingsLocalizationDesc =>
-      'Languages, translations & regional settings';
+  String get settingsLocalizationDesc => 'Languages, translations & regional settings';
 
   @override
   String get settingsStoreProfile => 'Store Profile';
@@ -1473,8 +1460,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPosBehavior => 'POS Behavior';
 
   @override
-  String get settingsPosBehaviorDesc =>
-      'Sales, returns, inventory & loyalty settings';
+  String get settingsPosBehaviorDesc => 'Sales, returns, inventory & loyalty settings';
 
   @override
   String get settingsSaved => 'Settings saved';
@@ -1510,8 +1496,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPricesIncludeTax => 'Prices Include Tax';
 
   @override
-  String get settingsPricesIncludeTaxDesc =>
-      'Product prices already include tax';
+  String get settingsPricesIncludeTaxDesc => 'Product prices already include tax';
 
   @override
   String get settingsTaxConfig => 'Tax Configuration';
@@ -1637,19 +1622,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPosManagerRefund => 'Manager Approval for Refunds';
 
   @override
-  String get settingsPosManagerRefundDesc =>
-      'Require manager PIN for refund transactions';
+  String get settingsPosManagerRefundDesc => 'Require manager PIN for refund transactions';
 
   @override
   String get settingsPosManagerDiscount => 'Manager Approval for Discounts';
 
   @override
-  String get settingsPosManagerDiscountDesc =>
-      'Require manager PIN when applying discounts';
+  String get settingsPosManagerDiscountDesc => 'Require manager PIN when applying discounts';
 
   @override
-  String get settingsPosReturnWithoutReceiptPolicy =>
-      'Return Without Receipt Policy';
+  String get settingsPosReturnWithoutReceiptPolicy => 'Return Without Receipt Policy';
 
   @override
   String get settingsPosReturnPolicyDeny => 'Deny (no return without receipt)';
@@ -1929,15 +1911,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessibilityScreenReader => 'Screen Reader Support';
 
   @override
-  String get accessibilityScreenReaderDesc =>
-      'Optimize for screen reader software';
+  String get accessibilityScreenReaderDesc => 'Optimize for screen reader software';
 
   @override
   String get accessibilityVisual => 'Visual';
 
   @override
-  String get accessibilityHighContrastDesc =>
-      'Increase contrast for better visibility';
+  String get accessibilityHighContrastDesc => 'Increase contrast for better visibility';
 
   @override
   String get accessibilityColorBlind => 'Color Blind Mode';
@@ -1946,8 +1926,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessibilityReducedMotion => 'Reduced Motion';
 
   @override
-  String get accessibilityReducedMotionDesc =>
-      'Minimize animations and transitions';
+  String get accessibilityReducedMotionDesc => 'Minimize animations and transitions';
 
   @override
   String get accessibilityAudio => 'Audio';
@@ -1962,15 +1941,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessibilityLargeTouchTargets => 'Large Touch Targets';
 
   @override
-  String get accessibilityLargeTouchTargetsDesc =>
-      'Increase button and control sizes';
+  String get accessibilityLargeTouchTargetsDesc => 'Increase button and control sizes';
 
   @override
   String get accessibilityVisibleFocus => 'Visible Focus Indicators';
 
   @override
-  String get accessibilityVisibleFocusDesc =>
-      'Show clear focus outlines on controls';
+  String get accessibilityVisibleFocusDesc => 'Show clear focus outlines on controls';
 
   @override
   String get accessibilityShortcutsPOS => 'POS';
@@ -2124,8 +2101,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoUpdateEnable => 'Auto Update';
 
   @override
-  String get autoUpdateEnableDesc =>
-      'Automatically download and install updates';
+  String get autoUpdateEnableDesc => 'Automatically download and install updates';
 
   @override
   String get autoUpdateMaintenanceWindow => 'Maintenance Window';
@@ -2137,8 +2113,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoUpdateWindowEnd => 'End Hour';
 
   @override
-  String get autoUpdateWindowDesc =>
-      'Updates will be installed during this window';
+  String get autoUpdateWindowDesc => 'Updates will be installed during this window';
 
   @override
   String get autoUpdateChannel => 'Update Channel';
@@ -2156,8 +2131,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoUpdateRequired => 'Required Update';
 
   @override
-  String get autoUpdateForceDesc =>
-      'This update is required and must be installed to continue.';
+  String get autoUpdateForceDesc => 'This update is required and must be installed to continue.';
 
   @override
   String get autoUpdateWhatsNew => 'What\'s New';
@@ -2553,8 +2527,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pharmacyDaysFilter => 'Days';
 
   @override
-  String get pharmacyNoExpiryAlerts =>
-      'No items expiring within the selected period';
+  String get pharmacyNoExpiryAlerts => 'No items expiring within the selected period';
 
   @override
   String get pharmacySeverityExpired => 'Expired';
@@ -2920,8 +2893,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffCreateUserAccount => 'Create User Account';
 
   @override
-  String get staffCreateUserAccountDesc =>
-      'Create a login account for this staff member to access the POS system';
+  String get staffCreateUserAccountDesc => 'Create a login account for this staff member to access the POS system';
 
   @override
   String get staffUserAccountLinked => 'User Account Linked';
@@ -2993,8 +2965,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffSystemName => 'System Name';
 
   @override
-  String get staffSystemNameHelper =>
-      'Auto-generated, must be unique lowercase';
+  String get staffSystemNameHelper => 'Auto-generated, must be unique lowercase';
 
   @override
   String get staffSystemNameNoChange => 'Cannot be changed after creation';
@@ -3010,12 +2981,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String staffPermissionCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'permissions',
-      one: 'permission',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: 'permissions', one: 'permission');
     return '$count $_temp0';
   }
 
@@ -3074,8 +3040,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffDeleteShift => 'Delete Shift';
 
   @override
-  String get staffDeleteShiftConfirm =>
-      'Delete this shift? This cannot be undone.';
+  String get staffDeleteShiftConfirm => 'Delete this shift? This cannot be undone.';
 
   @override
   String get staffShiftsTab => 'Shifts';
@@ -3096,8 +3061,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffDeleteTemplate => 'Delete Template';
 
   @override
-  String get staffDeleteTemplateConfirm =>
-      'Delete this template? This cannot be undone.';
+  String get staffDeleteTemplateConfirm => 'Delete this template? This cannot be undone.';
 
   @override
   String get staffTemplateCreated => 'Template created';
@@ -3303,8 +3267,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscriptionCancelConfirmTitle => 'Cancel Subscription?';
 
   @override
-  String get subscriptionCancelConfirmMessage =>
-      'Are you sure you want to cancel? You may lose access to premium features.';
+  String get subscriptionCancelConfirmMessage => 'Are you sure you want to cancel? You may lose access to premium features.';
 
   @override
   String get subscriptionCancelReasonLabel => 'Reason (optional)';
@@ -3328,8 +3291,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscriptionNoActiveSubscription => 'No Active Subscription';
 
   @override
-  String get subscriptionChoosePlan =>
-      'Choose a plan to get started with your POS.';
+  String get subscriptionChoosePlan => 'Choose a plan to get started with your POS.';
 
   @override
   String get subscriptionBrowsePlans => 'Browse Plans';
@@ -3358,11 +3320,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String subscriptionSubscribeConfirm(
-    String planName,
-    String billingCycle,
-    String price,
-  ) {
+  String subscriptionSubscribeConfirm(String planName, String billingCycle, String price) {
     return 'You will be subscribed to $planName on a $billingCycle basis.\n\nPrice: $price /$billingCycle';
   }
 
@@ -3406,15 +3364,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get subscriptionGracePeriodEndsToday =>
-      'Grace period ends today. Renew immediately.';
+  String get subscriptionGracePeriodEndsToday => 'Grace period ends today. Renew immediately.';
 
   @override
   String get subscriptionExpired => 'Subscription Expired';
 
   @override
-  String get subscriptionExpiredMessage =>
-      'Your subscription has expired. Renew now to restore access.';
+  String get subscriptionExpiredMessage => 'Your subscription has expired. Renew now to restore access.';
 
   @override
   String get subscriptionRenewNow => 'Renew Now';
@@ -3432,8 +3388,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscriptionDownloading => 'Downloading...';
 
   @override
-  String get subscriptionPdfNotAvailable =>
-      'PDF not available for this invoice';
+  String get subscriptionPdfNotAvailable => 'PDF not available for this invoice';
 
   @override
   String get subscriptionPdfOpenFailed => 'Could not open PDF';
@@ -3574,8 +3529,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscriptionFeatureGated => 'Feature Not Available';
 
   @override
-  String get subscriptionFeatureGatedMessage =>
-      'This feature requires a higher plan. Upgrade to access it.';
+  String get subscriptionFeatureGatedMessage => 'This feature requires a higher plan. Upgrade to access it.';
 
   @override
   String get subscriptionLimitReached => 'Limit Reached';
@@ -3660,8 +3614,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffUnlinkTitle => 'Unlink User Account';
 
   @override
-  String get staffUnlinkConfirm =>
-      'Are you sure you want to unlink this user account from this staff member?';
+  String get staffUnlinkConfirm => 'Are you sure you want to unlink this user account from this staff member?';
 
   @override
   String get staffLinkSuccess => 'User account linked successfully';
@@ -3670,8 +3623,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffUnlinkSuccess => 'User account unlinked successfully';
 
   @override
-  String get staffLinkNone =>
-      'No user account linked. Link a user account to allow this staff member to log in.';
+  String get staffLinkNone => 'No user account linked. Link a user account to allow this staff member to log in.';
 
   @override
   String get staffLinkNoUsers => 'No available users to link';
@@ -3698,8 +3650,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get layoutNoTemplates => 'No layout templates';
 
   @override
-  String get layoutNoTemplatesSubtitle =>
-      'Create a layout template to get started or browse the marketplace.';
+  String get layoutNoTemplatesSubtitle => 'Create a layout template to get started or browse the marketplace.';
 
   @override
   String get layoutDefault => 'Default';
@@ -3747,8 +3698,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get layoutVersions => 'Versions';
 
   @override
-  String get layoutSelectWidget =>
-      'Select a widget on the canvas to edit its properties';
+  String get layoutSelectWidget => 'Select a widget on the canvas to edit its properties';
 
   @override
   String get layoutPosition => 'Position';
@@ -3906,8 +3856,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelNoTemplates => 'No Templates';
 
   @override
-  String get labelNoTemplatesSubtitle =>
-      'Create your first label template to get started';
+  String get labelNoTemplatesSubtitle => 'Create your first label template to get started';
 
   @override
   String get labelPrintQueue => 'Print Queue';
@@ -3970,8 +3919,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelNoHistory => 'No Print History';
 
   @override
-  String get labelNoHistorySubtitle =>
-      'Print history will appear here after printing labels';
+  String get labelNoHistorySubtitle => 'Print history will appear here after printing labels';
 
   @override
   String get marketplaceTitle => 'Template Marketplace';
@@ -4001,8 +3949,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplaceNoListings => 'No templates found';
 
   @override
-  String get marketplaceNoListingsSubtitle =>
-      'Try adjusting your search or filters.';
+  String get marketplaceNoListingsSubtitle => 'Try adjusting your search or filters.';
 
   @override
   String get marketplacePage => 'Page';
@@ -4047,8 +3994,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplaceWriteReview => 'Write a Review';
 
   @override
-  String get marketplaceReviewHint =>
-      'Share your experience with this template...';
+  String get marketplaceReviewHint => 'Share your experience with this template...';
 
   @override
   String get marketplaceSubmitReview => 'Submit Review';
@@ -4060,8 +4006,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplacePurchaseConfirm => 'Confirm Purchase';
 
   @override
-  String get marketplacePurchaseFreeConfirm =>
-      'Would you like to add this free template?';
+  String get marketplacePurchaseFreeConfirm => 'Would you like to add this free template?';
 
   @override
   String get marketplacePurchaseChargeConfirm => 'You will be charged';
@@ -4079,15 +4024,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplaceNoPurchases => 'No purchases yet';
 
   @override
-  String get marketplaceNoPurchasesSubtitle =>
-      'Browse the marketplace to find templates.';
+  String get marketplaceNoPurchasesSubtitle => 'Browse the marketplace to find templates.';
 
   @override
   String get marketplaceNoInvoices => 'No invoices';
 
   @override
-  String get marketplaceNoInvoicesSubtitle =>
-      'Invoices will appear when you make a purchase.';
+  String get marketplaceNoInvoicesSubtitle => 'Invoices will appear when you make a purchase.';
 
   @override
   String get marketplaceTemplateName => 'Template Name';
@@ -4120,8 +4063,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplaceCancelPurchase => 'Cancel Purchase';
 
   @override
-  String get marketplaceCancelConfirm =>
-      'Are you sure you want to cancel this purchase?';
+  String get marketplaceCancelConfirm => 'Are you sure you want to cancel this purchase?';
 
   @override
   String get marketplacePurchaseId => 'Purchase';
@@ -4277,8 +4219,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noActiveCashSession => 'No Active Cash Session';
 
   @override
-  String get openSessionPrompt =>
-      'Open a session to start accepting cash payments';
+  String get openSessionPrompt => 'Open a session to start accepting cash payments';
 
   @override
   String get openCashSession => 'Open Cash Session';
@@ -4543,8 +4484,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentBankTransfer => 'Bank Transfer';
 
   @override
-  String get offlineChangesSynced =>
-      'Offline — changes will sync when connected';
+  String get offlineChangesSynced => 'Offline — changes will sync when connected';
 
   @override
   String get syncing => 'Syncing...';
@@ -4599,8 +4539,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkingConnectivity => 'Checking connectivity...';
 
   @override
-  String get noInternetPrompt =>
-      'No internet connection. Please connect and try again.';
+  String get noInternetPrompt => 'No internet connection. Please connect and try again.';
 
   @override
   String get downloadingData => 'Downloading data...';
@@ -4632,8 +4571,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminTerminals => 'Admin — Terminals';
 
   @override
-  String get adminTerminalsSubtitle =>
-      'Manage all POS terminals & SoftPOS configuration';
+  String get adminTerminalsSubtitle => 'Manage all POS terminals & SoftPOS configuration';
 
   @override
   String get addTerminal => 'Add Terminal';
@@ -4654,8 +4592,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteTerminalTitle => 'Delete Terminal?';
 
   @override
-  String get deleteTerminalMessage =>
-      'Deleting this terminal cannot be undone.';
+  String get deleteTerminalMessage => 'Deleting this terminal cannot be undone.';
 
   @override
   String get toggleStatusTitle => 'Toggle Status';
@@ -4682,8 +4619,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get softposConfiguration => 'SoftPOS / NearPay Configuration';
 
   @override
-  String get softposConfigSubtitle =>
-      'NFC tap-to-pay settings and acquirer info';
+  String get softposConfigSubtitle => 'NFC tap-to-pay settings and acquirer info';
 
   @override
   String get nearpayTid => 'NearPay Terminal ID (TID)';
@@ -4719,8 +4655,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get softposDeactivated => 'SoftPOS deactivated.';
 
   @override
-  String get softposActivationFailed =>
-      'Activation failed. Ensure NearPay TID and acquirer are set.';
+  String get softposActivationFailed => 'Activation failed. Ensure NearPay TID and acquirer are set.';
 
   @override
   String get softposActive => 'SoftPOS Active';
@@ -4843,8 +4778,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posStartShift => 'Start Your Shift';
 
   @override
-  String get posStartShiftDesc =>
-      'Open a cash session to start processing transactions';
+  String get posStartShiftDesc => 'Open a cash session to start processing transactions';
 
   @override
   String get posOpenShift => 'Open Shift';
@@ -4943,8 +4877,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posNoProducts => 'No products found';
 
   @override
-  String get posNoProductsHint =>
-      'Try a different search or check your catalog.';
+  String get posNoProductsHint => 'Try a different search or check your catalog.';
 
   @override
   String posProductAdded(Object name) {
@@ -4989,8 +4922,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get posFindTransaction =>
-      'Enter a receipt number to find the transaction';
+  String get posFindTransaction => 'Enter a receipt number to find the transaction';
 
   @override
   String get posTransactionNotFound => 'Transaction not found';
@@ -5016,8 +4948,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posTotalWithTip => 'Total with Tip';
 
   @override
-  String get posPaymentTotalInsufficient =>
-      'Payment total does not cover the amount due';
+  String get posPaymentTotalInsufficient => 'Payment total does not cover the amount due';
 
   @override
   String posReturnQtyExceedsOriginal(String product, String max) {
@@ -5149,8 +5080,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posStartYourShift => 'Start Your Shift';
 
   @override
-  String get posOpenShiftDescription =>
-      'Open a cash session to start processing transactions';
+  String get posOpenShiftDescription => 'Open a cash session to start processing transactions';
 
   @override
   String get posNotes => 'Notes';
@@ -5170,8 +5100,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posNoProductsFound => 'No products found';
 
   @override
-  String get posNoProductsSubtitle =>
-      'Try a different search or check your catalog.';
+  String get posNoProductsSubtitle => 'Try a different search or check your catalog.';
 
   @override
   String get posTapProductsToAdd => 'Tap products to add them';
@@ -5227,8 +5156,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posClosingCashCount => 'Closing Cash Count';
 
   @override
-  String get posInvalidClosingCash =>
-      'Please enter a valid closing cash amount';
+  String get posInvalidClosingCash => 'Please enter a valid closing cash amount';
 
   @override
   String get posSearchCustomerHint => 'Search by name, phone, loyalty code...';
@@ -5285,8 +5213,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get posTotalNotCovered =>
-      'Total paid does not cover the outstanding amount';
+  String get posTotalNotCovered => 'Total paid does not cover the outstanding amount';
 
   @override
   String get posReceiptTransactionNumber => 'Receipt / Transaction number';
@@ -5311,15 +5238,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get posEnterReceiptNumber =>
-      'Enter a receipt number to find the transaction';
+  String get posEnterReceiptNumber => 'Enter a receipt number to find the transaction';
 
   @override
   String get posOpenPosSession => 'Open POS Session';
 
   @override
-  String get posOpenPosSessionSubtitle =>
-      'Enter the opening cash amount for this session.';
+  String get posOpenPosSessionSubtitle => 'Enter the opening cash amount for this session.';
 
   @override
   String get posOpeningCashLabel => 'Opening Cash';
@@ -5334,8 +5259,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posCloseSession => 'Close Session';
 
   @override
-  String get posCloseSessionSubtitle =>
-      'Enter the closing cash amount to close this session.';
+  String get posCloseSessionSubtitle => 'Enter the closing cash amount to close this session.';
 
   @override
   String get posSessionClosed => 'Session closed.';
@@ -5377,8 +5301,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posNoSessionsFound => 'No sessions found';
 
   @override
-  String get posOpenSessionSubtitle =>
-      'Open a POS session to start processing transactions.';
+  String get posOpenSessionSubtitle => 'Open a POS session to start processing transactions.';
 
   @override
   String get posEditTerminal => 'Edit Terminal';
@@ -5476,8 +5399,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get posFailedUpdateTerminalStatus =>
-      'Failed to update terminal status.';
+  String get posFailedUpdateTerminalStatus => 'Failed to update terminal status.';
 
   @override
   String get posActivated => 'activated';
@@ -5525,8 +5447,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posNoTerminalsFound => 'No terminals found';
 
   @override
-  String get posNoTerminalsSubtitle =>
-      'Add your first POS terminal to get started.';
+  String get posNoTerminalsSubtitle => 'Add your first POS terminal to get started.';
 
   @override
   String get posOff => 'Off';
@@ -5573,8 +5494,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posNoActiveCashSession => 'No Active Cash Session';
 
   @override
-  String get posOpenCashSessionDescription =>
-      'Open a session to start accepting cash payments';
+  String get posOpenCashSessionDescription => 'Open a session to start accepting cash payments';
 
   @override
   String get posOpenCashSession => 'Open Cash Session';
@@ -5677,8 +5597,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinLoginSubtitle => 'Quick switch — enter your 4-digit PIN';
 
   @override
-  String get pinLoginNoStoreSession =>
-      'No store session found. Please sign in with email.';
+  String get pinLoginNoStoreSession => 'No store session found. Please sign in with email.';
 
   @override
   String get pinLoginSignInWithEmail => 'Sign in with email instead';
@@ -5724,8 +5643,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockNoLowStockProducts => 'No products are below reorder point.';
 
   @override
-  String get stockLevelsEmptySubtitle =>
-      'Stock levels will appear once products receive inventory.';
+  String get stockLevelsEmptySubtitle => 'Stock levels will appear once products receive inventory.';
 
   @override
   String get stockAdjustReasonDamaged => 'Damaged';
@@ -5752,12 +5670,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockAdjustReasonOther => 'Other';
 
   @override
-  String get stockTransferApproveConfirm =>
-      'Approve this transfer? This will deduct stock from the source store.';
+  String get stockTransferApproveConfirm => 'Approve this transfer? This will deduct stock from the source store.';
 
   @override
-  String get stockTransferReceiveConfirm =>
-      'Mark this transfer as received? Stock will be added to the destination store.';
+  String get stockTransferReceiveConfirm => 'Mark this transfer as received? Stock will be added to the destination store.';
 
   @override
   String get stockTransferCancelConfirm => 'Cancel this transfer?';
@@ -5901,8 +5817,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cashMgmtNoActiveSession => 'No Active Session';
 
   @override
-  String get cashMgmtNoActiveSessionSubtitle =>
-      'Open a cash session to start processing transactions';
+  String get cashMgmtNoActiveSessionSubtitle => 'Open a cash session to start processing transactions';
 
   @override
   String get cashMgmtNoSessions => 'No sessions';
@@ -6111,8 +6026,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryGoodsReceipts => 'Goods Receipts';
 
   @override
-  String get inventoryGoodsReceiptsSubtitle =>
-      'Receive and verify incoming stock shipments';
+  String get inventoryGoodsReceiptsSubtitle => 'Receive and verify incoming stock shipments';
 
   @override
   String get inventoryIncrease => 'Increase';
@@ -6171,8 +6085,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryNoGoodsReceipts => 'No goods receipts';
 
   @override
-  String get inventoryNoGoodsReceiptsHint =>
-      'Create a goods receipt to track incoming stock.';
+  String get inventoryNoGoodsReceiptsHint => 'Create a goods receipt to track incoming stock.';
 
   @override
   String get inventoryNoMovements => 'No movements';
@@ -6184,8 +6097,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryNoRecipes => 'No recipes';
 
   @override
-  String get inventoryNoRecipesHint =>
-      'Create a recipe to track product ingredients.';
+  String get inventoryNoRecipesHint => 'Create a recipe to track product ingredients.';
 
   @override
   String get inventoryNoStockLevels => 'No stock levels';
@@ -6227,8 +6139,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryPurchaseOrders => 'Purchase Orders';
 
   @override
-  String get inventoryPurchaseOrdersSubtitle =>
-      'Create and manage supplier purchase orders';
+  String get inventoryPurchaseOrdersSubtitle => 'Create and manage supplier purchase orders';
 
   @override
   String get inventoryQuantity => 'Quantity';
@@ -6258,8 +6169,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryRecipes => 'Recipes';
 
   @override
-  String get inventoryRecipesSubtitle =>
-      'Define product ingredients and yields';
+  String get inventoryRecipesSubtitle => 'Define product ingredients and yields';
 
   @override
   String get inventoryRef => 'Ref';
@@ -6307,29 +6217,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryStockAdjustments => 'Stock Adjustments';
 
   @override
-  String get inventoryStockAdjustmentsSubtitle =>
-      'Record inventory corrections and write-offs';
+  String get inventoryStockAdjustmentsSubtitle => 'Record inventory corrections and write-offs';
 
   @override
   String get inventoryStockLevels => 'Stock Levels';
 
   @override
-  String get inventoryStockLevelsSubtitle =>
-      'Monitor current inventory across all products';
+  String get inventoryStockLevelsSubtitle => 'Monitor current inventory across all products';
 
   @override
   String get inventoryStockMovements => 'Stock Movements';
 
   @override
-  String get inventoryStockMovementsSubtitle =>
-      'Track all inventory ins and outs';
+  String get inventoryStockMovementsSubtitle => 'Track all inventory ins and outs';
 
   @override
   String get inventoryStockTransfers => 'Stock Transfers';
 
   @override
-  String get inventoryStockTransfersSubtitle =>
-      'Move stock between stores or warehouses';
+  String get inventoryStockTransfersSubtitle => 'Move stock between stores or warehouses';
 
   @override
   String get inventorySupplier => 'Supplier';
@@ -6371,8 +6277,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsInventoryAlerts => 'Inventory Alerts';
 
   @override
-  String get notificationsInventoryAlertsSubtitle =>
-      'Low stock and reorder notifications';
+  String get notificationsInventoryAlertsSubtitle => 'Low stock and reorder notifications';
 
   @override
   String get notificationsMarkAllAsRead => 'Mark all as read';
@@ -6390,8 +6295,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsOrderUpdates => 'Order Updates';
 
   @override
-  String get notificationsOrderUpdatesSubtitle =>
-      'Receive alerts for new orders and status changes';
+  String get notificationsOrderUpdatesSubtitle => 'Receive alerts for new orders and status changes';
 
   @override
   String get notificationsPreferences => 'Notification Preferences';
@@ -6400,8 +6304,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsPromotions => 'Promotions';
 
   @override
-  String get notificationsPromotionsSubtitle =>
-      'Promotion activity and coupon usage alerts';
+  String get notificationsPromotionsSubtitle => 'Promotion activity and coupon usage alerts';
 
   @override
   String get notificationsPush => 'Push';
@@ -6413,8 +6316,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsQuietHours => 'Quiet Hours';
 
   @override
-  String get notificationsQuietHoursSubtitle =>
-      'Pause notifications during these hours';
+  String get notificationsQuietHoursSubtitle => 'Pause notifications during these hours';
 
   @override
   String get notificationsQuietStart => 'Start';
@@ -6426,8 +6328,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsSystemUpdates => 'System Updates';
 
   @override
-  String get notificationsSystemUpdatesSubtitle =>
-      'App updates and maintenance notices';
+  String get notificationsSystemUpdatesSubtitle => 'App updates and maintenance notices';
 
   @override
   String get notificationsTitle => 'Notifications';
@@ -6467,15 +6368,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsSoundEnabled => 'Sound Enabled';
 
   @override
-  String get notificationsSoundEnabledSubtitle =>
-      'Play sounds for incoming notifications';
+  String get notificationsSoundEnabledSubtitle => 'Play sounds for incoming notifications';
 
   @override
   String get notificationsEmailDigest => 'Email Digest';
 
   @override
-  String get notificationsEmailDigestSubtitle =>
-      'Receive a summary of notifications by email';
+  String get notificationsEmailDigestSubtitle => 'Receive a summary of notifications by email';
 
   @override
   String get notificationsDigestNone => 'None';
@@ -6615,8 +6514,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifDeleteSingleTitle => 'Delete Notification';
 
   @override
-  String get notifDeleteSingleMessage =>
-      'Are you sure you want to delete this notification?';
+  String get notifDeleteSingleMessage => 'Are you sure you want to delete this notification?';
 
   @override
   String get notifJustNow => 'Just now';
@@ -6625,15 +6523,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifPrefPaymentAlerts => 'Payment Alerts';
 
   @override
-  String get notifPrefPaymentAlertsSubtitle =>
-      'Payment confirmations and refund alerts';
+  String get notifPrefPaymentAlertsSubtitle => 'Payment confirmations and refund alerts';
 
   @override
   String get notifPrefStaffEvents => 'Staff Events';
 
   @override
-  String get notifPrefStaffEventsSubtitle =>
-      'Staff schedule and attendance updates';
+  String get notifPrefStaffEventsSubtitle => 'Staff schedule and attendance updates';
 
   @override
   String get notifPrefEmail => 'Email';
@@ -6657,15 +6553,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifScheduleCreatedSuccess => 'Schedule created successfully';
 
   @override
-  String get notifSchedulesEmptySubtitle =>
-      'Tap + to create a scheduled notification';
+  String get notifSchedulesEmptySubtitle => 'Tap + to create a scheduled notification';
 
   @override
   String get notifScheduleCancelConfirmTitle => 'Cancel Schedule';
 
   @override
-  String get notifScheduleCancelConfirmMessage =>
-      'Are you sure you want to cancel this scheduled notification?';
+  String get notifScheduleCancelConfirmMessage => 'Are you sure you want to cancel this scheduled notification?';
 
   @override
   String get notifScheduleType => 'Schedule Type';
@@ -6724,8 +6618,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ordersNoOrders => 'No orders';
 
   @override
-  String get ordersNoOrdersSubtitle =>
-      'Orders will appear here once transactions are made.';
+  String get ordersNoOrdersSubtitle => 'Orders will appear here once transactions are made.';
 
   @override
   String get ordersOrderNumberCol => 'Order #';
@@ -6780,8 +6673,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get posEnterReceiptNumberHint =>
-      'Enter a receipt number to find the transaction';
+  String get posEnterReceiptNumberHint => 'Enter a receipt number to find the transaction';
 
   @override
   String get posHeldCartFallback => 'Held Cart';
@@ -7078,22 +6970,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get securityPinOverrideTitle => 'Manager Authorization Required';
 
   @override
-  String get securityManagerAuthorization =>
-      'Enter a manager PIN to authorize this action.';
+  String get securityManagerAuthorization => 'Enter a manager PIN to authorize this action.';
 
   @override
   String get securityEnterPin => 'Enter PIN';
 
   @override
-  String get securityPinOverrideError =>
-      'Authorization failed. Please try again.';
+  String get securityPinOverrideError => 'Authorization failed. Please try again.';
 
   @override
   String get securityPinOverrideInvalidPin => 'Invalid PIN. Please try again.';
 
   @override
-  String get securityPinOverrideLockout =>
-      'Too many attempts. Please wait before trying again.';
+  String get securityPinOverrideLockout => 'Too many attempts. Please wait before trying again.';
 
   @override
   String get securityPolicyUpdated => 'Security policy updated successfully.';
@@ -7168,8 +7057,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsCloseSession => 'Close Session';
 
   @override
-  String get sessionsCloseSessionDescription =>
-      'Enter the closing cash amount to close this session.';
+  String get sessionsCloseSessionDescription => 'Enter the closing cash amount to close this session.';
 
   @override
   String get sessionsClosingCash => 'Closing Cash';
@@ -7205,8 +7093,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsNoSessions => 'No sessions found';
 
   @override
-  String get sessionsNoSessionsSubtitle =>
-      'Open a POS session to start processing transactions.';
+  String get sessionsNoSessionsSubtitle => 'Open a POS session to start processing transactions.';
 
   @override
   String get sessionsOpenPosSession => 'Open POS Session';
@@ -7215,8 +7102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsOpenSession => 'Open Session';
 
   @override
-  String get sessionsOpenSessionDescription =>
-      'Enter the opening cash amount for this session.';
+  String get sessionsOpenSessionDescription => 'Enter the opening cash amount for this session.';
 
   @override
   String get sessionsOpeningCash => 'Opening Cash';
@@ -7562,8 +7448,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get terminalsNoTerminals => 'No terminals found';
 
   @override
-  String get terminalsNoTerminalsSubtitle =>
-      'Add your first POS terminal to get started.';
+  String get terminalsNoTerminalsSubtitle => 'Add your first POS terminal to get started.';
 
   @override
   String get terminalsOff => 'Off';
@@ -7949,8 +7834,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receiptTemplatesEmpty => 'No Receipt Templates';
 
   @override
-  String get receiptTemplatesEmptySubtitle =>
-      'No receipt layout templates are available for your plan.';
+  String get receiptTemplatesEmptySubtitle => 'No receipt layout templates are available for your plan.';
 
   @override
   String get receiptTemplateDetail => 'Receipt Template Details';
@@ -7986,8 +7870,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cfdThemesEmpty => 'No CFD Themes';
 
   @override
-  String get cfdThemesEmptySubtitle =>
-      'No customer facing display themes are available for your plan.';
+  String get cfdThemesEmptySubtitle => 'No customer facing display themes are available for your plan.';
 
   @override
   String get cfdThemeDetail => 'CFD Theme Details';
@@ -8062,8 +7945,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelLayoutTemplatesEmpty => 'No Label Templates';
 
   @override
-  String get labelLayoutTemplatesEmptySubtitle =>
-      'Label layout templates will appear here once created by admin';
+  String get labelLayoutTemplatesEmptySubtitle => 'Label layout templates will appear here once created by admin';
 
   @override
   String get labelLayoutTemplateDetail => 'Label Template Detail';
@@ -8255,8 +8137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supplierNoSuppliers => 'No suppliers yet';
 
   @override
-  String get supplierNoSuppliersHint =>
-      'Add suppliers to track your product sources.';
+  String get supplierNoSuppliersHint => 'Add suppliers to track your product sources.';
 
   @override
   String get supplierStatistics => 'Statistics';
@@ -8308,8 +8189,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supplierReturnNoReturns => 'No supplier returns';
 
   @override
-  String get supplierReturnNoReturnsHint =>
-      'Create a return to send products back to a supplier.';
+  String get supplierReturnNoReturnsHint => 'Create a return to send products back to a supplier.';
 
   @override
   String get supplierReturnNoItems => 'No items in this return';
@@ -8394,8 +8274,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debitsNoDebitsSubtitle => 'Debits will appear here once created.';
 
   @override
-  String get debitsSearchHint =>
-      'Search by reference, customer, description...';
+  String get debitsSearchHint => 'Search by reference, customer, description...';
 
   @override
   String get debitsFilterByStatus => 'Filter by status';
@@ -8503,12 +8382,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debitsReverseReason => 'Reason for reversal';
 
   @override
-  String get debitsReverseConfirm =>
-      'Are you sure you want to reverse this debit?';
+  String get debitsReverseConfirm => 'Are you sure you want to reverse this debit?';
 
   @override
-  String get debitsDeleteConfirm =>
-      'Are you sure you want to delete this debit?';
+  String get debitsDeleteConfirm => 'Are you sure you want to delete this debit?';
 
   @override
   String get debitsCreatedSuccess => 'Debit created successfully';
@@ -8589,12 +8466,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receivablesNoReceivables => 'No receivables';
 
   @override
-  String get receivablesNoReceivablesSubtitle =>
-      'Receivables will appear here once created.';
+  String get receivablesNoReceivablesSubtitle => 'Receivables will appear here once created.';
 
   @override
-  String get receivablesSearchHint =>
-      'Search by reference, customer, description...';
+  String get receivablesSearchHint => 'Search by reference, customer, description...';
 
   @override
   String get receivablesFilterByStatus => 'Filter by status';
@@ -8723,12 +8598,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receivablesReverseReason => 'Reason for reversal';
 
   @override
-  String get receivablesReverseConfirm =>
-      'Are you sure you want to reverse this receivable?';
+  String get receivablesReverseConfirm => 'Are you sure you want to reverse this receivable?';
 
   @override
-  String get receivablesDeleteConfirm =>
-      'Are you sure you want to delete this receivable?';
+  String get receivablesDeleteConfirm => 'Are you sure you want to delete this receivable?';
 
   @override
   String get receivablesCreatedSuccess => 'Receivable created successfully';
@@ -9126,8 +8999,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get txNoTransactions => 'No transactions found';
 
   @override
-  String get txNoTransactionsSubtitle =>
-      'Adjust your filters or date range to find transactions';
+  String get txNoTransactionsSubtitle => 'Adjust your filters or date range to find transactions';
 
   @override
   String get txStatsTotalSales => 'Total Sales';
@@ -9244,8 +9116,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get txVoidConfirmTitle => 'Void Transaction';
 
   @override
-  String get txVoidConfirmMessage =>
-      'Are you sure you want to void this transaction? This action cannot be undone.';
+  String get txVoidConfirmMessage => 'Are you sure you want to void this transaction? This action cannot be undone.';
 
   @override
   String get txVoidAction => 'Void';
@@ -9359,12 +9230,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noInstallmentProviders => 'No installment providers found';
 
   @override
-  String get noInstallmentProvidersAvailable =>
-      'No installment providers available';
+  String get noInstallmentProvidersAvailable => 'No installment providers available';
 
   @override
-  String get noInstallmentProvidersForAmount =>
-      'No installment providers available for this amount';
+  String get noInstallmentProvidersForAmount => 'No installment providers available for this amount';
 
   @override
   String get selectInstallmentProvider => 'Select Installment Provider';
@@ -9373,8 +9242,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payWithInstallments => 'Pay with Installments';
 
   @override
-  String get installmentCredentialsNote =>
-      'Credentials are encrypted and stored securely';
+  String get installmentCredentialsNote => 'Credentials are encrypted and stored securely';
 
   @override
   String get months => 'months';
@@ -9392,8 +9260,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancelPayment => 'Cancel Payment';
 
   @override
-  String get cancelPaymentConfirm =>
-      'Are you sure you want to cancel this payment?';
+  String get cancelPaymentConfirm => 'Are you sure you want to cancel this payment?';
 
   @override
   String get goBack => 'Go Back';
@@ -9432,8 +9299,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get endMaintenance => 'End Maintenance';
 
   @override
-  String get endMaintenanceConfirm =>
-      'Provider will be available again. Continue?';
+  String get endMaintenanceConfirm => 'Provider will be available again. Continue?';
 
   @override
   String get maintenanceMessage => 'Maintenance Message (EN)';
@@ -9635,8 +9501,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAINoSuggestions => 'No suggestions yet';
 
   @override
-  String get wameedAINoSuggestionsSubtitle =>
-      'AI suggestions will appear here as they are generated';
+  String get wameedAINoSuggestionsSubtitle => 'AI suggestions will appear here as they are generated';
 
   @override
   String get wameedAISuggestionBody => 'Details';
@@ -9786,8 +9651,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAIGallery => 'Gallery';
 
   @override
-  String get wameedAIUploadInvoicePrompt =>
-      'Take a photo or select an invoice image to extract data';
+  String get wameedAIUploadInvoicePrompt => 'Take a photo or select an invoice image to extract data';
 
   @override
   String get wameedAIExtractData => 'Extract Invoice Data';
@@ -9805,8 +9669,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAIProcessingInvoice => 'Analyzing Invoice...';
 
   @override
-  String get wameedAIOCRProcessingHint =>
-      'AI is reading and extracting data from your invoice. This may take a few seconds.';
+  String get wameedAIOCRProcessingHint => 'AI is reading and extracting data from your invoice. This may take a few seconds.';
 
   @override
   String get wameedAICameraTakePhoto => 'Take a photo of the invoice';
@@ -9971,8 +9834,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAIBillingPaymentHistory => 'Payment History';
 
   @override
-  String get wameedAIBillingDisabled =>
-      'AI is currently disabled for your store';
+  String get wameedAIBillingDisabled => 'AI is currently disabled for your store';
 
   @override
   String get wameedAIBillingViewAll => 'View All';
@@ -9984,8 +9846,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAIAssistant => 'Wameed AI Assistant';
 
   @override
-  String get wameedAIWelcomeSubtitle =>
-      'Ask anything about your business — sales, inventory, customers, and more.';
+  String get wameedAIWelcomeSubtitle => 'Ask anything about your business — sales, inventory, customers, and more.';
 
   @override
   String get wameedAIMenu => 'Menu';
@@ -10012,41 +9873,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAICustomerSegmentsSubtitle => 'Group customers by behavior';
 
   @override
-  String get wameedAIInvoiceOCRSubtitle =>
-      'Scan supplier invoices into your system';
+  String get wameedAIInvoiceOCRSubtitle => 'Scan supplier invoices into your system';
 
   @override
   String get wameedAISuggTodaySalesTitle => 'Today\'s sales summary';
 
   @override
-  String get wameedAISuggTodaySalesSubtitle =>
-      'Show revenue, top items, and trends';
+  String get wameedAISuggTodaySalesSubtitle => 'Show revenue, top items, and trends';
 
   @override
-  String get wameedAISuggTodaySalesPrompt =>
-      'Show today\'s sales summary with top products and trends';
+  String get wameedAISuggTodaySalesPrompt => 'Show today\'s sales summary with top products and trends';
 
   @override
   String get wameedAISuggReorderTitle => 'Suggest reorder';
 
   @override
-  String get wameedAISuggReorderSubtitle =>
-      'For low-stock and fast-moving items';
+  String get wameedAISuggReorderSubtitle => 'For low-stock and fast-moving items';
 
   @override
-  String get wameedAISuggReorderPrompt =>
-      'Suggest a reorder list for items that are running low or selling fast';
+  String get wameedAISuggReorderPrompt => 'Suggest a reorder list for items that are running low or selling fast';
 
   @override
   String get wameedAISuggSlowMoversTitle => 'Find slow movers';
 
   @override
-  String get wameedAISuggSlowMoversSubtitle =>
-      'Items that are not selling well';
+  String get wameedAISuggSlowMoversSubtitle => 'Items that are not selling well';
 
   @override
-  String get wameedAISuggSlowMoversPrompt =>
-      'List the slowest-moving products in my inventory this month';
+  String get wameedAISuggSlowMoversPrompt => 'List the slowest-moving products in my inventory this month';
 
   @override
   String get wameedAISuggSegmentsTitle => 'Customer segments';
@@ -10055,8 +9909,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAISuggSegmentsSubtitle => 'Group customers by behavior';
 
   @override
-  String get wameedAISuggSegmentsPrompt =>
-      'Analyze my customers and group them into useful segments';
+  String get wameedAISuggSegmentsPrompt => 'Analyze my customers and group them into useful segments';
 
   @override
   String get wameedAIRecentChats => 'Recent Chats';
@@ -10065,8 +9918,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wameedAINoChats => 'No conversations yet';
 
   @override
-  String get wameedAINoChatsSubtitle =>
-      'Tap \"New Chat\" to start a conversation with Wameed AI';
+  String get wameedAINoChatsSubtitle => 'Tap \"New Chat\" to start a conversation with Wameed AI';
 
   @override
   String get wameedAIMessages => 'messages';
@@ -10307,8 +10159,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gamificationLeaderboard => 'Leaderboard';
 
   @override
-  String get gamificationLeaderboardDesc =>
-      'Show real-time cashier leaderboard rankings';
+  String get gamificationLeaderboardDesc => 'Show real-time cashier leaderboard rankings';
 
   @override
   String get gamificationBadgesDesc => 'Award performance badges to cashiers';
@@ -10317,19 +10168,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gamificationAnomalyDetection => 'Anomaly Detection';
 
   @override
-  String get gamificationAnomalyDetectionDesc =>
-      'Detect suspicious cashier activity patterns';
+  String get gamificationAnomalyDetectionDesc => 'Detect suspicious cashier activity patterns';
 
   @override
-  String get gamificationShiftReportsDesc =>
-      'Generate end-of-shift performance reports';
+  String get gamificationShiftReportsDesc => 'Generate end-of-shift performance reports';
 
   @override
   String get gamificationAutoGenerate => 'Auto-Generate on Session Close';
 
   @override
-  String get gamificationAutoGenerateDesc =>
-      'Automatically run analysis when a POS session closes';
+  String get gamificationAutoGenerateDesc => 'Automatically run analysis when a POS session closes';
 
   @override
   String get gamificationFeatureToggles => 'Feature Toggles';
@@ -10460,8 +10308,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A confirmation dialog will appear. Products are soft-deleted and can potentially be recovered. Confirm to proceed.';
 
   @override
-  String get featureInfoProductsTip1 =>
-      'Use the grid/list toggle (desktop) to switch between table and card views.';
+  String get featureInfoProductsTip1 => 'Use the grid/list toggle (desktop) to switch between table and card views.';
 
   @override
   String get featureInfoProductsTip2 =>
@@ -10482,12 +10329,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCategoriesAddTitle => 'Creating a Category';
 
   @override
-  String get featureInfoCategoriesAddStep1Title =>
-      'Tap the New Category button';
+  String get featureInfoCategoriesAddStep1Title => 'Tap the New Category button';
 
   @override
-  String get featureInfoCategoriesAddStep1Desc =>
-      'Press the floating action button to open the category creation dialog.';
+  String get featureInfoCategoriesAddStep1Desc => 'Press the floating action button to open the category creation dialog.';
 
   @override
   String get featureInfoCategoriesAddStep2Title => 'Fill in category details';
@@ -10514,8 +10359,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCategoriesEditTitle => 'Editing a Category';
 
   @override
-  String get featureInfoCategoriesEditStep1Title =>
-      'Click Edit on the category';
+  String get featureInfoCategoriesEditStep1Title => 'Click Edit on the category';
 
   @override
   String get featureInfoCategoriesEditStep1Desc =>
@@ -10532,8 +10376,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCategoriesDeleteTitle => 'Deleting a Category';
 
   @override
-  String get featureInfoCategoriesDeleteStep1Title =>
-      'Click Delete on the category';
+  String get featureInfoCategoriesDeleteStep1Title => 'Click Delete on the category';
 
   @override
   String get featureInfoCategoriesDeleteStep1Desc =>
@@ -10568,19 +10411,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoSuppliersAddStep1Title => 'Tap the New Supplier button';
 
   @override
-  String get featureInfoSuppliersAddStep1Desc =>
-      'Press the floating action button to open the supplier form dialog.';
+  String get featureInfoSuppliersAddStep1Desc => 'Press the floating action button to open the supplier form dialog.';
 
   @override
   String get featureInfoSuppliersAddStep2Title => 'Enter basic information';
 
   @override
-  String get featureInfoSuppliersAddStep2Desc =>
-      'Fill in the supplier name (required), contact person, and category.';
+  String get featureInfoSuppliersAddStep2Desc => 'Fill in the supplier name (required), contact person, and category.';
 
   @override
-  String get featureInfoSuppliersAddStep3Title =>
-      'Add contact and banking details';
+  String get featureInfoSuppliersAddStep3Title => 'Add contact and banking details';
 
   @override
   String get featureInfoSuppliersAddStep3Desc =>
@@ -10590,15 +10430,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoSuppliersAddStep4Title => 'Save the supplier';
 
   @override
-  String get featureInfoSuppliersAddStep4Desc =>
-      'Tap \'Save\' to add the supplier to your directory.';
+  String get featureInfoSuppliersAddStep4Desc => 'Tap \'Save\' to add the supplier to your directory.';
 
   @override
   String get featureInfoSuppliersEditTitle => 'Editing a Supplier';
 
   @override
-  String get featureInfoSuppliersEditStep1Title =>
-      'Click Edit on the supplier row';
+  String get featureInfoSuppliersEditStep1Title => 'Click Edit on the supplier row';
 
   @override
   String get featureInfoSuppliersEditStep1Desc =>
@@ -10608,19 +10446,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoSuppliersEditStep2Title => 'Update and save';
 
   @override
-  String get featureInfoSuppliersEditStep2Desc =>
-      'Modify any field and tap \'Save\' to update the supplier.';
+  String get featureInfoSuppliersEditStep2Desc => 'Modify any field and tap \'Save\' to update the supplier.';
 
   @override
   String get featureInfoSuppliersDeleteTitle => 'Deleting a Supplier';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Title =>
-      'Click Delete on the supplier row';
+  String get featureInfoSuppliersDeleteStep1Title => 'Click Delete on the supplier row';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Desc =>
-      'Find the supplier in the table and click the \'Delete\' action.';
+  String get featureInfoSuppliersDeleteStep1Desc => 'Find the supplier in the table and click the \'Delete\' action.';
 
   @override
   String get featureInfoSuppliersDeleteStep2Title => 'Confirm deletion';
@@ -10634,8 +10469,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap a supplier row to see detailed statistics including purchase orders, goods receipts, returns, and outstanding balance.';
 
   @override
-  String get featureInfoSuppliersTip2 =>
-      'Use the search bar to quickly find suppliers by name.';
+  String get featureInfoSuppliersTip2 => 'Use the search bar to quickly find suppliers by name.';
 
   @override
   String get featureInfoCustomersTitle => 'Customer Directory';
@@ -10686,8 +10520,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoOrdersViewStep2Title => 'Search by order number';
 
   @override
-  String get featureInfoOrdersViewStep2Desc =>
-      'Use the search bar to find a specific order by its order number.';
+  String get featureInfoOrdersViewStep2Desc => 'Use the search bar to find a specific order by its order number.';
 
   @override
   String get featureInfoOrdersViewStep3Title => 'Filter by status';
@@ -10714,12 +10547,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Click the \'Void\' action on the order row and confirm in the dialog. This is irreversible.';
 
   @override
-  String get featureInfoOrdersTip1 =>
-      'Use pagination controls at the bottom to navigate between pages.';
+  String get featureInfoOrdersTip1 => 'Use pagination controls at the bottom to navigate between pages.';
 
   @override
-  String get featureInfoOrdersTip2 =>
-      'Pull down to refresh the order list on mobile.';
+  String get featureInfoOrdersTip2 => 'Pull down to refresh the order list on mobile.';
 
   @override
   String get featureInfoStaffTitle => 'Staff Management';
@@ -10735,20 +10566,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStaffAddStep1Title => 'Tap the Add button';
 
   @override
-  String get featureInfoStaffAddStep1Desc =>
-      'Press the floating action button to navigate to the staff creation form.';
+  String get featureInfoStaffAddStep1Desc => 'Press the floating action button to navigate to the staff creation form.';
 
   @override
-  String get featureInfoStaffAddStep2Title =>
-      'Select store and fill personal info';
+  String get featureInfoStaffAddStep2Title => 'Select store and fill personal info';
 
   @override
   String get featureInfoStaffAddStep2Desc =>
       'Choose the store assignment from the dropdown. Enter the first name (required) and last name (required).';
 
   @override
-  String get featureInfoStaffAddStep3Title =>
-      'Set contact and employment details';
+  String get featureInfoStaffAddStep3Title => 'Set contact and employment details';
 
   @override
   String get featureInfoStaffAddStep3Desc =>
@@ -10758,8 +10586,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStaffAddStep4Title => 'Configure Security PIN';
 
   @override
-  String get featureInfoStaffAddStep4Desc =>
-      'Set a 4-6 digit PIN that the staff member will use to log in to the POS terminal.';
+  String get featureInfoStaffAddStep4Desc => 'Set a 4-6 digit PIN that the staff member will use to log in to the POS terminal.';
 
   @override
   String get featureInfoStaffAddStep5Title => 'Create optional user account';
@@ -10772,8 +10599,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStaffEditTitle => 'Editing a Staff Member';
 
   @override
-  String get featureInfoStaffEditStep1Title =>
-      'Find and open the staff profile';
+  String get featureInfoStaffEditStep1Title => 'Find and open the staff profile';
 
   @override
   String get featureInfoStaffEditStep1Desc =>
@@ -10793,19 +10619,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStaffDeleteStep1Title => 'Open the staff popup menu';
 
   @override
-  String get featureInfoStaffDeleteStep1Desc =>
-      'Find the staff member card and tap the three-dot menu icon.';
+  String get featureInfoStaffDeleteStep1Desc => 'Find the staff member card and tap the three-dot menu icon.';
 
   @override
   String get featureInfoStaffDeleteStep2Title => 'Select Delete and confirm';
 
   @override
-  String get featureInfoStaffDeleteStep2Desc =>
-      'Choose \'Delete\' from the menu and confirm in the dialog.';
+  String get featureInfoStaffDeleteStep2Desc => 'Choose \'Delete\' from the menu and confirm in the dialog.';
 
   @override
-  String get featureInfoStaffTip1 =>
-      'Use the store selector at the top to view staff for a specific branch.';
+  String get featureInfoStaffTip1 => 'Use the store selector at the top to view staff for a specific branch.';
 
   @override
   String get featureInfoStaffTip2 =>
@@ -10829,12 +10652,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoRolesCreateStep1Title => 'Tap the New Role button';
 
   @override
-  String get featureInfoRolesCreateStep1Desc =>
-      'Press the floating action button to navigate to the role creation form.';
+  String get featureInfoRolesCreateStep1Desc => 'Press the floating action button to navigate to the role creation form.';
 
   @override
-  String get featureInfoRolesCreateStep2Title =>
-      'Enter role name and description';
+  String get featureInfoRolesCreateStep2Title => 'Enter role name and description';
 
   @override
   String get featureInfoRolesCreateStep2Desc =>
@@ -10890,8 +10711,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoInventoryNavigateTitle => 'Using the Inventory Hub';
 
   @override
-  String get featureInfoInventoryNavigateStep1Title =>
-      'Choose an inventory module';
+  String get featureInfoInventoryNavigateStep1Title => 'Choose an inventory module';
 
   @override
   String get featureInfoInventoryNavigateStep1Desc =>
@@ -10905,8 +10725,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Each module has its own info button (ℹ) with detailed instructions for that specific feature.';
 
   @override
-  String get featureInfoInventoryTip1 =>
-      'Stock Levels shows current quantities and reorder status at a glance.';
+  String get featureInfoInventoryTip1 => 'Stock Levels shows current quantities and reorder status at a glance.';
 
   @override
   String get featureInfoInventoryTip2 =>
@@ -10923,16 +10742,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStockAdjCreateTitle => 'Creating a Stock Adjustment';
 
   @override
-  String get featureInfoStockAdjCreateStep1Title =>
-      'Tap the New Adjustment button';
+  String get featureInfoStockAdjCreateStep1Title => 'Tap the New Adjustment button';
 
   @override
-  String get featureInfoStockAdjCreateStep1Desc =>
-      'Press the floating action button to open the adjustment dialog.';
+  String get featureInfoStockAdjCreateStep1Desc => 'Press the floating action button to open the adjustment dialog.';
 
   @override
-  String get featureInfoStockAdjCreateStep2Title =>
-      'Select the adjustment type';
+  String get featureInfoStockAdjCreateStep2Title => 'Select the adjustment type';
 
   @override
   String get featureInfoStockAdjCreateStep2Desc =>
@@ -10960,8 +10776,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap \'Create\' to record the adjustment. The stock level will be updated immediately.';
 
   @override
-  String get featureInfoStockAdjTip1 =>
-      'Always select the correct reason — it helps in reporting and audit trails.';
+  String get featureInfoStockAdjTip1 => 'Always select the correct reason — it helps in reporting and audit trails.';
 
   @override
   String get featureInfoStockAdjTip2 =>
@@ -10981,15 +10796,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoPOCreateStep1Title => 'Tap the New PO button';
 
   @override
-  String get featureInfoPOCreateStep1Desc =>
-      'Press the floating action button to open the purchase order creation dialog.';
+  String get featureInfoPOCreateStep1Desc => 'Press the floating action button to open the purchase order creation dialog.';
 
   @override
   String get featureInfoPOCreateStep2Title => 'Select a supplier';
 
   @override
-  String get featureInfoPOCreateStep2Desc =>
-      'Use the searchable dropdown to find and select the supplier for this order.';
+  String get featureInfoPOCreateStep2Desc => 'Use the searchable dropdown to find and select the supplier for this order.';
 
   @override
   String get featureInfoPOCreateStep3Title => 'Add product and quantities';
@@ -11002,8 +10815,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoPOCreateStep4Title => 'Create the order';
 
   @override
-  String get featureInfoPOCreateStep4Desc =>
-      'Tap \'Create\' to save the purchase order as a Draft.';
+  String get featureInfoPOCreateStep4Desc => 'Tap \'Create\' to save the purchase order as a Draft.';
 
   @override
   String get featureInfoPOManageTitle => 'Managing Purchase Orders';
@@ -11034,8 +10846,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use the filter button to view orders by status (Draft, Sent, Partially Received, Fully Received, Cancelled).';
 
   @override
-  String get featureInfoPOTip2 =>
-      'The table shows reference number, supplier, status, total cost, and expected delivery date.';
+  String get featureInfoPOTip2 => 'The table shows reference number, supplier, status, total cost, and expected delivery date.';
 
   @override
   String get featureInfoTransfersTitle => 'Stock Transfers';
@@ -11048,16 +10859,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoTransfersCreateTitle => 'Creating a Stock Transfer';
 
   @override
-  String get featureInfoTransfersCreateStep1Title =>
-      'Tap the New Transfer button';
+  String get featureInfoTransfersCreateStep1Title => 'Tap the New Transfer button';
 
   @override
-  String get featureInfoTransfersCreateStep1Desc =>
-      'Press the floating action button to open the transfer creation dialog.';
+  String get featureInfoTransfersCreateStep1Desc => 'Press the floating action button to open the transfer creation dialog.';
 
   @override
-  String get featureInfoTransfersCreateStep2Title =>
-      'Select source and destination';
+  String get featureInfoTransfersCreateStep2Title => 'Select source and destination';
 
   @override
   String get featureInfoTransfersCreateStep2Desc =>
@@ -11074,8 +10882,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoTransfersCreateStep4Title => 'Create the transfer';
 
   @override
-  String get featureInfoTransfersCreateStep4Desc =>
-      'Tap \'Create\' to submit the transfer request as Pending.';
+  String get featureInfoTransfersCreateStep4Desc => 'Tap \'Create\' to submit the transfer request as Pending.';
 
   @override
   String get featureInfoTransfersManageTitle => 'Managing Stock Transfers';
@@ -11119,8 +10926,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoGRCreateStep1Title => 'Tap the New Receipt button';
 
   @override
-  String get featureInfoGRCreateStep1Desc =>
-      'Press the floating action button to navigate to the goods receipt form page.';
+  String get featureInfoGRCreateStep1Desc => 'Press the floating action button to navigate to the goods receipt form page.';
 
   @override
   String get featureInfoGRCreateStep2Title => 'Fill in receipt details';
@@ -11143,8 +10949,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoGRConfirmStep1Title => 'Find the draft receipt';
 
   @override
-  String get featureInfoGRConfirmStep1Desc =>
-      'Locate the Draft receipt in the table. Only Draft receipts can be confirmed.';
+  String get featureInfoGRConfirmStep1Desc => 'Locate the Draft receipt in the table. Only Draft receipts can be confirmed.';
 
   @override
   String get featureInfoGRConfirmStep2Title => 'Confirm the receipt';
@@ -11171,8 +10976,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoSRCreateStep1Title => 'Tap the New Return button';
 
   @override
-  String get featureInfoSRCreateStep1Desc =>
-      'Press the floating action button to navigate to the supplier return form page.';
+  String get featureInfoSRCreateStep1Desc => 'Press the floating action button to navigate to the supplier return form page.';
 
   @override
   String get featureInfoSRCreateStep2Title => 'Fill in return details';
@@ -11195,15 +10999,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoSRManageStep1Title => 'Submit the return';
 
   @override
-  String get featureInfoSRManageStep1Desc =>
-      'Use the \'Submit\' action on a Draft return to send it for approval.';
+  String get featureInfoSRManageStep1Desc => 'Use the \'Submit\' action on a Draft return to send it for approval.';
 
   @override
   String get featureInfoSRManageStep2Title => 'Approve the return';
 
   @override
-  String get featureInfoSRManageStep2Desc =>
-      'Use the \'Approve\' action on a Submitted return to authorize the return.';
+  String get featureInfoSRManageStep2Desc => 'Use the \'Approve\' action on a Submitted return to authorize the return.';
 
   @override
   String get featureInfoSRManageStep3Title => 'Complete the return';
@@ -11220,8 +11022,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Draft and Submitted returns can be cancelled. Draft returns can also be permanently deleted.';
 
   @override
-  String get featureInfoSRTip1 =>
-      'Use the search bar and status filter dropdown to quickly find specific returns.';
+  String get featureInfoSRTip1 => 'Use the search bar and status filter dropdown to quickly find specific returns.';
 
   @override
   String get featureInfoRecipesTitle => 'Recipes';
@@ -11237,8 +11038,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoRecipesCreateStep1Title => 'Tap the New Recipe button';
 
   @override
-  String get featureInfoRecipesCreateStep1Desc =>
-      'Press the floating action button to open the recipe creation dialog.';
+  String get featureInfoRecipesCreateStep1Desc => 'Press the floating action button to open the recipe creation dialog.';
 
   @override
   String get featureInfoRecipesCreateStep2Title => 'Select the output product';
@@ -11265,8 +11065,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoRecipesDeleteTitle => 'Deleting a Recipe';
 
   @override
-  String get featureInfoRecipesDeleteStep1Title =>
-      'Find the recipe in the table';
+  String get featureInfoRecipesDeleteStep1Title => 'Find the recipe in the table';
 
   @override
   String get featureInfoRecipesDeleteStep1Desc =>
@@ -11311,16 +11110,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoStockLevelsReorderTitle => 'Setting Reorder Points';
 
   @override
-  String get featureInfoStockLevelsReorderStep1Title =>
-      'Click \'Set Reorder Point\'';
+  String get featureInfoStockLevelsReorderStep1Title => 'Click \'Set Reorder Point\'';
 
   @override
   String get featureInfoStockLevelsReorderStep1Desc =>
       'Use the row action \'Set Reorder Point\' on any product to open the dialog.';
 
   @override
-  String get featureInfoStockLevelsReorderStep2Title =>
-      'Enter reorder thresholds';
+  String get featureInfoStockLevelsReorderStep2Title => 'Enter reorder thresholds';
 
   @override
   String get featureInfoStockLevelsReorderStep2Desc =>
@@ -11351,8 +11148,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoPromotionsCreateStep1Title => 'Tap the Add button';
 
   @override
-  String get featureInfoPromotionsCreateStep1Desc =>
-      'Press the floating action button to open the promotion creation form.';
+  String get featureInfoPromotionsCreateStep1Desc => 'Press the floating action button to open the promotion creation form.';
 
   @override
   String get featureInfoPromotionsCreateStep2Title => 'Enter promotion details';
@@ -11362,8 +11158,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter the promotion name (required) and description. Select the type: Percentage, Fixed Amount, BOGO, Bundle, or Happy Hour.';
 
   @override
-  String get featureInfoPromotionsCreateStep3Title =>
-      'Configure discount values';
+  String get featureInfoPromotionsCreateStep3Title => 'Configure discount values';
 
   @override
   String get featureInfoPromotionsCreateStep3Desc =>
@@ -11408,12 +11203,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Select \'Analytics\' from the popup menu to see performance data for the promotion.';
 
   @override
-  String get featureInfoPromotionsTip1 =>
-      'Use the search bar and filter button to find promotions by name, type, or status.';
+  String get featureInfoPromotionsTip1 => 'Use the search bar and filter button to find promotions by name, type, or status.';
 
   @override
-  String get featureInfoPromotionsTip2 =>
-      'Happy hour promotions automatically apply during configured time windows.';
+  String get featureInfoPromotionsTip2 => 'Happy hour promotions automatically apply during configured time windows.';
 
   @override
   String get featureInfoBranchesTitle => 'Branches Management';
@@ -11426,12 +11219,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoBranchesCreateTitle => 'Creating a Branch';
 
   @override
-  String get featureInfoBranchesCreateStep1Title =>
-      'Tap the Create Branch button';
+  String get featureInfoBranchesCreateStep1Title => 'Tap the Create Branch button';
 
   @override
-  String get featureInfoBranchesCreateStep1Desc =>
-      'Press the floating action button to navigate to the branch creation form.';
+  String get featureInfoBranchesCreateStep1Desc => 'Press the floating action button to navigate to the branch creation form.';
 
   @override
   String get featureInfoBranchesCreateStep2Title => 'Fill in Basic Info';
@@ -11451,12 +11242,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoBranchesCreateStep4Title => 'Add Contact information';
 
   @override
-  String get featureInfoBranchesCreateStep4Desc =>
-      'Enter phone, secondary phone, email, and contact person for the branch.';
+  String get featureInfoBranchesCreateStep4Desc => 'Enter phone, secondary phone, email, and contact person for the branch.';
 
   @override
-  String get featureInfoBranchesCreateStep5Title =>
-      'Configure Operational settings';
+  String get featureInfoBranchesCreateStep5Title => 'Configure Operational settings';
 
   @override
   String get featureInfoBranchesCreateStep5Desc =>
@@ -11483,16 +11272,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoBranchesEditStep2Title => 'Edit and save';
 
   @override
-  String get featureInfoBranchesEditStep2Desc =>
-      'Modify any fields across all 6 tabs and tap \'Save\' to update.';
+  String get featureInfoBranchesEditStep2Desc => 'Modify any fields across all 6 tabs and tap \'Save\' to update.';
 
   @override
   String get featureInfoBranchesTip1 =>
       'The stats row at the top shows total branches, active count, inactive count, and warehouse count.';
 
   @override
-  String get featureInfoBranchesTip2 =>
-      'Use the status filter (All/Active/Inactive) to quickly narrow down the branch list.';
+  String get featureInfoBranchesTip2 => 'Use the status filter (All/Active/Inactive) to quickly narrow down the branch list.';
 
   @override
   String get featureInfoDebitsTitle => 'Debits Management';
@@ -11508,8 +11295,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoDebitsCreateStep1Title => 'Tap the Add button';
 
   @override
-  String get featureInfoDebitsCreateStep1Desc =>
-      'Press the floating action button to navigate to the debit creation form.';
+  String get featureInfoDebitsCreateStep1Desc => 'Press the floating action button to navigate to the debit creation form.';
 
   @override
   String get featureInfoDebitsCreateStep2Title => 'Select customer and type';
@@ -11529,8 +11315,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoDebitsCreateStep4Title => 'Save the debit';
 
   @override
-  String get featureInfoDebitsCreateStep4Desc =>
-      'Tap \'Save\' to create the debit with Pending status.';
+  String get featureInfoDebitsCreateStep4Desc => 'Tap \'Save\' to create the debit with Pending status.';
 
   @override
   String get featureInfoDebitsAllocateTitle => 'Allocating a Debit to an Order';
@@ -11570,16 +11355,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoDebitsReverseStep2Title => 'Enter reason and confirm';
 
   @override
-  String get featureInfoDebitsReverseStep2Desc =>
-      'Type the reversal reason and confirm. Reversed debits cannot be allocated.';
+  String get featureInfoDebitsReverseStep2Desc => 'Type the reversal reason and confirm. Reversed debits cannot be allocated.';
 
   @override
   String get featureInfoDebitsTip1 =>
       'The summary cards at the top show Total Debits, Pending Amount, Allocated, and Unallocated totals.';
 
   @override
-  String get featureInfoDebitsTip2 =>
-      'Use the search bar to find debits by reference number.';
+  String get featureInfoDebitsTip2 => 'Use the search bar to find debits by reference number.';
 
   @override
   String get featureInfoExpensesTitle => 'Expenses Tracking';
@@ -11592,26 +11375,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoExpensesCreateTitle => 'Recording an Expense';
 
   @override
-  String get featureInfoExpensesCreateStep1Title =>
-      'Tap the New Expense button';
+  String get featureInfoExpensesCreateStep1Title => 'Tap the New Expense button';
 
   @override
-  String get featureInfoExpensesCreateStep1Desc =>
-      'Click the \'New Expense\' button in the AppBar to open the expense dialog.';
+  String get featureInfoExpensesCreateStep1Desc => 'Click the \'New Expense\' button in the AppBar to open the expense dialog.';
 
   @override
   String get featureInfoExpensesCreateStep2Title => 'Enter the amount';
 
   @override
-  String get featureInfoExpensesCreateStep2Desc =>
-      'Type the expense amount in the numeric field.';
+  String get featureInfoExpensesCreateStep2Desc => 'Type the expense amount in the numeric field.';
 
   @override
   String get featureInfoExpensesCreateStep3Title => 'Select a category';
 
   @override
-  String get featureInfoExpensesCreateStep3Desc =>
-      'Choose from: Supplies, Food, Transport, Maintenance, Utility, or Other.';
+  String get featureInfoExpensesCreateStep3Desc => 'Choose from: Supplies, Food, Transport, Maintenance, Utility, or Other.';
 
   @override
   String get featureInfoExpensesCreateStep4Title => 'Add description and save';
@@ -11621,8 +11400,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Optionally add a description explaining the expense. Tap \'Create\' to record it.';
 
   @override
-  String get featureInfoExpensesTip1 =>
-      'Expenses are grouped by date. Each date group shows the total expenses for that day.';
+  String get featureInfoExpensesTip1 => 'Expenses are grouped by date. Each date group shows the total expenses for that day.';
 
   @override
   String get featureInfoCashMgmtTitle => 'Cash Management';
@@ -11638,8 +11416,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCashMgmtOpenStep1Title => 'Tap \'Open Session\'';
 
   @override
-  String get featureInfoCashMgmtOpenStep1Desc =>
-      'If no active session exists, tap the \'Open Session\' button to start.';
+  String get featureInfoCashMgmtOpenStep1Desc => 'If no active session exists, tap the \'Open Session\' button to start.';
 
   @override
   String get featureInfoCashMgmtOpenStep2Title => 'Enter opening float';
@@ -11652,8 +11429,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCashMgmtCashInOutTitle => 'Recording Cash In/Out';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep1Title =>
-      'Tap Cash In or Cash Out';
+  String get featureInfoCashMgmtCashInOutStep1Title => 'Tap Cash In or Cash Out';
 
   @override
   String get featureInfoCashMgmtCashInOutStep1Desc =>
@@ -11670,8 +11446,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCashMgmtCashInOutStep3Title => 'Submit the transaction';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep3Desc =>
-      'Confirm the cash event. The expected cash balance updates in real-time.';
+  String get featureInfoCashMgmtCashInOutStep3Desc => 'Confirm the cash event. The expected cash balance updates in real-time.';
 
   @override
   String get featureInfoCashMgmtCloseTitle => 'Closing a Cash Session';
@@ -11726,8 +11501,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoGiftCardsIssueStep2Title => 'Add recipient (optional)';
 
   @override
-  String get featureInfoGiftCardsIssueStep2Desc =>
-      'Enter the recipient\'s name if you want to personalize the gift card.';
+  String get featureInfoGiftCardsIssueStep2Desc => 'Enter the recipient\'s name if you want to personalize the gift card.';
 
   @override
   String get featureInfoGiftCardsIssueStep3Title => 'Issue the card';
@@ -11743,15 +11517,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoGiftCardsCheckStep1Title => 'Enter the gift card code';
 
   @override
-  String get featureInfoGiftCardsCheckStep1Desc =>
-      'On the \'Check Balance\' tab, enter the gift card code.';
+  String get featureInfoGiftCardsCheckStep1Desc => 'On the \'Check Balance\' tab, enter the gift card code.';
 
   @override
   String get featureInfoGiftCardsCheckStep2Title => 'View balance details';
 
   @override
-  String get featureInfoGiftCardsCheckStep2Desc =>
-      'Tap \'Check\'. The remaining balance, status, and expiry date are displayed.';
+  String get featureInfoGiftCardsCheckStep2Desc => 'Tap \'Check\'. The remaining balance, status, and expiry date are displayed.';
 
   @override
   String get featureInfoGiftCardsRedeemTitle => 'Redeeming a Gift Card';
@@ -11760,22 +11532,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoGiftCardsRedeemStep1Title => 'Enter the gift card code';
 
   @override
-  String get featureInfoGiftCardsRedeemStep1Desc =>
-      'On the \'Redeem\' tab, enter the gift card code.';
+  String get featureInfoGiftCardsRedeemStep1Desc => 'On the \'Redeem\' tab, enter the gift card code.';
 
   @override
   String get featureInfoGiftCardsRedeemStep2Title => 'Enter redemption amount';
 
   @override
-  String get featureInfoGiftCardsRedeemStep2Desc =>
-      'Enter the amount to redeem (must not exceed the remaining balance).';
+  String get featureInfoGiftCardsRedeemStep2Desc => 'Enter the amount to redeem (must not exceed the remaining balance).';
 
   @override
   String get featureInfoGiftCardsRedeemStep3Title => 'Complete redemption';
 
   @override
-  String get featureInfoGiftCardsRedeemStep3Desc =>
-      'Tap \'Redeem\'. A confirmation card shows the updated balance.';
+  String get featureInfoGiftCardsRedeemStep3Desc => 'Tap \'Redeem\'. A confirmation card shows the updated balance.';
 
   @override
   String get featureInfoGiftCardsTip1 =>
@@ -11802,8 +11571,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoCashSessionsViewStep2Title => 'Check session details';
 
   @override
-  String get featureInfoCashSessionsViewStep2Desc =>
-      'Each session entry shows key information about the cash session period.';
+  String get featureInfoCashSessionsViewStep2Desc => 'Each session entry shows key information about the cash session period.';
 
   @override
   String get featureInfoCashSessionsTip1 =>
@@ -11827,8 +11595,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Click the left/right arrows in the AppBar to go to the previous or next day.';
 
   @override
-  String get featureInfoDailySummaryNavigateStep2Title =>
-      'Pick a specific date';
+  String get featureInfoDailySummaryNavigateStep2Title => 'Pick a specific date';
 
   @override
   String get featureInfoDailySummaryNavigateStep2Desc =>
@@ -11845,8 +11612,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The top section shows Gross Revenue, Expenses, Net Revenue, and Transaction Count for the selected day.';
 
   @override
-  String get featureInfoDailySummaryReviewStep2Title =>
-      'Review payment breakdown';
+  String get featureInfoDailySummaryReviewStep2Title => 'Review payment breakdown';
 
   @override
   String get featureInfoDailySummaryReviewStep2Desc =>
@@ -11877,8 +11643,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoFinReconStep1Title => 'Select the date';
 
   @override
-  String get featureInfoFinReconStep1Desc =>
-      'Use the date picker in the AppBar to select the day you want to reconcile.';
+  String get featureInfoFinReconStep1Desc => 'Use the date picker in the AppBar to select the day you want to reconcile.';
 
   @override
   String get featureInfoFinReconStep2Title => 'Review revenue summary';
@@ -11909,12 +11674,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Review the cash variance (difference between counted and expected). Tap \'Confirm Reconciliation\' and verify in the confirmation dialog.';
 
   @override
-  String get featureInfoFinReconTip1 =>
-      'Cash variance is color-coded: green for matching, red for discrepancies.';
+  String get featureInfoFinReconTip1 => 'Cash variance is color-coded: green for matching, red for discrepancies.';
 
   @override
-  String get featureInfoFinReconTip2 =>
-      'You can also print the report or export to PDF using the action buttons.';
+  String get featureInfoFinReconTip2 => 'You can also print the report or export to PDF using the action buttons.';
 
   @override
   String get featureInfoTxExplorerTitle => 'Transaction Explorer';
@@ -11934,8 +11697,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Type a transaction number or keyword in the search field to filter results.';
 
   @override
-  String get featureInfoTxExplorerSearchStep2Title =>
-      'Apply type and status filters';
+  String get featureInfoTxExplorerSearchStep2Title => 'Apply type and status filters';
 
   @override
   String get featureInfoTxExplorerSearchStep2Desc =>
@@ -11952,24 +11714,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoTxExplorerAnalyticsTitle => 'Viewing Analytics';
 
   @override
-  String get featureInfoTxExplorerAnalyticsStep1Title =>
-      'Toggle analytics panel';
+  String get featureInfoTxExplorerAnalyticsStep1Title => 'Toggle analytics panel';
 
   @override
   String get featureInfoTxExplorerAnalyticsStep1Desc =>
       'Click the analytics icon in the AppBar to show or hide the analytics dashboard above the transaction list.';
 
   @override
-  String get featureInfoTxExplorerAnalyticsStep2Title =>
-      'Review KPIs and charts';
+  String get featureInfoTxExplorerAnalyticsStep2Title => 'Review KPIs and charts';
 
   @override
   String get featureInfoTxExplorerAnalyticsStep2Desc =>
       'The analytics panel shows stats cards, transaction charts, and a daily trend line to help identify patterns.';
 
   @override
-  String get featureInfoTxExplorerTip1 =>
-      'Tap any transaction row to navigate to the full transaction detail page.';
+  String get featureInfoTxExplorerTip1 => 'Tap any transaction row to navigate to the full transaction detail page.';
 
   @override
   String get featureInfoReportsTitle => 'Reports & Analytics';
@@ -12003,8 +11762,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use the 3x3 grid to navigate to: Sales Summary, Product Performance, Category Breakdown, Staff Performance, Hourly Sales, Payment Methods, Inventory Report, Financial Report, and Customer Report.';
 
   @override
-  String get featureInfoReportsTip1 =>
-      'Use the refresh button in the AppBar and the filter panel to customize the data view.';
+  String get featureInfoReportsTip1 => 'Use the refresh button in the AppBar and the filter panel to customize the data view.';
 
   @override
   String get featureInfoLabelsTitle => 'Label Templates';
@@ -12020,15 +11778,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoLabelsCreateStep1Title => 'Click \'Label Designer\'';
 
   @override
-  String get featureInfoLabelsCreateStep1Desc =>
-      'Tap the \'Label Designer\' button in the AppBar to open the WYSIWYG designer.';
+  String get featureInfoLabelsCreateStep1Desc => 'Tap the \'Label Designer\' button in the AppBar to open the WYSIWYG designer.';
 
   @override
   String get featureInfoLabelsCreateStep2Title => 'Set template dimensions';
 
   @override
-  String get featureInfoLabelsCreateStep2Desc =>
-      'Enter a template name, width (mm), and height (mm) for the label.';
+  String get featureInfoLabelsCreateStep2Desc => 'Enter a template name, width (mm), and height (mm) for the label.';
 
   @override
   String get featureInfoLabelsCreateStep3Title => 'Add and arrange elements';
@@ -12041,15 +11797,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoLabelsCreateStep4Title => 'Save the template';
 
   @override
-  String get featureInfoLabelsCreateStep4Desc =>
-      'Click \'Save\' to store the template. It will appear in the template list.';
+  String get featureInfoLabelsCreateStep4Desc => 'Click \'Save\' to store the template. It will appear in the template list.';
 
   @override
   String get featureInfoLabelsPrintTitle => 'Printing Labels';
 
   @override
-  String get featureInfoLabelsPrintStep1Title =>
-      'Select \'Print Queue\' on a template';
+  String get featureInfoLabelsPrintStep1Title => 'Select \'Print Queue\' on a template';
 
   @override
   String get featureInfoLabelsPrintStep1Desc =>
@@ -12059,8 +11813,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoLabelsPrintStep2Title => 'Configure and print';
 
   @override
-  String get featureInfoLabelsPrintStep2Desc =>
-      'Select products, set quantities, and send to the printer.';
+  String get featureInfoLabelsPrintStep2Desc => 'Select products, set quantities, and send to the printer.';
 
   @override
   String get featureInfoLabelsTip1 =>
@@ -12077,16 +11830,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoDeliveryPlatformsTitle => 'Managing Delivery Platforms';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Title =>
-      'Go to the Platforms tab';
+  String get featureInfoDeliveryPlatformsStep1Title => 'Go to the Platforms tab';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Desc =>
-      'Switch to the \'Platforms\' tab to see all configured delivery platforms.';
+  String get featureInfoDeliveryPlatformsStep1Desc => 'Switch to the \'Platforms\' tab to see all configured delivery platforms.';
 
   @override
-  String get featureInfoDeliveryPlatformsStep2Title =>
-      'Toggle or configure platforms';
+  String get featureInfoDeliveryPlatformsStep2Title => 'Toggle or configure platforms';
 
   @override
   String get featureInfoDeliveryPlatformsStep2Desc =>
@@ -12120,8 +11870,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoDeliveryOrdersStep3Title => 'Complete orders';
 
   @override
-  String get featureInfoDeliveryOrdersStep3Desc =>
-      'When the order is delivered, use the \'Complete\' button to finalize it.';
+  String get featureInfoDeliveryOrdersStep3Desc => 'When the order is delivered, use the \'Complete\' button to finalize it.';
 
   @override
   String get featureInfoDeliveryTip1 =>
@@ -12162,12 +11911,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureInfoNotificationsManageStep4Title => 'Pull to refresh';
 
   @override
-  String get featureInfoNotificationsManageStep4Desc =>
-      'Pull down on the list to refresh and load new notifications.';
+  String get featureInfoNotificationsManageStep4Desc => 'Pull down on the list to refresh and load new notifications.';
 
   @override
-  String get featureInfoNotificationsTip1 =>
-      'The unread count badge in the AppBar shows how many unread notifications you have.';
+  String get featureInfoNotificationsTip1 => 'The unread count badge in the AppBar shows how many unread notifications you have.';
 
   @override
   String get sidebarGroupPlatformAdmin => 'Platform Admin';
@@ -12327,12 +12074,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This will generate invoices for all stores with AI usage in the current billing period. Continue?';
 
   @override
-  String get adminWameedAIGenerateInvoicesHint =>
-      'Generate invoices to see them here';
+  String get adminWameedAIGenerateInvoicesHint => 'Generate invoices to see them here';
 
   @override
-  String get adminWameedAINoStoresMessage =>
-      'No stores with AI billing configured';
+  String get adminWameedAINoStoresMessage => 'No stores with AI billing configured';
 
   @override
   String get adminWameedAICacheHitRate => 'Cache Hit Rate';
@@ -12500,8 +12245,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get withKeys => 'with keys';
 
   @override
-  String get deleteModelConfirm =>
-      'Are you sure you want to delete this model? This action cannot be undone.';
+  String get deleteModelConfirm => 'Are you sure you want to delete this model? This action cannot be undone.';
 
   @override
   String get successful => 'Successful';
@@ -12522,8 +12266,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerPaymentCancelTitle => 'Cancel Payment?';
 
   @override
-  String get providerPaymentCancelBody =>
-      'Are you sure you want to cancel this payment? You can retry later.';
+  String get providerPaymentCancelBody => 'Are you sure you want to cancel this payment? You can retry later.';
 
   @override
   String get providerPaymentContinue => 'Continue Payment';
@@ -12670,8 +12413,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinLoginTitle => 'Enter PIN';
 
   @override
-  String get pinLoginNoStore =>
-      'No store session found. Please sign in with email.';
+  String get pinLoginNoStore => 'No store session found. Please sign in with email.';
 
   @override
   String get pinLoginEmailInstead => 'Sign in with email instead';
@@ -12704,12 +12446,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retryOnFailure => 'Retry on Failure';
 
   @override
-  String get automaticallyRetryFailedExports =>
-      'Automatically retry failed exports';
+  String get automaticallyRetryFailedExports => 'Automatically retry failed exports';
 
   @override
-  String get mapPosAccountsToProviderAccounts =>
-      'Map POS accounts to provider accounts';
+  String get mapPosAccountsToProviderAccounts => 'Map POS accounts to provider accounts';
 
   @override
   String get viewAndManageExports => 'View and manage exports';
@@ -12778,8 +12518,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promoDuplicated => 'Promotion duplicated.';
 
   @override
-  String get promoCouponsEmpty =>
-      'No coupons yet. Use Generate to create some.';
+  String get promoCouponsEmpty => 'No coupons yet. Use Generate to create some.';
 
   @override
   String get promoCouponDeleted => 'Coupon deleted.';
@@ -12950,8 +12689,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noAppointments => 'No appointments';
 
   @override
-  String get enterACustomerIdToViewWishlist =>
-      'Enter a customer ID to view wishlist';
+  String get enterACustomerIdToViewWishlist => 'Enter a customer ID to view wishlist';
 
   @override
   String get wishlistIsEmpty => 'Wishlist is empty';
@@ -14025,8 +13763,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogBulkImportTitle => 'Bulk Import Products';
 
   @override
-  String get catalogBulkImportSubtitle =>
-      'Upload a CSV or Excel file to create products in bulk.';
+  String get catalogBulkImportSubtitle => 'Upload a CSV or Excel file to create products in bulk.';
 
   @override
   String get catalogImportStepFile => 'File';
@@ -14044,8 +13781,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogImportPickFileHeading => 'Choose a file';
 
   @override
-  String get catalogImportPickFileHint =>
-      'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.';
+  String get catalogImportPickFileHint => 'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.';
 
   @override
   String get catalogImportSelectFile => 'Click to select a file';
@@ -14054,15 +13790,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogImportChangeFile => 'Click to choose a different file';
 
   @override
-  String get catalogImportFormatTip =>
-      'First row should contain column headers. Required: name, sell_price.';
+  String get catalogImportFormatTip => 'First row should contain column headers. Required: name, sell_price.';
 
   @override
   String get catalogImportMapHeading => 'Map columns';
 
   @override
-  String get catalogImportMapHint =>
-      'Match each product field to a column from your file. Required fields are marked with *.';
+  String get catalogImportMapHint => 'Match each product field to a column from your file. Required fields are marked with *.';
 
   @override
   String get catalogImportPreviewHeading => 'Preview';
@@ -14139,8 +13873,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogComboClearConfirmTitle => 'Clear combo?';
 
   @override
-  String get catalogComboClearConfirmBody =>
-      'This will remove all combo items and unflag the product.';
+  String get catalogComboClearConfirmBody => 'This will remove all combo items and unflag the product.';
 
   @override
   String get catalogComboPickItem => 'Pick a product';
@@ -14149,16 +13882,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogComboSearchHint => 'Search by name, SKU or barcode';
 
   @override
-  String get catalogComboItemAlreadyAdded =>
-      'This product is already in the combo';
+  String get catalogComboItemAlreadyAdded => 'This product is already in the combo';
 
   @override
-  String get catalogComboNeedsAtLeastOneItem =>
-      'Add at least one item before saving';
+  String get catalogComboNeedsAtLeastOneItem => 'Add at least one item before saving';
 
   @override
-  String get catalogComboInvalidQuantity =>
-      'Quantity must be a positive number';
+  String get catalogComboInvalidQuantity => 'Quantity must be a positive number';
 
   @override
   String get catalogComboInvalidPrice => 'Combo price must be zero or more';
@@ -14170,8 +13900,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogSearchProductsShort => 'Search products...';
 
   @override
-  String get catalogSearchProductsFull =>
-      'Search products by name, SKU or barcode...';
+  String get catalogSearchProductsFull => 'Search products by name, SKU or barcode...';
 
   @override
   String get catalogClearSelection => 'Clear selection';
@@ -14311,8 +14040,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get electronicsImei => 'IMEI';
 
   @override
-  String get electronicsInvalidImei =>
-      'Invalid IMEI (must be 15 digits, Luhn check failed)';
+  String get electronicsInvalidImei => 'Invalid IMEI (must be 15 digits, Luhn check failed)';
 
   @override
   String get electronicsCheckImeiServer => 'Check Duplicate';
@@ -14440,8 +14168,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get floristIsTemplate => 'Is Template';
 
   @override
-  String get floristTemplateSubtitle =>
-      'Reusable arrangement template for subscriptions';
+  String get floristTemplateSubtitle => 'Reusable arrangement template for subscriptions';
 
   @override
   String get floristFreshness => 'Freshness';
@@ -14590,8 +14317,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pharmacyManufacturerHint => 'Drug manufacturer';
 
   @override
-  String get pharmacyPrescriptionRequired =>
-      'Must present valid prescription to purchase';
+  String get pharmacyPrescriptionRequired => 'Must present valid prescription to purchase';
 
   @override
   String get pharmacyNoPrescriptions => 'No prescriptions';
@@ -14762,8 +14488,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminDeleteFee => 'Delete Fee';
 
   @override
-  String get adminDeleteFeeConfirm =>
-      'Are you sure you want to delete this implementation fee?';
+  String get adminDeleteFeeConfirm => 'Are you sure you want to delete this implementation fee?';
 
   @override
   String get adminStoreDetails => 'Store Details';
@@ -14851,8 +14576,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminDeleteSale => 'Delete Sale';
 
   @override
-  String get adminDeleteSaleConfirm =>
-      'Are you sure you want to delete this hardware sale?';
+  String get adminDeleteSaleConfirm => 'Are you sure you want to delete this hardware sale?';
 
   @override
   String get adminSelectFiltersPayments => 'Select filters to load payments';
@@ -14910,8 +14634,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminDeleteGateway => 'Delete Gateway';
 
   @override
-  String get adminDeleteGatewayConfirm =>
-      'Are you sure you want to delete this gateway?';
+  String get adminDeleteGatewayConfirm => 'Are you sure you want to delete this gateway?';
 
   @override
   String get adminActionRoleCreated => 'Role Created';
@@ -15171,8 +14894,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminDeleteRole => 'Delete Role';
 
   @override
-  String get adminDeleteRoleConfirm =>
-      'Are you sure you want to delete this role? This cannot be undone.';
+  String get adminDeleteRoleConfirm => 'Are you sure you want to delete this role? This cannot be undone.';
 
   @override
   String get adminStatusWarning => 'WARNING';
@@ -15316,8 +15038,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminRejectRegistration => 'Reject Registration';
 
   @override
-  String get adminRejectReasonHint =>
-      'Explain why this registration is rejected';
+  String get adminRejectReasonHint => 'Explain why this registration is rejected';
 
   @override
   String get subSubscribedSuccessfully => 'Subscribed successfully!';
@@ -15432,8 +15153,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subSubscriptionExpired => 'Subscription Expired';
 
   @override
-  String get subExpiredRenewMessage =>
-      'Your subscription has expired. Renew now to restore access.';
+  String get subExpiredRenewMessage => 'Your subscription has expired. Renew now to restore access.';
 
   @override
   String subGraceDaysRemaining(int days) {
@@ -15558,8 +15278,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffRequiresPinOverride => 'Requires PIN override';
 
   @override
-  String get staffNoActionPermission =>
-      'You do not have permission for this action';
+  String get staffNoActionPermission => 'You do not have permission for this action';
 
   @override
   String staffAttInLabel(String time) {
@@ -15695,8 +15414,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pcNoPredefinedCategories => 'No predefined categories found';
 
   @override
-  String get predefinedNoCategoriesForBusiness =>
-      'No predefined categories are available for your business type';
+  String get predefinedNoCategoriesForBusiness => 'No predefined categories are available for your business type';
 
   @override
   String get pcCloneToMyStore => 'Clone to my store';
@@ -15724,8 +15442,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeleteMapping => 'Delete Mapping';
 
   @override
-  String get acctDeleteMappingConfirm =>
-      'Are you sure you want to remove this mapping?';
+  String get acctDeleteMappingConfirm => 'Are you sure you want to remove this mapping?';
 
   @override
   String get acctEnableAutoExport => 'Enable Auto Export';
@@ -15877,12 +15594,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get labelsNoPrinterConfigured =>
-      'No label printer configured. Please configure one in Hardware Settings.';
+  String get labelsNoPrinterConfigured => 'No label printer configured. Please configure one in Hardware Settings.';
 
   @override
-  String get labelsQueueEmpty =>
-      'Queue is empty. Add products to print labels.';
+  String get labelsQueueEmpty => 'Queue is empty. Add products to print labels.';
 
   @override
   String get labelsRemoveFromQueue => 'Remove from queue';
@@ -15894,8 +15609,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelsPrintLabel => 'Print label';
 
   @override
-  String get labelsNoTemplateConfigured =>
-      'No label template configured. Create one in Labels.';
+  String get labelsNoTemplateConfigured => 'No label template configured. Create one in Labels.';
 
   @override
   String get labelsProductName => 'Product Name';
@@ -15988,8 +15702,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingSkipSetup => 'Skip Setup';
 
   @override
-  String get onboardingTaxIncludedNote =>
-      'When enabled, product prices are displayed with tax included.';
+  String get onboardingTaxIncludedNote => 'When enabled, product prices are displayed with tax included.';
 
   @override
   String get onboardingAllSet => 'You\'re all set!';
@@ -16121,8 +15834,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupEnableAutoBackup => 'Enable Auto-Backup';
 
   @override
-  String get backupEnableAutoBackupHint =>
-      'Automatically create backups on a scheduled interval.';
+  String get backupEnableAutoBackupHint => 'Automatically create backups on a scheduled interval.';
 
   @override
   String get backupNoLoaded => 'No backups loaded';
@@ -16134,8 +15846,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupNowTitle => 'Create Manual Backup';
 
   @override
-  String get backupNowHint =>
-      'This will create a full backup of your store data.';
+  String get backupNowHint => 'This will create a full backup of your store data.';
 
   @override
   String get backupTerminalId => 'Terminal ID';
@@ -16297,8 +16008,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupSelectForRestore => 'Select a backup to restore';
 
   @override
-  String get backupOnlyCompletedRestore =>
-      'Only completed and verified backups can be restored';
+  String get backupOnlyCompletedRestore => 'Only completed and verified backups can be restored';
 
   @override
   String get backupVerifyStep => 'Verify Integrity';
@@ -16307,8 +16017,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupVerifySuccess => 'Backup integrity verified';
 
   @override
-  String get backupVerifyFailed =>
-      'Integrity check failed — backup may be corrupted';
+  String get backupVerifyFailed => 'Integrity check failed — backup may be corrupted';
 
   @override
   String get backupVerifyChecksum => 'Checksum';
@@ -16341,12 +16050,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupRestoreFailed => 'Restore Failed';
 
   @override
-  String get backupRestoreInitiated =>
-      'Restore has been initiated. The system will apply the backup.';
+  String get backupRestoreInitiated => 'Restore has been initiated. The system will apply the backup.';
 
   @override
-  String get backupRequiresMigration =>
-      'This backup requires a database migration';
+  String get backupRequiresMigration => 'This backup requires a database migration';
 
   @override
   String get backupStartRestore => 'Start Restore';
@@ -16391,8 +16098,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupExportIncludeImages => 'Include Images';
 
   @override
-  String get backupExportIncludeImagesDesc =>
-      'Attach image files (increases export size)';
+  String get backupExportIncludeImagesDesc => 'Attach image files (increases export size)';
 
   @override
   String get backupExportResult => 'Export Result';
@@ -16419,8 +16125,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupDeleteConfirmTitle => 'Delete Backup?';
 
   @override
-  String get backupDeleteConfirmMessage =>
-      'This will permanently delete this backup file. This cannot be undone.';
+  String get backupDeleteConfirmMessage => 'This will permanently delete this backup file. This cannot be undone.';
 
   @override
   String get backupDeleteSuccess => 'Backup deleted';
@@ -16696,8 +16401,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminForcePasswordChange => 'Force Password Change';
 
   @override
-  String get adminForcePasswordChangeDesc =>
-      'Require user to change password on next login';
+  String get adminForcePasswordChangeDesc => 'Require user to change password on next login';
 
   @override
   String get adminNoRoleTemplates => 'No role templates';
@@ -16756,12 +16460,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get softPosRemaining => 'Remaining';
 
   @override
-  String subAddOnConfirmMessage(
-    String name,
-    String price,
-    String currency,
-    String cycle,
-  ) {
+  String subAddOnConfirmMessage(String name, String price, String currency, String cycle) {
     return 'Add $name for $price $currency/$cycle?';
   }
 
@@ -16776,12 +16475,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String subConfirmSubscriptionMessage(
-    String planName,
-    String billingCycle,
-    String price,
-    String currency,
-  ) {
+  String subConfirmSubscriptionMessage(String planName, String billingCycle, String price, String currency) {
     return 'Subscribe to $planName ($billingCycle) for $price $currency?';
   }
 
@@ -17116,8 +16810,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posVoidReasonHint => 'Reason (required, min 5 chars)';
 
   @override
-  String get posVoidReasonError =>
-      'Please provide a reason of at least 5 characters';
+  String get posVoidReasonError => 'Please provide a reason of at least 5 characters';
 
   @override
   String get posVoidConfirmAction => 'Void';
@@ -17258,8 +16951,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posApplyCredit => 'Apply Credit';
 
   @override
-  String get posCustomerRequired =>
-      'Customer is required to complete this sale';
+  String get posCustomerRequired => 'Customer is required to complete this sale';
 
   @override
   String get posHoldOrdersDisabled => 'Hold orders are disabled in settings';
@@ -17386,8 +17078,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customersLastVisit => 'Last Visit';
 
   @override
-  String get customersDuplicatePhone =>
-      'A customer with this phone already exists';
+  String get customersDuplicatePhone => 'A customer with this phone already exists';
 
   @override
   String get customersDeleteConfirm => 'Delete this customer?';
@@ -17553,8 +17244,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customersExcludedCategories => 'Excluded Categories';
 
   @override
-  String get customersExcludedCategoriesHint =>
-      'Sales in these categories do not earn points';
+  String get customersExcludedCategoriesHint => 'Sales in these categories do not earn points';
 
   @override
   String get customersDoublePointsDays => 'Double-points Days';
@@ -17583,8 +17273,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zatcaNoDevices => 'No registered devices';
 
   @override
-  String get zatcaDeviceTampered =>
-      'This device\'s chain has been tampered. Submissions are blocked until reset.';
+  String get zatcaDeviceTampered => 'This device\'s chain has been tampered. Submissions are blocked until reset.';
 
   @override
   String get zatcaResetTamper => 'Reset Tamper';
@@ -17740,8 +17429,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportsScheduledFrequency => 'Frequency';
 
   @override
-  String get reportsScheduledRecipients =>
-      'Recipients (comma-separated emails)';
+  String get reportsScheduledRecipients => 'Recipients (comma-separated emails)';
 
   @override
   String get reportsScheduledDaily => 'Daily';
@@ -17840,12 +17528,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get reportsSubscriptionRequired =>
-      'Upgrade required to access this report';
+  String get reportsSubscriptionRequired => 'Upgrade required to access this report';
 
   @override
-  String get reportsUpgradeRequired =>
-      'This feature is available on higher plans';
+  String get reportsUpgradeRequired => 'This feature is available on higher plans';
 
   @override
   String get reportsNoSchedulesYet => 'No scheduled reports yet';
@@ -18140,8 +17826,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseDeleteTitle => 'Delete Expense';
 
   @override
-  String get expenseDeleteConfirm =>
-      'Are you sure you want to delete this expense?';
+  String get expenseDeleteConfirm => 'Are you sure you want to delete this expense?';
 
   @override
   String get expenseDeletedSuccess => 'Expense deleted';
@@ -18150,8 +17835,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseUpdatedSuccess => 'Expense updated';
 
   @override
-  String get expensesInfoMessage =>
-      'Track and manage all store expenses. Swipe left to delete, tap the edit icon to update.';
+  String get expensesInfoMessage => 'Track and manage all store expenses. Swipe left to delete, tap the edit icon to update.';
 
   @override
   String get cashSessionDetailTitle => 'Session Detail';
@@ -18194,12 +17878,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailySummaryNoExpenses => 'No expenses recorded';
 
   @override
-  String get dailySummaryInfoMessage =>
-      'View today\'s sales summary including revenue, expenses, and session data.';
+  String get dailySummaryInfoMessage => 'View today\'s sales summary including revenue, expenses, and session data.';
 
   @override
-  String get finReconInfoMessage =>
-      'Review and confirm financial reconciliation for a date range. Export PDF for records.';
+  String get finReconInfoMessage => 'Review and confirm financial reconciliation for a date range. Export PDF for records.';
 
   @override
   String get allCategories => 'All Categories';
@@ -18211,8 +17893,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get syncCheckingConnectivity => 'Checking connectivity...';
 
   @override
-  String get syncNoInternet =>
-      'No internet connection. Please connect and try again.';
+  String get syncNoInternet => 'No internet connection. Please connect and try again.';
 
   @override
   String get syncDownloadingData => 'Downloading data...';

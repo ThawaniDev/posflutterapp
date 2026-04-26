@@ -56,13 +56,7 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> {
   }
 
   // null means the current tab has no export support
-  String? get _exportType => const [
-    'inventory_valuation',
-    null,
-    null,
-    'inventory_low_stock',
-    'inventory_expiry',
-  ][_currentTab];
+  String? get _exportType => const ['inventory_valuation', null, null, 'inventory_low_stock', 'inventory_expiry'][_currentTab];
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +71,7 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> {
               icon: Icons.download_rounded,
               tooltip: l10n.reportsExportFormatTitle,
               variant: PosButtonVariant.ghost,
-              onPressed: () => showReportExportSheet(
-                context: context,
-                reportType: _exportType!,
-                filters: _filters,
-              ),
+              onPressed: () => showReportExportSheet(context: context, reportType: _exportType!, filters: _filters),
             ),
         ],
         child: Column(
@@ -336,9 +326,7 @@ class _ShrinkageTab extends ConsumerWidget {
                                     ),
                                     Text(
                                       l10n.reportNUnits(qty.toString()),
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                     ),
                                   ],
                                 ),
@@ -459,9 +447,7 @@ class _LowStockTab extends ConsumerWidget {
                                   ),
                                   Text(
                                     l10n.reportStockReorder(current.toString(), reorder.toString()),
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AppColors.mutedFor(context),
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                   ),
                                 ],
                               ),
@@ -527,10 +513,7 @@ class _ExpiryTab extends ConsumerWidget {
 
             // Expired section
             if ((data['expired'] as List?)?.isNotEmpty ?? false) ...[
-              ReportSectionHeader(
-                title: l10n.reportsExpiryExpired,
-                icon: Icons.error_rounded,
-              ),
+              ReportSectionHeader(title: l10n.reportsExpiryExpired, icon: Icons.error_rounded),
               _ExpiryItemList(
                 items: (data['expired'] as List).cast<Map<String, dynamic>>(),
                 badgeColor: AppColors.error,
@@ -541,10 +524,7 @@ class _ExpiryTab extends ConsumerWidget {
 
             // Critical section
             if ((data['critical'] as List?)?.isNotEmpty ?? false) ...[
-              ReportSectionHeader(
-                title: l10n.reportsExpiryCritical,
-                icon: Icons.warning_amber_rounded,
-              ),
+              ReportSectionHeader(title: l10n.reportsExpiryCritical, icon: Icons.warning_amber_rounded),
               _ExpiryItemList(
                 items: (data['critical'] as List).cast<Map<String, dynamic>>(),
                 badgeColor: AppColors.warning,
@@ -555,10 +535,7 @@ class _ExpiryTab extends ConsumerWidget {
 
             // Warning section
             if ((data['warning'] as List?)?.isNotEmpty ?? false) ...[
-              ReportSectionHeader(
-                title: l10n.reportsExpiryWarning,
-                icon: Icons.info_rounded,
-              ),
+              ReportSectionHeader(title: l10n.reportsExpiryWarning, icon: Icons.info_rounded),
               _ExpiryItemList(
                 items: (data['warning'] as List).cast<Map<String, dynamic>>(),
                 badgeColor: AppColors.info,
@@ -578,11 +555,7 @@ class _ExpiryTab extends ConsumerWidget {
 }
 
 class _ExpiryItemList extends StatelessWidget {
-  const _ExpiryItemList({
-    required this.items,
-    required this.badgeColor,
-    required this.l10n,
-  });
+  const _ExpiryItemList({required this.items, required this.badgeColor, required this.l10n});
   final List<Map<String, dynamic>> items;
   final Color badgeColor;
   final AppLocalizations l10n;

@@ -22,7 +22,6 @@ class PaymentMethodsPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
@@ -54,11 +53,7 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: 'sales_summary',
-              filters: _filters,
-            ),
+            onPressed: () => showReportExportSheet(context: context, reportType: 'sales_summary', filters: _filters),
           ),
         ],
         filterPanel: ReportFilterPanel(
@@ -105,7 +100,6 @@ Color _colorForMethod(String method) {
 }
 
 class _PaymentList extends StatelessWidget {
-
   const _PaymentList({required this.methods});
   final List<Map<String, dynamic>> methods;
 
@@ -195,9 +189,7 @@ class _PaymentList extends StatelessWidget {
                             ),
                             Text(
                               '${l10n.reportNTransactions(txCount.toString())} · ${l10n.reportAvgAmount(formatCurrency(avg))}',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                             ),
                           ],
                         ),

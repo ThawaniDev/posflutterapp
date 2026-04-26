@@ -10,11 +10,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Displays a bottom-sheet for choosing an export format (PDF / CSV) and
 /// triggering the export API call. Shows progress, success, and error states.
-Future<void> showReportExportSheet({
-  required BuildContext context,
-  required String reportType,
-  required ReportFilters filters,
-}) {
+Future<void> showReportExportSheet({required BuildContext context, required String reportType, required ReportFilters filters}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -52,12 +48,9 @@ class _ReportExportSheetState extends ConsumerState<_ReportExportSheet> {
     ref.listen<ReportExportState>(reportExportProvider, (_, next) {
       if (next is ReportExportSuccess) {
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l10n.reportsExportSuccess),
-            backgroundColor: AppColors.success,
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.reportsExportSuccess), backgroundColor: AppColors.success));
       }
     });
 
@@ -74,10 +67,7 @@ class _ReportExportSheetState extends ConsumerState<_ReportExportSheet> {
           Container(
             width: 40,
             height: 4,
-            decoration: BoxDecoration(
-              color: AppColors.borderFor(context),
-              borderRadius: BorderRadius.circular(2),
-            ),
+            decoration: BoxDecoration(color: AppColors.borderFor(context), borderRadius: BorderRadius.circular(2)),
           ),
           const SizedBox(height: 20),
           Text(
@@ -126,11 +116,9 @@ class _ReportExportSheetState extends ConsumerState<_ReportExportSheet> {
                     label: l10n.reportsExportGenerating,
                     icon: Icons.download_rounded,
                     onPressed: () {
-                      ref.read(reportExportProvider.notifier).export(
-                        reportType: widget.reportType,
-                        format: _format,
-                        filters: widget.filters,
-                      );
+                      ref
+                          .read(reportExportProvider.notifier)
+                          .export(reportType: widget.reportType, format: _format, filters: widget.filters);
                     },
                   ),
           ),
@@ -164,10 +152,7 @@ class _FormatOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? color.withValues(alpha: 0.08) : Colors.transparent,
           borderRadius: AppRadius.borderLg,
-          border: Border.all(
-            color: isSelected ? color : AppColors.borderFor(context),
-            width: isSelected ? 2 : 1,
-          ),
+          border: Border.all(color: isSelected ? color : AppColors.borderFor(context), width: isSelected ? 2 : 1),
         ),
         child: Column(
           children: [

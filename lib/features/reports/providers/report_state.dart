@@ -14,12 +14,7 @@ class SalesSummaryLoading extends SalesSummaryState {
 }
 
 class SalesSummaryLoaded extends SalesSummaryState {
-
-  const SalesSummaryLoaded({
-    required this.totals,
-    required this.daily,
-    this.previousPeriod,
-  });
+  const SalesSummaryLoaded({required this.totals, required this.daily, this.previousPeriod});
   final Map<String, dynamic> totals;
   final List<Map<String, dynamic>> daily;
   final Map<String, dynamic>? previousPeriod;
@@ -159,7 +154,6 @@ class DashboardLoading extends DashboardState {
 }
 
 class DashboardLoaded extends DashboardState {
-
   const DashboardLoaded({required this.today, required this.yesterday, required this.topProducts});
   final Map<String, dynamic> today;
   final Map<String, dynamic> yesterday;

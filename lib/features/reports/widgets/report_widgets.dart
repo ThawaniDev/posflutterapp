@@ -31,7 +31,6 @@ String formatPercent(num value) {
 // ─── Date Range Filter Bar ──────────────────────────────────
 
 class ReportDateBar extends StatelessWidget {
-
   const ReportDateBar({
     super.key,
     required this.dateRange,
@@ -81,11 +80,7 @@ class ReportDateBar extends StatelessWidget {
                       AppSpacing.gapW8,
                       GestureDetector(
                         onTap: onClear,
-                        child: Icon(
-                          Icons.close_rounded,
-                          size: 16,
-                          color: AppColors.mutedFor(context),
-                        ),
+                        child: Icon(Icons.close_rounded, size: 16, color: AppColors.mutedFor(context)),
                       ),
                     ],
                   ],
@@ -112,7 +107,6 @@ class ReportDateBar extends StatelessWidget {
 // ─── KPI Metric Card ────────────────────────────────────────
 
 class ReportKpiCard extends StatelessWidget {
-
   const ReportKpiCard({
     super.key,
     required this.label,
@@ -164,9 +158,7 @@ class ReportKpiCard extends StatelessWidget {
           AppSpacing.gapH2,
           Text(
             label,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 10),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 10),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -213,12 +205,7 @@ class ReportKpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           AppSpacing.gapH2,
-          Text(
-            label,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
           if (subtitle != null) ...[
             AppSpacing.gapH2,
             Text(
@@ -237,7 +224,6 @@ class ReportKpiCard extends StatelessWidget {
 // ─── Section Header ─────────────────────────────────────────
 
 class ReportSectionHeader extends StatelessWidget {
-
   const ReportSectionHeader({super.key, required this.title, this.icon, this.trailing});
   final String title;
   final IconData? icon;
@@ -266,7 +252,6 @@ class ReportSectionHeader extends StatelessWidget {
 // ─── Data Table Card ────────────────────────────────────────
 
 class ReportDataCard extends StatelessWidget {
-
   const ReportDataCard({super.key, required this.child, this.padding});
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -291,7 +276,6 @@ class ReportDataCard extends StatelessWidget {
 // ─── Ranked List Item ───────────────────────────────────────
 
 class ReportRankedItem extends StatelessWidget {
-
   const ReportRankedItem({
     super.key,
     required this.rank,
@@ -351,12 +335,7 @@ class ReportRankedItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (subtitle != null)
-                  Text(
-                    subtitle!,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
-                  ),
+                  Text(subtitle!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
                 if (badges != null && badges!.isNotEmpty) ...[AppSpacing.gapH4, Wrap(spacing: 6, children: badges!)],
               ],
             ),
@@ -375,10 +354,7 @@ class ReportRankedItem extends StatelessWidget {
               if (trailingSubtitle != null)
                 Text(
                   trailingSubtitle!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.mutedFor(context),
-                    fontSize: 11,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
                 ),
             ],
           ),
@@ -391,7 +367,6 @@ class ReportRankedItem extends StatelessWidget {
 // ─── Small Badge/Tag ────────────────────────────────────────
 
 class ReportBadge extends StatelessWidget {
-
   const ReportBadge({super.key, required this.label, required this.color});
   final String label;
   final Color color;
@@ -412,7 +387,6 @@ class ReportBadge extends StatelessWidget {
 // ─── Comparison Row ─────────────────────────────────────────
 
 class ReportComparisonRow extends StatelessWidget {
-
   const ReportComparisonRow({super.key, required this.label, required this.todayVal, required this.yesterdayVal});
   final String label;
   final double todayVal;
@@ -436,9 +410,7 @@ class ReportComparisonRow extends StatelessWidget {
                 Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
                 Text(
                   l10n.reportTodayVsYesterday(formatCurrency(todayVal), formatCurrency(yesterdayVal)),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],
             ),
@@ -467,7 +439,6 @@ class ReportComparisonRow extends StatelessWidget {
 // ─── Horizontal Bar ─────────────────────────────────────────
 
 class ReportBar extends StatelessWidget {
-
   const ReportBar({super.key, required this.value, required this.maxValue, required this.color, this.height = 8});
   final double value;
   final double maxValue;
@@ -499,7 +470,6 @@ class ReportBar extends StatelessWidget {
 // ─── Stat Row (label: value) ────────────────────────────────
 
 class ReportStatRow extends StatelessWidget {
-
   const ReportStatRow({super.key, required this.label, required this.value, this.valueColor});
   final String label;
   final String value;
@@ -533,7 +503,6 @@ class ReportStatRow extends StatelessWidget {
 // ─── Report Page Scaffold ───────────────────────────────────
 
 class ReportPageScaffold extends StatelessWidget {
-
   const ReportPageScaffold({
     super.key,
     required this.title,
@@ -579,7 +548,6 @@ class ReportPageScaffold extends StatelessWidget {
 // ─── KPI Grid (responsive: squares on mobile) ─────────────
 
 class ReportKpiGrid extends StatelessWidget {
-
   const ReportKpiGrid({super.key, required this.cards});
   final List<ReportKpiCard> cards;
 
@@ -663,11 +631,9 @@ class ReportErrorBody extends ConsumerWidget {
               const SizedBox(height: 20),
               PosButton(
                 label: AppLocalizations.of(context)!.subscriptionUpgrade,
-                onPressed: () => ref.read(upgradePromptServiceProvider).showFeatureGatePrompt(
-                  context: context,
-                  featureKey: featureKey,
-                  featureName: featureName,
-                ),
+                onPressed: () => ref
+                    .read(upgradePromptServiceProvider)
+                    .showFeatureGatePrompt(context: context, featureKey: featureKey, featureName: featureName),
               ),
             ],
           ),

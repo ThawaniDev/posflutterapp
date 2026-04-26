@@ -6,7 +6,6 @@ final securityRepositoryProvider = Provider<SecurityRepository>((ref) {
 });
 
 class SecurityRepository {
-
   SecurityRepository(this._api);
   final SecurityApiService _api;
 
@@ -32,12 +31,8 @@ class SecurityRepository {
 
   Future<Map<String, dynamic>> getAuditStats({required String storeId}) => _api.getAuditStats(storeId: storeId);
 
-  Future<String> exportAuditLogs({
-    required String storeId,
-    String? action,
-    String? severity,
-    String? since,
-  }) => _api.exportAuditLogs(storeId: storeId, action: action, severity: severity, since: since);
+  Future<String> exportAuditLogs({required String storeId, String? action, String? severity, String? since}) =>
+      _api.exportAuditLogs(storeId: storeId, action: action, severity: severity, since: since);
 
   // Devices
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) =>

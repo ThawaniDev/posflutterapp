@@ -1,5 +1,4 @@
 class SecurityIncident {
-
   const SecurityIncident({
     required this.id,
     required this.storeId,
@@ -64,8 +63,8 @@ class SecurityIncident {
     return {
       'id': id,
       'store_id': storeId,
-      'incident_type': type,   // backend field name
-      'type': type,            // normalized alias
+      'incident_type': type, // backend field name
+      'type': type, // normalized alias
       'severity': severity,
       'title': title,
       'description': description,

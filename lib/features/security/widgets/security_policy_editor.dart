@@ -10,7 +10,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 /// Fully editable security policy form.
 /// When [onSave] is null the form is display-only (no edit button shown).
 class SecurityPolicyEditor extends ConsumerStatefulWidget {
-
   const SecurityPolicyEditor({super.key, required this.policy, this.onSave, this.isSaving = false});
   final SecurityPolicy policy;
   final ValueChanged<Map<String, dynamic>>? onSave;
@@ -21,7 +20,6 @@ class SecurityPolicyEditor extends ConsumerStatefulWidget {
 }
 
 class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
-
   final _formKey = GlobalKey<FormState>();
   bool _editing = false;
 
@@ -239,12 +237,32 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
                       validator: _requiredIntValidator,
                     ),
                   ] else ...[
-                    _buildRow(context, l10n.securityPinLength, '${widget.policy.pinMinLength ?? 4} – ${widget.policy.pinMaxLength ?? 6} ${l10n.securityDigits}', Icons.pin),
-                    _buildRow(context, l10n.securityPinExpiryDays, '${widget.policy.pinExpiryDays ?? 0} ${l10n.securityDays}', Icons.schedule),
+                    _buildRow(
+                      context,
+                      l10n.securityPinLength,
+                      '${widget.policy.pinMinLength ?? 4} – ${widget.policy.pinMaxLength ?? 6} ${l10n.securityDigits}',
+                      Icons.pin,
+                    ),
+                    _buildRow(
+                      context,
+                      l10n.securityPinExpiryDays,
+                      '${widget.policy.pinExpiryDays ?? 0} ${l10n.securityDays}',
+                      Icons.schedule,
+                    ),
                   ],
                   AppSpacing.gapH4,
-                  _buildSwitch(context, l10n.securityRequireUniquePins, _requireUniquePins, (v) => setState(() => _requireUniquePins = v)),
-                  _buildSwitch(context, l10n.securityBiometricEnabled, _biometricEnabled, (v) => setState(() => _biometricEnabled = v)),
+                  _buildSwitch(
+                    context,
+                    l10n.securityRequireUniquePins,
+                    _requireUniquePins,
+                    (v) => setState(() => _requireUniquePins = v),
+                  ),
+                  _buildSwitch(
+                    context,
+                    l10n.securityBiometricEnabled,
+                    _biometricEnabled,
+                    (v) => setState(() => _biometricEnabled = v),
+                  ),
                   _buildSwitch(context, l10n.securityRequire2fa, _require2faOwner, (v) => setState(() => _require2faOwner = v)),
                 ],
               ),
@@ -309,12 +327,27 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
                     ),
                   ] else ...[
                     _buildRow(context, l10n.securityAutoLock, '${widget.policy.autoLockSeconds ?? 300}s', Icons.lock_clock),
-                    _buildRow(context, l10n.securityMaxFailedAttempts, '${widget.policy.maxFailedAttempts ?? 5}', Icons.error_outline),
-                    _buildRow(context, l10n.securityLockoutDuration, '${widget.policy.lockoutDurationMinutes ?? 15} ${l10n.securityMinutes}', Icons.timer_off),
+                    _buildRow(
+                      context,
+                      l10n.securityMaxFailedAttempts,
+                      '${widget.policy.maxFailedAttempts ?? 5}',
+                      Icons.error_outline,
+                    ),
+                    _buildRow(
+                      context,
+                      l10n.securityLockoutDuration,
+                      '${widget.policy.lockoutDurationMinutes ?? 15} ${l10n.securityMinutes}',
+                      Icons.timer_off,
+                    ),
                     _buildRow(context, l10n.securitySessionMaxHours, '${widget.policy.sessionMaxHours ?? 12}h', Icons.schedule),
                   ],
                   AppSpacing.gapH4,
-                  _buildSwitch(context, l10n.securityForceLogoutOnRoleChange, _forceLogoutOnRoleChange, (v) => setState(() => _forceLogoutOnRoleChange = v)),
+                  _buildSwitch(
+                    context,
+                    l10n.securityForceLogoutOnRoleChange,
+                    _forceLogoutOnRoleChange,
+                    (v) => setState(() => _forceLogoutOnRoleChange = v),
+                  ),
                 ],
               ),
             ),
@@ -329,9 +362,24 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
               padding: AppSpacing.paddingAll16,
               child: Column(
                 children: [
-                  _buildSwitch(context, l10n.securityPinOverrideVoid, _requirePinOverrideVoid, (v) => setState(() => _requirePinOverrideVoid = v)),
-                  _buildSwitch(context, l10n.securityPinOverrideReturn, _requirePinOverrideReturn, (v) => setState(() => _requirePinOverrideReturn = v)),
-                  _buildSwitch(context, l10n.securityPinOverrideDiscount, _requirePinOverrideDiscount, (v) => setState(() => _requirePinOverrideDiscount = v)),
+                  _buildSwitch(
+                    context,
+                    l10n.securityPinOverrideVoid,
+                    _requirePinOverrideVoid,
+                    (v) => setState(() => _requirePinOverrideVoid = v),
+                  ),
+                  _buildSwitch(
+                    context,
+                    l10n.securityPinOverrideReturn,
+                    _requirePinOverrideReturn,
+                    (v) => setState(() => _requirePinOverrideReturn = v),
+                  ),
+                  _buildSwitch(
+                    context,
+                    l10n.securityPinOverrideDiscount,
+                    _requirePinOverrideDiscount,
+                    (v) => setState(() => _requirePinOverrideDiscount = v),
+                  ),
                   if (_editing)
                     PosTextField(
                       controller: _discountThreshold,
@@ -341,7 +389,12 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
                       validator: _requiredDoubleValidator,
                     )
                   else
-                    _buildRow(context, l10n.securityDiscountThreshold, '${widget.policy.discountOverrideThreshold ?? 20.0}%', Icons.percent),
+                    _buildRow(
+                      context,
+                      l10n.securityDiscountThreshold,
+                      '${widget.policy.discountOverrideThreshold ?? 20.0}%',
+                      Icons.percent,
+                    ),
                 ],
               ),
             ),
@@ -394,12 +447,27 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
                       ],
                     ),
                   ] else ...[
-                    _buildRow(context, l10n.securityPasswordExpiryDays, '${widget.policy.passwordExpiryDays ?? 0} ${l10n.securityDays}', Icons.key),
+                    _buildRow(
+                      context,
+                      l10n.securityPasswordExpiryDays,
+                      '${widget.policy.passwordExpiryDays ?? 0} ${l10n.securityDays}',
+                      Icons.key,
+                    ),
                     _buildRow(context, l10n.securityMaxDevices, '${widget.policy.maxDevices ?? 5}', Icons.devices),
-                    _buildRow(context, l10n.securityAuditRetentionDays, '${widget.policy.auditRetentionDays ?? 90} ${l10n.securityDays}', Icons.history),
+                    _buildRow(
+                      context,
+                      l10n.securityAuditRetentionDays,
+                      '${widget.policy.auditRetentionDays ?? 90} ${l10n.securityDays}',
+                      Icons.history,
+                    ),
                   ],
                   AppSpacing.gapH4,
-                  _buildSwitch(context, l10n.securityRequireStrongPassword, _requireStrongPassword, (v) => setState(() => _requireStrongPassword = v)),
+                  _buildSwitch(
+                    context,
+                    l10n.securityRequireStrongPassword,
+                    _requireStrongPassword,
+                    (v) => setState(() => _requireStrongPassword = v),
+                  ),
                 ],
               ),
             ),
@@ -415,7 +483,12 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSwitch(context, l10n.securityIpRestrictionEnabled, _ipRestrictionEnabled, (v) => setState(() => _ipRestrictionEnabled = v)),
+                  _buildSwitch(
+                    context,
+                    l10n.securityIpRestrictionEnabled,
+                    _ipRestrictionEnabled,
+                    (v) => setState(() => _ipRestrictionEnabled = v),
+                  ),
                   if (_ipRestrictionEnabled) ...[
                     AppSpacing.gapH12,
                     Text(
@@ -537,11 +610,7 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
       child: Row(
         children: [
           Expanded(child: Text(label)),
-          Switch.adaptive(
-            value: value,
-            onChanged: _editing ? onChanged : null,
-            activeThumbColor: AppColors.primary,
-          ),
+          Switch.adaptive(value: value, onChanged: _editing ? onChanged : null, activeThumbColor: AppColors.primary),
         ],
       ),
     );

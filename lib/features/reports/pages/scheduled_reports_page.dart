@@ -36,29 +36,23 @@ class _ScheduledReportsPageState extends ConsumerState<ScheduledReportsPage> {
       child: PosListPage(
         title: l10n.reportsScheduledTitle,
         showSearch: false,
-        actions: [
-          PosButton.icon(
-            icon: Icons.add_rounded,
-            onPressed: () => _showCreateSheet(context),
-          ),
-        ],
+        actions: [PosButton.icon(icon: Icons.add_rounded, onPressed: () => _showCreateSheet(context))],
         child: switch (state) {
           ScheduledReportsInitial() || ScheduledReportsLoading() => PosLoadingSkeleton.list(),
           ScheduledReportsError(:final message) => PosErrorState(
             message: message,
             onRetry: () => ref.read(scheduledReportsProvider.notifier).load(),
           ),
-          ScheduledReportsLoaded(:final schedules) => schedules.isEmpty
-              ? PosEmptyState(title: l10n.reportsScheduledEmpty, icon: Icons.schedule)
-              : ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: schedules.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                  itemBuilder: (_, i) => _ScheduleCard(
-                    schedule: schedules[i],
-                    onDelete: () => _confirmDelete(context, schedules[i]),
+          ScheduledReportsLoaded(:final schedules) =>
+            schedules.isEmpty
+                ? PosEmptyState(title: l10n.reportsScheduledEmpty, icon: Icons.schedule)
+                : ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: schedules.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 10),
+                    itemBuilder: (_, i) =>
+                        _ScheduleCard(schedule: schedules[i], onDelete: () => _confirmDelete(context, schedules[i])),
                   ),
-                ),
         },
       ),
     );
@@ -69,9 +63,7 @@ class _ScheduledReportsPageState extends ConsumerState<ScheduledReportsPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => _CreateScheduleSheet(
-        onCreated: () => ref.read(scheduledReportsProvider.notifier).load(),
-      ),
+      builder: (_) => _CreateScheduleSheet(onCreated: () => ref.read(scheduledReportsProvider.notifier).load()),
     );
   }
 
@@ -82,10 +74,7 @@ class _ScheduledReportsPageState extends ConsumerState<ScheduledReportsPage> {
         title: Text(l10n.reportsScheduledDelete),
         content: Text(l10n.reportsScheduledDeleteConfirm(schedule['name'] as String? ?? '')),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.cancel),
-          ),
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(l10n.cancel)),
           TextButton(
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
             onPressed: () => Navigator.of(context).pop(true),
@@ -142,10 +131,9 @@ class _ScheduleCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       reportType.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -181,18 +169,19 @@ class _ScheduleCard extends StatelessWidget {
             children: [
               _InfoChip(icon: Icons.repeat_rounded, label: _frequencyLabel(l10n, frequency)),
               _InfoChip(icon: Icons.picture_as_pdf_rounded, label: format),
-              if (nextRun != null) _InfoChip(icon: Icons.schedule_rounded, label: l10n.reportsScheduledNext(nextRun.substring(0, 10))),
-              if (lastRun != null) _InfoChip(icon: Icons.history_rounded, label: l10n.reportsScheduledLast(lastRun.substring(0, 10))),
+              if (nextRun != null)
+                _InfoChip(icon: Icons.schedule_rounded, label: l10n.reportsScheduledNext(nextRun.substring(0, 10))),
+              if (lastRun != null)
+                _InfoChip(icon: Icons.history_rounded, label: l10n.reportsScheduledLast(lastRun.substring(0, 10))),
             ],
           ),
           if (recipients.isNotEmpty) ...[
             const SizedBox(height: 10),
             Text(
               l10n.reportsScheduledRecipients,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppColors.mutedFor(context),
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
             Text(
@@ -226,10 +215,7 @@ class _InfoChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.borderFor(context).withValues(alpha: 0.5),
-        borderRadius: AppRadius.borderSm,
-      ),
+      decoration: BoxDecoration(color: AppColors.borderFor(context).withValues(alpha: 0.5), borderRadius: AppRadius.borderSm),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -263,10 +249,18 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
   bool _isSubmitting = false;
 
   static const _reportTypes = [
-    'sales_summary', 'product_performance', 'category_breakdown',
-    'staff_performance', 'slow_movers', 'product_margin',
-    'inventory_valuation', 'inventory_low_stock', 'inventory_expiry',
-    'financial_pl', 'financial_expenses', 'financial_delivery_commission',
+    'sales_summary',
+    'product_performance',
+    'category_breakdown',
+    'staff_performance',
+    'slow_movers',
+    'product_margin',
+    'inventory_valuation',
+    'inventory_low_stock',
+    'inventory_expiry',
+    'financial_pl',
+    'financial_expenses',
+    'financial_delivery_commission',
     'top_customers',
   ];
 
@@ -300,10 +294,7 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
                   child: Container(
                     width: 40,
                     height: 4,
-                    decoration: BoxDecoration(
-                      color: AppColors.borderFor(context),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
+                    decoration: BoxDecoration(color: AppColors.borderFor(context), borderRadius: BorderRadius.circular(2)),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -327,7 +318,9 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
                 DropdownButtonFormField<String>(
                   value: _reportType,
                   decoration: const InputDecoration(isDense: true),
-                  items: _reportTypes.map((t) => DropdownMenuItem(value: t, child: Text(t.replaceAll('_', ' ').toUpperCase()))).toList(),
+                  items: _reportTypes
+                      .map((t) => DropdownMenuItem(value: t, child: Text(t.replaceAll('_', ' ').toUpperCase())))
+                      .toList(),
                   onChanged: (v) => setState(() => _reportType = v ?? _reportType),
                 ),
                 const SizedBox(height: 16),
@@ -406,10 +399,7 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
                   width: double.infinity,
                   child: _isSubmitting
                       ? const Center(child: CircularProgressIndicator())
-                      : PosButton(
-                          label: l10n.reportsScheduledCreate,
-                          onPressed: _submit,
-                        ),
+                      : PosButton(label: l10n.reportsScheduledCreate, onPressed: _submit),
                 ),
               ],
             ),
@@ -423,19 +413,17 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     setState(() => _isSubmitting = true);
     try {
-      final emails = _recipientsCtrl.text
-          .split(',')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
+      final emails = _recipientsCtrl.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
 
-      await ref.read(scheduledReportsProvider.notifier).create(
-        reportType: _reportType,
-        name: _nameCtrl.text.trim(),
-        frequency: _frequency,
-        recipients: emails,
-        format: _format,
-      );
+      await ref
+          .read(scheduledReportsProvider.notifier)
+          .create(
+            reportType: _reportType,
+            name: _nameCtrl.text.trim(),
+            frequency: _frequency,
+            recipients: emails,
+            format: _format,
+          );
       if (mounted) {
         Navigator.of(context).pop();
         widget.onCreated();
@@ -447,12 +435,7 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
 }
 
 class _FrequencyButton extends StatelessWidget {
-  const _FrequencyButton({
-    required this.label,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
-  });
+  const _FrequencyButton({required this.label, required this.value, required this.groupValue, required this.onChanged});
   final String label;
   final String value;
   final String groupValue;
@@ -470,10 +453,7 @@ class _FrequencyButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.transparent,
             borderRadius: AppRadius.borderMd,
-            border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.borderFor(context),
-              width: isSelected ? 2 : 1,
-            ),
+            border: Border.all(color: isSelected ? AppColors.primary : AppColors.borderFor(context), width: isSelected ? 2 : 1),
           ),
           child: Text(
             label,

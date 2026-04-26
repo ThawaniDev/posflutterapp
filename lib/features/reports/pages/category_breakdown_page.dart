@@ -22,7 +22,6 @@ class CategoryBreakdownPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
@@ -54,11 +53,7 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: 'category_breakdown',
-              filters: _filters,
-            ),
+            onPressed: () => showReportExportSheet(context: context, reportType: 'category_breakdown', filters: _filters),
           ),
         ],
         filterPanel: ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
@@ -76,7 +71,6 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
 }
 
 class _CategoryList extends StatelessWidget {
-
   const _CategoryList({required this.categories});
   final List<Map<String, dynamic>> categories;
 
@@ -172,9 +166,7 @@ class _CategoryList extends StatelessWidget {
                                   if (c['category_name_ar'] != null)
                                     Text(
                                       c['category_name_ar'] as String,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                     ),
                                 ],
                               ),
@@ -188,9 +180,7 @@ class _CategoryList extends StatelessWidget {
                                 ),
                                 Text(
                                   formatPercent(pct * 100),
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.mutedFor(context),
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                 ),
                               ],
                             ),

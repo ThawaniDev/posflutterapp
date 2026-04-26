@@ -633,8 +633,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get supportCloseTicket => 'ٹکٹ بند کریں';
 
   @override
-  String get supportCloseConfirmation =>
-      'کیا آپ واقعی اس ٹکٹ کو بند کرنا چاہتے ہیں؟';
+  String get supportCloseConfirmation => 'کیا آپ واقعی اس ٹکٹ کو بند کرنا چاہتے ہیں؟';
 
   @override
   String get supportCancel => 'منسوخ';
@@ -711,8 +710,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get branchesDeleteBranch => 'شاخ حذف کریں';
 
   @override
-  String get branchesDeleteConfirm =>
-      'کیا آپ واقعی اس شاخ کو حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں کیا جا سکتا۔';
+  String get branchesDeleteConfirm => 'کیا آپ واقعی اس شاخ کو حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں کیا جا سکتا۔';
 
   @override
   String get branchesBranchDetail => 'شاخ تفصیلات';
@@ -998,8 +996,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get branchesCannotDeleteMain => 'مرکزی شاخ حذف نہیں کی جا سکتی';
 
   @override
-  String get branchesCannotDeleteWithTransactions =>
-      'موجودہ لین دین والی شاخ حذف نہیں کی جا سکتی';
+  String get branchesCannotDeleteWithTransactions => 'موجودہ لین دین والی شاخ حذف نہیں کی جا سکتی';
 
   @override
   String get deliveryIntegration => 'ڈیلیوری انضمام';
@@ -1034,8 +1031,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliveryNoPlatforms => 'کوئی پلیٹ فارم منسلک نہیں';
 
   @override
-  String get deliveryConfigurePlatform =>
-      'جائزہ ٹیب سے ڈیلیوری پلیٹ فارم ترتیب دیں';
+  String get deliveryConfigurePlatform => 'جائزہ ٹیب سے ڈیلیوری پلیٹ فارم ترتیب دیں';
 
   @override
   String get deliveryNoOrders => 'ابھی کوئی ڈیلیوری آرڈر نہیں';
@@ -1071,8 +1067,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliveryAutoAccept => 'آرڈرز خودکار قبول';
 
   @override
-  String get deliveryAutoAcceptDesc =>
-      'آنے والے ڈیلیوری آرڈرز خودکار قبول کریں';
+  String get deliveryAutoAcceptDesc => 'آنے والے ڈیلیوری آرڈرز خودکار قبول کریں';
 
   @override
   String get deliveryCreated => 'بنایا گیا';
@@ -1129,8 +1124,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliveryMerchantId => 'تاجر آئی ڈی';
 
   @override
-  String get deliveryNoPlatformsForSync =>
-      'مطابقت کے لیے کوئی پلیٹ فارم دستیاب نہیں';
+  String get deliveryNoPlatformsForSync => 'مطابقت کے لیے کوئی پلیٹ فارم دستیاب نہیں';
 
   @override
   String get deliveryNoSyncLogs => 'ابھی مطابقت لاگ نہیں';
@@ -1181,8 +1175,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliverySyncOnChange => 'مصنوع تبدیلی پر مطابقت';
 
   @override
-  String get deliverySyncOnChangeDesc =>
-      'مصنوعات اپ ڈیٹ ہونے پر خودکار مینو مطابقت';
+  String get deliverySyncOnChangeDesc => 'مصنوعات اپ ڈیٹ ہونے پر خودکار مینو مطابقت';
 
   @override
   String get deliverySyncing => 'مطابقت پذیری ہو رہی ہے...';
@@ -1200,8 +1193,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliveryTriggerSync => 'مینو مطابقت شروع کریں';
 
   @override
-  String get deliveryTriggerSyncDesc =>
-      'اپنے مصنوعات کا مینو ڈیلیوری پلیٹ فارمز سے مطابقت کریں';
+  String get deliveryTriggerSyncDesc => 'اپنے مصنوعات کا مینو ڈیلیوری پلیٹ فارمز سے مطابقت کریں';
 
   @override
   String get deliveryViewPending => 'زیر التواء دیکھیں';
@@ -1372,15 +1364,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get thawaniAutoSyncProducts => 'مصنوعات خودکار مطابقت';
 
   @override
-  String get thawaniAutoSyncProductsDesc =>
-      'مصنوعات کو ثوانی مارکیٹ پلیس سے خودکار مطابقت';
+  String get thawaniAutoSyncProductsDesc => 'مصنوعات کو ثوانی مارکیٹ پلیس سے خودکار مطابقت';
 
   @override
   String get thawaniAutoSyncInventory => 'انوینٹری خودکار مطابقت';
 
   @override
-  String get thawaniAutoSyncInventoryDesc =>
-      'اسٹاک سطحوں کو حقیقی وقت میں مطابقت رکھیں';
+  String get thawaniAutoSyncInventoryDesc => 'اسٹاک سطحوں کو حقیقی وقت میں مطابقت رکھیں';
 
   @override
   String get thawaniAutoAcceptOrders => 'آرڈرز خودکار قبول';
@@ -1470,8 +1460,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsPosBehavior => 'پی او ایس رویہ';
 
   @override
-  String get settingsPosBehaviorDesc =>
-      'فروخت، واپسی، انوینٹری اور وفاداری ترتیبات';
+  String get settingsPosBehaviorDesc => 'فروخت، واپسی، انوینٹری اور وفاداری ترتیبات';
 
   @override
   String get settingsSaved => 'ترتیبات محفوظ ہوئیں';
@@ -1507,8 +1496,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsPricesIncludeTax => 'قیمتوں میں ٹیکس شامل ہے';
 
   @override
-  String get settingsPricesIncludeTaxDesc =>
-      'مصنوعات کی قیمتوں میں پہلے سے ٹیکس شامل ہے';
+  String get settingsPricesIncludeTaxDesc => 'مصنوعات کی قیمتوں میں پہلے سے ٹیکس شامل ہے';
 
   @override
   String get settingsTaxConfig => 'ٹیکس ترتیب';
@@ -1634,19 +1622,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsPosManagerRefund => 'واپسی کے لیے مینیجر منظوری';
 
   @override
-  String get settingsPosManagerRefundDesc =>
-      'واپسی لین دین کے لیے مینیجر پن ضروری';
+  String get settingsPosManagerRefundDesc => 'واپسی لین دین کے لیے مینیجر پن ضروری';
 
   @override
   String get settingsPosManagerDiscount => 'رعایت کے لیے مینیجر منظوری';
 
   @override
-  String get settingsPosManagerDiscountDesc =>
-      'رعایت لاگو کرتے وقت مینیجر پن ضروری';
+  String get settingsPosManagerDiscountDesc => 'رعایت لاگو کرتے وقت مینیجر پن ضروری';
 
   @override
-  String get settingsPosReturnWithoutReceiptPolicy =>
-      'Return Without Receipt Policy';
+  String get settingsPosReturnWithoutReceiptPolicy => 'Return Without Receipt Policy';
 
   @override
   String get settingsPosReturnPolicyDeny => 'Deny (no return without receipt)';
@@ -1783,8 +1768,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsAboutSupport => 'سپورٹ';
 
   @override
-  String get settingsAboutSupportDesc =>
-      'مدد چاہیے؟ ہماری سپورٹ ٹیم سے رابطہ کریں';
+  String get settingsAboutSupportDesc => 'مدد چاہیے؟ ہماری سپورٹ ٹیم سے رابطہ کریں';
 
   @override
   String settingsAboutCopyright(String year) {
@@ -1927,15 +1911,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get accessibilityScreenReader => 'اسکرین Reader سپورٹ';
 
   @override
-  String get accessibilityScreenReaderDesc =>
-      'Optimize کے لیے screen reader software';
+  String get accessibilityScreenReaderDesc => 'Optimize کے لیے screen reader software';
 
   @override
   String get accessibilityVisual => 'بصری';
 
   @override
-  String get accessibilityHighContrastDesc =>
-      'اضافہ contrast کے لیے better visibility';
+  String get accessibilityHighContrastDesc => 'اضافہ contrast کے لیے better visibility';
 
   @override
   String get accessibilityColorBlind => 'رنگ نابینا موڈ';
@@ -1944,8 +1926,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get accessibilityReducedMotion => 'کم شدہ حرکت';
 
   @override
-  String get accessibilityReducedMotionDesc =>
-      'Minimize animations اور transitions';
+  String get accessibilityReducedMotionDesc => 'Minimize animations اور transitions';
 
   @override
   String get accessibilityAudio => 'آڈیو';
@@ -1960,15 +1941,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get accessibilityLargeTouchTargets => 'بڑا ٹچ اہداف';
 
   @override
-  String get accessibilityLargeTouchTargetsDesc =>
-      'اضافہ button اور control sizes';
+  String get accessibilityLargeTouchTargetsDesc => 'اضافہ button اور control sizes';
 
   @override
   String get accessibilityVisibleFocus => 'نظر آنے والا فوکس اشارے';
 
   @override
-  String get accessibilityVisibleFocusDesc =>
-      'دکھائیں clear focus outlines on controls';
+  String get accessibilityVisibleFocusDesc => 'دکھائیں clear focus outlines on controls';
 
   @override
   String get accessibilityShortcutsPOS => 'پی او ایس';
@@ -2122,8 +2101,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get autoUpdateEnable => 'آٹو اپ ڈیٹ';
 
   @override
-  String get autoUpdateEnableDesc =>
-      'خودکار طور پر download اور install updates';
+  String get autoUpdateEnableDesc => 'خودکار طور پر download اور install updates';
 
   @override
   String get autoUpdateMaintenanceWindow => 'دیکھ بھال ونڈو';
@@ -2135,8 +2113,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get autoUpdateWindowEnd => 'اختتام Hour';
 
   @override
-  String get autoUpdateWindowDesc =>
-      'اپ ڈیٹس will be installed during this window';
+  String get autoUpdateWindowDesc => 'اپ ڈیٹس will be installed during this window';
 
   @override
   String get autoUpdateChannel => 'اپ ڈیٹ چینل';
@@ -2154,8 +2131,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get autoUpdateRequired => 'ضروری اپ ڈیٹ';
 
   @override
-  String get autoUpdateForceDesc =>
-      'یہ update ہے required اور must be installed تک continue.';
+  String get autoUpdateForceDesc => 'یہ update ہے required اور must be installed تک continue.';
 
   @override
   String get autoUpdateWhatsNew => 'کیا ہے نیا';
@@ -2551,8 +2527,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pharmacyDaysFilter => 'دن';
 
   @override
-  String get pharmacyNoExpiryAlerts =>
-      'منتخبہ مدت میں کوئی مصنوع میعاد ختم نہیں ہوگا';
+  String get pharmacyNoExpiryAlerts => 'منتخبہ مدت میں کوئی مصنوع میعاد ختم نہیں ہوگا';
 
   @override
   String get pharmacySeverityExpired => 'میعاد ختم';
@@ -2918,8 +2893,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffCreateUserAccount => 'صارف اکاؤنٹ بنائیں';
 
   @override
-  String get staffCreateUserAccountDesc =>
-      'عملے کے اس رکن کے لیے پی او ایس سسٹم تک رسائی کے لیے لاگ ان اکاؤنٹ بنائیں';
+  String get staffCreateUserAccountDesc => 'عملے کے اس رکن کے لیے پی او ایس سسٹم تک رسائی کے لیے لاگ ان اکاؤنٹ بنائیں';
 
   @override
   String get staffUserAccountLinked => 'صارف اکاؤنٹ منسلک';
@@ -2991,8 +2965,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffSystemName => 'سسٹم نام';
 
   @override
-  String get staffSystemNameHelper =>
-      'خودکار تیار، منفرد چھوٹے حروف ہونے چاہیئں';
+  String get staffSystemNameHelper => 'خودکار تیار، منفرد چھوٹے حروف ہونے چاہیئں';
 
   @override
   String get staffSystemNameNoChange => 'بنانے کے بعد تبدیل نہیں ہو سکتا';
@@ -3008,12 +2981,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String staffPermissionCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'permissions',
-      one: 'permission',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: 'permissions', one: 'permission');
     return '$count $_temp0';
   }
 
@@ -3027,8 +2995,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffNoRoles => 'ابھی کوئی کردار ترتیب نہیں دیا گیا';
 
   @override
-  String get staffNoRolesDesc =>
-      'عملے کی اجازتوں کا انتظام کرنے کے لیے کردار بنائیں۔';
+  String get staffNoRolesDesc => 'عملے کی اجازتوں کا انتظام کرنے کے لیے کردار بنائیں۔';
 
   @override
   String get staffAttendance => 'حاضری';
@@ -3073,8 +3040,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffDeleteShift => 'شفٹ حذف کریں';
 
   @override
-  String get staffDeleteShiftConfirm =>
-      'یہ شفٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔';
+  String get staffDeleteShiftConfirm => 'یہ شفٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔';
 
   @override
   String get staffShiftsTab => 'شفٹس';
@@ -3095,8 +3061,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffDeleteTemplate => 'ٹیمپلیٹ حذف کریں';
 
   @override
-  String get staffDeleteTemplateConfirm =>
-      'یہ ٹیمپلیٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔';
+  String get staffDeleteTemplateConfirm => 'یہ ٹیمپلیٹ حذف کریں؟ یہ واپس نہیں ہو سکتی۔';
 
   @override
   String get staffTemplateCreated => 'ٹیمپلیٹ بنایا گیا';
@@ -3302,8 +3267,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get subscriptionCancelConfirmTitle => 'سبسکرپشن منسوخ کریں؟';
 
   @override
-  String get subscriptionCancelConfirmMessage =>
-      'کیا آپ واقعی منسوخ کرنا چاہتے ہیں؟ آپ پریمیم خصوصیات تک رسائی کھو سکتے ہیں۔';
+  String get subscriptionCancelConfirmMessage => 'کیا آپ واقعی منسوخ کرنا چاہتے ہیں؟ آپ پریمیم خصوصیات تک رسائی کھو سکتے ہیں۔';
 
   @override
   String get subscriptionCancelReasonLabel => 'وجہ (اختیاری)';
@@ -3327,8 +3291,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get subscriptionNoActiveSubscription => 'کوئی فعال سبسکرپشن نہیں';
 
   @override
-  String get subscriptionChoosePlan =>
-      'اپنے پی او ایس کے ساتھ شروع کرنے کے لیے منصوبہ منتخب کریں۔';
+  String get subscriptionChoosePlan => 'اپنے پی او ایس کے ساتھ شروع کرنے کے لیے منصوبہ منتخب کریں۔';
 
   @override
   String get subscriptionBrowsePlans => 'منصوبے براؤز کریں';
@@ -3357,11 +3320,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String subscriptionSubscribeConfirm(
-    String planName,
-    String billingCycle,
-    String price,
-  ) {
+  String subscriptionSubscribeConfirm(String planName, String billingCycle, String price) {
     return 'آپ will be subscribed تک $planName on a $billingCycle basis.\n\nقیمت: $price /$billingCycle';
   }
 
@@ -3405,15 +3364,13 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get subscriptionGracePeriodEndsToday =>
-      'Grace period ends today. تجدید immediately.';
+  String get subscriptionGracePeriodEndsToday => 'Grace period ends today. تجدید immediately.';
 
   @override
   String get subscriptionExpired => 'سبسکرپشن ختم شدہ';
 
   @override
-  String get subscriptionExpiredMessage =>
-      'آپ کا subscription has expired. تجدید now تک restore access.';
+  String get subscriptionExpiredMessage => 'آپ کا subscription has expired. تجدید now تک restore access.';
 
   @override
   String get subscriptionRenewNow => 'تجدید ابھی';
@@ -3431,8 +3388,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get subscriptionDownloading => 'ڈاؤن لوڈ ہو رہا ہے...';
 
   @override
-  String get subscriptionPdfNotAvailable =>
-      'PDF not available کے لیے this invoice';
+  String get subscriptionPdfNotAvailable => 'PDF not available کے لیے this invoice';
 
   @override
   String get subscriptionPdfOpenFailed => 'Could not open PDF';
@@ -3573,8 +3529,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get subscriptionFeatureGated => 'خصوصیت نہیں دستیاب';
 
   @override
-  String get subscriptionFeatureGatedMessage =>
-      'یہ feature requires a higher plan. اپ گریڈ تک access it.';
+  String get subscriptionFeatureGatedMessage => 'یہ feature requires a higher plan. اپ گریڈ تک access it.';
 
   @override
   String get subscriptionLimitReached => 'حد Reached';
@@ -3659,8 +3614,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffUnlinkTitle => 'لنک ختم کریں صارف اکاؤنٹ';
 
   @override
-  String get staffUnlinkConfirm =>
-      'Are you sure you want تک unlink this user account سے this staff member?';
+  String get staffUnlinkConfirm => 'Are you sure you want تک unlink this user account سے this staff member?';
 
   @override
   String get staffLinkSuccess => 'صارف account linked successfully';
@@ -3669,8 +3623,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get staffUnlinkSuccess => 'صارف account unlinked successfully';
 
   @override
-  String get staffLinkNone =>
-      'نہیں user account linked. لنک a user account تک allow this staff member تک log in.';
+  String get staffLinkNone => 'نہیں user account linked. لنک a user account تک allow this staff member تک log in.';
 
   @override
   String get staffLinkNoUsers => 'نہیں available users تک link';
@@ -3697,8 +3650,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get layoutNoTemplates => 'نہیں layout templates';
 
   @override
-  String get layoutNoTemplatesSubtitle =>
-      'بنائیں a layout template تک get started or browse the marketplace.';
+  String get layoutNoTemplatesSubtitle => 'بنائیں a layout template تک get started or browse the marketplace.';
 
   @override
   String get layoutDefault => 'ڈیفالٹ';
@@ -3746,8 +3698,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get layoutVersions => 'ورژنز';
 
   @override
-  String get layoutSelectWidget =>
-      'منتخب کریں a widget on the canvas تک edit its properties';
+  String get layoutSelectWidget => 'منتخب کریں a widget on the canvas تک edit its properties';
 
   @override
   String get layoutPosition => 'Position';
@@ -3837,8 +3788,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelHeight => 'اونچائی';
 
   @override
-  String get labelSelectElement =>
-      'منتخب کریں an element تک edit its properties';
+  String get labelSelectElement => 'منتخب کریں an element تک edit its properties';
 
   @override
   String get labelNameRequired => 'ٹیمپلیٹ name ہے required';
@@ -3888,8 +3838,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelSetAsDefault => 'پہلے سے طے شدہ کے طور پر سیٹ کریں';
 
   @override
-  String get labelSetAsDefaultSuccess =>
-      'ٹیمپلیٹ کامیابی سے ڈیفالٹ مقرر کیا گیا';
+  String get labelSetAsDefaultSuccess => 'ٹیمپلیٹ کامیابی سے ڈیفالٹ مقرر کیا گیا';
 
   @override
   String get labelPreset => 'Preset';
@@ -3907,8 +3856,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelNoTemplates => 'نہیں ٹیمپلیٹس';
 
   @override
-  String get labelNoTemplatesSubtitle =>
-      'بنائیں your first label template تک get started';
+  String get labelNoTemplatesSubtitle => 'بنائیں your first label template تک get started';
 
   @override
   String get labelPrintQueue => 'پرنٹ قطار';
@@ -3971,8 +3919,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelNoHistory => 'نہیں پرنٹ تاریخ';
 
   @override
-  String get labelNoHistorySubtitle =>
-      'پرنٹ history will appear here after printing labels';
+  String get labelNoHistorySubtitle => 'پرنٹ history will appear here after printing labels';
 
   @override
   String get marketplaceTitle => 'ٹیمپلیٹ مارکیٹ پلیس';
@@ -4002,8 +3949,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get marketplaceNoListings => 'نہیں templates found';
 
   @override
-  String get marketplaceNoListingsSubtitle =>
-      'Try adjusting your search or filters.';
+  String get marketplaceNoListingsSubtitle => 'Try adjusting your search or filters.';
 
   @override
   String get marketplacePage => 'صفحہ';
@@ -4048,8 +3994,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get marketplaceWriteReview => 'لکھیں a جائزہ';
 
   @override
-  String get marketplaceReviewHint =>
-      'Share your experience with this template...';
+  String get marketplaceReviewHint => 'Share your experience with this template...';
 
   @override
   String get marketplaceSubmitReview => 'جمع کرائیں جائزہ';
@@ -4061,8 +4006,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get marketplacePurchaseConfirm => 'تصدیق خریداری';
 
   @override
-  String get marketplacePurchaseFreeConfirm =>
-      'Would you like تک add this free template?';
+  String get marketplacePurchaseFreeConfirm => 'Would you like تک add this free template?';
 
   @override
   String get marketplacePurchaseChargeConfirm => 'آپ will be charged';
@@ -4080,15 +4024,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get marketplaceNoPurchases => 'نہیں purchases yet';
 
   @override
-  String get marketplaceNoPurchasesSubtitle =>
-      'براؤز the marketplace تک find templates.';
+  String get marketplaceNoPurchasesSubtitle => 'براؤز the marketplace تک find templates.';
 
   @override
   String get marketplaceNoInvoices => 'نہیں invoices';
 
   @override
-  String get marketplaceNoInvoicesSubtitle =>
-      'انوائسز will appear when you make a purchase.';
+  String get marketplaceNoInvoicesSubtitle => 'انوائسز will appear when you make a purchase.';
 
   @override
   String get marketplaceTemplateName => 'ٹیمپلیٹ نام';
@@ -4121,8 +4063,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get marketplaceCancelPurchase => 'منسوخ خریداری';
 
   @override
-  String get marketplaceCancelConfirm =>
-      'Are you sure you want تک cancel this purchase?';
+  String get marketplaceCancelConfirm => 'Are you sure you want تک cancel this purchase?';
 
   @override
   String get marketplacePurchaseId => 'خریداری';
@@ -4278,8 +4219,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get noActiveCashSession => 'کوئی فعال نقد سیشن نہیں';
 
   @override
-  String get openSessionPrompt =>
-      'نقد ادائیگیاں قبول کرنا شروع کرنے کے لیے سیشن کھولیں';
+  String get openSessionPrompt => 'نقد ادائیگیاں قبول کرنا شروع کرنے کے لیے سیشن کھولیں';
 
   @override
   String get openCashSession => 'نقد سیشن کھولیں';
@@ -4456,8 +4396,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get confirmReconciliationTitle => 'مطابقت تصدیق';
 
   @override
-  String get confirmReconciliationMessage =>
-      'یہ آج کی مطابقت کو حتمی کر دے گا۔ تمام نقد سیشنز مطابقت شدہ نشان ہوں گے۔';
+  String get confirmReconciliationMessage => 'یہ آج کی مطابقت کو حتمی کر دے گا۔ تمام نقد سیشنز مطابقت شدہ نشان ہوں گے۔';
 
   @override
   String get reconciliationConfirmed => 'مطابقت تصدیق شدہ';
@@ -4544,8 +4483,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get paymentBankTransfer => 'بینک ٹرانسفر';
 
   @override
-  String get offlineChangesSynced =>
-      'آف لائن — تبدیلیاں منسلک ہونے پر مطابقت ہوں گی';
+  String get offlineChangesSynced => 'آف لائن — تبدیلیاں منسلک ہونے پر مطابقت ہوں گی';
 
   @override
   String get syncing => 'مطابقت پذیری ہو رہی ہے...';
@@ -4600,8 +4538,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get checkingConnectivity => 'رابطہ جانچا جا رہا ہے...';
 
   @override
-  String get noInternetPrompt =>
-      'انٹرنیٹ کنکشن نہیں۔ براہ کرم منسلک ہو کر دوبارہ کوشش کریں۔';
+  String get noInternetPrompt => 'انٹرنیٹ کنکشن نہیں۔ براہ کرم منسلک ہو کر دوبارہ کوشش کریں۔';
 
   @override
   String get downloadingData => 'ڈیٹا ڈاؤن لوڈ ہو رہا ہے...';
@@ -4633,8 +4570,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminTerminals => 'ایڈمن — ٹرمینلز';
 
   @override
-  String get adminTerminalsSubtitle =>
-      'تمام پی او ایس ٹرمینلز اور سافٹ پی او ایس ترتیب کا انتظام';
+  String get adminTerminalsSubtitle => 'تمام پی او ایس ٹرمینلز اور سافٹ پی او ایس ترتیب کا انتظام';
 
   @override
   String get addTerminal => 'ٹرمینل شامل کریں';
@@ -4655,8 +4591,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deleteTerminalTitle => 'ٹرمینل حذف کریں؟';
 
   @override
-  String get deleteTerminalMessage =>
-      'اس ٹرمینل کو حذف کرنا واپس نہیں کیا جا سکتا۔';
+  String get deleteTerminalMessage => 'اس ٹرمینل کو حذف کرنا واپس نہیں کیا جا سکتا۔';
 
   @override
   String get toggleStatusTitle => 'حالت ٹوگل';
@@ -4683,8 +4618,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get softposConfiguration => 'سافٹ پی او ایس / نیئرپے ترتیب';
 
   @override
-  String get softposConfigSubtitle =>
-      'این ایف سی ٹیپ ٹو پے ترتیبات اور حاصل کنندہ معلومات';
+  String get softposConfigSubtitle => 'این ایف سی ٹیپ ٹو پے ترتیبات اور حاصل کنندہ معلومات';
 
   @override
   String get nearpayTid => 'نیئرپے ٹرمینل آئی ڈی (TID)';
@@ -4720,8 +4654,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get softposDeactivated => 'سافٹ پی او ایس غیر فعال ہوا۔';
 
   @override
-  String get softposActivationFailed =>
-      'فعالیت ناکام۔ یقینی بنائیں کہ نیئرپے ٹی آئی ڈی اور حاصل کنندہ سیٹ ہیں۔';
+  String get softposActivationFailed => 'فعالیت ناکام۔ یقینی بنائیں کہ نیئرپے ٹی آئی ڈی اور حاصل کنندہ سیٹ ہیں۔';
 
   @override
   String get softposActive => 'سافٹ پی او ایس فعال';
@@ -4811,8 +4744,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminNotes => 'ایڈمن نوٹس';
 
   @override
-  String get adminNotesSubtitle =>
-      'اندرونی نوٹس (فراہم کنندگان کو نظر نہیں آتے)';
+  String get adminNotesSubtitle => 'اندرونی نوٹس (فراہم کنندگان کو نظر نہیں آتے)';
 
   @override
   String get terminalInformation => 'ٹرمینل معلومات';
@@ -4845,8 +4777,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posStartShift => 'اپنی شفٹ شروع کریں';
 
   @override
-  String get posStartShiftDesc =>
-      'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
+  String get posStartShiftDesc => 'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
 
   @override
   String get posOpenShift => 'شفٹ کھولیں';
@@ -4867,8 +4798,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posSelectRegister => 'رجسٹر منتخب کریں';
 
   @override
-  String get posNoRegisters =>
-      'کوئی رجسٹر نہیں ملا۔ براہ کرم پہلے ایک شامل کریں۔';
+  String get posNoRegisters => 'کوئی رجسٹر نہیں ملا۔ براہ کرم پہلے ایک شامل کریں۔';
 
   @override
   String get posCountOpeningCash => 'شروع کرنے کے لیے اپنی ابتدائی نقد گنیں';
@@ -4991,8 +4921,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get posFindTransaction =>
-      'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
+  String get posFindTransaction => 'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
 
   @override
   String get posTransactionNotFound => 'لین دین نہیں ملا';
@@ -5018,8 +4947,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posTotalWithTip => 'ٹپ کے ساتھ کل';
 
   @override
-  String get posPaymentTotalInsufficient =>
-      'ادائیگی کی کل رقم واجب الادا رقم کو پورا نہیں کرتی';
+  String get posPaymentTotalInsufficient => 'ادائیگی کی کل رقم واجب الادا رقم کو پورا نہیں کرتی';
 
   @override
   String posReturnQtyExceedsOriginal(String product, String max) {
@@ -5151,8 +5079,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posStartYourShift => 'اپنی شفٹ شروع کریں';
 
   @override
-  String get posOpenShiftDescription =>
-      'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
+  String get posOpenShiftDescription => 'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
 
   @override
   String get posNotes => 'نوٹس';
@@ -5172,8 +5099,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posNoProductsFound => 'کوئی مصنوع نہیں ملی';
 
   @override
-  String get posNoProductsSubtitle =>
-      'مختلف تلاش آزمائیں یا اپنا کیٹلاگ چیک کریں۔';
+  String get posNoProductsSubtitle => 'مختلف تلاش آزمائیں یا اپنا کیٹلاگ چیک کریں۔';
 
   @override
   String get posTapProductsToAdd => 'مصنوعات شامل کرنے کے لیے ٹیپ کریں';
@@ -5273,8 +5199,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posPleaseSelectRegister => 'براہ کرم رجسٹر منتخب کریں';
 
   @override
-  String get posNoRegistersFound =>
-      'کوئی رجسٹر نہیں ملا۔ براہ کرم پہلے ایک شامل کریں۔';
+  String get posNoRegistersFound => 'کوئی رجسٹر نہیں ملا۔ براہ کرم پہلے ایک شامل کریں۔';
 
   @override
   String posChangeGiven(Object amount) {
@@ -5287,8 +5212,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get posTotalNotCovered =>
-      'ادا شدہ کل واجب الادا رقم کو پورا نہیں کرتا';
+  String get posTotalNotCovered => 'ادا شدہ کل واجب الادا رقم کو پورا نہیں کرتا';
 
   @override
   String get posReceiptTransactionNumber => 'رسید / لین دین نمبر';
@@ -5313,15 +5237,13 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get posEnterReceiptNumber =>
-      'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
+  String get posEnterReceiptNumber => 'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
 
   @override
   String get posOpenPosSession => 'پی او ایس سیشن کھولیں';
 
   @override
-  String get posOpenPosSessionSubtitle =>
-      'اس سیشن کے لیے ابتدائی نقد رقم درج کریں۔';
+  String get posOpenPosSessionSubtitle => 'اس سیشن کے لیے ابتدائی نقد رقم درج کریں۔';
 
   @override
   String get posOpeningCashLabel => 'ابتدائی نقد';
@@ -5336,8 +5258,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posCloseSession => 'سیشن بند کریں';
 
   @override
-  String get posCloseSessionSubtitle =>
-      'اس سیشن کو بند کرنے کے لیے اختتامی نقد رقم درج کریں۔';
+  String get posCloseSessionSubtitle => 'اس سیشن کو بند کرنے کے لیے اختتامی نقد رقم درج کریں۔';
 
   @override
   String get posSessionClosed => 'سیشن بند ہوا۔';
@@ -5379,8 +5300,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posNoSessionsFound => 'کوئی سیشن نہیں ملا';
 
   @override
-  String get posOpenSessionSubtitle =>
-      'لین دین کی کارروائی شروع کرنے کے لیے پی او ایس سیشن کھولیں۔';
+  String get posOpenSessionSubtitle => 'لین دین کی کارروائی شروع کرنے کے لیے پی او ایس سیشن کھولیں۔';
 
   @override
   String get posEditTerminal => 'ٹرمینل ترمیم';
@@ -5478,8 +5398,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get posFailedUpdateTerminalStatus =>
-      'ناکام تک update terminal status.';
+  String get posFailedUpdateTerminalStatus => 'ناکام تک update terminal status.';
 
   @override
   String get posActivated => 'فعال';
@@ -5527,8 +5446,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posNoTerminalsFound => 'کوئی ٹرمینل نہیں ملا';
 
   @override
-  String get posNoTerminalsSubtitle =>
-      'شروع کرنے کے لیے اپنا پہلا پی او ایس ٹرمینل شامل کریں۔';
+  String get posNoTerminalsSubtitle => 'شروع کرنے کے لیے اپنا پہلا پی او ایس ٹرمینل شامل کریں۔';
 
   @override
   String get posOff => 'بند';
@@ -5575,8 +5493,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posNoActiveCashSession => 'کوئی فعال نقد سیشن نہیں';
 
   @override
-  String get posOpenCashSessionDescription =>
-      'نقد ادائیگیاں قبول کرنا شروع کرنے کے لیے سیشن کھولیں';
+  String get posOpenCashSessionDescription => 'نقد ادائیگیاں قبول کرنا شروع کرنے کے لیے سیشن کھولیں';
 
   @override
   String get posOpenCashSession => 'نقد سیشن کھولیں';
@@ -5679,8 +5596,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pinLoginSubtitle => 'فوری سوئچ — اپنا 4 ہندسے کا پن درج کریں';
 
   @override
-  String get pinLoginNoStoreSession =>
-      'اسٹور سیشن نہیں ملا۔ براہ کرم ای میل سے سائن ان کریں۔';
+  String get pinLoginNoStoreSession => 'اسٹور سیشن نہیں ملا۔ براہ کرم ای میل سے سائن ان کریں۔';
 
   @override
   String get pinLoginSignInWithEmail => 'اس کے بجائے ای میل سے سائن ان کریں';
@@ -5723,12 +5639,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get stockMaxLevelHint => 'e.g. 100';
 
   @override
-  String get stockNoLowStockProducts =>
-      'کوئی مصنوع دوبارہ آرڈر کے مقام سے نیچے نہیں۔';
+  String get stockNoLowStockProducts => 'کوئی مصنوع دوبارہ آرڈر کے مقام سے نیچے نہیں۔';
 
   @override
-  String get stockLevelsEmptySubtitle =>
-      'مصنوعات کو انوینٹری ملنے پر اسٹاک سطحیں ظاہر ہوں گی۔';
+  String get stockLevelsEmptySubtitle => 'مصنوعات کو انوینٹری ملنے پر اسٹاک سطحیں ظاہر ہوں گی۔';
 
   @override
   String get stockAdjustReasonDamaged => 'خراب شدہ';
@@ -5755,12 +5669,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get stockAdjustReasonOther => 'دیگر';
 
   @override
-  String get stockTransferApproveConfirm =>
-      'یہ ٹرانسفر منظور کریں؟ یہ ذریعہ اسٹور سے اسٹاک کاٹے گا۔';
+  String get stockTransferApproveConfirm => 'یہ ٹرانسفر منظور کریں؟ یہ ذریعہ اسٹور سے اسٹاک کاٹے گا۔';
 
   @override
-  String get stockTransferReceiveConfirm =>
-      'یہ ٹرانسفر وصول شدہ نشان کریں؟ منزل اسٹور میں اسٹاک شامل ہو گا۔';
+  String get stockTransferReceiveConfirm => 'یہ ٹرانسفر وصول شدہ نشان کریں؟ منزل اسٹور میں اسٹاک شامل ہو گا۔';
 
   @override
   String get stockTransferCancelConfirm => 'یہ ٹرانسفر منسوخ کریں؟';
@@ -5904,8 +5816,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cashMgmtNoActiveSession => 'نہیں فعال سیشن';
 
   @override
-  String get cashMgmtNoActiveSessionSubtitle =>
-      'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
+  String get cashMgmtNoActiveSessionSubtitle => 'لین دین کی کارروائی شروع کرنے کے لیے نقد سیشن کھولیں';
 
   @override
   String get cashMgmtNoSessions => 'کوئی سیشن نہیں';
@@ -6114,8 +6025,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryGoodsReceipts => 'Goods رسیدیں';
 
   @override
-  String get inventoryGoodsReceiptsSubtitle =>
-      'آنے والی اسٹاک شپمنٹ وصول اور تصدیق کریں';
+  String get inventoryGoodsReceiptsSubtitle => 'آنے والی اسٹاک شپمنٹ وصول اور تصدیق کریں';
 
   @override
   String get inventoryIncrease => 'اضافہ';
@@ -6144,8 +6054,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryManagement => 'انوینٹری انتظام';
 
   @override
-  String get inventoryMaxStockLevelOptional =>
-      'زیادہ سے زیادہ اسٹاک سطح (optional)';
+  String get inventoryMaxStockLevelOptional => 'زیادہ سے زیادہ اسٹاک سطح (optional)';
 
   @override
   String get inventoryNewAdjustment => 'نیا Adjustment';
@@ -6175,8 +6084,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryNoGoodsReceipts => 'نہیں goods receipts';
 
   @override
-  String get inventoryNoGoodsReceiptsHint =>
-      'بنائیں a goods receipt تک track incoming stock.';
+  String get inventoryNoGoodsReceiptsHint => 'بنائیں a goods receipt تک track incoming stock.';
 
   @override
   String get inventoryNoMovements => 'نہیں movements';
@@ -6188,8 +6096,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryNoRecipes => 'نہیں recipes';
 
   @override
-  String get inventoryNoRecipesHint =>
-      'بنائیں a recipe تک track product ingredients.';
+  String get inventoryNoRecipesHint => 'بنائیں a recipe تک track product ingredients.';
 
   @override
   String get inventoryNoStockLevels => 'نہیں stock levels';
@@ -6231,8 +6138,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryPurchaseOrders => 'خریداری آرڈرز';
 
   @override
-  String get inventoryPurchaseOrdersSubtitle =>
-      'سپلائر خریداری آرڈرز بنائیں اور منظم کریں';
+  String get inventoryPurchaseOrdersSubtitle => 'سپلائر خریداری آرڈرز بنائیں اور منظم کریں';
 
   @override
   String get inventoryQuantity => 'مقدار';
@@ -6262,8 +6168,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryRecipes => 'Recipes';
 
   @override
-  String get inventoryRecipesSubtitle =>
-      'مصنوع اجزاء اور پیداوار کی تعریف کریں';
+  String get inventoryRecipesSubtitle => 'مصنوع اجزاء اور پیداوار کی تعریف کریں';
 
   @override
   String get inventoryRef => 'حوالہ';
@@ -6311,29 +6216,25 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryStockAdjustments => 'اسٹاک Adjustments';
 
   @override
-  String get inventoryStockAdjustmentsSubtitle =>
-      'انوینٹری اصلاحات اور رائٹ آف ریکارڈ کریں';
+  String get inventoryStockAdjustmentsSubtitle => 'انوینٹری اصلاحات اور رائٹ آف ریکارڈ کریں';
 
   @override
   String get inventoryStockLevels => 'اسٹاک سطحیں';
 
   @override
-  String get inventoryStockLevelsSubtitle =>
-      'تمام مصنوعات میں موجودہ انوینٹری کی نگرانی کریں';
+  String get inventoryStockLevelsSubtitle => 'تمام مصنوعات میں موجودہ انوینٹری کی نگرانی کریں';
 
   @override
   String get inventoryStockMovements => 'اسٹاک حرکات';
 
   @override
-  String get inventoryStockMovementsSubtitle =>
-      'تمام انوینٹری آمد و رفت ٹریک کریں';
+  String get inventoryStockMovementsSubtitle => 'تمام انوینٹری آمد و رفت ٹریک کریں';
 
   @override
   String get inventoryStockTransfers => 'اسٹاک ٹرانسفرز';
 
   @override
-  String get inventoryStockTransfersSubtitle =>
-      'اسٹورز یا گوداموں کے درمیان اسٹاک منتقل کریں';
+  String get inventoryStockTransfersSubtitle => 'اسٹورز یا گوداموں کے درمیان اسٹاک منتقل کریں';
 
   @override
   String get inventorySupplier => 'سپلائر';
@@ -6375,8 +6276,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsInventoryAlerts => 'انوینٹری انتباہات';
 
   @override
-  String get notificationsInventoryAlertsSubtitle =>
-      'کم stock اور reorder notifications';
+  String get notificationsInventoryAlertsSubtitle => 'کم stock اور reorder notifications';
 
   @override
   String get notificationsMarkAllAsRead => 'Mark all as read';
@@ -6394,8 +6294,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsOrderUpdates => 'آرڈر اپ ڈیٹس';
 
   @override
-  String get notificationsOrderUpdatesSubtitle =>
-      'وصول کریں alerts کے لیے new orders اور status changes';
+  String get notificationsOrderUpdatesSubtitle => 'وصول کریں alerts کے لیے new orders اور status changes';
 
   @override
   String get notificationsPreferences => 'اطلاع ترجیحات';
@@ -6404,8 +6303,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsPromotions => 'پروموشنز';
 
   @override
-  String get notificationsPromotionsSubtitle =>
-      'پروموشن activity اور coupon usage alerts';
+  String get notificationsPromotionsSubtitle => 'پروموشن activity اور coupon usage alerts';
 
   @override
   String get notificationsPush => 'پش';
@@ -6417,8 +6315,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsQuietHours => 'Quiet گھنٹے';
 
   @override
-  String get notificationsQuietHoursSubtitle =>
-      'Pause notifications during these گھنٹے';
+  String get notificationsQuietHoursSubtitle => 'Pause notifications during these گھنٹے';
 
   @override
   String get notificationsQuietStart => 'شروع';
@@ -6430,8 +6327,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsSystemUpdates => 'سسٹم اپ ڈیٹس';
 
   @override
-  String get notificationsSystemUpdatesSubtitle =>
-      'ایپ updates اور maintenance notices';
+  String get notificationsSystemUpdatesSubtitle => 'ایپ updates اور maintenance notices';
 
   @override
   String get notificationsTitle => 'اطلاعات';
@@ -6471,15 +6367,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notificationsSoundEnabled => 'آواز فعال';
 
   @override
-  String get notificationsSoundEnabledSubtitle =>
-      'Play sounds کے لیے incoming notifications';
+  String get notificationsSoundEnabledSubtitle => 'Play sounds کے لیے incoming notifications';
 
   @override
   String get notificationsEmailDigest => 'ای میل خلاصہ';
 
   @override
-  String get notificationsEmailDigestSubtitle =>
-      'وصول کریں a summary of notifications by email';
+  String get notificationsEmailDigestSubtitle => 'وصول کریں a summary of notifications by email';
 
   @override
   String get notificationsDigestNone => 'None';
@@ -6619,8 +6513,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifDeleteSingleTitle => 'حذف کریں اطلاع';
 
   @override
-  String get notifDeleteSingleMessage =>
-      'Are you sure you want to delete this notification?';
+  String get notifDeleteSingleMessage => 'Are you sure you want to delete this notification?';
 
   @override
   String get notifJustNow => 'Just now';
@@ -6629,15 +6522,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifPrefPaymentAlerts => 'ادائیگی Alerts';
 
   @override
-  String get notifPrefPaymentAlertsSubtitle =>
-      'ادائیگی confirmations and refund alerts';
+  String get notifPrefPaymentAlertsSubtitle => 'ادائیگی confirmations and refund alerts';
 
   @override
   String get notifPrefStaffEvents => 'عملہ واقعات';
 
   @override
-  String get notifPrefStaffEventsSubtitle =>
-      'عملہ schedule and attendance updates';
+  String get notifPrefStaffEventsSubtitle => 'عملہ schedule and attendance updates';
 
   @override
   String get notifPrefEmail => 'ای میل';
@@ -6661,15 +6552,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifScheduleCreatedSuccess => 'شیڈول created successfully';
 
   @override
-  String get notifSchedulesEmptySubtitle =>
-      'Tap + to create a scheduled notification';
+  String get notifSchedulesEmptySubtitle => 'Tap + to create a scheduled notification';
 
   @override
   String get notifScheduleCancelConfirmTitle => 'منسوخ شیڈول';
 
   @override
-  String get notifScheduleCancelConfirmMessage =>
-      'Are you sure you want to cancel this scheduled notification?';
+  String get notifScheduleCancelConfirmMessage => 'Are you sure you want to cancel this scheduled notification?';
 
   @override
   String get notifScheduleType => 'شیڈول قسم';
@@ -6728,8 +6617,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get ordersNoOrders => 'نہیں orders';
 
   @override
-  String get ordersNoOrdersSubtitle =>
-      'آرڈرز will appear here once transactions are made.';
+  String get ordersNoOrdersSubtitle => 'آرڈرز will appear here once transactions are made.';
 
   @override
   String get ordersOrderNumberCol => 'آرڈر #';
@@ -6784,8 +6672,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get posEnterReceiptNumberHint =>
-      'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
+  String get posEnterReceiptNumberHint => 'لین دین تلاش کرنے کے لیے رسید نمبر درج کریں';
 
   @override
   String get posHeldCartFallback => 'Held کارٹ';
@@ -7082,8 +6969,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get securityPinOverrideTitle => 'مینیجر کی اجازت ضروری ہے';
 
   @override
-  String get securityManagerAuthorization =>
-      'اس عمل کی اجازت کے لیے مینیجر کا PIN درج کریں۔';
+  String get securityManagerAuthorization => 'اس عمل کی اجازت کے لیے مینیجر کا PIN درج کریں۔';
 
   @override
   String get securityEnterPin => 'PIN درج کریں';
@@ -7095,15 +6981,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get securityPinOverrideInvalidPin => 'غلط PIN۔ دوبارہ کوشش کریں۔';
 
   @override
-  String get securityPinOverrideLockout =>
-      'بہت زیادہ کوششیں۔ کچھ دیر بعد کوشش کریں۔';
+  String get securityPinOverrideLockout => 'بہت زیادہ کوششیں۔ کچھ دیر بعد کوشش کریں۔';
 
   @override
   String get securityPolicyUpdated => 'سیکیورٹی پالیسی کامیابی سے اپ ڈیٹ ہوئی۔';
 
   @override
-  String get securityPolicyUpdateError =>
-      'سیکیورٹی پالیسی اپ ڈیٹ کرنے میں ناکامی۔';
+  String get securityPolicyUpdateError => 'سیکیورٹی پالیسی اپ ڈیٹ کرنے میں ناکامی۔';
 
   @override
   String get securityIncidentStatusOpen => 'کھلا';
@@ -7172,8 +7056,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get sessionsCloseSession => 'سیشن بند کریں';
 
   @override
-  String get sessionsCloseSessionDescription =>
-      'اس سیشن کو بند کرنے کے لیے اختتامی نقد رقم درج کریں۔';
+  String get sessionsCloseSessionDescription => 'اس سیشن کو بند کرنے کے لیے اختتامی نقد رقم درج کریں۔';
 
   @override
   String get sessionsClosingCash => 'اختتامی نقد';
@@ -7209,8 +7092,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get sessionsNoSessions => 'کوئی سیشن نہیں ملا';
 
   @override
-  String get sessionsNoSessionsSubtitle =>
-      'لین دین کی کارروائی شروع کرنے کے لیے پی او ایس سیشن کھولیں۔';
+  String get sessionsNoSessionsSubtitle => 'لین دین کی کارروائی شروع کرنے کے لیے پی او ایس سیشن کھولیں۔';
 
   @override
   String get sessionsOpenPosSession => 'پی او ایس سیشن کھولیں';
@@ -7219,8 +7101,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get sessionsOpenSession => 'کھولیں سیشن';
 
   @override
-  String get sessionsOpenSessionDescription =>
-      'اس سیشن کے لیے ابتدائی نقد رقم درج کریں۔';
+  String get sessionsOpenSessionDescription => 'اس سیشن کے لیے ابتدائی نقد رقم درج کریں۔';
 
   @override
   String get sessionsOpeningCash => 'ابتدائی نقد';
@@ -7566,8 +7447,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get terminalsNoTerminals => 'کوئی ٹرمینل نہیں ملا';
 
   @override
-  String get terminalsNoTerminalsSubtitle =>
-      'شروع کرنے کے لیے اپنا پہلا پی او ایس ٹرمینل شامل کریں۔';
+  String get terminalsNoTerminalsSubtitle => 'شروع کرنے کے لیے اپنا پہلا پی او ایس ٹرمینل شامل کریں۔';
 
   @override
   String get terminalsOff => 'بند';
@@ -7928,8 +7808,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get finReconConfirmRecon => 'مطابقت تصدیق';
 
   @override
-  String get finReconConfirmMessage =>
-      'یہ آج کی مطابقت کو حتمی کر دے گا۔ تمام نقد سیشنز مطابقت شدہ نشان ہوں گے۔';
+  String get finReconConfirmMessage => 'یہ آج کی مطابقت کو حتمی کر دے گا۔ تمام نقد سیشنز مطابقت شدہ نشان ہوں گے۔';
 
   @override
   String get finReconConfirmed => 'مطابقت تصدیق شدہ';
@@ -7953,8 +7832,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get receiptTemplatesEmpty => 'نہیں رسید ٹیمپلیٹس';
 
   @override
-  String get receiptTemplatesEmptySubtitle =>
-      'نہیں receipt layout templates are available کے لیے your plan.';
+  String get receiptTemplatesEmptySubtitle => 'نہیں receipt layout templates are available کے لیے your plan.';
 
   @override
   String get receiptTemplateDetail => 'رسید ٹیمپلیٹ تفصیلات';
@@ -7990,8 +7868,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cfdThemesEmpty => 'نہیں CFD تھیمز';
 
   @override
-  String get cfdThemesEmptySubtitle =>
-      'نہیں customer facing display themes are available کے لیے your plan.';
+  String get cfdThemesEmptySubtitle => 'نہیں customer facing display themes are available کے لیے your plan.';
 
   @override
   String get cfdThemeDetail => 'CFD تھیم تفصیلات';
@@ -8066,8 +7943,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelLayoutTemplatesEmpty => 'نہیں لیبل ٹیمپلیٹس';
 
   @override
-  String get labelLayoutTemplatesEmptySubtitle =>
-      'لیبل layout templates will appear here once created by admin';
+  String get labelLayoutTemplatesEmptySubtitle => 'لیبل layout templates will appear here once created by admin';
 
   @override
   String get labelLayoutTemplateDetail => 'لیبل ٹیمپلیٹ تفصیل';
@@ -8259,8 +8135,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get supplierNoSuppliers => 'نہیں suppliers yet';
 
   @override
-  String get supplierNoSuppliersHint =>
-      'شامل کریں suppliers تک track your product sources.';
+  String get supplierNoSuppliersHint => 'شامل کریں suppliers تک track your product sources.';
 
   @override
   String get supplierStatistics => 'اعداد و شمار';
@@ -8312,8 +8187,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get supplierReturnNoReturns => 'نہیں supplier returns';
 
   @override
-  String get supplierReturnNoReturnsHint =>
-      'بنائیں a return تک send products back تک a supplier.';
+  String get supplierReturnNoReturnsHint => 'بنائیں a return تک send products back تک a supplier.';
 
   @override
   String get supplierReturnNoItems => 'نہیں آئٹمز in this return';
@@ -8506,12 +8380,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get debitsReverseReason => 'وجہ کے لیے reversal';
 
   @override
-  String get debitsReverseConfirm =>
-      'Are you sure you want تک reverse this debit?';
+  String get debitsReverseConfirm => 'Are you sure you want تک reverse this debit?';
 
   @override
-  String get debitsDeleteConfirm =>
-      'Are you sure you want تک delete this debit?';
+  String get debitsDeleteConfirm => 'Are you sure you want تک delete this debit?';
 
   @override
   String get debitsCreatedSuccess => 'ڈیبٹ created successfully';
@@ -8592,8 +8464,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get receivablesNoReceivables => 'کوئی وصولیات نہیں';
 
   @override
-  String get receivablesNoReceivablesSubtitle =>
-      'بنانے کے بعد وصولیات یہاں ظاہر ہوں گی۔';
+  String get receivablesNoReceivablesSubtitle => 'بنانے کے بعد وصولیات یہاں ظاہر ہوں گی۔';
 
   @override
   String get receivablesSearchHint => 'حوالہ، گاہک، تفصیل سے تلاش...';
@@ -8725,12 +8596,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get receivablesReverseReason => 'منسوخی کی وجہ';
 
   @override
-  String get receivablesReverseConfirm =>
-      'کیا آپ واقعی اس وصولی کو منسوخ کرنا چاہتے ہیں؟';
+  String get receivablesReverseConfirm => 'کیا آپ واقعی اس وصولی کو منسوخ کرنا چاہتے ہیں؟';
 
   @override
-  String get receivablesDeleteConfirm =>
-      'کیا آپ واقعی اس وصولی کو حذف کرنا چاہتے ہیں؟';
+  String get receivablesDeleteConfirm => 'کیا آپ واقعی اس وصولی کو حذف کرنا چاہتے ہیں؟';
 
   @override
   String get receivablesCreatedSuccess => 'وصولی کامیابی سے بنائی گئی';
@@ -8971,8 +8840,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get selectBusinessTypeFirst =>
-      'براہ کرم پہلے کاروبار کی قسم منتخب کریں۔';
+  String get selectBusinessTypeFirst => 'براہ کرم پہلے کاروبار کی قسم منتخب کریں۔';
 
   @override
   String clonedCategoriesAndProducts(String cats, String prods) {
@@ -9129,8 +8997,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get txNoTransactions => 'کوئی لین دین نہیں ملا';
 
   @override
-  String get txNoTransactionsSubtitle =>
-      'لین دین تلاش کرنے کے لیے اپنے فلٹرز یا تاریخ کی حد ایڈجسٹ کریں';
+  String get txNoTransactionsSubtitle => 'لین دین تلاش کرنے کے لیے اپنے فلٹرز یا تاریخ کی حد ایڈجسٹ کریں';
 
   @override
   String get txStatsTotalSales => 'کل فروخت';
@@ -9247,8 +9114,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get txVoidConfirmTitle => 'لین دین کالعدم';
 
   @override
-  String get txVoidConfirmMessage =>
-      'کیا آپ واقعی اس لین دین کو کالعدم کرنا چاہتے ہیں؟ یہ عمل واپس نہیں کیا جا سکتا۔';
+  String get txVoidConfirmMessage => 'کیا آپ واقعی اس لین دین کو کالعدم کرنا چاہتے ہیں؟ یہ عمل واپس نہیں کیا جا سکتا۔';
 
   @override
   String get txVoidAction => 'کالعدم';
@@ -9362,12 +9228,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get noInstallmentProviders => 'قسطوں کے کوئی فراہم کنندگان نہیں ملے';
 
   @override
-  String get noInstallmentProvidersAvailable =>
-      'قسطوں کے فراہم کنندگان دستیاب نہیں';
+  String get noInstallmentProvidersAvailable => 'قسطوں کے فراہم کنندگان دستیاب نہیں';
 
   @override
-  String get noInstallmentProvidersForAmount =>
-      'اس رقم کے لیے قسطوں کے فراہم کنندگان دستیاب نہیں';
+  String get noInstallmentProvidersForAmount => 'اس رقم کے لیے قسطوں کے فراہم کنندگان دستیاب نہیں';
 
   @override
   String get selectInstallmentProvider => 'قسط فراہم کنندہ منتخب کریں';
@@ -9376,8 +9240,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get payWithInstallments => 'قسطوں سے ادائیگی';
 
   @override
-  String get installmentCredentialsNote =>
-      'اسناد خفیہ کر کے محفوظ طریقے سے ذخیرہ ہوتی ہیں';
+  String get installmentCredentialsNote => 'اسناد خفیہ کر کے محفوظ طریقے سے ذخیرہ ہوتی ہیں';
 
   @override
   String get months => 'مہینے';
@@ -9395,8 +9258,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cancelPayment => 'ادائیگی منسوخ';
 
   @override
-  String get cancelPaymentConfirm =>
-      'کیا آپ واقعی اس ادائیگی کو منسوخ کرنا چاہتے ہیں؟';
+  String get cancelPaymentConfirm => 'کیا آپ واقعی اس ادائیگی کو منسوخ کرنا چاہتے ہیں؟';
 
   @override
   String get goBack => 'واپس جائیں';
@@ -9435,15 +9297,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get endMaintenance => 'اختتام دیکھ بھال';
 
   @override
-  String get endMaintenanceConfirm =>
-      'فراہم کنندہ will be available again. Continue?';
+  String get endMaintenanceConfirm => 'فراہم کنندہ will be available again. Continue?';
 
   @override
   String get maintenanceMessage => 'دیکھ بھال پیغام (EN)';
 
   @override
-  String get maintenanceMessageHint =>
-      'درج کریں maintenance message in انگریزی';
+  String get maintenanceMessageHint => 'درج کریں maintenance message in انگریزی';
 
   @override
   String get maintenanceMessageAr => 'دیکھ بھال پیغام (AR)';
@@ -9594,8 +9454,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAISmartSearch => 'سمارٹ تلاش';
 
   @override
-  String get wameedAISmartSearchHint =>
-      'اپنے اسٹور ڈیٹا کے بارے میں کچھ بھی پوچھیں...';
+  String get wameedAISmartSearchHint => 'اپنے اسٹور ڈیٹا کے بارے میں کچھ بھی پوچھیں...';
 
   @override
   String get wameedAISearch => 'تلاش';
@@ -9640,8 +9499,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAINoSuggestions => 'ابھی کوئی تجاویز نہیں';
 
   @override
-  String get wameedAINoSuggestionsSubtitle =>
-      'اے آئی تجاویز یہاں ظاہر ہوں گی جیسے بنائی جائیں';
+  String get wameedAINoSuggestionsSubtitle => 'اے آئی تجاویز یہاں ظاہر ہوں گی جیسے بنائی جائیں';
 
   @override
   String get wameedAISuggestionBody => 'تفصیلات';
@@ -9779,8 +9637,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIPromotionIdeas => 'پروموشن آئیڈیاز';
 
   @override
-  String get wameedAISelectInvoiceImage =>
-      'اسکین کرنے کے لیے انوائس تصویر منتخب کریں';
+  String get wameedAISelectInvoiceImage => 'اسکین کرنے کے لیے انوائس تصویر منتخب کریں';
 
   @override
   String get wameedAIImageSelected => 'تصویر منتخب';
@@ -9792,8 +9649,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIGallery => 'گیلری';
 
   @override
-  String get wameedAIUploadInvoicePrompt =>
-      'ڈیٹا نکالنے کے لیے تصویر لیں یا انوائس تصویر منتخب کریں';
+  String get wameedAIUploadInvoicePrompt => 'ڈیٹا نکالنے کے لیے تصویر لیں یا انوائس تصویر منتخب کریں';
 
   @override
   String get wameedAIExtractData => 'انوائس ڈیٹا نکالیں';
@@ -9811,8 +9667,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIProcessingInvoice => 'انوائس کا تجزیہ ہو رہا ہے...';
 
   @override
-  String get wameedAIOCRProcessingHint =>
-      'اے آئی آپ کی انوائس سے ڈیٹا پڑھ اور نکال رہا ہے۔ اس میں چند سیکنڈ لگ سکتے ہیں۔';
+  String get wameedAIOCRProcessingHint => 'اے آئی آپ کی انوائس سے ڈیٹا پڑھ اور نکال رہا ہے۔ اس میں چند سیکنڈ لگ سکتے ہیں۔';
 
   @override
   String get wameedAICameraTakePhoto => 'انوائس کی تصویر لیں';
@@ -9893,8 +9748,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIHighPriority => 'اعلیٰ ترجیح';
 
   @override
-  String get wameedAITapToExplore =>
-      'اے آئی خصوصیات دریافت کرنے کے لیے ٹیپ کریں';
+  String get wameedAITapToExplore => 'اے آئی خصوصیات دریافت کرنے کے لیے ٹیپ کریں';
 
   @override
   String get wameedAIBilling => 'اے آئی بلنگ';
@@ -9978,8 +9832,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIBillingPaymentHistory => 'ادائیگی کی تاریخ';
 
   @override
-  String get wameedAIBillingDisabled =>
-      'آپ کے اسٹور کے لیے اے آئی فی الحال غیر فعال ہے';
+  String get wameedAIBillingDisabled => 'آپ کے اسٹور کے لیے اے آئی فی الحال غیر فعال ہے';
 
   @override
   String get wameedAIBillingViewAll => 'دیکھیں سب';
@@ -9991,8 +9844,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAIAssistant => 'Wameed AI Assistant';
 
   @override
-  String get wameedAIWelcomeSubtitle =>
-      'Ask anything about your business — sales, inventory, customers, and more.';
+  String get wameedAIWelcomeSubtitle => 'Ask anything about your business — sales, inventory, customers, and more.';
 
   @override
   String get wameedAIMenu => 'مینو';
@@ -10016,56 +9868,46 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAISmartReorderSubtitle => 'AI تجویز کردہ خریداری کی فہرست';
 
   @override
-  String get wameedAICustomerSegmentsSubtitle =>
-      'رویے کے مطابق صارفین کی گروپ بندی';
+  String get wameedAICustomerSegmentsSubtitle => 'رویے کے مطابق صارفین کی گروپ بندی';
 
   @override
-  String get wameedAIInvoiceOCRSubtitle =>
-      'سپلائر انوائسز اپنے سسٹم میں اسکین کریں';
+  String get wameedAIInvoiceOCRSubtitle => 'سپلائر انوائسز اپنے سسٹم میں اسکین کریں';
 
   @override
   String get wameedAISuggTodaySalesTitle => 'آج کی سیلز کا خلاصہ';
 
   @override
-  String get wameedAISuggTodaySalesSubtitle =>
-      'آمدنی، ٹاپ آئٹمز اور رجحانات دکھائیں';
+  String get wameedAISuggTodaySalesSubtitle => 'آمدنی، ٹاپ آئٹمز اور رجحانات دکھائیں';
 
   @override
-  String get wameedAISuggTodaySalesPrompt =>
-      'ٹاپ مصنوعات اور رجحانات کے ساتھ آج کی سیلز کا خلاصہ دکھائیں';
+  String get wameedAISuggTodaySalesPrompt => 'ٹاپ مصنوعات اور رجحانات کے ساتھ آج کی سیلز کا خلاصہ دکھائیں';
 
   @override
   String get wameedAISuggReorderTitle => 'ری آرڈر تجویز';
 
   @override
-  String get wameedAISuggReorderSubtitle =>
-      'کم اسٹاک اور تیزی سے بکنے والی اشیاء کے لیے';
+  String get wameedAISuggReorderSubtitle => 'کم اسٹاک اور تیزی سے بکنے والی اشیاء کے لیے';
 
   @override
-  String get wameedAISuggReorderPrompt =>
-      'کم یا تیزی سے بکنے والی اشیاء کے لیے ری آرڈر فہرست تجویز کریں';
+  String get wameedAISuggReorderPrompt => 'کم یا تیزی سے بکنے والی اشیاء کے لیے ری آرڈر فہرست تجویز کریں';
 
   @override
   String get wameedAISuggSlowMoversTitle => 'سست رفتار آئٹمز تلاش کریں';
 
   @override
-  String get wameedAISuggSlowMoversSubtitle =>
-      'وہ آئٹمز جو اچھی فروخت نہیں ہو رہیں';
+  String get wameedAISuggSlowMoversSubtitle => 'وہ آئٹمز جو اچھی فروخت نہیں ہو رہیں';
 
   @override
-  String get wameedAISuggSlowMoversPrompt =>
-      'اس مہینے میری انوینٹری میں سب سے سست رفتار مصنوعات کی فہرست بنائیں';
+  String get wameedAISuggSlowMoversPrompt => 'اس مہینے میری انوینٹری میں سب سے سست رفتار مصنوعات کی فہرست بنائیں';
 
   @override
   String get wameedAISuggSegmentsTitle => 'کسٹمر سیگمنٹس';
 
   @override
-  String get wameedAISuggSegmentsSubtitle =>
-      'رویے کے مطابق صارفین کی گروپ بندی';
+  String get wameedAISuggSegmentsSubtitle => 'رویے کے مطابق صارفین کی گروپ بندی';
 
   @override
-  String get wameedAISuggSegmentsPrompt =>
-      'میرے صارفین کا تجزیہ کریں اور مفید سیگمنٹس میں گروپ بندی کریں';
+  String get wameedAISuggSegmentsPrompt => 'میرے صارفین کا تجزیہ کریں اور مفید سیگمنٹس میں گروپ بندی کریں';
 
   @override
   String get wameedAIRecentChats => 'Recent Chats';
@@ -10074,8 +9916,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wameedAINoChats => 'نہیں conversations yet';
 
   @override
-  String get wameedAINoChatsSubtitle =>
-      'Tap \"New Chat\" to start a conversation with Wameed AI';
+  String get wameedAINoChatsSubtitle => 'Tap \"New Chat\" to start a conversation with Wameed AI';
 
   @override
   String get wameedAIMessages => 'messages';
@@ -10316,8 +10157,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get gamificationLeaderboard => 'لیڈر بورڈ';
 
   @override
-  String get gamificationLeaderboardDesc =>
-      'ریئل ٹائم کیشیئر لیڈر بورڈ درجہ بندی دکھائیں';
+  String get gamificationLeaderboardDesc => 'ریئل ٹائم کیشیئر لیڈر بورڈ درجہ بندی دکھائیں';
 
   @override
   String get gamificationBadgesDesc => 'کیشیئرز کو کارکردگی بیجز دیں';
@@ -10326,19 +10166,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get gamificationAnomalyDetection => 'بے ضابطگی پتہ لگانا';
 
   @override
-  String get gamificationAnomalyDetectionDesc =>
-      'مشکوک کیشیئر سرگرمی پیٹرن پتہ لگائیں';
+  String get gamificationAnomalyDetectionDesc => 'مشکوک کیشیئر سرگرمی پیٹرن پتہ لگائیں';
 
   @override
-  String get gamificationShiftReportsDesc =>
-      'شفٹ کے اختتام کی کارکردگی رپورٹس بنائیں';
+  String get gamificationShiftReportsDesc => 'شفٹ کے اختتام کی کارکردگی رپورٹس بنائیں';
 
   @override
   String get gamificationAutoGenerate => 'سیشن بند ہونے پر خودکار بنائیں';
 
   @override
-  String get gamificationAutoGenerateDesc =>
-      'پی او ایس سیشن بند ہونے پر خودکار تجزیہ چلائیں';
+  String get gamificationAutoGenerateDesc => 'پی او ایس سیشن بند ہونے پر خودکار تجزیہ چلائیں';
 
   @override
   String get gamificationFeatureToggles => 'خصوصیت ٹوگلز';
@@ -10393,8 +10230,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoProductsAddTitle => 'شامل کریں a نیا مصنوع';
 
   @override
-  String get featureInfoProductsAddStep1Title =>
-      'ٹیپ the شامل کریں مصنوع button';
+  String get featureInfoProductsAddStep1Title => 'ٹیپ the شامل کریں مصنوع button';
 
   @override
   String get featureInfoProductsAddStep1Desc =>
@@ -10456,8 +10292,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoProductsDeleteTitle => 'حذف ہو رہا ہے a مصنوع';
 
   @override
-  String get featureInfoProductsDeleteStep1Title =>
-      'منتخب کریں products تک delete';
+  String get featureInfoProductsDeleteStep1Title => 'منتخب کریں products تک delete';
 
   @override
   String get featureInfoProductsDeleteStep1Desc =>
@@ -10471,8 +10306,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'A confirmation dialog will appear. مصنوعات are soft-حذف شدہ اور can potentially be recovered. تصدیق تک proceed.';
 
   @override
-  String get featureInfoProductsTip1 =>
-      'استعمال the grid/list toggle (desktop) تک switch between table اور card views.';
+  String get featureInfoProductsTip1 => 'استعمال the grid/list toggle (desktop) تک switch between table اور card views.';
 
   @override
   String get featureInfoProductsTip2 =>
@@ -10496,8 +10330,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoCategoriesAddStep1Title => 'ٹیپ the نیا زمرہ button';
 
   @override
-  String get featureInfoCategoriesAddStep1Desc =>
-      'دبائیں the floating action button تک open the category creation dialog.';
+  String get featureInfoCategoriesAddStep1Desc => 'دبائیں the floating action button تک open the category creation dialog.';
 
   @override
   String get featureInfoCategoriesAddStep2Title => 'Fill in category details';
@@ -10541,8 +10374,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoCategoriesDeleteTitle => 'حذف ہو رہا ہے a زمرہ';
 
   @override
-  String get featureInfoCategoriesDeleteStep1Title =>
-      'کلک حذف کریں on the category';
+  String get featureInfoCategoriesDeleteStep1Title => 'کلک حذف کریں on the category';
 
   @override
   String get featureInfoCategoriesDeleteStep1Desc =>
@@ -10560,8 +10392,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'استعمال \'Expand All\' اور \'Collapse All\' buttons in the AppBar تک quickly navigate the category tree.';
 
   @override
-  String get featureInfoCategoriesTip2 =>
-      'آپ can add child categories directly سے any tree node using the \'Add Child\' action.';
+  String get featureInfoCategoriesTip2 => 'آپ can add child categories directly سے any tree node using the \'Add Child\' action.';
 
   @override
   String get featureInfoSuppliersTitle => 'سپلائرز انتظام';
@@ -10577,19 +10408,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoSuppliersAddStep1Title => 'ٹیپ the نیا سپلائر button';
 
   @override
-  String get featureInfoSuppliersAddStep1Desc =>
-      'دبائیں the floating action button تک open the supplier form dialog.';
+  String get featureInfoSuppliersAddStep1Desc => 'دبائیں the floating action button تک open the supplier form dialog.';
 
   @override
   String get featureInfoSuppliersAddStep2Title => 'درج کریں basic information';
 
   @override
-  String get featureInfoSuppliersAddStep2Desc =>
-      'Fill in the supplier name (required), contact person, اور category.';
+  String get featureInfoSuppliersAddStep2Desc => 'Fill in the supplier name (required), contact person, اور category.';
 
   @override
-  String get featureInfoSuppliersAddStep3Title =>
-      'شامل کریں contact اور banking details';
+  String get featureInfoSuppliersAddStep3Title => 'شامل کریں contact اور banking details';
 
   @override
   String get featureInfoSuppliersAddStep3Desc =>
@@ -10599,15 +10427,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoSuppliersAddStep4Title => 'محفوظ کریں the supplier';
 
   @override
-  String get featureInfoSuppliersAddStep4Desc =>
-      'ٹیپ \'Save\' تک add the supplier تک your directory.';
+  String get featureInfoSuppliersAddStep4Desc => 'ٹیپ \'Save\' تک add the supplier تک your directory.';
 
   @override
   String get featureInfoSuppliersEditTitle => 'ترمیم a سپلائر';
 
   @override
-  String get featureInfoSuppliersEditStep1Title =>
-      'کلک ترمیم on the supplier row';
+  String get featureInfoSuppliersEditStep1Title => 'کلک ترمیم on the supplier row';
 
   @override
   String get featureInfoSuppliersEditStep1Desc =>
@@ -10617,19 +10443,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoSuppliersEditStep2Title => 'اپ ڈیٹ اور save';
 
   @override
-  String get featureInfoSuppliersEditStep2Desc =>
-      'Modify any field اور tap \'Save\' تک update the supplier.';
+  String get featureInfoSuppliersEditStep2Desc => 'Modify any field اور tap \'Save\' تک update the supplier.';
 
   @override
   String get featureInfoSuppliersDeleteTitle => 'حذف ہو رہا ہے a سپلائر';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Title =>
-      'کلک حذف کریں on the supplier row';
+  String get featureInfoSuppliersDeleteStep1Title => 'کلک حذف کریں on the supplier row';
 
   @override
-  String get featureInfoSuppliersDeleteStep1Desc =>
-      'تلاش the supplier in the table اور click the \'Delete\' action.';
+  String get featureInfoSuppliersDeleteStep1Desc => 'تلاش the supplier in the table اور click the \'Delete\' action.';
 
   @override
   String get featureInfoSuppliersDeleteStep2Title => 'تصدیق deletion';
@@ -10643,8 +10466,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'ٹیپ a supplier row تک see detailed statistics including purchase orders, goods receipts, returns, اور outstanding balance.';
 
   @override
-  String get featureInfoSuppliersTip2 =>
-      'استعمال the search bar تک quickly find suppliers by name.';
+  String get featureInfoSuppliersTip2 => 'استعمال the search bar تک quickly find suppliers by name.';
 
   @override
   String get featureInfoCustomersTitle => 'گاہک Directory';
@@ -10695,8 +10517,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoOrdersViewStep2Title => 'تلاش by order number';
 
   @override
-  String get featureInfoOrdersViewStep2Desc =>
-      'استعمال the search bar تک find a specific order by its order number.';
+  String get featureInfoOrdersViewStep2Desc => 'استعمال the search bar تک find a specific order by its order number.';
 
   @override
   String get featureInfoOrdersViewStep3Title => 'فلٹر by status';
@@ -10723,12 +10544,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'کلک the \'Void\' action on the order row اور confirm in the dialog. یہ ہے irreversible.';
 
   @override
-  String get featureInfoOrdersTip1 =>
-      'استعمال pagination controls at the bottom تک navigate between pages.';
+  String get featureInfoOrdersTip1 => 'استعمال pagination controls at the bottom تک navigate between pages.';
 
   @override
-  String get featureInfoOrdersTip2 =>
-      'پل down تک refresh the order list on mobile.';
+  String get featureInfoOrdersTip2 => 'پل down تک refresh the order list on mobile.';
 
   @override
   String get featureInfoStaffTitle => 'عملہ انتظام';
@@ -10744,20 +10563,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoStaffAddStep1Title => 'ٹیپ the شامل کریں button';
 
   @override
-  String get featureInfoStaffAddStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the staff creation form.';
+  String get featureInfoStaffAddStep1Desc => 'دبائیں the floating action button تک navigate تک the staff creation form.';
 
   @override
-  String get featureInfoStaffAddStep2Title =>
-      'منتخب کریں store اور fill personal info';
+  String get featureInfoStaffAddStep2Title => 'منتخب کریں store اور fill personal info';
 
   @override
   String get featureInfoStaffAddStep2Desc =>
       'Choose the store assignment سے the dropdown. درج کریں the first name (required) اور last name (required).';
 
   @override
-  String get featureInfoStaffAddStep3Title =>
-      'سیٹ contact اور employment details';
+  String get featureInfoStaffAddStep3Title => 'سیٹ contact اور employment details';
 
   @override
   String get featureInfoStaffAddStep3Desc =>
@@ -10781,8 +10597,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoStaffEditTitle => 'ترمیم a عملہ رکن';
 
   @override
-  String get featureInfoStaffEditStep1Title =>
-      'تلاش اور open the staff profile';
+  String get featureInfoStaffEditStep1Title => 'تلاش اور open the staff profile';
 
   @override
   String get featureInfoStaffEditStep1Desc =>
@@ -10802,24 +10617,19 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoStaffDeleteStep1Title => 'کھولیں the staff popup menu';
 
   @override
-  String get featureInfoStaffDeleteStep1Desc =>
-      'تلاش the staff member card اور tap the three-dot menu icon.';
+  String get featureInfoStaffDeleteStep1Desc => 'تلاش the staff member card اور tap the three-dot menu icon.';
 
   @override
-  String get featureInfoStaffDeleteStep2Title =>
-      'منتخب کریں حذف کریں اور confirm';
+  String get featureInfoStaffDeleteStep2Title => 'منتخب کریں حذف کریں اور confirm';
 
   @override
-  String get featureInfoStaffDeleteStep2Desc =>
-      'Choose \'Delete\' سے the menu اور confirm in the dialog.';
+  String get featureInfoStaffDeleteStep2Desc => 'Choose \'Delete\' سے the menu اور confirm in the dialog.';
 
   @override
-  String get featureInfoStaffTip1 =>
-      'استعمال the store selector at the top تک view staff کے لیے a specific branch.';
+  String get featureInfoStaffTip1 => 'استعمال the store selector at the top تک view staff کے لیے a specific branch.';
 
   @override
-  String get featureInfoStaffTip2 =>
-      'فلٹر chips let you quickly filter by status (فعال, Inactive, آن Leave) or employment type.';
+  String get featureInfoStaffTip2 => 'فلٹر chips let you quickly filter by status (فعال, Inactive, آن Leave) or employment type.';
 
   @override
   String get featureInfoStaffTip3 =>
@@ -10839,12 +10649,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoRolesCreateStep1Title => 'ٹیپ the نیا کردار button';
 
   @override
-  String get featureInfoRolesCreateStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the role creation form.';
+  String get featureInfoRolesCreateStep1Desc => 'دبائیں the floating action button تک navigate تک the role creation form.';
 
   @override
-  String get featureInfoRolesCreateStep2Title =>
-      'درج کریں role name اور description';
+  String get featureInfoRolesCreateStep2Title => 'درج کریں role name اور description';
 
   @override
   String get featureInfoRolesCreateStep2Desc =>
@@ -10900,8 +10708,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoInventoryNavigateTitle => 'Using the انوینٹری Hub';
 
   @override
-  String get featureInfoInventoryNavigateStep1Title =>
-      'Choose an inventory module';
+  String get featureInfoInventoryNavigateStep1Title => 'Choose an inventory module';
 
   @override
   String get featureInfoInventoryNavigateStep1Desc =>
@@ -10915,8 +10722,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'Each module has its own info button (ℹ) with detailed instructions کے لیے that specific feature.';
 
   @override
-  String get featureInfoInventoryTip1 =>
-      'اسٹاک سطحیں shows current quantities اور reorder status at a glance.';
+  String get featureInfoInventoryTip1 => 'اسٹاک سطحیں shows current quantities اور reorder status at a glance.';
 
   @override
   String get featureInfoInventoryTip2 =>
@@ -10933,16 +10739,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoStockAdjCreateTitle => 'Creating a اسٹاک Adjustment';
 
   @override
-  String get featureInfoStockAdjCreateStep1Title =>
-      'ٹیپ the نیا Adjustment button';
+  String get featureInfoStockAdjCreateStep1Title => 'ٹیپ the نیا Adjustment button';
 
   @override
-  String get featureInfoStockAdjCreateStep1Desc =>
-      'دبائیں the floating action button تک open the adjustment dialog.';
+  String get featureInfoStockAdjCreateStep1Desc => 'دبائیں the floating action button تک open the adjustment dialog.';
 
   @override
-  String get featureInfoStockAdjCreateStep2Title =>
-      'منتخب کریں the adjustment type';
+  String get featureInfoStockAdjCreateStep2Title => 'منتخب کریں the adjustment type';
 
   @override
   String get featureInfoStockAdjCreateStep2Desc =>
@@ -10956,8 +10759,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'استعمال the searchable product dropdown تک find اور select the product you want تک adjust.';
 
   @override
-  String get featureInfoStockAdjCreateStep4Title =>
-      'درج کریں quantity اور reason';
+  String get featureInfoStockAdjCreateStep4Title => 'درج کریں quantity اور reason';
 
   @override
   String get featureInfoStockAdjCreateStep4Desc =>
@@ -10971,8 +10773,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'ٹیپ \'Create\' تک record the adjustment. The stock level will be updated immediately.';
 
   @override
-  String get featureInfoStockAdjTip1 =>
-      'Always select the correct reason — it helps in reporting اور audit trails.';
+  String get featureInfoStockAdjTip1 => 'Always select the correct reason — it helps in reporting اور audit trails.';
 
   @override
   String get featureInfoStockAdjTip2 =>
@@ -10992,19 +10793,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoPOCreateStep1Title => 'ٹیپ the نیا PO button';
 
   @override
-  String get featureInfoPOCreateStep1Desc =>
-      'دبائیں the floating action button تک open the purchase order creation dialog.';
+  String get featureInfoPOCreateStep1Desc => 'دبائیں the floating action button تک open the purchase order creation dialog.';
 
   @override
   String get featureInfoPOCreateStep2Title => 'منتخب کریں a supplier';
 
   @override
-  String get featureInfoPOCreateStep2Desc =>
-      'استعمال the searchable dropdown تک find اور select the supplier کے لیے this order.';
+  String get featureInfoPOCreateStep2Desc => 'استعمال the searchable dropdown تک find اور select the supplier کے لیے this order.';
 
   @override
-  String get featureInfoPOCreateStep3Title =>
-      'شامل کریں product اور quantities';
+  String get featureInfoPOCreateStep3Title => 'شامل کریں product اور quantities';
 
   @override
   String get featureInfoPOCreateStep3Desc =>
@@ -11014,8 +10812,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoPOCreateStep4Title => 'بنائیں the order';
 
   @override
-  String get featureInfoPOCreateStep4Desc =>
-      'ٹیپ \'Create\' تک save the purchase order as a مسودہ.';
+  String get featureInfoPOCreateStep4Desc => 'ٹیپ \'Create\' تک save the purchase order as a مسودہ.';
 
   @override
   String get featureInfoPOManageTitle => 'Managing خریداری آرڈرز';
@@ -11046,8 +10843,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'استعمال the filter button تک view orders by status (مسودہ, بھیجا گیا, جزوی وصول شدہ, مکمل طور پر وصول شدہ, منسوخ شدہ).';
 
   @override
-  String get featureInfoPOTip2 =>
-      'The table shows reference number, supplier, status, total cost, اور expected delivery date.';
+  String get featureInfoPOTip2 => 'The table shows reference number, supplier, status, total cost, اور expected delivery date.';
 
   @override
   String get featureInfoTransfersTitle => 'اسٹاک ٹرانسفرز';
@@ -11060,24 +10856,20 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoTransfersCreateTitle => 'Creating a اسٹاک ٹرانسفر';
 
   @override
-  String get featureInfoTransfersCreateStep1Title =>
-      'ٹیپ the نیا ٹرانسفر button';
+  String get featureInfoTransfersCreateStep1Title => 'ٹیپ the نیا ٹرانسفر button';
 
   @override
-  String get featureInfoTransfersCreateStep1Desc =>
-      'دبائیں the floating action button تک open the transfer creation dialog.';
+  String get featureInfoTransfersCreateStep1Desc => 'دبائیں the floating action button تک open the transfer creation dialog.';
 
   @override
-  String get featureInfoTransfersCreateStep2Title =>
-      'منتخب کریں source اور destination';
+  String get featureInfoTransfersCreateStep2Title => 'منتخب کریں source اور destination';
 
   @override
   String get featureInfoTransfersCreateStep2Desc =>
       'Choose the \'From Store\' (source branch) اور \'To Store\' (destination branch) سے the searchable dropdowns.';
 
   @override
-  String get featureInfoTransfersCreateStep3Title =>
-      'شامل کریں product details';
+  String get featureInfoTransfersCreateStep3Title => 'شامل کریں product details';
 
   @override
   String get featureInfoTransfersCreateStep3Desc =>
@@ -11087,8 +10879,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoTransfersCreateStep4Title => 'بنائیں the transfer';
 
   @override
-  String get featureInfoTransfersCreateStep4Desc =>
-      'ٹیپ \'Create\' تک submit the transfer request as زیر التواء.';
+  String get featureInfoTransfersCreateStep4Desc => 'ٹیپ \'Create\' تک submit the transfer request as زیر التواء.';
 
   @override
   String get featureInfoTransfersManageTitle => 'Managing اسٹاک ٹرانسفرز';
@@ -11132,8 +10923,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoGRCreateStep1Title => 'ٹیپ the نیا رسید button';
 
   @override
-  String get featureInfoGRCreateStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the goods receipt form page.';
+  String get featureInfoGRCreateStep1Desc => 'دبائیں the floating action button تک navigate تک the goods receipt form page.';
 
   @override
   String get featureInfoGRCreateStep2Title => 'Fill in receipt details';
@@ -11156,8 +10946,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoGRConfirmStep1Title => 'تلاش the draft receipt';
 
   @override
-  String get featureInfoGRConfirmStep1Desc =>
-      'Locate the مسودہ receipt in the table. Only مسودہ receipts can be confirmed.';
+  String get featureInfoGRConfirmStep1Desc => 'Locate the مسودہ receipt in the table. Only مسودہ receipts can be confirmed.';
 
   @override
   String get featureInfoGRConfirmStep2Title => 'تصدیق the receipt';
@@ -11184,8 +10973,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoSRCreateStep1Title => 'ٹیپ the نیا واپسی button';
 
   @override
-  String get featureInfoSRCreateStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the supplier return form page.';
+  String get featureInfoSRCreateStep1Desc => 'دبائیں the floating action button تک navigate تک the supplier return form page.';
 
   @override
   String get featureInfoSRCreateStep2Title => 'Fill in return details';
@@ -11208,15 +10996,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoSRManageStep1Title => 'جمع کرائیں the return';
 
   @override
-  String get featureInfoSRManageStep1Desc =>
-      'استعمال the \'Submit\' action on a مسودہ return تک send it کے لیے approval.';
+  String get featureInfoSRManageStep1Desc => 'استعمال the \'Submit\' action on a مسودہ return تک send it کے لیے approval.';
 
   @override
   String get featureInfoSRManageStep2Title => 'منظور کریں the return';
 
   @override
-  String get featureInfoSRManageStep2Desc =>
-      'استعمال the \'Approve\' action on a جمع شدہ return تک authorize the return.';
+  String get featureInfoSRManageStep2Desc => 'استعمال the \'Approve\' action on a جمع شدہ return تک authorize the return.';
 
   @override
   String get featureInfoSRManageStep3Title => 'Complete the return';
@@ -11233,8 +11019,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'مسودہ اور جمع شدہ returns can be cancelled. مسودہ returns can also be permanently حذف شدہ.';
 
   @override
-  String get featureInfoSRTip1 =>
-      'استعمال the search bar اور status filter dropdown تک quickly find specific returns.';
+  String get featureInfoSRTip1 => 'استعمال the search bar اور status filter dropdown تک quickly find specific returns.';
 
   @override
   String get featureInfoRecipesTitle => 'Recipes';
@@ -11250,12 +11035,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoRecipesCreateStep1Title => 'ٹیپ the نیا Recipe button';
 
   @override
-  String get featureInfoRecipesCreateStep1Desc =>
-      'دبائیں the floating action button تک open the recipe creation dialog.';
+  String get featureInfoRecipesCreateStep1Desc => 'دبائیں the floating action button تک open the recipe creation dialog.';
 
   @override
-  String get featureInfoRecipesCreateStep2Title =>
-      'منتخب کریں the output product';
+  String get featureInfoRecipesCreateStep2Title => 'منتخب کریں the output product';
 
   @override
   String get featureInfoRecipesCreateStep2Desc =>
@@ -11279,8 +11062,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoRecipesDeleteTitle => 'حذف ہو رہا ہے a Recipe';
 
   @override
-  String get featureInfoRecipesDeleteStep1Title =>
-      'تلاش the recipe in the table';
+  String get featureInfoRecipesDeleteStep1Title => 'تلاش the recipe in the table';
 
   @override
   String get featureInfoRecipesDeleteStep1Desc =>
@@ -11322,28 +11104,24 @@ class AppLocalizationsUr extends AppLocalizations {
       'ٹوگل the \'Low Stock\' filter chip تک show only products that are below their reorder point.';
 
   @override
-  String get featureInfoStockLevelsReorderTitle =>
-      'Setting دوبارہ آرڈر پوائنٹس';
+  String get featureInfoStockLevelsReorderTitle => 'Setting دوبارہ آرڈر پوائنٹس';
 
   @override
-  String get featureInfoStockLevelsReorderStep1Title =>
-      'کلک \'Set دوبارہ آرڈر Point\'';
+  String get featureInfoStockLevelsReorderStep1Title => 'کلک \'Set دوبارہ آرڈر Point\'';
 
   @override
   String get featureInfoStockLevelsReorderStep1Desc =>
       'استعمال the row action \'Set دوبارہ آرڈر Point\' on any product تک open the dialog.';
 
   @override
-  String get featureInfoStockLevelsReorderStep2Title =>
-      'درج کریں reorder thresholds';
+  String get featureInfoStockLevelsReorderStep2Title => 'درج کریں reorder thresholds';
 
   @override
   String get featureInfoStockLevelsReorderStep2Desc =>
       'سیٹ the reorder point (minimum stock level before alert) اور optionally set the maximum stock level.';
 
   @override
-  String get featureInfoStockLevelsReorderStep3Title =>
-      'محفوظ کریں the thresholds';
+  String get featureInfoStockLevelsReorderStep3Title => 'محفوظ کریں the thresholds';
 
   @override
   String get featureInfoStockLevelsReorderStep3Desc =>
@@ -11364,24 +11142,20 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoPromotionsCreateTitle => 'Creating a پروموشن';
 
   @override
-  String get featureInfoPromotionsCreateStep1Title =>
-      'ٹیپ the شامل کریں button';
+  String get featureInfoPromotionsCreateStep1Title => 'ٹیپ the شامل کریں button';
 
   @override
-  String get featureInfoPromotionsCreateStep1Desc =>
-      'دبائیں the floating action button تک open the promotion creation form.';
+  String get featureInfoPromotionsCreateStep1Desc => 'دبائیں the floating action button تک open the promotion creation form.';
 
   @override
-  String get featureInfoPromotionsCreateStep2Title =>
-      'درج کریں promotion details';
+  String get featureInfoPromotionsCreateStep2Title => 'درج کریں promotion details';
 
   @override
   String get featureInfoPromotionsCreateStep2Desc =>
       'درج کریں the promotion name (required) اور description. منتخب کریں the type: Percentage, Fixed رقم, BOGO, Bundle, or Happy Hour.';
 
   @override
-  String get featureInfoPromotionsCreateStep3Title =>
-      'ترتیب دیں discount values';
+  String get featureInfoPromotionsCreateStep3Title => 'ترتیب دیں discount values';
 
   @override
   String get featureInfoPromotionsCreateStep3Desc =>
@@ -11395,8 +11169,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'ترتیب دیں minimum order total, maximum total uses, اور maximum uses per customer. ٹوگل \'Requires کوپن Code\' if this ہے a coupon-based promotion. ٹوگل \'Stackable\' تک allow combining with other promotions.';
 
   @override
-  String get featureInfoPromotionsCreateStep5Title =>
-      'محفوظ کریں the promotion';
+  String get featureInfoPromotionsCreateStep5Title => 'محفوظ کریں the promotion';
 
   @override
   String get featureInfoPromotionsCreateStep5Desc =>
@@ -11427,12 +11200,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'منتخب کریں \'Analytics\' سے the popup menu تک see performance data کے لیے the promotion.';
 
   @override
-  String get featureInfoPromotionsTip1 =>
-      'استعمال the search bar اور filter button تک find promotions by name, type, or status.';
+  String get featureInfoPromotionsTip1 => 'استعمال the search bar اور filter button تک find promotions by name, type, or status.';
 
   @override
-  String get featureInfoPromotionsTip2 =>
-      'Happy hour promotions automatically apply during configured time windows.';
+  String get featureInfoPromotionsTip2 => 'Happy hour promotions automatically apply during configured time windows.';
 
   @override
   String get featureInfoBranchesTitle => 'شاخیں انتظام';
@@ -11448,8 +11219,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoBranchesCreateStep1Title => 'ٹیپ the بنائیں شاخ button';
 
   @override
-  String get featureInfoBranchesCreateStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the branch creation form.';
+  String get featureInfoBranchesCreateStep1Desc => 'دبائیں the floating action button تک navigate تک the branch creation form.';
 
   @override
   String get featureInfoBranchesCreateStep2Title => 'Fill in بنیادی معلومات';
@@ -11466,24 +11236,21 @@ class AppLocalizationsUr extends AppLocalizations {
       'درج کریں the address, city, region, postal code, country, گوگل نقشے یو آر ایل, اور coordinates (latitude/longitude).';
 
   @override
-  String get featureInfoBranchesCreateStep4Title =>
-      'شامل کریں Contact information';
+  String get featureInfoBranchesCreateStep4Title => 'شامل کریں Contact information';
 
   @override
   String get featureInfoBranchesCreateStep4Desc =>
       'درج کریں phone, secondary phone, email, اور contact person کے لیے the branch.';
 
   @override
-  String get featureInfoBranchesCreateStep5Title =>
-      'ترتیب دیں آپریشنل settings';
+  String get featureInfoBranchesCreateStep5Title => 'ترتیب دیں آپریشنل settings';
 
   @override
   String get featureInfoBranchesCreateStep5Desc =>
       'سیٹ opening/closing dates, max registers, max staff, floor area, seating capacity, اور upload logo/cover images.';
 
   @override
-  String get featureInfoBranchesCreateStep6Title =>
-      'شامل کریں قانونی اور سوشل info';
+  String get featureInfoBranchesCreateStep6Title => 'شامل کریں قانونی اور سوشل info';
 
   @override
   String get featureInfoBranchesCreateStep6Desc =>
@@ -11503,16 +11270,14 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoBranchesEditStep2Title => 'ترمیم اور save';
 
   @override
-  String get featureInfoBranchesEditStep2Desc =>
-      'Modify any fields across all 6 tabs اور tap \'Save\' تک update.';
+  String get featureInfoBranchesEditStep2Desc => 'Modify any fields across all 6 tabs اور tap \'Save\' تک update.';
 
   @override
   String get featureInfoBranchesTip1 =>
       'The stats row at the top shows total branches, active count, inactive count, اور warehouse count.';
 
   @override
-  String get featureInfoBranchesTip2 =>
-      'استعمال the status filter (سب/فعال/Inactive) تک quickly narrow down the branch list.';
+  String get featureInfoBranchesTip2 => 'استعمال the status filter (سب/فعال/Inactive) تک quickly narrow down the branch list.';
 
   @override
   String get featureInfoDebitsTitle => 'ڈیبٹس انتظام';
@@ -11528,12 +11293,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoDebitsCreateStep1Title => 'ٹیپ the شامل کریں button';
 
   @override
-  String get featureInfoDebitsCreateStep1Desc =>
-      'دبائیں the floating action button تک navigate تک the debit creation form.';
+  String get featureInfoDebitsCreateStep1Desc => 'دبائیں the floating action button تک navigate تک the debit creation form.';
 
   @override
-  String get featureInfoDebitsCreateStep2Title =>
-      'منتخب کریں customer اور type';
+  String get featureInfoDebitsCreateStep2Title => 'منتخب کریں customer اور type';
 
   @override
   String get featureInfoDebitsCreateStep2Desc =>
@@ -11550,8 +11313,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoDebitsCreateStep4Title => 'محفوظ کریں the debit';
 
   @override
-  String get featureInfoDebitsCreateStep4Desc =>
-      'ٹیپ \'Save\' تک create the debit with زیر التواء status.';
+  String get featureInfoDebitsCreateStep4Desc => 'ٹیپ \'Save\' تک create the debit with زیر التواء status.';
 
   @override
   String get featureInfoDebitsAllocateTitle => 'Allocating a ڈیبٹ تک an آرڈر';
@@ -11571,8 +11333,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'آن a pending or partially allocated debit, click the \'Allocate\' row action تک open the allocation dialog.';
 
   @override
-  String get featureInfoDebitsAllocateStep3Title =>
-      'منتخب کریں order اور amount';
+  String get featureInfoDebitsAllocateStep3Title => 'منتخب کریں order اور amount';
 
   @override
   String get featureInfoDebitsAllocateStep3Desc =>
@@ -11589,20 +11350,17 @@ class AppLocalizationsUr extends AppLocalizations {
       'آن an eligible debit, click the \'Reverse\' action تک open the reversal dialog.';
 
   @override
-  String get featureInfoDebitsReverseStep2Title =>
-      'درج کریں reason اور confirm';
+  String get featureInfoDebitsReverseStep2Title => 'درج کریں reason اور confirm';
 
   @override
-  String get featureInfoDebitsReverseStep2Desc =>
-      'قسم the reversal reason اور confirm. الٹ شدہ debits cannot be allocated.';
+  String get featureInfoDebitsReverseStep2Desc => 'قسم the reversal reason اور confirm. الٹ شدہ debits cannot be allocated.';
 
   @override
   String get featureInfoDebitsTip1 =>
       'The summary cards at the top show کل ڈیبٹس, زیر التواء رقم, مختص شدہ, اور غیر مختص totals.';
 
   @override
-  String get featureInfoDebitsTip2 =>
-      'استعمال the search bar تک find debits by reference number.';
+  String get featureInfoDebitsTip2 => 'استعمال the search bar تک find debits by reference number.';
 
   @override
   String get featureInfoExpensesTitle => 'اخراجات ٹریکنگ';
@@ -11615,38 +11373,32 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoExpensesCreateTitle => 'ریکارڈ an Expense';
 
   @override
-  String get featureInfoExpensesCreateStep1Title =>
-      'ٹیپ the نیا Expense button';
+  String get featureInfoExpensesCreateStep1Title => 'ٹیپ the نیا Expense button';
 
   @override
-  String get featureInfoExpensesCreateStep1Desc =>
-      'کلک the \'New Expense\' button in the AppBar تک open the expense dialog.';
+  String get featureInfoExpensesCreateStep1Desc => 'کلک the \'New Expense\' button in the AppBar تک open the expense dialog.';
 
   @override
   String get featureInfoExpensesCreateStep2Title => 'درج کریں the amount';
 
   @override
-  String get featureInfoExpensesCreateStep2Desc =>
-      'قسم the expense amount in the numeric field.';
+  String get featureInfoExpensesCreateStep2Desc => 'قسم the expense amount in the numeric field.';
 
   @override
   String get featureInfoExpensesCreateStep3Title => 'منتخب کریں a category';
 
   @override
-  String get featureInfoExpensesCreateStep3Desc =>
-      'Choose سے: Supplies, Food, Transport, دیکھ بھال, Utility, or دیگر.';
+  String get featureInfoExpensesCreateStep3Desc => 'Choose سے: Supplies, Food, Transport, دیکھ بھال, Utility, or دیگر.';
 
   @override
-  String get featureInfoExpensesCreateStep4Title =>
-      'شامل کریں description اور save';
+  String get featureInfoExpensesCreateStep4Title => 'شامل کریں description اور save';
 
   @override
   String get featureInfoExpensesCreateStep4Desc =>
       'Optionally add a description explaining the expense. ٹیپ \'Create\' تک record it.';
 
   @override
-  String get featureInfoExpensesTip1 =>
-      'اخراجات are grouped by date. Each date group shows the total expenses کے لیے that day.';
+  String get featureInfoExpensesTip1 => 'اخراجات are grouped by date. Each date group shows the total expenses کے لیے that day.';
 
   @override
   String get featureInfoCashMgmtTitle => 'نقد انتظام';
@@ -11662,8 +11414,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoCashMgmtOpenStep1Title => 'ٹیپ \'Open Session\'';
 
   @override
-  String get featureInfoCashMgmtOpenStep1Desc =>
-      'If no active session exists, tap the \'Open Session\' button تک start.';
+  String get featureInfoCashMgmtOpenStep1Desc => 'If no active session exists, tap the \'Open Session\' button تک start.';
 
   @override
   String get featureInfoCashMgmtOpenStep2Title => 'درج کریں opening float';
@@ -11676,8 +11427,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoCashMgmtCashInOutTitle => 'ریکارڈ نقد میں/باہر';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep1Title =>
-      'ٹیپ نقد میں or نقد باہر';
+  String get featureInfoCashMgmtCashInOutStep1Title => 'ٹیپ نقد میں or نقد باہر';
 
   @override
   String get featureInfoCashMgmtCashInOutStep1Desc =>
@@ -11691,12 +11441,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'درج کریں the amount, select a reason (کے لیے نقد میں: tips, change replenish, other; کے لیے نقد باہر: petty cash, supplier payment, bank deposit, other), اور optionally add notes.';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep3Title =>
-      'جمع کرائیں the transaction';
+  String get featureInfoCashMgmtCashInOutStep3Title => 'جمع کرائیں the transaction';
 
   @override
-  String get featureInfoCashMgmtCashInOutStep3Desc =>
-      'تصدیق the cash event. The expected cash balance updates in real-time.';
+  String get featureInfoCashMgmtCashInOutStep3Desc => 'تصدیق the cash event. The expected cash balance updates in real-time.';
 
   @override
   String get featureInfoCashMgmtCloseTitle => 'اختتامی a نقد سیشن';
@@ -11748,12 +11496,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'آن the \'Issue\' tab, choose a quick preset amount (50, 100, 200, 500) or enter a custom amount.';
 
   @override
-  String get featureInfoGiftCardsIssueStep2Title =>
-      'شامل کریں recipient (optional)';
+  String get featureInfoGiftCardsIssueStep2Title => 'شامل کریں recipient (optional)';
 
   @override
-  String get featureInfoGiftCardsIssueStep2Desc =>
-      'درج کریں the recipient\'s name if you want تک personalize the gift card.';
+  String get featureInfoGiftCardsIssueStep2Desc => 'درج کریں the recipient\'s name if you want تک personalize the gift card.';
 
   @override
   String get featureInfoGiftCardsIssueStep3Title => 'جاری کریں the card';
@@ -11766,45 +11512,37 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoGiftCardsCheckTitle => 'چیک بیلنس';
 
   @override
-  String get featureInfoGiftCardsCheckStep1Title =>
-      'درج کریں the gift card code';
+  String get featureInfoGiftCardsCheckStep1Title => 'درج کریں the gift card code';
 
   @override
-  String get featureInfoGiftCardsCheckStep1Desc =>
-      'آن the \'Check Balance\' tab, enter the gift card code.';
+  String get featureInfoGiftCardsCheckStep1Desc => 'آن the \'Check Balance\' tab, enter the gift card code.';
 
   @override
   String get featureInfoGiftCardsCheckStep2Title => 'دیکھیں balance details';
 
   @override
-  String get featureInfoGiftCardsCheckStep2Desc =>
-      'ٹیپ \'Check\'. The remaining balance, status, اور expiry date are displayed.';
+  String get featureInfoGiftCardsCheckStep2Desc => 'ٹیپ \'Check\'. The remaining balance, status, اور expiry date are displayed.';
 
   @override
   String get featureInfoGiftCardsRedeemTitle => 'استعمال کریں a تحفہ کارڈ';
 
   @override
-  String get featureInfoGiftCardsRedeemStep1Title =>
-      'درج کریں the gift card code';
+  String get featureInfoGiftCardsRedeemStep1Title => 'درج کریں the gift card code';
 
   @override
-  String get featureInfoGiftCardsRedeemStep1Desc =>
-      'آن the \'Redeem\' tab, enter the gift card code.';
+  String get featureInfoGiftCardsRedeemStep1Desc => 'آن the \'Redeem\' tab, enter the gift card code.';
 
   @override
-  String get featureInfoGiftCardsRedeemStep2Title =>
-      'درج کریں redemption amount';
+  String get featureInfoGiftCardsRedeemStep2Title => 'درج کریں redemption amount';
 
   @override
-  String get featureInfoGiftCardsRedeemStep2Desc =>
-      'درج کریں the amount تک redeem (must not exceed the remaining balance).';
+  String get featureInfoGiftCardsRedeemStep2Desc => 'درج کریں the amount تک redeem (must not exceed the remaining balance).';
 
   @override
   String get featureInfoGiftCardsRedeemStep3Title => 'Complete redemption';
 
   @override
-  String get featureInfoGiftCardsRedeemStep3Desc =>
-      'ٹیپ \'Redeem\'. A confirmation card shows the updated balance.';
+  String get featureInfoGiftCardsRedeemStep3Desc => 'ٹیپ \'Redeem\'. A confirmation card shows the updated balance.';
 
   @override
   String get featureInfoGiftCardsTip1 =>
@@ -11831,8 +11569,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoCashSessionsViewStep2Title => 'چیک session details';
 
   @override
-  String get featureInfoCashSessionsViewStep2Desc =>
-      'Each session entry shows key information about the cash session period.';
+  String get featureInfoCashSessionsViewStep2Desc => 'Each session entry shows key information about the cash session period.';
 
   @override
   String get featureInfoCashSessionsTip1 =>
@@ -11849,16 +11586,14 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoDailySummaryNavigateTitle => 'Navigating Between تاریخ';
 
   @override
-  String get featureInfoDailySummaryNavigateStep1Title =>
-      'استعمال the date arrows';
+  String get featureInfoDailySummaryNavigateStep1Title => 'استعمال the date arrows';
 
   @override
   String get featureInfoDailySummaryNavigateStep1Desc =>
       'کلک the left/right arrows in the AppBar تک go تک the previous or next day.';
 
   @override
-  String get featureInfoDailySummaryNavigateStep2Title =>
-      'Pick a specific date';
+  String get featureInfoDailySummaryNavigateStep2Title => 'Pick a specific date';
 
   @override
   String get featureInfoDailySummaryNavigateStep2Desc =>
@@ -11875,8 +11610,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'The top section shows مجموعی آمدنی, اخراجات, خالص آمدنی, اور لین دین شمار کے لیے the selected day.';
 
   @override
-  String get featureInfoDailySummaryReviewStep2Title =>
-      'جائزہ payment breakdown';
+  String get featureInfoDailySummaryReviewStep2Title => 'جائزہ payment breakdown';
 
   @override
   String get featureInfoDailySummaryReviewStep2Desc =>
@@ -11907,8 +11641,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoFinReconStep1Title => 'منتخب کریں the date';
 
   @override
-  String get featureInfoFinReconStep1Desc =>
-      'استعمال the date picker in the AppBar تک select the day you want تک reconcile.';
+  String get featureInfoFinReconStep1Desc => 'استعمال the date picker in the AppBar تک select the day you want تک reconcile.';
 
   @override
   String get featureInfoFinReconStep2Title => 'جائزہ revenue summary';
@@ -11939,12 +11672,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'جائزہ the cash variance (difference between counted اور expected). ٹیپ \'Confirm Reconciliation\' اور verify in the confirmation dialog.';
 
   @override
-  String get featureInfoFinReconTip1 =>
-      'نقد variance ہے color-coded: green کے لیے matching, red کے لیے discrepancies.';
+  String get featureInfoFinReconTip1 => 'نقد variance ہے color-coded: green کے لیے matching, red کے لیے discrepancies.';
 
   @override
-  String get featureInfoFinReconTip2 =>
-      'آپ can also print the report or export تک PDF using the action buttons.';
+  String get featureInfoFinReconTip2 => 'آپ can also print the report or export تک PDF using the action buttons.';
 
   @override
   String get featureInfoTxExplorerTitle => 'لین دین ایکسپلورر';
@@ -11960,12 +11691,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoTxExplorerSearchStep1Title => 'استعمال the search bar';
 
   @override
-  String get featureInfoTxExplorerSearchStep1Desc =>
-      'قسم a transaction number or keyword in the search field تک filter results.';
+  String get featureInfoTxExplorerSearchStep1Desc => 'قسم a transaction number or keyword in the search field تک filter results.';
 
   @override
-  String get featureInfoTxExplorerSearchStep2Title =>
-      'ایپ type اور status filters';
+  String get featureInfoTxExplorerSearchStep2Title => 'ایپ type اور status filters';
 
   @override
   String get featureInfoTxExplorerSearchStep2Desc =>
@@ -11989,16 +11718,14 @@ class AppLocalizationsUr extends AppLocalizations {
       'کلک the analytics icon in the AppBar تک show or hide the analytics dashboard above the transaction list.';
 
   @override
-  String get featureInfoTxExplorerAnalyticsStep2Title =>
-      'جائزہ KPIs اور charts';
+  String get featureInfoTxExplorerAnalyticsStep2Title => 'جائزہ KPIs اور charts';
 
   @override
   String get featureInfoTxExplorerAnalyticsStep2Desc =>
       'The analytics panel shows stats cards, transaction charts, اور a daily trend line تک help identify patterns.';
 
   @override
-  String get featureInfoTxExplorerTip1 =>
-      'ٹیپ any transaction row تک navigate تک the full transaction detail page.';
+  String get featureInfoTxExplorerTip1 => 'ٹیپ any transaction row تک navigate تک the full transaction detail page.';
 
   @override
   String get featureInfoReportsTitle => 'رپورٹس & تجزیات';
@@ -12049,19 +11776,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoLabelsCreateStep1Title => 'کلک \'Label Designer\'';
 
   @override
-  String get featureInfoLabelsCreateStep1Desc =>
-      'ٹیپ the \'Label Designer\' button in the AppBar تک open the WYSIWYG designer.';
+  String get featureInfoLabelsCreateStep1Desc => 'ٹیپ the \'Label Designer\' button in the AppBar تک open the WYSIWYG designer.';
 
   @override
   String get featureInfoLabelsCreateStep2Title => 'سیٹ template dimensions';
 
   @override
-  String get featureInfoLabelsCreateStep2Desc =>
-      'درج کریں a template name, width (mm), اور height (mm) کے لیے the label.';
+  String get featureInfoLabelsCreateStep2Desc => 'درج کریں a template name, width (mm), اور height (mm) کے لیے the label.';
 
   @override
-  String get featureInfoLabelsCreateStep3Title =>
-      'شامل کریں اور arrange elements';
+  String get featureInfoLabelsCreateStep3Title => 'شامل کریں اور arrange elements';
 
   @override
   String get featureInfoLabelsCreateStep3Desc =>
@@ -12071,15 +11795,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoLabelsCreateStep4Title => 'محفوظ کریں the template';
 
   @override
-  String get featureInfoLabelsCreateStep4Desc =>
-      'کلک \'Save\' تک store the template. It will appear in the template list.';
+  String get featureInfoLabelsCreateStep4Desc => 'کلک \'Save\' تک store the template. It will appear in the template list.';
 
   @override
   String get featureInfoLabelsPrintTitle => 'پرنٹ لیبلز';
 
   @override
-  String get featureInfoLabelsPrintStep1Title =>
-      'منتخب کریں \'Print Queue\' on a template';
+  String get featureInfoLabelsPrintStep1Title => 'منتخب کریں \'Print Queue\' on a template';
 
   @override
   String get featureInfoLabelsPrintStep1Desc =>
@@ -12089,8 +11811,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoLabelsPrintStep2Title => 'ترتیب دیں اور print';
 
   @override
-  String get featureInfoLabelsPrintStep2Desc =>
-      'منتخب کریں products, set quantities, اور send تک the printer.';
+  String get featureInfoLabelsPrintStep2Desc => 'منتخب کریں products, set quantities, اور send تک the printer.';
 
   @override
   String get featureInfoLabelsTip1 =>
@@ -12107,24 +11828,20 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoDeliveryPlatformsTitle => 'Managing ڈیلیوری پلیٹ فارمز';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Title =>
-      'Go تک the پلیٹ فارمز tab';
+  String get featureInfoDeliveryPlatformsStep1Title => 'Go تک the پلیٹ فارمز tab';
 
   @override
-  String get featureInfoDeliveryPlatformsStep1Desc =>
-      'سوئچ تک the \'Platforms\' tab تک see all configured delivery platforms.';
+  String get featureInfoDeliveryPlatformsStep1Desc => 'سوئچ تک the \'Platforms\' tab تک see all configured delivery platforms.';
 
   @override
-  String get featureInfoDeliveryPlatformsStep2Title =>
-      'ٹوگل or configure platforms';
+  String get featureInfoDeliveryPlatformsStep2Title => 'ٹوگل or configure platforms';
 
   @override
   String get featureInfoDeliveryPlatformsStep2Desc =>
       'استعمال the toggle switch تک enable or disable a platform. کلک \'Edit\' تک modify configuration. کلک \'Test\' تک verify API connectivity.';
 
   @override
-  String get featureInfoDeliveryPlatformsStep3Title =>
-      'شامل کریں a new platform';
+  String get featureInfoDeliveryPlatformsStep3Title => 'شامل کریں a new platform';
 
   @override
   String get featureInfoDeliveryPlatformsStep3Desc =>
@@ -12151,8 +11868,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoDeliveryOrdersStep3Title => 'Complete orders';
 
   @override
-  String get featureInfoDeliveryOrdersStep3Desc =>
-      'When the order ہے delivered, use the \'Complete\' button تک finalize it.';
+  String get featureInfoDeliveryOrdersStep3Desc => 'When the order ہے delivered, use the \'Complete\' button تک finalize it.';
 
   @override
   String get featureInfoDeliveryTip1 =>
@@ -12183,8 +11899,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'ٹیپ the blue dot icon on an unread notification تک mark it as read. استعمال \'Mark سب as Read\' in the AppBar تک clear all unread.';
 
   @override
-  String get featureInfoNotificationsManageStep3Title =>
-      'حذف کریں notifications';
+  String get featureInfoNotificationsManageStep3Title => 'حذف کریں notifications';
 
   @override
   String get featureInfoNotificationsManageStep3Desc =>
@@ -12194,12 +11909,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get featureInfoNotificationsManageStep4Title => 'پل تک refresh';
 
   @override
-  String get featureInfoNotificationsManageStep4Desc =>
-      'پل down on the list تک refresh اور load new notifications.';
+  String get featureInfoNotificationsManageStep4Desc => 'پل down on the list تک refresh اور load new notifications.';
 
   @override
-  String get featureInfoNotificationsTip1 =>
-      'The unread count badge in the AppBar shows how many unread notifications you have.';
+  String get featureInfoNotificationsTip1 => 'The unread count badge in the AppBar shows how many unread notifications you have.';
 
   @override
   String get sidebarGroupPlatformAdmin => 'Platform ایڈمن';
@@ -12359,12 +12072,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'This will generate invoices for all stores with AI usage in the current billing period. Continue?';
 
   @override
-  String get adminWameedAIGenerateInvoicesHint =>
-      'Generate invoices to see them here';
+  String get adminWameedAIGenerateInvoicesHint => 'Generate invoices to see them here';
 
   @override
-  String get adminWameedAINoStoresMessage =>
-      'No stores with AI billing configured';
+  String get adminWameedAINoStoresMessage => 'No stores with AI billing configured';
 
   @override
   String get adminWameedAICacheHitRate => 'Cache Hit شرح';
@@ -12532,8 +12243,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get withKeys => 'with keys';
 
   @override
-  String get deleteModelConfirm =>
-      'Are you sure you want to delete this model? This action cannot be undone.';
+  String get deleteModelConfirm => 'Are you sure you want to delete this model? This action cannot be undone.';
 
   @override
   String get successful => 'Successful';
@@ -12554,8 +12264,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get providerPaymentCancelTitle => 'منسوخ ادائیگی?';
 
   @override
-  String get providerPaymentCancelBody =>
-      'Are you sure you want to cancel this payment? You can retry later.';
+  String get providerPaymentCancelBody => 'Are you sure you want to cancel this payment? You can retry later.';
 
   @override
   String get providerPaymentContinue => 'Continue ادائیگی';
@@ -12702,8 +12411,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pinLoginTitle => 'پن درج کریں';
 
   @override
-  String get pinLoginNoStore =>
-      'کوئی سٹور سیشن نہیں ملا۔ ای میل سے سائن ان کریں۔';
+  String get pinLoginNoStore => 'کوئی سٹور سیشن نہیں ملا۔ ای میل سے سائن ان کریں۔';
 
   @override
   String get pinLoginEmailInstead => 'بجائے اس کے ای میل سے سائن ان کریں';
@@ -12736,12 +12444,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get retryOnFailure => 'ناکامی پر دوبارہ کوشش';
 
   @override
-  String get automaticallyRetryFailedExports =>
-      'ناکام ایکسپورٹ خودکار دوبارہ کوشش';
+  String get automaticallyRetryFailedExports => 'ناکام ایکسپورٹ خودکار دوبارہ کوشش';
 
   @override
-  String get mapPosAccountsToProviderAccounts =>
-      'POS اکاؤنٹس کو پرووائڈر اکاؤنٹس سے جوڑیں';
+  String get mapPosAccountsToProviderAccounts => 'POS اکاؤنٹس کو پرووائڈر اکاؤنٹس سے جوڑیں';
 
   @override
   String get viewAndManageExports => 'ایکسپورٹس دیکھیں اور منظم کریں';
@@ -12810,8 +12516,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get promoDuplicated => 'Promotion duplicated.';
 
   @override
-  String get promoCouponsEmpty =>
-      'No coupons yet. Use Generate to create some.';
+  String get promoCouponsEmpty => 'No coupons yet. Use Generate to create some.';
 
   @override
   String get promoCouponDeleted => 'Coupon deleted.';
@@ -12964,8 +12669,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get prefixOptional => 'پریفکس (اختیاری)';
 
   @override
-  String get maxUsesPerCouponOptional =>
-      'فی کوپن زیادہ سے زیادہ استعمال (اختیاری)';
+  String get maxUsesPerCouponOptional => 'فی کوپن زیادہ سے زیادہ استعمال (اختیاری)';
 
   @override
   String get expandAll => 'سب پھیلائیں';
@@ -12983,8 +12687,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get noAppointments => 'کوئی اپائنٹمنٹ نہیں';
 
   @override
-  String get enterACustomerIdToViewWishlist =>
-      'ویش لسٹ دیکھنے کے لیے گاہک آئی ڈی درج کریں';
+  String get enterACustomerIdToViewWishlist => 'ویش لسٹ دیکھنے کے لیے گاہک آئی ڈی درج کریں';
 
   @override
   String get wishlistIsEmpty => 'ویش لسٹ خالی ہے';
@@ -13299,8 +13002,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get reportsTopProductsByRevenue => 'آمدنی کے لحاظ سے سرفہرست مصنوعات';
 
   @override
-  String get reportsProductsRankedByRevenue =>
-      'آمدنی کے لحاظ سے مصنوعات کی درجہ بندی';
+  String get reportsProductsRankedByRevenue => 'آمدنی کے لحاظ سے مصنوعات کی درجہ بندی';
 
   @override
   String get reportsNoProductData => 'منتخب مدت کے لیے کوئی پروڈکٹ ڈیٹا نہیں';
@@ -13339,8 +13041,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get reportsRevenueByStaff => 'عملے کے لحاظ سے آمدنی';
 
   @override
-  String get reportsStaffRankedByRevenue =>
-      'آمدنی کے لحاظ سے عملے کی درجہ بندی';
+  String get reportsStaffRankedByRevenue => 'آمدنی کے لحاظ سے عملے کی درجہ بندی';
 
   @override
   String get reportsNoStaffData => 'عملے کی کارکردگی کا ڈیٹا نہیں';
@@ -13586,8 +13287,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get paymentsPrefixOptional => 'سابقہ (اختیاری)';
 
   @override
-  String get paymentsMaxUsesPerCoupon =>
-      'فی کوپن زیادہ سے زیادہ استعمال (اختیاری)';
+  String get paymentsMaxUsesPerCoupon => 'فی کوپن زیادہ سے زیادہ استعمال (اختیاری)';
 
   @override
   String get accountingDayOfMonth => 'مہینے کا دن';
@@ -13893,8 +13593,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get accessDenied => 'رسائی نامنظور';
 
   @override
-  String get accessDeniedMessage =>
-      'آپ کو یہ صفحہ دیکھنے کی اجازت نہیں ہے۔\nرسائی کے لیے اپنے ایڈمنسٹریٹر سے رابطہ کریں۔';
+  String get accessDeniedMessage => 'آپ کو یہ صفحہ دیکھنے کی اجازت نہیں ہے۔\nرسائی کے لیے اپنے ایڈمنسٹریٹر سے رابطہ کریں۔';
 
   @override
   String get catalogTabBasicInfo => 'بنیادی معلومات';
@@ -14061,8 +13760,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogBulkImportTitle => 'Bulk Import Products';
 
   @override
-  String get catalogBulkImportSubtitle =>
-      'Upload a CSV or Excel file to create products in bulk.';
+  String get catalogBulkImportSubtitle => 'Upload a CSV or Excel file to create products in bulk.';
 
   @override
   String get catalogImportStepFile => 'File';
@@ -14080,8 +13778,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogImportPickFileHeading => 'Choose a file';
 
   @override
-  String get catalogImportPickFileHint =>
-      'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.';
+  String get catalogImportPickFileHint => 'We accept CSV (.csv) and Excel (.xlsx, .xls) files up to 10MB.';
 
   @override
   String get catalogImportSelectFile => 'Click to select a file';
@@ -14090,15 +13787,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogImportChangeFile => 'Click to choose a different file';
 
   @override
-  String get catalogImportFormatTip =>
-      'First row should contain column headers. Required: name, sell_price.';
+  String get catalogImportFormatTip => 'First row should contain column headers. Required: name, sell_price.';
 
   @override
   String get catalogImportMapHeading => 'Map columns';
 
   @override
-  String get catalogImportMapHint =>
-      'Match each product field to a column from your file. Required fields are marked with *.';
+  String get catalogImportMapHint => 'Match each product field to a column from your file. Required fields are marked with *.';
 
   @override
   String get catalogImportPreviewHeading => 'Preview';
@@ -14175,8 +13870,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogComboClearConfirmTitle => 'Clear combo?';
 
   @override
-  String get catalogComboClearConfirmBody =>
-      'This will remove all combo items and unflag the product.';
+  String get catalogComboClearConfirmBody => 'This will remove all combo items and unflag the product.';
 
   @override
   String get catalogComboPickItem => 'Pick a product';
@@ -14185,16 +13879,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogComboSearchHint => 'Search by name, SKU or barcode';
 
   @override
-  String get catalogComboItemAlreadyAdded =>
-      'This product is already in the combo';
+  String get catalogComboItemAlreadyAdded => 'This product is already in the combo';
 
   @override
-  String get catalogComboNeedsAtLeastOneItem =>
-      'Add at least one item before saving';
+  String get catalogComboNeedsAtLeastOneItem => 'Add at least one item before saving';
 
   @override
-  String get catalogComboInvalidQuantity =>
-      'Quantity must be a positive number';
+  String get catalogComboInvalidQuantity => 'Quantity must be a positive number';
 
   @override
   String get catalogComboInvalidPrice => 'Combo price must be zero or more';
@@ -14206,8 +13897,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get catalogSearchProductsShort => 'پروڈکٹس تلاش کریں...';
 
   @override
-  String get catalogSearchProductsFull =>
-      'نام، SKU یا بارکوڈ سے پروڈکٹس تلاش کریں...';
+  String get catalogSearchProductsFull => 'نام، SKU یا بارکوڈ سے پروڈکٹس تلاش کریں...';
 
   @override
   String get catalogClearSelection => 'انتخاب صاف کریں';
@@ -14475,8 +14165,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get floristIsTemplate => 'ٹیمپلیٹ ہے';
 
   @override
-  String get floristTemplateSubtitle =>
-      'سبسکرپشن کے لیے دوبارہ استعمال کے قابل ٹیمپلیٹ';
+  String get floristTemplateSubtitle => 'سبسکرپشن کے لیے دوبارہ استعمال کے قابل ٹیمپلیٹ';
 
   @override
   String get floristFreshness => 'تازگی';
@@ -14625,8 +14314,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pharmacyManufacturerHint => 'دوا مینوفیکچرر';
 
   @override
-  String get pharmacyPrescriptionRequired =>
-      'خریداری کے لیے درست نسخہ پیش کرنا لازمی';
+  String get pharmacyPrescriptionRequired => 'خریداری کے لیے درست نسخہ پیش کرنا لازمی';
 
   @override
   String get pharmacyNoPrescriptions => 'کوئی نسخہ نہیں';
@@ -14797,8 +14485,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminDeleteFee => 'فیس حذف کریں';
 
   @override
-  String get adminDeleteFeeConfirm =>
-      'کیا آپ واقعی اس نفاذ فیس کو حذف کرنا چاہتے ہیں؟';
+  String get adminDeleteFeeConfirm => 'کیا آپ واقعی اس نفاذ فیس کو حذف کرنا چاہتے ہیں؟';
 
   @override
   String get adminStoreDetails => 'اسٹور کی تفصیلات';
@@ -14886,12 +14573,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminDeleteSale => 'سیل حذف کریں';
 
   @override
-  String get adminDeleteSaleConfirm =>
-      'کیا آپ واقعی اس ہارڈویئر سیل کو حذف کرنا چاہتے ہیں؟';
+  String get adminDeleteSaleConfirm => 'کیا آپ واقعی اس ہارڈویئر سیل کو حذف کرنا چاہتے ہیں؟';
 
   @override
-  String get adminSelectFiltersPayments =>
-      'ادائیگیاں لوڈ کرنے کے لیے فلٹرز منتخب کریں';
+  String get adminSelectFiltersPayments => 'ادائیگیاں لوڈ کرنے کے لیے فلٹرز منتخب کریں';
 
   @override
   String get adminPaymentCash => 'کیش';
@@ -14946,8 +14631,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminDeleteGateway => 'گیٹ وے حذف کریں';
 
   @override
-  String get adminDeleteGatewayConfirm =>
-      'کیا آپ واقعی اس گیٹ وے کو حذف کرنا چاہتے ہیں؟';
+  String get adminDeleteGatewayConfirm => 'کیا آپ واقعی اس گیٹ وے کو حذف کرنا چاہتے ہیں؟';
 
   @override
   String get adminActionRoleCreated => 'رول بنایا گیا';
@@ -15207,8 +14891,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminDeleteRole => 'رول حذف کریں';
 
   @override
-  String get adminDeleteRoleConfirm =>
-      'کیا آپ واقعی یہ رول حذف کرنا چاہتے ہیں؟ یہ واپس نہیں کیا جا سکتا۔';
+  String get adminDeleteRoleConfirm => 'کیا آپ واقعی یہ رول حذف کرنا چاہتے ہیں؟ یہ واپس نہیں کیا جا سکتا۔';
 
   @override
   String get adminStatusWarning => 'انتباہ';
@@ -15338,8 +15021,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminReset2FA => '2FA ری سیٹ کریں';
 
   @override
-  String get adminClear2FAHint =>
-      '2FA صاف کریں؛ ایڈمن کو دوبارہ اندراج کرانا ہوگا';
+  String get adminClear2FAHint => '2FA صاف کریں؛ ایڈمن کو دوبارہ اندراج کرانا ہوگا';
 
   @override
   String get adminRegistrationQueue => 'رجسٹریشن قطار';
@@ -15353,8 +15035,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminRejectRegistration => 'رجسٹریشن مسترد کریں';
 
   @override
-  String get adminRejectReasonHint =>
-      'وضاحت کریں کہ یہ رجسٹریشن کیوں مسترد کی گئی';
+  String get adminRejectReasonHint => 'وضاحت کریں کہ یہ رجسٹریشن کیوں مسترد کی گئی';
 
   @override
   String get subSubscribedSuccessfully => 'کامیابی سے سبسکرائب ہوا!';
@@ -15469,8 +15150,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get subSubscriptionExpired => 'سبسکرپشن ختم ہو گئی';
 
   @override
-  String get subExpiredRenewMessage =>
-      'آپ کی سبسکرپشن ختم ہو گئی ہے۔ رسائی بحال کرنے کے لیے ابھی تجدید کریں۔';
+  String get subExpiredRenewMessage => 'آپ کی سبسکرپشن ختم ہو گئی ہے۔ رسائی بحال کرنے کے لیے ابھی تجدید کریں۔';
 
   @override
   String subGraceDaysRemaining(int days) {
@@ -15478,8 +15158,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get subGraceEndsToday =>
-      'مہلت کی مدت آج ختم ہو رہی ہے۔ فوری طور پر تجدید کریں۔';
+  String get subGraceEndsToday => 'مہلت کی مدت آج ختم ہو رہی ہے۔ فوری طور پر تجدید کریں۔';
 
   @override
   String get subInvoice => 'انوائس';
@@ -15706,8 +15385,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pcCloneProductSuccess => 'پروڈکٹ کامیابی سے کاپی ہوا';
 
   @override
-  String get pcCloneAllSuccess =>
-      'تمام پہلے سے طے شدہ پروڈکٹس کامیابی سے کاپی ہوئیں';
+  String get pcCloneAllSuccess => 'تمام پہلے سے طے شدہ پروڈکٹس کامیابی سے کاپی ہوئیں';
 
   @override
   String get pcCloneAllProducts => 'تمام پروڈکٹس کاپی کریں';
@@ -15733,8 +15411,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pcNoPredefinedCategories => 'کوئی پہلے سے طے شدہ زمرے نہیں ملے';
 
   @override
-  String get predefinedNoCategoriesForBusiness =>
-      'آپ کے کاروباری قسم کے لیے کوئی پہلے سے طے شدہ زمرے دستیاب نہیں ہیں';
+  String get predefinedNoCategoriesForBusiness => 'آپ کے کاروباری قسم کے لیے کوئی پہلے سے طے شدہ زمرے دستیاب نہیں ہیں';
 
   @override
   String get pcCloneToMyStore => 'میرے اسٹور میں کاپی';
@@ -15762,8 +15439,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctDeleteMapping => 'میپنگ حذف کریں';
 
   @override
-  String get acctDeleteMappingConfirm =>
-      'کیا آپ واقعی یہ میپنگ ہٹانا چاہتے ہیں؟';
+  String get acctDeleteMappingConfirm => 'کیا آپ واقعی یہ میپنگ ہٹانا چاہتے ہیں؟';
 
   @override
   String get acctEnableAutoExport => 'آٹو ایکسپورٹ فعال کریں';
@@ -15915,12 +15591,10 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get labelsNoPrinterConfigured =>
-      'No label printer configured. Please configure one in Hardware Settings.';
+  String get labelsNoPrinterConfigured => 'No label printer configured. Please configure one in Hardware Settings.';
 
   @override
-  String get labelsQueueEmpty =>
-      'Queue is empty. Add products to print labels.';
+  String get labelsQueueEmpty => 'Queue is empty. Add products to print labels.';
 
   @override
   String get labelsRemoveFromQueue => 'Remove from queue';
@@ -15932,8 +15606,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get labelsPrintLabel => 'Print label';
 
   @override
-  String get labelsNoTemplateConfigured =>
-      'No label template configured. Create one in Labels.';
+  String get labelsNoTemplateConfigured => 'No label template configured. Create one in Labels.';
 
   @override
   String get labelsProductName => 'پروڈکٹ کا نام';
@@ -16026,8 +15699,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get onboardingSkipSetup => 'سیٹ اپ چھوڑیں';
 
   @override
-  String get onboardingTaxIncludedNote =>
-      'جب فعال ہو تو پروڈکٹ کی قیمتیں ٹیکس سمیت دکھائی جاتی ہیں۔';
+  String get onboardingTaxIncludedNote => 'جب فعال ہو تو پروڈکٹ کی قیمتیں ٹیکس سمیت دکھائی جاتی ہیں۔';
 
   @override
   String get onboardingAllSet => 'آپ تیار ہیں!';
@@ -16159,8 +15831,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupEnableAutoBackup => 'Enable Auto-Backup';
 
   @override
-  String get backupEnableAutoBackupHint =>
-      'Automatically create backups on a scheduled interval.';
+  String get backupEnableAutoBackupHint => 'Automatically create backups on a scheduled interval.';
 
   @override
   String get backupNoLoaded => 'کوئی بیک اپ لوڈ نہیں ہوا';
@@ -16172,8 +15843,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupNowTitle => 'Create Manual Backup';
 
   @override
-  String get backupNowHint =>
-      'This will create a full backup of your store data.';
+  String get backupNowHint => 'This will create a full backup of your store data.';
 
   @override
   String get backupTerminalId => 'Terminal ID';
@@ -16335,8 +16005,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupSelectForRestore => 'Select a backup to restore';
 
   @override
-  String get backupOnlyCompletedRestore =>
-      'Only completed and verified backups can be restored';
+  String get backupOnlyCompletedRestore => 'Only completed and verified backups can be restored';
 
   @override
   String get backupVerifyStep => 'Verify Integrity';
@@ -16345,8 +16014,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupVerifySuccess => 'Backup integrity verified';
 
   @override
-  String get backupVerifyFailed =>
-      'Integrity check failed — backup may be corrupted';
+  String get backupVerifyFailed => 'Integrity check failed — backup may be corrupted';
 
   @override
   String get backupVerifyChecksum => 'Checksum';
@@ -16379,12 +16047,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupRestoreFailed => 'Restore Failed';
 
   @override
-  String get backupRestoreInitiated =>
-      'Restore has been initiated. The system will apply the backup.';
+  String get backupRestoreInitiated => 'Restore has been initiated. The system will apply the backup.';
 
   @override
-  String get backupRequiresMigration =>
-      'This backup requires a database migration';
+  String get backupRequiresMigration => 'This backup requires a database migration';
 
   @override
   String get backupStartRestore => 'Start Restore';
@@ -16429,8 +16095,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupExportIncludeImages => 'Include Images';
 
   @override
-  String get backupExportIncludeImagesDesc =>
-      'Attach image files (increases export size)';
+  String get backupExportIncludeImagesDesc => 'Attach image files (increases export size)';
 
   @override
   String get backupExportResult => 'Export Result';
@@ -16457,8 +16122,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupDeleteConfirmTitle => 'Delete Backup?';
 
   @override
-  String get backupDeleteConfirmMessage =>
-      'This will permanently delete this backup file. This cannot be undone.';
+  String get backupDeleteConfirmMessage => 'This will permanently delete this backup file. This cannot be undone.';
 
   @override
   String get backupDeleteSuccess => 'Backup deleted';
@@ -16734,8 +16398,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminForcePasswordChange => 'پاس ورڈ تبدیلی لازمی';
 
   @override
-  String get adminForcePasswordChangeDesc =>
-      'اگلی لاگ ان پر صارف سے پاس ورڈ تبدیلی کا مطالبہ';
+  String get adminForcePasswordChangeDesc => 'اگلی لاگ ان پر صارف سے پاس ورڈ تبدیلی کا مطالبہ';
 
   @override
   String get adminNoRoleTemplates => 'کوئی رول ٹیمپلیٹ نہیں';
@@ -16794,12 +16457,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get softPosRemaining => 'باقی';
 
   @override
-  String subAddOnConfirmMessage(
-    String name,
-    String price,
-    String currency,
-    String cycle,
-  ) {
+  String subAddOnConfirmMessage(String name, String price, String currency, String cycle) {
     return '$cycle فی $price $currency میں $name شامل کریں؟';
   }
 
@@ -16814,12 +16472,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String subConfirmSubscriptionMessage(
-    String planName,
-    String billingCycle,
-    String price,
-    String currency,
-  ) {
+  String subConfirmSubscriptionMessage(String planName, String billingCycle, String price, String currency) {
     return '$planName ($billingCycle) کو $price $currency میں سبسکرائب کریں؟';
   }
 
@@ -17115,8 +16768,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get predefinedProductCloned => 'پروڈکٹ کامیابی سے کلون کیا گیا';
 
   @override
-  String get predefinedAllProductsCloned =>
-      'تمام پروڈکٹس کامیابی سے کلون کی گئیں';
+  String get predefinedAllProductsCloned => 'تمام پروڈکٹس کامیابی سے کلون کی گئیں';
 
   @override
   String get promoFilterPromotions => 'پروموشنز فلٹر کریں';
@@ -17155,8 +16807,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posVoidReasonHint => 'Reason (required, min 5 chars)';
 
   @override
-  String get posVoidReasonError =>
-      'Please provide a reason of at least 5 characters';
+  String get posVoidReasonError => 'Please provide a reason of at least 5 characters';
 
   @override
   String get posVoidConfirmAction => 'Void';
@@ -17297,8 +16948,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get posApplyCredit => 'Apply Credit';
 
   @override
-  String get posCustomerRequired =>
-      'Customer is required to complete this sale';
+  String get posCustomerRequired => 'Customer is required to complete this sale';
 
   @override
   String get posHoldOrdersDisabled => 'Hold orders are disabled in settings';
@@ -17425,8 +17075,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get customersLastVisit => 'Last Visit';
 
   @override
-  String get customersDuplicatePhone =>
-      'A customer with this phone already exists';
+  String get customersDuplicatePhone => 'A customer with this phone already exists';
 
   @override
   String get customersDeleteConfirm => 'Delete this customer?';
@@ -17592,8 +17241,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get customersExcludedCategories => 'Excluded Categories';
 
   @override
-  String get customersExcludedCategoriesHint =>
-      'Sales in these categories do not earn points';
+  String get customersExcludedCategoriesHint => 'Sales in these categories do not earn points';
 
   @override
   String get customersDoublePointsDays => 'Double-points Days';
@@ -17877,8 +17525,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get reportsSubscriptionRequired =>
-      'اس رپورٹ تک رسائی کے لیے اپ گریڈ ضروری ہے';
+  String get reportsSubscriptionRequired => 'اس رپورٹ تک رسائی کے لیے اپ گریڈ ضروری ہے';
 
   @override
   String get reportsUpgradeRequired => 'یہ خصوصیت اعلی منصوبوں میں دستیاب ہے';
@@ -18062,8 +17709,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get paymentListRefund => 'واپسی';
 
   @override
-  String get paymentListInfoMessage =>
-      'تمام ادائیگی لین دین کو براؤز اور فلٹر کریں۔';
+  String get paymentListInfoMessage => 'تمام ادائیگی لین دین کو براؤز اور فلٹر کریں۔';
 
   @override
   String get paymentStatusCompleted => 'مکمل';
@@ -18218,8 +17864,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cashSessionClosedAt => 'بند کیا گیا';
 
   @override
-  String get cashSessionsInfoMessage =>
-      'تمام نقد سیشن دیکھیں۔ تفصیلات کے لیے سیشن پر کلک کریں۔';
+  String get cashSessionsInfoMessage => 'تمام نقد سیشن دیکھیں۔ تفصیلات کے لیے سیشن پر کلک کریں۔';
 
   @override
   String get dailySummaryExpensesBreakdown => 'زمرہ کے مطابق اخراجات';
@@ -18243,8 +17888,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get syncCheckingConnectivity => 'Checking connectivity...';
 
   @override
-  String get syncNoInternet =>
-      'No internet connection. Please connect and try again.';
+  String get syncNoInternet => 'No internet connection. Please connect and try again.';
 
   @override
   String get syncDownloadingData => 'Downloading data...';

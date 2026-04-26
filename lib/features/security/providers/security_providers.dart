@@ -16,7 +16,6 @@ final securityOverviewProvider = StateNotifierProvider<SecurityOverviewNotifier,
 );
 
 class SecurityOverviewNotifier extends StateNotifier<SecurityOverviewState> {
-
   SecurityOverviewNotifier(this._repo) : super(const SecurityOverviewInitial());
   final SecurityRepository _repo;
 
@@ -39,7 +38,6 @@ final securityPolicyProvider = StateNotifierProvider<SecurityPolicyNotifier, Sec
 );
 
 class SecurityPolicyNotifier extends StateNotifier<SecurityPolicyState> {
-
   SecurityPolicyNotifier(this._repo) : super(const SecurityPolicyInitial());
   final SecurityRepository _repo;
 
@@ -73,7 +71,6 @@ final auditLogListProvider = StateNotifierProvider<AuditLogListNotifier, AuditLo
 );
 
 class AuditLogListNotifier extends StateNotifier<AuditLogListState> {
-
   AuditLogListNotifier(this._repo) : super(const AuditLogListInitial());
   final SecurityRepository _repo;
 
@@ -97,7 +94,6 @@ final deviceListProvider = StateNotifierProvider<DeviceListNotifier, DeviceListS
 );
 
 class DeviceListNotifier extends StateNotifier<DeviceListState> {
-
   DeviceListNotifier(this._repo) : super(const DeviceListInitial());
   final SecurityRepository _repo;
 
@@ -120,7 +116,6 @@ final loginAttemptsProvider = StateNotifierProvider<LoginAttemptsNotifier, Login
 );
 
 class LoginAttemptsNotifier extends StateNotifier<LoginAttemptsState> {
-
   LoginAttemptsNotifier(this._repo) : super(const LoginAttemptsInitial());
   final SecurityRepository _repo;
 
@@ -144,7 +139,6 @@ final sessionListProvider = StateNotifierProvider<SessionListNotifier, SessionLi
 );
 
 class SessionListNotifier extends StateNotifier<SessionListState> {
-
   SessionListNotifier(this._repo) : super(const SessionListInitial());
   final SecurityRepository _repo;
 
@@ -167,7 +161,6 @@ final incidentListProvider = StateNotifierProvider<IncidentListNotifier, Inciden
 );
 
 class IncidentListNotifier extends StateNotifier<IncidentListState> {
-
   IncidentListNotifier(this._repo) : super(const IncidentListInitial());
   final SecurityRepository _repo;
 
@@ -187,14 +180,10 @@ class IncidentListNotifier extends StateNotifier<IncidentListState> {
 // ─── Security Action Provider ──────────────────────────────
 
 final securityActionProvider = StateNotifierProvider<SecurityActionNotifier, SecurityActionState>(
-  (ref) => SecurityActionNotifier(
-    ref.watch(securityRepositoryProvider),
-    ref.watch(authLocalStorageProvider),
-  ),
+  (ref) => SecurityActionNotifier(ref.watch(securityRepositoryProvider), ref.watch(authLocalStorageProvider)),
 );
 
 class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
-
   SecurityActionNotifier(this._repo, this._authStorage) : super(const SecurityActionInitial());
   final SecurityRepository _repo;
   final AuthLocalStorage _authStorage;
@@ -251,11 +240,7 @@ class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
   }
 
   /// Returns the CSV string on success, null on error (state is set accordingly).
-  Future<String?> exportAuditLogs({
-    required String storeId,
-    String? action,
-    String? severity,
-  }) async {
+  Future<String?> exportAuditLogs({required String storeId, String? action, String? severity}) async {
     state = const SecurityActionLoading();
     try {
       final csv = await _repo.exportAuditLogs(storeId: storeId, action: action, severity: severity);

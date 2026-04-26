@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 /// Unified filter model for all report pages.
 class ReportFilters {
-
   const ReportFilters({
     this.dateRange,
     this.branchId,

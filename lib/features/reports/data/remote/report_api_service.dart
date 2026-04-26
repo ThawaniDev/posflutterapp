@@ -9,7 +9,6 @@ final reportApiServiceProvider = Provider<ReportApiService>((ref) {
 });
 
 class ReportApiService {
-
   ReportApiService(this._dio);
   final Dio _dio;
 

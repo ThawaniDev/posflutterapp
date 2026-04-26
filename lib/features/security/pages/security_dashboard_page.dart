@@ -141,9 +141,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
         child: SecurityPolicyEditor(
           policy: p,
           isSaving: ref.watch(securityPolicyProvider) is SecurityPolicyLoading,
-          onSave: _storeId == null
-              ? null
-              : (data) => ref.read(securityPolicyProvider.notifier).updatePolicy(_storeId!, data),
+          onSave: _storeId == null ? null : (data) => ref.read(securityPolicyProvider.notifier).updatePolicy(_storeId!, data),
         ),
       ),
       SecurityPolicyError(message: final m) => PosErrorState(
@@ -161,20 +159,14 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
 
     void reload() {
       if (_storeId == null) return;
-      ref.read(auditLogListProvider.notifier).loadLogs(
-        _storeId!,
-        action: _auditFilterAction,
-        severity: _auditFilterSeverity,
-      );
+      ref.read(auditLogListProvider.notifier).loadLogs(_storeId!, action: _auditFilterAction, severity: _auditFilterSeverity);
     }
 
     Future<void> exportCsv() async {
       if (_storeId == null) return;
-      final csv = await ref.read(securityActionProvider.notifier).exportAuditLogs(
-        storeId: _storeId!,
-        action: _auditFilterAction,
-        severity: _auditFilterSeverity,
-      );
+      final csv = await ref
+          .read(securityActionProvider.notifier)
+          .exportAuditLogs(storeId: _storeId!, action: _auditFilterAction, severity: _auditFilterSeverity);
       if (!mounted) return;
       if (csv == null) {
         showPosErrorSnackbar(context, l10n.securityExportError);
@@ -208,8 +200,18 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
                   value: _auditFilterAction,
                   items: [
                     DropdownMenuItem(value: null, child: Text(l10n.securityAllActions)),
-                    ...['login', 'logout', 'create', 'update', 'delete', 'view', 'export', 'print', 'void', 'refund']
-                        .map((a) => DropdownMenuItem(value: a, child: Text(a))),
+                    ...[
+                      'login',
+                      'logout',
+                      'create',
+                      'update',
+                      'delete',
+                      'view',
+                      'export',
+                      'print',
+                      'void',
+                      'refund',
+                    ].map((a) => DropdownMenuItem(value: a, child: Text(a))),
                   ],
                   onChanged: (v) {
                     setState(() => _auditFilterAction = v);
@@ -224,8 +226,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
                   value: _auditFilterSeverity,
                   items: [
                     DropdownMenuItem(value: null, child: Text(l10n.securityAllSeverities)),
-                    ...['info', 'warning', 'critical']
-                        .map((s) => DropdownMenuItem(value: s, child: Text(s))),
+                    ...['info', 'warning', 'critical'].map((s) => DropdownMenuItem(value: s, child: Text(s))),
                   ],
                   onChanged: (v) {
                     setState(() => _auditFilterSeverity = v);
@@ -249,10 +250,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
           child: switch (state) {
             AuditLogListInitial() || AuditLogListLoading() => Center(child: PosLoadingSkeleton.list()),
             AuditLogListLoaded(logs: final logs) => AuditLogListWidget(logs: logs),
-            AuditLogListError(message: final m) => PosErrorState(
-              message: l10n.securityError(m),
-              onRetry: reload,
-            ),
+            AuditLogListError(message: final m) => PosErrorState(message: l10n.securityError(m), onRetry: reload),
           },
         ),
       ],
@@ -285,11 +283,9 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
 
     void reload() {
       if (_storeId == null) return;
-      ref.read(loginAttemptsProvider.notifier).loadAttempts(
-        _storeId!,
-        attemptType: _loginFilterType?.value,
-        isSuccessful: _loginFilterSuccess,
-      );
+      ref
+          .read(loginAttemptsProvider.notifier)
+          .loadAttempts(_storeId!, attemptType: _loginFilterType?.value, isSuccessful: _loginFilterSuccess);
     }
 
     return Column(
@@ -304,9 +300,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
                   value: _loginFilterType,
                   items: [
                     DropdownMenuItem(value: null, child: Text(l10n.securityAllActions)),
-                    ...LoginAttemptType.values.map(
-                      (t) => DropdownMenuItem(value: t, child: Text(t.value)),
-                    ),
+                    ...LoginAttemptType.values.map((t) => DropdownMenuItem(value: t, child: Text(t.value))),
                   ],
                   onChanged: (v) {
                     setState(() => _loginFilterType = v);
@@ -338,10 +332,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
           child: switch (state) {
             LoginAttemptsInitial() || LoginAttemptsLoading() => Center(child: PosLoadingSkeleton.list()),
             LoginAttemptsLoaded(attempts: final attempts) => _buildLoginList(attempts),
-            LoginAttemptsError(message: final m) => PosErrorState(
-              message: l10n.securityError(m),
-              onRetry: reload,
-            ),
+            LoginAttemptsError(message: final m) => PosErrorState(message: l10n.securityError(m), onRetry: reload),
           },
         ),
       ],
@@ -376,11 +367,9 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
 
     void reload() {
       if (_storeId == null) return;
-      ref.read(incidentListProvider.notifier).loadIncidents(
-        _storeId!,
-        severity: _incidentFilterSeverity,
-        isResolved: _incidentFilterResolved,
-      );
+      ref
+          .read(incidentListProvider.notifier)
+          .loadIncidents(_storeId!, severity: _incidentFilterSeverity, isResolved: _incidentFilterResolved);
     }
 
     return Column(
@@ -395,8 +384,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
                   value: _incidentFilterSeverity,
                   items: [
                     DropdownMenuItem(value: null, child: Text(l10n.securityAllSeverities)),
-                    ...['low', 'medium', 'high', 'critical']
-                        .map((s) => DropdownMenuItem(value: s, child: Text(s))),
+                    ...['low', 'medium', 'high', 'critical'].map((s) => DropdownMenuItem(value: s, child: Text(s))),
                   ],
                   onChanged: (v) {
                     setState(() => _incidentFilterSeverity = v);
@@ -430,13 +418,9 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
             IncidentListLoaded(:final incidents) => IncidentListWidget(
               incidents: incidents,
               isActionLoading: isLoading,
-              onResolve: (id, notes) =>
-                  ref.read(securityActionProvider.notifier).resolveIncident(id, resolutionNotes: notes),
+              onResolve: (id, notes) => ref.read(securityActionProvider.notifier).resolveIncident(id, resolutionNotes: notes),
             ),
-            IncidentListError(:final message) => PosErrorState(
-              message: message,
-              onRetry: reload,
-            ),
+            IncidentListError(:final message) => PosErrorState(message: message, onRetry: reload),
           },
         ),
       ],
@@ -447,10 +431,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
     final l10n = AppLocalizations.of(context)!;
     return PosDataTable<LoginAttempt>(
       items: attempts,
-      emptyConfig: PosTableEmptyConfig(
-        title: l10n.securityNoLoginAttempts,
-        icon: Icons.login_outlined,
-      ),
+      emptyConfig: PosTableEmptyConfig(title: l10n.securityNoLoginAttempts, icon: Icons.login_outlined),
       columns: [
         PosTableColumn(title: l10n.securityLoginUser, flex: 2, sortable: true, key: 'user'),
         PosTableColumn(title: l10n.securityLoginType, flex: 1, key: 'type'),
@@ -472,10 +453,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
               ],
             );
           case 1:
-            return PosBadge(
-              label: item.attemptType.value,
-              variant: _attemptTypeVariant(item.attemptType),
-            );
+            return PosBadge(label: item.attemptType.value, variant: _attemptTypeVariant(item.attemptType));
           case 2:
             return PosStatusBadge(
               label: item.isSuccessful ? l10n.securityLoginSuccess : l10n.securityLoginFailed,
@@ -504,10 +482,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 if (item.failureReason != null)
-                  Text(
-                    item.failureReason!,
-                    style: const TextStyle(fontSize: 11, color: AppColors.error),
-                  ),
+                  Text(item.failureReason!, style: const TextStyle(fontSize: 11, color: AppColors.error)),
               ],
             );
           default:

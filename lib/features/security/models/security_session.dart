@@ -1,5 +1,4 @@
 class SecuritySession {
-
   const SecuritySession({
     required this.id,
     required this.storeId,

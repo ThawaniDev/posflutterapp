@@ -8,7 +8,6 @@ final securityApiServiceProvider = Provider<SecurityApiService>((ref) {
 });
 
 class SecurityApiService {
-
   SecurityApiService(this._dio);
   final Dio _dio;
 
@@ -42,13 +41,7 @@ class SecurityApiService {
   }) async {
     final res = await _dio.get(
       ApiEndpoints.securityAuditLogs,
-      queryParameters: {
-        'store_id': storeId,
-        'action': ?action,
-        'severity': ?severity,
-        'user_id': ?userId,
-        'per_page': ?perPage,
-      },
+      queryParameters: {'store_id': storeId, 'action': ?action, 'severity': ?severity, 'user_id': ?userId, 'per_page': ?perPage},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -64,12 +57,7 @@ class SecurityApiService {
   }
 
   /// Returns CSV content as a string.
-  Future<String> exportAuditLogs({
-    required String storeId,
-    String? action,
-    String? severity,
-    String? since,
-  }) async {
+  Future<String> exportAuditLogs({required String storeId, String? action, String? severity, String? since}) async {
     final res = await _dio.get(
       ApiEndpoints.securityAuditLogsExport,
       queryParameters: {
@@ -86,10 +74,7 @@ class SecurityApiService {
   // ─── Devices ──────────────────────────────────────────────
 
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) async {
-    final res = await _dio.get(
-      ApiEndpoints.securityDevices,
-      queryParameters: {'store_id': storeId, 'active_only': ?activeOnly},
-    );
+    final res = await _dio.get(ApiEndpoints.securityDevices, queryParameters: {'store_id': storeId, 'active_only': ?activeOnly});
     return res.data as Map<String, dynamic>;
   }
 
@@ -128,12 +113,7 @@ class SecurityApiService {
   }) async {
     final res = await _dio.get(
       ApiEndpoints.securityLoginAttempts,
-      queryParameters: {
-        'store_id': storeId,
-        'attempt_type': ?attemptType,
-        'is_successful': ?isSuccessful,
-        'per_page': ?perPage,
-      },
+      queryParameters: {'store_id': storeId, 'attempt_type': ?attemptType, 'is_successful': ?isSuccessful, 'per_page': ?perPage},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -150,11 +130,7 @@ class SecurityApiService {
   }) async {
     final res = await _dio.get(
       ApiEndpoints.securityLoginAttemptsFailedCount,
-      queryParameters: {
-        'store_id': storeId,
-        'user_identifier': userIdentifier,
-        'window_minutes': ?windowMinutes,
-      },
+      queryParameters: {'store_id': storeId, 'user_identifier': userIdentifier, 'window_minutes': ?windowMinutes},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -175,10 +151,7 @@ class SecurityApiService {
   // ─── Sessions ─────────────────────────────────────────────
 
   Future<Map<String, dynamic>> listSessions({required String storeId, String? status}) async {
-    final res = await _dio.get(
-      ApiEndpoints.securitySessions,
-      queryParameters: {'store_id': storeId, 'status': ?status},
-    );
+    final res = await _dio.get(ApiEndpoints.securitySessions, queryParameters: {'store_id': storeId, 'status': ?status});
     return res.data as Map<String, dynamic>;
   }
 
@@ -200,10 +173,7 @@ class SecurityApiService {
   Future<Map<String, dynamic>> endAllSessions({required String storeId, String? userId}) async {
     final res = await _dio.post(
       ApiEndpoints.securitySessionsEndAll,
-      data: {
-        'store_id': storeId,
-        if (userId != null) 'user_id': userId,
-      },
+      data: {'store_id': storeId, if (userId != null) 'user_id': userId},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -213,11 +183,7 @@ class SecurityApiService {
   Future<Map<String, dynamic>> listIncidents({required String storeId, String? severity, bool? isResolved}) async {
     final res = await _dio.get(
       ApiEndpoints.securityIncidents,
-      queryParameters: {
-        'store_id': storeId,
-        'severity': ?severity,
-        'is_resolved': ?isResolved,
-      },
+      queryParameters: {'store_id': storeId, 'severity': ?severity, 'is_resolved': ?isResolved},
     );
     return res.data as Map<String, dynamic>;
   }
@@ -228,10 +194,7 @@ class SecurityApiService {
   }
 
   Future<Map<String, dynamic>> resolveIncident({required String incidentId, String? resolutionNotes}) async {
-    final res = await _dio.put(
-      ApiEndpoints.securityIncidentResolve(incidentId),
-      data: {'resolution_notes': ?resolutionNotes},
-    );
+    final res = await _dio.put(ApiEndpoints.securityIncidentResolve(incidentId), data: {'resolution_notes': ?resolutionNotes});
     return res.data as Map<String, dynamic>;
   }
 
@@ -260,10 +223,7 @@ class SecurityApiService {
 
   /// Get PIN override history for the store.
   Future<Map<String, dynamic>> getPinOverrideHistory({required String storeId, int limit = 50}) async {
-    final res = await _dio.get(
-      ApiEndpoints.pinOverrideHistory,
-      queryParameters: {'store_id': storeId, 'limit': limit},
-    );
+    final res = await _dio.get(ApiEndpoints.pinOverrideHistory, queryParameters: {'store_id': storeId, 'limit': limit});
     return res.data as Map<String, dynamic>;
   }
 }

@@ -5,7 +5,6 @@ import 'package:wameedpos/features/security/models/security_audit_log.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AuditLogListWidget extends StatelessWidget {
-
   const AuditLogListWidget({super.key, required this.logs});
   final List<SecurityAuditLog> logs;
 
@@ -28,7 +27,6 @@ class AuditLogListWidget extends StatelessWidget {
 }
 
 class _AuditLogTile extends StatelessWidget {
-
   const _AuditLogTile({required this.log});
   final SecurityAuditLog log;
 

@@ -21,7 +21,6 @@ class SalesSummaryPage extends ConsumerStatefulWidget {
 }
 
 class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
@@ -53,11 +52,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: 'sales_summary',
-              filters: _filters,
-            ),
+            onPressed: () => showReportExportSheet(context: context, reportType: 'sales_summary', filters: _filters),
           ),
         ],
         filterPanel: ReportFilterPanel(
@@ -187,9 +182,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                     ),
                                     Text(
                                       l10n.reportNOrders(daily[i]['total_transactions'].toString()),
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                                     ),
                                   ],
                                 ),
@@ -203,7 +196,9 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                   ),
                                   Text(
                                     l10n.reportNetPrefix(formatCurrency(daily[i]['net_revenue'] as num)),
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success, fontSize: 11),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.copyWith(color: AppColors.success, fontSize: 11),
                                   ),
                                 ],
                               ),
@@ -226,11 +221,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
 // ─── Previous Period Comparison Section ──────────────────────
 
 class _PreviousPeriodSection extends StatelessWidget {
-  const _PreviousPeriodSection({
-    required this.current,
-    required this.previous,
-    required this.l10n,
-  });
+  const _PreviousPeriodSection({required this.current, required this.previous, required this.l10n});
   final Map<String, dynamic> current;
   final Map<String, dynamic> previous;
   final AppLocalizations l10n;

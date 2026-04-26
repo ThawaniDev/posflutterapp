@@ -21,7 +21,6 @@ class ProductPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
   int _currentTab = 0;
@@ -50,12 +49,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
     _loadCurrentTab();
   }
 
-  String get _exportType => const [
-    'product_performance',
-    'slow_movers',
-    'product_margin',
-    'category_breakdown',
-  ][_currentTab];
+  String get _exportType => const ['product_performance', 'slow_movers', 'product_margin', 'category_breakdown'][_currentTab];
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +63,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(
-              context: context,
-              reportType: _exportType,
-              filters: _filters,
-            ),
+            onPressed: () => showReportExportSheet(context: context, reportType: _exportType, filters: _filters),
           ),
         ],
         child: Column(
@@ -104,12 +94,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
             Expanded(
               child: IndexedStack(
                 index: _currentTab,
-                children: const [
-                  _BestSellersTab(),
-                  _SlowMoversTab(),
-                  _MarginAnalysisTab(),
-                  _CategoryContributionTab(),
-                ],
+                children: const [_BestSellersTab(), _SlowMoversTab(), _MarginAnalysisTab(), _CategoryContributionTab()],
               ),
             ),
           ],
@@ -134,9 +119,10 @@ class _BestSellersTab extends ConsumerWidget {
         message: message,
         onRetry: () => ref.read(productPerformanceProvider.notifier).load(),
       ),
-      ProductPerformanceLoaded(:final products) => products.isEmpty
-          ? PosEmptyState(title: l10n.reportsNoProductData, icon: Icons.inventory_2)
-          : _ProductList(products: products),
+      ProductPerformanceLoaded(:final products) =>
+        products.isEmpty
+            ? PosEmptyState(title: l10n.reportsNoProductData, icon: Icons.inventory_2)
+            : _ProductList(products: products),
     };
   }
 }
@@ -156,48 +142,49 @@ class _SlowMoversTab extends ConsumerWidget {
         message: message,
         onRetry: () => ref.read(slowMoversProvider.notifier).load(),
       ),
-      SlowMoversLoaded(:final products) => products.isEmpty
-          ? PosEmptyState(title: l10n.reportsNoSlowMovers, icon: Icons.hourglass_empty)
-          : ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                ReportKpiCard(
-                  label: l10n.reportsSlowMoversCount(products.length),
-                  value: '${products.length}',
-                  icon: Icons.hourglass_bottom_rounded,
-                  color: AppColors.warning,
-                ),
-                const SizedBox(height: 20),
-                ReportSectionHeader(title: l10n.reportsSlowMoversTab, icon: Icons.trending_down_rounded),
-                ReportDataCard(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    children: List.generate(products.length, (i) {
-                      final p = products[i];
-                      final qty = (p['quantity_sold'] as num?)?.toInt() ?? 0;
-                      final days = (p['days_since_last_sale'] as num?)?.toInt() ?? 0;
-                      final stock = (p['current_stock'] as num?)?.toInt() ?? 0;
-                      return Column(
-                        children: [
-                          if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
-                          ReportRankedItem(
-                            rank: i + 1,
-                            title: p['product_name'] as String? ?? '',
-                            subtitle: p['sku'] as String?,
-                            trailingValue: l10n.reportNDays(days),
-                            trailingColor: days > 30 ? AppColors.error : AppColors.warning,
-                            badges: [
-                              ReportBadge(label: l10n.reportNSold(qty.toString()), color: AppColors.info),
-                              ReportBadge(label: l10n.reportNInStock(stock), color: AppColors.warning),
-                            ],
-                          ),
-                        ],
-                      );
-                    }),
+      SlowMoversLoaded(:final products) =>
+        products.isEmpty
+            ? PosEmptyState(title: l10n.reportsNoSlowMovers, icon: Icons.hourglass_empty)
+            : ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  ReportKpiCard(
+                    label: l10n.reportsSlowMoversCount(products.length),
+                    value: '${products.length}',
+                    icon: Icons.hourglass_bottom_rounded,
+                    color: AppColors.warning,
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(height: 20),
+                  ReportSectionHeader(title: l10n.reportsSlowMoversTab, icon: Icons.trending_down_rounded),
+                  ReportDataCard(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      children: List.generate(products.length, (i) {
+                        final p = products[i];
+                        final qty = (p['quantity_sold'] as num?)?.toInt() ?? 0;
+                        final days = (p['days_since_last_sale'] as num?)?.toInt() ?? 0;
+                        final stock = (p['current_stock'] as num?)?.toInt() ?? 0;
+                        return Column(
+                          children: [
+                            if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+                            ReportRankedItem(
+                              rank: i + 1,
+                              title: p['product_name'] as String? ?? '',
+                              subtitle: p['sku'] as String?,
+                              trailingValue: l10n.reportNDays(days),
+                              trailingColor: days > 30 ? AppColors.error : AppColors.warning,
+                              badges: [
+                                ReportBadge(label: l10n.reportNSold(qty.toString()), color: AppColors.info),
+                                ReportBadge(label: l10n.reportNInStock(stock), color: AppColors.warning),
+                              ],
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
     };
   }
 }
@@ -230,67 +217,71 @@ class _MarginAnalysisContent extends ConsumerWidget {
         message: message,
         onRetry: () => ref.read(productMarginProvider.notifier).load(),
       ),
-      ProductMarginLoaded(:final products) => products.isEmpty
-          ? PosEmptyState(title: l10n.reportsNoMarginData, icon: Icons.percent)
-          : ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                ReportKpiGrid(
-                  cards: [
-                    ReportKpiCard(
-                      label: l10n.reportsAvgMargin,
-                      value: formatPercent(
-                        products.isEmpty ? 0 : products.fold<double>(0, (s, p) => s + (double.tryParse(p['margin_percent'].toString()) ?? 0)) / products.length,
+      ProductMarginLoaded(:final products) =>
+        products.isEmpty
+            ? PosEmptyState(title: l10n.reportsNoMarginData, icon: Icons.percent)
+            : ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  ReportKpiGrid(
+                    cards: [
+                      ReportKpiCard(
+                        label: l10n.reportsAvgMargin,
+                        value: formatPercent(
+                          products.isEmpty
+                              ? 0
+                              : products.fold<double>(0, (s, p) => s + (double.tryParse(p['margin_percent'].toString()) ?? 0)) /
+                                    products.length,
+                        ),
+                        icon: Icons.percent_rounded,
+                        color: AppColors.primary,
                       ),
-                      icon: Icons.percent_rounded,
-                      color: AppColors.primary,
-                    ),
-                    ReportKpiCard(
-                      label: l10n.reportsTotalProfit,
-                      value: formatCurrency(
-                        products.fold<double>(0, (s, p) => s + (double.tryParse(p['total_profit'].toString()) ?? 0)),
+                      ReportKpiCard(
+                        label: l10n.reportsTotalProfit,
+                        value: formatCurrency(
+                          products.fold<double>(0, (s, p) => s + (double.tryParse(p['total_profit'].toString()) ?? 0)),
+                        ),
+                        icon: Icons.trending_up_rounded,
+                        color: AppColors.success,
                       ),
-                      icon: Icons.trending_up_rounded,
-                      color: AppColors.success,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ReportSectionHeader(title: l10n.reportsMarginAnalysis, icon: Icons.analytics_rounded),
-                ReportDataCard(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    children: List.generate(products.length, (i) {
-                      final p = products[i];
-                      final marginPct = double.tryParse(p['margin_percent'].toString()) ?? 0;
-                      final revenue = double.tryParse(p['total_revenue'].toString()) ?? 0;
-                      final profit = double.tryParse(p['total_profit'].toString()) ?? 0;
-                      final marginColor = marginPct >= 30
-                          ? AppColors.success
-                          : marginPct >= 15
-                          ? AppColors.warning
-                          : AppColors.error;
-                      return Column(
-                        children: [
-                          if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
-                          ReportRankedItem(
-                            rank: i + 1,
-                            title: p['product_name'] as String? ?? '',
-                            subtitle: p['sku'] as String?,
-                            trailingValue: formatPercent(marginPct),
-                            trailingColor: marginColor,
-                            badges: [
-                              ReportBadge(label: formatCurrency(revenue), color: AppColors.primary),
-                              ReportBadge(label: l10n.reportProfitAmount(formatCurrency(profit)), color: AppColors.success),
-                            ],
-                          ),
-                        ],
-                      );
-                    }),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(height: 20),
+                  ReportSectionHeader(title: l10n.reportsMarginAnalysis, icon: Icons.analytics_rounded),
+                  ReportDataCard(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      children: List.generate(products.length, (i) {
+                        final p = products[i];
+                        final marginPct = double.tryParse(p['margin_percent'].toString()) ?? 0;
+                        final revenue = double.tryParse(p['total_revenue'].toString()) ?? 0;
+                        final profit = double.tryParse(p['total_profit'].toString()) ?? 0;
+                        final marginColor = marginPct >= 30
+                            ? AppColors.success
+                            : marginPct >= 15
+                            ? AppColors.warning
+                            : AppColors.error;
+                        return Column(
+                          children: [
+                            if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+                            ReportRankedItem(
+                              rank: i + 1,
+                              title: p['product_name'] as String? ?? '',
+                              subtitle: p['sku'] as String?,
+                              trailingValue: formatPercent(marginPct),
+                              trailingColor: marginColor,
+                              badges: [
+                                ReportBadge(label: formatCurrency(revenue), color: AppColors.primary),
+                                ReportBadge(label: l10n.reportProfitAmount(formatCurrency(profit)), color: AppColors.success),
+                              ],
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
     };
   }
 }
@@ -310,57 +301,55 @@ class _CategoryContributionTab extends ConsumerWidget {
         message: message,
         onRetry: () => ref.read(categoryBreakdownProvider.notifier).load(),
       ),
-      CategoryBreakdownLoaded(:final categories) => categories.isEmpty
-          ? PosEmptyState(title: l10n.reportsNoCategoryData, icon: Icons.category)
-          : ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                if (categories.isNotEmpty) ...[
-                  ReportSectionHeader(title: l10n.reportsCategoryContribution, icon: Icons.donut_large_rounded),
+      CategoryBreakdownLoaded(:final categories) =>
+        categories.isEmpty
+            ? PosEmptyState(title: l10n.reportsNoCategoryData, icon: Icons.category)
+            : ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  if (categories.isNotEmpty) ...[
+                    ReportSectionHeader(title: l10n.reportsCategoryContribution, icon: Icons.donut_large_rounded),
+                    ReportDataCard(
+                      child: ReportPieChart(data: categories, labelKey: 'category_name', valueKey: 'total_revenue', donut: true),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                  ReportSectionHeader(title: l10n.reportsCategories, icon: Icons.list_rounded),
                   ReportDataCard(
-                    child: ReportPieChart(
-                      data: categories,
-                      labelKey: 'category_name',
-                      valueKey: 'total_revenue',
-                      donut: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      children: List.generate(categories.length, (i) {
+                        final c = categories[i];
+                        final revenue = double.tryParse(c['total_revenue'].toString()) ?? 0;
+                        final qty = (c['quantity_sold'] as num?)?.toInt() ?? 0;
+                        final totalRev = categories.fold<double>(
+                          0,
+                          (s, x) => s + (double.tryParse(x['total_revenue'].toString()) ?? 0),
+                        );
+                        final pct = totalRev > 0 ? revenue / totalRev * 100 : 0.0;
+                        return Column(
+                          children: [
+                            if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+                            ReportRankedItem(
+                              rank: i + 1,
+                              title: c['category_name'] as String? ?? '',
+                              subtitle: l10n.reportNSold(qty.toString()),
+                              trailingValue: formatCurrency(revenue),
+                              trailingColor: AppColors.success,
+                              badges: [ReportBadge(label: formatPercent(pct), color: AppColors.primary)],
+                            ),
+                          ],
+                        );
+                      }),
                     ),
                   ),
-                  const SizedBox(height: 24),
                 ],
-                ReportSectionHeader(title: l10n.reportsCategories, icon: Icons.list_rounded),
-                ReportDataCard(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    children: List.generate(categories.length, (i) {
-                      final c = categories[i];
-                      final revenue = double.tryParse(c['total_revenue'].toString()) ?? 0;
-                      final qty = (c['quantity_sold'] as num?)?.toInt() ?? 0;
-                      final totalRev = categories.fold<double>(0, (s, x) => s + (double.tryParse(x['total_revenue'].toString()) ?? 0));
-                      final pct = totalRev > 0 ? revenue / totalRev * 100 : 0.0;
-                      return Column(
-                        children: [
-                          if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
-                          ReportRankedItem(
-                            rank: i + 1,
-                            title: c['category_name'] as String? ?? '',
-                            subtitle: l10n.reportNSold(qty.toString()),
-                            trailingValue: formatCurrency(revenue),
-                            trailingColor: AppColors.success,
-                            badges: [ReportBadge(label: formatPercent(pct), color: AppColors.primary)],
-                          ),
-                        ],
-                      );
-                    }),
-                  ),
-                ),
-              ],
-            ),
+              ),
     };
   }
 }
 
 class _ProductList extends StatelessWidget {
-
   const _ProductList({required this.products});
   final List<Map<String, dynamic>> products;
 

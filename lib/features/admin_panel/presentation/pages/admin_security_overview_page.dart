@@ -17,7 +17,6 @@ class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOverviewPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -41,9 +40,9 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
     final state = ref.watch(securityOverviewProvider);
 
     return PosListPage(
-  title: l10n.adminSecurity,
-  showSearch: false,
-    child: Column(
+      title: l10n.adminSecurity,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -70,7 +69,7 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildOverview(Map<String, dynamic> data) {
@@ -121,7 +120,6 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
 }
 
 class _SectionCard extends StatelessWidget {
-
   const _SectionCard({required this.title, required this.icon, required this.color, required this.stats});
   final String title;
   final IconData icon;

@@ -150,10 +150,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
               // ─── Header ──────────────────────────────────────
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.1), shape: BoxShape.circle),
                 child: const Icon(Icons.admin_panel_settings_rounded, color: AppColors.warning, size: 32),
               ),
               AppSpacing.gapH12,
@@ -165,9 +162,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
               AppSpacing.gapH8,
               Text(
                 l10n.securityManagerAuthorization,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.mutedFor(context),
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
                 textAlign: TextAlign.center,
               ),
               AppSpacing.gapH4,
@@ -207,8 +202,8 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
                         color: _errorMessage != null
                             ? AppColors.error
                             : filled
-                                ? AppColors.primary
-                                : AppColors.mutedFor(context),
+                            ? AppColors.primary
+                            : AppColors.mutedFor(context),
                         width: 2,
                       ),
                     ),
@@ -239,10 +234,7 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
 
               // ─── Numpad ────────────────────────────────────────
               if (_isLoading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: CircularProgressIndicator(),
-                )
+                const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator())
               else
                 _buildNumpad(context),
 
@@ -312,9 +304,7 @@ class _NumpadKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isAction
-          ? Theme.of(context).colorScheme.surfaceContainerHighest
-          : Theme.of(context).colorScheme.surface,
+      color: isAction ? Theme.of(context).colorScheme.surfaceContainerHighest : Theme.of(context).colorScheme.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -325,18 +315,14 @@ class _NumpadKey extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
-            ),
+            border: Border.all(color: Theme.of(context).dividerColor.withValues(alpha: 0.3)),
           ),
           child: Text(
             label,
             style: TextStyle(
               fontSize: isAction ? 18 : 22,
               fontWeight: FontWeight.w500,
-              color: isAction
-                  ? AppColors.mutedFor(context)
-                  : Theme.of(context).colorScheme.onSurface,
+              color: isAction ? AppColors.mutedFor(context) : Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),

@@ -7,7 +7,6 @@ final reportRepositoryProvider = Provider<ReportRepository>((ref) {
 });
 
 class ReportRepository {
-
   ReportRepository(this._api);
   final ReportApiService _api;
 

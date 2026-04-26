@@ -72,130 +72,131 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                   )
                 : ListView(
                     padding: const EdgeInsets.all(20),
-                  children: [
-                    // Peak hour highlight + KPIs
-                    if (hours.isNotEmpty) ...[
-                      Builder(
-                        builder: (context) {
-                          final peak = hours.reduce((a, b) => (a['total_revenue'] as num) > (b['total_revenue'] as num) ? a : b);
-                          final totalRevenue = hours.fold<double>(
-                            0,
-                            (sum, h) => sum + (double.tryParse(h['total_revenue'].toString()) ?? 0.0),
-                          );
-                          final totalOrders = hours.fold<int>(0, (sum, h) => sum + (h['total_orders'] as int? ?? 0));
-                          return Column(
-                            children: [
-                              context.isPhone
-                                  ? Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: ReportKpiCard(
-                                                label: l10n.reportsPeakHour,
-                                                value: _formatHour(peak['hour'] as int),
-                                                icon: Icons.whatshot_rounded,
-                                                color: AppColors.warning,
-                                                subtitle: formatCurrency(peak['total_revenue'] as num),
+                    children: [
+                      // Peak hour highlight + KPIs
+                      if (hours.isNotEmpty) ...[
+                        Builder(
+                          builder: (context) {
+                            final peak = hours.reduce(
+                              (a, b) => (a['total_revenue'] as num) > (b['total_revenue'] as num) ? a : b,
+                            );
+                            final totalRevenue = hours.fold<double>(
+                              0,
+                              (sum, h) => sum + (double.tryParse(h['total_revenue'].toString()) ?? 0.0),
+                            );
+                            final totalOrders = hours.fold<int>(0, (sum, h) => sum + (h['total_orders'] as int? ?? 0));
+                            return Column(
+                              children: [
+                                context.isPhone
+                                    ? Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: ReportKpiCard(
+                                                  label: l10n.reportsPeakHour,
+                                                  value: _formatHour(peak['hour'] as int),
+                                                  icon: Icons.whatshot_rounded,
+                                                  color: AppColors.warning,
+                                                  subtitle: formatCurrency(peak['total_revenue'] as num),
+                                                ),
                                               ),
-                                            ),
-                                            AppSpacing.gapW12,
-                                            Expanded(
-                                              child: ReportKpiCard(
-                                                label: l10n.totalRevenue,
-                                                value: formatCurrency(totalRevenue),
-                                                icon: Icons.trending_up_rounded,
-                                                color: AppColors.success,
+                                              AppSpacing.gapW12,
+                                              Expanded(
+                                                child: ReportKpiCard(
+                                                  label: l10n.totalRevenue,
+                                                  value: formatCurrency(totalRevenue),
+                                                  icon: Icons.trending_up_rounded,
+                                                  color: AppColors.success,
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        AppSpacing.gapH12,
-                                        ReportKpiCard(
-                                          label: l10n.staffTotalOrders,
-                                          value: '$totalOrders',
-                                          icon: Icons.receipt_long_rounded,
-                                          color: AppColors.info,
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        Expanded(
-                                          child: ReportKpiCard(
-                                            label: l10n.reportsPeakHour,
-                                            value: _formatHour(peak['hour'] as int),
-                                            icon: Icons.whatshot_rounded,
-                                            color: AppColors.warning,
-                                            subtitle: formatCurrency(peak['total_revenue'] as num),
+                                            ],
                                           ),
-                                        ),
-                                        AppSpacing.gapW12,
-                                        Expanded(
-                                          child: ReportKpiCard(
-                                            label: l10n.totalRevenue,
-                                            value: formatCurrency(totalRevenue),
-                                            icon: Icons.trending_up_rounded,
-                                            color: AppColors.success,
-                                          ),
-                                        ),
-                                        AppSpacing.gapW12,
-                                        Expanded(
-                                          child: ReportKpiCard(
+                                          AppSpacing.gapH12,
+                                          ReportKpiCard(
                                             label: l10n.staffTotalOrders,
                                             value: '$totalOrders',
                                             icon: Icons.receipt_long_rounded,
                                             color: AppColors.info,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                              AppSpacing.gapH24,
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: ReportKpiCard(
+                                              label: l10n.reportsPeakHour,
+                                              value: _formatHour(peak['hour'] as int),
+                                              icon: Icons.whatshot_rounded,
+                                              color: AppColors.warning,
+                                              subtitle: formatCurrency(peak['total_revenue'] as num),
+                                            ),
+                                          ),
+                                          AppSpacing.gapW12,
+                                          Expanded(
+                                            child: ReportKpiCard(
+                                              label: l10n.totalRevenue,
+                                              value: formatCurrency(totalRevenue),
+                                              icon: Icons.trending_up_rounded,
+                                              color: AppColors.success,
+                                            ),
+                                          ),
+                                          AppSpacing.gapW12,
+                                          Expanded(
+                                            child: ReportKpiCard(
+                                              label: l10n.staffTotalOrders,
+                                              value: '$totalOrders',
+                                              icon: Icons.receipt_long_rounded,
+                                              color: AppColors.info,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                AppSpacing.gapH24,
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+
+                      // Hourly Chart
+                      ReportSectionHeader(title: l10n.reportsHourlyPattern, icon: Icons.schedule_rounded),
+                      ReportDataCard(
+                        child: ReportHourlyChart(data: hours, valueKey: 'total_revenue'),
+                      ),
+                      AppSpacing.gapH24,
+
+                      ReportSectionHeader(title: l10n.reportsRevenueByHour, icon: Icons.bar_chart_rounded),
+                      ReportDataCard(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            for (int i = 0; i < hours.length; i++) ...[
+                              if (i > 0) AppSpacing.gapH8,
+                              _HourRow(
+                                hour: _formatHour(hours[i]['hour'] as int),
+                                revenue: double.tryParse(hours[i]['total_revenue'].toString()) ?? 0.0,
+                                orders: hours[i]['total_orders'] as int? ?? 0,
+                                maxRevenue: hours.fold<double>(0, (max, h) {
+                                  final r = double.tryParse(h['total_revenue'].toString()) ?? 0.0;
+                                  return r > max ? r : max;
+                                }),
+                                isDark: isDark,
+                              ),
                             ],
-                          );
-                        },
-                      ),
-                    ],
-
-                    // Hourly Chart
-                    ReportSectionHeader(title: l10n.reportsHourlyPattern, icon: Icons.schedule_rounded),
-                    ReportDataCard(
-                      child: ReportHourlyChart(data: hours, valueKey: 'total_revenue'),
-                    ),
-                    AppSpacing.gapH24,
-
-                    ReportSectionHeader(title: l10n.reportsRevenueByHour, icon: Icons.bar_chart_rounded),
-                    ReportDataCard(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          for (int i = 0; i < hours.length; i++) ...[
-                            if (i > 0) AppSpacing.gapH8,
-                            _HourRow(
-                              hour: _formatHour(hours[i]['hour'] as int),
-                              revenue: double.tryParse(hours[i]['total_revenue'].toString()) ?? 0.0,
-                              orders: hours[i]['total_orders'] as int? ?? 0,
-                              maxRevenue: hours.fold<double>(0, (max, h) {
-                                final r = double.tryParse(h['total_revenue'].toString()) ?? 0.0;
-                                return r > max ? r : max;
-                              }),
-                              isDark: isDark,
-                            ),
                           ],
-                        ],
+                        ),
                       ),
-                    ),
-                    AppSpacing.gapH20,
-                  ],
-                ),
-      },
+                      AppSpacing.gapH20,
+                    ],
+                  ),
+        },
       ),
     );
   }
 }
 
 class _HourRow extends StatelessWidget {
-
   const _HourRow({
     required this.hour,
     required this.revenue,
@@ -235,9 +236,7 @@ class _HourRow extends StatelessWidget {
               Text(formatCurrency(revenue), style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
               Text(
                 l10n.reportNOrders(orders.toString()),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(fontSize: 10, color: AppColors.mutedFor(context)),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10, color: AppColors.mutedFor(context)),
               ),
             ],
           ),
