@@ -24,8 +24,8 @@ class NotificationPreference {
     }
 
     return NotificationPreference(
-      id: json['id'] as String,
-      userId: json['user_id'] as String,
+      id: json['id'] as String? ?? '',
+      userId: json['user_id'] as String? ?? '',
       eventKey: json['event_key'] as String? ?? '',
       channel: NotificationChannel.fromValue(json['channel'] as String? ?? 'in_app'),
       isEnabled: json['is_enabled'] as bool?,

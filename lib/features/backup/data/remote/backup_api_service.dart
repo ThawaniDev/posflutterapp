@@ -58,6 +58,9 @@ class BackupApiService {
     required String frequency,
     required int retentionDays,
     required bool encryptBackups,
+    bool localBackupEnabled = true,
+    bool cloudBackupEnabled = true,
+    int backupHour = 2,
   }) async {
     final res = await _dio.put(
       ApiEndpoints.backupSchedule,
@@ -66,6 +69,9 @@ class BackupApiService {
         'frequency': frequency,
         'retention_days': retentionDays,
         'encrypt_backups': encryptBackups,
+        'local_backup_enabled': localBackupEnabled,
+        'cloud_backup_enabled': cloudBackupEnabled,
+        'backup_hour': backupHour,
       },
     );
     return res.data as Map<String, dynamic>;

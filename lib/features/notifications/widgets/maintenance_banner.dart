@@ -46,7 +46,7 @@ class _MaintenanceBannerState extends ConsumerState<MaintenanceBanner> {
 
     return async.when(
       loading: () => const SizedBox.shrink(),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (data) {
         final status = MaintenanceStatus.fromJson(data);
         if (!status.shouldShow) return const SizedBox.shrink();
@@ -64,7 +64,7 @@ class _MaintenanceBannerState extends ConsumerState<MaintenanceBanner> {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
           child: Row(
             children: [
-              Icon(Icons.build_rounded, size: 18, color: AppColors.warning),
+              const Icon(Icons.build_rounded, size: 18, color: AppColors.warning),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Column(

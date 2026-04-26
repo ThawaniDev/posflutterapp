@@ -24,7 +24,7 @@ class KitchenTicket {
       orderId: json['order_id'] as String,
       tableId: json['table_id'] as String?,
       ticketNumber: (json['ticket_number'] as num).toInt(),
-      itemsJson: Map<String, dynamic>.from(json['items_json'] as Map),
+      itemsJson: (json['items_json'] as Map<String, dynamic>?) ?? {},
       station: json['station'] as String?,
       status: KitchenTicketStatus.tryFromValue(json['status'] as String?),
       courseNumber: (json['course_number'] as num?)?.toInt(),

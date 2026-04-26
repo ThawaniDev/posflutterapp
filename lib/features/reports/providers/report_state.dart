@@ -15,9 +15,14 @@ class SalesSummaryLoading extends SalesSummaryState {
 
 class SalesSummaryLoaded extends SalesSummaryState {
 
-  const SalesSummaryLoaded({required this.totals, required this.daily});
+  const SalesSummaryLoaded({
+    required this.totals,
+    required this.daily,
+    this.previousPeriod,
+  });
   final Map<String, dynamic> totals;
   final List<Map<String, dynamic>> daily;
+  final Map<String, dynamic>? previousPeriod;
 }
 
 class SalesSummaryError extends SalesSummaryState {
@@ -372,5 +377,144 @@ class CustomerRetentionLoaded extends CustomerRetentionState {
 
 class CustomerRetentionError extends CustomerRetentionState {
   const CustomerRetentionError({required this.message});
+  final String message;
+}
+
+// Inventory Expiry
+sealed class InventoryExpiryState {
+  const InventoryExpiryState();
+}
+
+class InventoryExpiryInitial extends InventoryExpiryState {
+  const InventoryExpiryInitial();
+}
+
+class InventoryExpiryLoading extends InventoryExpiryState {
+  const InventoryExpiryLoading();
+}
+
+class InventoryExpiryLoaded extends InventoryExpiryState {
+  const InventoryExpiryLoaded({required this.data});
+  final Map<String, dynamic> data;
+}
+
+class InventoryExpiryError extends InventoryExpiryState {
+  const InventoryExpiryError({required this.message});
+  final String message;
+}
+
+// Delivery Commission
+sealed class DeliveryCommissionState {
+  const DeliveryCommissionState();
+}
+
+class DeliveryCommissionInitial extends DeliveryCommissionState {
+  const DeliveryCommissionInitial();
+}
+
+class DeliveryCommissionLoading extends DeliveryCommissionState {
+  const DeliveryCommissionLoading();
+}
+
+class DeliveryCommissionLoaded extends DeliveryCommissionState {
+  const DeliveryCommissionLoaded({required this.data});
+  final Map<String, dynamic> data;
+}
+
+class DeliveryCommissionError extends DeliveryCommissionState {
+  const DeliveryCommissionError({required this.message});
+  final String message;
+}
+
+// Report Export
+sealed class ReportExportState {
+  const ReportExportState();
+}
+
+class ReportExportInitial extends ReportExportState {
+  const ReportExportInitial();
+}
+
+class ReportExportLoading extends ReportExportState {
+  const ReportExportLoading();
+}
+
+class ReportExportSuccess extends ReportExportState {
+  const ReportExportSuccess({required this.reportType, required this.format});
+  final String reportType;
+  final String format;
+}
+
+class ReportExportError extends ReportExportState {
+  const ReportExportError({required this.message});
+  final String message;
+}
+
+// Scheduled Reports
+sealed class ScheduledReportsState {
+  const ScheduledReportsState();
+}
+
+class ScheduledReportsInitial extends ScheduledReportsState {
+  const ScheduledReportsInitial();
+}
+
+class ScheduledReportsLoading extends ScheduledReportsState {
+  const ScheduledReportsLoading();
+}
+
+class ScheduledReportsLoaded extends ScheduledReportsState {
+  const ScheduledReportsLoaded({required this.schedules});
+  final List<Map<String, dynamic>> schedules;
+}
+
+class ScheduledReportsError extends ScheduledReportsState {
+  const ScheduledReportsError({required this.message});
+  final String message;
+}
+
+// Slow Movers
+sealed class SlowMoversState {
+  const SlowMoversState();
+}
+
+class SlowMoversInitial extends SlowMoversState {
+  const SlowMoversInitial();
+}
+
+class SlowMoversLoading extends SlowMoversState {
+  const SlowMoversLoading();
+}
+
+class SlowMoversLoaded extends SlowMoversState {
+  const SlowMoversLoaded({required this.products});
+  final List<Map<String, dynamic>> products;
+}
+
+class SlowMoversError extends SlowMoversState {
+  const SlowMoversError({required this.message});
+  final String message;
+}
+
+// Product Margin
+sealed class ProductMarginState {
+  const ProductMarginState();
+}
+
+class ProductMarginInitial extends ProductMarginState {
+  const ProductMarginInitial();
+}
+
+class ProductMarginLoading extends ProductMarginState {
+  const ProductMarginLoading();
+}
+
+class ProductMarginLoaded extends ProductMarginState {
+  const ProductMarginLoaded({required this.products});
+  final List<Map<String, dynamic>> products;
+}
+
+class ProductMarginError extends ProductMarginState {
+  const ProductMarginError({required this.message});
   final String message;
 }

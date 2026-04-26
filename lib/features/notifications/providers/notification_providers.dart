@@ -364,6 +364,27 @@ final notificationStatsProvider = StateNotifierProvider<NotificationStatsNotifie
   return NotificationStatsNotifier(ref.watch(notificationRepositoryProvider));
 });
 
+// ─── Delivery Stats Provider ─────────────────────────────
+class DeliveryStatsNotifier extends StateNotifier<DeliveryStatsState> {
+  DeliveryStatsNotifier(this._repository) : super(const DeliveryStatsInitial());
+  final NotificationRepository _repository;
+
+  Future<void> load() async {
+    if (state is! DeliveryStatsLoaded) state = const DeliveryStatsLoading();
+    try {
+      final result = await _repository.getDeliveryStats();
+      final data = result['data'] as Map<String, dynamic>? ?? {};
+      state = DeliveryStatsLoaded(data);
+    } catch (e) {
+      if (state is! DeliveryStatsLoaded) state = DeliveryStatsError(e.toString());
+    }
+  }
+}
+
+final deliveryStatsProvider = StateNotifierProvider<DeliveryStatsNotifier, DeliveryStatsState>((ref) {
+  return DeliveryStatsNotifier(ref.watch(notificationRepositoryProvider));
+});
+
 // ─── Notification Centre Composite Providers ────────────
 
 /// Active platform announcements for the current store.

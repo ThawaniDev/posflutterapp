@@ -1,4 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
 import 'package:wameedpos/features/sync/models/sync_conflict.dart';
@@ -13,6 +16,24 @@ import 'package:wameedpos/features/sync/services/sync_engine.dart';
 import 'package:wameedpos/features/sync/services/sync_queue_manager.dart';
 import 'package:wameedpos/features/sync/services/sync_retry_service.dart';
 import 'package:wameedpos/features/sync/services/websocket_service.dart';
+
+const _kTerminalIdKey = 'sync_terminal_id';
+
+/// Returns the stable UUID for this terminal, generating and persisting one on first use.
+final terminalIdProvider = FutureProvider<String>((ref) async {
+  const storage = FlutterSecureStorage();
+  final existing = await storage.read(key: _kTerminalIdKey);
+  if (existing != null && existing.isNotEmpty) return existing;
+  final id = const Uuid().v4();
+  await storage.write(key: _kTerminalIdKey, value: id);
+  return id;
+});
+
+/// Resolves the app documents directory path for queue storage.
+final queueStoragePathProvider = FutureProvider<String>((ref) async {
+  final dir = await getApplicationDocumentsDirectory();
+  return dir.path;
+});
 
 // ─── Connectivity Provider ─────────────────────────────────
 
@@ -44,19 +65,26 @@ final wsConnectionStateProvider = StreamProvider<WebSocketConnectionState>((ref)
 
 // ─── Sync Queue Provider ───────────────────────────────────
 
-final syncQueueManagerProvider = Provider<SyncQueueManager>((ref) {
-  return SyncQueueManager(storagePath: '.');
+final syncQueueManagerProvider = Provider<SyncQueueManager?>((ref) {
+  final pathAsync = ref.watch(queueStoragePathProvider);
+  return pathAsync.whenOrNull(
+    data: (path) => SyncQueueManager(storagePath: path),
+  );
 });
 
 // ─── Sync Engine Provider ──────────────────────────────────
 
 final syncEngineProvider = Provider<SyncEngine>((ref) {
+  final terminalIdAsync = ref.watch(terminalIdProvider);
+  final queueManager = ref.watch(syncQueueManagerProvider);
+  final terminalId = terminalIdAsync.valueOrNull ?? 'pending';
+
   final engine = SyncEngine(
     apiService: ref.watch(syncApiServiceProvider),
     connectivity: ref.watch(connectivityServiceProvider),
-    queueManager: ref.watch(syncQueueManagerProvider),
+    queueManager: queueManager ?? SyncQueueManager(storagePath: '.'),
     webSocket: ref.watch(webSocketServiceProvider),
-    terminalId: 'default',
+    terminalId: terminalId,
   );
   ref.onDispose(() => engine.stop());
   return engine;
@@ -224,4 +252,43 @@ class SyncConflictListNotifier extends StateNotifier<SyncConflictListState> {
 
 final syncConflictListProvider = StateNotifierProvider<SyncConflictListNotifier, SyncConflictListState>((ref) {
   return SyncConflictListNotifier(ref.watch(syncRepositoryProvider));
+});
+
+// ─── Sync Logs Provider ───────────────────────────────────
+class SyncLogsNotifier extends StateNotifier<SyncLogsState> {
+  SyncLogsNotifier(this._repo) : super(const SyncLogsInitial());
+  final SyncRepository _repo;
+
+  Future<void> load({
+    String? direction,
+    String? status,
+    String? terminalId,
+    int page = 1,
+    int perPage = 25,
+  }) async {
+    if (page == 1) state = const SyncLogsLoading();
+    try {
+      final data = await _repo.listLogs(
+        direction: direction,
+        status: status,
+        terminalId: terminalId,
+        page: page,
+        perPage: perPage,
+      );
+      final pagination = data['pagination'] as Map<String, dynamic>;
+      final logsRaw = data['logs'] as List;
+      state = SyncLogsLoaded(
+        logs: logsRaw.cast<Map<String, dynamic>>(),
+        currentPage: pagination['current_page'] as int,
+        lastPage: pagination['last_page'] as int,
+        total: pagination['total'] as int,
+      );
+    } catch (e) {
+      state = SyncLogsError(e.toString());
+    }
+  }
+}
+
+final syncLogsProvider = StateNotifierProvider<SyncLogsNotifier, SyncLogsState>((ref) {
+  return SyncLogsNotifier(ref.watch(syncRepositoryProvider));
 });

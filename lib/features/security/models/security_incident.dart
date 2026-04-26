@@ -19,18 +19,25 @@ class SecurityIncident {
   });
 
   factory SecurityIncident.fromJson(Map<String, dynamic> json) {
+    // Backend serializes as 'incident_type'; resource also exposes 'type' for Flutter
+    final rawType = (json['incident_type'] ?? json['type'] ?? '') as String;
+    // Backend sends status:'open'/'resolved'; resource also sends is_resolved bool
+    final status = json['status'] as String? ?? 'open';
+    final isResolvedBool = json['is_resolved'] as bool? ?? status == 'resolved';
     return SecurityIncident(
       id: json['id'] as String,
       storeId: json['store_id'] as String,
-      type: json['type'] as String,
+      type: rawType,
       severity: json['severity'] as String,
       title: json['title'] as String,
       description: json['description'] as String?,
       userId: json['user_id'] as String?,
       deviceId: json['device_id'] as String?,
       ipAddress: json['ip_address'] as String?,
-      details: json['details'] != null ? Map<String, dynamic>.from(json['details'] as Map) : null,
-      isResolved: json['is_resolved'] as bool? ?? false,
+      details: (json['details'] ?? json['metadata']) != null
+          ? Map<String, dynamic>.from((json['details'] ?? json['metadata']) as Map)
+          : null,
+      isResolved: isResolvedBool,
       resolvedBy: json['resolved_by'] as String?,
       resolvedAt: json['resolved_at'] != null ? DateTime.parse(json['resolved_at'] as String) : null,
       resolutionNotes: json['resolution_notes'] as String?,
@@ -57,7 +64,8 @@ class SecurityIncident {
     return {
       'id': id,
       'store_id': storeId,
-      'type': type,
+      'incident_type': type,   // backend field name
+      'type': type,            // normalized alias
       'severity': severity,
       'title': title,
       'description': description,

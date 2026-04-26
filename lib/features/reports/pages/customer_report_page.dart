@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_export_sheet.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 
@@ -35,6 +38,8 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> {
       case 0:
         ref.read(topCustomersProvider.notifier).load(filters: _filters);
       case 1:
+      case 2:
+      case 3:
         ref.read(customerRetentionProvider.notifier).load(filters: _filters);
     }
   }
@@ -44,13 +49,31 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> {
     _onTabChanged(_currentTab);
   }
 
+  // tabs 1-3 share retention data; only tab 0 (top customers) has an export type
+  String? get _exportType => _currentTab == 0 ? 'top_customers' : null;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return PosListPage(
+    return PermissionGuardPage(
+      permission: Permissions.reportsCustomers,
+      child: PosListPage(
       title: l10n.customerReportsTitle,
       showSearch: false,
+      actions: [
+        if (_exportType != null)
+          PosButton.icon(
+            icon: Icons.download_rounded,
+            tooltip: l10n.reportsExportFormatTitle,
+            variant: PosButtonVariant.ghost,
+            onPressed: () => showReportExportSheet(
+              context: context,
+              reportType: _exportType!,
+              filters: _filters,
+            ),
+          ),
+      ],
       child: Column(
         children: [
           Padding(
@@ -64,14 +87,17 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> {
               tabs: [
                 PosTabItem(label: l10n.customerReportsTopCustomers),
                 PosTabItem(label: l10n.customerReportsRetention),
+                PosTabItem(label: l10n.customerReportsNewVsReturning),
+                PosTabItem(label: l10n.customerReportsLoyalty),
               ],
             ),
           ),
           ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: () => _onTabChanged(_currentTab)),
           Expanded(
-            child: IndexedStack(index: _currentTab, children: const [_TopCustomersTab(), _RetentionTab()]),
+            child: IndexedStack(index: _currentTab, children: const [_TopCustomersTab(), _RetentionTab(), _NewVsReturningTab(), _LoyaltyTab()]),
           ),
         ],
+      ),
       ),
     );
   }
@@ -86,7 +112,6 @@ class _TopCustomersTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(topCustomersProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       TopCustomersInitial() || TopCustomersLoading() => PosLoadingSkeleton.list(),
@@ -255,6 +280,127 @@ class _RetentionTab extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    };
+  }
+}
+
+// ─── New vs Returning Tab ────────────────────────────────────
+
+class _NewVsReturningTab extends ConsumerWidget {
+  const _NewVsReturningTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(customerRetentionProvider);
+
+    return switch (state) {
+      CustomerRetentionInitial() || CustomerRetentionLoading() => PosLoadingSkeleton.list(),
+      CustomerRetentionError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(customerRetentionProvider.notifier).load(),
+      ),
+      CustomerRetentionLoaded(:final data) => ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          ReportKpiGrid(
+            cards: [
+              ReportKpiCard(
+                label: l10n.reportsNew30d,
+                value: '${data['new_customers_30d'] ?? 0}',
+                icon: Icons.person_add_rounded,
+                color: AppColors.success,
+              ),
+              ReportKpiCard(
+                label: l10n.reportsReturning30d,
+                value: '${data['returning_customers_30d'] ?? data['active_customers_30d'] ?? 0}',
+                icon: Icons.person_rounded,
+                color: AppColors.info,
+              ),
+              ReportKpiCard(
+                label: l10n.reportsRepeatCustomers,
+                value: '${data['repeat_customers'] ?? 0}',
+                icon: Icons.repeat_rounded,
+                color: AppColors.purple,
+              ),
+              ReportKpiCard(
+                label: l10n.reportsRepeatRate,
+                value: formatPercent((data['repeat_rate'] as num?) ?? 0),
+                icon: Icons.trending_up_rounded,
+                color: AppColors.warning,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          ReportSectionHeader(title: l10n.customerReportsNewVsReturning, icon: Icons.pie_chart_rounded),
+          ReportDataCard(
+            child: ReportPieChart(
+              data: [
+                {'label': l10n.reportsNew30d, 'value': data['new_customers_30d'] ?? 0},
+                {'label': l10n.reportsReturning30d, 'value': data['returning_customers_30d'] ?? data['active_customers_30d'] ?? 0},
+              ],
+              labelKey: 'label',
+              valueKey: 'value',
+              donut: false,
+            ),
+          ),
+        ],
+      ),
+    };
+  }
+}
+
+// ─── Loyalty Points Tab ──────────────────────────────────────
+
+class _LoyaltyTab extends ConsumerWidget {
+  const _LoyaltyTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(customerRetentionProvider);
+
+    return switch (state) {
+      CustomerRetentionInitial() || CustomerRetentionLoading() => PosLoadingSkeleton.list(),
+      CustomerRetentionError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(customerRetentionProvider.notifier).load(),
+      ),
+      CustomerRetentionLoaded(:final data) => ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          ReportKpiGrid(
+            cards: [
+              ReportKpiCard(
+                label: l10n.reportsLoyaltyBalance,
+                value: formatCompact((data['total_loyalty_points'] as num?) ?? 0),
+                icon: Icons.stars_rounded,
+                color: AppColors.warning,
+              ),
+              ReportKpiCard(
+                label: l10n.reportsLoyaltyRedeemed,
+                value: formatCompact((data['loyalty_points_redeemed'] as num?) ?? 0),
+                icon: Icons.redeem_rounded,
+                color: AppColors.error,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          ReportSectionHeader(title: l10n.customerReportsLoyalty, icon: Icons.loyalty_rounded),
+          ReportDataCard(
+            child: Column(
+              children: [
+                ReportStatRow(label: l10n.reportsLoyaltyBalance, value: formatCompact((data['total_loyalty_points'] as num?) ?? 0)),
+                ReportStatRow(label: l10n.reportsLoyaltyRedeemed, value: formatCompact((data['loyalty_points_redeemed'] as num?) ?? 0)),
+                ReportStatRow(
+                  label: l10n.reportsAvgLoyaltyPoints,
+                  value: '${(data['avg_loyalty_points'] as num?)?.toStringAsFixed(0) ?? '0'} pts',
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     };
   }

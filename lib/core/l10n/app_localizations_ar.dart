@@ -2534,6 +2534,44 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pharmacyPrescriptions => 'الوصفات الطبية';
 
   @override
+  String get pharmacyExpiryAlerts => 'تنبيهات انتهاء الصلاحية';
+
+  @override
+  String pharmacyExpiryAlertsTitle(int days) {
+    return 'تنبيهات انتهاء الصلاحية ($days يوم)';
+  }
+
+  @override
+  String get pharmacyDaysFilter => 'الأيام';
+
+  @override
+  String get pharmacyNoExpiryAlerts => 'لا توجد منتجات تنتهي صلاحيتها';
+
+  @override
+  String get pharmacySeverityExpired => 'منتهي';
+
+  @override
+  String get pharmacySeverityCritical => 'حرج';
+
+  @override
+  String get pharmacySeverityWarning => 'تحذير';
+
+  @override
+  String pharmacyDaysUntilExpiry(int days) {
+    return '$days يوم';
+  }
+
+  @override
+  String pharmacyExpiryDate(String date) {
+    return 'ينتهي: $date';
+  }
+
+  @override
+  String pharmacyQtyAvailable(int qty) {
+    return 'الكمية: $qty';
+  }
+
+  @override
   String get pharmacyNewPrescription => 'وصفة طبية جديدة';
 
   @override
@@ -2595,6 +2633,66 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get restaurantCompleteTicket => 'إكمال التذكرة';
+
+  @override
+  String get restaurantNewKitchenTicket => 'تذكرة مطبخ جديدة';
+
+  @override
+  String get restaurantCreateTicket => 'إنشاء تذكرة';
+
+  @override
+  String get restaurantStationLabel => 'المحطة';
+
+  @override
+  String get restaurantStationHint => 'مثل: الشواء، المعجنات';
+
+  @override
+  String get restaurantCourseLabel => 'رقم الطبق';
+
+  @override
+  String get restaurantFireAt => 'وقت التنفيذ (اختياري)';
+
+  @override
+  String get restaurantTicketItems => 'العناصر';
+
+  @override
+  String get restaurantItemName => 'الصنف';
+
+  @override
+  String get restaurantItemNameHint => 'اسم الصنف';
+
+  @override
+  String get restaurantItemQty => 'الكمية';
+
+  @override
+  String get restaurantSplitBill => 'تقسيم الفاتورة';
+
+  @override
+  String get restaurantBillTotal => 'إجمالي الفاتورة (ر.س)';
+
+  @override
+  String get restaurantSplitEqual => 'بالتساوي';
+
+  @override
+  String get restaurantSplitCustom => 'مخصص';
+
+  @override
+  String get restaurantNumberOfPeople => 'عدد الأشخاص';
+
+  @override
+  String get restaurantPerPerson => 'لكل شخص';
+
+  @override
+  String get restaurantCustomAmounts => 'مبالغ مخصصة';
+
+  @override
+  String get restaurantPerson => 'شخص';
+
+  @override
+  String get restaurantSumEntered => 'المجموع المدخل';
+
+  @override
+  String get restaurantConfirmSplit => 'تأكيد التقسيم';
 
   @override
   String get accountingTitle => 'تكامل المحاسبة';
@@ -3772,6 +3870,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelDuplicate => 'تكرار';
+
+  @override
+  String get labelDuplicateSuccess => 'تم تكرار القالب بنجاح';
+
+  @override
+  String get labelSetAsDefault => 'تعيين كافتراضي';
+
+  @override
+  String get labelSetAsDefaultSuccess => 'تم تعيين القالب كافتراضي بنجاح';
 
   @override
   String get labelPreset => 'مُعد مسبقاً';
@@ -5821,6 +5928,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonCancel => 'إلغاء';
 
   @override
+  String get commonClear => 'مسح';
+
+  @override
   String get commonCreate => 'إنشاء';
 
   @override
@@ -5843,6 +5953,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonNo => 'لا';
+
+  @override
+  String get commonYes => 'نعم';
 
   @override
   String get commonNotes => 'ملاحظات';
@@ -6421,6 +6534,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifDeliveryLogsRetries => 'المحاولات';
 
   @override
+  String get notifDeliveryStatsTitle => 'إحصائيات التوصيل';
+
+  @override
+  String get notifDeliveryStatsTotal => 'إجمالي المرسل';
+
+  @override
+  String get notifDeliveryStatsDelivered => 'تم التوصيل';
+
+  @override
+  String get notifDeliveryStatsFailed => 'فشل التوصيل';
+
+  @override
+  String get notifDeliveryStatsRate => 'معدل النجاح';
+
+  @override
+  String get notifDeliveryStatsAvgLatency => 'متوسط زمن التأخير';
+
+  @override
   String get notifStatsTotal => 'الإجمالي';
 
   @override
@@ -6881,6 +7012,129 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get securityAllowedIpRanges => 'نطاقات IP المسموحة:';
+
+  @override
+  String get securityEditPolicy => 'تعديل السياسة';
+
+  @override
+  String get securitySavePolicy => 'حفظ السياسة';
+
+  @override
+  String get securityCancelEdit => 'إلغاء';
+
+  @override
+  String get securityFilterByAction => 'تصفية حسب الإجراء';
+
+  @override
+  String get securityFilterBySeverity => 'تصفية حسب الخطورة';
+
+  @override
+  String get securityFilterByType => 'تصفية حسب النوع';
+
+  @override
+  String get securityFilterByStatus => 'تصفية حسب الحالة';
+
+  @override
+  String get securityAllActions => 'جميع الإجراءات';
+
+  @override
+  String get securityAllSeverities => 'جميع مستويات الخطورة';
+
+  @override
+  String get securityAllStatuses => 'جميع الحالات';
+
+  @override
+  String get securityAllTypes => 'جميع الأنواع';
+
+  @override
+  String get securityPinOverrideTitle => 'مطلوب تفويض المدير';
+
+  @override
+  String get securityManagerAuthorization =>
+      'أدخل رمز PIN للمدير للموافقة على هذا الإجراء.';
+
+  @override
+  String get securityEnterPin => 'أدخل رمز PIN';
+
+  @override
+  String get securityPinOverrideError => 'فشل التفويض. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get securityPinOverrideInvalidPin =>
+      'رمز PIN غير صحيح. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get securityPinOverrideLockout =>
+      'محاولات كثيرة جداً. يرجى الانتظار قبل المحاولة مرة أخرى.';
+
+  @override
+  String get securityPolicyUpdated => 'تم تحديث سياسة الأمان بنجاح.';
+
+  @override
+  String get securityPolicyUpdateError => 'فشل تحديث سياسة الأمان.';
+
+  @override
+  String get securityIncidentStatusOpen => 'مفتوح';
+
+  @override
+  String get securityIncidentStatusResolved => 'تم الحل';
+
+  @override
+  String get securitySessionStatusActive => 'نشط';
+
+  @override
+  String get securitySessionStatusExpired => 'منتهي الصلاحية';
+
+  @override
+  String get securitySessionStatusRevoked => 'ملغي';
+
+  @override
+  String get securitySessionStatusClosed => 'مغلق';
+
+  @override
+  String get securityLoginType => 'النوع';
+
+  @override
+  String get securityLoginStatus => 'الحالة';
+
+  @override
+  String get securityLoginUser => 'المستخدم';
+
+  @override
+  String get securityLoginIp => 'عنوان IP';
+
+  @override
+  String get securityLoginTime => 'الوقت';
+
+  @override
+  String get securityLoginUserAgent => 'الجهاز / المتصفح';
+
+  @override
+  String get securityPinMinLength => 'الحد الأدنى لطول PIN';
+
+  @override
+  String get securityPinMaxLength => 'الحد الأقصى لطول PIN';
+
+  @override
+  String get securityInSeconds => 'بالثواني';
+
+  @override
+  String get securityInMinutes => 'بالدقائق';
+
+  @override
+  String get securityInHours => 'بالساعات';
+
+  @override
+  String get securityInDays => 'بالأيام';
+
+  @override
+  String get securityZeroMeansNeverExpires => '0 = لا تنتهي صلاحيته أبداً';
+
+  @override
+  String get securityAddIpRange => 'إضافة نطاق IP';
+
+  @override
+  String get securityAddButton => 'إضافة';
 
   @override
   String get sessionsCloseSession => 'إغلاق الجلسة';
@@ -13033,6 +13287,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reportsLoyaltyPoints => 'نقاط الولاء';
 
   @override
+  String get reportsLoyaltyBalance => 'رصيد الولاء';
+
+  @override
+  String get reportsLoyaltyRedeemed => 'النقاط المستردة';
+
+  @override
+  String get customerReportsNewVsReturning => 'الجدد مقابل العائدين';
+
+  @override
+  String get customerReportsLoyalty => 'الولاء';
+
+  @override
+  String get reportsReturning30d => 'العائدون (30 يوم)';
+
+  @override
+  String get reportsOrderSource => 'مصدر الطلب';
+
+  @override
+  String get reportsOrderSourcePos => 'نقطة البيع';
+
+  @override
+  String get reportsOrderSourceDelivery => 'توصيل';
+
+  @override
+  String get reportsOrderSourceOnline => 'أونلاين';
+
+  @override
+  String get reportsOrderSourcePhone => 'هاتف';
+
+  @override
   String get reportsAverages => 'المتوسطات';
 
   @override
@@ -13974,6 +14258,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get electronicsImei => 'IMEI';
+
+  @override
+  String get electronicsInvalidImei =>
+      'رقم IMEI غير صحيح (يجب أن يكون 15 رقمًا ويجتاز التحقق)';
+
+  @override
+  String get electronicsCheckImeiServer => 'تحقق من التكرار';
+
+  @override
+  String get electronicsImeiDuplicate => 'رقم IMEI مسجل مسبقاً';
+
+  @override
+  String get electronicsImeiUnique => 'رقم IMEI فريد';
 
   @override
   String get electronicsImeiHint => 'رقم IMEI من 15 رقمًا';
@@ -15766,10 +16063,348 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backupAutoSettings => 'إعدادات النسخ الاحتياطي التلقائي';
 
   @override
+  String get backupEnableAutoBackup => 'تفعيل النسخ الاحتياطي التلقائي';
+
+  @override
+  String get backupEnableAutoBackupHint =>
+      'إنشاء نسخ احتياطية تلقائياً وفق جدول زمني محدد.';
+
+  @override
   String get backupNoLoaded => 'لم يتم تحميل نسخ احتياطية';
 
   @override
+  String get backupNow => 'نسخ احتياطي الآن';
+
+  @override
+  String get backupNowTitle => 'إنشاء نسخة احتياطية يدوية';
+
+  @override
+  String get backupNowHint => 'سيتم إنشاء نسخة احتياطية كاملة من بيانات متجرك.';
+
+  @override
+  String get backupTerminalId => 'معرّف الجهاز';
+
+  @override
+  String get backupEncryptThisBackup => 'تشفير هذه النسخة الاحتياطية';
+
+  @override
+  String get backupTypeLabel => 'نوع النسخة الاحتياطية';
+
+  @override
+  String get backupTypeAuto => 'تلقائي';
+
+  @override
+  String get backupTypeManual => 'يدوي';
+
+  @override
+  String get backupTypePreUpdate => 'قبل التحديث';
+
+  @override
+  String get backupStatusCompleted => 'مكتملة';
+
+  @override
+  String get backupStatusFailed => 'فاشلة';
+
+  @override
+  String get backupStatusCorrupted => 'تالفة';
+
+  @override
+  String get backupStatusInProgress => 'قيد التنفيذ';
+
+  @override
+  String get backupStorageLocal => 'محلي';
+
+  @override
+  String get backupStorageCloud => 'سحابي';
+
+  @override
+  String get backupStorageBoth => 'محلي وسحابي';
+
+  @override
+  String get backupFrequencyHourly => 'كل ساعة';
+
+  @override
+  String get backupFrequencyDaily => 'يومي';
+
+  @override
+  String get backupFrequencyWeekly => 'أسبوعي';
+
+  @override
+  String get backupColType => 'النوع';
+
+  @override
+  String get backupColDate => 'التاريخ';
+
+  @override
+  String get backupColSize => 'الحجم';
+
+  @override
+  String get backupColLocation => 'الموقع';
+
+  @override
+  String get backupColStatus => 'الحالة';
+
+  @override
+  String get backupColVerified => 'تحقق';
+
+  @override
+  String get backupFilterType => 'تصفية حسب النوع';
+
+  @override
+  String get backupFilterStatus => 'تصفية حسب الحالة';
+
+  @override
+  String get backupFilterAllTypes => 'جميع الأنواع';
+
+  @override
+  String get backupFilterAllStatuses => 'جميع الحالات';
+
+  @override
+  String get backupVerified => 'تم التحقق';
+
+  @override
+  String get backupNotVerified => 'لم يتم التحقق';
+
+  @override
+  String get backupEncrypt => 'تشفير النسخ الاحتياطية';
+
+  @override
+  String get backupLocalEnabled => 'تفعيل النسخ المحلي';
+
+  @override
+  String get backupCloudEnabled => 'تفعيل النسخ السحابي';
+
+  @override
+  String get backupRetentionDays => 'مدة الاحتفاظ (بالأيام)';
+
+  @override
+  String get backupBackupHour => 'ساعة النسخ الاحتياطي (0–23)';
+
+  @override
+  String get backupNextScheduled => 'الموعد التالي المجدول';
+
+  @override
+  String get backupLastBackup => 'آخر نسخة احتياطية';
+
+  @override
+  String get backupLastAutoBackup => 'آخر نسخة تلقائية';
+
+  @override
+  String get backupTotalBackups => 'إجمالي النسخ الاحتياطية';
+
+  @override
+  String get backupTotalSize => 'الحجم الإجمالي';
+
+  @override
+  String get backupStorageUsed => 'التخزين المستخدم';
+
+  @override
+  String get backupQuota => 'الحصة';
+
+  @override
+  String get backupUsagePercent => 'نسبة الاستخدام';
+
+  @override
+  String get backupByType => 'التوزيع حسب النوع';
+
+  @override
+  String get backupRecentBackups => 'النسخ الاحتياطية الأخيرة';
+
+  @override
+  String get backupSaveSchedule => 'حفظ الجدول';
+
+  @override
+  String get backupScheduleSaved => 'تم حفظ الجدول بنجاح';
+
+  @override
+  String get backupScheduleSaveError => 'فشل حفظ الجدول';
+
+  @override
+  String get backupRestoreWizard => 'معالج الاستعادة';
+
+  @override
+  String get backupRestoreStep1 => 'اختر النسخة';
+
+  @override
+  String get backupRestoreStep2 => 'تحقق من السلامة';
+
+  @override
+  String get backupRestoreStep3 => 'تأكيد الاستعادة';
+
+  @override
+  String get backupRestoreStep4 => 'تقدم الاستعادة';
+
+  @override
+  String get backupRestoreStep5 => 'اكتمال';
+
+  @override
+  String get backupSelectForRestore => 'اختر نسخة احتياطية للاستعادة';
+
+  @override
+  String get backupOnlyCompletedRestore =>
+      'يمكن استعادة النسخ المكتملة والمتحقق منها فقط';
+
+  @override
+  String get backupVerifyStep => 'التحقق من السلامة';
+
+  @override
+  String get backupVerifySuccess => 'تم التحقق من سلامة النسخة الاحتياطية';
+
+  @override
+  String get backupVerifyFailed => 'فشل التحقق — قد تكون النسخة تالفة';
+
+  @override
+  String get backupVerifyChecksum => 'الفحص التشفيري';
+
+  @override
+  String get backupConfirmRestore => 'تأكيد الاستعادة';
+
+  @override
+  String get backupRestoreWarning =>
+      '⚠️ سيؤدي هذا إلى الكتابة فوق جميع البيانات الحالية. لا يمكن التراجع عن هذا الإجراء. ننصح بشدة بإنشاء نسخة احتياطية قبل الاستعادة.';
+
+  @override
+  String get backupCreatePreRestoreBackup =>
+      'إنشاء نسخة احتياطية قبل الاستعادة';
+
+  @override
+  String get backupEstimatedDuration => 'الوقت المقدر';
+
+  @override
+  String backupEstimatedDurationSeconds(String seconds) {
+    return '$seconds ثانية';
+  }
+
+  @override
+  String get backupRestoreProgress => 'جارٍ الاستعادة...';
+
+  @override
+  String get backupRestoreComplete => 'اكتملت الاستعادة';
+
+  @override
+  String get backupRestoreFailed => 'فشلت الاستعادة';
+
+  @override
+  String get backupRestoreInitiated =>
+      'تم بدء الاستعادة. سيقوم النظام بتطبيق النسخة الاحتياطية.';
+
+  @override
+  String get backupRequiresMigration => 'تتطلب هذه النسخة ترحيل قاعدة بيانات';
+
+  @override
+  String get backupStartRestore => 'بدء الاستعادة';
+
+  @override
+  String get backupExportData => 'تصدير البيانات';
+
+  @override
+  String get backupExportTables => 'اختر الجداول للتصدير';
+
+  @override
+  String get backupExportTableProducts => 'المنتجات';
+
+  @override
+  String get backupExportTableCustomers => 'العملاء';
+
+  @override
+  String get backupExportTableOrders => 'الطلبات';
+
+  @override
+  String get backupExportTableInventory => 'المخزون';
+
+  @override
+  String get backupExportTableSettings => 'الإعدادات';
+
+  @override
+  String get backupExportTableStaff => 'الموظفون';
+
+  @override
+  String get backupExportTableCategories => 'الفئات';
+
+  @override
+  String get backupExportFormat => 'صيغة التصدير';
+
+  @override
+  String get backupExportFormatJson => 'JSON';
+
+  @override
+  String get backupExportFormatCsv => 'CSV';
+
+  @override
+  String get backupExportIncludeImages => 'تضمين الصور';
+
+  @override
+  String get backupExportIncludeImagesDesc =>
+      'إرفاق ملفات الصور (يزيد من حجم التصدير)';
+
+  @override
+  String get backupExportResult => 'نتيجة التصدير';
+
+  @override
+  String get backupExportId => 'معرّف التصدير';
+
+  @override
+  String get backupExportFilePath => 'مسار الملف';
+
+  @override
+  String get backupExportTotalRecords => 'إجمالي السجلات';
+
+  @override
+  String get backupExportSuccess => 'تم إنشاء التصدير بنجاح';
+
+  @override
+  String get backupExportError => 'فشل التصدير. يرجى المحاولة مجدداً.';
+
+  @override
+  String get backupExportStarted => 'جارٍ بدء التصدير...';
+
+  @override
+  String get backupDeleteConfirmTitle => 'حذف النسخة الاحتياطية؟';
+
+  @override
+  String get backupDeleteConfirmMessage =>
+      'سيؤدي هذا إلى حذف ملف النسخة الاحتياطية نهائياً. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get backupDeleteSuccess => 'تم حذف النسخة الاحتياطية';
+
+  @override
+  String get backupDeleteError => 'فشل حذف النسخة الاحتياطية';
+
+  @override
+  String backupRecordsCount(String count) {
+    return '$count سجل';
+  }
+
+  @override
+  String get backupDbVersion => 'إصدار قاعدة البيانات';
+
+  @override
+  String get backupChecksum => 'الفحص التشفيري';
+
+  @override
+  String get backupEncrypted => 'مشفّرة';
+
+  @override
+  String get backupProviderStatus => 'حالة المزوّد';
+
+  @override
+  String get backupNoProvidersConnected => 'لا يوجد مزودون متصلون';
+
+  @override
   String get securityNoAuditLogs => 'لم يتم العثور على سجلات تدقيق.';
+
+  @override
+  String get securityExportCsv => 'تصدير CSV';
+
+  @override
+  String get securityExporting => 'جارٍ التصدير...';
+
+  @override
+  String get securityExportSuccess => 'تم تصدير سجل التدقيق بنجاح.';
+
+  @override
+  String get securityExportError => 'فشل التصدير. يرجى المحاولة مجدداً.';
 
   @override
   String get marketplaceContinue => 'متابعة';
@@ -16988,4 +17623,602 @@ class AppLocalizationsAr extends AppLocalizations {
   String zatcaTamperedDevices(int count) {
     return '$count جهاز معبث';
   }
+
+  @override
+  String get reportsScheduledTitle => 'التقارير المجدولة';
+
+  @override
+  String get reportsSlowMoversTab => 'بطيء الحركة';
+
+  @override
+  String get reportsMarginAnalysis => 'تحليل الهامش';
+
+  @override
+  String get reportsCategoryContribution => 'مساهمة الفئة';
+
+  @override
+  String get reportsNoSlowMovers => 'لا توجد منتجات بطيئة الحركة';
+
+  @override
+  String reportsSlowMoversCount(int count) {
+    return '$count منتج بطيء';
+  }
+
+  @override
+  String get reportsAvgMargin => 'متوسط الهامش';
+
+  @override
+  String get reportsNoMarginData => 'لا توجد بيانات هامش';
+
+  @override
+  String get reportsNoCategoryContribution => 'لا توجد بيانات فئة';
+
+  @override
+  String get reportsExportPdf => 'تصدير PDF';
+
+  @override
+  String get reportsExportCsv => 'تصدير CSV';
+
+  @override
+  String get reportsExportFormatTitle => 'صيغة التصدير';
+
+  @override
+  String get reportsExportGenerating => 'جارٍ إنشاء التقرير…';
+
+  @override
+  String get reportsExportSuccess => 'تم تصدير التقرير بنجاح';
+
+  @override
+  String get reportsExportFailed => 'فشل التصدير. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get reportsScheduledCreate => 'إنشاء جدول';
+
+  @override
+  String get reportsScheduledName => 'اسم الجدول';
+
+  @override
+  String get reportsScheduledFrequency => 'التكرار';
+
+  @override
+  String get reportsScheduledRecipients =>
+      'المستلمون (رسائل بريد إلكتروني مفصولة بفواصل)';
+
+  @override
+  String get reportsScheduledDaily => 'يومي';
+
+  @override
+  String get reportsScheduledWeekly => 'أسبوعي';
+
+  @override
+  String get reportsScheduledMonthly => 'شهري';
+
+  @override
+  String reportsScheduledNext(String date) {
+    return 'التالي: $date';
+  }
+
+  @override
+  String reportsScheduledLast(String date) {
+    return 'الأخير: $date';
+  }
+
+  @override
+  String get reportsScheduledDelete => 'حذف الجدول';
+
+  @override
+  String reportsScheduledDeleteConfirm(String name) {
+    return 'حذف الجدول \"$name\"؟';
+  }
+
+  @override
+  String get reportsScheduledEmpty => 'لا توجد تقارير مجدولة بعد';
+
+  @override
+  String get reportsScheduledFormat => 'الصيغة';
+
+  @override
+  String get reportsComparePeriod => 'مقارنة الفترة';
+
+  @override
+  String get reportsCompareFrom => 'من';
+
+  @override
+  String get reportsCompareTo => 'إلى';
+
+  @override
+  String get reportsExpiryTab => 'انتهاء الصلاحية';
+
+  @override
+  String reportsExpiryDate(String date) {
+    return 'تنتهي: $date';
+  }
+
+  @override
+  String reportsExpiryDaysLeft(int days) {
+    return '$days يوم متبقي';
+  }
+
+  @override
+  String get reportsExpiryExpired => 'منتهي الصلاحية';
+
+  @override
+  String get reportsExpiryCritical => 'حرج (≤7 أيام)';
+
+  @override
+  String get reportsExpiryWarning => 'تحذير (≤30 يوم)';
+
+  @override
+  String get reportsNoExpiryData => 'لا توجد بيانات انتهاء صلاحية';
+
+  @override
+  String get reportsDeliveryCommission => 'عمولة التوصيل';
+
+  @override
+  String get reportsDeliveryPlatform => 'المنصة';
+
+  @override
+  String get reportsDeliveryOrders => 'الطلبات';
+
+  @override
+  String get reportsDeliveryGross => 'إجمالي المبيعات';
+
+  @override
+  String get reportsDeliveryFee => 'رسوم العمولة';
+
+  @override
+  String get reportsDeliveryNet => 'صافي المبيعات';
+
+  @override
+  String get reportsNoDeliveryData => 'لا توجد بيانات عمولة توصيل';
+
+  @override
+  String get reportsAutoRefreshing => 'يتجدد تلقائيًا كل 60 ثانية';
+
+  @override
+  String reportsLastRefreshed(String time) {
+    return 'آخر تحديث: $time';
+  }
+
+  @override
+  String get reportsSubscriptionRequired =>
+      'مطلوب ترقية للوصول إلى هذا التقرير';
+
+  @override
+  String get reportsUpgradeRequired => 'هذه الميزة متاحة في الخطط الأعلى';
+
+  @override
+  String get reportsNoSchedulesYet => 'لا توجد تقارير مجدولة بعد';
+
+  @override
+  String reportNDays(int days) {
+    return '$days أيام';
+  }
+
+  @override
+  String reportNInStock(int n) {
+    return '$n في المخزون';
+  }
+
+  @override
+  String get reportsBestSellers => 'الأكثر مبيعاً';
+
+  @override
+  String get reportsType => 'نوع التقرير';
+
+  @override
+  String get bakeryEditCakeOrder => 'تعديل طلب الكيك';
+
+  @override
+  String get bakeryNewCakeOrder => 'طلب كيك جديد';
+
+  @override
+  String get bakeryUpdateOrder => 'تحديث الطلب';
+
+  @override
+  String get bakeryCreateOrder => 'إنشاء الطلب';
+
+  @override
+  String get bakeryEditRecipe => 'تعديل الوصفة';
+
+  @override
+  String get bakeryUpdateRecipe => 'تحديث الوصفة';
+
+  @override
+  String get bakeryCreateRecipe => 'إنشاء الوصفة';
+
+  @override
+  String get electronicsEditImeiRecord => 'تعديل سجل IMEI';
+
+  @override
+  String get electronicsNewImeiRecord => 'سجل IMEI جديد';
+
+  @override
+  String get electronicsUpdateRecord => 'تحديث السجل';
+
+  @override
+  String get electronicsCreateRecord => 'إنشاء السجل';
+
+  @override
+  String get electronicsEditRepairJob => 'تعديل طلب الإصلاح';
+
+  @override
+  String get electronicsUpdateJob => 'تحديث الطلب';
+
+  @override
+  String get electronicsCreateJob => 'إنشاء الطلب';
+
+  @override
+  String get floristEditArrangement => 'تعديل التنسيق';
+
+  @override
+  String get floristNewArrangementTitle => 'تنسيق جديد';
+
+  @override
+  String get floristUpdateArrangement => 'تحديث التنسيق';
+
+  @override
+  String get floristCreateArrangement => 'إنشاء التنسيق';
+
+  @override
+  String get floristNewSubscription => 'اشتراك جديد';
+
+  @override
+  String get floristEditSubscription => 'تعديل الاشتراك';
+
+  @override
+  String get floristUpdateSubscription => 'تحديث الاشتراك';
+
+  @override
+  String get floristCreateSubscription => 'إنشاء الاشتراك';
+
+  @override
+  String get jewelryEditProductDetail => 'تعديل تفاصيل المنتج';
+
+  @override
+  String get jewelryPriceCalculator => 'حاسبة الأسعار';
+
+  @override
+  String get jewelrySelectRate => 'اختر سعر المعدن';
+
+  @override
+  String get sarPerGram => 'ر.س/غ';
+
+  @override
+  String get jewelryPercentage => 'نسبة مئوية';
+
+  @override
+  String get jewelryFlat => 'مبلغ ثابت';
+
+  @override
+  String get jewelryPerGram => 'لكل غرام';
+
+  @override
+  String get jewelryCalculatedPrice => 'السعر المحسوب';
+
+  @override
+  String get jewelryNewProductDetail => 'تفاصيل مجوهرات جديدة';
+
+  @override
+  String get jewelryUpdateDetail => 'تحديث التفاصيل';
+
+  @override
+  String get jewelryCreateDetail => 'إنشاء التفاصيل';
+
+  @override
+  String get pharmacyEditPrescription => 'تعديل الوصفة الطبية';
+
+  @override
+  String get pharmacyUpdatePrescription => 'تحديث الوصفة';
+
+  @override
+  String get pharmacyCreatePrescription => 'إنشاء الوصفة';
+
+  @override
+  String get pharmacyEditDrugSchedule => 'تعديل جدول الدواء';
+
+  @override
+  String get pharmacyNewDrugSchedule => 'جدول دواء جديد';
+
+  @override
+  String get pharmacyUpdateSchedule => 'تحديث الجدول';
+
+  @override
+  String get pharmacyCreateSchedule => 'إنشاء الجدول';
+
+  @override
+  String get restaurantUpdateReservation => 'تحديث الحجز';
+
+  @override
+  String get restaurantCreateReservation => 'إنشاء الحجز';
+
+  @override
+  String get restaurantEditTable => 'تعديل الطاولة';
+
+  @override
+  String get restaurantUpdateTable => 'تحديث الطاولة';
+
+  @override
+  String get restaurantCreateTable => 'إنشاء الطاولة';
+
+  @override
+  String get paymentListTitle => 'سجل المدفوعات';
+
+  @override
+  String get paymentListFilters => 'فلاتر';
+
+  @override
+  String get paymentListEmpty => 'لا توجد مدفوعات';
+
+  @override
+  String get paymentListSearchHint => 'البحث في المعاملات...';
+
+  @override
+  String get paymentListDateRange => 'نطاق التاريخ';
+
+  @override
+  String get paymentListMethod => 'طريقة الدفع';
+
+  @override
+  String get paymentListStatus => 'الحالة';
+
+  @override
+  String get paymentListRefund => 'استرداد';
+
+  @override
+  String get paymentListInfoMessage =>
+      'تصفح وفلترة جميع معاملات الدفع. اضغط على صف لعرض التفاصيل أو معالجة استرداد.';
+
+  @override
+  String get paymentStatusCompleted => 'مكتمل';
+
+  @override
+  String get paymentStatusRefunded => 'مُسترد';
+
+  @override
+  String get paymentStatusPartialRefund => 'استرداد جزئي';
+
+  @override
+  String get paymentStatusFailed => 'فاشل';
+
+  @override
+  String get paymentDetailTitle => 'تفاصيل الدفع';
+
+  @override
+  String get paymentDetailInfo => 'معلومات المعاملة';
+
+  @override
+  String get paymentDetailMethod => 'طريقة الدفع';
+
+  @override
+  String get paymentDetailAmount => 'المبلغ';
+
+  @override
+  String get paymentDetailCashTendered => 'النقد المقدم';
+
+  @override
+  String get paymentDetailChange => 'الفكة';
+
+  @override
+  String get paymentDetailTip => 'بقشيش';
+
+  @override
+  String get paymentDetailStatus => 'الحالة';
+
+  @override
+  String get paymentDetailTransactionId => 'رقم المعاملة';
+
+  @override
+  String get paymentDetailCard => 'بطاقة';
+
+  @override
+  String get paymentDetailGiftCard => 'بطاقة هدية';
+
+  @override
+  String get paymentDetailDate => 'التاريخ';
+
+  @override
+  String get paymentDetailRefunds => 'سجل الاسترداد';
+
+  @override
+  String get paymentDetailNoRefunds => 'لا توجد مستردات لهذه الدفعة';
+
+  @override
+  String get refundAmount => 'مبلغ الاسترداد';
+
+  @override
+  String get refundMethod => 'طريقة الاسترداد';
+
+  @override
+  String get refundReference => 'رقم المرجع';
+
+  @override
+  String get refundSubmit => 'معالجة الاسترداد';
+
+  @override
+  String get refundCreatedSuccess => 'تمت معالجة الاسترداد بنجاح';
+
+  @override
+  String get giftCardManage => 'إدارة';
+
+  @override
+  String get giftCardManageEmpty => 'لا توجد بطاقات هدايا';
+
+  @override
+  String get giftCardManageFilterStatus => 'فلتر حسب الحالة';
+
+  @override
+  String get giftCardDeactivateTitle => 'إلغاء تفعيل بطاقة الهدية';
+
+  @override
+  String giftCardDeactivateConfirm(String code) {
+    return 'هل أنت متأكد من إلغاء تفعيل بطاقة الهدية $code؟';
+  }
+
+  @override
+  String get giftCardDeactivateAction => 'إلغاء التفعيل';
+
+  @override
+  String get giftCardDeactivatedSuccess => 'تم إلغاء تفعيل بطاقة الهدية';
+
+  @override
+  String get giftCardStatusActive => 'نشط';
+
+  @override
+  String get giftCardStatusRedeemed => 'مستخدمة';
+
+  @override
+  String get giftCardStatusExpired => 'منتهية الصلاحية';
+
+  @override
+  String get giftCardStatusDeactivated => 'مُلغاة';
+
+  @override
+  String get expenseEditTitle => 'تعديل المصروف';
+
+  @override
+  String get expenseDeleteTitle => 'حذف المصروف';
+
+  @override
+  String get expenseDeleteConfirm => 'هل أنت متأكد من حذف هذا المصروف؟';
+
+  @override
+  String get expenseDeletedSuccess => 'تم حذف المصروف';
+
+  @override
+  String get expenseUpdatedSuccess => 'تم تحديث المصروف';
+
+  @override
+  String get expensesInfoMessage =>
+      'تتبع وإدارة جميع مصروفات المتجر. اسحب لليسار للحذف، اضغط أيقونة التعديل للتحديث.';
+
+  @override
+  String get cashSessionDetailTitle => 'تفاصيل الجلسة';
+
+  @override
+  String get cashSessionEventsTab => 'أحداث النقد';
+
+  @override
+  String get cashSessionExpensesTab => 'المصروفات';
+
+  @override
+  String get cashSessionNoEvents => 'لا توجد أحداث نقدية في هذه الجلسة';
+
+  @override
+  String get cashSessionNoExpenses => 'لا توجد مصروفات في هذه الجلسة';
+
+  @override
+  String get cashSessionOpenFloat => 'النقد الافتتاحي';
+
+  @override
+  String get cashSessionExpectedCash => 'النقد المتوقع';
+
+  @override
+  String get cashSessionVariance => 'الفارق';
+
+  @override
+  String get cashSessionOpenedAt => 'فُتحت';
+
+  @override
+  String get cashSessionClosedAt => 'أُغلقت';
+
+  @override
+  String get cashSessionsInfoMessage =>
+      'عرض جميع جلسات النقد وتفاصيلها. اضغط على جلسة لرؤية أحداث النقد والمصروفات.';
+
+  @override
+  String get dailySummaryExpensesBreakdown => 'المصروفات حسب الفئة';
+
+  @override
+  String get dailySummaryNoExpenses => 'لا توجد مصروفات مسجلة';
+
+  @override
+  String get dailySummaryInfoMessage =>
+      'عرض ملخص مبيعات اليوم بما يشمل الإيرادات والمصروفات وبيانات الجلسات.';
+
+  @override
+  String get finReconInfoMessage =>
+      'مراجعة وتأكيد التسوية المالية لفترة زمنية. تصدير PDF للسجلات.';
+
+  @override
+  String get allCategories => 'جميع الفئات';
+
+  @override
+  String get syncConnecting => 'جارٍ الاتصال بالخادم...';
+
+  @override
+  String get syncCheckingConnectivity => 'جارٍ التحقق من الاتصال...';
+
+  @override
+  String get syncNoInternet =>
+      'لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مجددًا.';
+
+  @override
+  String get syncDownloadingData => 'جارٍ تنزيل البيانات...';
+
+  @override
+  String get syncPerformingFullSync => 'جارٍ إجراء مزامنة كاملة...';
+
+  @override
+  String get syncReady => 'جاهز!';
+
+  @override
+  String get syncSettingUp => 'الإعداد';
+
+  @override
+  String get syncConnected => 'متصل';
+
+  @override
+  String get syncOfflineStatus => 'غير متصل';
+
+  @override
+  String syncPendingCount(int count) {
+    return '$count معلّق';
+  }
+
+  @override
+  String syncLastSyncInfo(String direction, int records) {
+    return 'آخر مزامنة: $direction · $records سجل';
+  }
+
+  @override
+  String syncPendingConflictsCount(int count) {
+    return '$count تعارضات';
+  }
+
+  @override
+  String syncFailedCount(int count) {
+    return '$count فاشل';
+  }
+
+  @override
+  String get syncLogsTitle => 'سجلات المزامنة';
+
+  @override
+  String get syncLogsEmpty => 'لا توجد سجلات مزامنة بعد';
+
+  @override
+  String get syncLogsFilterDirection => 'الاتجاه';
+
+  @override
+  String get syncLogsFilterStatus => 'الحالة';
+
+  @override
+  String get syncLogsTerminal => 'الجهاز';
+
+  @override
+  String syncLogsDuration(int ms) {
+    return '$ms مللي ثانية';
+  }
+
+  @override
+  String syncLogsRecordsCount(int count) {
+    return '$count سجل';
+  }
+
+  @override
+  String get syncLogHistory => 'سجل تاريخ المزامنة';
+
+  @override
+  String get viewAllLogs => 'عرض كل السجلات';
 }

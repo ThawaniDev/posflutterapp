@@ -382,11 +382,33 @@ class PosSidebar extends StatefulWidget {
           permission: Permissions.deliveryViewDashboard,
           featureKey: 'delivery_integration',
         ),
+      ],
+    ),
+
+    // ZATCA Compliance (KSA e-invoicing)
+    PosSidebarGroup(
+      label: l10n.sidebarZatca,
+      icon: Icons.verified_rounded,
+      items: [
         PosSidebarItem(
-          label: l10n.sidebarZatca,
-          icon: Icons.verified_rounded,
+          label: l10n.zatcaComplianceSummary,
+          icon: Icons.dashboard_rounded,
           route: '/zatca',
           permission: Permissions.zatcaView,
+          featureKey: 'zatca_phase2',
+        ),
+        PosSidebarItem(
+          label: l10n.zatcaDeviceActivation,
+          icon: Icons.devices_rounded,
+          route: '/zatca/devices',
+          permission: Permissions.zatcaView,
+          featureKey: 'zatca_phase2',
+        ),
+        PosSidebarItem(
+          label: l10n.zatcaTitle,
+          icon: Icons.admin_panel_settings_rounded,
+          route: '/admin/zatca',
+          permission: Permissions.zatcaManage,
           featureKey: 'zatca_phase2',
         ),
       ],
@@ -404,12 +426,13 @@ class PosSidebar extends StatefulWidget {
           permission: Permissions.hardwareView,
         ),
         PosSidebarItem(label: l10n.sidebarSync, icon: Icons.sync_rounded, route: '/sync', permission: Permissions.syncView),
-        PosSidebarItem(
-          label: l10n.sidebarBackup,
-          icon: Icons.backup_rounded,
-          route: '/backup',
-          permission: Permissions.backupView,
-        ),
+        // Backup & Recovery hidden — using service-provider cloud backup
+        // PosSidebarItem(
+        //   label: l10n.sidebarBackup,
+        //   icon: Icons.backup_rounded,
+        //   route: '/backup',
+        //   permission: Permissions.backupView,
+        // ),
       ],
     ),
 

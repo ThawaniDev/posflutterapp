@@ -86,9 +86,9 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
   @override
   Widget build(BuildContext context) {
     return PosFormPage(
-      title: _isEditing ? 'Edit Prescription' : 'New Prescription',
+      title: _isEditing ? l10n.pharmacyEditPrescription : l10n.pharmacyNewPrescription,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Prescription' : 'Create Prescription',
+          label: _isEditing ? l10n.pharmacyUpdatePrescription : l10n.pharmacyCreatePrescription,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 class Payment {
-
   const Payment({
     required this.id,
     required this.transactionId,
@@ -17,6 +16,9 @@ class Payment {
     this.giftCardCode,
     this.couponCode,
     this.loyaltyPointsUsed,
+    this.status,
+    this.nearpayTransactionId,
+    this.syncVersion,
     this.createdAt,
   });
 
@@ -36,9 +38,13 @@ class Payment {
       giftCardCode: json['gift_card_code'] as String?,
       couponCode: json['coupon_code'] as String?,
       loyaltyPointsUsed: (json['loyalty_points_used'] as num?)?.toInt(),
+      status: json['status'] as String?,
+      nearpayTransactionId: json['nearpay_transaction_id'] as String?,
+      syncVersion: (json['sync_version'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
+
   final String id;
   final String transactionId;
   final PaymentMethodKey method;
@@ -53,6 +59,9 @@ class Payment {
   final String? giftCardCode;
   final String? couponCode;
   final int? loyaltyPointsUsed;
+  final String? status;
+  final String? nearpayTransactionId;
+  final int? syncVersion;
   final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
@@ -71,6 +80,9 @@ class Payment {
       'gift_card_code': giftCardCode,
       'coupon_code': couponCode,
       'loyalty_points_used': loyaltyPointsUsed,
+      'status': status,
+      'nearpay_transaction_id': nearpayTransactionId,
+      'sync_version': syncVersion,
       'created_at': createdAt?.toIso8601String(),
     };
   }
@@ -90,6 +102,9 @@ class Payment {
     String? giftCardCode,
     String? couponCode,
     int? loyaltyPointsUsed,
+    String? status,
+    String? nearpayTransactionId,
+    int? syncVersion,
     DateTime? createdAt,
   }) {
     return Payment(
@@ -107,6 +122,9 @@ class Payment {
       giftCardCode: giftCardCode ?? this.giftCardCode,
       couponCode: couponCode ?? this.couponCode,
       loyaltyPointsUsed: loyaltyPointsUsed ?? this.loyaltyPointsUsed,
+      status: status ?? this.status,
+      nearpayTransactionId: nearpayTransactionId ?? this.nearpayTransactionId,
+      syncVersion: syncVersion ?? this.syncVersion,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -119,5 +137,5 @@ class Payment {
 
   @override
   String toString() =>
-      'Payment(id: $id, transactionId: $transactionId, method: $method, amount: $amount, cashTendered: $cashTendered, changeGiven: $changeGiven, ...)';
+      'Payment(id: $id, transactionId: $transactionId, method: $method, amount: $amount, status: $status)';
 }

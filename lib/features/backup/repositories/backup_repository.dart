@@ -29,11 +29,17 @@ class BackupRepository {
     required String frequency,
     required int retentionDays,
     required bool encryptBackups,
+    bool localBackupEnabled = true,
+    bool cloudBackupEnabled = true,
+    int backupHour = 2,
   }) => _api.updateSchedule(
     autoBackupEnabled: autoBackupEnabled,
     frequency: frequency,
     retentionDays: retentionDays,
     encryptBackups: encryptBackups,
+    localBackupEnabled: localBackupEnabled,
+    cloudBackupEnabled: cloudBackupEnabled,
+    backupHour: backupHour,
   );
 
   Future<Map<String, dynamic>> getStorageUsage() => _api.getStorageUsage();

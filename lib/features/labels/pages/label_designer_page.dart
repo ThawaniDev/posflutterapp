@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
@@ -125,7 +127,9 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
     final canvasHeight = double.tryParse(_heightController.text) ?? 30;
     final scale = 4.0 * _zoom; // 1mm = 4px @ 100% zoom
 
-    return Scaffold(
+    return PermissionGuardPage(
+      permission: Permissions.labelsManage,
+      child: Scaffold(
       appBar: PosAppBar(
         title: _loadedTemplateId != null ? l10n.labelEditTemplate : l10n.labelCreateTemplate,
         showBackButton: true,
@@ -161,7 +165,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                         Expanded(
                           child: ListView.separated(
                             itemCount: LabelDesignerPage._availableElements.length,
-                            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
+                            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.xs),
                             itemBuilder: (context, index) {
                               final el = LabelDesignerPage._availableElements[index];
                               return _ElementPaletteItem(elementType: el, onTap: () => _addElement(el));
@@ -343,7 +347,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                 ),
               ],
             ),
-    );
+    ));
   }
 
   void _addElement(_ElementType type) {

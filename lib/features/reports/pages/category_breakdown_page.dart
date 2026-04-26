@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_export_sheet.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -42,17 +45,32 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(categoryBreakdownProvider);
 
-    return ReportPageScaffold(
-      title: l10n.sidebarCategoryBreakdown,
-      filterPanel: ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
-      body: switch (state) {
-        CategoryBreakdownInitial() || CategoryBreakdownLoading() => PosLoadingSkeleton.list(),
-        CategoryBreakdownError(:final message) => PosErrorState(message: message, onRetry: _loadData),
-        CategoryBreakdownLoaded(:final categories) =>
-          categories.isEmpty
-              ? PosEmptyState(title: l10n.reportsNoCategoryData, icon: Icons.category)
-              : _CategoryList(categories: categories),
-      },
+    return PermissionGuardPage(
+      permission: Permissions.reportsSales,
+      child: ReportPageScaffold(
+        title: l10n.sidebarCategoryBreakdown,
+        actions: [
+          PosButton.icon(
+            icon: Icons.download_rounded,
+            tooltip: l10n.reportsExportFormatTitle,
+            variant: PosButtonVariant.ghost,
+            onPressed: () => showReportExportSheet(
+              context: context,
+              reportType: 'category_breakdown',
+              filters: _filters,
+            ),
+          ),
+        ],
+        filterPanel: ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
+        body: switch (state) {
+          CategoryBreakdownInitial() || CategoryBreakdownLoading() => PosLoadingSkeleton.list(),
+          CategoryBreakdownError(:final message) => PosErrorState(message: message, onRetry: _loadData),
+          CategoryBreakdownLoaded(:final categories) =>
+            categories.isEmpty
+                ? PosEmptyState(title: l10n.reportsNoCategoryData, icon: Icons.category)
+                : _CategoryList(categories: categories),
+        },
+      ),
     );
   }
 }
@@ -65,7 +83,6 @@ class _CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final totalRevenue = categories.fold<double>(0, (sum, c) => sum + (double.tryParse(c['total_revenue'].toString()) ?? 0.0));
     final maxRevenue = categories.isEmpty
         ? 1.0

@@ -48,6 +48,9 @@ class BackupScheduleNotifier extends StateNotifier<BackupScheduleState> {
     required String frequency,
     required int retentionDays,
     required bool encryptBackups,
+    bool localBackupEnabled = true,
+    bool cloudBackupEnabled = true,
+    int backupHour = 2,
   }) async {
     state = const BackupScheduleLoading();
     try {
@@ -56,6 +59,9 @@ class BackupScheduleNotifier extends StateNotifier<BackupScheduleState> {
         frequency: frequency,
         retentionDays: retentionDays,
         encryptBackups: encryptBackups,
+        localBackupEnabled: localBackupEnabled,
+        cloudBackupEnabled: cloudBackupEnabled,
+        backupHour: backupHour,
       );
       state = BackupScheduleLoaded(data);
     } catch (e) {

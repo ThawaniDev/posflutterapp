@@ -40,12 +40,17 @@ class ApiEndpoints {
 
   // Payments
   static const String payments = '/payments';
+  static const String paymentRefunds = '/payments/refunds';
+  static String paymentRefundsById(String id) => '/payments/$id/refunds';
+  static String paymentRefund(String id) => '/payments/$id/refund';
   static const String cashSessions = '/cash-sessions';
   static const String cashEvents = '/cash-events';
   static const String expenses = '/expenses';
+  static String expenseById(String id) => '/expenses/$id';
   static const String giftCards = '/gift-cards';
   static String giftCardBalance(String code) => '/gift-cards/$code/balance';
   static String giftCardRedeem(String code) => '/gift-cards/$code/redeem';
+  static String giftCardDeactivate(String code) => '/gift-cards/$code/deactivate';
   static String cashSessionClose(String id) => '/cash-sessions/$id/close';
   static const String financeDailySummary = '/finance/daily-summary';
   static const String financeReconciliation = '/finance/reconciliation';
@@ -99,9 +104,11 @@ class ApiEndpoints {
   static const String inventoryTurnover = '/reports/inventory/turnover';
   static const String inventoryShrinkage = '/reports/inventory/shrinkage';
   static const String inventoryLowStock = '/reports/inventory/low-stock';
+  static const String inventoryExpiry = '/reports/inventory/expiry';
   static const String financialDailyPl = '/reports/financial/daily-pl';
   static const String financialExpenses = '/reports/financial/expenses';
   static const String financialCashVariance = '/reports/financial/cash-variance';
+  static const String financialDeliveryCommission = '/reports/financial/delivery-commission';
   static const String topCustomers = '/reports/customers/top';
   static const String customerRetention = '/reports/customers/retention';
   static const String reportExport = '/reports/export';
@@ -559,6 +566,7 @@ class ApiEndpoints {
   static String syncResolveConflict(String id) => '/sync/resolve-conflict/$id';
   static const String syncConflicts = '/sync/conflicts';
   static const String syncHeartbeat = '/sync/heartbeat';
+  static const String syncLogs = '/sync/logs';
 
   // ─── POS Feature #22: Hardware Support ───────────────────
   static const String hardwareConfig = '/hardware/config';
@@ -571,6 +579,7 @@ class ApiEndpoints {
   // ─── POS Feature #24: Security Provider ──────────────────
   static const String securityPolicy = '/security/policy';
   static const String securityAuditLogs = '/security/audit-logs';
+  static const String securityAuditLogsExport = '/security/audit-logs/export';
   static const String securityAuditStats = '/security/audit-stats';
   static const String securityOverviewEndpoint = '/security/overview';
   static const String securityDevices = '/security/devices';
@@ -708,6 +717,7 @@ class ApiEndpoints {
   static String pharmacyPrescription(String id) => '/industry/pharmacy/prescriptions/$id';
   static const String pharmacyDrugSchedules = '/industry/pharmacy/drug-schedules';
   static String pharmacyDrugSchedule(String id) => '/industry/pharmacy/drug-schedules/$id';
+  static const String pharmacyExpiryAlerts = '/industry/pharmacy/expiry-alerts';
 
   // Jewelry
   static const String jewelryMetalRates = '/industry/jewelry/metal-rates';
@@ -718,6 +728,7 @@ class ApiEndpoints {
   // Electronics
   static const String electronicsImeiRecords = '/industry/electronics/imei-records';
   static String electronicsImeiRecord(String id) => '/industry/electronics/imei-records/$id';
+  static const String electronicsImeiValidate = '/industry/electronics/imei/validate';
   static const String electronicsRepairJobs = '/industry/electronics/repair-jobs';
   static String electronicsRepairJob(String id) => '/industry/electronics/repair-jobs/$id';
   static String electronicsRepairJobStatus(String id) => '/industry/electronics/repair-jobs/$id/status';

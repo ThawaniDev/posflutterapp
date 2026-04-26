@@ -9,6 +9,8 @@ import 'package:wameedpos/features/industry_florist/widgets/flower_subscription_
 import 'package:wameedpos/features/industry_florist/pages/arrangement_form_page.dart';
 import 'package:wameedpos/features/industry_florist/pages/freshness_log_form_page.dart';
 import 'package:wameedpos/features/industry_florist/pages/subscription_form_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FloristDashboardPage extends ConsumerStatefulWidget {
@@ -45,7 +47,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
     final isLoading = state is FloristInitial || state is FloristLoading;
     final hasError = state is FloristError;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.floristTitle,
       showSearch: false,
       isLoading: isLoading,
@@ -131,6 +133,10 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.flowersView,
+      child: content,
     );
   }
 }

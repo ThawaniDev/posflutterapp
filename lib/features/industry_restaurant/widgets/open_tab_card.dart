@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/features/industry_restaurant/models/open_tab.dart';
+import 'package:wameedpos/features/industry_restaurant/widgets/split_bill_dialog.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
-class OpenTabCard extends StatelessWidget {
+class OpenTabCard extends ConsumerWidget {
 
   const OpenTabCard({super.key, required this.tab, this.onTap, this.onClose});
   final OpenTab tab;
@@ -14,10 +18,11 @@ class OpenTabCard extends StatelessWidget {
   final VoidCallback? onClose;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final isOpen = tab.closedAt == null;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final canSplitBill = ref.watch(userPermissionsProvider).hasPermission(Permissions.restaurantSplitBill);
 
     return PosCard(
       elevation: 0,
@@ -70,8 +75,15 @@ class OpenTabCard extends StatelessWidget {
                     label: isOpen ? 'Open' : 'Closed',
                     variant: isOpen ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.neutral,
                   ),
-                  if (isOpen && onClose != null) ...[
+                  if (isOpen && onClose != null) ...[                    
+                    if (canSplitBill) ...[
                     AppSpacing.gapH4,
+                    GestureDetector(
+                      onTap: () => showSplitBillDialog(context),
+                      child: Text(l10n.restaurantSplitBill, style: AppTypography.labelSmall.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    ),
+                    AppSpacing.gapH4,
+                    ],
                     GestureDetector(
                       onTap: onClose,
                       child: Text(l10n.restaurantCloseTab, style: AppTypography.labelSmall.copyWith(color: AppColors.error)),

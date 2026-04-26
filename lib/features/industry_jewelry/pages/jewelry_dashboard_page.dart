@@ -6,9 +6,12 @@ import 'package:wameedpos/features/industry_jewelry/providers/jewelry_state.dart
 import 'package:wameedpos/features/industry_jewelry/widgets/metal_rate_card.dart';
 import 'package:wameedpos/features/industry_jewelry/widgets/jewelry_detail_card.dart';
 import 'package:wameedpos/features/industry_jewelry/widgets/buyback_card.dart';
+import 'package:wameedpos/features/industry_jewelry/widgets/jewelry_price_calculator.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/metal_rate_form_page.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/product_detail_form_page.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/buyback_form_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class JewelryDashboardPage extends ConsumerStatefulWidget {
@@ -45,14 +48,18 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
     final isLoading = state is JewelryInitial || state is JewelryLoading;
     final hasError = state is JewelryError;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.jewelryTitle,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
       errorMessage: hasError ? state.message : null,
       onRetry: () => ref.read(jewelryProvider.notifier).load(),
-      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
+      actions: [
+        PosButton(label: l10n.jewelryPriceCalculator, icon: Icons.calculate_outlined, onPressed: () => showJewelryPriceCalculator(context)),
+        const SizedBox(width: 8),
+        PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed),
+      ],
       child: Column(
         children: [
           PosTabs(
@@ -128,6 +135,10 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.jewelryView,
+      child: content,
     );
   }
 }

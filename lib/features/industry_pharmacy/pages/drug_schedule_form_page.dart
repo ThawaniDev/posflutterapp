@@ -88,9 +88,9 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit Drug Schedule' : 'New Drug Schedule',
+      title: _isEditing ? l10n.pharmacyEditDrugSchedule : l10n.pharmacyNewDrugSchedule,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Schedule' : 'Create Schedule',
+          label: _isEditing ? l10n.pharmacyUpdateSchedule : l10n.pharmacyCreateSchedule,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

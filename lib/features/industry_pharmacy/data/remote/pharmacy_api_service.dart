@@ -61,4 +61,17 @@ class PharmacyApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return DrugSchedule.fromJson(apiResponse.data as Map<String, dynamic>);
   }
+
+  Future<({List<Map<String, dynamic>> alerts, int days})> getExpiryAlerts({int days = 90}) async {
+    final response = await _dio.get(
+      ApiEndpoints.pharmacyExpiryAlerts,
+      queryParameters: {'days': days},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data as Map<String, dynamic>);
+    final payload = apiResponse.data ?? {};
+    final alertsList = (payload['data'] as List? ?? [])
+        .cast<Map<String, dynamic>>();
+    final returnedDays = (payload['days'] as num?)?.toInt() ?? days;
+    return (alerts: alertsList, days: returnedDays);
+  }
 }

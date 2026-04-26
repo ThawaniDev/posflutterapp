@@ -20,4 +20,6 @@ class LabelRepository {
   Future<void> deleteTemplate(String id) => _apiService.deleteTemplate(id);
   Future<List<LabelPrintHistory>> getPrintHistory() => _apiService.getPrintHistory();
   Future<void> recordPrint(Map<String, dynamic> data) => _apiService.recordPrint(data);
+  Future<LabelTemplate> duplicateTemplate(String id) => _apiService.duplicateTemplate(id);
+  Future<LabelTemplate> setDefaultTemplate(String id) => _apiService.setDefaultTemplate(id);
 }

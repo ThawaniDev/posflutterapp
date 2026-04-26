@@ -18,7 +18,7 @@ class AuditLogListWidget extends StatelessWidget {
 
     return ListView.separated(
       itemCount: logs.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
+      separatorBuilder: (_, i) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final log = logs[index];
         return _AuditLogTile(log: log);
@@ -34,7 +34,6 @@ class _AuditLogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final severityColor = switch (log.severity?.value) {
       'critical' => AppColors.error,

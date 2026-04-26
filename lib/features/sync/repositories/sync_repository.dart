@@ -26,6 +26,20 @@ class SyncRepository {
 
   Future<Map<String, dynamic>> heartbeat({String? terminalId, List<Map<String, dynamic>>? changes}) =>
       _api.heartbeat(terminalId: terminalId, changes: changes);
+
+  Future<Map<String, dynamic>> listLogs({
+    String? direction,
+    String? status,
+    String? terminalId,
+    int page = 1,
+    int perPage = 25,
+  }) => _api.listLogs(
+        direction: direction,
+        status: status,
+        terminalId: terminalId,
+        page: page,
+        perPage: perPage,
+      );
 }
 
 final syncRepositoryProvider = Provider<SyncRepository>((ref) {

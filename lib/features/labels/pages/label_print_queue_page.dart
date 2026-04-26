@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/services/label_printer_service.dart';
@@ -57,7 +59,9 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
     final state = ref.watch(labelTemplatesProvider);
     final templates = state is LabelTemplatesLoaded ? state.templates : <LabelTemplate>[];
 
-    return PosListPage(
+    return PermissionGuardPage(
+      permission: Permissions.labelsPrint,
+      child: PosListPage(
       title: l10n.labelPrintQueue,
       showSearch: false,
       onBack: () => context.pop(),
@@ -74,7 +78,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
       child: context.isPhone
           ? _buildMobileBody(context, l10n, isDark, templates)
           : _buildDesktopBody(context, l10n, isDark, templates),
-    );
+    ));
   }
 
   Widget _buildMobileBody(BuildContext context, AppLocalizations l10n, bool isDark, List<LabelTemplate> templates) {
@@ -189,7 +193,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                           )
                         : ListView.separated(
                             itemCount: _queueItems.length,
-                            separatorBuilder: (_, __) => const Divider(height: 1),
+                            separatorBuilder: (_, _) => const Divider(height: 1),
                             itemBuilder: (context, index) {
                               final item = _queueItems[index];
                               return ListTile(
@@ -482,7 +486,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                 )
                               : ListView.separated(
                                   itemCount: _queueItems.length,
-                                  separatorBuilder: (_, __) => const Divider(height: 1),
+                                  separatorBuilder: (_, _) => const Divider(height: 1),
                                   itemBuilder: (context, index) {
                                     final item = _queueItems[index];
                                     return ListTile(

@@ -88,9 +88,9 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit Recipe' : 'New Recipe',
+      title: _isEditing ? l10n.bakeryEditRecipe : l10n.bakeryNewRecipe,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Recipe' : 'Create Recipe',
+          label: _isEditing ? l10n.bakeryUpdateRecipe : l10n.bakeryCreateRecipe,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

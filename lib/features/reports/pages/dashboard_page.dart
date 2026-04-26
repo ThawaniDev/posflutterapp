@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
@@ -23,22 +26,31 @@ class DashboardPage extends ConsumerStatefulWidget {
 class _DashboardPageState extends ConsumerState<DashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
+  Timer? _refreshTimer;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dashboardProvider.notifier).load(filters: _filters);
+      _loadData();
+      _refreshTimer = Timer.periodic(const Duration(seconds: 60), (_) => _loadData());
     });
   }
 
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
+  }
+
   void _loadData() {
-    ref.read(dashboardProvider.notifier).load(filters: _filters);
+    ref.read(dashboardProvider.notifier).load();
+    ref.read(hourlySalesProvider.notifier).load(filters: _filters);
   }
 
   void _onFiltersChanged(ReportFilters filters) {
     setState(() => _filters = filters);
-    _loadData();
+    ref.read(hourlySalesProvider.notifier).load(filters: _filters);
   }
 
   @override
@@ -46,37 +58,39 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final state = ref.watch(dashboardProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return PosListPage(
-      title: l10n.featureInfoReportsTitle,
-      showSearch: false,
-      actions: [
-        PosButton.icon(
-          icon: Icons.info_outline,
-          tooltip: l10n.featureInfoTooltip,
-          onPressed: () => showReportsDashboardInfo(context),
-          variant: PosButtonVariant.ghost,
-        ),
-        PosButton.icon(
-          icon: Icons.refresh_rounded,
-          tooltip: l10n.commonRefresh,
-          onPressed: _loadData,
-          variant: PosButtonVariant.ghost,
-        ),
-      ],
-      child: Column(
-        children: [
-          ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
-          Expanded(
-            child: switch (state) {
-              DashboardInitial() || DashboardLoading() => PosLoadingSkeleton.list(),
-              DashboardError(:final message) => PosErrorState(message: message, onRetry: _loadData),
-              DashboardLoaded(:final today, :final yesterday, :final topProducts) => RefreshIndicator(
-                onRefresh: () => ref.read(dashboardProvider.notifier).load(filters: _filters),
-                child: ListView(
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    _ReportNavGrid(isDark: isDark),
-                    const SizedBox(height: 28),
+    return PermissionGuardPage(
+      permission: Permissions.reportsView,
+      child: PosListPage(
+        title: l10n.featureInfoReportsTitle,
+        showSearch: false,
+        actions: [
+          PosButton.icon(
+            icon: Icons.info_outline,
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showReportsDashboardInfo(context),
+            variant: PosButtonVariant.ghost,
+          ),
+          PosButton.icon(
+            icon: Icons.refresh_rounded,
+            tooltip: l10n.commonRefresh,
+            onPressed: _loadData,
+            variant: PosButtonVariant.ghost,
+          ),
+        ],
+        child: Column(
+          children: [
+            ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
+            Expanded(
+              child: switch (state) {
+                DashboardInitial() || DashboardLoading() => PosLoadingSkeleton.list(),
+                DashboardError(:final message) => PosErrorState(message: message, onRetry: _loadData),
+                DashboardLoaded(:final today, :final yesterday, :final topProducts) => RefreshIndicator(
+                  onRefresh: () async => _loadData(),
+                  child: ListView(
+                    padding: const EdgeInsets.all(20),
+                    children: [
+                      _ReportNavGrid(isDark: isDark),
+                      const SizedBox(height: 28),
 
                     ReportSectionHeader(title: l10n.reportsTodaysOverview, icon: Icons.today_rounded),
                     ReportKpiGrid(
@@ -131,6 +145,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     ),
 
                     const SizedBox(height: 28),
+
+                    // Hourly Sales Mini Chart
+                    _HourlySalesMiniChart(),
 
                     ReportSectionHeader(title: l10n.reportsVsYesterday, icon: Icons.compare_arrows_rounded),
                     ReportDataCard(
@@ -199,7 +216,37 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           ),
         ],
       ),
+      ),
     );
+  }
+}
+
+class _HourlySalesMiniChart extends ConsumerWidget {
+  const _HourlySalesMiniChart();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(hourlySalesProvider);
+    if (state case HourlySalesLoaded(:final hours) when hours.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ReportSectionHeader(title: l10n.sidebarHourlySales, icon: Icons.schedule_rounded),
+          ReportDataCard(
+            child: ReportBarChart(
+              data: hours,
+              labelKey: 'hour_label',
+              valueKey: 'revenue',
+              barColor: AppColors.info,
+              height: 160,
+            ),
+          ),
+          const SizedBox(height: 28),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
   }
 }
 
@@ -220,6 +267,7 @@ class _ReportNavGrid extends StatelessWidget {
       _NavItem(l10n.reportNavInventory, Icons.warehouse_rounded, const Color(0xFF6366F1), Routes.reportsInventory),
       _NavItem(l10n.reportNavFinancial, Icons.account_balance_rounded, AppColors.error, Routes.reportsFinancial),
       _NavItem(l10n.reportNavCustomers, Icons.group_rounded, const Color(0xFFEC4899), Routes.reportsCustomers),
+      _NavItem(l10n.reportsScheduledTitle, Icons.calendar_today_rounded, AppColors.primary, Routes.reportsScheduled),
     ];
 
     return GridView.count(

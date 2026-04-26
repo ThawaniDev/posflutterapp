@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/payments/enums/expense_category.dart';
 
 class Expense {
-
   const Expense({
     required this.id,
     required this.storeId,
@@ -13,6 +12,7 @@ class Expense {
     required this.recordedBy,
     required this.expenseDate,
     this.createdAt,
+    this.updatedAt,
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) {
@@ -27,8 +27,10 @@ class Expense {
       recordedBy: json['recorded_by'] as String,
       expenseDate: DateTime.parse(json['expense_date'] as String),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
+
   final String id;
   final String storeId;
   final String? cashSessionId;
@@ -39,6 +41,7 @@ class Expense {
   final String recordedBy;
   final DateTime expenseDate;
   final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -50,8 +53,9 @@ class Expense {
       'description': description,
       'receipt_image_url': receiptImageUrl,
       'recorded_by': recordedBy,
-      'expense_date': expenseDate.toIso8601String(),
+      'expense_date': expenseDate.toIso8601String().substring(0, 10),
       'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
     };
   }
 
@@ -66,6 +70,7 @@ class Expense {
     String? recordedBy,
     DateTime? expenseDate,
     DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return Expense(
       id: id ?? this.id,
@@ -78,6 +83,7 @@ class Expense {
       recordedBy: recordedBy ?? this.recordedBy,
       expenseDate: expenseDate ?? this.expenseDate,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -89,5 +95,5 @@ class Expense {
 
   @override
   String toString() =>
-      'Expense(id: $id, storeId: $storeId, cashSessionId: $cashSessionId, amount: $amount, category: $category, description: $description, ...)';
+      'Expense(id: $id, amount: $amount, category: $category, expenseDate: $expenseDate)';
 }

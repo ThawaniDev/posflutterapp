@@ -7,6 +7,9 @@ import 'package:wameedpos/features/industry_pharmacy/widgets/prescription_card.d
 import 'package:wameedpos/features/industry_pharmacy/widgets/drug_schedule_card.dart';
 import 'package:wameedpos/features/industry_pharmacy/pages/prescription_form_page.dart';
 import 'package:wameedpos/features/industry_pharmacy/pages/drug_schedule_form_page.dart';
+import 'package:wameedpos/features/industry_pharmacy/pages/expiry_alerts_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PharmacyDashboardPage extends ConsumerStatefulWidget {
@@ -42,14 +45,20 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
     final isLoading = state is PharmacyInitial || state is PharmacyLoading;
     final hasError = state is PharmacyError;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.pharmacyTitle,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
       errorMessage: hasError ? state.message : null,
       onRetry: () => ref.read(pharmacyProvider.notifier).load(),
-      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
+      actions: [
+        PosButton(label: l10n.pharmacyExpiryAlerts, icon: Icons.warning_amber_rounded, onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PharmacyExpiryAlertsPage()));
+        }),
+        const SizedBox(width: 8),
+        PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed),
+      ],
       child: Column(
         children: [
           PosTabs(
@@ -111,6 +120,10 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.pharmacyView,
+      child: content,
     );
   }
 }

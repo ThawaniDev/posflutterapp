@@ -1,3 +1,5 @@
+import 'package:wameedpos/features/payments/models/cash_event.dart';
+import 'package:wameedpos/features/payments/models/expense.dart';
 import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class CashSession {
@@ -16,6 +18,8 @@ class CashSession {
     this.openedAt,
     this.closedAt,
     this.closeNotes,
+    this.cashEvents,
+    this.expenses,
   });
 
   factory CashSession.fromJson(Map<String, dynamic> json) {
@@ -33,6 +37,12 @@ class CashSession {
       openedAt: json['opened_at'] != null ? DateTime.parse(json['opened_at'] as String) : null,
       closedAt: json['closed_at'] != null ? DateTime.parse(json['closed_at'] as String) : null,
       closeNotes: json['close_notes'] as String?,
+      cashEvents: (json['cash_events'] as List<dynamic>?)
+          ?.map((e) => CashEvent.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      expenses: (json['expenses'] as List<dynamic>?)
+          ?.map((e) => Expense.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
   final String id;
@@ -48,6 +58,8 @@ class CashSession {
   final DateTime? openedAt;
   final DateTime? closedAt;
   final String? closeNotes;
+  final List<CashEvent>? cashEvents;
+  final List<Expense>? expenses;
 
   Map<String, dynamic> toJson() {
     return {
@@ -81,6 +93,8 @@ class CashSession {
     DateTime? openedAt,
     DateTime? closedAt,
     String? closeNotes,
+    List<CashEvent>? cashEvents,
+    List<Expense>? expenses,
   }) {
     return CashSession(
       id: id ?? this.id,
@@ -96,6 +110,8 @@ class CashSession {
       openedAt: openedAt ?? this.openedAt,
       closedAt: closedAt ?? this.closedAt,
       closeNotes: closeNotes ?? this.closeNotes,
+      cashEvents: cashEvents ?? this.cashEvents,
+      expenses: expenses ?? this.expenses,
     );
   }
 

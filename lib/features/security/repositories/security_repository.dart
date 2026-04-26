@@ -32,6 +32,13 @@ class SecurityRepository {
 
   Future<Map<String, dynamic>> getAuditStats({required String storeId}) => _api.getAuditStats(storeId: storeId);
 
+  Future<String> exportAuditLogs({
+    required String storeId,
+    String? action,
+    String? severity,
+    String? since,
+  }) => _api.exportAuditLogs(storeId: storeId, action: action, severity: severity, since: since);
+
   // Devices
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) =>
       _api.listDevices(storeId: storeId, activeOnly: activeOnly);
@@ -78,7 +85,8 @@ class SecurityRepository {
 
   Future<Map<String, dynamic>> sessionHeartbeat({required String sessionId}) => _api.sessionHeartbeat(sessionId: sessionId);
 
-  Future<Map<String, dynamic>> endAllSessions({required String storeId}) => _api.endAllSessions(storeId: storeId);
+  Future<Map<String, dynamic>> endAllSessions({required String storeId, String? userId}) =>
+      _api.endAllSessions(storeId: storeId, userId: userId);
 
   // Incidents
   Future<Map<String, dynamic>> listIncidents({required String storeId, String? severity, bool? isResolved}) =>

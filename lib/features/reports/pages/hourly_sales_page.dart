@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
@@ -48,26 +50,28 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
     final state = ref.watch(hourlySalesProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return ReportPageScaffold(
-      title: l10n.sidebarHourlySales,
-      filterPanel: ReportFilterPanel(
-        filters: _filters,
-        onFiltersChanged: _onFiltersChanged,
-        onRefresh: _loadData,
-        showStaffFilter: true,
-        showPaymentMethodFilter: true,
-        showOrderStatus: true,
-      ),
-      body: switch (state) {
-        HourlySalesInitial() || HourlySalesLoading() => PosLoadingSkeleton.list(),
-        HourlySalesError(:final message) => PosErrorState(message: message, onRetry: _loadData),
-        HourlySalesLoaded(:final hours) =>
-          hours.isEmpty
-              ? Center(
-                  child: PosEmptyState(title: l10n.reportsNoHourlyData, icon: Icons.schedule),
-                )
-              : ListView(
-                  padding: const EdgeInsets.all(20),
+    return PermissionGuardPage(
+      permission: Permissions.reportsSales,
+      child: ReportPageScaffold(
+        title: l10n.sidebarHourlySales,
+        filterPanel: ReportFilterPanel(
+          filters: _filters,
+          onFiltersChanged: _onFiltersChanged,
+          onRefresh: _loadData,
+          showStaffFilter: true,
+          showPaymentMethodFilter: true,
+          showOrderStatus: true,
+        ),
+        body: switch (state) {
+          HourlySalesInitial() || HourlySalesLoading() => PosLoadingSkeleton.list(),
+          HourlySalesError(:final message) => PosErrorState(message: message, onRetry: _loadData),
+          HourlySalesLoaded(:final hours) =>
+            hours.isEmpty
+                ? Center(
+                    child: PosEmptyState(title: l10n.reportsNoHourlyData, icon: Icons.schedule),
+                  )
+                : ListView(
+                    padding: const EdgeInsets.all(20),
                   children: [
                     // Peak hour highlight + KPIs
                     if (hours.isNotEmpty) ...[
@@ -185,6 +189,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                   ],
                 ),
       },
+      ),
     );
   }
 }

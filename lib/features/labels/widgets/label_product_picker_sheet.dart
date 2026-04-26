@@ -132,7 +132,7 @@ class _LabelProductPickerSheetState extends ConsumerState<_LabelProductPickerShe
                   : ListView.separated(
                       controller: scrollController,
                       itemCount: _results.length,
-                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      separatorBuilder: (_, _) => const Divider(height: 1),
                       itemBuilder: (_, i) {
                         final p = _results[i];
                         final sel = _selected[p.id];

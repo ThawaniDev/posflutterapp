@@ -19,7 +19,7 @@ class InitialSyncScreen extends ConsumerStatefulWidget {
 class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   _SyncPhase _phase = _SyncPhase.connecting;
-  String _statusMessage = 'Connecting to server...';
+  String _statusMessage = '';
   double _progress = 0;
   String? _error;
 
@@ -29,12 +29,22 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
     _startInitialSync();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_statusMessage.isEmpty && _error == null) {
+      setState(() {
+        _statusMessage = l10n.syncConnecting;
+      });
+    }
+  }
+
   Future<void> _startInitialSync() async {
     final engine = ref.read(syncEngineProvider);
 
     setState(() {
       _phase = _SyncPhase.connecting;
-      _statusMessage = 'Checking connectivity...';
+      _statusMessage = l10n.syncCheckingConnectivity;
       _progress = 0.1;
     });
 
@@ -45,14 +55,14 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
     if (status != ConnectivityStatus.online) {
       setState(() {
         _phase = _SyncPhase.error;
-        _error = 'No internet connection. Please connect and try again.';
+        _error = l10n.syncNoInternet;
       });
       return;
     }
 
     setState(() {
       _phase = _SyncPhase.syncing;
-      _statusMessage = 'Downloading data...';
+      _statusMessage = l10n.syncDownloadingData;
       _progress = 0.3;
     });
 
@@ -60,7 +70,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
       await engine.start();
 
       setState(() {
-        _statusMessage = 'Performing full sync...';
+        _statusMessage = l10n.syncPerformingFullSync;
         _progress = 0.5;
       });
 
@@ -75,7 +85,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
       }
 
       setState(() {
-        _statusMessage = 'Sync complete — ${result.pulled} records loaded';
+        _statusMessage = l10n.syncCompleteRecords(result.pulled);
         _progress = 1.0;
         _phase = _SyncPhase.complete;
       });
@@ -128,10 +138,10 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
 
                   Text(
                     _phase == _SyncPhase.error
-                        ? 'Sync Failed'
+                        ? l10n.syncFailed
                         : _phase == _SyncPhase.complete
-                        ? 'Ready!'
-                        : 'Setting Up',
+                        ? l10n.syncReady
+                        : l10n.syncSettingUp,
                     style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   AppSpacing.gapH8,

@@ -17,7 +17,7 @@ class FlowerArrangement {
       storeId: json['store_id'] as String,
       name: json['name'] as String,
       occasion: json['occasion'] as String?,
-      itemsJson: Map<String, dynamic>.from(json['items_json'] as Map),
+      itemsJson: (json['items_json'] as Map<String, dynamic>?) ?? {},
       totalPrice: double.tryParse(json['total_price'].toString()) ?? 0.0,
       isTemplate: json['is_template'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

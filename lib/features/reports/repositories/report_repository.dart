@@ -50,6 +50,9 @@ class ReportRepository {
   Future<List<Map<String, dynamic>>> getInventoryLowStock({ReportFilters filters = const ReportFilters()}) =>
       _api.getInventoryLowStock(filters: filters);
 
+  Future<Map<String, dynamic>> getInventoryExpiry({ReportFilters filters = const ReportFilters()}) =>
+      _api.getInventoryExpiry(filters: filters);
+
   Future<Map<String, dynamic>> getFinancialDailyPl({ReportFilters filters = const ReportFilters()}) =>
       _api.getFinancialDailyPl(filters: filters);
 
@@ -58,6 +61,9 @@ class ReportRepository {
 
   Future<Map<String, dynamic>> getFinancialCashVariance({ReportFilters filters = const ReportFilters()}) =>
       _api.getFinancialCashVariance(filters: filters);
+
+  Future<Map<String, dynamic>> getFinancialDeliveryCommission({ReportFilters filters = const ReportFilters()}) =>
+      _api.getFinancialDeliveryCommission(filters: filters);
 
   Future<List<Map<String, dynamic>>> getTopCustomers({ReportFilters filters = const ReportFilters()}) =>
       _api.getTopCustomers(filters: filters);

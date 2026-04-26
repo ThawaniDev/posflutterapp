@@ -12,7 +12,7 @@ void main() {
   // ═══════════════ Enums ═══════════════
   group('ProductionScheduleStatus', () {
     test('all values', () {
-      expect(ProductionScheduleStatus.values, hasLength(3));
+      expect(ProductionScheduleStatus.values, hasLength(5));
       expect(ProductionScheduleStatus.planned.value, 'planned');
       expect(ProductionScheduleStatus.inProgress.value, 'in_progress');
       expect(ProductionScheduleStatus.completed.value, 'completed');
@@ -27,7 +27,7 @@ void main() {
 
   group('CustomCakeOrderStatus', () {
     test('all values', () {
-      expect(CustomCakeOrderStatus.values, hasLength(4));
+      expect(CustomCakeOrderStatus.values, hasLength(6));
       expect(CustomCakeOrderStatus.ordered.value, 'ordered');
       expect(CustomCakeOrderStatus.inProduction.value, 'in_production');
       expect(CustomCakeOrderStatus.ready.value, 'ready');

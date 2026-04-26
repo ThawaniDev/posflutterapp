@@ -212,11 +212,14 @@ import 'package:wameedpos/features/zatca/pages/zatca_dashboard_page.dart';
 import 'package:wameedpos/features/zatca/pages/zatca_device_activation_page.dart';
 import 'package:wameedpos/features/zatca/pages/zatca_invoice_detail_page.dart';
 import 'package:wameedpos/features/zatca/pages/zatca_admin_overview_page.dart';
+import 'package:wameedpos/features/sync/pages/conflict_resolution_page.dart';
 import 'package:wameedpos/features/sync/pages/sync_dashboard_page.dart';
+import 'package:wameedpos/features/sync/pages/sync_logs_page.dart';
 import 'package:wameedpos/features/hardware/pages/hardware_dashboard_page.dart';
 import 'package:wameedpos/features/settings/pages/localization_page.dart';
 import 'package:wameedpos/features/security/pages/security_dashboard_page.dart';
-import 'package:wameedpos/features/backup/pages/backup_dashboard_page.dart';
+// ignore: unused_import — kept for when backup feature is re-enabled
+// import 'package:wameedpos/features/backup/pages/backup_dashboard_page.dart';
 import 'package:wameedpos/features/companion/pages/companion_dashboard_page.dart';
 import 'package:wameedpos/features/pos_customization/pages/customization_dashboard_page.dart';
 import 'package:wameedpos/features/layout_builder/pages/layout_template_list_page.dart';
@@ -245,6 +248,7 @@ import 'package:wameedpos/features/reports/pages/staff_performance_page.dart';
 import 'package:wameedpos/features/reports/pages/inventory_report_page.dart';
 import 'package:wameedpos/features/reports/pages/financial_report_page.dart';
 import 'package:wameedpos/features/reports/pages/customer_report_page.dart';
+import 'package:wameedpos/features/reports/pages/scheduled_reports_page.dart';
 // Accounting
 import 'package:wameedpos/features/accounting/pages/accounting_settings_page.dart';
 import 'package:wameedpos/features/accounting/pages/account_mapping_page.dart';
@@ -1099,6 +1103,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Sync ───
           GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
+          GoRoute(
+            path: Routes.syncConflicts,
+            name: 'syncConflicts',
+            builder: (context, state) => const ConflictResolutionPage(),
+          ),
+          GoRoute(
+            path: '/sync/logs',
+            name: 'syncLogs',
+            builder: (context, state) => const SyncLogsPage(),
+          ),
 
           // ─── Hardware ───
           GoRoute(
@@ -1117,12 +1131,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const SecurityDashboardPage(),
           ),
 
-          // ─── Backup & Recovery ───
-          GoRoute(
-            path: Routes.backupDashboard,
-            name: 'backupDashboard',
-            builder: (context, state) => const BackupDashboardPage(),
-          ),
+          // ─── Backup & Recovery (disabled — using service-provider cloud backup) ───
+          // GoRoute(
+          //   path: Routes.backupDashboard,
+          //   name: 'backupDashboard',
+          //   builder: (context, state) => const BackupDashboardPage(),
+          // ),
 
           // ─── Mobile Companion ───
           GoRoute(
@@ -1338,6 +1352,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.reportsCustomers,
             name: 'reportsCustomers',
             builder: (context, state) => const CustomerReportPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsScheduled,
+            name: 'reportsScheduled',
+            builder: (context, state) => const ScheduledReportsPage(),
           ),
 
           // ─── Branches ───

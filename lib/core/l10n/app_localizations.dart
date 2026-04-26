@@ -5058,6 +5058,66 @@ abstract class AppLocalizations {
   /// **'Prescriptions'**
   String get pharmacyPrescriptions;
 
+  /// No description provided for @pharmacyExpiryAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Alerts'**
+  String get pharmacyExpiryAlerts;
+
+  /// No description provided for @pharmacyExpiryAlertsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Alerts ({days} days)'**
+  String pharmacyExpiryAlertsTitle(int days);
+
+  /// No description provided for @pharmacyDaysFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get pharmacyDaysFilter;
+
+  /// No description provided for @pharmacyNoExpiryAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'No items expiring within the selected period'**
+  String get pharmacyNoExpiryAlerts;
+
+  /// No description provided for @pharmacySeverityExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get pharmacySeverityExpired;
+
+  /// No description provided for @pharmacySeverityCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get pharmacySeverityCritical;
+
+  /// No description provided for @pharmacySeverityWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get pharmacySeverityWarning;
+
+  /// No description provided for @pharmacyDaysUntilExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String pharmacyDaysUntilExpiry(int days);
+
+  /// No description provided for @pharmacyExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires: {date}'**
+  String pharmacyExpiryDate(String date);
+
+  /// No description provided for @pharmacyQtyAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty: {qty}'**
+  String pharmacyQtyAvailable(int qty);
+
   /// No description provided for @pharmacyNewPrescription.
   ///
   /// In en, this message translates to:
@@ -5183,6 +5243,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Complete Ticket'**
   String get restaurantCompleteTicket;
+
+  /// No description provided for @restaurantNewKitchenTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'New Kitchen Ticket'**
+  String get restaurantNewKitchenTicket;
+
+  /// No description provided for @restaurantCreateTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Ticket'**
+  String get restaurantCreateTicket;
+
+  /// No description provided for @restaurantStationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Station'**
+  String get restaurantStationLabel;
+
+  /// No description provided for @restaurantStationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Grill, Pastry'**
+  String get restaurantStationHint;
+
+  /// No description provided for @restaurantCourseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Number'**
+  String get restaurantCourseLabel;
+
+  /// No description provided for @restaurantFireAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire At (optional)'**
+  String get restaurantFireAt;
+
+  /// No description provided for @restaurantTicketItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get restaurantTicketItems;
+
+  /// No description provided for @restaurantItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get restaurantItemName;
+
+  /// No description provided for @restaurantItemNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Item name'**
+  String get restaurantItemNameHint;
+
+  /// No description provided for @restaurantItemQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get restaurantItemQty;
+
+  /// No description provided for @restaurantSplitBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Split Bill'**
+  String get restaurantSplitBill;
+
+  /// No description provided for @restaurantBillTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill Total (SAR)'**
+  String get restaurantBillTotal;
+
+  /// No description provided for @restaurantSplitEqual.
+  ///
+  /// In en, this message translates to:
+  /// **'Equal'**
+  String get restaurantSplitEqual;
+
+  /// No description provided for @restaurantSplitCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get restaurantSplitCustom;
+
+  /// No description provided for @restaurantNumberOfPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of People'**
+  String get restaurantNumberOfPeople;
+
+  /// No description provided for @restaurantPerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Per Person'**
+  String get restaurantPerPerson;
+
+  /// No description provided for @restaurantCustomAmounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Amounts'**
+  String get restaurantCustomAmounts;
+
+  /// No description provided for @restaurantPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get restaurantPerson;
+
+  /// No description provided for @restaurantSumEntered.
+  ///
+  /// In en, this message translates to:
+  /// **'Sum entered'**
+  String get restaurantSumEntered;
+
+  /// No description provided for @restaurantConfirmSplit.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Split'**
+  String get restaurantConfirmSplit;
 
   /// No description provided for @accountingTitle.
   ///
@@ -7419,6 +7599,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Duplicate'**
   String get labelDuplicate;
+
+  /// No description provided for @labelDuplicateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Template duplicated successfully'**
+  String get labelDuplicateSuccess;
+
+  /// No description provided for @labelSetAsDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Set as Default'**
+  String get labelSetAsDefault;
+
+  /// No description provided for @labelSetAsDefaultSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Template set as default successfully'**
+  String get labelSetAsDefaultSuccess;
 
   /// No description provided for @labelPreset.
   ///
@@ -11314,6 +11512,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get commonCancel;
 
+  /// No description provided for @commonClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get commonClear;
+
   /// No description provided for @commonCreate.
   ///
   /// In en, this message translates to:
@@ -11361,6 +11565,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No'**
   String get commonNo;
+
+  /// No description provided for @commonYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get commonYes;
 
   /// No description provided for @commonNotes.
   ///
@@ -12472,6 +12682,42 @@ abstract class AppLocalizations {
   /// **'Retries'**
   String get notifDeliveryLogsRetries;
 
+  /// No description provided for @notifDeliveryStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Statistics'**
+  String get notifDeliveryStatsTitle;
+
+  /// No description provided for @notifDeliveryStatsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sent'**
+  String get notifDeliveryStatsTotal;
+
+  /// No description provided for @notifDeliveryStatsDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get notifDeliveryStatsDelivered;
+
+  /// No description provided for @notifDeliveryStatsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get notifDeliveryStatsFailed;
+
+  /// No description provided for @notifDeliveryStatsRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Rate'**
+  String get notifDeliveryStatsRate;
+
+  /// No description provided for @notifDeliveryStatsAvgLatency.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Latency'**
+  String get notifDeliveryStatsAvgLatency;
+
   /// No description provided for @notifStatsTotal.
   ///
   /// In en, this message translates to:
@@ -13359,6 +13605,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allowed IP Ranges:'**
   String get securityAllowedIpRanges;
+
+  /// No description provided for @securityEditPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Policy'**
+  String get securityEditPolicy;
+
+  /// No description provided for @securitySavePolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Policy'**
+  String get securitySavePolicy;
+
+  /// No description provided for @securityCancelEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get securityCancelEdit;
+
+  /// No description provided for @securityFilterByAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Action'**
+  String get securityFilterByAction;
+
+  /// No description provided for @securityFilterBySeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Severity'**
+  String get securityFilterBySeverity;
+
+  /// No description provided for @securityFilterByType.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Type'**
+  String get securityFilterByType;
+
+  /// No description provided for @securityFilterByStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Status'**
+  String get securityFilterByStatus;
+
+  /// No description provided for @securityAllActions.
+  ///
+  /// In en, this message translates to:
+  /// **'All Actions'**
+  String get securityAllActions;
+
+  /// No description provided for @securityAllSeverities.
+  ///
+  /// In en, this message translates to:
+  /// **'All Severities'**
+  String get securityAllSeverities;
+
+  /// No description provided for @securityAllStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get securityAllStatuses;
+
+  /// No description provided for @securityAllTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get securityAllTypes;
+
+  /// No description provided for @securityPinOverrideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager Authorization Required'**
+  String get securityPinOverrideTitle;
+
+  /// No description provided for @securityManagerAuthorization.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a manager PIN to authorize this action.'**
+  String get securityManagerAuthorization;
+
+  /// No description provided for @securityEnterPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter PIN'**
+  String get securityEnterPin;
+
+  /// No description provided for @securityPinOverrideError.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorization failed. Please try again.'**
+  String get securityPinOverrideError;
+
+  /// No description provided for @securityPinOverrideInvalidPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid PIN. Please try again.'**
+  String get securityPinOverrideInvalidPin;
+
+  /// No description provided for @securityPinOverrideLockout.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please wait before trying again.'**
+  String get securityPinOverrideLockout;
+
+  /// No description provided for @securityPolicyUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Security policy updated successfully.'**
+  String get securityPolicyUpdated;
+
+  /// No description provided for @securityPolicyUpdateError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update security policy.'**
+  String get securityPolicyUpdateError;
+
+  /// No description provided for @securityIncidentStatusOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get securityIncidentStatusOpen;
+
+  /// No description provided for @securityIncidentStatusResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get securityIncidentStatusResolved;
+
+  /// No description provided for @securitySessionStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get securitySessionStatusActive;
+
+  /// No description provided for @securitySessionStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get securitySessionStatusExpired;
+
+  /// No description provided for @securitySessionStatusRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get securitySessionStatusRevoked;
+
+  /// No description provided for @securitySessionStatusClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get securitySessionStatusClosed;
+
+  /// No description provided for @securityLoginType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get securityLoginType;
+
+  /// No description provided for @securityLoginStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get securityLoginStatus;
+
+  /// No description provided for @securityLoginUser.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get securityLoginUser;
+
+  /// No description provided for @securityLoginIp.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Address'**
+  String get securityLoginIp;
+
+  /// No description provided for @securityLoginTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get securityLoginTime;
+
+  /// No description provided for @securityLoginUserAgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Device / User Agent'**
+  String get securityLoginUserAgent;
+
+  /// No description provided for @securityPinMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Min PIN Length'**
+  String get securityPinMinLength;
+
+  /// No description provided for @securityPinMaxLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Max PIN Length'**
+  String get securityPinMaxLength;
+
+  /// No description provided for @securityInSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'in seconds'**
+  String get securityInSeconds;
+
+  /// No description provided for @securityInMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'in minutes'**
+  String get securityInMinutes;
+
+  /// No description provided for @securityInHours.
+  ///
+  /// In en, this message translates to:
+  /// **'in hours'**
+  String get securityInHours;
+
+  /// No description provided for @securityInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'in days'**
+  String get securityInDays;
+
+  /// No description provided for @securityZeroMeansNeverExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'0 = never expires'**
+  String get securityZeroMeansNeverExpires;
+
+  /// No description provided for @securityAddIpRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Add IP Range'**
+  String get securityAddIpRange;
+
+  /// No description provided for @securityAddButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get securityAddButton;
 
   /// No description provided for @sessionsCloseSession.
   ///
@@ -24880,6 +25366,66 @@ abstract class AppLocalizations {
   /// **'Loyalty Points'**
   String get reportsLoyaltyPoints;
 
+  /// No description provided for @reportsLoyaltyBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Balance'**
+  String get reportsLoyaltyBalance;
+
+  /// No description provided for @reportsLoyaltyRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Points Redeemed'**
+  String get reportsLoyaltyRedeemed;
+
+  /// No description provided for @customerReportsNewVsReturning.
+  ///
+  /// In en, this message translates to:
+  /// **'New vs Returning'**
+  String get customerReportsNewVsReturning;
+
+  /// No description provided for @customerReportsLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty'**
+  String get customerReportsLoyalty;
+
+  /// No description provided for @reportsReturning30d.
+  ///
+  /// In en, this message translates to:
+  /// **'Returning (30d)'**
+  String get reportsReturning30d;
+
+  /// No description provided for @reportsOrderSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Source'**
+  String get reportsOrderSource;
+
+  /// No description provided for @reportsOrderSourcePos.
+  ///
+  /// In en, this message translates to:
+  /// **'POS'**
+  String get reportsOrderSourcePos;
+
+  /// No description provided for @reportsOrderSourceDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get reportsOrderSourceDelivery;
+
+  /// No description provided for @reportsOrderSourceOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get reportsOrderSourceOnline;
+
+  /// No description provided for @reportsOrderSourcePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get reportsOrderSourcePhone;
+
   /// No description provided for @reportsAverages.
   ///
   /// In en, this message translates to:
@@ -26631,6 +27177,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'IMEI'**
   String get electronicsImei;
+
+  /// No description provided for @electronicsInvalidImei.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid IMEI (must be 15 digits, Luhn check failed)'**
+  String get electronicsInvalidImei;
+
+  /// No description provided for @electronicsCheckImeiServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Duplicate'**
+  String get electronicsCheckImeiServer;
+
+  /// No description provided for @electronicsImeiDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'IMEI already registered'**
+  String get electronicsImeiDuplicate;
+
+  /// No description provided for @electronicsImeiUnique.
+  ///
+  /// In en, this message translates to:
+  /// **'IMEI is unique'**
+  String get electronicsImeiUnique;
 
   /// No description provided for @electronicsImeiHint.
   ///
@@ -29836,17 +30406,671 @@ abstract class AppLocalizations {
   /// **'Auto-Backup Settings'**
   String get backupAutoSettings;
 
+  /// No description provided for @backupEnableAutoBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Auto-Backup'**
+  String get backupEnableAutoBackup;
+
+  /// No description provided for @backupEnableAutoBackupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically create backups on a scheduled interval.'**
+  String get backupEnableAutoBackupHint;
+
   /// No description provided for @backupNoLoaded.
   ///
   /// In en, this message translates to:
   /// **'No backups loaded'**
   String get backupNoLoaded;
 
+  /// No description provided for @backupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Now'**
+  String get backupNow;
+
+  /// No description provided for @backupNowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Manual Backup'**
+  String get backupNowTitle;
+
+  /// No description provided for @backupNowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This will create a full backup of your store data.'**
+  String get backupNowHint;
+
+  /// No description provided for @backupTerminalId.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal ID'**
+  String get backupTerminalId;
+
+  /// No description provided for @backupEncryptThisBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt this backup'**
+  String get backupEncryptThisBackup;
+
+  /// No description provided for @backupTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Type'**
+  String get backupTypeLabel;
+
+  /// No description provided for @backupTypeAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get backupTypeAuto;
+
+  /// No description provided for @backupTypeManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get backupTypeManual;
+
+  /// No description provided for @backupTypePreUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-Update'**
+  String get backupTypePreUpdate;
+
+  /// No description provided for @backupStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get backupStatusCompleted;
+
+  /// No description provided for @backupStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get backupStatusFailed;
+
+  /// No description provided for @backupStatusCorrupted.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrupted'**
+  String get backupStatusCorrupted;
+
+  /// No description provided for @backupStatusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get backupStatusInProgress;
+
+  /// No description provided for @backupStorageLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get backupStorageLocal;
+
+  /// No description provided for @backupStorageCloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud'**
+  String get backupStorageCloud;
+
+  /// No description provided for @backupStorageBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Local & Cloud'**
+  String get backupStorageBoth;
+
+  /// No description provided for @backupFrequencyHourly.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly'**
+  String get backupFrequencyHourly;
+
+  /// No description provided for @backupFrequencyDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get backupFrequencyDaily;
+
+  /// No description provided for @backupFrequencyWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get backupFrequencyWeekly;
+
+  /// No description provided for @backupColType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get backupColType;
+
+  /// No description provided for @backupColDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get backupColDate;
+
+  /// No description provided for @backupColSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get backupColSize;
+
+  /// No description provided for @backupColLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get backupColLocation;
+
+  /// No description provided for @backupColStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get backupColStatus;
+
+  /// No description provided for @backupColVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get backupColVerified;
+
+  /// No description provided for @backupFilterType.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by type'**
+  String get backupFilterType;
+
+  /// No description provided for @backupFilterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by status'**
+  String get backupFilterStatus;
+
+  /// No description provided for @backupFilterAllTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get backupFilterAllTypes;
+
+  /// No description provided for @backupFilterAllStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get backupFilterAllStatuses;
+
+  /// No description provided for @backupVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get backupVerified;
+
+  /// No description provided for @backupNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Verified'**
+  String get backupNotVerified;
+
+  /// No description provided for @backupEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt Backups'**
+  String get backupEncrypt;
+
+  /// No description provided for @backupLocalEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Backup Enabled'**
+  String get backupLocalEnabled;
+
+  /// No description provided for @backupCloudEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Backup Enabled'**
+  String get backupCloudEnabled;
+
+  /// No description provided for @backupRetentionDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Retention Period (days)'**
+  String get backupRetentionDays;
+
+  /// No description provided for @backupBackupHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Hour (0–23)'**
+  String get backupBackupHour;
+
+  /// No description provided for @backupNextScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Scheduled'**
+  String get backupNextScheduled;
+
+  /// No description provided for @backupLastBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Backup'**
+  String get backupLastBackup;
+
+  /// No description provided for @backupLastAutoBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Auto Backup'**
+  String get backupLastAutoBackup;
+
+  /// No description provided for @backupTotalBackups.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Backups'**
+  String get backupTotalBackups;
+
+  /// No description provided for @backupTotalSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Size'**
+  String get backupTotalSize;
+
+  /// No description provided for @backupStorageUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage Used'**
+  String get backupStorageUsed;
+
+  /// No description provided for @backupQuota.
+  ///
+  /// In en, this message translates to:
+  /// **'Quota'**
+  String get backupQuota;
+
+  /// No description provided for @backupUsagePercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get backupUsagePercent;
+
+  /// No description provided for @backupByType.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakdown by Type'**
+  String get backupByType;
+
+  /// No description provided for @backupRecentBackups.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Backups'**
+  String get backupRecentBackups;
+
+  /// No description provided for @backupSaveSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Schedule'**
+  String get backupSaveSchedule;
+
+  /// No description provided for @backupScheduleSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule saved successfully'**
+  String get backupScheduleSaved;
+
+  /// No description provided for @backupScheduleSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save schedule'**
+  String get backupScheduleSaveError;
+
+  /// No description provided for @backupRestoreWizard.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Wizard'**
+  String get backupRestoreWizard;
+
+  /// No description provided for @backupRestoreStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Backup'**
+  String get backupRestoreStep1;
+
+  /// No description provided for @backupRestoreStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Integrity'**
+  String get backupRestoreStep2;
+
+  /// No description provided for @backupRestoreStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Restore'**
+  String get backupRestoreStep3;
+
+  /// No description provided for @backupRestoreStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Progress'**
+  String get backupRestoreStep4;
+
+  /// No description provided for @backupRestoreStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get backupRestoreStep5;
+
+  /// No description provided for @backupSelectForRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a backup to restore'**
+  String get backupSelectForRestore;
+
+  /// No description provided for @backupOnlyCompletedRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Only completed and verified backups can be restored'**
+  String get backupOnlyCompletedRestore;
+
+  /// No description provided for @backupVerifyStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Integrity'**
+  String get backupVerifyStep;
+
+  /// No description provided for @backupVerifySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup integrity verified'**
+  String get backupVerifySuccess;
+
+  /// No description provided for @backupVerifyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity check failed — backup may be corrupted'**
+  String get backupVerifyFailed;
+
+  /// No description provided for @backupVerifyChecksum.
+  ///
+  /// In en, this message translates to:
+  /// **'Checksum'**
+  String get backupVerifyChecksum;
+
+  /// No description provided for @backupConfirmRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Restore'**
+  String get backupConfirmRestore;
+
+  /// No description provided for @backupRestoreWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ This will overwrite all current data. This action cannot be undone. We strongly recommend creating a pre-restore backup.'**
+  String get backupRestoreWarning;
+
+  /// No description provided for @backupCreatePreRestoreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a backup before restoring'**
+  String get backupCreatePreRestoreBackup;
+
+  /// No description provided for @backupEstimatedDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated duration'**
+  String get backupEstimatedDuration;
+
+  /// No description provided for @backupEstimatedDurationSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String backupEstimatedDurationSeconds(String seconds);
+
+  /// No description provided for @backupRestoreProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring...'**
+  String get backupRestoreProgress;
+
+  /// No description provided for @backupRestoreComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Completed'**
+  String get backupRestoreComplete;
+
+  /// No description provided for @backupRestoreFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Failed'**
+  String get backupRestoreFailed;
+
+  /// No description provided for @backupRestoreInitiated.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore has been initiated. The system will apply the backup.'**
+  String get backupRestoreInitiated;
+
+  /// No description provided for @backupRequiresMigration.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup requires a database migration'**
+  String get backupRequiresMigration;
+
+  /// No description provided for @backupStartRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Restore'**
+  String get backupStartRestore;
+
+  /// No description provided for @backupExportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get backupExportData;
+
+  /// No description provided for @backupExportTables.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Tables to Export'**
+  String get backupExportTables;
+
+  /// No description provided for @backupExportTableProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get backupExportTableProducts;
+
+  /// No description provided for @backupExportTableCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get backupExportTableCustomers;
+
+  /// No description provided for @backupExportTableOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get backupExportTableOrders;
+
+  /// No description provided for @backupExportTableInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get backupExportTableInventory;
+
+  /// No description provided for @backupExportTableSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get backupExportTableSettings;
+
+  /// No description provided for @backupExportTableStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get backupExportTableStaff;
+
+  /// No description provided for @backupExportTableCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get backupExportTableCategories;
+
+  /// No description provided for @backupExportFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Format'**
+  String get backupExportFormat;
+
+  /// No description provided for @backupExportFormatJson.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON'**
+  String get backupExportFormatJson;
+
+  /// No description provided for @backupExportFormatCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV'**
+  String get backupExportFormatCsv;
+
+  /// No description provided for @backupExportIncludeImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Include Images'**
+  String get backupExportIncludeImages;
+
+  /// No description provided for @backupExportIncludeImagesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach image files (increases export size)'**
+  String get backupExportIncludeImagesDesc;
+
+  /// No description provided for @backupExportResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Result'**
+  String get backupExportResult;
+
+  /// No description provided for @backupExportId.
+  ///
+  /// In en, this message translates to:
+  /// **'Export ID'**
+  String get backupExportId;
+
+  /// No description provided for @backupExportFilePath.
+  ///
+  /// In en, this message translates to:
+  /// **'File Path'**
+  String get backupExportFilePath;
+
+  /// No description provided for @backupExportTotalRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Records'**
+  String get backupExportTotalRecords;
+
+  /// No description provided for @backupExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Export created successfully'**
+  String get backupExportSuccess;
+
+  /// No description provided for @backupExportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed. Please try again.'**
+  String get backupExportError;
+
+  /// No description provided for @backupExportStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting export...'**
+  String get backupExportStarted;
+
+  /// No description provided for @backupDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Backup?'**
+  String get backupDeleteConfirmTitle;
+
+  /// No description provided for @backupDeleteConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete this backup file. This cannot be undone.'**
+  String get backupDeleteConfirmMessage;
+
+  /// No description provided for @backupDeleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup deleted'**
+  String get backupDeleteSuccess;
+
+  /// No description provided for @backupDeleteError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete backup'**
+  String get backupDeleteError;
+
+  /// No description provided for @backupRecordsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String backupRecordsCount(String count);
+
+  /// No description provided for @backupDbVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'DB Version'**
+  String get backupDbVersion;
+
+  /// No description provided for @backupChecksum.
+  ///
+  /// In en, this message translates to:
+  /// **'Checksum'**
+  String get backupChecksum;
+
+  /// No description provided for @backupEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get backupEncrypted;
+
+  /// No description provided for @backupProviderStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Status'**
+  String get backupProviderStatus;
+
+  /// No description provided for @backupNoProvidersConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'No providers connected'**
+  String get backupNoProvidersConnected;
+
   /// No description provided for @securityNoAuditLogs.
   ///
   /// In en, this message translates to:
   /// **'No audit logs found.'**
   String get securityNoAuditLogs;
+
+  /// No description provided for @securityExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get securityExportCsv;
+
+  /// No description provided for @securityExporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting...'**
+  String get securityExporting;
+
+  /// No description provided for @securityExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit log exported successfully.'**
+  String get securityExportSuccess;
+
+  /// No description provided for @securityExportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed. Please try again.'**
+  String get securityExportError;
 
   /// No description provided for @marketplaceContinue.
   ///
@@ -32095,6 +33319,1122 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} tampered devices'**
   String zatcaTamperedDevices(int count);
+
+  /// No description provided for @reportsScheduledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled Reports'**
+  String get reportsScheduledTitle;
+
+  /// No description provided for @reportsSlowMoversTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Slow Movers'**
+  String get reportsSlowMoversTab;
+
+  /// No description provided for @reportsMarginAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Margin Analysis'**
+  String get reportsMarginAnalysis;
+
+  /// No description provided for @reportsCategoryContribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Contribution'**
+  String get reportsCategoryContribution;
+
+  /// No description provided for @reportsNoSlowMovers.
+  ///
+  /// In en, this message translates to:
+  /// **'No slow-moving products found'**
+  String get reportsNoSlowMovers;
+
+  /// No description provided for @reportsSlowMoversCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} slow mover(s)'**
+  String reportsSlowMoversCount(int count);
+
+  /// No description provided for @reportsAvgMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Margin'**
+  String get reportsAvgMargin;
+
+  /// No description provided for @reportsNoMarginData.
+  ///
+  /// In en, this message translates to:
+  /// **'No margin data available'**
+  String get reportsNoMarginData;
+
+  /// No description provided for @reportsNoCategoryContribution.
+  ///
+  /// In en, this message translates to:
+  /// **'No category data available'**
+  String get reportsNoCategoryContribution;
+
+  /// No description provided for @reportsExportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export PDF'**
+  String get reportsExportPdf;
+
+  /// No description provided for @reportsExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get reportsExportCsv;
+
+  /// No description provided for @reportsExportFormatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Format'**
+  String get reportsExportFormatTitle;
+
+  /// No description provided for @reportsExportGenerating.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating report…'**
+  String get reportsExportGenerating;
+
+  /// No description provided for @reportsExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Report exported successfully'**
+  String get reportsExportSuccess;
+
+  /// No description provided for @reportsExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed. Please try again.'**
+  String get reportsExportFailed;
+
+  /// No description provided for @reportsScheduledCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Schedule'**
+  String get reportsScheduledCreate;
+
+  /// No description provided for @reportsScheduledName.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Name'**
+  String get reportsScheduledName;
+
+  /// No description provided for @reportsScheduledFrequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get reportsScheduledFrequency;
+
+  /// No description provided for @reportsScheduledRecipients.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipients (comma-separated emails)'**
+  String get reportsScheduledRecipients;
+
+  /// No description provided for @reportsScheduledDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get reportsScheduledDaily;
+
+  /// No description provided for @reportsScheduledWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get reportsScheduledWeekly;
+
+  /// No description provided for @reportsScheduledMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get reportsScheduledMonthly;
+
+  /// No description provided for @reportsScheduledNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {date}'**
+  String reportsScheduledNext(String date);
+
+  /// No description provided for @reportsScheduledLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last: {date}'**
+  String reportsScheduledLast(String date);
+
+  /// No description provided for @reportsScheduledDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Schedule'**
+  String get reportsScheduledDelete;
+
+  /// No description provided for @reportsScheduledDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete schedule \"{name}\"?'**
+  String reportsScheduledDeleteConfirm(String name);
+
+  /// No description provided for @reportsScheduledEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No scheduled reports yet'**
+  String get reportsScheduledEmpty;
+
+  /// No description provided for @reportsScheduledFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get reportsScheduledFormat;
+
+  /// No description provided for @reportsComparePeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period Comparison'**
+  String get reportsComparePeriod;
+
+  /// No description provided for @reportsCompareFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get reportsCompareFrom;
+
+  /// No description provided for @reportsCompareTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get reportsCompareTo;
+
+  /// No description provided for @reportsExpiryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get reportsExpiryTab;
+
+  /// No description provided for @reportsExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires: {date}'**
+  String reportsExpiryDate(String date);
+
+  /// No description provided for @reportsExpiryDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days left'**
+  String reportsExpiryDaysLeft(int days);
+
+  /// No description provided for @reportsExpiryExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get reportsExpiryExpired;
+
+  /// No description provided for @reportsExpiryCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical (≤7 days)'**
+  String get reportsExpiryCritical;
+
+  /// No description provided for @reportsExpiryWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning (≤30 days)'**
+  String get reportsExpiryWarning;
+
+  /// No description provided for @reportsNoExpiryData.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry data available'**
+  String get reportsNoExpiryData;
+
+  /// No description provided for @reportsDeliveryCommission.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Commission'**
+  String get reportsDeliveryCommission;
+
+  /// No description provided for @reportsDeliveryPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get reportsDeliveryPlatform;
+
+  /// No description provided for @reportsDeliveryOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get reportsDeliveryOrders;
+
+  /// No description provided for @reportsDeliveryGross.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross Sales'**
+  String get reportsDeliveryGross;
+
+  /// No description provided for @reportsDeliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Commission Fee'**
+  String get reportsDeliveryFee;
+
+  /// No description provided for @reportsDeliveryNet.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Sales'**
+  String get reportsDeliveryNet;
+
+  /// No description provided for @reportsNoDeliveryData.
+  ///
+  /// In en, this message translates to:
+  /// **'No delivery commission data'**
+  String get reportsNoDeliveryData;
+
+  /// No description provided for @reportsAutoRefreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-refreshing every 60s'**
+  String get reportsAutoRefreshing;
+
+  /// No description provided for @reportsLastRefreshed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last refreshed: {time}'**
+  String reportsLastRefreshed(String time);
+
+  /// No description provided for @reportsSubscriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade required to access this report'**
+  String get reportsSubscriptionRequired;
+
+  /// No description provided for @reportsUpgradeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is available on higher plans'**
+  String get reportsUpgradeRequired;
+
+  /// No description provided for @reportsNoSchedulesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No scheduled reports yet'**
+  String get reportsNoSchedulesYet;
+
+  /// No description provided for @reportNDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String reportNDays(int days);
+
+  /// No description provided for @reportNInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} in stock'**
+  String reportNInStock(int n);
+
+  /// No description provided for @reportsBestSellers.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Sellers'**
+  String get reportsBestSellers;
+
+  /// No description provided for @reportsType.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Type'**
+  String get reportsType;
+
+  /// No description provided for @bakeryEditCakeOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Cake Order'**
+  String get bakeryEditCakeOrder;
+
+  /// No description provided for @bakeryNewCakeOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'New Cake Order'**
+  String get bakeryNewCakeOrder;
+
+  /// No description provided for @bakeryUpdateOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Order'**
+  String get bakeryUpdateOrder;
+
+  /// No description provided for @bakeryCreateOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Order'**
+  String get bakeryCreateOrder;
+
+  /// No description provided for @bakeryEditRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Recipe'**
+  String get bakeryEditRecipe;
+
+  /// No description provided for @bakeryUpdateRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Recipe'**
+  String get bakeryUpdateRecipe;
+
+  /// No description provided for @bakeryCreateRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Recipe'**
+  String get bakeryCreateRecipe;
+
+  /// No description provided for @electronicsEditImeiRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit IMEI Record'**
+  String get electronicsEditImeiRecord;
+
+  /// No description provided for @electronicsNewImeiRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'New IMEI Record'**
+  String get electronicsNewImeiRecord;
+
+  /// No description provided for @electronicsUpdateRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Record'**
+  String get electronicsUpdateRecord;
+
+  /// No description provided for @electronicsCreateRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Record'**
+  String get electronicsCreateRecord;
+
+  /// No description provided for @electronicsEditRepairJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Repair Job'**
+  String get electronicsEditRepairJob;
+
+  /// No description provided for @electronicsUpdateJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Job'**
+  String get electronicsUpdateJob;
+
+  /// No description provided for @electronicsCreateJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Job'**
+  String get electronicsCreateJob;
+
+  /// No description provided for @floristEditArrangement.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Arrangement'**
+  String get floristEditArrangement;
+
+  /// No description provided for @floristNewArrangementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New Arrangement'**
+  String get floristNewArrangementTitle;
+
+  /// No description provided for @floristUpdateArrangement.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Arrangement'**
+  String get floristUpdateArrangement;
+
+  /// No description provided for @floristCreateArrangement.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Arrangement'**
+  String get floristCreateArrangement;
+
+  /// No description provided for @floristNewSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'New Subscription'**
+  String get floristNewSubscription;
+
+  /// No description provided for @floristEditSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Subscription'**
+  String get floristEditSubscription;
+
+  /// No description provided for @floristUpdateSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Subscription'**
+  String get floristUpdateSubscription;
+
+  /// No description provided for @floristCreateSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Subscription'**
+  String get floristCreateSubscription;
+
+  /// No description provided for @jewelryEditProductDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product Detail'**
+  String get jewelryEditProductDetail;
+
+  /// No description provided for @jewelryPriceCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Calculator'**
+  String get jewelryPriceCalculator;
+
+  /// No description provided for @jewelrySelectRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Metal Rate'**
+  String get jewelrySelectRate;
+
+  /// No description provided for @sarPerGram.
+  ///
+  /// In en, this message translates to:
+  /// **'SAR/g'**
+  String get sarPerGram;
+
+  /// No description provided for @jewelryPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage'**
+  String get jewelryPercentage;
+
+  /// No description provided for @jewelryFlat.
+  ///
+  /// In en, this message translates to:
+  /// **'Flat'**
+  String get jewelryFlat;
+
+  /// No description provided for @jewelryPerGram.
+  ///
+  /// In en, this message translates to:
+  /// **'Per Gram'**
+  String get jewelryPerGram;
+
+  /// No description provided for @jewelryCalculatedPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated Price'**
+  String get jewelryCalculatedPrice;
+
+  /// No description provided for @jewelryNewProductDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'New Jewelry Detail'**
+  String get jewelryNewProductDetail;
+
+  /// No description provided for @jewelryUpdateDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Detail'**
+  String get jewelryUpdateDetail;
+
+  /// No description provided for @jewelryCreateDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Detail'**
+  String get jewelryCreateDetail;
+
+  /// No description provided for @pharmacyEditPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Prescription'**
+  String get pharmacyEditPrescription;
+
+  /// No description provided for @pharmacyUpdatePrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Prescription'**
+  String get pharmacyUpdatePrescription;
+
+  /// No description provided for @pharmacyCreatePrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Prescription'**
+  String get pharmacyCreatePrescription;
+
+  /// No description provided for @pharmacyEditDrugSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Drug Schedule'**
+  String get pharmacyEditDrugSchedule;
+
+  /// No description provided for @pharmacyNewDrugSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'New Drug Schedule'**
+  String get pharmacyNewDrugSchedule;
+
+  /// No description provided for @pharmacyUpdateSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Schedule'**
+  String get pharmacyUpdateSchedule;
+
+  /// No description provided for @pharmacyCreateSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Schedule'**
+  String get pharmacyCreateSchedule;
+
+  /// No description provided for @restaurantUpdateReservation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Reservation'**
+  String get restaurantUpdateReservation;
+
+  /// No description provided for @restaurantCreateReservation.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Reservation'**
+  String get restaurantCreateReservation;
+
+  /// No description provided for @restaurantEditTable.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Table'**
+  String get restaurantEditTable;
+
+  /// No description provided for @restaurantUpdateTable.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Table'**
+  String get restaurantUpdateTable;
+
+  /// No description provided for @restaurantCreateTable.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Table'**
+  String get restaurantCreateTable;
+
+  /// No description provided for @paymentListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment History'**
+  String get paymentListTitle;
+
+  /// No description provided for @paymentListFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get paymentListFilters;
+
+  /// No description provided for @paymentListEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments found'**
+  String get paymentListEmpty;
+
+  /// No description provided for @paymentListSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transactions...'**
+  String get paymentListSearchHint;
+
+  /// No description provided for @paymentListDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date range'**
+  String get paymentListDateRange;
+
+  /// No description provided for @paymentListMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get paymentListMethod;
+
+  /// No description provided for @paymentListStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get paymentListStatus;
+
+  /// No description provided for @paymentListRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get paymentListRefund;
+
+  /// No description provided for @paymentListInfoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse and filter all payment transactions. Tap a row to view details or process a refund.'**
+  String get paymentListInfoMessage;
+
+  /// No description provided for @paymentStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get paymentStatusCompleted;
+
+  /// No description provided for @paymentStatusRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get paymentStatusRefunded;
+
+  /// No description provided for @paymentStatusPartialRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial Refund'**
+  String get paymentStatusPartialRefund;
+
+  /// No description provided for @paymentStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get paymentStatusFailed;
+
+  /// No description provided for @paymentDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get paymentDetailTitle;
+
+  /// No description provided for @paymentDetailInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Info'**
+  String get paymentDetailInfo;
+
+  /// No description provided for @paymentDetailMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get paymentDetailMethod;
+
+  /// No description provided for @paymentDetailAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get paymentDetailAmount;
+
+  /// No description provided for @paymentDetailCashTendered.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Tendered'**
+  String get paymentDetailCashTendered;
+
+  /// No description provided for @paymentDetailChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get paymentDetailChange;
+
+  /// No description provided for @paymentDetailTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip'**
+  String get paymentDetailTip;
+
+  /// No description provided for @paymentDetailStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get paymentDetailStatus;
+
+  /// No description provided for @paymentDetailTransactionId.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction ID'**
+  String get paymentDetailTransactionId;
+
+  /// No description provided for @paymentDetailCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentDetailCard;
+
+  /// No description provided for @paymentDetailGiftCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift Card'**
+  String get paymentDetailGiftCard;
+
+  /// No description provided for @paymentDetailDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get paymentDetailDate;
+
+  /// No description provided for @paymentDetailRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund History'**
+  String get paymentDetailRefunds;
+
+  /// No description provided for @paymentDetailNoRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'No refunds for this payment'**
+  String get paymentDetailNoRefunds;
+
+  /// No description provided for @refundAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Amount'**
+  String get refundAmount;
+
+  /// No description provided for @refundMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Method'**
+  String get refundMethod;
+
+  /// No description provided for @refundReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference Number'**
+  String get refundReference;
+
+  /// No description provided for @refundSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Process Refund'**
+  String get refundSubmit;
+
+  /// No description provided for @refundCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund processed successfully'**
+  String get refundCreatedSuccess;
+
+  /// No description provided for @giftCardManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get giftCardManage;
+
+  /// No description provided for @giftCardManageEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No gift cards found'**
+  String get giftCardManageEmpty;
+
+  /// No description provided for @giftCardManageFilterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by status'**
+  String get giftCardManageFilterStatus;
+
+  /// No description provided for @giftCardDeactivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Gift Card'**
+  String get giftCardDeactivateTitle;
+
+  /// No description provided for @giftCardDeactivateConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to deactivate gift card {code}?'**
+  String giftCardDeactivateConfirm(String code);
+
+  /// No description provided for @giftCardDeactivateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get giftCardDeactivateAction;
+
+  /// No description provided for @giftCardDeactivatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift card deactivated'**
+  String get giftCardDeactivatedSuccess;
+
+  /// No description provided for @giftCardStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get giftCardStatusActive;
+
+  /// No description provided for @giftCardStatusRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeemed'**
+  String get giftCardStatusRedeemed;
+
+  /// No description provided for @giftCardStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get giftCardStatusExpired;
+
+  /// No description provided for @giftCardStatusDeactivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivated'**
+  String get giftCardStatusDeactivated;
+
+  /// No description provided for @expenseEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Expense'**
+  String get expenseEditTitle;
+
+  /// No description provided for @expenseDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Expense'**
+  String get expenseDeleteTitle;
+
+  /// No description provided for @expenseDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this expense?'**
+  String get expenseDeleteConfirm;
+
+  /// No description provided for @expenseDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense deleted'**
+  String get expenseDeletedSuccess;
+
+  /// No description provided for @expenseUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense updated'**
+  String get expenseUpdatedSuccess;
+
+  /// No description provided for @expensesInfoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Track and manage all store expenses. Swipe left to delete, tap the edit icon to update.'**
+  String get expensesInfoMessage;
+
+  /// No description provided for @cashSessionDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Detail'**
+  String get cashSessionDetailTitle;
+
+  /// No description provided for @cashSessionEventsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Events'**
+  String get cashSessionEventsTab;
+
+  /// No description provided for @cashSessionExpensesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get cashSessionExpensesTab;
+
+  /// No description provided for @cashSessionNoEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No cash events in this session'**
+  String get cashSessionNoEvents;
+
+  /// No description provided for @cashSessionNoExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses in this session'**
+  String get cashSessionNoExpenses;
+
+  /// No description provided for @cashSessionOpenFloat.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Float'**
+  String get cashSessionOpenFloat;
+
+  /// No description provided for @cashSessionExpectedCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Cash'**
+  String get cashSessionExpectedCash;
+
+  /// No description provided for @cashSessionVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Variance'**
+  String get cashSessionVariance;
+
+  /// No description provided for @cashSessionOpenedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Opened'**
+  String get cashSessionOpenedAt;
+
+  /// No description provided for @cashSessionClosedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get cashSessionClosedAt;
+
+  /// No description provided for @cashSessionsInfoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'View all cash sessions and their details. Tap a session to see cash events and expenses.'**
+  String get cashSessionsInfoMessage;
+
+  /// No description provided for @dailySummaryExpensesBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses by Category'**
+  String get dailySummaryExpensesBreakdown;
+
+  /// No description provided for @dailySummaryNoExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses recorded'**
+  String get dailySummaryNoExpenses;
+
+  /// No description provided for @dailySummaryInfoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'View today\'s sales summary including revenue, expenses, and session data.'**
+  String get dailySummaryInfoMessage;
+
+  /// No description provided for @finReconInfoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and confirm financial reconciliation for a date range. Export PDF for records.'**
+  String get finReconInfoMessage;
+
+  /// No description provided for @allCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'All Categories'**
+  String get allCategories;
+
+  /// No description provided for @syncConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to server...'**
+  String get syncConnecting;
+
+  /// No description provided for @syncCheckingConnectivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking connectivity...'**
+  String get syncCheckingConnectivity;
+
+  /// No description provided for @syncNoInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please connect and try again.'**
+  String get syncNoInternet;
+
+  /// No description provided for @syncDownloadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading data...'**
+  String get syncDownloadingData;
+
+  /// No description provided for @syncPerformingFullSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Performing full sync...'**
+  String get syncPerformingFullSync;
+
+  /// No description provided for @syncReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready!'**
+  String get syncReady;
+
+  /// No description provided for @syncSettingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting Up'**
+  String get syncSettingUp;
+
+  /// No description provided for @syncConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get syncConnected;
+
+  /// No description provided for @syncOfflineStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get syncOfflineStatus;
+
+  /// No description provided for @syncPendingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pending'**
+  String syncPendingCount(int count);
+
+  /// No description provided for @syncLastSyncInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Last sync: {direction} · {records} records'**
+  String syncLastSyncInfo(String direction, int records);
+
+  /// No description provided for @syncPendingConflictsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} conflicts'**
+  String syncPendingConflictsCount(int count);
+
+  /// No description provided for @syncFailedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} failed'**
+  String syncFailedCount(int count);
+
+  /// No description provided for @syncLogsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Logs'**
+  String get syncLogsTitle;
+
+  /// No description provided for @syncLogsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sync logs yet'**
+  String get syncLogsEmpty;
+
+  /// No description provided for @syncLogsFilterDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get syncLogsFilterDirection;
+
+  /// No description provided for @syncLogsFilterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get syncLogsFilterStatus;
+
+  /// No description provided for @syncLogsTerminal.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal'**
+  String get syncLogsTerminal;
+
+  /// No description provided for @syncLogsDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{ms}ms'**
+  String syncLogsDuration(int ms);
+
+  /// No description provided for @syncLogsRecordsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String syncLogsRecordsCount(int count);
+
+  /// No description provided for @syncLogHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Log History'**
+  String get syncLogHistory;
+
+  /// No description provided for @viewAllLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'View All Logs'**
+  String get viewAllLogs;
 }
 
 class _AppLocalizationsDelegate

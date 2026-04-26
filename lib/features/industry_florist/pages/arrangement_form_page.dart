@@ -52,7 +52,7 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
       'name': _nameCtrl.text.trim(),
       'total_price': double.parse(_totalPriceCtrl.text.trim()),
       'is_template': _isTemplate,
-      'items_json': {},
+      'items_json': [],
       if (_occasionCtrl.text.isNotEmpty) 'occasion': _occasionCtrl.text.trim(),
     };
 
@@ -70,9 +70,9 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
   @override
   Widget build(BuildContext context) {
     return PosFormPage(
-      title: _isEditing ? 'Edit Arrangement' : 'New Arrangement',
+      title: _isEditing ? l10n.floristEditArrangement : l10n.floristNewArrangementTitle,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Arrangement' : 'Create Arrangement',
+          label: _isEditing ? l10n.floristUpdateArrangement : l10n.floristCreateArrangement,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

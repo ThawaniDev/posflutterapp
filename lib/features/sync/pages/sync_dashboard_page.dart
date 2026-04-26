@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -111,14 +113,20 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
                 PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
-                      : () => ref.read(syncOperationProvider.notifier).push(terminalId: 'local', changes: []),
+                      : () {
+                          final terminalId = ref.read(terminalIdProvider).valueOrNull ?? 'pending';
+                          ref.read(syncOperationProvider.notifier).push(terminalId: terminalId, changes: []);
+                        },
                   icon: Icons.cloud_upload,
                   label: AppLocalizations.of(context)!.syncPush,
                 ),
                 PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
-                      : () => ref.read(syncOperationProvider.notifier).pull(terminalId: 'local'),
+                      : () {
+                          final terminalId = ref.read(terminalIdProvider).valueOrNull ?? 'pending';
+                          ref.read(syncOperationProvider.notifier).pull(terminalId: terminalId);
+                        },
                   variant: PosButtonVariant.outline,
                   icon: Icons.cloud_download,
                   label: AppLocalizations.of(context)!.syncPull,
@@ -126,7 +134,10 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
                 PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
-                      : () => ref.read(syncOperationProvider.notifier).fullSync(terminalId: 'local'),
+                      : () {
+                          final terminalId = ref.read(terminalIdProvider).valueOrNull ?? 'pending';
+                          ref.read(syncOperationProvider.notifier).fullSync(terminalId: terminalId);
+                        },
                   variant: PosButtonVariant.outline,
                   icon: Icons.sync,
                   label: AppLocalizations.of(context)!.syncFullSync,
@@ -145,9 +156,20 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
       SyncConflictListLoaded(:final conflicts, :final total) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            AppLocalizations.of(context)!.syncUnresolvedConflicts(total),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.syncUnresolvedConflicts(total),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              if (total > 0)
+                TextButton.icon(
+                  onPressed: () => context.push(Routes.syncConflicts),
+                  icon: const Icon(Icons.warning_amber, size: 16),
+                  label: Text(AppLocalizations.of(context)!.syncOpen),
+                ),
+            ],
           ),
           AppSpacing.gapH8,
           if (conflicts.isEmpty)
@@ -158,7 +180,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
               ),
             )
           else
-            ...conflicts.map(
+            ...conflicts.take(3).map(
               (c) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: ConflictCard(
@@ -179,8 +201,29 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
   }
 
   Widget _buildLogSection(SyncStatusState state) {
+    final l10n = AppLocalizations.of(context)!;
     if (state is SyncStatusLoaded) {
-      return SyncLogList(logs: state.recentLogs);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.recentSyncActivity,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              TextButton.icon(
+                onPressed: () => context.push('/sync/logs'),
+                icon: const Icon(Icons.history, size: 16),
+                label: Text(l10n.viewAllLogs),
+              ),
+            ],
+          ),
+          AppSpacing.gapH8,
+          SyncLogList(logs: state.recentLogs),
+        ],
+      );
     }
     return const SizedBox.shrink();
   }

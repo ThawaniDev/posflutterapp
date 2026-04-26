@@ -72,7 +72,7 @@ class _NotificationBellState extends ConsumerState<NotificationBell> {
                           padding: const EdgeInsets.all(AppSpacing.sm),
                           child: Row(
                             children: [
-                              Icon(Icons.notifications_active_rounded, color: AppColors.primary, size: 20),
+                              const Icon(Icons.notifications_active_rounded, color: AppColors.primary, size: 20),
                               const SizedBox(width: AppSpacing.sm),
                               Expanded(
                                 child: Text(
@@ -154,7 +154,7 @@ class _NotificationBellState extends ConsumerState<NotificationBell> {
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         itemCount: items.length,
-        separatorBuilder: (_, __) => const Divider(height: 1),
+        separatorBuilder: (_, _) => const Divider(height: 1),
         itemBuilder: (_, i) {
           final n = items[i];
           final title = (n['title'] as String?) ?? '';

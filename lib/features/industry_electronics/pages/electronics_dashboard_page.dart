@@ -9,6 +9,8 @@ import 'package:wameedpos/features/industry_electronics/widgets/trade_in_card.da
 import 'package:wameedpos/features/industry_electronics/pages/imei_record_form_page.dart';
 import 'package:wameedpos/features/industry_electronics/pages/repair_job_form_page.dart';
 import 'package:wameedpos/features/industry_electronics/pages/trade_in_form_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ElectronicsDashboardPage extends ConsumerStatefulWidget {
@@ -45,7 +47,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
     final isLoading = state is ElectronicsInitial || state is ElectronicsLoading;
     final hasError = state is ElectronicsError;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.electronicsTitle,
       showSearch: false,
       isLoading: isLoading,
@@ -128,6 +130,10 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.mobileView,
+      child: content,
     );
   }
 }

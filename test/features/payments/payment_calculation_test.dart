@@ -366,8 +366,8 @@ void main() {
   // ═══════════════════════════════════════════════════════════
 
   group('PaymentMethodKey', () {
-    test('has 7 values', () {
-      expect(PaymentMethodKey.values, hasLength(7));
+    test('has 18 values', () {
+      expect(PaymentMethodKey.values, hasLength(18));
     });
 
     test('fromValue round-trips', () {

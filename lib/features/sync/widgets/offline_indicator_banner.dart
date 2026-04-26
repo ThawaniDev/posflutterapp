@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -14,6 +15,7 @@ class OfflineIndicatorBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final connectivityAsync = ref.watch(connectivityStatusProvider);
     final engineStatusAsync = ref.watch(syncEngineStatusProvider);
 
@@ -26,13 +28,13 @@ class OfflineIndicatorBanner extends ConsumerWidget {
     }
 
     final (bgColor, icon, message) = switch (engineStatus) {
-      SyncEngineStatus.offline => (AppColors.warning, Icons.cloud_off, 'Offline — changes will sync when connected'),
-      SyncEngineStatus.syncing => (AppColors.info, Icons.sync, 'Syncing...'),
-      SyncEngineStatus.error => (AppColors.error, Icons.error_outline, 'Sync error — will retry'),
+      SyncEngineStatus.offline => (AppColors.warning, Icons.cloud_off, l10n.offlineChangesSynced),
+      SyncEngineStatus.syncing => (AppColors.info, Icons.sync, l10n.syncInProgress),
+      SyncEngineStatus.error => (AppColors.error, Icons.error_outline, l10n.syncError),
       _ =>
         connectivity == ConnectivityStatus.offline
-            ? (AppColors.warning, Icons.cloud_off, 'No internet connection')
-            : (AppColors.info, Icons.sync, 'Syncing...'),
+            ? (AppColors.warning, Icons.cloud_off, l10n.offline)
+            : (AppColors.info, Icons.sync, l10n.syncInProgress),
     };
 
     final pendingCount = ref.watch(syncEngineProvider).pendingOperations;
@@ -58,7 +60,7 @@ class OfflineIndicatorBanner extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: AppRadius.borderFull),
                   child: Text(
-                    '$pendingCount pending',
+                    l10n.syncPendingCount(pendingCount),
                     style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
                   ),
                 ),

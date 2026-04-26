@@ -87,3 +87,34 @@ final class SyncConflictListError extends SyncConflictListState {
   const SyncConflictListError(this.message);
   final String message;
 }
+
+// ─── Sync Logs State ──────────────────────────────────────
+sealed class SyncLogsState {
+  const SyncLogsState();
+}
+
+final class SyncLogsInitial extends SyncLogsState {
+  const SyncLogsInitial();
+}
+
+final class SyncLogsLoading extends SyncLogsState {
+  const SyncLogsLoading();
+}
+
+final class SyncLogsLoaded extends SyncLogsState {
+  const SyncLogsLoaded({
+    required this.logs,
+    required this.currentPage,
+    required this.lastPage,
+    required this.total,
+  });
+  final List<Map<String, dynamic>> logs;
+  final int currentPage;
+  final int lastPage;
+  final int total;
+}
+
+final class SyncLogsError extends SyncLogsState {
+  const SyncLogsError(this.message);
+  final String message;
+}

@@ -10,12 +10,13 @@ class BackupHistory {
     this.cloudKey,
     this.fileSizeBytes = 0,
     this.checksum,
-    this.dbVersion,
+    this.dbVersion = 1,
     this.recordsCount = 0,
     this.isVerified = false,
     this.isEncrypted = false,
     required this.status,
     this.errorMessage,
+    this.createdAt,
   });
 
   factory BackupHistory.fromJson(Map<String, dynamic> json) {
@@ -23,18 +24,21 @@ class BackupHistory {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       terminalId: json['terminal_id'] as String?,
-      backupType: json['backup_type'] as String,
+      backupType: json['backup_type'] as String? ?? 'manual',
       storageLocation: json['storage_location'] as String?,
       localPath: json['local_path'] as String?,
       cloudKey: json['cloud_key'] as String?,
       fileSizeBytes: (json['file_size_bytes'] as num?)?.toInt() ?? 0,
       checksum: json['checksum'] as String?,
-      dbVersion: json['db_version'] as String?,
+      dbVersion: json['db_version'] is num ? (json['db_version'] as num).toInt() : (int.tryParse(json['db_version']?.toString() ?? '') ?? 1),
       recordsCount: (json['records_count'] as num?)?.toInt() ?? 0,
-      isVerified: json['is_verified'] as bool? ?? false,
-      isEncrypted: json['is_encrypted'] as bool? ?? false,
-      status: json['status'] as String,
+      isVerified: json['is_verified'] == true || json['is_verified'] == 1,
+      isEncrypted: json['is_encrypted'] == true || json['is_encrypted'] == 1,
+      status: json['status'] as String? ?? 'completed',
       errorMessage: json['error_message'] as String?,
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'] as String)
+          : null,
     );
   }
   final String id;
@@ -46,12 +50,13 @@ class BackupHistory {
   final String? cloudKey;
   final int fileSizeBytes;
   final String? checksum;
-  final String? dbVersion;
+  final int dbVersion;
   final int recordsCount;
   final bool isVerified;
   final bool isEncrypted;
   final String status;
   final String? errorMessage;
+  final DateTime? createdAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -70,6 +75,7 @@ class BackupHistory {
       'is_encrypted': isEncrypted,
       'status': status,
       'error_message': errorMessage,
+      'created_at': createdAt?.toIso8601String(),
     };
   }
 
@@ -83,12 +89,13 @@ class BackupHistory {
     String? cloudKey,
     int? fileSizeBytes,
     String? checksum,
-    String? dbVersion,
+    int? dbVersion,
     int? recordsCount,
     bool? isVerified,
     bool? isEncrypted,
     String? status,
     String? errorMessage,
+    DateTime? createdAt,
   }) {
     return BackupHistory(
       id: id ?? this.id,
@@ -106,6 +113,7 @@ class BackupHistory {
       isEncrypted: isEncrypted ?? this.isEncrypted,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -115,3 +123,4 @@ class BackupHistory {
   @override
   int get hashCode => id.hashCode;
 }
+

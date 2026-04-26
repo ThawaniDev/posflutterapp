@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_export_sheet.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -36,6 +39,10 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
       case 1:
         ref.read(financialExpensesProvider.notifier).load(filters: _filters);
       case 2:
+        ref.read(paymentMethodsProvider.notifier).load(filters: _filters);
+      case 3:
+        ref.read(deliveryCommissionProvider.notifier).load(filters: _filters);
+      case 4:
         ref.read(cashVarianceProvider.notifier).load(filters: _filters);
     }
   }
@@ -45,39 +52,69 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
     _loadCurrentTab();
   }
 
+  // null = payment_methods and cash_variance have no backend export type
+  String? get _exportType => const [
+    'financial_pl',
+    'financial_expenses',
+    null,
+    'financial_delivery_commission',
+    null,
+  ][_currentTab];
+
   @override
   Widget build(BuildContext context) {
-    return PosListPage(
-      title: l10n.reportsFinancial,
-      showSearch: false,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: PosTabs(
-              selectedIndex: _currentTab,
-              onChanged: (i) => setState(() {
-                _currentTab = i;
-                _loadCurrentTab();
-              }),
-              tabs: [
-                PosTabItem(label: l10n.reportsDailyPl),
-                PosTabItem(label: l10n.expenses),
-                PosTabItem(label: l10n.cashVariance),
-              ],
+    return PermissionGuardPage(
+      permission: Permissions.reportsViewFinancial,
+      child: PosListPage(
+        title: l10n.reportsFinancial,
+        showSearch: false,
+        actions: [
+          if (_exportType != null)
+            PosButton.icon(
+              icon: Icons.download_rounded,
+              tooltip: l10n.reportsExportFormatTitle,
+              variant: PosButtonVariant.ghost,
+              onPressed: () => showReportExportSheet(
+                context: context,
+                reportType: _exportType!,
+                filters: _filters,
+              ),
             ),
-          ),
-          ReportFilterPanel(
-            filters: _filters,
-            onFiltersChanged: _onFiltersChanged,
-            onRefresh: _loadCurrentTab,
-            showGranularity: true,
-            showStaffFilter: true,
-          ),
-          Expanded(
-            child: IndexedStack(index: _currentTab, children: const [_DailyPlTab(), _ExpensesTab(), _CashVarianceTab()]),
-          ),
         ],
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: PosTabs(
+                selectedIndex: _currentTab,
+                onChanged: (i) => setState(() {
+                  _currentTab = i;
+                  _loadCurrentTab();
+                }),
+                tabs: [
+                  PosTabItem(label: l10n.reportsDailyPl),
+                  PosTabItem(label: l10n.expenses),
+                  PosTabItem(label: l10n.paymentMethods),
+                  PosTabItem(label: l10n.reportsDeliveryCommission),
+                  PosTabItem(label: l10n.cashVariance),
+                ],
+              ),
+            ),
+            ReportFilterPanel(
+              filters: _filters,
+              onFiltersChanged: _onFiltersChanged,
+              onRefresh: _loadCurrentTab,
+              showGranularity: true,
+              showStaffFilter: true,
+            ),
+            Expanded(
+              child: IndexedStack(
+                index: _currentTab,
+                children: const [_DailyPlTab(), _ExpensesTab(), _PaymentMethodSummaryTab(), _DeliveryCommissionTab(), _CashVarianceTab()],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -92,7 +129,6 @@ class _DailyPlTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(financialDailyPlProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       FinancialDailyPlInitial() || FinancialDailyPlLoading() => PosLoadingSkeleton.list(),
@@ -195,7 +231,6 @@ class _ExpensesTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(financialExpensesProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       FinancialExpensesInitial() || FinancialExpensesLoading() => PosLoadingSkeleton.list(),
@@ -406,6 +441,209 @@ class _CashVarianceTab extends ConsumerWidget {
               }),
           ],
         ),
+      ),
+    };
+  }
+}
+
+// ─── Delivery Commission Tab ─────────────────────────────────
+
+class _DeliveryCommissionTab extends ConsumerWidget {
+  const _DeliveryCommissionTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(deliveryCommissionProvider);
+
+    return switch (state) {
+      DeliveryCommissionInitial() || DeliveryCommissionLoading() => PosLoadingSkeleton.list(),
+      DeliveryCommissionError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(deliveryCommissionProvider.notifier).load(),
+      ),
+      DeliveryCommissionLoaded(:final data) => RefreshIndicator(
+        onRefresh: () => ref.read(deliveryCommissionProvider.notifier).load(),
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            // Summary KPIs
+            ReportKpiGrid(
+              cards: [
+                ReportKpiCard(
+                  label: l10n.reportsDeliveryOrders,
+                  value: '${(data['totals'] as Map?)?.cast<String, dynamic>()['total_orders'] ?? 0}',
+                  icon: Icons.delivery_dining_rounded,
+                  color: AppColors.info,
+                ),
+                ReportKpiCard(
+                  label: l10n.reportsDeliveryGross,
+                  value: formatCurrency(
+                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_gross'] ?? 0,
+                  ),
+                  icon: Icons.attach_money_rounded,
+                  color: AppColors.primary,
+                ),
+                ReportKpiCard(
+                  label: l10n.reportsDeliveryFee,
+                  value: formatCurrency(
+                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_commission'] ?? 0,
+                  ),
+                  icon: Icons.percent_rounded,
+                  color: AppColors.warning,
+                ),
+                ReportKpiCard(
+                  label: l10n.reportsDeliveryNet,
+                  value: formatCurrency(
+                    (data['totals'] as Map?)?.cast<String, dynamic>()['total_net'] ?? 0,
+                  ),
+                  icon: Icons.account_balance_wallet_rounded,
+                  color: AppColors.success,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            ReportSectionHeader(title: l10n.reportsDeliveryPlatform, icon: Icons.storefront_rounded),
+            if ((data['platforms'] as List?)?.isEmpty ?? true)
+              PosEmptyState(title: l10n.reportsNoDeliveryData, icon: Icons.delivery_dining)
+            else
+              ReportDataCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  children: List.generate(
+                    (data['platforms'] as List).length,
+                    (i) {
+                      final p = (data['platforms'] as List).cast<Map<String, dynamic>>()[i];
+                      final gross = (p['gross_sales'] as num?)?.toDouble() ?? 0;
+                      final commission = (p['total_commission'] as num?)?.toDouble() ?? 0;
+                      final net = (p['net_settlement'] as num?)?.toDouble() ?? 0;
+                      final rate = (p['commission_rate'] as num?)?.toDouble() ?? 0;
+                      final orders = (p['order_count'] as num?)?.toInt() ?? 0;
+
+                      return Column(
+                        children: [
+                          if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary.withValues(alpha: 0.1),
+                                        borderRadius: AppRadius.borderMd,
+                                      ),
+                                      child: const Icon(Icons.delivery_dining_rounded, color: AppColors.primary, size: 18),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            p['platform'] as String? ?? '',
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            l10n.reportNTransactions(orders.toString()),
+                                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              color: AppColors.mutedFor(context),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ReportBadge(label: formatPercent(rate), color: AppColors.warning),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                ReportStatRow(label: l10n.reportsDeliveryGross, value: formatCurrency(gross)),
+                                ReportStatRow(label: l10n.reportsDeliveryFee, value: '-${formatCurrency(commission)}', valueColor: AppColors.error),
+                                ReportStatRow(label: l10n.reportsDeliveryNet, value: formatCurrency(net), valueColor: AppColors.success),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    };
+  }
+}
+
+// ─── Payment Method Summary Tab ──────────────────────────────
+
+class _PaymentMethodSummaryTab extends ConsumerWidget {
+  const _PaymentMethodSummaryTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(paymentMethodsProvider);
+
+    return switch (state) {
+      PaymentMethodsInitial() || PaymentMethodsLoading() => PosLoadingSkeleton.list(),
+      PaymentMethodsError(:final message) => ReportErrorBody(
+        message: message,
+        featureKey: 'reports_basic',
+        featureName: l10n.paymentMethods,
+        onRetry: () => ref.read(paymentMethodsProvider.notifier).load(),
+      ),
+      PaymentMethodsLoaded(:final methods) when methods.isEmpty => PosEmptyState(
+        title: l10n.reportsNoPaymentData,
+        icon: Icons.payment,
+      ),
+      PaymentMethodsLoaded(:final methods) => ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          ReportSectionHeader(title: l10n.reportsBreakdownByMethod, icon: Icons.pie_chart_outline_rounded),
+          if (methods.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            ReportDataCard(
+              child: ReportPieChart(data: methods, labelKey: 'method', valueKey: 'total_amount', donut: true),
+            ),
+            const SizedBox(height: 16),
+          ],
+          ...methods.map((m) {
+            final method = m['method'] as String? ?? '';
+            final amount = (m['total_amount'] as num?)?.toDouble() ?? 0;
+            final txCount = (m['transaction_count'] as num?)?.toInt() ?? 0;
+            final avg = (m['avg_amount'] as num?)?.toDouble() ?? 0;
+            return ReportDataCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.payment_rounded, size: 18, color: AppColors.primary),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          method,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Text(
+                        formatCurrency(amount),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ReportStatRow(label: l10n.transactions, value: '$txCount'),
+                  ReportStatRow(label: l10n.reportsAvgPerTx, value: formatCurrency(avg)),
+                ],
+              ),
+            );
+          }),
+        ],
       ),
     };
   }

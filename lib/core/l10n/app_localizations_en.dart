@@ -2542,6 +2542,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pharmacyPrescriptions => 'Prescriptions';
 
   @override
+  String get pharmacyExpiryAlerts => 'Expiry Alerts';
+
+  @override
+  String pharmacyExpiryAlertsTitle(int days) {
+    return 'Expiry Alerts ($days days)';
+  }
+
+  @override
+  String get pharmacyDaysFilter => 'Days';
+
+  @override
+  String get pharmacyNoExpiryAlerts =>
+      'No items expiring within the selected period';
+
+  @override
+  String get pharmacySeverityExpired => 'Expired';
+
+  @override
+  String get pharmacySeverityCritical => 'Critical';
+
+  @override
+  String get pharmacySeverityWarning => 'Warning';
+
+  @override
+  String pharmacyDaysUntilExpiry(int days) {
+    return '$days days';
+  }
+
+  @override
+  String pharmacyExpiryDate(String date) {
+    return 'Expires: $date';
+  }
+
+  @override
+  String pharmacyQtyAvailable(int qty) {
+    return 'Qty: $qty';
+  }
+
+  @override
   String get pharmacyNewPrescription => 'New Prescription';
 
   @override
@@ -2603,6 +2642,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restaurantCompleteTicket => 'Complete Ticket';
+
+  @override
+  String get restaurantNewKitchenTicket => 'New Kitchen Ticket';
+
+  @override
+  String get restaurantCreateTicket => 'Create Ticket';
+
+  @override
+  String get restaurantStationLabel => 'Station';
+
+  @override
+  String get restaurantStationHint => 'e.g. Grill, Pastry';
+
+  @override
+  String get restaurantCourseLabel => 'Course Number';
+
+  @override
+  String get restaurantFireAt => 'Fire At (optional)';
+
+  @override
+  String get restaurantTicketItems => 'Items';
+
+  @override
+  String get restaurantItemName => 'Item';
+
+  @override
+  String get restaurantItemNameHint => 'Item name';
+
+  @override
+  String get restaurantItemQty => 'Qty';
+
+  @override
+  String get restaurantSplitBill => 'Split Bill';
+
+  @override
+  String get restaurantBillTotal => 'Bill Total (SAR)';
+
+  @override
+  String get restaurantSplitEqual => 'Equal';
+
+  @override
+  String get restaurantSplitCustom => 'Custom';
+
+  @override
+  String get restaurantNumberOfPeople => 'Number of People';
+
+  @override
+  String get restaurantPerPerson => 'Per Person';
+
+  @override
+  String get restaurantCustomAmounts => 'Custom Amounts';
+
+  @override
+  String get restaurantPerson => 'Person';
+
+  @override
+  String get restaurantSumEntered => 'Sum entered';
+
+  @override
+  String get restaurantConfirmSplit => 'Confirm Split';
 
   @override
   String get accountingTitle => 'Accounting Integration';
@@ -3781,6 +3880,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelDuplicate => 'Duplicate';
+
+  @override
+  String get labelDuplicateSuccess => 'Template duplicated successfully';
+
+  @override
+  String get labelSetAsDefault => 'Set as Default';
+
+  @override
+  String get labelSetAsDefaultSuccess => 'Template set as default successfully';
 
   @override
   String get labelPreset => 'Preset';
@@ -5842,6 +5950,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCancel => 'Cancel';
 
   @override
+  String get commonClear => 'Clear';
+
+  @override
   String get commonCreate => 'Create';
 
   @override
@@ -5864,6 +5975,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonNo => 'No';
+
+  @override
+  String get commonYes => 'Yes';
 
   @override
   String get commonNotes => 'Notes';
@@ -6445,6 +6559,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifDeliveryLogsRetries => 'Retries';
 
   @override
+  String get notifDeliveryStatsTitle => 'Delivery Statistics';
+
+  @override
+  String get notifDeliveryStatsTotal => 'Total Sent';
+
+  @override
+  String get notifDeliveryStatsDelivered => 'Delivered';
+
+  @override
+  String get notifDeliveryStatsFailed => 'Failed';
+
+  @override
+  String get notifDeliveryStatsRate => 'Success Rate';
+
+  @override
+  String get notifDeliveryStatsAvgLatency => 'Avg. Latency';
+
+  @override
   String get notifStatsTotal => 'Total';
 
   @override
@@ -6908,6 +7040,129 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get securityAllowedIpRanges => 'Allowed IP Ranges:';
+
+  @override
+  String get securityEditPolicy => 'Edit Policy';
+
+  @override
+  String get securitySavePolicy => 'Save Policy';
+
+  @override
+  String get securityCancelEdit => 'Cancel';
+
+  @override
+  String get securityFilterByAction => 'Filter by Action';
+
+  @override
+  String get securityFilterBySeverity => 'Filter by Severity';
+
+  @override
+  String get securityFilterByType => 'Filter by Type';
+
+  @override
+  String get securityFilterByStatus => 'Filter by Status';
+
+  @override
+  String get securityAllActions => 'All Actions';
+
+  @override
+  String get securityAllSeverities => 'All Severities';
+
+  @override
+  String get securityAllStatuses => 'All Statuses';
+
+  @override
+  String get securityAllTypes => 'All Types';
+
+  @override
+  String get securityPinOverrideTitle => 'Manager Authorization Required';
+
+  @override
+  String get securityManagerAuthorization =>
+      'Enter a manager PIN to authorize this action.';
+
+  @override
+  String get securityEnterPin => 'Enter PIN';
+
+  @override
+  String get securityPinOverrideError =>
+      'Authorization failed. Please try again.';
+
+  @override
+  String get securityPinOverrideInvalidPin => 'Invalid PIN. Please try again.';
+
+  @override
+  String get securityPinOverrideLockout =>
+      'Too many attempts. Please wait before trying again.';
+
+  @override
+  String get securityPolicyUpdated => 'Security policy updated successfully.';
+
+  @override
+  String get securityPolicyUpdateError => 'Failed to update security policy.';
+
+  @override
+  String get securityIncidentStatusOpen => 'Open';
+
+  @override
+  String get securityIncidentStatusResolved => 'Resolved';
+
+  @override
+  String get securitySessionStatusActive => 'Active';
+
+  @override
+  String get securitySessionStatusExpired => 'Expired';
+
+  @override
+  String get securitySessionStatusRevoked => 'Revoked';
+
+  @override
+  String get securitySessionStatusClosed => 'Closed';
+
+  @override
+  String get securityLoginType => 'Type';
+
+  @override
+  String get securityLoginStatus => 'Status';
+
+  @override
+  String get securityLoginUser => 'User';
+
+  @override
+  String get securityLoginIp => 'IP Address';
+
+  @override
+  String get securityLoginTime => 'Time';
+
+  @override
+  String get securityLoginUserAgent => 'Device / User Agent';
+
+  @override
+  String get securityPinMinLength => 'Min PIN Length';
+
+  @override
+  String get securityPinMaxLength => 'Max PIN Length';
+
+  @override
+  String get securityInSeconds => 'in seconds';
+
+  @override
+  String get securityInMinutes => 'in minutes';
+
+  @override
+  String get securityInHours => 'in hours';
+
+  @override
+  String get securityInDays => 'in days';
+
+  @override
+  String get securityZeroMeansNeverExpires => '0 = never expires';
+
+  @override
+  String get securityAddIpRange => 'Add IP Range';
+
+  @override
+  String get securityAddButton => 'Add';
 
   @override
   String get sessionsCloseSession => 'Close Session';
@@ -13086,6 +13341,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportsLoyaltyPoints => 'Loyalty Points';
 
   @override
+  String get reportsLoyaltyBalance => 'Loyalty Balance';
+
+  @override
+  String get reportsLoyaltyRedeemed => 'Points Redeemed';
+
+  @override
+  String get customerReportsNewVsReturning => 'New vs Returning';
+
+  @override
+  String get customerReportsLoyalty => 'Loyalty';
+
+  @override
+  String get reportsReturning30d => 'Returning (30d)';
+
+  @override
+  String get reportsOrderSource => 'Order Source';
+
+  @override
+  String get reportsOrderSourcePos => 'POS';
+
+  @override
+  String get reportsOrderSourceDelivery => 'Delivery';
+
+  @override
+  String get reportsOrderSourceOnline => 'Online';
+
+  @override
+  String get reportsOrderSourcePhone => 'Phone';
+
+  @override
   String get reportsAverages => 'Averages';
 
   @override
@@ -14024,6 +14309,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get electronicsImei => 'IMEI';
+
+  @override
+  String get electronicsInvalidImei =>
+      'Invalid IMEI (must be 15 digits, Luhn check failed)';
+
+  @override
+  String get electronicsCheckImeiServer => 'Check Duplicate';
+
+  @override
+  String get electronicsImeiDuplicate => 'IMEI already registered';
+
+  @override
+  String get electronicsImeiUnique => 'IMEI is unique';
 
   @override
   String get electronicsImeiHint => '15-digit IMEI number';
@@ -15820,10 +16118,350 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupAutoSettings => 'Auto-Backup Settings';
 
   @override
+  String get backupEnableAutoBackup => 'Enable Auto-Backup';
+
+  @override
+  String get backupEnableAutoBackupHint =>
+      'Automatically create backups on a scheduled interval.';
+
+  @override
   String get backupNoLoaded => 'No backups loaded';
 
   @override
+  String get backupNow => 'Backup Now';
+
+  @override
+  String get backupNowTitle => 'Create Manual Backup';
+
+  @override
+  String get backupNowHint =>
+      'This will create a full backup of your store data.';
+
+  @override
+  String get backupTerminalId => 'Terminal ID';
+
+  @override
+  String get backupEncryptThisBackup => 'Encrypt this backup';
+
+  @override
+  String get backupTypeLabel => 'Backup Type';
+
+  @override
+  String get backupTypeAuto => 'Automatic';
+
+  @override
+  String get backupTypeManual => 'Manual';
+
+  @override
+  String get backupTypePreUpdate => 'Pre-Update';
+
+  @override
+  String get backupStatusCompleted => 'Completed';
+
+  @override
+  String get backupStatusFailed => 'Failed';
+
+  @override
+  String get backupStatusCorrupted => 'Corrupted';
+
+  @override
+  String get backupStatusInProgress => 'In Progress';
+
+  @override
+  String get backupStorageLocal => 'Local';
+
+  @override
+  String get backupStorageCloud => 'Cloud';
+
+  @override
+  String get backupStorageBoth => 'Local & Cloud';
+
+  @override
+  String get backupFrequencyHourly => 'Hourly';
+
+  @override
+  String get backupFrequencyDaily => 'Daily';
+
+  @override
+  String get backupFrequencyWeekly => 'Weekly';
+
+  @override
+  String get backupColType => 'Type';
+
+  @override
+  String get backupColDate => 'Date';
+
+  @override
+  String get backupColSize => 'Size';
+
+  @override
+  String get backupColLocation => 'Location';
+
+  @override
+  String get backupColStatus => 'Status';
+
+  @override
+  String get backupColVerified => 'Verified';
+
+  @override
+  String get backupFilterType => 'Filter by type';
+
+  @override
+  String get backupFilterStatus => 'Filter by status';
+
+  @override
+  String get backupFilterAllTypes => 'All Types';
+
+  @override
+  String get backupFilterAllStatuses => 'All Statuses';
+
+  @override
+  String get backupVerified => 'Verified';
+
+  @override
+  String get backupNotVerified => 'Not Verified';
+
+  @override
+  String get backupEncrypt => 'Encrypt Backups';
+
+  @override
+  String get backupLocalEnabled => 'Local Backup Enabled';
+
+  @override
+  String get backupCloudEnabled => 'Cloud Backup Enabled';
+
+  @override
+  String get backupRetentionDays => 'Retention Period (days)';
+
+  @override
+  String get backupBackupHour => 'Backup Hour (0–23)';
+
+  @override
+  String get backupNextScheduled => 'Next Scheduled';
+
+  @override
+  String get backupLastBackup => 'Last Backup';
+
+  @override
+  String get backupLastAutoBackup => 'Last Auto Backup';
+
+  @override
+  String get backupTotalBackups => 'Total Backups';
+
+  @override
+  String get backupTotalSize => 'Total Size';
+
+  @override
+  String get backupStorageUsed => 'Storage Used';
+
+  @override
+  String get backupQuota => 'Quota';
+
+  @override
+  String get backupUsagePercent => 'Usage';
+
+  @override
+  String get backupByType => 'Breakdown by Type';
+
+  @override
+  String get backupRecentBackups => 'Recent Backups';
+
+  @override
+  String get backupSaveSchedule => 'Save Schedule';
+
+  @override
+  String get backupScheduleSaved => 'Schedule saved successfully';
+
+  @override
+  String get backupScheduleSaveError => 'Failed to save schedule';
+
+  @override
+  String get backupRestoreWizard => 'Restore Wizard';
+
+  @override
+  String get backupRestoreStep1 => 'Select Backup';
+
+  @override
+  String get backupRestoreStep2 => 'Verify Integrity';
+
+  @override
+  String get backupRestoreStep3 => 'Confirm Restore';
+
+  @override
+  String get backupRestoreStep4 => 'Restore Progress';
+
+  @override
+  String get backupRestoreStep5 => 'Complete';
+
+  @override
+  String get backupSelectForRestore => 'Select a backup to restore';
+
+  @override
+  String get backupOnlyCompletedRestore =>
+      'Only completed and verified backups can be restored';
+
+  @override
+  String get backupVerifyStep => 'Verify Integrity';
+
+  @override
+  String get backupVerifySuccess => 'Backup integrity verified';
+
+  @override
+  String get backupVerifyFailed =>
+      'Integrity check failed — backup may be corrupted';
+
+  @override
+  String get backupVerifyChecksum => 'Checksum';
+
+  @override
+  String get backupConfirmRestore => 'Confirm Restore';
+
+  @override
+  String get backupRestoreWarning =>
+      '⚠️ This will overwrite all current data. This action cannot be undone. We strongly recommend creating a pre-restore backup.';
+
+  @override
+  String get backupCreatePreRestoreBackup => 'Create a backup before restoring';
+
+  @override
+  String get backupEstimatedDuration => 'Estimated duration';
+
+  @override
+  String backupEstimatedDurationSeconds(String seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get backupRestoreProgress => 'Restoring...';
+
+  @override
+  String get backupRestoreComplete => 'Restore Completed';
+
+  @override
+  String get backupRestoreFailed => 'Restore Failed';
+
+  @override
+  String get backupRestoreInitiated =>
+      'Restore has been initiated. The system will apply the backup.';
+
+  @override
+  String get backupRequiresMigration =>
+      'This backup requires a database migration';
+
+  @override
+  String get backupStartRestore => 'Start Restore';
+
+  @override
+  String get backupExportData => 'Export Data';
+
+  @override
+  String get backupExportTables => 'Select Tables to Export';
+
+  @override
+  String get backupExportTableProducts => 'Products';
+
+  @override
+  String get backupExportTableCustomers => 'Customers';
+
+  @override
+  String get backupExportTableOrders => 'Orders';
+
+  @override
+  String get backupExportTableInventory => 'Inventory';
+
+  @override
+  String get backupExportTableSettings => 'Settings';
+
+  @override
+  String get backupExportTableStaff => 'Staff';
+
+  @override
+  String get backupExportTableCategories => 'Categories';
+
+  @override
+  String get backupExportFormat => 'Export Format';
+
+  @override
+  String get backupExportFormatJson => 'JSON';
+
+  @override
+  String get backupExportFormatCsv => 'CSV';
+
+  @override
+  String get backupExportIncludeImages => 'Include Images';
+
+  @override
+  String get backupExportIncludeImagesDesc =>
+      'Attach image files (increases export size)';
+
+  @override
+  String get backupExportResult => 'Export Result';
+
+  @override
+  String get backupExportId => 'Export ID';
+
+  @override
+  String get backupExportFilePath => 'File Path';
+
+  @override
+  String get backupExportTotalRecords => 'Total Records';
+
+  @override
+  String get backupExportSuccess => 'Export created successfully';
+
+  @override
+  String get backupExportError => 'Export failed. Please try again.';
+
+  @override
+  String get backupExportStarted => 'Starting export...';
+
+  @override
+  String get backupDeleteConfirmTitle => 'Delete Backup?';
+
+  @override
+  String get backupDeleteConfirmMessage =>
+      'This will permanently delete this backup file. This cannot be undone.';
+
+  @override
+  String get backupDeleteSuccess => 'Backup deleted';
+
+  @override
+  String get backupDeleteError => 'Failed to delete backup';
+
+  @override
+  String backupRecordsCount(String count) {
+    return '$count records';
+  }
+
+  @override
+  String get backupDbVersion => 'DB Version';
+
+  @override
+  String get backupChecksum => 'Checksum';
+
+  @override
+  String get backupEncrypted => 'Encrypted';
+
+  @override
+  String get backupProviderStatus => 'Provider Status';
+
+  @override
+  String get backupNoProvidersConnected => 'No providers connected';
+
+  @override
   String get securityNoAuditLogs => 'No audit logs found.';
+
+  @override
+  String get securityExportCsv => 'Export CSV';
+
+  @override
+  String get securityExporting => 'Exporting...';
+
+  @override
+  String get securityExportSuccess => 'Audit log exported successfully.';
+
+  @override
+  String get securityExportError => 'Export failed. Please try again.';
 
   @override
   String get marketplaceContinue => 'Continue';
@@ -17044,4 +17682,604 @@ class AppLocalizationsEn extends AppLocalizations {
   String zatcaTamperedDevices(int count) {
     return '$count tampered devices';
   }
+
+  @override
+  String get reportsScheduledTitle => 'Scheduled Reports';
+
+  @override
+  String get reportsSlowMoversTab => 'Slow Movers';
+
+  @override
+  String get reportsMarginAnalysis => 'Margin Analysis';
+
+  @override
+  String get reportsCategoryContribution => 'Category Contribution';
+
+  @override
+  String get reportsNoSlowMovers => 'No slow-moving products found';
+
+  @override
+  String reportsSlowMoversCount(int count) {
+    return '$count slow mover(s)';
+  }
+
+  @override
+  String get reportsAvgMargin => 'Avg. Margin';
+
+  @override
+  String get reportsNoMarginData => 'No margin data available';
+
+  @override
+  String get reportsNoCategoryContribution => 'No category data available';
+
+  @override
+  String get reportsExportPdf => 'Export PDF';
+
+  @override
+  String get reportsExportCsv => 'Export CSV';
+
+  @override
+  String get reportsExportFormatTitle => 'Export Format';
+
+  @override
+  String get reportsExportGenerating => 'Generating report…';
+
+  @override
+  String get reportsExportSuccess => 'Report exported successfully';
+
+  @override
+  String get reportsExportFailed => 'Export failed. Please try again.';
+
+  @override
+  String get reportsScheduledCreate => 'Create Schedule';
+
+  @override
+  String get reportsScheduledName => 'Schedule Name';
+
+  @override
+  String get reportsScheduledFrequency => 'Frequency';
+
+  @override
+  String get reportsScheduledRecipients =>
+      'Recipients (comma-separated emails)';
+
+  @override
+  String get reportsScheduledDaily => 'Daily';
+
+  @override
+  String get reportsScheduledWeekly => 'Weekly';
+
+  @override
+  String get reportsScheduledMonthly => 'Monthly';
+
+  @override
+  String reportsScheduledNext(String date) {
+    return 'Next: $date';
+  }
+
+  @override
+  String reportsScheduledLast(String date) {
+    return 'Last: $date';
+  }
+
+  @override
+  String get reportsScheduledDelete => 'Delete Schedule';
+
+  @override
+  String reportsScheduledDeleteConfirm(String name) {
+    return 'Delete schedule \"$name\"?';
+  }
+
+  @override
+  String get reportsScheduledEmpty => 'No scheduled reports yet';
+
+  @override
+  String get reportsScheduledFormat => 'Format';
+
+  @override
+  String get reportsComparePeriod => 'Period Comparison';
+
+  @override
+  String get reportsCompareFrom => 'From';
+
+  @override
+  String get reportsCompareTo => 'To';
+
+  @override
+  String get reportsExpiryTab => 'Expiry';
+
+  @override
+  String reportsExpiryDate(String date) {
+    return 'Expires: $date';
+  }
+
+  @override
+  String reportsExpiryDaysLeft(int days) {
+    return '$days days left';
+  }
+
+  @override
+  String get reportsExpiryExpired => 'Expired';
+
+  @override
+  String get reportsExpiryCritical => 'Critical (≤7 days)';
+
+  @override
+  String get reportsExpiryWarning => 'Warning (≤30 days)';
+
+  @override
+  String get reportsNoExpiryData => 'No expiry data available';
+
+  @override
+  String get reportsDeliveryCommission => 'Delivery Commission';
+
+  @override
+  String get reportsDeliveryPlatform => 'Platform';
+
+  @override
+  String get reportsDeliveryOrders => 'Orders';
+
+  @override
+  String get reportsDeliveryGross => 'Gross Sales';
+
+  @override
+  String get reportsDeliveryFee => 'Commission Fee';
+
+  @override
+  String get reportsDeliveryNet => 'Net Sales';
+
+  @override
+  String get reportsNoDeliveryData => 'No delivery commission data';
+
+  @override
+  String get reportsAutoRefreshing => 'Auto-refreshing every 60s';
+
+  @override
+  String reportsLastRefreshed(String time) {
+    return 'Last refreshed: $time';
+  }
+
+  @override
+  String get reportsSubscriptionRequired =>
+      'Upgrade required to access this report';
+
+  @override
+  String get reportsUpgradeRequired =>
+      'This feature is available on higher plans';
+
+  @override
+  String get reportsNoSchedulesYet => 'No scheduled reports yet';
+
+  @override
+  String reportNDays(int days) {
+    return '$days days';
+  }
+
+  @override
+  String reportNInStock(int n) {
+    return '$n in stock';
+  }
+
+  @override
+  String get reportsBestSellers => 'Best Sellers';
+
+  @override
+  String get reportsType => 'Report Type';
+
+  @override
+  String get bakeryEditCakeOrder => 'Edit Cake Order';
+
+  @override
+  String get bakeryNewCakeOrder => 'New Cake Order';
+
+  @override
+  String get bakeryUpdateOrder => 'Update Order';
+
+  @override
+  String get bakeryCreateOrder => 'Create Order';
+
+  @override
+  String get bakeryEditRecipe => 'Edit Recipe';
+
+  @override
+  String get bakeryUpdateRecipe => 'Update Recipe';
+
+  @override
+  String get bakeryCreateRecipe => 'Create Recipe';
+
+  @override
+  String get electronicsEditImeiRecord => 'Edit IMEI Record';
+
+  @override
+  String get electronicsNewImeiRecord => 'New IMEI Record';
+
+  @override
+  String get electronicsUpdateRecord => 'Update Record';
+
+  @override
+  String get electronicsCreateRecord => 'Create Record';
+
+  @override
+  String get electronicsEditRepairJob => 'Edit Repair Job';
+
+  @override
+  String get electronicsUpdateJob => 'Update Job';
+
+  @override
+  String get electronicsCreateJob => 'Create Job';
+
+  @override
+  String get floristEditArrangement => 'Edit Arrangement';
+
+  @override
+  String get floristNewArrangementTitle => 'New Arrangement';
+
+  @override
+  String get floristUpdateArrangement => 'Update Arrangement';
+
+  @override
+  String get floristCreateArrangement => 'Create Arrangement';
+
+  @override
+  String get floristNewSubscription => 'New Subscription';
+
+  @override
+  String get floristEditSubscription => 'Edit Subscription';
+
+  @override
+  String get floristUpdateSubscription => 'Update Subscription';
+
+  @override
+  String get floristCreateSubscription => 'Create Subscription';
+
+  @override
+  String get jewelryEditProductDetail => 'Edit Product Detail';
+
+  @override
+  String get jewelryPriceCalculator => 'Price Calculator';
+
+  @override
+  String get jewelrySelectRate => 'Select Metal Rate';
+
+  @override
+  String get sarPerGram => 'SAR/g';
+
+  @override
+  String get jewelryPercentage => 'Percentage';
+
+  @override
+  String get jewelryFlat => 'Flat';
+
+  @override
+  String get jewelryPerGram => 'Per Gram';
+
+  @override
+  String get jewelryCalculatedPrice => 'Calculated Price';
+
+  @override
+  String get jewelryNewProductDetail => 'New Jewelry Detail';
+
+  @override
+  String get jewelryUpdateDetail => 'Update Detail';
+
+  @override
+  String get jewelryCreateDetail => 'Create Detail';
+
+  @override
+  String get pharmacyEditPrescription => 'Edit Prescription';
+
+  @override
+  String get pharmacyUpdatePrescription => 'Update Prescription';
+
+  @override
+  String get pharmacyCreatePrescription => 'Create Prescription';
+
+  @override
+  String get pharmacyEditDrugSchedule => 'Edit Drug Schedule';
+
+  @override
+  String get pharmacyNewDrugSchedule => 'New Drug Schedule';
+
+  @override
+  String get pharmacyUpdateSchedule => 'Update Schedule';
+
+  @override
+  String get pharmacyCreateSchedule => 'Create Schedule';
+
+  @override
+  String get restaurantUpdateReservation => 'Update Reservation';
+
+  @override
+  String get restaurantCreateReservation => 'Create Reservation';
+
+  @override
+  String get restaurantEditTable => 'Edit Table';
+
+  @override
+  String get restaurantUpdateTable => 'Update Table';
+
+  @override
+  String get restaurantCreateTable => 'Create Table';
+
+  @override
+  String get paymentListTitle => 'Payment History';
+
+  @override
+  String get paymentListFilters => 'Filters';
+
+  @override
+  String get paymentListEmpty => 'No payments found';
+
+  @override
+  String get paymentListSearchHint => 'Search transactions...';
+
+  @override
+  String get paymentListDateRange => 'Date range';
+
+  @override
+  String get paymentListMethod => 'Method';
+
+  @override
+  String get paymentListStatus => 'Status';
+
+  @override
+  String get paymentListRefund => 'Refund';
+
+  @override
+  String get paymentListInfoMessage =>
+      'Browse and filter all payment transactions. Tap a row to view details or process a refund.';
+
+  @override
+  String get paymentStatusCompleted => 'Completed';
+
+  @override
+  String get paymentStatusRefunded => 'Refunded';
+
+  @override
+  String get paymentStatusPartialRefund => 'Partial Refund';
+
+  @override
+  String get paymentStatusFailed => 'Failed';
+
+  @override
+  String get paymentDetailTitle => 'Payment Details';
+
+  @override
+  String get paymentDetailInfo => 'Transaction Info';
+
+  @override
+  String get paymentDetailMethod => 'Method';
+
+  @override
+  String get paymentDetailAmount => 'Amount';
+
+  @override
+  String get paymentDetailCashTendered => 'Cash Tendered';
+
+  @override
+  String get paymentDetailChange => 'Change';
+
+  @override
+  String get paymentDetailTip => 'Tip';
+
+  @override
+  String get paymentDetailStatus => 'Status';
+
+  @override
+  String get paymentDetailTransactionId => 'Transaction ID';
+
+  @override
+  String get paymentDetailCard => 'Card';
+
+  @override
+  String get paymentDetailGiftCard => 'Gift Card';
+
+  @override
+  String get paymentDetailDate => 'Date';
+
+  @override
+  String get paymentDetailRefunds => 'Refund History';
+
+  @override
+  String get paymentDetailNoRefunds => 'No refunds for this payment';
+
+  @override
+  String get refundAmount => 'Refund Amount';
+
+  @override
+  String get refundMethod => 'Refund Method';
+
+  @override
+  String get refundReference => 'Reference Number';
+
+  @override
+  String get refundSubmit => 'Process Refund';
+
+  @override
+  String get refundCreatedSuccess => 'Refund processed successfully';
+
+  @override
+  String get giftCardManage => 'Manage';
+
+  @override
+  String get giftCardManageEmpty => 'No gift cards found';
+
+  @override
+  String get giftCardManageFilterStatus => 'Filter by status';
+
+  @override
+  String get giftCardDeactivateTitle => 'Deactivate Gift Card';
+
+  @override
+  String giftCardDeactivateConfirm(String code) {
+    return 'Are you sure you want to deactivate gift card $code?';
+  }
+
+  @override
+  String get giftCardDeactivateAction => 'Deactivate';
+
+  @override
+  String get giftCardDeactivatedSuccess => 'Gift card deactivated';
+
+  @override
+  String get giftCardStatusActive => 'Active';
+
+  @override
+  String get giftCardStatusRedeemed => 'Redeemed';
+
+  @override
+  String get giftCardStatusExpired => 'Expired';
+
+  @override
+  String get giftCardStatusDeactivated => 'Deactivated';
+
+  @override
+  String get expenseEditTitle => 'Edit Expense';
+
+  @override
+  String get expenseDeleteTitle => 'Delete Expense';
+
+  @override
+  String get expenseDeleteConfirm =>
+      'Are you sure you want to delete this expense?';
+
+  @override
+  String get expenseDeletedSuccess => 'Expense deleted';
+
+  @override
+  String get expenseUpdatedSuccess => 'Expense updated';
+
+  @override
+  String get expensesInfoMessage =>
+      'Track and manage all store expenses. Swipe left to delete, tap the edit icon to update.';
+
+  @override
+  String get cashSessionDetailTitle => 'Session Detail';
+
+  @override
+  String get cashSessionEventsTab => 'Cash Events';
+
+  @override
+  String get cashSessionExpensesTab => 'Expenses';
+
+  @override
+  String get cashSessionNoEvents => 'No cash events in this session';
+
+  @override
+  String get cashSessionNoExpenses => 'No expenses in this session';
+
+  @override
+  String get cashSessionOpenFloat => 'Opening Float';
+
+  @override
+  String get cashSessionExpectedCash => 'Expected Cash';
+
+  @override
+  String get cashSessionVariance => 'Variance';
+
+  @override
+  String get cashSessionOpenedAt => 'Opened';
+
+  @override
+  String get cashSessionClosedAt => 'Closed';
+
+  @override
+  String get cashSessionsInfoMessage =>
+      'View all cash sessions and their details. Tap a session to see cash events and expenses.';
+
+  @override
+  String get dailySummaryExpensesBreakdown => 'Expenses by Category';
+
+  @override
+  String get dailySummaryNoExpenses => 'No expenses recorded';
+
+  @override
+  String get dailySummaryInfoMessage =>
+      'View today\'s sales summary including revenue, expenses, and session data.';
+
+  @override
+  String get finReconInfoMessage =>
+      'Review and confirm financial reconciliation for a date range. Export PDF for records.';
+
+  @override
+  String get allCategories => 'All Categories';
+
+  @override
+  String get syncConnecting => 'Connecting to server...';
+
+  @override
+  String get syncCheckingConnectivity => 'Checking connectivity...';
+
+  @override
+  String get syncNoInternet =>
+      'No internet connection. Please connect and try again.';
+
+  @override
+  String get syncDownloadingData => 'Downloading data...';
+
+  @override
+  String get syncPerformingFullSync => 'Performing full sync...';
+
+  @override
+  String get syncReady => 'Ready!';
+
+  @override
+  String get syncSettingUp => 'Setting Up';
+
+  @override
+  String get syncConnected => 'Connected';
+
+  @override
+  String get syncOfflineStatus => 'Offline';
+
+  @override
+  String syncPendingCount(int count) {
+    return '$count pending';
+  }
+
+  @override
+  String syncLastSyncInfo(String direction, int records) {
+    return 'Last sync: $direction · $records records';
+  }
+
+  @override
+  String syncPendingConflictsCount(int count) {
+    return '$count conflicts';
+  }
+
+  @override
+  String syncFailedCount(int count) {
+    return '$count failed';
+  }
+
+  @override
+  String get syncLogsTitle => 'Sync Logs';
+
+  @override
+  String get syncLogsEmpty => 'No sync logs yet';
+
+  @override
+  String get syncLogsFilterDirection => 'Direction';
+
+  @override
+  String get syncLogsFilterStatus => 'Status';
+
+  @override
+  String get syncLogsTerminal => 'Terminal';
+
+  @override
+  String syncLogsDuration(int ms) {
+    return '${ms}ms';
+  }
+
+  @override
+  String syncLogsRecordsCount(int count) {
+    return '$count records';
+  }
+
+  @override
+  String get syncLogHistory => 'Sync Log History';
+
+  @override
+  String get viewAllLogs => 'View All Logs';
 }

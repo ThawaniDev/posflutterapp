@@ -61,4 +61,16 @@ class LabelApiService {
   Future<void> recordPrint(Map<String, dynamic> data) async {
     await _dio.post(ApiEndpoints.labelPrintHistory, data: data);
   }
+
+  Future<LabelTemplate> duplicateTemplate(String id) async {
+    final response = await _dio.post('${ApiEndpoints.labelTemplates}/$id/duplicate');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return LabelTemplate.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<LabelTemplate> setDefaultTemplate(String id) async {
+    final response = await _dio.post('${ApiEndpoints.labelTemplates}/$id/set-default');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return LabelTemplate.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
 }

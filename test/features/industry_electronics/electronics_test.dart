@@ -28,7 +28,7 @@ void main() {
 
   group('RepairJobStatus', () {
     test('all values', () {
-      expect(RepairJobStatus.values, hasLength(7));
+      expect(RepairJobStatus.values, hasLength(8));
       expect(RepairJobStatus.received.value, 'received');
       expect(RepairJobStatus.diagnosing.value, 'diagnosing');
       expect(RepairJobStatus.repairing.value, 'repairing');

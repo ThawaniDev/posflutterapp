@@ -45,6 +45,39 @@ class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
       state = LabelTemplatesError(message: _extractError(e));
     }
   }
+
+  Future<bool> duplicateTemplate(String id) async {
+    try {
+      final copy = await _repo.duplicateTemplate(id);
+      if (state is LabelTemplatesLoaded) {
+        final current = (state as LabelTemplatesLoaded).templates;
+        state = (state as LabelTemplatesLoaded).copyWith(templates: [...current, copy]);
+      }
+      return true;
+    } on DioException catch (e) {
+      state = LabelTemplatesError(message: _extractError(e));
+      return false;
+    }
+  }
+
+  Future<bool> setDefaultTemplate(String id) async {
+    try {
+      final updated = await _repo.setDefaultTemplate(id);
+      if (state is LabelTemplatesLoaded) {
+        final current = (state as LabelTemplatesLoaded).templates;
+        final newList = current.map((t) {
+          if (t.id == updated.id) return updated;
+          if (t.isDefault == true) return t.copyWith(isDefault: false);
+          return t;
+        }).toList();
+        state = (state as LabelTemplatesLoaded).copyWith(templates: newList);
+      }
+      return true;
+    } on DioException catch (e) {
+      state = LabelTemplatesError(message: _extractError(e));
+      return false;
+    }
+  }
 }
 
 // ─── Label Detail Provider ──────────────────────────────────────

@@ -309,7 +309,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                   itemCount: notifications.length,
-                  separatorBuilder: (_, __) => AppSpacing.gapH8,
+                  separatorBuilder: (_, _) => AppSpacing.gapH8,
                   itemBuilder: (context, index) => _buildNotificationCard(notifications[index], isDark),
                 ),
               ),

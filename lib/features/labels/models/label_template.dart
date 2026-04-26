@@ -10,6 +10,7 @@ class LabelTemplate {
     this.isPreset,
     this.isDefault,
     this.createdBy,
+    this.createdByName,
     this.syncVersion,
     this.createdAt,
     this.updatedAt,
@@ -26,6 +27,7 @@ class LabelTemplate {
       isPreset: json['is_preset'] as bool?,
       isDefault: json['is_default'] as bool?,
       createdBy: json['created_by'] as String?,
+      createdByName: json['created_by_name'] as String?,
       syncVersion: (json['sync_version'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
@@ -40,6 +42,7 @@ class LabelTemplate {
   final bool? isPreset;
   final bool? isDefault;
   final String? createdBy;
+  final String? createdByName;
   final int? syncVersion;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -55,6 +58,7 @@ class LabelTemplate {
       'is_preset': isPreset,
       'is_default': isDefault,
       'created_by': createdBy,
+      'created_by_name': createdByName,
       'sync_version': syncVersion,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
@@ -71,6 +75,7 @@ class LabelTemplate {
     bool? isPreset,
     bool? isDefault,
     String? createdBy,
+    String? createdByName,
     int? syncVersion,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -85,6 +90,7 @@ class LabelTemplate {
       isPreset: isPreset ?? this.isPreset,
       isDefault: isDefault ?? this.isDefault,
       createdBy: createdBy ?? this.createdBy,
+      createdByName: createdByName ?? this.createdByName,
       syncVersion: syncVersion ?? this.syncVersion,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

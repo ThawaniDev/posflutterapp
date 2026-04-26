@@ -30,7 +30,7 @@ void main() {
 
   group('KitchenTicketStatus', () {
     test('all values', () {
-      expect(KitchenTicketStatus.values, hasLength(4));
+      expect(KitchenTicketStatus.values, hasLength(6));
       expect(KitchenTicketStatus.pending.value, 'pending');
       expect(KitchenTicketStatus.preparing.value, 'preparing');
       expect(KitchenTicketStatus.ready.value, 'ready');

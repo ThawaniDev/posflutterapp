@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_page_scaffolds.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/services/upgrade_prompt_service.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Shared Report Widgets — consistent look across all report pages
@@ -44,7 +46,6 @@ class ReportDateBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
@@ -420,7 +421,6 @@ class ReportComparisonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final diff = yesterdayVal > 0 ? ((todayVal - yesterdayVal) / yesterdayVal * 100) : 0.0;
     final isPositive = diff >= 0;
     final changeColor = isPositive ? AppColors.success : AppColors.error;
@@ -544,6 +544,7 @@ class ReportPageScaffold extends StatelessWidget {
     this.onRefresh,
     required this.body,
     this.bottom,
+    this.actions,
   });
   final String title;
   final Widget? filterPanel;
@@ -553,12 +554,14 @@ class ReportPageScaffold extends StatelessWidget {
   final VoidCallback? onRefresh;
   final Widget body;
   final PreferredSizeWidget? bottom;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return PosListPage(
       title: title,
       showSearch: false,
+      actions: actions,
       child: Column(
         children: [
           ?bottom,
@@ -615,5 +618,62 @@ class ReportKpiGrid extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+// ─── Report Error Body ───────────────────────────────────────
+/// Shows an upgrade prompt for subscription_required errors,
+/// otherwise shows the standard PosErrorState.
+
+class ReportErrorBody extends ConsumerWidget {
+  const ReportErrorBody({
+    super.key,
+    required this.message,
+    required this.featureKey,
+    required this.featureName,
+    required this.onRetry,
+  });
+  final String message;
+  final String featureKey;
+  final String featureName;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (message == 'subscription_required') {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.lock_rounded, size: 56, color: AppColors.warning),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.reportsSubscriptionRequired,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                AppLocalizations.of(context)!.reportsUpgradeRequired,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              PosButton(
+                label: AppLocalizations.of(context)!.subscriptionUpgrade,
+                onPressed: () => ref.read(upgradePromptServiceProvider).showFeatureGatePrompt(
+                  context: context,
+                  featureKey: featureKey,
+                  featureName: featureName,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    return PosErrorState(message: message, onRetry: onRetry);
   }
 }

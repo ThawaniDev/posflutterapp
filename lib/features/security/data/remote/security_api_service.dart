@@ -63,6 +63,26 @@ class SecurityApiService {
     return res.data as Map<String, dynamic>;
   }
 
+  /// Returns CSV content as a string.
+  Future<String> exportAuditLogs({
+    required String storeId,
+    String? action,
+    String? severity,
+    String? since,
+  }) async {
+    final res = await _dio.get(
+      ApiEndpoints.securityAuditLogsExport,
+      queryParameters: {
+        'store_id': storeId,
+        if (action != null) 'action': action,
+        if (severity != null) 'severity': severity,
+        if (since != null) 'since': since,
+      },
+      options: Options(responseType: ResponseType.plain),
+    );
+    return res.data as String;
+  }
+
   // ─── Devices ──────────────────────────────────────────────
 
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) async {
@@ -177,8 +197,14 @@ class SecurityApiService {
     return res.data as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> endAllSessions({required String storeId}) async {
-    final res = await _dio.post(ApiEndpoints.securitySessionsEndAll, data: {'store_id': storeId});
+  Future<Map<String, dynamic>> endAllSessions({required String storeId, String? userId}) async {
+    final res = await _dio.post(
+      ApiEndpoints.securitySessionsEndAll,
+      data: {
+        'store_id': storeId,
+        if (userId != null) 'user_id': userId,
+      },
+    );
     return res.data as Map<String, dynamic>;
   }
 
@@ -205,6 +231,38 @@ class SecurityApiService {
     final res = await _dio.put(
       ApiEndpoints.securityIncidentResolve(incidentId),
       data: {'resolution_notes': ?resolutionNotes},
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  // ─── PIN Override ──────────────────────────────────────────
+
+  /// Authorize a PIN override by entering an authorizing manager's PIN.
+  Future<Map<String, dynamic>> requestPinOverride({
+    required String storeId,
+    required String requestingUserId,
+    required String pin,
+    required String permissionCode,
+    Map<String, dynamic>? actionContext,
+  }) async {
+    final res = await _dio.post(
+      ApiEndpoints.pinOverride,
+      data: {
+        'store_id': storeId,
+        'requesting_user_id': requestingUserId,
+        'pin': pin,
+        'permission_code': permissionCode,
+        if (actionContext != null) 'action_context': actionContext,
+      },
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  /// Get PIN override history for the store.
+  Future<Map<String, dynamic>> getPinOverrideHistory({required String storeId, int limit = 50}) async {
+    final res = await _dio.get(
+      ApiEndpoints.pinOverrideHistory,
+      queryParameters: {'store_id': storeId, 'limit': limit},
     );
     return res.data as Map<String, dynamic>;
   }

@@ -30,6 +30,10 @@ enum PaymentMethodKey {
 
   static PaymentMethodKey? tryFromValue(String? value) {
     if (value == null) return null;
-    return fromValue(value);
+    try {
+      return PaymentMethodKey.values.firstWhere((e) => e.value == value);
+    } catch (_) {
+      return null;
+    }
   }
 }

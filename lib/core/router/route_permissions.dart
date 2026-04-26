@@ -147,6 +147,7 @@ String? permissionForRoute(String path) {
   if (path.startsWith('/predefined-catalog')) return Permissions.productsUsePredefined;
 
   // ── ZATCA ────────────────────────────────────────────
+  if (path.startsWith('/admin/zatca')) return Permissions.zatcaManage;
   if (path.startsWith('/zatca')) return Permissions.zatcaView;
 
   // ── Sync ─────────────────────────────────────────────
@@ -158,8 +159,8 @@ String? permissionForRoute(String path) {
   // ── Security ─────────────────────────────────────────
   if (path.startsWith('/security')) return Permissions.securityViewDashboard;
 
-  // ── Backup ───────────────────────────────────────────
-  if (path.startsWith('/backup')) return Permissions.backupView;
+  // ── Backup (disabled — using service-provider cloud backup) ─────────────
+  // if (path.startsWith('/backup')) return Permissions.backupView;
 
   // ── Companion ────────────────────────────────────────
   if (path.startsWith('/companion')) return Permissions.companionView;

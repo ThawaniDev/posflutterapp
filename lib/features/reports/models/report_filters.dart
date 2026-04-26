@@ -13,6 +13,7 @@ class ReportFilters {
     this.minAmount,
     this.maxAmount,
     this.orderStatus,
+    this.orderSource,
     this.sortBy,
     this.sortDir,
     this.granularity,
@@ -28,6 +29,7 @@ class ReportFilters {
   final double? minAmount;
   final double? maxAmount;
   final String? orderStatus;
+  final String? orderSource;
   final String? sortBy;
   final String? sortDir;
   final String? granularity;
@@ -44,6 +46,7 @@ class ReportFilters {
     double? Function()? minAmount,
     double? Function()? maxAmount,
     String? Function()? orderStatus,
+    String? Function()? orderSource,
     String? Function()? sortBy,
     String? Function()? sortDir,
     String? Function()? granularity,
@@ -60,6 +63,7 @@ class ReportFilters {
       minAmount: minAmount != null ? minAmount() : this.minAmount,
       maxAmount: maxAmount != null ? maxAmount() : this.maxAmount,
       orderStatus: orderStatus != null ? orderStatus() : this.orderStatus,
+      orderSource: orderSource != null ? orderSource() : this.orderSource,
       sortBy: sortBy != null ? sortBy() : this.sortBy,
       sortDir: sortDir != null ? sortDir() : this.sortDir,
       granularity: granularity != null ? granularity() : this.granularity,
@@ -82,6 +86,7 @@ class ReportFilters {
     if (minAmount != null) params['min_amount'] = minAmount;
     if (maxAmount != null) params['max_amount'] = maxAmount;
     if (orderStatus != null) params['order_status'] = orderStatus;
+    if (orderSource != null) params['order_source'] = orderSource;
     if (sortBy != null) params['sort_by'] = sortBy;
     if (sortDir != null) params['sort_dir'] = sortDir;
     if (granularity != null) params['granularity'] = granularity;
@@ -111,6 +116,7 @@ class ReportFilters {
     if (paymentMethod != null) count++;
     if (minAmount != null || maxAmount != null) count++;
     if (orderStatus != null) count++;
+    if (orderSource != null) count++;
     if (granularity != null && granularity != 'daily') count++;
     return count;
   }

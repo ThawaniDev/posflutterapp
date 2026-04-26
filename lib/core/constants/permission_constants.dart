@@ -238,6 +238,7 @@ abstract final class Permissions {
   static const restaurantKds = 'restaurant.kds';
   static const restaurantReservations = 'restaurant.reservations';
   static const restaurantTabs = 'restaurant.tabs';
+  static const restaurantSplitBill = 'restaurant.split_bill';
 
   // ── Wameed AI ────────────────────────────────────────
   static const wameedAiView = 'wameed_ai.view';
@@ -362,7 +363,7 @@ abstract final class Permissions {
     pharmacyView, pharmacyPrescriptions, pharmacyDrugSchedules,
     // restaurant
     restaurantView, restaurantTables, restaurantKds, restaurantReservations,
-    restaurantTabs,
+    restaurantTabs, restaurantSplitBill,
     // wameed_ai
     wameedAiView, wameedAiManage, wameedAiUse,
     // admin wameed_ai

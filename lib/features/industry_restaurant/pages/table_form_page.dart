@@ -81,9 +81,9 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
   @override
   Widget build(BuildContext context) {
     return PosFormPage(
-      title: _isEditing ? 'Edit Table' : 'New Table',
+      title: _isEditing ? l10n.restaurantEditTable : l10n.restaurantNewTable,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Table' : 'Create Table',
+          label: _isEditing ? l10n.restaurantUpdateTable : l10n.restaurantCreateTable,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

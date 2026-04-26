@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
 import 'package:wameedpos/features/security/models/device_registration.dart';
 import 'package:wameedpos/features/security/models/login_attempt.dart';
 import 'package:wameedpos/features/security/models/security_audit_log.dart';
@@ -123,10 +124,10 @@ class LoginAttemptsNotifier extends StateNotifier<LoginAttemptsState> {
   LoginAttemptsNotifier(this._repo) : super(const LoginAttemptsInitial());
   final SecurityRepository _repo;
 
-  Future<void> loadAttempts(String storeId, {String? attemptType}) async {
+  Future<void> loadAttempts(String storeId, {String? attemptType, bool? isSuccessful}) async {
     state = const LoginAttemptsLoading();
     try {
-      final res = await _repo.listLoginAttempts(storeId: storeId, attemptType: attemptType);
+      final res = await _repo.listLoginAttempts(storeId: storeId, attemptType: attemptType, isSuccessful: isSuccessful);
       final raw = res['data'] as Map<String, dynamic>;
       final list = (raw['data'] as List).map((e) => LoginAttempt.fromJson(e as Map<String, dynamic>)).toList();
       state = LoginAttemptsLoaded(list);
@@ -186,13 +187,17 @@ class IncidentListNotifier extends StateNotifier<IncidentListState> {
 // ─── Security Action Provider ──────────────────────────────
 
 final securityActionProvider = StateNotifierProvider<SecurityActionNotifier, SecurityActionState>(
-  (ref) => SecurityActionNotifier(ref.watch(securityRepositoryProvider)),
+  (ref) => SecurityActionNotifier(
+    ref.watch(securityRepositoryProvider),
+    ref.watch(authLocalStorageProvider),
+  ),
 );
 
 class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
 
-  SecurityActionNotifier(this._repo) : super(const SecurityActionInitial());
+  SecurityActionNotifier(this._repo, this._authStorage) : super(const SecurityActionInitial());
   final SecurityRepository _repo;
+  final AuthLocalStorage _authStorage;
 
   Future<void> deactivateDevice(String deviceId) async {
     state = const SecurityActionLoading();
@@ -227,7 +232,8 @@ class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
   Future<void> endAllSessions(String storeId) async {
     state = const SecurityActionLoading();
     try {
-      await _repo.endAllSessions(storeId: storeId);
+      final userId = await _authStorage.getUserId();
+      await _repo.endAllSessions(storeId: storeId, userId: userId);
       state = const SecurityActionSuccess('All sessions ended');
     } catch (e) {
       state = SecurityActionError(e.toString());
@@ -241,6 +247,23 @@ class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
       state = const SecurityActionSuccess('Incident resolved');
     } catch (e) {
       state = SecurityActionError(e.toString());
+    }
+  }
+
+  /// Returns the CSV string on success, null on error (state is set accordingly).
+  Future<String?> exportAuditLogs({
+    required String storeId,
+    String? action,
+    String? severity,
+  }) async {
+    state = const SecurityActionLoading();
+    try {
+      final csv = await _repo.exportAuditLogs(storeId: storeId, action: action, severity: severity);
+      state = const SecurityActionSuccess('export_ok');
+      return csv;
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+      return null;
     }
   }
 

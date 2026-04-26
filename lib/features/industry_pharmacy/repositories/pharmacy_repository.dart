@@ -20,4 +20,7 @@ class PharmacyRepository {
       _apiService.listDrugSchedules(scheduleType: scheduleType, productId: productId, perPage: perPage);
   Future<DrugSchedule> createDrugSchedule(Map<String, dynamic> data) => _apiService.createDrugSchedule(data);
   Future<DrugSchedule> updateDrugSchedule(String id, Map<String, dynamic> data) => _apiService.updateDrugSchedule(id, data);
+
+  Future<({List<Map<String, dynamic>> alerts, int days})> getExpiryAlerts({int days = 90}) =>
+      _apiService.getExpiryAlerts(days: days);
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -17,26 +20,30 @@ class FinancialReconciliationPage extends ConsumerStatefulWidget {
 
 class _FinancialReconciliationPageState extends ConsumerState<FinancialReconciliationPage> {
   late List<DenominationCount> _denominationCounts;
-  DateTime _selectedDate = DateTime.now();
+  DateTime _startDate = DateTime.now().subtract(const Duration(days: 6));
+  DateTime _endDate = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     _denominationCounts = PaymentCalculationService.createDenominationCounts();
-    Future.microtask(() {
-      ref.read(cashSessionsProvider.notifier).load();
-      ref.read(paymentsProvider.notifier).load();
-      ref.read(expensesProvider.notifier).load();
-    });
+    Future.microtask(_reload);
+  }
+
+  String _fmt(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  void _reload() {
+    ref.read(reconciliationProvider.notifier).load(startDate: _fmt(_startDate), endDate: _fmt(_endDate));
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final paymentsState = ref.watch(paymentsProvider);
-    final sessionsState = ref.watch(cashSessionsProvider);
-    final expensesState = ref.watch(expensesProvider);
+    final state = ref.watch(reconciliationProvider);
+    final data = state is ReconciliationLoaded ? state.data : null;
+    final isLoading = state is ReconciliationLoading || state is ReconciliationInitial;
 
     return PosListPage(
       title: l10n.finReconTitle,
@@ -49,112 +56,113 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           variant: PosButtonVariant.ghost,
         ),
         PosButton(
-          label: '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-          icon: Icons.calendar_today,
+          label: '${_fmt(_startDate)} – ${_fmt(_endDate)}',
+          icon: Icons.date_range,
           variant: PosButtonVariant.outline,
-          onPressed: () => _pickDate(context),
+          onPressed: () => _pickDateRange(context),
         ),
       ],
-      child: SingleChildScrollView(
-        padding: context.responsivePagePadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ── Revenue Summary ──
-            _buildRevenueSection(theme, paymentsState, l10n),
-            AppSpacing.gapH24,
+      isLoading: isLoading,
+      hasError: state is ReconciliationError,
+      errorMessage: state is ReconciliationError ? (state).message : null,
+      onRetry: _reload,
+      child: data == null
+          ? const SizedBox.shrink()
+          : SingleChildScrollView(
+              padding: context.responsivePagePadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ── Revenue Summary ──
+                  _buildRevenueSection(theme, data, l10n),
+                  AppSpacing.gapH24,
 
-            // ── Payment Method Breakdown ──
-            _buildPaymentBreakdown(theme, paymentsState, l10n),
-            AppSpacing.gapH24,
+                  // ── Payment Method Breakdown ──
+                  _buildPaymentBreakdown(theme, data, l10n),
+                  AppSpacing.gapH24,
 
-            // ── Cash Reconciliation ──
-            _buildCashReconciliation(theme, sessionsState, l10n),
-            AppSpacing.gapH24,
+                  // ── Cash Reconciliation ──
+                  _buildCashReconciliation(theme, data, l10n),
+                  AppSpacing.gapH24,
 
-            // ── Expenses Summary ──
-            _buildExpensesSummary(theme, expensesState, l10n),
-            AppSpacing.gapH24,
+                  // ── Expenses Summary ──
+                  _buildExpensesSummary(theme, data, l10n),
+                  AppSpacing.gapH24,
 
-            // ── Denomination Count ──
-            Text(l10n.finReconPhysicalCashCount, style: theme.textTheme.titleMedium),
-            AppSpacing.gapH12,
-            _buildCompactDenominations(theme, l10n),
-            AppSpacing.gapH24,
+                  // ── Denomination Count ──
+                  Text(l10n.finReconPhysicalCashCount, style: theme.textTheme.titleMedium),
+                  AppSpacing.gapH12,
+                  _buildCompactDenominations(theme, l10n),
+                  AppSpacing.gapH24,
 
-            // ── Actions ──
-            context.isPhone
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PosButton(
-                              onPressed: () {},
+                  // ── Actions ──
+                  context.isPhone
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: PosButton(
+                                    onPressed: () => _printReport(context, data, l10n),
+                                    variant: PosButtonVariant.outline,
+                                    icon: Icons.print,
+                                    label: l10n.finReconPrintReport,
+                                  ),
+                                ),
+                                AppSpacing.gapW8,
+                                Expanded(
+                                  child: PosButton(
+                                    onPressed: () => _exportPdf(context, data, l10n),
+                                    variant: PosButtonVariant.outline,
+                                    icon: Icons.download,
+                                    label: l10n.finReconExportPdf,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            AppSpacing.gapH8,
+                            PosButton(
+                              onPressed: () => _confirmReconciliation(context),
+                              icon: Icons.check_circle_outline,
+                              label: l10n.finReconConfirmRecon,
+                              isFullWidth: true,
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            PosButton(
+                              onPressed: () => _printReport(context, data, l10n),
                               variant: PosButtonVariant.outline,
                               icon: Icons.print,
                               label: l10n.finReconPrintReport,
                             ),
-                          ),
-                          AppSpacing.gapW8,
-                          Expanded(
-                            child: PosButton(
-                              onPressed: () {},
+                            AppSpacing.gapW8,
+                            PosButton(
+                              onPressed: () => _exportPdf(context, data, l10n),
                               variant: PosButtonVariant.outline,
                               icon: Icons.download,
                               label: l10n.finReconExportPdf,
                             ),
-                          ),
-                        ],
-                      ),
-                      AppSpacing.gapH8,
-                      PosButton(
-                        onPressed: () => _confirmReconciliation(context),
-                        icon: Icons.check_circle_outline,
-                        label: l10n.finReconConfirmRecon,
-                        isFullWidth: true,
-                      ),
-                    ],
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      PosButton(
-                        onPressed: () {},
-                        variant: PosButtonVariant.outline,
-                        icon: Icons.print,
-                        label: l10n.finReconPrintReport,
-                      ),
-                      AppSpacing.gapW8,
-                      PosButton(
-                        onPressed: () {},
-                        variant: PosButtonVariant.outline,
-                        icon: Icons.download,
-                        label: l10n.finReconExportPdf,
-                      ),
-                      AppSpacing.gapW8,
-                      PosButton(
-                        onPressed: () => _confirmReconciliation(context),
-                        icon: Icons.check_circle_outline,
-                        label: l10n.finReconConfirmRecon,
-                      ),
-                    ],
-                  ),
-          ],
-        ),
-      ),
+                            AppSpacing.gapW8,
+                            PosButton(
+                              onPressed: () => _confirmReconciliation(context),
+                              icon: Icons.check_circle_outline,
+                              label: l10n.finReconConfirmRecon,
+                            ),
+                          ],
+                        ),
+                ],
+              ),
+            ),
     );
   }
 
-  Widget _buildRevenueSection(ThemeData theme, PaymentsState state, AppLocalizations l10n) {
-    final payments = switch (state) {
-      PaymentsLoaded(:final payments) => payments,
-      _ => <dynamic>[],
-    };
-
-    final totalRevenue = payments.fold<double>(0, (sum, p) => sum + p.amount);
-    final txCount = payments.length;
+  Widget _buildRevenueSection(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final totalRevenue = _toDouble(data['total_revenue']);
+    final txCount = data['transaction_count'] as int? ?? 0;
 
     return PosCard(
       borderRadius: AppRadius.borderLg,
@@ -172,20 +180,9 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildPaymentBreakdown(ThemeData theme, PaymentsState state, AppLocalizations l10n) {
-    final payments = switch (state) {
-      PaymentsLoaded(:final payments) => payments,
-      _ => <dynamic>[],
-    };
-
-    // Group by method
-    final byMethod = <String, double>{};
-    for (final p in payments) {
-      final key = PaymentCalculationService.methodDisplayName(p.method.value);
-      byMethod[key] = (byMethod[key] ?? 0) + p.amount;
-    }
-
-    final total = byMethod.values.fold<double>(0, (s, v) => s + v);
+  Widget _buildPaymentBreakdown(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final byMethod = data['by_method'] as List? ?? [];
+    final total = byMethod.fold<double>(0, (s, item) => s + _toDouble(item['amount']));
 
     return PosCard(
       borderRadius: AppRadius.borderLg,
@@ -199,8 +196,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             if (byMethod.isEmpty)
               Text(l10n.finReconNoPayments, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
             else
-              ...byMethod.entries.map((entry) {
-                final pct = total > 0 ? (entry.value / total * 100) : 0;
+              ...byMethod.map((item) {
+                final method = item['method'] as String? ?? '';
+                final amount = _toDouble(item['amount']);
+                final pct = total > 0 ? (amount / total * 100) : 0.0;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Column(
@@ -209,16 +208,16 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(entry.key, style: theme.textTheme.bodyMedium),
+                          Text(method.replaceAll('_', ' '), style: theme.textTheme.bodyMedium),
                           Text(
-                            '${entry.value.toStringAsFixed(2)} \u0081 (${pct.toStringAsFixed(1)}%)',
+                            '${amount.toStringAsFixed(2)} \u0631 (${pct.toStringAsFixed(1)}%)',
                             style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
                       AppSpacing.gapH4,
                       LinearProgressIndicator(
-                        value: total > 0 ? entry.value / total : 0,
+                        value: total > 0 ? amount / total : 0,
                         backgroundColor: theme.dividerColor,
                         color: AppColors.primary,
                         minHeight: 6,
@@ -234,16 +233,11 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildCashReconciliation(ThemeData theme, CashSessionsState state, AppLocalizations l10n) {
-    final sessions = switch (state) {
-      CashSessionsLoaded(:final sessions) => sessions,
-      _ => <dynamic>[],
-    };
-
-    final closedSessions = sessions.where((s) => s.status?.value == 'closed').toList();
-    final totalExpected = closedSessions.fold<double>(0, (sum, s) => sum + (s.expectedCash ?? 0));
-    final totalActual = closedSessions.fold<double>(0, (sum, s) => sum + (s.actualCash ?? 0));
-    final totalVariance = totalActual - totalExpected;
+  Widget _buildCashReconciliation(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final totalExpected = _toDouble(data['expected_cash']);
+    final totalActual = _toDouble(data['actual_cash']);
+    final totalVariance = _toDouble(data['cash_variance'] ?? (totalActual - totalExpected));
+    final sessionsClosed = data['sessions_closed'] as int? ?? 0;
 
     return PosCard(
       borderRadius: AppRadius.borderLg,
@@ -255,10 +249,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             Text(l10n.finReconCashRecon, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             _buildCashReconTiles(theme, l10n, totalExpected, totalActual, totalVariance),
-            if (closedSessions.isNotEmpty) ...[
+            if (sessionsClosed > 0) ...[
               AppSpacing.gapH16,
               Text(
-                l10n.finReconSessionsClosed(closedSessions.length),
+                l10n.finReconSessionsClosed(sessionsClosed),
                 style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
               ),
             ],
@@ -268,20 +262,9 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildExpensesSummary(ThemeData theme, ExpensesState state, AppLocalizations l10n) {
-    final expenses = switch (state) {
-      ExpensesLoaded(:final expenses) => expenses,
-      _ => <dynamic>[],
-    };
-
-    final totalExpenses = expenses.fold<double>(0, (sum, e) => sum + e.amount);
-
-    // Group by category
-    final byCategory = <String, double>{};
-    for (final e in expenses) {
-      final key = e.category.value.replaceAll('_', ' ');
-      byCategory[key] = (byCategory[key] ?? 0) + e.amount;
-    }
+  Widget _buildExpensesSummary(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final totalExpenses = _toDouble(data['total_expenses']);
+    final byCategory = data['expenses_by_category'] as List? ?? [];
 
     return PosCard(
       borderRadius: AppRadius.borderLg,
@@ -295,7 +278,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               children: [
                 Text(l10n.finReconExpenses, style: theme.textTheme.titleMedium),
                 Text(
-                  '${totalExpenses.toStringAsFixed(2)} \u0081',
+                  '${totalExpenses.toStringAsFixed(2)} \u0631',
                   style: theme.textTheme.titleMedium?.copyWith(color: AppColors.error, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -307,9 +290,11 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: byCategory.entries.map((e) {
+                children: byCategory.map((e) {
+                  final cat = e['category'] as String? ?? '';
+                  final amt = _toDouble(e['amount']);
                   return Chip(
-                    label: Text('${e.key}: ${e.value.toStringAsFixed(2)} \u0081', style: const TextStyle(fontSize: 12)),
+                    label: Text('${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631', style: const TextStyle(fontSize: 12)),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   );
@@ -355,7 +340,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               children: [
                 Text(l10n.finReconCountedTotal, style: theme.textTheme.titleSmall),
                 Text(
-                  '${total.toStringAsFixed(2)} \u0081',
+                  '${total.toStringAsFixed(2)} \u0631',
                   style: theme.textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -376,10 +361,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           children: [
             Icon(icon, color: color, size: 20),
             AppSpacing.gapH8,
-            Text(
-              value,
-              style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color),
-            ),
+            Text(value, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color)),
             AppSpacing.gapH2,
             Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
           ],
@@ -402,10 +384,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-                Text(
-                  value,
-                  style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color),
-                ),
+                Text(value, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color)),
               ],
             ),
           ),
@@ -418,20 +397,14 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     if (context.isPhone) {
       return Column(
         children: [
-          _summaryTileFullWidth(
-            theme,
-            l10n.finReconTotalRevenue,
-            '${totalRevenue.toStringAsFixed(2)} \u0081',
-            Icons.trending_up,
-            AppColors.success,
-          ),
+          _summaryTileFullWidth(theme, l10n.finReconTotalRevenue, '${totalRevenue.toStringAsFixed(2)} \u0631', Icons.trending_up, AppColors.success),
           AppSpacing.gapH8,
           _summaryTileFullWidth(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
           AppSpacing.gapH8,
           _summaryTileFullWidth(
             theme,
             l10n.finReconAvgTransaction,
-            txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
+            txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0631' : '0.00 \u0631',
             Icons.analytics,
             AppColors.primary,
           ),
@@ -440,20 +413,14 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     }
     return Row(
       children: [
-        _summaryTile(
-          theme,
-          l10n.finReconTotalRevenue,
-          '${totalRevenue.toStringAsFixed(2)} \u0081',
-          Icons.trending_up,
-          AppColors.success,
-        ),
+        _summaryTile(theme, l10n.finReconTotalRevenue, '${totalRevenue.toStringAsFixed(2)} \u0631', Icons.trending_up, AppColors.success),
         AppSpacing.gapW16,
         _summaryTile(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
         AppSpacing.gapW16,
         _summaryTile(
           theme,
           l10n.finReconAvgTransaction,
-          txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
+          txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0631' : '0.00 \u0631',
           Icons.analytics,
           AppColors.primary,
         ),
@@ -461,85 +428,120 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildCashReconTiles(
-    ThemeData theme,
-    AppLocalizations l10n,
-    double totalExpected,
-    double totalActual,
-    double totalVariance,
-  ) {
+  Widget _buildCashReconTiles(ThemeData theme, AppLocalizations l10n, double totalExpected, double totalActual, double totalVariance) {
+    final varianceColor = totalVariance.abs() > 5 ? AppColors.error : AppColors.success;
     if (context.isPhone) {
       return Column(
         children: [
-          _summaryTileFullWidth(
-            theme,
-            l10n.finReconExpectedCash,
-            '${totalExpected.toStringAsFixed(2)} \u0081',
-            Icons.calculate,
-            AppColors.info,
-          ),
+          _summaryTileFullWidth(theme, l10n.finReconExpectedCash, '${totalExpected.toStringAsFixed(2)} \u0631', Icons.calculate, AppColors.info),
           AppSpacing.gapH8,
-          _summaryTileFullWidth(
-            theme,
-            l10n.finReconActualCash,
-            '${totalActual.toStringAsFixed(2)} \u0081',
-            Icons.payments,
-            AppColors.primary,
-          ),
+          _summaryTileFullWidth(theme, l10n.finReconActualCash, '${totalActual.toStringAsFixed(2)} \u0631', Icons.payments, AppColors.primary),
           AppSpacing.gapH8,
-          _summaryTileFullWidth(
-            theme,
-            l10n.finReconVariance,
-            '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
-            Icons.compare_arrows,
-            totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
-          ),
+          _summaryTileFullWidth(theme, l10n.finReconVariance, '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631', Icons.compare_arrows, varianceColor),
         ],
       );
     }
     return Row(
       children: [
-        _summaryTile(
-          theme,
-          l10n.finReconExpectedCash,
-          '${totalExpected.toStringAsFixed(2)} \u0081',
-          Icons.calculate,
-          AppColors.info,
-        ),
+        _summaryTile(theme, l10n.finReconExpectedCash, '${totalExpected.toStringAsFixed(2)} \u0631', Icons.calculate, AppColors.info),
         AppSpacing.gapW16,
-        _summaryTile(
-          theme,
-          l10n.finReconActualCash,
-          '${totalActual.toStringAsFixed(2)} \u0081',
-          Icons.payments,
-          AppColors.primary,
-        ),
+        _summaryTile(theme, l10n.finReconActualCash, '${totalActual.toStringAsFixed(2)} \u0631', Icons.payments, AppColors.primary),
         AppSpacing.gapW16,
-        _summaryTile(
-          theme,
-          l10n.finReconVariance,
-          '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
-          Icons.compare_arrows,
-          totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
-        ),
+        _summaryTile(theme, l10n.finReconVariance, '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0631', Icons.compare_arrows, varianceColor),
       ],
     );
   }
 
-  void _pickDate(BuildContext context) async {
-    final picked = await showDatePicker(
+  void _pickDateRange(BuildContext context) async {
+    final picked = await showDateRangePicker(
       context: context,
-      initialDate: _selectedDate,
       firstDate: DateTime(2024),
       lastDate: DateTime.now(),
+      initialDateRange: DateTimeRange(start: _startDate, end: _endDate),
     );
     if (picked != null) {
-      setState(() => _selectedDate = picked);
-      // Reload with date filter
-      ref.read(paymentsProvider.notifier).load();
-      ref.read(cashSessionsProvider.notifier).load();
-      ref.read(expensesProvider.notifier).load();
+      setState(() {
+        _startDate = picked.start;
+        _endDate = picked.end;
+      });
+      _reload();
     }
+  }
+
+  Future<void> _printReport(BuildContext context, Map<String, dynamic> data, AppLocalizations l10n) async {
+    await _generateAndPrint(data, l10n, printMode: true);
+  }
+
+  Future<void> _exportPdf(BuildContext context, Map<String, dynamic> data, AppLocalizations l10n) async {
+    await _generateAndPrint(data, l10n, printMode: false);
+  }
+
+  Future<void> _generateAndPrint(Map<String, dynamic> data, AppLocalizations l10n, {required bool printMode}) async {
+    final totalRevenue = _toDouble(data['total_revenue']);
+    final totalExpenses = _toDouble(data['total_expenses']);
+    final cashVariance = _toDouble(data['cash_variance']);
+    final txCount = data['transaction_count'] as int? ?? 0;
+    final byMethod = data['by_method'] as List? ?? [];
+
+    await Printing.layoutPdf(
+      onLayout: (_) async {
+        final doc = pw.Document();
+        doc.addPage(
+          pw.Page(
+            pageFormat: PdfPageFormat.a4,
+            build: (pw.Context ctx) => pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(l10n.finReconTitle, style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 4),
+                pw.Text('${_fmt(_startDate)} – ${_fmt(_endDate)}', style: const pw.TextStyle(fontSize: 12)),
+                pw.Divider(),
+                pw.SizedBox(height: 8),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text('${l10n.finReconTotalRevenue}: ${totalRevenue.toStringAsFixed(2)} SAR'),
+                    pw.Text('${l10n.finReconTransactions}: $txCount'),
+                  ],
+                ),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text('${l10n.finReconExpenses}: ${totalExpenses.toStringAsFixed(2)} SAR'),
+                    pw.Text('${l10n.finReconVariance}: ${cashVariance >= 0 ? '+' : ''}${cashVariance.toStringAsFixed(2)} SAR'),
+                  ],
+                ),
+                pw.SizedBox(height: 12),
+                pw.Text(l10n.finReconPaymentMethods, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 6),
+                ...byMethod.map((item) {
+                  final method = item['method'] as String? ?? '';
+                  final amount = _toDouble(item['amount']);
+                  return pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 4),
+                    child: pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(method.replaceAll('_', ' ')),
+                        pw.Text('${amount.toStringAsFixed(2)} SAR'),
+                      ],
+                    ),
+                  );
+                }),
+                pw.SizedBox(height: 12),
+                pw.Text(
+                  l10n.finReconPhysicalCashCount,
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 6),
+                pw.Text('${l10n.finReconCountedTotal}: ${PaymentCalculationService.calculateDenominationTotal(_denominationCounts).toStringAsFixed(2)} SAR'),
+              ],
+            ),
+          ),
+        );
+        return doc.save();
+      },
+    );
   }
 
   void _confirmReconciliation(BuildContext context) async {
@@ -550,8 +552,19 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
       message: l10n.finReconConfirmMessage,
       confirmLabel: l10n.commonConfirm,
     );
-    if (confirmed == true) {
+    if (confirmed == true && mounted) {
       showPosSuccessSnackbar(context, l10n.finReconConfirmed);
     }
   }
+
+  double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    return double.tryParse(value.toString()) ?? 0.0;
+  }
 }
+
+void showFinancialReconciliationInfo(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  showPosInfoDialog(context, title: l10n.finReconTitle, message: l10n.finReconInfoMessage);
+}
+

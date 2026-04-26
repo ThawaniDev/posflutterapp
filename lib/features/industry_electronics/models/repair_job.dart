@@ -35,7 +35,7 @@ class RepairJob {
       repairNotes: json['repair_notes'] as String?,
       estimatedCost: (json['estimated_cost'] != null ? double.tryParse(json['estimated_cost'].toString()) : null),
       finalCost: (json['final_cost'] != null ? double.tryParse(json['final_cost'].toString()) : null),
-      partsUsed: json['parts_used'] != null ? Map<String, dynamic>.from(json['parts_used'] as Map) : null,
+      partsUsed: json['parts_used'] != null ? (json['parts_used'] as List).cast<dynamic>() : null,
       staffUserId: json['staff_user_id'] as String,
       receivedAt: json['received_at'] != null ? DateTime.parse(json['received_at'] as String) : null,
       estimatedReadyAt: json['estimated_ready_at'] != null ? DateTime.parse(json['estimated_ready_at'] as String) : null,
@@ -54,7 +54,7 @@ class RepairJob {
   final String? repairNotes;
   final double? estimatedCost;
   final double? finalCost;
-  final Map<String, dynamic>? partsUsed;
+  final List<dynamic>? partsUsed;
   final String staffUserId;
   final DateTime? receivedAt;
   final DateTime? estimatedReadyAt;
@@ -95,7 +95,7 @@ class RepairJob {
     String? repairNotes,
     double? estimatedCost,
     double? finalCost,
-    Map<String, dynamic>? partsUsed,
+    List<dynamic>? partsUsed,
     String? staffUserId,
     DateTime? receivedAt,
     DateTime? estimatedReadyAt,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -22,52 +25,24 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      ref.read(paymentsProvider.notifier).load();
-      ref.read(cashSessionsProvider.notifier).load();
-      ref.read(expensesProvider.notifier).load();
-    });
+    Future.microtask(_reload);
+  }
+
+  String get _dateString =>
+      '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}';
+
+  void _reload() {
+    ref.read(dailySummaryProvider.notifier).load(date: _dateString);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final paymentsState = ref.watch(paymentsProvider);
-    final sessionsState = ref.watch(cashSessionsProvider);
-    final expensesState = ref.watch(expensesProvider);
+    final state = ref.watch(dailySummaryProvider);
 
-    final payments = switch (paymentsState) {
-      PaymentsLoaded(:final payments) => payments,
-      _ => <dynamic>[],
-    };
-    final sessions = switch (sessionsState) {
-      CashSessionsLoaded(:final sessions) => sessions,
-      _ => <dynamic>[],
-    };
-    final expenses = switch (expensesState) {
-      ExpensesLoaded(:final expenses) => expenses,
-      _ => <dynamic>[],
-    };
-
-    final totalRevenue = payments.fold<double>(0, (sum, p) => sum + p.amount);
-    final totalExpenses = expenses.fold<double>(0, (sum, e) => sum + e.amount);
-    final netRevenue = totalRevenue - totalExpenses;
-    final txCount = payments.length;
-
-    // Payment method breakdown
-    final byMethod = <String, double>{};
-    for (final p in payments) {
-      final key = p.method.value;
-      byMethod[key] = (byMethod[key] ?? 0) + p.amount;
-    }
-
-    // Cash variance
-    final closedSessions = sessions.where((s) => s.status?.value == 'closed').toList();
-    final totalVariance = closedSessions.fold<double>(0, (sum, s) => sum + ((s.actualCash ?? 0) - (s.expectedCash ?? 0)));
-
-    final isLoading =
-        paymentsState is PaymentsLoading || sessionsState is CashSessionsLoading || expensesState is ExpensesLoading;
+    final isLoading = state is DailySummaryLoading || state is DailySummaryInitial;
+    final data = state is DailySummaryLoaded ? state.data : null;
 
     return PosListPage(
       title: l10n.dailySummaryTitle,
@@ -104,70 +79,96 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               : null,
           variant: PosButtonVariant.ghost,
         ),
-        PosButton(label: l10n.dailySummaryPrint, icon: Icons.print, variant: PosButtonVariant.outline, onPressed: () {}),
+        PosButton(
+          label: l10n.dailySummaryPrint,
+          icon: Icons.print,
+          variant: PosButtonVariant.outline,
+          onPressed: data != null ? () => _printSummary(context, data, l10n) : null,
+        ),
       ],
       isLoading: isLoading,
-      child: SingleChildScrollView(
-        padding: context.responsivePagePadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ── Top KPI Cards ──
-            PosKpiGrid(
-              desktopCols: 4,
-              mobileCols: 2,
-              cards: [
-                PosKpiCard(
-                  label: l10n.dailySummaryGrossRevenue,
-                  value: '${totalRevenue.toStringAsFixed(2)} \u0081',
-                  icon: Icons.trending_up,
-                  iconColor: AppColors.success,
-                ),
-                PosKpiCard(
-                  label: l10n.dailySummaryExpenses,
-                  value: '${totalExpenses.toStringAsFixed(2)} \u0081',
-                  icon: Icons.trending_down,
-                  iconColor: AppColors.error,
-                ),
-                PosKpiCard(
-                  label: l10n.dailySummaryNetRevenue,
-                  value: '${netRevenue.toStringAsFixed(2)} \u0081',
-                  icon: Icons.account_balance,
-                  iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
-                ),
-                PosKpiCard(
-                  label: l10n.dailySummaryTransactions,
-                  value: '$txCount',
-                  icon: Icons.receipt,
-                  iconColor: AppColors.info,
-                ),
-              ],
+      hasError: state is DailySummaryError,
+      errorMessage: state is DailySummaryError ? (state).message : null,
+      onRetry: _reload,
+      child: data == null
+          ? const SizedBox.shrink()
+          : SingleChildScrollView(
+              padding: context.responsivePagePadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ── Top KPI Cards ──
+                  _buildKpiCards(theme, data, l10n),
+                  AppSpacing.gapH24,
+
+                  // ── Revenue by Payment Method + Cash Variance ──
+                  ResponsiveTwoColumn(
+                    leftFlex: 3,
+                    rightFlex: 2,
+                    spacing: AppSpacing.base,
+                    left: _buildMethodBreakdownCard(theme, data, l10n),
+                    right: _buildCashVarianceCard(theme, data, l10n),
+                  ),
+                  AppSpacing.gapH24,
+
+                  // ── Hourly Activity ──
+                  _buildHourlyActivityCard(theme, data, l10n),
+                  AppSpacing.gapH24,
+
+                  // ── Expenses by Category ──
+                  _buildExpensesByCategoryCard(theme, data, l10n),
+                  AppSpacing.gapH24,
+
+                  // ── Session Details ──
+                  _buildSessionDetailsCard(theme, data, l10n),
+                ],
+              ),
             ),
-            AppSpacing.gapH24,
-
-            // ── Revenue by Payment Method ──
-            ResponsiveTwoColumn(
-              leftFlex: 3,
-              rightFlex: 2,
-              spacing: AppSpacing.base,
-              left: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n),
-              right: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n),
-            ),
-            AppSpacing.gapH24,
-
-            // ── Hourly Activity ──
-            _buildHourlyActivityCard(theme, payments, l10n),
-            AppSpacing.gapH24,
-
-            // ── Session Details ──
-            _buildSessionDetailsCard(theme, sessions, l10n),
-          ],
-        ),
-      ),
     );
   }
 
-  Widget _buildMethodBreakdownCard(ThemeData theme, Map<String, double> byMethod, double total, AppLocalizations l10n) {
+  Widget _buildKpiCards(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final totalRevenue = _toDouble(data['total_revenue']);
+    final totalExpenses = _toDouble(data['total_expenses']);
+    final netRevenue = _toDouble(data['net_revenue'] ?? (totalRevenue - totalExpenses));
+    final txCount = data['transaction_count'] as int? ?? 0;
+
+    return PosKpiGrid(
+      desktopCols: 4,
+      mobileCols: 2,
+      cards: [
+        PosKpiCard(
+          label: l10n.dailySummaryGrossRevenue,
+          value: '${totalRevenue.toStringAsFixed(2)} \u0631',
+          icon: Icons.trending_up,
+          iconColor: AppColors.success,
+        ),
+        PosKpiCard(
+          label: l10n.dailySummaryExpenses,
+          value: '${totalExpenses.toStringAsFixed(2)} \u0631',
+          icon: Icons.trending_down,
+          iconColor: AppColors.error,
+        ),
+        PosKpiCard(
+          label: l10n.dailySummaryNetRevenue,
+          value: '${netRevenue.toStringAsFixed(2)} \u0631',
+          icon: Icons.account_balance,
+          iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
+        ),
+        PosKpiCard(
+          label: l10n.dailySummaryTransactions,
+          value: '$txCount',
+          icon: Icons.receipt,
+          iconColor: AppColors.info,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMethodBreakdownCard(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final byMethod = data['by_method'] as List? ?? [];
+    final totalRevenue = _toDouble(data['total_revenue']);
+
     return PosCard(
       borderRadius: AppRadius.borderLg,
       child: Padding(
@@ -183,11 +184,13 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 child: Text(l10n.dailySummaryNoPayments, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
               )
             else
-              ...byMethod.entries.map((entry) {
-                final methodKey = PaymentMethodKey.tryFromValue(entry.key);
-                final displayName = methodKey != null ? PaymentCalculationService.methodDisplayName(methodKey) : entry.key;
-                final pct = total > 0 ? entry.value / total : 0.0;
-                final color = _methodColor(entry.key);
+              ...byMethod.map((item) {
+                final method = item['method'] as String? ?? '';
+                final amount = _toDouble(item['amount']);
+                final methodKey = PaymentMethodKey.tryFromValue(method);
+                final displayName = methodKey != null ? PaymentCalculationService.methodDisplayName(methodKey) : method;
+                final pct = totalRevenue > 0 ? amount / totalRevenue : 0.0;
+                final color = _methodColor(method);
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -220,7 +223,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            entry.value.toStringAsFixed(2),
+                            amount.toStringAsFixed(2),
                             style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           Text(
@@ -239,7 +242,10 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildCashVarianceCard(ThemeData theme, List<dynamic> closedSessions, double totalVariance, AppLocalizations l10n) {
+  Widget _buildCashVarianceCard(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final cashVariance = _toDouble(data['cash_variance']);
+    final sessionsClosed = data['sessions_closed'] as int? ?? 0;
+
     return PosCard(
       borderRadius: AppRadius.borderLg,
       child: Padding(
@@ -253,21 +259,21 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               child: Column(
                 children: [
                   Icon(
-                    totalVariance.abs() > 5 ? Icons.warning_amber : Icons.check_circle,
+                    cashVariance.abs() > 5 ? Icons.warning_amber : Icons.check_circle,
                     size: 48,
-                    color: totalVariance.abs() > 5 ? AppColors.warning : AppColors.success,
+                    color: cashVariance.abs() > 5 ? AppColors.warning : AppColors.success,
                   ),
                   AppSpacing.gapH12,
                   Text(
-                    '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
+                    '${cashVariance >= 0 ? '+' : ''}${cashVariance.toStringAsFixed(2)} \u0631',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
+                      color: cashVariance.abs() > 5 ? AppColors.error : AppColors.success,
                     ),
                   ),
                   AppSpacing.gapH4,
                   Text(
-                    totalVariance.abs() <= 5 ? l10n.dailySummaryWithinTolerance : l10n.dailySummaryNeedsReview,
+                    cashVariance.abs() <= 5 ? l10n.dailySummaryWithinTolerance : l10n.dailySummaryNeedsReview,
                     style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                   ),
                 ],
@@ -275,7 +281,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             ),
             AppSpacing.gapH16,
             Text(
-              l10n.dailySummarySessions(closedSessions.length),
+              l10n.dailySummarySessions(sessionsClosed),
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
             ),
           ],
@@ -284,16 +290,14 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildHourlyActivityCard(ThemeData theme, List<dynamic> payments, AppLocalizations l10n) {
-    // Group payments by hour
+  Widget _buildHourlyActivityCard(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final hourlyBreakdown = data['hourly_breakdown'] as List? ?? [];
     final byHour = <int, int>{};
-    for (final p in payments) {
-      if (p.createdAt != null) {
-        final hour = p.createdAt!.hour;
-        byHour[hour] = (byHour[hour] ?? 0) + 1;
-      }
+    for (final entry in hourlyBreakdown) {
+      final hour = entry['hour'] as int? ?? 0;
+      final count = entry['count'] as int? ?? 0;
+      byHour[hour] = count;
     }
-
     final maxCount = byHour.values.fold<int>(0, (m, v) => v > m ? v : m);
 
     return PosCard(
@@ -334,13 +338,9 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             AppSpacing.gapH4,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('00', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)),
-                Text('06', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)),
-                Text('12', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)),
-                Text('18', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)),
-                Text('23', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)),
-              ],
+              children: ['00', '06', '12', '18', '23']
+                  .map((h) => Text(h, style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: theme.hintColor)))
+                  .toList(),
             ),
           ],
         ),
@@ -348,7 +348,53 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildSessionDetailsCard(ThemeData theme, List<dynamic> sessions, AppLocalizations l10n) {
+  Widget _buildExpensesByCategoryCard(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final byCategory = data['expenses_by_category'] as List? ?? [];
+    final totalExpenses = _toDouble(data['total_expenses']);
+
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(l10n.dailySummaryExpensesBreakdown, style: theme.textTheme.titleMedium),
+                Text(
+                  '${totalExpenses.toStringAsFixed(2)} \u0631',
+                  style: theme.textTheme.titleSmall?.copyWith(color: AppColors.error, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            AppSpacing.gapH12,
+            if (byCategory.isEmpty)
+              Text(l10n.dailySummaryNoExpenses, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
+            else
+              Wrap(
+                spacing: 8,
+                runSpacing: 6,
+                children: byCategory.map((e) {
+                  final cat = e['category'] as String? ?? '';
+                  final amt = _toDouble(e['amount']);
+                  return Chip(
+                    label: Text('${cat.replaceAll('_', ' ')}: ${amt.toStringAsFixed(2)} \u0631', style: const TextStyle(fontSize: 12)),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                  );
+                }).toList(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSessionDetailsCard(ThemeData theme, Map<String, dynamic> data, AppLocalizations l10n) {
+    final sessions = data['sessions'] as List? ?? [];
+
     return PosCard(
       borderRadius: AppRadius.borderLg,
       child: Padding(
@@ -361,8 +407,14 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             if (sessions.isEmpty)
               Text(l10n.dailySummaryNoSessions, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
             else
-              ...sessions.map(
-                (s) => Container(
+              ...sessions.map((s) {
+                final status = s['status'] as String? ?? '';
+                final terminalId = s['terminal_id'] as String? ?? 'N/A';
+                final openingFloat = _toDouble(s['opening_float']);
+                final variance = s['variance'] != null ? _toDouble(s['variance']) : null;
+                final isActive = status == 'active';
+
+                return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: AppSpacing.paddingAll12,
                   decoration: BoxDecoration(
@@ -372,8 +424,8 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   child: Row(
                     children: [
                       Icon(
-                        s.status?.value == 'active' ? Icons.lock_open : Icons.lock,
-                        color: s.status?.value == 'active' ? AppColors.success : theme.hintColor,
+                        isActive ? Icons.lock_open : Icons.lock,
+                        color: isActive ? AppColors.success : theme.hintColor,
                         size: 20,
                       ),
                       AppSpacing.gapW12,
@@ -382,29 +434,29 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              l10n.dailySummaryFloat(s.openingFloat.toStringAsFixed(2)),
+                              l10n.dailySummaryFloat(openingFloat.toStringAsFixed(2)),
                               style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              l10n.dailySummaryTerminal(s.terminalId ?? 'N/A'),
+                              l10n.dailySummaryTerminal(terminalId),
                               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                             ),
                           ],
                         ),
                       ),
-                      if (s.variance != null)
+                      if (variance != null)
                         Text(
-                          '${s.variance! >= 0 ? '+' : ''}${s.variance!.toStringAsFixed(2)}',
+                          '${variance >= 0 ? '+' : ''}${variance.toStringAsFixed(2)}',
                           style: TextStyle(
-                            color: s.variance!.abs() > 5 ? AppColors.error : AppColors.success,
+                            color: variance.abs() > 5 ? AppColors.error : AppColors.success,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
                         ),
                     ],
                   ),
-                ),
-              ),
+                );
+              }),
           ],
         ),
       ),
@@ -437,9 +489,75 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     }
   }
 
-  void _reload() {
-    ref.read(paymentsProvider.notifier).load();
-    ref.read(cashSessionsProvider.notifier).load();
-    ref.read(expensesProvider.notifier).load();
+  Future<void> _printSummary(BuildContext context, Map<String, dynamic> data, AppLocalizations l10n) async {
+    final totalRevenue = _toDouble(data['total_revenue']);
+    final totalExpenses = _toDouble(data['total_expenses']);
+    final netRevenue = _toDouble(data['net_revenue'] ?? (totalRevenue - totalExpenses));
+    final txCount = data['transaction_count'] as int? ?? 0;
+    final byMethod = data['by_method'] as List? ?? [];
+
+    await Printing.layoutPdf(
+      onLayout: (_) async {
+        final doc = pw.Document();
+        doc.addPage(
+          pw.Page(
+            pageFormat: PdfPageFormat.a4,
+            build: (pw.Context ctx) => pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  '${l10n.dailySummaryTitle} — $_dateString',
+                  style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 16),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text('${l10n.dailySummaryGrossRevenue}: ${totalRevenue.toStringAsFixed(2)} SAR'),
+                    pw.Text('${l10n.dailySummaryTransactions}: $txCount'),
+                  ],
+                ),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text('${l10n.dailySummaryExpenses}: ${totalExpenses.toStringAsFixed(2)} SAR'),
+                    pw.Text('${l10n.dailySummaryNetRevenue}: ${netRevenue.toStringAsFixed(2)} SAR'),
+                  ],
+                ),
+                pw.SizedBox(height: 16),
+                pw.Text(l10n.dailySummaryRevenueByMethod, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 8),
+                ...byMethod.map((item) {
+                  final method = item['method'] as String? ?? '';
+                  final amount = _toDouble(item['amount']);
+                  return pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 4),
+                    child: pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(method),
+                        pw.Text('${amount.toStringAsFixed(2)} SAR'),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ),
+        );
+        return doc.save();
+      },
+    );
+  }
+
+  double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    return double.tryParse(value.toString()) ?? 0.0;
   }
 }
+
+void showDailySummaryInfo(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  showPosInfoDialog(context, title: l10n.dailySummaryTitle, message: l10n.dailySummaryInfoMessage);
+}
+

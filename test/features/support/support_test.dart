@@ -55,7 +55,7 @@ void main() {
     });
 
     test('has 5 values', () {
-      expect(TicketCategory.values.length, 5);
+      expect(TicketCategory.values.length, 6);
     });
 
     test('fromValue works for all values', () {

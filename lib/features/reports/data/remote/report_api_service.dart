@@ -141,6 +141,20 @@ class ReportApiService {
     return response.data['data'] as Map<String, dynamic>;
   }
 
+  // ─── Inventory Expiry ──────────────────────────────────────
+
+  Future<Map<String, dynamic>> getInventoryExpiry({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.inventoryExpiry, queryParameters: _buildParams(filters));
+    return response.data['data'] as Map<String, dynamic>;
+  }
+
+  // ─── Financial: Delivery Commission ───────────────────────
+
+  Future<Map<String, dynamic>> getFinancialDeliveryCommission({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.financialDeliveryCommission, queryParameters: _buildParams(filters));
+    return response.data['data'] as Map<String, dynamic>;
+  }
+
   // ─── Export Report ─────────────────────────────────────────
 
   Future<Map<String, dynamic>> exportReport({
@@ -173,7 +187,7 @@ class ReportApiService {
       'name': name,
       'frequency': frequency,
       'recipients': recipients,
-      'format': ?format,
+      if (format != null) 'format': format,
     };
 
     final response = await _dio.post(ApiEndpoints.reportSchedules, data: body);

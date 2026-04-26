@@ -224,3 +224,26 @@ class NotificationStatsError extends NotificationStatsState {
   const NotificationStatsError(this.message);
   final String message;
 }
+
+// ─── Delivery Stats State ────────────────────────────────
+sealed class DeliveryStatsState {
+  const DeliveryStatsState();
+}
+
+class DeliveryStatsInitial extends DeliveryStatsState {
+  const DeliveryStatsInitial();
+}
+
+class DeliveryStatsLoading extends DeliveryStatsState {
+  const DeliveryStatsLoading();
+}
+
+class DeliveryStatsLoaded extends DeliveryStatsState {
+  const DeliveryStatsLoaded(this.stats);
+  final Map<String, dynamic> stats;
+}
+
+class DeliveryStatsError extends DeliveryStatsState {
+  const DeliveryStatsError(this.message);
+  final String message;
+}

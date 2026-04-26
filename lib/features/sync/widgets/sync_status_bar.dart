@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
@@ -18,6 +19,7 @@ class SyncStatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Container(
@@ -39,7 +41,7 @@ class SyncStatusBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  serverOnline ? 'Connected' : 'Offline',
+                  serverOnline ? l10n.syncConnected : l10n.syncOfflineStatus,
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: serverOnline ? AppColors.success : AppColors.error,
@@ -47,7 +49,7 @@ class SyncStatusBar extends StatelessWidget {
                 ),
                 if (lastSync != null)
                   Text(
-                    'Last sync: ${lastSync!['direction']} - ${lastSync!['records_count']} records',
+                    l10n.syncLastSyncInfo(lastSync!['direction'] as String, lastSync!['records_count'] as int),
                     style: theme.textTheme.bodySmall,
                   ),
               ],
@@ -58,7 +60,7 @@ class SyncStatusBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.2), borderRadius: AppRadius.borderSm),
               child: Text(
-                '$pendingConflicts conflicts',
+                l10n.syncPendingConflictsCount(pendingConflicts),
                 style: theme.textTheme.bodySmall?.copyWith(color: AppColors.warning, fontWeight: FontWeight.w600),
               ),
             ),
@@ -68,7 +70,7 @@ class SyncStatusBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.2), borderRadius: AppRadius.borderSm),
               child: Text(
-                '$failedSyncs failed',
+                l10n.syncFailedCount(failedSyncs),
                 style: theme.textTheme.bodySmall?.copyWith(color: AppColors.error, fontWeight: FontWeight.w600),
               ),
             ),

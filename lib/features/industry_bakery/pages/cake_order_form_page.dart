@@ -95,9 +95,9 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
   @override
   Widget build(BuildContext context) {
     return PosFormPage(
-      title: _isEditing ? 'Edit Cake Order' : 'New Cake Order',
+      title: _isEditing ? l10n.bakeryEditCakeOrder : l10n.bakeryNewCakeOrder,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Order' : 'Create Order',
+          label: _isEditing ? l10n.bakeryUpdateOrder : l10n.bakeryCreateOrder,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

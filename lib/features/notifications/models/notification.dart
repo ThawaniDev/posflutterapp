@@ -12,6 +12,11 @@ class Notification {
     this.referenceId,
     this.isRead = false,
     this.createdAt,
+    this.priority,
+    this.channel,
+    this.expiresAt,
+    this.readAt,
+    this.metadata,
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) {
@@ -27,6 +32,11 @@ class Notification {
       referenceId: json['reference_id'] as String?,
       isRead: json['is_read'] as bool? ?? false,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      priority: json['priority'] as String?,
+      channel: json['channel'] as String?,
+      expiresAt: json['expires_at'] != null ? DateTime.parse(json['expires_at'] as String) : null,
+      readAt: json['read_at'] != null ? DateTime.parse(json['read_at'] as String) : null,
+      metadata: json['metadata'] != null ? Map<String, dynamic>.from(json['metadata'] as Map) : null,
     );
   }
   final String id;
@@ -40,6 +50,11 @@ class Notification {
   final String? referenceId;
   final bool isRead;
   final DateTime? createdAt;
+  final String? priority;
+  final String? channel;
+  final DateTime? expiresAt;
+  final DateTime? readAt;
+  final Map<String, dynamic>? metadata;
 
   Map<String, dynamic> toJson() {
     return {
@@ -54,6 +69,11 @@ class Notification {
       'reference_id': referenceId,
       'is_read': isRead,
       'created_at': createdAt?.toIso8601String(),
+      'priority': priority,
+      'channel': channel,
+      'expires_at': expiresAt?.toIso8601String(),
+      'read_at': readAt?.toIso8601String(),
+      'metadata': metadata,
     };
   }
 
@@ -69,6 +89,11 @@ class Notification {
     String? referenceId,
     bool? isRead,
     DateTime? createdAt,
+    String? priority,
+    String? channel,
+    DateTime? expiresAt,
+    DateTime? readAt,
+    Map<String, dynamic>? metadata,
   }) {
     return Notification(
       id: id ?? this.id,
@@ -82,6 +107,11 @@ class Notification {
       referenceId: referenceId ?? this.referenceId,
       isRead: isRead ?? this.isRead,
       createdAt: createdAt ?? this.createdAt,
+      priority: priority ?? this.priority,
+      channel: channel ?? this.channel,
+      expiresAt: expiresAt ?? this.expiresAt,
+      readAt: readAt ?? this.readAt,
+      metadata: metadata ?? this.metadata,
     );
   }
 
@@ -93,5 +123,5 @@ class Notification {
 
   @override
   String toString() =>
-      'Notification(id: $id, userId: $userId, storeId: $storeId, category: $category, title: $title, isRead: $isRead, ...)';
+      'Notification(id: $id, userId: $userId, storeId: $storeId, category: $category, title: $title, isRead: $isRead, priority: $priority, channel: $channel)';
 }

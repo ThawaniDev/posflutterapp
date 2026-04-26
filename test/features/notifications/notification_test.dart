@@ -124,6 +124,11 @@ void main() {
       'reference_id': 'order-123',
       'is_read': false,
       'created_at': '2024-01-15T10:00:00.000Z',
+      'priority': 'high',
+      'channel': 'push',
+      'expires_at': '2024-12-31T23:59:59.000Z',
+      'read_at': '2024-01-15T11:00:00.000Z',
+      'metadata': {'order_number': '1234', 'amount': 99.5},
     };
 
     test('fromJson', () {
@@ -139,6 +144,12 @@ void main() {
       expect(notif.referenceId, 'order-123');
       expect(notif.isRead, false);
       expect(notif.createdAt, isNotNull);
+      expect(notif.priority, 'high');
+      expect(notif.channel, 'push');
+      expect(notif.expiresAt, isNotNull);
+      expect(notif.readAt, isNotNull);
+      expect(notif.metadata, isNotNull);
+      expect(notif.metadata!['order_number'], '1234');
     });
 
     test('toJson round-trip', () {
@@ -148,6 +159,9 @@ void main() {
       expect(output['user_id'], 'user-1');
       expect(output['is_read'], false);
       expect(output['category'], 'order');
+      expect(output['priority'], 'high');
+      expect(output['channel'], 'push');
+      expect(output['metadata'], isNotNull);
     });
 
     test('fromJson with null dates', () {
@@ -155,6 +169,11 @@ void main() {
       final notif = Notification.fromJson(partial);
       expect(notif.isRead, false);
       expect(notif.createdAt, isNull);
+      expect(notif.priority, isNull);
+      expect(notif.channel, isNull);
+      expect(notif.expiresAt, isNull);
+      expect(notif.readAt, isNull);
+      expect(notif.metadata, isNull);
     });
 
     test('equality is by id', () {
@@ -165,8 +184,9 @@ void main() {
 
     test('copyWith', () {
       final notif = Notification.fromJson(json);
-      final copy = notif.copyWith(isRead: true);
+      final copy = notif.copyWith(isRead: true, priority: 'normal');
       expect(copy.isRead, true);
+      expect(copy.priority, 'normal');
       expect(copy.id, notif.id);
     });
   });

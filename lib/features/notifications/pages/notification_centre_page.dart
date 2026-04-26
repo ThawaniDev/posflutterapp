@@ -98,7 +98,7 @@ class _AnnouncementsTab extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.md),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) {
               final a = items[i];
               return PosCard(
@@ -369,7 +369,7 @@ class _AppReleasesTab extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.md),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) {
               final r = items[i];
               final notes = isAr && (r.releaseNotesAr?.isNotEmpty ?? false) ? r.releaseNotesAr : r.releaseNotes;

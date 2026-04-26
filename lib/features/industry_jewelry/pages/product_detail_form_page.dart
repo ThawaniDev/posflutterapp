@@ -106,9 +106,9 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit Product Detail' : 'New Jewelry Detail',
+      title: _isEditing ? l10n.jewelryEditProductDetail : l10n.jewelryNewProductDetail,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Detail' : 'Create Detail',
+          label: _isEditing ? l10n.jewelryUpdateDetail : l10n.jewelryCreateDetail,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

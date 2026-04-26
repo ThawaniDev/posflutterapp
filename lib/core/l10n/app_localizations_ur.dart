@@ -2540,6 +2540,45 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pharmacyPrescriptions => 'نسخے';
 
   @override
+  String get pharmacyExpiryAlerts => 'میعاد ختم ہونے کے الرٹ';
+
+  @override
+  String pharmacyExpiryAlertsTitle(int days) {
+    return 'میعاد ختم ($days دن)';
+  }
+
+  @override
+  String get pharmacyDaysFilter => 'دن';
+
+  @override
+  String get pharmacyNoExpiryAlerts =>
+      'منتخبہ مدت میں کوئی مصنوع میعاد ختم نہیں ہوگا';
+
+  @override
+  String get pharmacySeverityExpired => 'میعاد ختم';
+
+  @override
+  String get pharmacySeverityCritical => 'سنگین';
+
+  @override
+  String get pharmacySeverityWarning => 'تنبیہ';
+
+  @override
+  String pharmacyDaysUntilExpiry(int days) {
+    return '$days دن';
+  }
+
+  @override
+  String pharmacyExpiryDate(String date) {
+    return 'میعاد: $date';
+  }
+
+  @override
+  String pharmacyQtyAvailable(int qty) {
+    return 'تعداد: $qty';
+  }
+
+  @override
   String get pharmacyNewPrescription => 'نیا نسخہ';
 
   @override
@@ -2582,7 +2621,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get restaurantNewReservation => 'نیا ریزرویشن';
 
   @override
-  String get restaurantNewTable => 'نیا ٹیبل';
+  String get restaurantNewTable => 'نئی میز';
 
   @override
   String get restaurantTableNumber => 'ٹیبل نمبر';
@@ -2601,6 +2640,66 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get restaurantCompleteTicket => 'Complete ٹکٹ';
+
+  @override
+  String get restaurantNewKitchenTicket => 'نیا کچن ٹکٹ';
+
+  @override
+  String get restaurantCreateTicket => 'ٹکٹ بنائیں';
+
+  @override
+  String get restaurantStationLabel => 'اسٹیشن';
+
+  @override
+  String get restaurantStationHint => 'مثلاً: گرل، بیکری';
+
+  @override
+  String get restaurantCourseLabel => 'کورس نمبر';
+
+  @override
+  String get restaurantFireAt => 'فائر وقت (اختیاری)';
+
+  @override
+  String get restaurantTicketItems => 'اشیاء';
+
+  @override
+  String get restaurantItemName => 'آئٹم';
+
+  @override
+  String get restaurantItemNameHint => 'آئٹم کا نام';
+
+  @override
+  String get restaurantItemQty => 'تعداد';
+
+  @override
+  String get restaurantSplitBill => 'بل تقسیم';
+
+  @override
+  String get restaurantBillTotal => 'کل بل (ریال)';
+
+  @override
+  String get restaurantSplitEqual => 'برابر';
+
+  @override
+  String get restaurantSplitCustom => 'حسب پسند';
+
+  @override
+  String get restaurantNumberOfPeople => 'افراد کی تعداد';
+
+  @override
+  String get restaurantPerPerson => 'فی شخص';
+
+  @override
+  String get restaurantCustomAmounts => 'حسب پسند رقمیں';
+
+  @override
+  String get restaurantPerson => 'شخص';
+
+  @override
+  String get restaurantSumEntered => 'کل درج کردہ';
+
+  @override
+  String get restaurantConfirmSplit => 'تقسیم کی تصدیق';
 
   @override
   String get accountingTitle => 'اکاؤنٹنگ انضمام';
@@ -3781,6 +3880,16 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get labelDuplicate => 'ڈپلیکیٹ';
+
+  @override
+  String get labelDuplicateSuccess => 'ٹیمپلیٹ کامیابی سے ڈپلیکیٹ ہوگیا';
+
+  @override
+  String get labelSetAsDefault => 'پہلے سے طے شدہ کے طور پر سیٹ کریں';
+
+  @override
+  String get labelSetAsDefaultSuccess =>
+      'ٹیمپلیٹ کامیابی سے ڈیفالٹ مقرر کیا گیا';
 
   @override
   String get labelPreset => 'Preset';
@@ -5844,6 +5953,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonCancel => 'منسوخ';
 
   @override
+  String get commonClear => 'Clear';
+
+  @override
   String get commonCreate => 'بنائیں';
 
   @override
@@ -5866,6 +5978,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonNo => 'نہیں';
+
+  @override
+  String get commonYes => 'Yes';
 
   @override
   String get commonNotes => 'نوٹس';
@@ -6448,6 +6563,24 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifDeliveryLogsRetries => 'دوبارہ کوششیں';
 
   @override
+  String get notifDeliveryStatsTitle => 'ترسیل کے اعداد و شمار';
+
+  @override
+  String get notifDeliveryStatsTotal => 'کل بھیجے گئے';
+
+  @override
+  String get notifDeliveryStatsDelivered => 'پہنچا دیا گیا';
+
+  @override
+  String get notifDeliveryStatsFailed => 'ناکام';
+
+  @override
+  String get notifDeliveryStatsRate => 'کامیابی کی شرح';
+
+  @override
+  String get notifDeliveryStatsAvgLatency => 'اوسط تاخیر';
+
+  @override
   String get notifStatsTotal => 'کل';
 
   @override
@@ -6911,6 +7044,129 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get securityAllowedIpRanges => 'اجازت یافتہ آئی پی Ranges:';
+
+  @override
+  String get securityEditPolicy => 'پالیسی ترمیم کریں';
+
+  @override
+  String get securitySavePolicy => 'پالیسی محفوظ کریں';
+
+  @override
+  String get securityCancelEdit => 'منسوخ کریں';
+
+  @override
+  String get securityFilterByAction => 'عمل کے مطابق فلٹر کریں';
+
+  @override
+  String get securityFilterBySeverity => 'شدت کے مطابق فلٹر کریں';
+
+  @override
+  String get securityFilterByType => 'قسم کے مطابق فلٹر کریں';
+
+  @override
+  String get securityFilterByStatus => 'حالت کے مطابق فلٹر کریں';
+
+  @override
+  String get securityAllActions => 'تمام اعمال';
+
+  @override
+  String get securityAllSeverities => 'تمام شدتیں';
+
+  @override
+  String get securityAllStatuses => 'تمام حالات';
+
+  @override
+  String get securityAllTypes => 'تمام اقسام';
+
+  @override
+  String get securityPinOverrideTitle => 'مینیجر کی اجازت ضروری ہے';
+
+  @override
+  String get securityManagerAuthorization =>
+      'اس عمل کی اجازت کے لیے مینیجر کا PIN درج کریں۔';
+
+  @override
+  String get securityEnterPin => 'PIN درج کریں';
+
+  @override
+  String get securityPinOverrideError => 'اجازت ناکام ہوئی۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get securityPinOverrideInvalidPin => 'غلط PIN۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get securityPinOverrideLockout =>
+      'بہت زیادہ کوششیں۔ کچھ دیر بعد کوشش کریں۔';
+
+  @override
+  String get securityPolicyUpdated => 'سیکیورٹی پالیسی کامیابی سے اپ ڈیٹ ہوئی۔';
+
+  @override
+  String get securityPolicyUpdateError =>
+      'سیکیورٹی پالیسی اپ ڈیٹ کرنے میں ناکامی۔';
+
+  @override
+  String get securityIncidentStatusOpen => 'کھلا';
+
+  @override
+  String get securityIncidentStatusResolved => 'حل ہو گیا';
+
+  @override
+  String get securitySessionStatusActive => 'فعال';
+
+  @override
+  String get securitySessionStatusExpired => 'میعاد ختم';
+
+  @override
+  String get securitySessionStatusRevoked => 'منسوخ';
+
+  @override
+  String get securitySessionStatusClosed => 'بند';
+
+  @override
+  String get securityLoginType => 'قسم';
+
+  @override
+  String get securityLoginStatus => 'حالت';
+
+  @override
+  String get securityLoginUser => 'صارف';
+
+  @override
+  String get securityLoginIp => 'IP پتہ';
+
+  @override
+  String get securityLoginTime => 'وقت';
+
+  @override
+  String get securityLoginUserAgent => 'ڈیوائس / یوزر ایجنٹ';
+
+  @override
+  String get securityPinMinLength => 'PIN کی کم از کم لمبائی';
+
+  @override
+  String get securityPinMaxLength => 'PIN کی زیادہ سے زیادہ لمبائی';
+
+  @override
+  String get securityInSeconds => 'سیکنڈ میں';
+
+  @override
+  String get securityInMinutes => 'منٹ میں';
+
+  @override
+  String get securityInHours => 'گھنٹے میں';
+
+  @override
+  String get securityInDays => 'دن میں';
+
+  @override
+  String get securityZeroMeansNeverExpires => '0 = کبھی ختم نہیں ہوگا';
+
+  @override
+  String get securityAddIpRange => 'IP رینج شامل کریں';
+
+  @override
+  String get securityAddButton => 'شامل کریں';
 
   @override
   String get sessionsCloseSession => 'سیشن بند کریں';
@@ -13120,6 +13376,36 @@ class AppLocalizationsUr extends AppLocalizations {
   String get reportsLoyaltyPoints => 'وفاداری پوائنٹس';
 
   @override
+  String get reportsLoyaltyBalance => 'وفاداری بیلنس';
+
+  @override
+  String get reportsLoyaltyRedeemed => 'پوائنٹس ریڈیم';
+
+  @override
+  String get customerReportsNewVsReturning => 'نئے بمقابلہ واپسی';
+
+  @override
+  String get customerReportsLoyalty => 'وفاداری';
+
+  @override
+  String get reportsReturning30d => 'واپسی (30 دن)';
+
+  @override
+  String get reportsOrderSource => 'آرڈر کا ذریعہ';
+
+  @override
+  String get reportsOrderSourcePos => 'POS';
+
+  @override
+  String get reportsOrderSourceDelivery => 'ڈیلیوری';
+
+  @override
+  String get reportsOrderSourceOnline => 'آن لائن';
+
+  @override
+  String get reportsOrderSourcePhone => 'فون';
+
+  @override
   String get reportsAverages => 'اوسط';
 
   @override
@@ -14059,6 +14345,18 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get electronicsImei => 'IMEI';
+
+  @override
+  String get electronicsInvalidImei => 'غلط IMEI (15 ہندسے اور Luhn چیک لازمی)';
+
+  @override
+  String get electronicsCheckImeiServer => 'ڈپلیکیٹ چیک کریں';
+
+  @override
+  String get electronicsImeiDuplicate => 'IMEI پہلے سے رجسٹرڈ ہے';
+
+  @override
+  String get electronicsImeiUnique => 'IMEI منفرد ہے';
 
   @override
   String get electronicsImeiHint => '15 ہندسوں کا IMEI نمبر';
@@ -15858,10 +16156,350 @@ class AppLocalizationsUr extends AppLocalizations {
   String get backupAutoSettings => 'خودکار بیک اپ کی ترتیبات';
 
   @override
+  String get backupEnableAutoBackup => 'Enable Auto-Backup';
+
+  @override
+  String get backupEnableAutoBackupHint =>
+      'Automatically create backups on a scheduled interval.';
+
+  @override
   String get backupNoLoaded => 'کوئی بیک اپ لوڈ نہیں ہوا';
 
   @override
+  String get backupNow => 'Backup Now';
+
+  @override
+  String get backupNowTitle => 'Create Manual Backup';
+
+  @override
+  String get backupNowHint =>
+      'This will create a full backup of your store data.';
+
+  @override
+  String get backupTerminalId => 'Terminal ID';
+
+  @override
+  String get backupEncryptThisBackup => 'Encrypt this backup';
+
+  @override
+  String get backupTypeLabel => 'Backup Type';
+
+  @override
+  String get backupTypeAuto => 'Automatic';
+
+  @override
+  String get backupTypeManual => 'Manual';
+
+  @override
+  String get backupTypePreUpdate => 'Pre-Update';
+
+  @override
+  String get backupStatusCompleted => 'Completed';
+
+  @override
+  String get backupStatusFailed => 'Failed';
+
+  @override
+  String get backupStatusCorrupted => 'Corrupted';
+
+  @override
+  String get backupStatusInProgress => 'In Progress';
+
+  @override
+  String get backupStorageLocal => 'Local';
+
+  @override
+  String get backupStorageCloud => 'Cloud';
+
+  @override
+  String get backupStorageBoth => 'Local & Cloud';
+
+  @override
+  String get backupFrequencyHourly => 'Hourly';
+
+  @override
+  String get backupFrequencyDaily => 'Daily';
+
+  @override
+  String get backupFrequencyWeekly => 'Weekly';
+
+  @override
+  String get backupColType => 'Type';
+
+  @override
+  String get backupColDate => 'Date';
+
+  @override
+  String get backupColSize => 'Size';
+
+  @override
+  String get backupColLocation => 'Location';
+
+  @override
+  String get backupColStatus => 'Status';
+
+  @override
+  String get backupColVerified => 'Verified';
+
+  @override
+  String get backupFilterType => 'Filter by type';
+
+  @override
+  String get backupFilterStatus => 'Filter by status';
+
+  @override
+  String get backupFilterAllTypes => 'All Types';
+
+  @override
+  String get backupFilterAllStatuses => 'All Statuses';
+
+  @override
+  String get backupVerified => 'Verified';
+
+  @override
+  String get backupNotVerified => 'Not Verified';
+
+  @override
+  String get backupEncrypt => 'Encrypt Backups';
+
+  @override
+  String get backupLocalEnabled => 'Local Backup Enabled';
+
+  @override
+  String get backupCloudEnabled => 'Cloud Backup Enabled';
+
+  @override
+  String get backupRetentionDays => 'Retention Period (days)';
+
+  @override
+  String get backupBackupHour => 'Backup Hour (0–23)';
+
+  @override
+  String get backupNextScheduled => 'Next Scheduled';
+
+  @override
+  String get backupLastBackup => 'Last Backup';
+
+  @override
+  String get backupLastAutoBackup => 'Last Auto Backup';
+
+  @override
+  String get backupTotalBackups => 'Total Backups';
+
+  @override
+  String get backupTotalSize => 'Total Size';
+
+  @override
+  String get backupStorageUsed => 'Storage Used';
+
+  @override
+  String get backupQuota => 'Quota';
+
+  @override
+  String get backupUsagePercent => 'Usage';
+
+  @override
+  String get backupByType => 'Breakdown by Type';
+
+  @override
+  String get backupRecentBackups => 'Recent Backups';
+
+  @override
+  String get backupSaveSchedule => 'Save Schedule';
+
+  @override
+  String get backupScheduleSaved => 'Schedule saved successfully';
+
+  @override
+  String get backupScheduleSaveError => 'Failed to save schedule';
+
+  @override
+  String get backupRestoreWizard => 'Restore Wizard';
+
+  @override
+  String get backupRestoreStep1 => 'Select Backup';
+
+  @override
+  String get backupRestoreStep2 => 'Verify Integrity';
+
+  @override
+  String get backupRestoreStep3 => 'Confirm Restore';
+
+  @override
+  String get backupRestoreStep4 => 'Restore Progress';
+
+  @override
+  String get backupRestoreStep5 => 'Complete';
+
+  @override
+  String get backupSelectForRestore => 'Select a backup to restore';
+
+  @override
+  String get backupOnlyCompletedRestore =>
+      'Only completed and verified backups can be restored';
+
+  @override
+  String get backupVerifyStep => 'Verify Integrity';
+
+  @override
+  String get backupVerifySuccess => 'Backup integrity verified';
+
+  @override
+  String get backupVerifyFailed =>
+      'Integrity check failed — backup may be corrupted';
+
+  @override
+  String get backupVerifyChecksum => 'Checksum';
+
+  @override
+  String get backupConfirmRestore => 'Confirm Restore';
+
+  @override
+  String get backupRestoreWarning =>
+      '⚠️ This will overwrite all current data. This action cannot be undone. We strongly recommend creating a pre-restore backup.';
+
+  @override
+  String get backupCreatePreRestoreBackup => 'Create a backup before restoring';
+
+  @override
+  String get backupEstimatedDuration => 'Estimated duration';
+
+  @override
+  String backupEstimatedDurationSeconds(String seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get backupRestoreProgress => 'Restoring...';
+
+  @override
+  String get backupRestoreComplete => 'Restore Completed';
+
+  @override
+  String get backupRestoreFailed => 'Restore Failed';
+
+  @override
+  String get backupRestoreInitiated =>
+      'Restore has been initiated. The system will apply the backup.';
+
+  @override
+  String get backupRequiresMigration =>
+      'This backup requires a database migration';
+
+  @override
+  String get backupStartRestore => 'Start Restore';
+
+  @override
+  String get backupExportData => 'Export Data';
+
+  @override
+  String get backupExportTables => 'Select Tables to Export';
+
+  @override
+  String get backupExportTableProducts => 'Products';
+
+  @override
+  String get backupExportTableCustomers => 'Customers';
+
+  @override
+  String get backupExportTableOrders => 'Orders';
+
+  @override
+  String get backupExportTableInventory => 'Inventory';
+
+  @override
+  String get backupExportTableSettings => 'Settings';
+
+  @override
+  String get backupExportTableStaff => 'Staff';
+
+  @override
+  String get backupExportTableCategories => 'Categories';
+
+  @override
+  String get backupExportFormat => 'Export Format';
+
+  @override
+  String get backupExportFormatJson => 'JSON';
+
+  @override
+  String get backupExportFormatCsv => 'CSV';
+
+  @override
+  String get backupExportIncludeImages => 'Include Images';
+
+  @override
+  String get backupExportIncludeImagesDesc =>
+      'Attach image files (increases export size)';
+
+  @override
+  String get backupExportResult => 'Export Result';
+
+  @override
+  String get backupExportId => 'Export ID';
+
+  @override
+  String get backupExportFilePath => 'File Path';
+
+  @override
+  String get backupExportTotalRecords => 'Total Records';
+
+  @override
+  String get backupExportSuccess => 'Export created successfully';
+
+  @override
+  String get backupExportError => 'Export failed. Please try again.';
+
+  @override
+  String get backupExportStarted => 'Starting export...';
+
+  @override
+  String get backupDeleteConfirmTitle => 'Delete Backup?';
+
+  @override
+  String get backupDeleteConfirmMessage =>
+      'This will permanently delete this backup file. This cannot be undone.';
+
+  @override
+  String get backupDeleteSuccess => 'Backup deleted';
+
+  @override
+  String get backupDeleteError => 'Failed to delete backup';
+
+  @override
+  String backupRecordsCount(String count) {
+    return '$count records';
+  }
+
+  @override
+  String get backupDbVersion => 'DB Version';
+
+  @override
+  String get backupChecksum => 'Checksum';
+
+  @override
+  String get backupEncrypted => 'Encrypted';
+
+  @override
+  String get backupProviderStatus => 'Provider Status';
+
+  @override
+  String get backupNoProvidersConnected => 'No providers connected';
+
+  @override
   String get securityNoAuditLogs => 'کوئی آڈٹ لاگ نہیں ملی۔';
+
+  @override
+  String get securityExportCsv => 'CSV برآمد کریں';
+
+  @override
+  String get securityExporting => 'برآمد ہو رہا ہے...';
+
+  @override
+  String get securityExportSuccess => 'آڈٹ لاگ کامیابی سے برآمد ہو گیا۔';
+
+  @override
+  String get securityExportError => 'برآمد ناکام۔ دوبارہ کوشش کریں۔';
 
   @override
   String get marketplaceContinue => 'جاری رکھیں';
@@ -17082,4 +17720,598 @@ class AppLocalizationsUr extends AppLocalizations {
   String zatcaTamperedDevices(int count) {
     return '$count ٹیمپرڈ ڈیوائسز';
   }
+
+  @override
+  String get reportsScheduledTitle => 'شیڈول شدہ رپورٹس';
+
+  @override
+  String get reportsSlowMoversTab => 'سست روی';
+
+  @override
+  String get reportsMarginAnalysis => 'مارجن تجزیہ';
+
+  @override
+  String get reportsCategoryContribution => 'زمرہ کا حصہ';
+
+  @override
+  String get reportsNoSlowMovers => 'کوئی سست فروخت ہونے والی مصنوعات نہیں';
+
+  @override
+  String reportsSlowMoversCount(int count) {
+    return '$count سست مصنوع';
+  }
+
+  @override
+  String get reportsAvgMargin => 'اوسط مارجن';
+
+  @override
+  String get reportsNoMarginData => 'کوئی مارجن ڈیٹا نہیں';
+
+  @override
+  String get reportsNoCategoryContribution => 'کوئی زمرہ ڈیٹا نہیں';
+
+  @override
+  String get reportsExportPdf => 'PDF برآمد کریں';
+
+  @override
+  String get reportsExportCsv => 'CSV برآمد کریں';
+
+  @override
+  String get reportsExportFormatTitle => 'برآمد فارمیٹ';
+
+  @override
+  String get reportsExportGenerating => 'رپورٹ تیار ہو رہی ہے…';
+
+  @override
+  String get reportsExportSuccess => 'رپورٹ کامیابی سے برآمد ہوئی';
+
+  @override
+  String get reportsExportFailed => 'برآمد ناکام ہوئی۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get reportsScheduledCreate => 'شیڈول بنائیں';
+
+  @override
+  String get reportsScheduledName => 'شیڈول کا نام';
+
+  @override
+  String get reportsScheduledFrequency => 'تکرار';
+
+  @override
+  String get reportsScheduledRecipients => 'وصول کنندگان (کاما سے الگ ای میل)';
+
+  @override
+  String get reportsScheduledDaily => 'روزانہ';
+
+  @override
+  String get reportsScheduledWeekly => 'ہفتہ وار';
+
+  @override
+  String get reportsScheduledMonthly => 'ماہانہ';
+
+  @override
+  String reportsScheduledNext(String date) {
+    return 'اگلا: $date';
+  }
+
+  @override
+  String reportsScheduledLast(String date) {
+    return 'آخری: $date';
+  }
+
+  @override
+  String get reportsScheduledDelete => 'شیڈول حذف کریں';
+
+  @override
+  String reportsScheduledDeleteConfirm(String name) {
+    return 'شیڈول \"$name\" حذف کریں؟';
+  }
+
+  @override
+  String get reportsScheduledEmpty => 'ابھی تک کوئی شیڈول نہیں';
+
+  @override
+  String get reportsScheduledFormat => 'فارمیٹ';
+
+  @override
+  String get reportsComparePeriod => 'مدت کا موازنہ';
+
+  @override
+  String get reportsCompareFrom => 'سے';
+
+  @override
+  String get reportsCompareTo => 'تک';
+
+  @override
+  String get reportsExpiryTab => 'میعاد ختم';
+
+  @override
+  String reportsExpiryDate(String date) {
+    return 'میعاد: $date';
+  }
+
+  @override
+  String reportsExpiryDaysLeft(int days) {
+    return '$days دن باقی';
+  }
+
+  @override
+  String get reportsExpiryExpired => 'میعاد ختم';
+
+  @override
+  String get reportsExpiryCritical => 'تنقیدی (≤7 دن)';
+
+  @override
+  String get reportsExpiryWarning => 'انتباہ (≤30 دن)';
+
+  @override
+  String get reportsNoExpiryData => 'کوئی میعاد ختم ڈیٹا نہیں';
+
+  @override
+  String get reportsDeliveryCommission => 'ڈیلیوری کمیشن';
+
+  @override
+  String get reportsDeliveryPlatform => 'پلیٹ فارم';
+
+  @override
+  String get reportsDeliveryOrders => 'آرڈرز';
+
+  @override
+  String get reportsDeliveryGross => 'مجموعی فروخت';
+
+  @override
+  String get reportsDeliveryFee => 'کمیشن فیس';
+
+  @override
+  String get reportsDeliveryNet => 'خالص فروخت';
+
+  @override
+  String get reportsNoDeliveryData => 'کوئی ڈیلیوری کمیشن ڈیٹا نہیں';
+
+  @override
+  String get reportsAutoRefreshing => 'ہر 60 سیکنڈ میں خودکار تجدید';
+
+  @override
+  String reportsLastRefreshed(String time) {
+    return 'آخری تازہ کاری: $time';
+  }
+
+  @override
+  String get reportsSubscriptionRequired =>
+      'اس رپورٹ تک رسائی کے لیے اپ گریڈ ضروری ہے';
+
+  @override
+  String get reportsUpgradeRequired => 'یہ خصوصیت اعلی منصوبوں میں دستیاب ہے';
+
+  @override
+  String get reportsNoSchedulesYet => 'ابھی تک کوئی شیڈول نہیں';
+
+  @override
+  String reportNDays(int days) {
+    return '$days دن';
+  }
+
+  @override
+  String reportNInStock(int n) {
+    return '$n اسٹاک میں';
+  }
+
+  @override
+  String get reportsBestSellers => 'سب سے زیادہ فروخت';
+
+  @override
+  String get reportsType => 'رپورٹ کی قسم';
+
+  @override
+  String get bakeryEditCakeOrder => 'کیک آرڈر ترمیم کریں';
+
+  @override
+  String get bakeryNewCakeOrder => 'نیا کیک آرڈر';
+
+  @override
+  String get bakeryUpdateOrder => 'آرڈر اپڈیٹ کریں';
+
+  @override
+  String get bakeryCreateOrder => 'آرڈر بنائیں';
+
+  @override
+  String get bakeryEditRecipe => 'ترکیب ترمیم کریں';
+
+  @override
+  String get bakeryUpdateRecipe => 'ترکیب اپڈیٹ کریں';
+
+  @override
+  String get bakeryCreateRecipe => 'ترکیب بنائیں';
+
+  @override
+  String get electronicsEditImeiRecord => 'IMEI ریکارڈ ترمیم کریں';
+
+  @override
+  String get electronicsNewImeiRecord => 'نیا IMEI ریکارڈ';
+
+  @override
+  String get electronicsUpdateRecord => 'ریکارڈ اپڈیٹ کریں';
+
+  @override
+  String get electronicsCreateRecord => 'ریکارڈ بنائیں';
+
+  @override
+  String get electronicsEditRepairJob => 'مرمت کام ترمیم کریں';
+
+  @override
+  String get electronicsUpdateJob => 'کام اپڈیٹ کریں';
+
+  @override
+  String get electronicsCreateJob => 'کام بنائیں';
+
+  @override
+  String get floristEditArrangement => 'ترتیب ترمیم کریں';
+
+  @override
+  String get floristNewArrangementTitle => 'نئی ترتیب';
+
+  @override
+  String get floristUpdateArrangement => 'ترتیب اپڈیٹ کریں';
+
+  @override
+  String get floristCreateArrangement => 'ترتیب بنائیں';
+
+  @override
+  String get floristNewSubscription => 'نئی رکنیت';
+
+  @override
+  String get floristEditSubscription => 'رکنیت ترمیم کریں';
+
+  @override
+  String get floristUpdateSubscription => 'رکنیت اپڈیٹ کریں';
+
+  @override
+  String get floristCreateSubscription => 'رکنیت بنائیں';
+
+  @override
+  String get jewelryEditProductDetail => 'مصنوع کی تفصیل ترمیم کریں';
+
+  @override
+  String get jewelryPriceCalculator => 'قیمت کیلکولیٹر';
+
+  @override
+  String get jewelrySelectRate => 'دھاتی شرح منتخب کریں';
+
+  @override
+  String get sarPerGram => 'ریال/گ';
+
+  @override
+  String get jewelryPercentage => 'فیصد';
+
+  @override
+  String get jewelryFlat => 'مستقل رقم';
+
+  @override
+  String get jewelryPerGram => 'فی گرام';
+
+  @override
+  String get jewelryCalculatedPrice => 'محسوب شدہ قیمت';
+
+  @override
+  String get jewelryNewProductDetail => 'نئی زیور تفصیل';
+
+  @override
+  String get jewelryUpdateDetail => 'تفصیل اپڈیٹ کریں';
+
+  @override
+  String get jewelryCreateDetail => 'تفصیل بنائیں';
+
+  @override
+  String get pharmacyEditPrescription => 'نسخہ ترمیم کریں';
+
+  @override
+  String get pharmacyUpdatePrescription => 'نسخہ اپڈیٹ کریں';
+
+  @override
+  String get pharmacyCreatePrescription => 'نسخہ بنائیں';
+
+  @override
+  String get pharmacyEditDrugSchedule => 'دوا شیڈول ترمیم کریں';
+
+  @override
+  String get pharmacyNewDrugSchedule => 'نئی دوا شیڈول';
+
+  @override
+  String get pharmacyUpdateSchedule => 'شیڈول اپڈیٹ کریں';
+
+  @override
+  String get pharmacyCreateSchedule => 'شیڈول بنائیں';
+
+  @override
+  String get restaurantUpdateReservation => 'ریزرویشن اپڈیٹ کریں';
+
+  @override
+  String get restaurantCreateReservation => 'ریزرویشن بنائیں';
+
+  @override
+  String get restaurantEditTable => 'میز ترمیم کریں';
+
+  @override
+  String get restaurantUpdateTable => 'میز اپڈیٹ کریں';
+
+  @override
+  String get restaurantCreateTable => 'میز بنائیں';
+
+  @override
+  String get paymentListTitle => 'ادائیگی کی تاریخ';
+
+  @override
+  String get paymentListFilters => 'فلٹرز';
+
+  @override
+  String get paymentListEmpty => 'کوئی ادائیگی نہیں ملی';
+
+  @override
+  String get paymentListSearchHint => 'لین دین تلاش کریں...';
+
+  @override
+  String get paymentListDateRange => 'تاریخ کی حد';
+
+  @override
+  String get paymentListMethod => 'طریقہ';
+
+  @override
+  String get paymentListStatus => 'حالت';
+
+  @override
+  String get paymentListRefund => 'واپسی';
+
+  @override
+  String get paymentListInfoMessage =>
+      'تمام ادائیگی لین دین کو براؤز اور فلٹر کریں۔';
+
+  @override
+  String get paymentStatusCompleted => 'مکمل';
+
+  @override
+  String get paymentStatusRefunded => 'واپس کردہ';
+
+  @override
+  String get paymentStatusPartialRefund => 'جزوی واپسی';
+
+  @override
+  String get paymentStatusFailed => 'ناکام';
+
+  @override
+  String get paymentDetailTitle => 'ادائیگی کی تفصیلات';
+
+  @override
+  String get paymentDetailInfo => 'لین دین کی معلومات';
+
+  @override
+  String get paymentDetailMethod => 'طریقہ';
+
+  @override
+  String get paymentDetailAmount => 'رقم';
+
+  @override
+  String get paymentDetailCashTendered => 'نقد پیش کردہ';
+
+  @override
+  String get paymentDetailChange => 'واپسی';
+
+  @override
+  String get paymentDetailTip => 'ٹپ';
+
+  @override
+  String get paymentDetailStatus => 'حالت';
+
+  @override
+  String get paymentDetailTransactionId => 'لین دین کا نمبر';
+
+  @override
+  String get paymentDetailCard => 'کارڈ';
+
+  @override
+  String get paymentDetailGiftCard => 'گفٹ کارڈ';
+
+  @override
+  String get paymentDetailDate => 'تاریخ';
+
+  @override
+  String get paymentDetailRefunds => 'واپسی کی تاریخ';
+
+  @override
+  String get paymentDetailNoRefunds => 'اس ادائیگی کے لیے کوئی واپسی نہیں';
+
+  @override
+  String get refundAmount => 'واپسی کی رقم';
+
+  @override
+  String get refundMethod => 'واپسی کا طریقہ';
+
+  @override
+  String get refundReference => 'حوالہ نمبر';
+
+  @override
+  String get refundSubmit => 'واپسی پروسیس کریں';
+
+  @override
+  String get refundCreatedSuccess => 'واپسی کامیابی سے پروسیس ہوئی';
+
+  @override
+  String get giftCardManage => 'انتظام';
+
+  @override
+  String get giftCardManageEmpty => 'کوئی گفٹ کارڈ نہیں ملا';
+
+  @override
+  String get giftCardManageFilterStatus => 'حالت کے مطابق فلٹر';
+
+  @override
+  String get giftCardDeactivateTitle => 'گفٹ کارڈ غیر فعال کریں';
+
+  @override
+  String giftCardDeactivateConfirm(String code) {
+    return 'کیا آپ گفٹ کارڈ $code غیر فعال کرنا چاہتے ہیں؟';
+  }
+
+  @override
+  String get giftCardDeactivateAction => 'غیر فعال کریں';
+
+  @override
+  String get giftCardDeactivatedSuccess => 'گفٹ کارڈ غیر فعال کر دیا گیا';
+
+  @override
+  String get giftCardStatusActive => 'فعال';
+
+  @override
+  String get giftCardStatusRedeemed => 'استعمال شدہ';
+
+  @override
+  String get giftCardStatusExpired => 'میعاد ختم';
+
+  @override
+  String get giftCardStatusDeactivated => 'غیر فعال';
+
+  @override
+  String get expenseEditTitle => 'اخراجات ترمیم کریں';
+
+  @override
+  String get expenseDeleteTitle => 'اخراجات حذف کریں';
+
+  @override
+  String get expenseDeleteConfirm => 'کیا آپ یہ خرچ حذف کرنا چاہتے ہیں؟';
+
+  @override
+  String get expenseDeletedSuccess => 'خرچ حذف کر دیا گیا';
+
+  @override
+  String get expenseUpdatedSuccess => 'خرچ اپڈیٹ کر دیا گیا';
+
+  @override
+  String get expensesInfoMessage => 'تمام اسٹور اخراجات کو ٹریک اور منظم کریں۔';
+
+  @override
+  String get cashSessionDetailTitle => 'سیشن کی تفصیل';
+
+  @override
+  String get cashSessionEventsTab => 'نقد واقعات';
+
+  @override
+  String get cashSessionExpensesTab => 'اخراجات';
+
+  @override
+  String get cashSessionNoEvents => 'اس سیشن میں کوئی نقد واقعہ نہیں';
+
+  @override
+  String get cashSessionNoExpenses => 'اس سیشن میں کوئی اخراجات نہیں';
+
+  @override
+  String get cashSessionOpenFloat => 'ابتدائی نقد';
+
+  @override
+  String get cashSessionExpectedCash => 'متوقع نقد';
+
+  @override
+  String get cashSessionVariance => 'فرق';
+
+  @override
+  String get cashSessionOpenedAt => 'کھولا گیا';
+
+  @override
+  String get cashSessionClosedAt => 'بند کیا گیا';
+
+  @override
+  String get cashSessionsInfoMessage =>
+      'تمام نقد سیشن دیکھیں۔ تفصیلات کے لیے سیشن پر کلک کریں۔';
+
+  @override
+  String get dailySummaryExpensesBreakdown => 'زمرہ کے مطابق اخراجات';
+
+  @override
+  String get dailySummaryNoExpenses => 'کوئی اخراجات ریکارڈ نہیں';
+
+  @override
+  String get dailySummaryInfoMessage => 'آج کی فروخت کا خلاصہ دیکھیں۔';
+
+  @override
+  String get finReconInfoMessage => 'مالی مصالحت کا جائزہ لیں اور تصدیق کریں۔';
+
+  @override
+  String get allCategories => 'تمام زمرے';
+
+  @override
+  String get syncConnecting => 'Connecting to server...';
+
+  @override
+  String get syncCheckingConnectivity => 'Checking connectivity...';
+
+  @override
+  String get syncNoInternet =>
+      'No internet connection. Please connect and try again.';
+
+  @override
+  String get syncDownloadingData => 'Downloading data...';
+
+  @override
+  String get syncPerformingFullSync => 'Performing full sync...';
+
+  @override
+  String get syncReady => 'Ready!';
+
+  @override
+  String get syncSettingUp => 'Setting Up';
+
+  @override
+  String get syncConnected => 'Connected';
+
+  @override
+  String get syncOfflineStatus => 'Offline';
+
+  @override
+  String syncPendingCount(int count) {
+    return '$count pending';
+  }
+
+  @override
+  String syncLastSyncInfo(String direction, int records) {
+    return 'Last sync: $direction · $records records';
+  }
+
+  @override
+  String syncPendingConflictsCount(int count) {
+    return '$count conflicts';
+  }
+
+  @override
+  String syncFailedCount(int count) {
+    return '$count failed';
+  }
+
+  @override
+  String get syncLogsTitle => 'Sync Logs';
+
+  @override
+  String get syncLogsEmpty => 'No sync logs yet';
+
+  @override
+  String get syncLogsFilterDirection => 'Direction';
+
+  @override
+  String get syncLogsFilterStatus => 'Status';
+
+  @override
+  String get syncLogsTerminal => 'Terminal';
+
+  @override
+  String syncLogsDuration(int ms) {
+    return '${ms}ms';
+  }
+
+  @override
+  String syncLogsRecordsCount(int count) {
+    return '$count records';
+  }
+
+  @override
+  String get syncLogHistory => 'Sync Log History';
+
+  @override
+  String get viewAllLogs => 'View All Logs';
 }

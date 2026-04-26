@@ -57,7 +57,7 @@ class SecuritySession {
     };
   }
 
-  bool get isActive => status == 'active';
+  bool get isActive => status == 'active' || status == 'open';
 
   SecuritySession copyWith({
     String? id,

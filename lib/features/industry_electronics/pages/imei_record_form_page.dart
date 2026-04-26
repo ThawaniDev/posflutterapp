@@ -6,6 +6,8 @@ import 'package:wameedpos/features/customers/enums/condition_grade.dart';
 import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
 import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
 import 'package:wameedpos/features/industry_electronics/providers/electronics_providers.dart';
+import 'package:wameedpos/features/industry_electronics/repositories/electronics_repository.dart';
+import 'package:wameedpos/features/industry_electronics/utils/imei_validator.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
@@ -24,6 +26,8 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
+  bool _checkingImei = false;
+  ({bool valid, bool exists})? _imeiServerResult;
   bool get _isEditing => widget.record != null;
 
   String? _selectedProductId;
@@ -59,6 +63,20 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     _serialNumberCtrl.dispose();
     _purchasePriceCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkImeiOnServer() async {
+    final imei = _imeiCtrl.text.trim();
+    if (!ImeiValidator.isValid(imei)) return;
+    setState(() { _checkingImei = true; _imeiServerResult = null; });
+    try {
+      final result = await ref.read(electronicsRepositoryProvider).validateImei(imei);
+      setState(() => _imeiServerResult = result);
+    } catch (_) {
+      // silently ignore server errors for the check
+    } finally {
+      setState(() => _checkingImei = false);
+    }
   }
 
   Future<void> _pickDate({required bool isStoreWarranty}) async {
@@ -117,9 +135,9 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit IMEI Record' : 'New IMEI Record',
+      title: _isEditing ? l10n.electronicsEditImeiRecord : l10n.electronicsNewImeiRecord,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Record' : 'Create Record',
+          label: _isEditing ? l10n.electronicsUpdateRecord : l10n.electronicsCreateRecord,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
@@ -138,7 +156,40 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               showSearch: true,
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _imeiCtrl, label: l10n.electronicsImei, hint: l10n.electronicsImeiHint, keyboardType: TextInputType.number),
+            PosTextField(
+              controller: _imeiCtrl,
+              label: l10n.electronicsImei,
+              hint: l10n.electronicsImeiHint,
+              keyboardType: TextInputType.number,
+              validator: (v) => ImeiValidator.validate(v, errorMessage: l10n.electronicsInvalidImei),
+              onChanged: (_) => setState(() => _imeiServerResult = null),
+            ),
+            Row(
+              children: [
+                if (_imeiServerResult != null) ...[
+                  Icon(
+                    _imeiServerResult!.exists ? Icons.warning_amber : Icons.check_circle_outline,
+                    size: 16,
+                    color: _imeiServerResult!.exists ? Theme.of(context).colorScheme.error : Colors.green,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    _imeiServerResult!.exists ? l10n.electronicsImeiDuplicate : l10n.electronicsImeiUnique,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: _imeiServerResult!.exists ? Theme.of(context).colorScheme.error : Colors.green,
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+                TextButton.icon(
+                  onPressed: _checkingImei ? null : _checkImeiOnServer,
+                  icon: _checkingImei
+                      ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Icon(Icons.cloud_done_outlined, size: 16),
+                  label: Text(l10n.electronicsCheckImeiServer, style: const TextStyle(fontSize: 12)),
+                ),
+              ],
+            ),
             const SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imei2Ctrl,

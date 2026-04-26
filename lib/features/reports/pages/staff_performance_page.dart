@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_export_sheet.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -42,24 +45,39 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(staffPerformanceProvider);
 
-    return ReportPageScaffold(
-      title: l10n.sidebarStaffPerformance,
-      filterPanel: ReportFilterPanel(
-        filters: _filters,
-        onFiltersChanged: _onFiltersChanged,
-        onRefresh: _loadData,
-        showStaffFilter: true,
-        showPaymentMethodFilter: true,
-        showAmountRange: true,
-        showOrderStatus: true,
-        showSortOptions: true,
+    return PermissionGuardPage(
+      permission: Permissions.reportsStaff,
+      child: ReportPageScaffold(
+        title: l10n.sidebarStaffPerformance,
+        actions: [
+          PosButton.icon(
+            icon: Icons.download_rounded,
+            tooltip: l10n.reportsExportFormatTitle,
+            variant: PosButtonVariant.ghost,
+            onPressed: () => showReportExportSheet(
+              context: context,
+              reportType: 'staff_performance',
+              filters: _filters,
+            ),
+          ),
+        ],
+        filterPanel: ReportFilterPanel(
+          filters: _filters,
+          onFiltersChanged: _onFiltersChanged,
+          onRefresh: _loadData,
+          showStaffFilter: true,
+          showPaymentMethodFilter: true,
+          showAmountRange: true,
+          showOrderStatus: true,
+          showSortOptions: true,
+        ),
+        body: switch (state) {
+          StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
+          StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
+          StaffPerformanceLoaded(:final staff) =>
+            staff.isEmpty ? PosEmptyState(title: l10n.reportsNoStaffData, icon: Icons.people) : _StaffList(staff: staff),
+        },
       ),
-      body: switch (state) {
-        StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
-        StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
-        StaffPerformanceLoaded(:final staff) =>
-          staff.isEmpty ? PosEmptyState(title: l10n.reportsNoStaffData, icon: Icons.people) : _StaffList(staff: staff),
-      },
     );
   }
 }
@@ -134,6 +152,7 @@ class _StaffList extends StatelessWidget {
               final orders = (s['total_orders'] as num).toInt();
               final avgOrder = double.tryParse(s['avg_order_value'].toString()) ?? 0.0;
               final discounts = double.tryParse(s['total_discounts_given'].toString()) ?? 0.0;
+              final hoursWorked = (s['hours_worked'] as num?)?.toDouble() ?? 0.0;
               final initials = name.isNotEmpty ? name[0].toUpperCase() : 'U';
 
               return Column(
@@ -202,6 +221,8 @@ class _StaffList extends StatelessWidget {
                                   ReportBadge(label: l10n.reportAvgAmount(formatCurrency(avgOrder)), color: AppColors.primary),
                                   if (discounts > 0)
                                     ReportBadge(label: '-${formatCurrency(discounts)}', color: AppColors.warning),
+                                  if (hoursWorked > 0)
+                                    ReportBadge(label: '${hoursWorked.toStringAsFixed(1)}h', color: AppColors.info),
                                 ],
                               ),
                             ],

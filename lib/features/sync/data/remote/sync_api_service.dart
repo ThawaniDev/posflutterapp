@@ -14,7 +14,11 @@ class SyncApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.syncPush,
-      data: {'terminal_id': terminalId, 'changes': changes, 'sync_token': ?syncToken},
+      data: {
+        'terminal_id': terminalId,
+        'changes': changes,
+        if (syncToken != null) 'sync_token': syncToken,
+      },
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -24,8 +28,8 @@ class SyncApiService {
       ApiEndpoints.syncPull,
       queryParameters: {
         'terminal_id': terminalId,
-        'tables': ?tables,
-        'sync_token': ?syncToken,
+        if (tables != null && tables.isNotEmpty) 'tables': tables,
+        if (syncToken != null) 'sync_token': syncToken,
       },
     );
     return response.data['data'] as Map<String, dynamic>;
@@ -48,7 +52,10 @@ class SyncApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.syncResolveConflict(conflictId),
-      data: {'resolution': resolution, 'merged_data': ?mergedData},
+      data: {
+        'resolution': resolution,
+        if (mergedData != null) 'merged_data': mergedData,
+      },
     );
     return response.data['data'] as Map<String, dynamic>;
   }
@@ -57,9 +64,9 @@ class SyncApiService {
     final response = await _dio.get(
       ApiEndpoints.syncConflicts,
       queryParameters: {
-        'status': ?status,
-        'table_name': ?tableName,
-        'per_page': ?perPage,
+        if (status != null) 'status': status,
+        if (tableName != null) 'table_name': tableName,
+        if (perPage != null) 'per_page': perPage,
       },
     );
     return response.data['data'] as Map<String, dynamic>;
@@ -68,7 +75,30 @@ class SyncApiService {
   Future<Map<String, dynamic>> heartbeat({String? terminalId, List<Map<String, dynamic>>? changes}) async {
     final response = await _dio.post(
       ApiEndpoints.syncHeartbeat,
-      data: {'terminal_id': ?terminalId, 'changes': ?changes},
+      data: {
+        if (terminalId != null) 'terminal_id': terminalId,
+        if (changes != null && changes.isNotEmpty) 'changes': changes,
+      },
+    );
+    return response.data['data'] as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> listLogs({
+    String? direction,
+    String? status,
+    String? terminalId,
+    int page = 1,
+    int perPage = 25,
+  }) async {
+    final response = await _dio.get(
+      '/sync/logs',
+      queryParameters: {
+        if (direction != null) 'direction': direction,
+        if (status != null) 'status': status,
+        if (terminalId != null) 'terminal_id': terminalId,
+        'page': page,
+        'per_page': perPage,
+      },
     );
     return response.data['data'] as Map<String, dynamic>;
   }

@@ -54,7 +54,7 @@ void main() {
     });
 
     test('has 4 values', () {
-      expect(AccountingExportStatus.values.length, 4);
+      expect(AccountingExportStatus.values.length, 5);
     });
 
     test('fromValue works for all values', () {
@@ -110,7 +110,7 @@ void main() {
     });
 
     test('has 2 values', () {
-      expect(ExportTriggeredBy.values.length, 2);
+      expect(ExportTriggeredBy.values.length, 3);
     });
 
     test('fromValue works for all values', () {

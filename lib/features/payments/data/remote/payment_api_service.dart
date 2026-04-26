@@ -9,26 +9,39 @@ import 'package:wameedpos/features/payments/models/cash_session.dart';
 import 'package:wameedpos/features/payments/models/expense.dart';
 import 'package:wameedpos/features/payments/models/gift_card.dart';
 import 'package:wameedpos/features/payments/models/payment.dart';
+import 'package:wameedpos/features/payments/models/refund.dart';
 
 final paymentApiServiceProvider = Provider<PaymentApiService>((ref) {
   return PaymentApiService(ref.watch(dioClientProvider));
 });
 
 class PaymentApiService {
-
   PaymentApiService(this._dio);
   final Dio _dio;
 
   // ─── Payments ─────────────────────────────────────────────────
 
-  Future<PaginatedResult<Payment>> listPayments({int page = 1, int perPage = 20, String? method, String? transactionId}) async {
+  Future<PaginatedResult<Payment>> listPayments({
+    int page = 1,
+    int perPage = 20,
+    String? method,
+    String? transactionId,
+    String? status,
+    String? startDate,
+    String? endDate,
+    String? search,
+  }) async {
     final response = await _dio.get(
       ApiEndpoints.payments,
       queryParameters: {
         'page': page,
         'per_page': perPage,
-        'method': ?method,
-        'transaction_id': ?transactionId,
+        if (method != null) 'method': method,
+        if (transactionId != null) 'transaction_id': transactionId,
+        if (status != null) 'status': status,
+        if (startDate != null) 'start_date': startDate,
+        if (endDate != null) 'end_date': endDate,
+        if (search != null) 'search': search,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -47,6 +60,62 @@ class PaymentApiService {
     final response = await _dio.post(ApiEndpoints.payments, data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Payment.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Refunds ──────────────────────────────────────────────────
+
+  Future<PaginatedResult<Refund>> listRefunds({
+    int page = 1,
+    int perPage = 20,
+    String? startDate,
+    String? endDate,
+    String? status,
+    String? method,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.paymentRefunds,
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (startDate != null) 'start_date': startDate,
+        if (endDate != null) 'end_date': endDate,
+        if (status != null) 'status': status,
+        if (method != null) 'method': method,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Refund.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  Future<PaginatedResult<Refund>> listPaymentRefunds(String paymentId, {int page = 1}) async {
+    final response = await _dio.get(
+      ApiEndpoints.paymentRefundsById(paymentId),
+      queryParameters: {'page': page},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Refund.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? 20,
+    );
+  }
+
+  Future<Refund> createRefund(String paymentId, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.paymentRefund(paymentId), data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Refund.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
   // ─── Cash Sessions ────────────────────────────────────────────
@@ -78,7 +147,7 @@ class PaymentApiService {
   }
 
   Future<CashSession> closeCashSession(String id, Map<String, dynamic> data) async {
-    final response = await _dio.put('${ApiEndpoints.cashSessions}/$id/close', data: data);
+    final response = await _dio.put(ApiEndpoints.cashSessionClose(id), data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return CashSession.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -93,8 +162,23 @@ class PaymentApiService {
 
   // ─── Expenses ─────────────────────────────────────────────────
 
-  Future<PaginatedResult<Expense>> listExpenses({int page = 1, int perPage = 20}) async {
-    final response = await _dio.get(ApiEndpoints.expenses, queryParameters: {'page': page, 'per_page': perPage});
+  Future<PaginatedResult<Expense>> listExpenses({
+    int page = 1,
+    int perPage = 20,
+    String? startDate,
+    String? endDate,
+    String? category,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.expenses,
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (startDate != null) 'start_date': startDate,
+        if (endDate != null) 'end_date': endDate,
+        if (category != null) 'category': category,
+      },
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final map = apiResponse.data as Map<String, dynamic>;
     final items = (map['data'] as List).map((j) => Expense.fromJson(j as Map<String, dynamic>)).toList();
@@ -113,7 +197,42 @@ class PaymentApiService {
     return Expense.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
+  Future<Expense> updateExpense(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.expenseById(id), data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Expense.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteExpense(String id) async {
+    await _dio.delete(ApiEndpoints.expenseById(id));
+  }
+
   // ─── Gift Cards ───────────────────────────────────────────────
+
+  Future<PaginatedResult<GiftCard>> listGiftCards({
+    int page = 1,
+    int perPage = 20,
+    String? status,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.giftCards,
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (status != null) 'status': status,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => GiftCard.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
 
   Future<GiftCard> issueGiftCard(Map<String, dynamic> data) async {
     final response = await _dio.post(ApiEndpoints.giftCards, data: data);
@@ -122,13 +241,19 @@ class PaymentApiService {
   }
 
   Future<Map<String, dynamic>> checkGiftCardBalance(String code) async {
-    final response = await _dio.get('${ApiEndpoints.giftCards}/$code/balance');
+    final response = await _dio.get(ApiEndpoints.giftCardBalance(code));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
 
   Future<GiftCard> redeemGiftCard(String code, double amount) async {
-    final response = await _dio.post('${ApiEndpoints.giftCards}/$code/redeem', data: {'amount': amount});
+    final response = await _dio.post(ApiEndpoints.giftCardRedeem(code), data: {'amount': amount});
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return GiftCard.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<GiftCard> deactivateGiftCard(String code) async {
+    final response = await _dio.put(ApiEndpoints.giftCardDeactivate(code));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return GiftCard.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -136,7 +261,12 @@ class PaymentApiService {
   // ─── Financial Reports ────────────────────────────────────────
 
   Future<Map<String, dynamic>> dailySummary({String? date}) async {
-    final response = await _dio.get(ApiEndpoints.financeDailySummary, queryParameters: {'date': ?date});
+    final response = await _dio.get(
+      ApiEndpoints.financeDailySummary,
+      queryParameters: {
+        if (date != null) 'date': date,
+      },
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
@@ -144,9 +274,13 @@ class PaymentApiService {
   Future<Map<String, dynamic>> reconciliation({String? startDate, String? endDate}) async {
     final response = await _dio.get(
       ApiEndpoints.financeReconciliation,
-      queryParameters: {'start_date': ?startDate, 'end_date': ?endDate},
+      queryParameters: {
+        if (startDate != null) 'start_date': startDate,
+        if (endDate != null) 'end_date': endDate,
+      },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }
 }
+

@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/payments/enums/gift_card_status.dart';
+import 'package:wameedpos/features/payments/models/gift_card.dart';
 import 'package:wameedpos/features/payments/providers/payment_providers.dart';
 import 'package:wameedpos/features/payments/providers/payment_state.dart';
 
@@ -45,8 +46,7 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
               tabs: [
                 PosTabItem(label: l10n.issue, icon: Icons.card_giftcard),
                 PosTabItem(label: l10n.checkBalance, icon: Icons.search),
-                PosTabItem(label: l10n.redeem, icon: Icons.redeem),
-              ],
+                PosTabItem(label: l10n.redeem, icon: Icons.redeem),                PosTabItem(label: l10n.giftCardManage, icon: Icons.list_alt),              ],
             ),
           ),
           Expanded(
@@ -55,8 +55,7 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
               children: [
                 _IssueTab(theme: theme),
                 _CheckBalanceTab(theme: theme),
-                _RedeemTab(theme: theme),
-              ],
+                _RedeemTab(theme: theme),                const _ManageTab(),              ],
             ),
           ),
         ],
@@ -379,7 +378,218 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
   }
 }
 
+// ─── Manage Tab ─────────────────────────────────────────────────
+
+class _ManageTab extends ConsumerStatefulWidget {
+  const _ManageTab();
+
+  @override
+  ConsumerState<_ManageTab> createState() => _ManageTabState();
+}
+
+class _ManageTabState extends ConsumerState<_ManageTab> {
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
+  String? _selectedStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(giftCardListProvider.notifier).load());
+  }
+
+  void _reload() {
+    ref.read(giftCardListProvider.notifier).load(status: _selectedStatus);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final state = ref.watch(giftCardListProvider);
+
+    return Column(
+      children: [
+        // ── Filter bar ──
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: PosSearchableDropdown<String>(
+                  hint: l10n.giftCardManageFilterStatus,
+                  items: [
+                    PosDropdownItem(value: 'active', label: l10n.giftCardStatusActive),
+                    PosDropdownItem(value: 'redeemed', label: l10n.giftCardStatusRedeemed),
+                    PosDropdownItem(value: 'expired', label: l10n.giftCardStatusExpired),
+                    PosDropdownItem(value: 'deactivated', label: l10n.giftCardStatusDeactivated),
+                  ],
+                  selectedValue: _selectedStatus,
+                  onChanged: (v) {
+                    setState(() => _selectedStatus = v);
+                    _reload();
+                  },
+                  label: l10n.giftCardManageFilterStatus,
+                  showSearch: false,
+                  clearable: true,
+                ),
+              ),
+              AppSpacing.gapW8,
+              PosButton.icon(
+                icon: Icons.refresh,
+                tooltip: l10n.commonRefresh,
+                onPressed: _reload,
+                variant: PosButtonVariant.ghost,
+              ),
+            ],
+          ),
+        ),
+
+        // ── List ──
+        Expanded(
+          child: switch (state) {
+            GiftCardListInitial() || GiftCardListLoading() => const Center(child: CircularProgressIndicator()),
+            GiftCardListError(:final message) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(message, style: TextStyle(color: AppColors.error)),
+                    AppSpacing.gapH12,
+                    PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _reload),
+                  ],
+                ),
+              ),
+            GiftCardListLoaded(:final cards, :final hasMore) => cards.isEmpty
+                ? Center(child: Text(l10n.giftCardManageEmpty, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)))
+                : ListView.separated(
+                    padding: AppSpacing.paddingAll16,
+                    itemCount: cards.length + (hasMore ? 1 : 0),
+                    separatorBuilder: (_, __) => AppSpacing.gapH8,
+                    itemBuilder: (context, index) {
+                      if (index == cards.length) {
+                        return Padding(
+                          padding: AppSpacing.paddingAll16,
+                          child: Center(
+                            child: PosButton(
+                              label: 'Load more',
+                              variant: PosButtonVariant.outline,
+                              onPressed: () => ref.read(giftCardListProvider.notifier).loadMore(),
+                            ),
+                          ),
+                        );
+                      }
+                      final card = cards[index];
+                      return _GiftCardManageRow(
+                        card: card,
+                        theme: theme,
+                        onDeactivate: () => _confirmDeactivate(context, card),
+                      );
+                    },
+                  ),
+          },
+        ),
+      ],
+    );
+  }
+
+  void _confirmDeactivate(BuildContext context, GiftCard card) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.giftCardDeactivateTitle,
+      message: l10n.giftCardDeactivateConfirm(card.code),
+      confirmLabel: l10n.giftCardDeactivateAction,
+      isDanger: true,
+    );
+    if (confirmed == true && mounted) {
+      final updated = await ref.read(giftCardListProvider.notifier).deactivate(card.code);
+      if (updated != null && mounted) {
+        showPosSuccessSnackbar(context, l10n.giftCardDeactivatedSuccess);
+      }
+    }
+  }
+}
+
+class _GiftCardManageRow extends StatelessWidget {
+  const _GiftCardManageRow({required this.card, required this.theme, required this.onDeactivate});
+  final GiftCard card;
+  final ThemeData theme;
+  final VoidCallback onDeactivate;
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = card.status == GiftCardStatus.active;
+
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
+      child: Padding(
+        padding: AppSpacing.paddingAll12,
+        child: Row(
+          children: [
+            // Icon
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.12),
+                borderRadius: AppRadius.borderMd,
+              ),
+              child: const Icon(Icons.card_giftcard, color: AppColors.warning, size: 20),
+            ),
+            AppSpacing.gapW12,
+            // Info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        card.code,
+                        style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, letterSpacing: 1.2),
+                      ),
+                      AppSpacing.gapW8,
+                      _statusBadge(card.status),
+                    ],
+                  ),
+                  AppSpacing.gapH2,
+                  Row(
+                    children: [
+                      Text(
+                        '${card.balance.toStringAsFixed(2)} / ${card.initialAmount.toStringAsFixed(2)} \u0631',
+                        style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+                      ),
+                      if (card.recipientName != null) ...[
+                        Text(' · ', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                        Text(card.recipientName!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                      ],
+                    ],
+                  ),
+                  if (card.expiresAt != null)
+                    Text(
+                      'Exp: ${card.expiresAt!.day}/${card.expiresAt!.month}/${card.expiresAt!.year}',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: card.expiresAt!.isBefore(DateTime.now()) ? AppColors.error : theme.hintColor,
+                        fontSize: 11,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            // Deactivate action
+            if (isActive)
+              PosButton.icon(
+                icon: Icons.block,
+                tooltip: AppLocalizations.of(context)!.giftCardDeactivateAction,
+                onPressed: onDeactivate,
+                variant: PosButtonVariant.ghost,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ─── Shared Widgets ─────────────────────────────────────────────
+
 
 class _GiftCardResultCard extends StatelessWidget {
 

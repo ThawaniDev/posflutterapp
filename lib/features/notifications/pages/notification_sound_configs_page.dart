@@ -48,7 +48,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
               : ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                   itemCount: configs.length,
-                  separatorBuilder: (_, __) => AppSpacing.gapH8,
+                  separatorBuilder: (_, _) => AppSpacing.gapH8,
                   itemBuilder: (context, index) => _buildConfigCard(configs[index]),
                 ),
       },

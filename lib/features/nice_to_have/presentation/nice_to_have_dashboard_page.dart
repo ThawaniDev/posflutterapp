@@ -43,6 +43,7 @@ class _NiceToHaveDashboardPageState extends ConsumerState<NiceToHaveDashboardPag
           PosTabs(
             selectedIndex: _currentTab,
             onChanged: (i) => setState(() => _currentTab = i),
+            isScrollable: true,
             tabs: [
               PosTabItem(label: l10n.niceToHaveWishlist, icon: Icons.favorite),
               PosTabItem(label: l10n.niceToHaveAppointments, icon: Icons.calendar_today),

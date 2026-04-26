@@ -116,23 +116,23 @@ class ConflictResolverService {
 
       switch (resolveStrategy) {
         case ConflictResolutionStrategy.acceptLocal:
-          apiResolution = 'AcceptLocal';
+          apiResolution = 'local_wins';
           break;
         case ConflictResolutionStrategy.acceptCloud:
-          apiResolution = 'AcceptCloud';
+          apiResolution = 'cloud_wins';
           break;
         case ConflictResolutionStrategy.lastWriteWins:
-          // Compare timestamps
+          // Compare timestamps — use server's last-write-wins logic
           final localUpdated = _parseTimestamp(conflict.localData['updated_at']);
           final cloudUpdated = _parseTimestamp(conflict.cloudData['updated_at']);
           if (localUpdated != null && cloudUpdated != null && localUpdated.isAfter(cloudUpdated)) {
-            apiResolution = 'AcceptLocal';
+            apiResolution = 'local_wins';
           } else {
-            apiResolution = 'AcceptCloud';
+            apiResolution = 'cloud_wins';
           }
           break;
         case ConflictResolutionStrategy.merge:
-          apiResolution = 'Merge';
+          apiResolution = 'merged';
           dataToSend = mergedData ?? _autoMerge(conflict);
           break;
         case ConflictResolutionStrategy.manual:

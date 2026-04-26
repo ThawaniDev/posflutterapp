@@ -21,6 +21,7 @@ class ReportFilterPanel extends ConsumerStatefulWidget {
     this.showPaymentMethodFilter = false,
     this.showAmountRange = false,
     this.showOrderStatus = false,
+    this.showOrderSourceFilter = false,
     this.showGranularity = false,
     this.showSortOptions = false,
     this.showCompare = false,
@@ -37,6 +38,7 @@ class ReportFilterPanel extends ConsumerStatefulWidget {
   final bool showPaymentMethodFilter;
   final bool showAmountRange;
   final bool showOrderStatus;
+  final bool showOrderSourceFilter;
   final bool showGranularity;
   final bool showSortOptions;
   final bool showCompare;
@@ -75,6 +77,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         widget.showPaymentMethodFilter ||
         widget.showAmountRange ||
         widget.showOrderStatus ||
+        widget.showOrderSourceFilter ||
         widget.showGranularity ||
         widget.showSortOptions;
   }
@@ -420,6 +423,23 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             DropdownOption(value: 'partially_refunded', label: l10n.filterPartialRefund),
           ],
           onChanged: (val) => _update(widget.filters.copyWith(orderStatus: () => val)),
+        ),
+      );
+    }
+    if (widget.showOrderSourceFilter) {
+      widgets.add(
+        _buildDropdownFilter(
+          isDark: isDark,
+          icon: Icons.storefront_rounded,
+          label: l10n.reportsOrderSource,
+          value: widget.filters.orderSource,
+          options: [
+            DropdownOption(value: 'pos', label: l10n.reportsOrderSourcePos),
+            DropdownOption(value: 'delivery', label: l10n.reportsOrderSourceDelivery),
+            DropdownOption(value: 'online', label: l10n.reportsOrderSourceOnline),
+            DropdownOption(value: 'phone', label: l10n.reportsOrderSourcePhone),
+          ],
+          onChanged: (val) => _update(widget.filters.copyWith(orderSource: () => val)),
         ),
       );
     }

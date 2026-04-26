@@ -92,4 +92,18 @@ class ElectronicsApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return TradeInRecord.fromJson(apiResponse.data as Map<String, dynamic>);
   }
+
+  /// Returns `{valid: bool, exists: bool}` for the given IMEI string.
+  Future<({bool valid, bool exists})> validateImei(String imei) async {
+    final response = await _dio.post(
+      ApiEndpoints.electronicsImeiValidate,
+      data: {'imei': imei},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data as Map<String, dynamic>);
+    final payload = apiResponse.data ?? {};
+    return (
+      valid: payload['valid'] as bool? ?? false,
+      exists: payload['exists'] as bool? ?? false,
+    );
+  }
 }

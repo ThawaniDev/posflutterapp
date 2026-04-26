@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_providers.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_export_sheet.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -42,6 +45,8 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> {
         ref.read(inventoryShrinkageProvider.notifier).load(filters: _filters);
       case 3:
         ref.read(inventoryLowStockProvider.notifier).load(filters: _filters);
+      case 4:
+        ref.read(inventoryExpiryProvider.notifier).load(filters: _filters);
     }
   }
 
@@ -50,42 +55,68 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> {
     _onTabChanged(_currentTab);
   }
 
+  // null means the current tab has no export support
+  String? get _exportType => const [
+    'inventory_valuation',
+    null,
+    null,
+    'inventory_low_stock',
+    'inventory_expiry',
+  ][_currentTab];
+
   @override
   Widget build(BuildContext context) {
-    return PosListPage(
-      title: l10n.reportsInventory,
-      showSearch: false,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: PosTabs(
-              selectedIndex: _currentTab,
-              onChanged: (i) => setState(() {
-                _currentTab = i;
-                _onTabChanged(i);
-              }),
-              tabs: [
-                PosTabItem(label: l10n.reportsValuation),
-                PosTabItem(label: l10n.reportsTurnover),
-                PosTabItem(label: l10n.reportsShrinkage),
-                PosTabItem(label: l10n.reportsLowStock),
-              ],
+    return PermissionGuardPage(
+      permission: Permissions.reportsInventory,
+      child: PosListPage(
+        title: l10n.reportsInventory,
+        showSearch: false,
+        actions: [
+          if (_exportType != null)
+            PosButton.icon(
+              icon: Icons.download_rounded,
+              tooltip: l10n.reportsExportFormatTitle,
+              variant: PosButtonVariant.ghost,
+              onPressed: () => showReportExportSheet(
+                context: context,
+                reportType: _exportType!,
+                filters: _filters,
+              ),
             ),
-          ),
-          ReportFilterPanel(
-            filters: _filters,
-            onFiltersChanged: _onFiltersChanged,
-            onRefresh: () => _onTabChanged(_currentTab),
-            showCategoryFilter: true,
-          ),
-          Expanded(
-            child: IndexedStack(
-              index: _currentTab,
-              children: const [_ValuationTab(), _TurnoverTab(), _ShrinkageTab(), _LowStockTab()],
-            ),
-          ),
         ],
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: PosTabs(
+                selectedIndex: _currentTab,
+                onChanged: (i) => setState(() {
+                  _currentTab = i;
+                  _onTabChanged(i);
+                }),
+                tabs: [
+                  PosTabItem(label: l10n.reportsValuation),
+                  PosTabItem(label: l10n.reportsTurnover),
+                  PosTabItem(label: l10n.reportsShrinkage),
+                  PosTabItem(label: l10n.reportsLowStock),
+                  PosTabItem(label: l10n.reportsExpiryTab),
+                ],
+              ),
+            ),
+            ReportFilterPanel(
+              filters: _filters,
+              onFiltersChanged: _onFiltersChanged,
+              onRefresh: () => _onTabChanged(_currentTab),
+              showCategoryFilter: true,
+            ),
+            Expanded(
+              child: IndexedStack(
+                index: _currentTab,
+                children: const [_ValuationTab(), _TurnoverTab(), _ShrinkageTab(), _LowStockTab(), _ExpiryTab()],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -100,7 +131,6 @@ class _ValuationTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryValuationProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       InventoryValuationInitial() || InventoryValuationLoading() => PosLoadingSkeleton.list(),
@@ -193,7 +223,6 @@ class _TurnoverTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryTurnoverProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       InventoryTurnoverInitial() || InventoryTurnoverLoading() => PosLoadingSkeleton.list(),
@@ -257,7 +286,6 @@ class _ShrinkageTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryShrinkageProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       InventoryShrinkageInitial() || InventoryShrinkageLoading() => PosLoadingSkeleton.list(),
@@ -373,7 +401,6 @@ class _LowStockTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryLowStockProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
       InventoryLowStockInitial() || InventoryLowStockLoading() => PosLoadingSkeleton.list(),
@@ -449,5 +476,145 @@ class _LowStockTab extends ConsumerWidget {
               ),
       ),
     };
+  }
+}
+
+// ─── Expiry Tab ──────────────────────────────────────────────
+
+class _ExpiryTab extends ConsumerWidget {
+  const _ExpiryTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(inventoryExpiryProvider);
+
+    return switch (state) {
+      InventoryExpiryInitial() || InventoryExpiryLoading() => PosLoadingSkeleton.list(),
+      InventoryExpiryError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(inventoryExpiryProvider.notifier).load(),
+      ),
+      InventoryExpiryLoaded(:final data) => RefreshIndicator(
+        onRefresh: () => ref.read(inventoryExpiryProvider.notifier).load(),
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            // KPI totals row
+            ReportKpiGrid(
+              cards: [
+                ReportKpiCard(
+                  label: l10n.reportsExpiryExpired,
+                  value: '${(data['totals'] as Map?)?.cast<String, dynamic>()['expired_count'] ?? 0}',
+                  icon: Icons.error_rounded,
+                  color: AppColors.error,
+                ),
+                ReportKpiCard(
+                  label: l10n.reportsExpiryCritical,
+                  value: '${(data['totals'] as Map?)?.cast<String, dynamic>()['critical_count'] ?? 0}',
+                  icon: Icons.warning_amber_rounded,
+                  color: AppColors.warning,
+                ),
+                ReportKpiCard(
+                  label: l10n.reportsExpiryWarning,
+                  value: '${(data['totals'] as Map?)?.cast<String, dynamic>()['warning_count'] ?? 0}',
+                  icon: Icons.info_rounded,
+                  color: AppColors.info,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            // Expired section
+            if ((data['expired'] as List?)?.isNotEmpty ?? false) ...[
+              ReportSectionHeader(
+                title: l10n.reportsExpiryExpired,
+                icon: Icons.error_rounded,
+              ),
+              _ExpiryItemList(
+                items: (data['expired'] as List).cast<Map<String, dynamic>>(),
+                badgeColor: AppColors.error,
+                l10n: l10n,
+              ),
+              const SizedBox(height: 20),
+            ],
+
+            // Critical section
+            if ((data['critical'] as List?)?.isNotEmpty ?? false) ...[
+              ReportSectionHeader(
+                title: l10n.reportsExpiryCritical,
+                icon: Icons.warning_amber_rounded,
+              ),
+              _ExpiryItemList(
+                items: (data['critical'] as List).cast<Map<String, dynamic>>(),
+                badgeColor: AppColors.warning,
+                l10n: l10n,
+              ),
+              const SizedBox(height: 20),
+            ],
+
+            // Warning section
+            if ((data['warning'] as List?)?.isNotEmpty ?? false) ...[
+              ReportSectionHeader(
+                title: l10n.reportsExpiryWarning,
+                icon: Icons.info_rounded,
+              ),
+              _ExpiryItemList(
+                items: (data['warning'] as List).cast<Map<String, dynamic>>(),
+                badgeColor: AppColors.info,
+                l10n: l10n,
+              ),
+            ],
+
+            if ((data['expired'] as List?)?.isEmpty == true &&
+                (data['critical'] as List?)?.isEmpty == true &&
+                (data['warning'] as List?)?.isEmpty == true)
+              PosEmptyState(title: l10n.reportsNoExpiryData, icon: Icons.check_circle),
+          ],
+        ),
+      ),
+    };
+  }
+}
+
+class _ExpiryItemList extends StatelessWidget {
+  const _ExpiryItemList({
+    required this.items,
+    required this.badgeColor,
+    required this.l10n,
+  });
+  final List<Map<String, dynamic>> items;
+  final Color badgeColor;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return ReportDataCard(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        children: List.generate(items.length, (i) {
+          final item = items[i];
+          final days = (item['days_until_expiry'] as num?)?.toInt() ?? 0;
+          final qty = (item['quantity'] as num?)?.toInt() ?? 0;
+          final expDate = item['expiry_date'] as String? ?? '';
+          return Column(
+            children: [
+              if (i > 0) Divider(height: 1, color: AppColors.borderFor(context)),
+              ReportRankedItem(
+                rank: i + 1,
+                title: item['product_name'] as String? ?? '',
+                subtitle: item['sku'] as String?,
+                trailingValue: days < 0 ? l10n.reportsExpiryExpired : l10n.reportsExpiryDaysLeft(days),
+                trailingColor: badgeColor,
+                badges: [
+                  ReportBadge(label: l10n.reportsExpiryDate(expDate), color: badgeColor),
+                  ReportBadge(label: l10n.reportNInStock(qty), color: AppColors.info),
+                ],
+              ),
+            ],
+          );
+        }),
+      ),
+    );
   }
 }

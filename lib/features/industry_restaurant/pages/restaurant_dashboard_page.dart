@@ -10,6 +10,9 @@ import 'package:wameedpos/features/industry_restaurant/widgets/open_tab_card.dar
 import 'package:wameedpos/features/industry_restaurant/pages/table_form_page.dart';
 import 'package:wameedpos/features/industry_restaurant/pages/reservation_form_page.dart';
 import 'package:wameedpos/features/industry_restaurant/pages/open_tab_form_page.dart';
+import 'package:wameedpos/features/industry_restaurant/pages/kitchen_ticket_form_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RestaurantDashboardPage extends ConsumerStatefulWidget {
@@ -32,6 +35,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
   void _onFabPressed() {
     final page = switch (_currentTab) {
       0 => const TableFormPage(),
+      1 => const KitchenTicketFormPage(),
       2 => const ReservationFormPage(),
       3 => const OpenTabFormPage(),
       _ => null,
@@ -47,16 +51,15 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
     final state = ref.watch(restaurantProvider);
     final isLoading = state is RestaurantInitial || state is RestaurantLoading;
     final hasError = state is RestaurantError;
-    final showAdd = _currentTab != 1;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.restaurantTitle,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
       errorMessage: hasError ? state.message : null,
       onRetry: () => ref.read(restaurantProvider.notifier).load(),
-      actions: showAdd ? [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)] : const [],
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
       child: Column(
         children: [
           PosTabs(
@@ -158,6 +161,10 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.restaurantView,
+      child: content,
     );
   }
 }

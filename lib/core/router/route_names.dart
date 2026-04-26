@@ -81,6 +81,7 @@ class Routes {
   static const String reportsInventory = '/reports/inventory';
   static const String reportsFinancial = '/reports/financial';
   static const String reportsCustomers = '/reports/customers';
+  static const String reportsScheduled = '/reports/schedules';
 
   // Settings
   static const String settings = '/settings';

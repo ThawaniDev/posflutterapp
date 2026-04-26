@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_providers.dart';
@@ -37,7 +39,9 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
     final isLoading = state is LabelTemplatesLoading || state is LabelTemplatesInitial;
     final error = state is LabelTemplatesError ? state.message : null;
 
-    return PosListPage(
+    return PermissionGuardPage(
+      permission: Permissions.labelsView,
+      child: PosListPage(
       title: l10n.labelTemplates,
       showSearch: false,
       isLoading: isLoading,
@@ -88,7 +92,13 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
           PosTableRowAction<LabelTemplate>(
             label: l10n.labelDuplicate,
             icon: Icons.copy_outlined,
-            onTap: (t) => context.push('${Routes.labelDesigner}?duplicate=${t.id}'),
+            onTap: (t) => _handleDuplicate(t),
+          ),
+          PosTableRowAction<LabelTemplate>(
+            label: l10n.labelSetAsDefault,
+            icon: Icons.star_outline_rounded,
+            isVisible: (t) => t.isDefault != true,
+            onTap: (t) => _handleSetDefault(t),
           ),
           PosTableRowAction<LabelTemplate>(
             label: l10n.labelPrintQueue,
@@ -145,11 +155,28 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
           }
         },
       ),
-    );
+    ));
+  }
+
+  Future<void> _handleDuplicate(LabelTemplate template) async {
+    final success = await ref.read(labelTemplatesProvider.notifier).duplicateTemplate(template.id);
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.labelDuplicateSuccess)),
+      );
+    }
+  }
+
+  Future<void> _handleSetDefault(LabelTemplate template) async {
+    final success = await ref.read(labelTemplatesProvider.notifier).setDefaultTemplate(template.id);
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.labelSetAsDefaultSuccess)),
+      );
+    }
   }
 
   Future<void> _handleDelete(LabelTemplate template) async {
-    final l10n = AppLocalizations.of(context)!;
     final confirm = await showPosConfirmDialog(
       context,
       title: l10n.labelDeleteTitle,

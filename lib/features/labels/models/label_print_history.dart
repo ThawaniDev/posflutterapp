@@ -4,7 +4,9 @@ class LabelPrintHistory {
     required this.id,
     required this.storeId,
     this.templateId,
+    this.templateName,
     required this.printedBy,
+    this.printedByName,
     required this.productCount,
     required this.totalLabels,
     this.printerName,
@@ -16,7 +18,9 @@ class LabelPrintHistory {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       templateId: json['template_id'] as String?,
+      templateName: json['template_name'] as String?,
       printedBy: json['printed_by'] as String,
+      printedByName: json['printed_by_name'] as String?,
       productCount: (json['product_count'] as num).toInt(),
       totalLabels: (json['total_labels'] as num).toInt(),
       printerName: json['printer_name'] as String?,
@@ -26,7 +30,9 @@ class LabelPrintHistory {
   final String id;
   final String storeId;
   final String? templateId;
+  final String? templateName;
   final String printedBy;
+  final String? printedByName;
   final int productCount;
   final int totalLabels;
   final String? printerName;
@@ -37,7 +43,9 @@ class LabelPrintHistory {
       'id': id,
       'store_id': storeId,
       'template_id': templateId,
+      'template_name': templateName,
       'printed_by': printedBy,
+      'printed_by_name': printedByName,
       'product_count': productCount,
       'total_labels': totalLabels,
       'printer_name': printerName,
@@ -49,7 +57,9 @@ class LabelPrintHistory {
     String? id,
     String? storeId,
     String? templateId,
+    String? templateName,
     String? printedBy,
+    String? printedByName,
     int? productCount,
     int? totalLabels,
     String? printerName,
@@ -59,7 +69,9 @@ class LabelPrintHistory {
       id: id ?? this.id,
       storeId: storeId ?? this.storeId,
       templateId: templateId ?? this.templateId,
+      templateName: templateName ?? this.templateName,
       printedBy: printedBy ?? this.printedBy,
+      printedByName: printedByName ?? this.printedByName,
       productCount: productCount ?? this.productCount,
       totalLabels: totalLabels ?? this.totalLabels,
       printerName: printerName ?? this.printerName,

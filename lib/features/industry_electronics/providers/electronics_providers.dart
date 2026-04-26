@@ -87,3 +87,11 @@ String _extractError(DioException e) {
   }
   return e.message ?? 'Unknown error';
 }
+
+/// One-shot IMEI server-side validation provider.
+/// Pass the IMEI string as the family argument.
+final imeiValidationProvider = FutureProvider.autoDispose
+    .family<({bool valid, bool exists}), String>((ref, imei) async {
+  final repo = ref.watch(electronicsRepositoryProvider);
+  return repo.validateImei(imei);
+});

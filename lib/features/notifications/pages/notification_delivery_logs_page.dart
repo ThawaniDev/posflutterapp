@@ -23,11 +23,15 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(deliveryLogsProvider.notifier).load());
+    Future.microtask(() {
+      ref.read(deliveryLogsProvider.notifier).load();
+      ref.read(deliveryStatsProvider.notifier).load();
+    });
   }
 
   void _reload() {
     ref.read(deliveryLogsProvider.notifier).load(channel: _channelFilter, status: _statusFilter);
+    ref.read(deliveryStatsProvider.notifier).load();
   }
 
   @override
@@ -35,6 +39,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final state = ref.watch(deliveryLogsProvider);
+    final statsState = ref.watch(deliveryStatsProvider);
 
     return PosListPage(
       title: l10n.notifDeliveryLogsTitle,
@@ -42,6 +47,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
       actions: [PosButton.icon(icon: Icons.refresh_rounded, onPressed: _reload)],
       child: Column(
         children: [
+          _buildStatsCard(statsState, l10n, isDark),
           _buildFilters(isDark),
           const PosDivider(),
           Expanded(
@@ -56,11 +62,73 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                           itemCount: logs.length,
-                          separatorBuilder: (_, __) => AppSpacing.gapH8,
+                          separatorBuilder: (_, _) => AppSpacing.gapH8,
                           itemBuilder: (context, index) => _buildLogCard(logs[index], isDark),
                         ),
                       ),
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatsCard(DeliveryStatsState statsState, AppLocalizations l10n, bool isDark) {
+    if (statsState is DeliveryStatsLoading || statsState is DeliveryStatsInitial) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
+        child: PosLoading(),
+      );
+    }
+    if (statsState is! DeliveryStatsLoaded) return const SizedBox.shrink();
+
+    final stats = statsState.stats;
+    final total = (stats['total'] as num?)?.toInt() ?? 0;
+    final delivered = (stats['delivered'] as num?)?.toInt() ?? 0;
+    final failed = (stats['failed'] as num?)?.toInt() ?? 0;
+    final rate = (stats['delivery_rate'] as num?)?.toDouble() ?? 0.0;
+    final avgLatencyMs = (stats['avg_latency_ms'] as num?)?.toInt();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
+      child: PosCard(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.notifDeliveryStatsTitle, style: AppTypography.titleMedium),
+            AppSpacing.gapH12,
+            Row(
+              children: [
+                _statItem(l10n.notifDeliveryStatsTotal, total.toString(), AppColors.info, isDark),
+                AppSpacing.gapW12,
+                _statItem(l10n.notifDeliveryStatsDelivered, delivered.toString(), AppColors.success, isDark),
+                AppSpacing.gapW12,
+                _statItem(l10n.notifDeliveryStatsFailed, failed.toString(), AppColors.error, isDark),
+                AppSpacing.gapW12,
+                _statItem(l10n.notifDeliveryStatsRate, '${rate.toStringAsFixed(1)}%', AppColors.primary, isDark),
+                if (avgLatencyMs != null) ...[
+                  AppSpacing.gapW12,
+                  _statItem(l10n.notifDeliveryStatsAvgLatency, '${avgLatencyMs}ms', AppColors.warning, isDark),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _statItem(String label, String value, Color color, bool isDark) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(value, style: AppTypography.titleMedium.copyWith(color: color, fontWeight: FontWeight.bold)),
+          AppSpacing.gapH4,
+          Text(
+            label,
+            style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

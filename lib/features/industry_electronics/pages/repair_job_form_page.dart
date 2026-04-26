@@ -90,9 +90,9 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit Repair Job' : 'New Repair Job',
+      title: _isEditing ? l10n.electronicsEditRepairJob : l10n.electronicsNewRepair,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Job' : 'Create Job',
+          label: _isEditing ? l10n.electronicsUpdateJob : l10n.electronicsCreateJob,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

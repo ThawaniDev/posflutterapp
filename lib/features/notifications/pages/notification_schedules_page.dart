@@ -206,7 +206,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
                   child: ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                     itemCount: schedules.length,
-                    separatorBuilder: (_, __) => AppSpacing.gapH8,
+                    separatorBuilder: (_, _) => AppSpacing.gapH8,
                     itemBuilder: (context, index) => _buildScheduleCard(schedules[index], isDark),
                   ),
                 ),

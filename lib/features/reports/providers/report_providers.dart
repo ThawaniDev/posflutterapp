@@ -1,7 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
 import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/repositories/report_repository.dart';
+
+String _reportErrorMessage(Object e) {
+  if (e is DioException && e.response?.statusCode == 402) {
+    return 'subscription_required';
+  }
+  return e.toString();
+}
 
 // ─── Sales Summary ───────────────────────────────────────────
 
@@ -21,9 +29,10 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
       state = SalesSummaryLoaded(
         totals: data['totals'] as Map<String, dynamic>,
         daily: ((data['series'] ?? data['daily']) as List).cast<Map<String, dynamic>>(),
+        previousPeriod: data['previous_period'] as Map<String, dynamic>?,
       );
     } catch (e) {
-      if (state is! SalesSummaryLoaded) state = SalesSummaryError(message: e.toString());
+      if (state is! SalesSummaryLoaded) state = SalesSummaryError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -45,7 +54,7 @@ class ProductPerformanceNotifier extends StateNotifier<ProductPerformanceState> 
       final data = await _repo.getProductPerformance(filters: filters);
       state = ProductPerformanceLoaded(products: data);
     } catch (e) {
-      if (state is! ProductPerformanceLoaded) state = ProductPerformanceError(message: e.toString());
+      if (state is! ProductPerformanceLoaded) state = ProductPerformanceError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -67,7 +76,7 @@ class CategoryBreakdownNotifier extends StateNotifier<CategoryBreakdownState> {
       final data = await _repo.getCategoryBreakdown(filters: filters);
       state = CategoryBreakdownLoaded(categories: data);
     } catch (e) {
-      if (state is! CategoryBreakdownLoaded) state = CategoryBreakdownError(message: e.toString());
+      if (state is! CategoryBreakdownLoaded) state = CategoryBreakdownError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -89,7 +98,7 @@ class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
       final data = await _repo.getStaffPerformance(filters: filters);
       state = StaffPerformanceLoaded(staff: data);
     } catch (e) {
-      if (state is! StaffPerformanceLoaded) state = StaffPerformanceError(message: e.toString());
+      if (state is! StaffPerformanceLoaded) state = StaffPerformanceError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -111,7 +120,7 @@ class HourlySalesNotifier extends StateNotifier<HourlySalesState> {
       final data = await _repo.getHourlySales(filters: filters);
       state = HourlySalesLoaded(hours: data);
     } catch (e) {
-      if (state is! HourlySalesLoaded) state = HourlySalesError(message: e.toString());
+      if (state is! HourlySalesLoaded) state = HourlySalesError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -133,7 +142,7 @@ class PaymentMethodsNotifier extends StateNotifier<PaymentMethodsState> {
       final data = await _repo.getPaymentMethods(filters: filters);
       state = PaymentMethodsLoaded(methods: data);
     } catch (e) {
-      if (state is! PaymentMethodsLoaded) state = PaymentMethodsError(message: e.toString());
+      if (state is! PaymentMethodsLoaded) state = PaymentMethodsError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -159,7 +168,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         topProducts: (data['top_products'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
-      if (state is! DashboardLoaded) state = DashboardError(message: e.toString());
+      if (state is! DashboardLoaded) state = DashboardError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -181,7 +190,7 @@ class InventoryValuationNotifier extends StateNotifier<InventoryValuationState> 
       final data = await _repo.getInventoryValuation(filters: filters);
       state = InventoryValuationLoaded(data: data);
     } catch (e) {
-      if (state is! InventoryValuationLoaded) state = InventoryValuationError(message: e.toString());
+      if (state is! InventoryValuationLoaded) state = InventoryValuationError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -203,7 +212,7 @@ class InventoryTurnoverNotifier extends StateNotifier<InventoryTurnoverState> {
       final data = await _repo.getInventoryTurnover(filters: filters);
       state = InventoryTurnoverLoaded(products: data);
     } catch (e) {
-      if (state is! InventoryTurnoverLoaded) state = InventoryTurnoverError(message: e.toString());
+      if (state is! InventoryTurnoverLoaded) state = InventoryTurnoverError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -225,7 +234,7 @@ class InventoryShrinkageNotifier extends StateNotifier<InventoryShrinkageState> 
       final data = await _repo.getInventoryShrinkage(filters: filters);
       state = InventoryShrinkageLoaded(data: data);
     } catch (e) {
-      if (state is! InventoryShrinkageLoaded) state = InventoryShrinkageError(message: e.toString());
+      if (state is! InventoryShrinkageLoaded) state = InventoryShrinkageError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -247,7 +256,7 @@ class InventoryLowStockNotifier extends StateNotifier<InventoryLowStockState> {
       final data = await _repo.getInventoryLowStock(filters: filters);
       state = InventoryLowStockLoaded(products: data);
     } catch (e) {
-      if (state is! InventoryLowStockLoaded) state = InventoryLowStockError(message: e.toString());
+      if (state is! InventoryLowStockLoaded) state = InventoryLowStockError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -272,7 +281,7 @@ class FinancialDailyPlNotifier extends StateNotifier<FinancialDailyPlState> {
         daily: (data['daily'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
-      if (state is! FinancialDailyPlLoaded) state = FinancialDailyPlError(message: e.toString());
+      if (state is! FinancialDailyPlLoaded) state = FinancialDailyPlError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -297,7 +306,7 @@ class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
         categories: (data['categories'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
-      if (state is! FinancialExpensesLoaded) state = FinancialExpensesError(message: e.toString());
+      if (state is! FinancialExpensesLoaded) state = FinancialExpensesError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -319,7 +328,7 @@ class CashVarianceNotifier extends StateNotifier<CashVarianceState> {
       final data = await _repo.getFinancialCashVariance(filters: filters);
       state = CashVarianceLoaded(data: data);
     } catch (e) {
-      if (state is! CashVarianceLoaded) state = CashVarianceError(message: e.toString());
+      if (state is! CashVarianceLoaded) state = CashVarianceError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -341,7 +350,7 @@ class TopCustomersNotifier extends StateNotifier<TopCustomersState> {
       final data = await _repo.getTopCustomers(filters: filters);
       state = TopCustomersLoaded(customers: data);
     } catch (e) {
-      if (state is! TopCustomersLoaded) state = TopCustomersError(message: e.toString());
+      if (state is! TopCustomersLoaded) state = TopCustomersError(message: _reportErrorMessage(e));
     }
   }
 }
@@ -363,7 +372,178 @@ class CustomerRetentionNotifier extends StateNotifier<CustomerRetentionState> {
       final data = await _repo.getCustomerRetention(filters: filters);
       state = CustomerRetentionLoaded(data: data);
     } catch (e) {
-      if (state is! CustomerRetentionLoaded) state = CustomerRetentionError(message: e.toString());
+      if (state is! CustomerRetentionLoaded) state = CustomerRetentionError(message: _reportErrorMessage(e));
+    }
+  }
+}
+
+// ─── Inventory Expiry ────────────────────────────────────────
+
+final inventoryExpiryProvider = StateNotifierProvider<InventoryExpiryNotifier, InventoryExpiryState>((ref) {
+  return InventoryExpiryNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class InventoryExpiryNotifier extends StateNotifier<InventoryExpiryState> {
+
+  InventoryExpiryNotifier(this._repo) : super(const InventoryExpiryInitial());
+  final ReportRepository _repo;
+
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
+    if (state is! InventoryExpiryLoaded) state = const InventoryExpiryLoading();
+    try {
+      final data = await _repo.getInventoryExpiry(filters: filters);
+      state = InventoryExpiryLoaded(data: data);
+    } catch (e) {
+      if (state is! InventoryExpiryLoaded) state = InventoryExpiryError(message: _reportErrorMessage(e));
+    }
+  }
+}
+
+// ─── Delivery Commission ─────────────────────────────────────
+
+final deliveryCommissionProvider = StateNotifierProvider<DeliveryCommissionNotifier, DeliveryCommissionState>((ref) {
+  return DeliveryCommissionNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class DeliveryCommissionNotifier extends StateNotifier<DeliveryCommissionState> {
+
+  DeliveryCommissionNotifier(this._repo) : super(const DeliveryCommissionInitial());
+  final ReportRepository _repo;
+
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
+    if (state is! DeliveryCommissionLoaded) state = const DeliveryCommissionLoading();
+    try {
+      final data = await _repo.getFinancialDeliveryCommission(filters: filters);
+      state = DeliveryCommissionLoaded(data: data);
+    } catch (e) {
+      if (state is! DeliveryCommissionLoaded) state = DeliveryCommissionError(message: _reportErrorMessage(e));
+    }
+  }
+}
+
+// ─── Report Export ───────────────────────────────────────────
+
+final reportExportProvider = StateNotifierProvider<ReportExportNotifier, ReportExportState>((ref) {
+  return ReportExportNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class ReportExportNotifier extends StateNotifier<ReportExportState> {
+
+  ReportExportNotifier(this._repo) : super(const ReportExportInitial());
+  final ReportRepository _repo;
+
+  Future<void> export({
+    required String reportType,
+    required String format,
+    ReportFilters filters = const ReportFilters(),
+  }) async {
+    state = const ReportExportLoading();
+    try {
+      await _repo.exportReport(reportType: reportType, format: format, filters: filters);
+      state = ReportExportSuccess(reportType: reportType, format: format);
+    } catch (e) {
+      state = ReportExportError(message: _reportErrorMessage(e));
+    }
+  }
+
+  void reset() => state = const ReportExportInitial();
+}
+
+// ─── Scheduled Reports ───────────────────────────────────────
+
+final scheduledReportsProvider = StateNotifierProvider<ScheduledReportsNotifier, ScheduledReportsState>((ref) {
+  return ScheduledReportsNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class ScheduledReportsNotifier extends StateNotifier<ScheduledReportsState> {
+
+  ScheduledReportsNotifier(this._repo) : super(const ScheduledReportsInitial());
+  final ReportRepository _repo;
+
+  Future<void> load() async {
+    if (state is! ScheduledReportsLoaded) state = const ScheduledReportsLoading();
+    try {
+      final data = await _repo.getScheduledReports();
+      state = ScheduledReportsLoaded(schedules: data);
+    } catch (e) {
+      if (state is! ScheduledReportsLoaded) state = ScheduledReportsError(message: _reportErrorMessage(e));
+    }
+  }
+
+  Future<void> create({
+    required String reportType,
+    required String name,
+    required String frequency,
+    required List<String> recipients,
+    String format = 'pdf',
+  }) async {
+    try {
+      await _repo.createScheduledReport(
+        reportType: reportType,
+        name: name,
+        frequency: frequency,
+        recipients: recipients,
+        format: format,
+      );
+      await load();
+    } catch (e) {
+      state = ScheduledReportsError(message: _reportErrorMessage(e));
+    }
+  }
+
+  Future<void> delete(String id) async {
+    try {
+      await _repo.deleteScheduledReport(id);
+      if (state is ScheduledReportsLoaded) {
+        final current = (state as ScheduledReportsLoaded).schedules;
+        state = ScheduledReportsLoaded(
+          schedules: current.where((s) => s['id'] != id).toList(),
+        );
+      }
+    } catch (e) {
+      state = ScheduledReportsError(message: _reportErrorMessage(e));
+    }
+  }
+}
+
+// ─── Slow Movers ─────────────────────────────────────────────
+
+final slowMoversProvider = StateNotifierProvider<SlowMoversNotifier, SlowMoversState>((ref) {
+  return SlowMoversNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class SlowMoversNotifier extends StateNotifier<SlowMoversState> {
+  SlowMoversNotifier(this._repo) : super(const SlowMoversInitial());
+  final ReportRepository _repo;
+
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
+    state = const SlowMoversLoading();
+    try {
+      final data = await _repo.getSlowMovers(filters: filters);
+      state = SlowMoversLoaded(products: data);
+    } catch (e) {
+      state = SlowMoversError(message: _reportErrorMessage(e));
+    }
+  }
+}
+
+// ─── Product Margin ───────────────────────────────────────────
+
+final productMarginProvider = StateNotifierProvider<ProductMarginNotifier, ProductMarginState>((ref) {
+  return ProductMarginNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class ProductMarginNotifier extends StateNotifier<ProductMarginState> {
+  ProductMarginNotifier(this._repo) : super(const ProductMarginInitial());
+  final ReportRepository _repo;
+
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
+    state = const ProductMarginLoading();
+    try {
+      final data = await _repo.getProductMargin(filters: filters);
+      state = ProductMarginLoaded(products: data);
+    } catch (e) {
+      state = ProductMarginError(message: _reportErrorMessage(e));
     }
   }
 }

@@ -98,9 +98,9 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
     final customersState = ref.watch(customersProvider);
     final customers = customersState is CustomersLoaded ? customersState.customers : <Customer>[];
     return PosFormPage(
-      title: _isEditing ? 'Edit Subscription' : 'New Subscription',
+      title: _isEditing ? l10n.floristEditSubscription : l10n.floristNewSubscription,
       bottomBar: PosButton(
-          label: _isEditing ? 'Update Subscription' : 'Create Subscription',
+          label: _isEditing ? l10n.floristUpdateSubscription : l10n.floristCreateSubscription,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,

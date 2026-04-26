@@ -9,6 +9,8 @@ import 'package:wameedpos/features/industry_bakery/widgets/production_schedule_c
 import 'package:wameedpos/features/industry_bakery/pages/recipe_form_page.dart';
 import 'package:wameedpos/features/industry_bakery/pages/cake_order_form_page.dart';
 import 'package:wameedpos/features/industry_bakery/pages/production_schedule_form_page.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BakeryDashboardPage extends ConsumerStatefulWidget {
@@ -45,7 +47,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
     final isLoading = state is BakeryInitial || state is BakeryLoading;
     final hasError = state is BakeryError;
 
-    return PosListPage(
+    final content = PosListPage(
       title: l10n.bakeryTitle,
       showSearch: false,
       isLoading: isLoading,
@@ -138,6 +140,10 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
           ),
         ],
       ),
+    );
+    return PermissionGuardPage(
+      permission: Permissions.bakeryView,
+      child: content,
     );
   }
 }
