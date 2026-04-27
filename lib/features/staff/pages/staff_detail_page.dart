@@ -15,7 +15,6 @@ import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 class StaffDetailPage extends ConsumerStatefulWidget {
-
   const StaffDetailPage({super.key, required this.staffId});
   final String staffId;
 
@@ -116,7 +115,6 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _ProfileHeader extends StatelessWidget {
-
   const _ProfileHeader({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
@@ -162,9 +160,7 @@ class _ProfileHeader extends StatelessWidget {
                     AppSpacing.gapW8,
                     Text(
                       staff.employmentType.value.replaceAll('_', ' ').toUpperCase(),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),
@@ -185,7 +181,6 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _StatusBadge extends StatelessWidget {
-
   const _StatusBadge({this.status});
   final StaffStatus? status;
 
@@ -214,7 +209,6 @@ class _StatusBadge extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _OverviewTab extends StatelessWidget {
-
   const _OverviewTab({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
@@ -238,10 +232,7 @@ class _OverviewTab extends StatelessWidget {
             if (staff.email == null && staff.phone == null && staff.nationalId == null)
               Padding(
                 padding: AppSpacing.paddingAll16,
-                child: Text(
-                  l10n.staffNoContactInfo,
-                  style: TextStyle(color: AppColors.mutedFor(context)),
-                ),
+                child: Text(l10n.staffNoContactInfo, style: TextStyle(color: AppColors.mutedFor(context))),
               ),
           ],
         ),
@@ -319,7 +310,6 @@ class _OverviewTab extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _BranchAssignmentsTab extends ConsumerWidget {
-
   const _BranchAssignmentsTab({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
@@ -357,11 +347,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                     color: a.isPrimary ? AppColors.primary10 : (isDark ? AppColors.hoverDark : AppColors.hoverLight),
                     borderRadius: AppRadius.borderMd,
                   ),
-                  child: Icon(
-                    Icons.store,
-                    color: a.isPrimary ? AppColors.primary : (AppColors.mutedFor(context)),
-                    size: 20,
-                  ),
+                  child: Icon(Icons.store, color: a.isPrimary ? AppColors.primary : (AppColors.mutedFor(context)), size: 20),
                 ),
                 title: Text(
                   a.branchName ?? a.branchId,
@@ -370,10 +356,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                     color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   ),
                 ),
-                subtitle: Text(
-                  a.roleName ?? l10n.staffNoRole,
-                  style: TextStyle(color: AppColors.mutedFor(context)),
-                ),
+                subtitle: Text(a.roleName ?? l10n.staffNoRole, style: TextStyle(color: AppColors.mutedFor(context))),
                 trailing: a.isPrimary
                     ? Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -398,7 +381,6 @@ class _BranchAssignmentsTab extends ConsumerWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _AttendanceTab extends ConsumerStatefulWidget {
-
   const _AttendanceTab({required this.staffId, required this.isDark, required this.l10n});
   final String staffId;
   final bool isDark;
@@ -443,9 +425,7 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                     margin: const EdgeInsets.only(bottom: 8),
                     borderRadius: AppRadius.borderMd,
 
-                    border: Border.fromBorderSide(
-                      BorderSide(color: AppColors.borderFor(context)),
-                    ),
+                    border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
                     color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
                     child: Padding(
                       padding: AppSpacing.paddingAll16,
@@ -473,19 +453,13 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                                   children: [
                                     Text(
                                       'In: ${timeFormat.format(r.clockInAt)}',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.mutedFor(context),
-                                      ),
+                                      style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
                                     ),
                                     if (r.clockOutAt != null) ...[
                                       AppSpacing.gapW12,
                                       Text(
                                         'Out: ${timeFormat.format(r.clockOutAt!)}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.mutedFor(context),
-                                        ),
+                                        style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
                                       ),
                                     ],
                                   ],
@@ -520,7 +494,6 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
 // ═══════════════════════════════════════════════════════════════
 
 class _ActivityTab extends ConsumerStatefulWidget {
-
   const _ActivityTab({required this.staffId, required this.isDark, required this.l10n});
   final String staffId;
   final bool isDark;
@@ -607,10 +580,7 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 if (createdAt != null)
-                  Text(
-                    dateTimeFormat.format(createdAt),
-                    style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
-                  ),
+                  Text(dateTimeFormat.format(createdAt), style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context))),
               ],
             ),
           ),
@@ -625,7 +595,6 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
 // ═══════════════════════════════════════════════════════════════
 
 class _LinkedUserSection extends ConsumerStatefulWidget {
-
   const _LinkedUserSection({required this.staff, required this.isDark, required this.l10n});
   final StaffUser staff;
   final bool isDark;
@@ -776,7 +745,6 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
 // ═══════════════════════════════════════════════════════════════
 
 class _LinkableUsersDialog extends StatefulWidget {
-
   const _LinkableUsersDialog({required this.users, required this.isDark, required this.l10n});
   final List<Map<String, dynamic>> users;
   final bool isDark;
@@ -847,7 +815,6 @@ class _LinkableUsersDialogState extends State<_LinkableUsersDialog> {
 // ═══════════════════════════════════════════════════════════════
 
 class _SectionCard extends StatelessWidget {
-
   const _SectionCard({required this.isDark, required this.title, required this.icon, required this.children});
   final bool isDark;
   final String title;
@@ -890,7 +857,6 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
-
   const _InfoRow({required this.icon, required this.label, required this.value});
   final IconData icon;
   final String label;
@@ -1021,11 +987,13 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
               onPressed: () async {
                 if (!formKey.currentState!.validate()) return;
                 Navigator.pop(ctx);
-                await ref.read(staffDocumentsProvider(widget.staffId).notifier).add(
-                  documentType: selectedType,
-                  fileUrl: urlController.text.trim(),
-                  expiryDate: expiryDate != null ? DateFormat('yyyy-MM-dd').format(expiryDate!) : null,
-                );
+                await ref
+                    .read(staffDocumentsProvider(widget.staffId).notifier)
+                    .add(
+                      documentType: selectedType,
+                      fileUrl: urlController.text.trim(),
+                      expiryDate: expiryDate != null ? DateFormat('yyyy-MM-dd').format(expiryDate!) : null,
+                    );
               },
             ),
           ],
@@ -1061,10 +1029,8 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
 
     return state.when(
       loading: () => PosLoadingSkeleton.list(),
-      error: (e, _) => PosErrorState(
-        message: e.toString(),
-        onRetry: () => ref.invalidate(staffDocumentsProvider(widget.staffId)),
-      ),
+      error: (e, _) =>
+          PosErrorState(message: e.toString(), onRetry: () => ref.invalidate(staffDocumentsProvider(widget.staffId))),
       data: (docs) => Column(
         children: [
           Padding(
@@ -1132,8 +1098,8 @@ class _DocumentCard extends StatelessWidget {
     final expiryColor = doc.isExpired
         ? AppColors.error
         : doc.expiringSoon
-            ? AppColors.warning
-            : AppColors.success;
+        ? AppColors.warning
+        : AppColors.success;
 
     return PosCard(
       child: Row(
@@ -1141,10 +1107,7 @@ class _DocumentCard extends StatelessWidget {
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
+            decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
             child: Icon(typeIcon, color: AppColors.primary, size: 22),
           ),
           AppSpacing.gapW12,
@@ -1159,16 +1122,13 @@ class _DocumentCard extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: expiryColor.withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                        decoration: BoxDecoration(color: expiryColor.withOpacity(0.12), borderRadius: BorderRadius.circular(20)),
                         child: Text(
                           doc.isExpired
                               ? l10n.staffDocumentExpired
                               : doc.expiringSoon
-                                  ? l10n.staffDocumentExpiringSoon
-                                  : l10n.staffDocumentDaysLeft(doc.daysUntilExpiry ?? 0),
+                              ? l10n.staffDocumentExpiringSoon
+                              : l10n.staffDocumentDaysLeft(doc.daysUntilExpiry ?? 0),
                           style: TextStyle(fontSize: 11, color: expiryColor, fontWeight: FontWeight.w500),
                         ),
                       ),

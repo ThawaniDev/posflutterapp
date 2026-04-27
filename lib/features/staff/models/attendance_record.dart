@@ -3,7 +3,6 @@ import 'package:wameedpos/features/staff/models/break_record.dart';
 
 /// Minimal nested staff info returned inline by the API.
 class AttendanceStaffUser {
-
   const AttendanceStaffUser({required this.id, required this.firstName, required this.lastName, this.photoUrl});
 
   factory AttendanceStaffUser.fromJson(Map<String, dynamic> json) {
@@ -23,7 +22,6 @@ class AttendanceStaffUser {
 }
 
 class AttendanceRecord {
-
   const AttendanceRecord({
     required this.id,
     required this.staffUserId,
@@ -71,6 +69,7 @@ class AttendanceRecord {
   final DateTime clockInAt;
   final DateTime? clockOutAt;
   final int? breakMinutes;
+
   /// Net work minutes from API (total time minus breaks), pre-calculated by backend.
   final int? workMinutes;
   final String? scheduledShiftId;

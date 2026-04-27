@@ -10,7 +10,6 @@ import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 class CommissionSummaryPage extends ConsumerStatefulWidget {
-
   const CommissionSummaryPage({super.key, required this.staffId, required this.staffName});
   final String staffId;
   final String staffName;
@@ -146,11 +145,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.analytics_outlined,
-                          size: 48,
-                          color: AppColors.mutedFor(context),
-                        ),
+                        Icon(Icons.analytics_outlined, size: 48, color: AppColors.mutedFor(context)),
                         AppSpacing.gapH16,
                         Text(
                           l10n.staffNoCommissionData,
@@ -309,25 +304,27 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                   data['percentage'] = double.parse(percentageController.text);
                 } else {
                   data['tiers'] = tiers
-                      .map((t) => {
-                            'min_amount': double.tryParse(t['min']!.text) ?? 0,
-                            'max_amount': double.tryParse(t['max']!.text),
-                            'rate': double.tryParse(t['rate']!.text) ?? 0,
-                          })
+                      .map(
+                        (t) => {
+                          'min_amount': double.tryParse(t['min']!.text) ?? 0,
+                          'max_amount': double.tryParse(t['max']!.text),
+                          'rate': double.tryParse(t['rate']!.text) ?? 0,
+                        },
+                      )
                       .toList();
                 }
                 try {
                   await ref.read(staffRepositoryProvider).setCommissionConfig(widget.staffId, data);
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.staffCommissionSaveSuccess), backgroundColor: AppColors.success),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(l10n.staffCommissionSaveSuccess), backgroundColor: AppColors.success));
                   }
                 } catch (e) {
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
                   }
                 }
               },
@@ -344,7 +341,6 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
 // ═══════════════════════════════════════════════════════════════
 
 class _MetricRow extends StatelessWidget {
-
   const _MetricRow({required this.label, required this.value});
   final String label;
   final String value;

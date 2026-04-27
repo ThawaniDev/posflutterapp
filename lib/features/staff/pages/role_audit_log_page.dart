@@ -43,11 +43,13 @@ class _RoleAuditLogPageState extends ConsumerState<RoleAuditLogPage> {
   }
 
   void _applyFilters() {
-    ref.read(roleAuditLogProvider.notifier).applyFilters(
-      action: _filterAction,
-      dateFrom: _dateRange != null ? _dateFmt.format(_dateRange!.start) : null,
-      dateTo: _dateRange != null ? _dateFmt.format(_dateRange!.end) : null,
-    );
+    ref
+        .read(roleAuditLogProvider.notifier)
+        .applyFilters(
+          action: _filterAction,
+          dateFrom: _dateRange != null ? _dateFmt.format(_dateRange!.start) : null,
+          dateTo: _dateRange != null ? _dateFmt.format(_dateRange!.end) : null,
+        );
   }
 
   @override
@@ -101,16 +103,22 @@ class _RoleAuditLogPageState extends ConsumerState<RoleAuditLogPage> {
                     ),
                     items: [
                       DropdownMenuItem(value: null, child: Text(l10n.all)),
-                      ..._actions.map((a) => DropdownMenuItem(
-                            value: a,
-                            child: Row(
-                              children: [
-                                Container(width: 8, height: 8, decoration: BoxDecoration(color: _actionColor(a), shape: BoxShape.circle)),
-                                const SizedBox(width: 6),
-                                Text(_actionLabel(a, l10n), style: const TextStyle(fontSize: 13)),
-                              ],
-                            ),
-                          )),
+                      ..._actions.map(
+                        (a) => DropdownMenuItem(
+                          value: a,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(color: _actionColor(a), shape: BoxShape.circle),
+                              ),
+                              const SizedBox(width: 6),
+                              Text(_actionLabel(a, l10n), style: const TextStyle(fontSize: 13)),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                     onChanged: (v) {
                       setState(() => _filterAction = v);
@@ -160,10 +168,7 @@ class _RoleAuditLogPageState extends ConsumerState<RoleAuditLogPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               child: Row(
                 children: [
-                  Text(
-                    '${state.total} ${l10n.totalCount}',
-                    style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
-                  ),
+                  Text('${state.total} ${l10n.totalCount}', style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context))),
                 ],
               ),
             ),
@@ -173,39 +178,38 @@ class _RoleAuditLogPageState extends ConsumerState<RoleAuditLogPage> {
             child: state.isLoading && state.entries.isEmpty
                 ? PosLoadingSkeleton.list()
                 : state.error != null && state.entries.isEmpty
-                    ? PosErrorState(
-                        message: state.error!,
-                        onRetry: () => ref.read(roleAuditLogProvider.notifier).load(refresh: true),
-                      )
-                    : state.entries.isEmpty
-                        ? PosEmptyState(title: l10n.staffRoleAuditNoLogs, icon: Icons.history_outlined)
-                        : NotificationListener<ScrollNotification>(
-                            onNotification: (n) {
-                              if (n is ScrollEndNotification && n.metrics.extentAfter < 200 && state.hasMore && !state.isLoading) {
-                                ref.read(roleAuditLogProvider.notifier).load(page: state.currentPage + 1);
-                              }
-                              return false;
-                            },
-                            child: ListView.separated(
-                              padding: const EdgeInsets.all(16),
-                              itemCount: state.entries.length + (state.hasMore ? 1 : 0),
-                              separatorBuilder: (_, __) => AppSpacing.gapH8,
-                              itemBuilder: (ctx, i) {
-                                if (i == state.entries.length) {
-                                  return const Center(child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator()));
-                                }
-                                final entry = state.entries[i];
-                                return _AuditLogCard(
-                                  entry: entry,
-                                  actionColor: _actionColor(entry['action'] as String? ?? ''),
-                                  actionLabel: _actionLabel(entry['action'] as String? ?? '', l10n),
-                                  displayFmt: _displayFmt,
-                                  isDark: isDark,
-                                  l10n: l10n,
-                                );
-                              },
-                            ),
-                          ),
+                ? PosErrorState(message: state.error!, onRetry: () => ref.read(roleAuditLogProvider.notifier).load(refresh: true))
+                : state.entries.isEmpty
+                ? PosEmptyState(title: l10n.staffRoleAuditNoLogs, icon: Icons.history_outlined)
+                : NotificationListener<ScrollNotification>(
+                    onNotification: (n) {
+                      if (n is ScrollEndNotification && n.metrics.extentAfter < 200 && state.hasMore && !state.isLoading) {
+                        ref.read(roleAuditLogProvider.notifier).load(page: state.currentPage + 1);
+                      }
+                      return false;
+                    },
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.entries.length + (state.hasMore ? 1 : 0),
+                      separatorBuilder: (_, __) => AppSpacing.gapH8,
+                      itemBuilder: (ctx, i) {
+                        if (i == state.entries.length) {
+                          return const Center(
+                            child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator()),
+                          );
+                        }
+                        final entry = state.entries[i];
+                        return _AuditLogCard(
+                          entry: entry,
+                          actionColor: _actionColor(entry['action'] as String? ?? ''),
+                          actionLabel: _actionLabel(entry['action'] as String? ?? '', l10n),
+                          displayFmt: _displayFmt,
+                          isDark: isDark,
+                          l10n: l10n,
+                        );
+                      },
+                    ),
+                  ),
           ),
         ],
       ),

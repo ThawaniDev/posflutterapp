@@ -170,17 +170,9 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                     helperText: _isEditing ? l10n.deliveryWebhookSecretHint : null,
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _merchantIdController,
-                    label: l10n.deliveryMerchantId,
-                    prefixIcon: Icons.store,
-                  ),
+                  PosTextField(controller: _merchantIdController, label: l10n.deliveryMerchantId, prefixIcon: Icons.store),
                   AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _branchIdController,
-                    label: l10n.deliveryBranchId,
-                    prefixIcon: Icons.business,
-                  ),
+                  PosTextField(controller: _branchIdController, label: l10n.deliveryBranchId, prefixIcon: Icons.business),
                 ],
               ),
             ),
@@ -212,10 +204,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                       label: l10n.deliveryAutoAcceptTimeout,
                       helperText: l10n.deliveryAutoAcceptTimeoutDesc,
                       prefixIcon: Icons.timer_outlined,
-                      suffix: Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 12),
-                        child: Text(l10n.deliverySeconds),
-                      ),
+                      suffix: Padding(padding: const EdgeInsetsDirectional.only(end: 12), child: Text(l10n.deliverySeconds)),
                       keyboardType: TextInputType.number,
                       onChanged: (v) => _autoAcceptTimeoutSeconds = int.tryParse(v) ?? 300,
                     ),
@@ -234,10 +223,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                         child: PosTextField(
                           controller: _menuIntervalController,
                           label: l10n.deliverySyncInterval,
-                          suffix: Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 12),
-                            child: Text(l10n.deliveryHours),
-                          ),
+                          suffix: Padding(padding: const EdgeInsetsDirectional.only(end: 12), child: Text(l10n.deliveryHours)),
                           keyboardType: TextInputType.number,
                           onChanged: (v) => _menuSyncIntervalHours = int.tryParse(v) ?? 24,
                         ),
@@ -275,27 +261,21 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      l10n.deliveryWebhookUrlDesc,
-                      style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                    ),
+                    Text(l10n.deliveryWebhookUrlDesc, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                     AppSpacing.gapH8,
                     Container(
                       padding: AppSpacing.paddingAll12,
                       decoration: BoxDecoration(
-                      color: AppColors.surfaceLight,
-                      borderRadius: AppRadius.borderMd,
-                      border: Border.all(color: AppColors.borderLight),
+                        color: AppColors.surfaceLight,
+                        borderRadius: AppRadius.borderMd,
+                        border: Border.all(color: AppColors.borderLight),
                       ),
                       child: Row(
                         children: [
                           const Icon(Icons.link, size: 16, color: AppColors.textSecondary),
                           AppSpacing.gapW8,
                           Expanded(
-                            child: SelectableText(
-                              _webhookUrl!,
-                              style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
-                            ),
+                            child: SelectableText(_webhookUrl!, style: const TextStyle(fontSize: 12, fontFamily: 'monospace')),
                           ),
                           IconButton(
                             icon: const Icon(Icons.copy, size: 16),
@@ -460,4 +440,3 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     }
   }
 }
-

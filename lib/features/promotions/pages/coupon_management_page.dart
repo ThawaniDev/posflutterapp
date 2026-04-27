@@ -44,7 +44,10 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
   }
 
   Future<void> _load({int page = 1}) async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final repo = ref.read(promotionRepositoryProvider);
       final result = await repo.listPromotionCoupons(
@@ -62,7 +65,10 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
         _loading = false;
       });
     } catch (e) {
-      setState(() { _error = e.toString(); _loading = false; });
+      setState(() {
+        _error = e.toString();
+        _loading = false;
+      });
     }
   }
 
@@ -85,7 +91,10 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
             activeLabel: l10n.active,
             inactiveLabel: l10n.inactive,
             value: _activeFilter,
-            onChanged: (v) { setState(() => _activeFilter = v); _load(); },
+            onChanged: (v) {
+              setState(() => _activeFilter = v);
+              _load();
+            },
           ),
           AppSpacing.gapW8,
           PosButton(
@@ -132,19 +141,17 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
             padding: const EdgeInsets.all(16),
             itemCount: _coupons.length,
             separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (_, i) => _CouponCard(
-              coupon: _coupons[i],
-              onDelete: () => _confirmDelete(_coupons[i]),
-            ),
+            itemBuilder: (_, i) => _CouponCard(coupon: _coupons[i], onDelete: () => _confirmDelete(_coupons[i])),
           ),
         ),
         // Pagination
-        if (_lastPage > 1) _PaginationBar(
-          currentPage: _currentPage,
-          lastPage: _lastPage,
-          onPageChange: (p) => _load(page: p),
-          isLoading: _loading,
-        ),
+        if (_lastPage > 1)
+          _PaginationBar(
+            currentPage: _currentPage,
+            lastPage: _lastPage,
+            onPageChange: (p) => _load(page: p),
+            isLoading: _loading,
+          ),
       ],
     );
   }
@@ -199,12 +206,9 @@ class _CouponManagementPageState extends ConsumerState<CouponManagementPage> {
               final maxUses = maxUsesCtrl.text.isEmpty ? null : int.tryParse(maxUsesCtrl.text);
               Navigator.pop(ctx);
               try {
-                await ref.read(promotionRepositoryProvider).batchGenerateCoupons(
-                  promotionId: widget.promotionId,
-                  count: count,
-                  prefix: prefix,
-                  maxUses: maxUses,
-                );
+                await ref
+                    .read(promotionRepositoryProvider)
+                    .batchGenerateCoupons(promotionId: widget.promotionId, count: count, prefix: prefix, maxUses: maxUses);
                 if (!mounted) return;
                 showPosInfoSnackbar(context, l10n.generatingCoupons(count.toString()));
                 await _load(page: 1);
@@ -249,10 +253,7 @@ class _CouponCard extends StatelessWidget {
                   width: 8,
                   height: 8,
                   margin: const EdgeInsets.only(right: 8, top: 2),
-                  decoration: BoxDecoration(
-                    color: isActive ? AppColors.success : AppColors.neutral300,
-                    shape: BoxShape.circle,
-                  ),
+                  decoration: BoxDecoration(color: isActive ? AppColors.success : AppColors.neutral300, shape: BoxShape.circle),
                 ),
                 // Code
                 Expanded(
@@ -297,19 +298,14 @@ class _CouponCard extends StatelessWidget {
                 Icon(Icons.show_chart_rounded, size: 14, color: AppColors.neutral400),
                 AppSpacing.gapW4,
                 Text(
-                  max != null
-                      ? '${l10n.used}: $used / $max'
-                      : '${l10n.used}: $used',
+                  max != null ? '${l10n.used}: $used / $max' : '${l10n.used}: $used',
                   style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral500),
                 ),
                 if (coupon.createdAt != null) ...[
                   AppSpacing.gapW16,
                   Icon(Icons.calendar_today_rounded, size: 12, color: AppColors.neutral400),
                   AppSpacing.gapW4,
-                  Text(
-                    _formatDate(coupon.createdAt!),
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400),
-                  ),
+                  Text(_formatDate(coupon.createdAt!), style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400)),
                 ],
               ],
             ),
@@ -323,7 +319,13 @@ class _CouponCard extends StatelessWidget {
                   minHeight: 5,
                   backgroundColor: AppColors.neutral200,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    pct >= 1.0 ? AppColors.neutral400 : pct >= 0.8 ? AppColors.error : pct >= 0.5 ? AppColors.warning : AppColors.success,
+                    pct >= 1.0
+                        ? AppColors.neutral400
+                        : pct >= 0.8
+                        ? AppColors.error
+                        : pct >= 0.5
+                        ? AppColors.warning
+                        : AppColors.success,
                   ),
                 ),
               ),
@@ -331,10 +333,7 @@ class _CouponCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    '${(pct * 100).toInt()}%',
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400),
-                  ),
+                  Text('${(pct * 100).toInt()}%', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400)),
                 ],
               ),
             ],
@@ -344,8 +343,7 @@ class _CouponCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _formatDate(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 }
 
 // ─── Filter Chip Widget ──────────────────────────────────────────
@@ -368,30 +366,38 @@ class _FilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     String displayLabel;
-    if (value == true) displayLabel = activeLabel;
-    else if (value == false) displayLabel = inactiveLabel;
-    else displayLabel = label;
+    if (value == true)
+      displayLabel = activeLabel;
+    else if (value == false)
+      displayLabel = inactiveLabel;
+    else
+      displayLabel = label;
 
     return GestureDetector(
       onTap: () {
-        if (value == null) onChanged(true);
-        else if (value == true) onChanged(false);
-        else onChanged(null);
+        if (value == null)
+          onChanged(true);
+        else if (value == true)
+          onChanged(false);
+        else
+          onChanged(null);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: value != null ? AppColors.primary.withValues(alpha: 0.1) : theme.colorScheme.surfaceContainerHighest,
           borderRadius: AppRadius.borderLg,
-          border: Border.all(
-            color: value != null ? AppColors.primary : Colors.transparent,
-          ),
+          border: Border.all(color: value != null ? AppColors.primary : Colors.transparent),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              value == true ? Icons.check_circle_outline : value == false ? Icons.cancel_outlined : Icons.filter_list_rounded,
+              value == true
+                  ? Icons.check_circle_outline
+                  : value == false
+                  ? Icons.cancel_outlined
+                  : Icons.filter_list_rounded,
               size: 14,
               color: value != null ? AppColors.primary : AppColors.neutral500,
             ),
@@ -413,12 +419,7 @@ class _FilterChip extends StatelessWidget {
 // ─── Pagination Bar ──────────────────────────────────────────────
 
 class _PaginationBar extends StatelessWidget {
-  const _PaginationBar({
-    required this.currentPage,
-    required this.lastPage,
-    required this.onPageChange,
-    required this.isLoading,
-  });
+  const _PaginationBar({required this.currentPage, required this.lastPage, required this.onPageChange, required this.isLoading});
   final int currentPage;
   final int lastPage;
   final ValueChanged<int> onPageChange;
@@ -441,10 +442,7 @@ class _PaginationBar extends StatelessWidget {
             onPressed: currentPage > 1 && !isLoading ? () => onPageChange(currentPage - 1) : null,
           ),
           AppSpacing.gapW8,
-          Text(
-            l10n.pageOf(currentPage.toString(), lastPage.toString()),
-            style: theme.textTheme.bodyMedium,
-          ),
+          Text(l10n.pageOf(currentPage.toString(), lastPage.toString()), style: theme.textTheme.bodyMedium),
           AppSpacing.gapW8,
           IconButton(
             icon: const Icon(Icons.chevron_right_rounded),

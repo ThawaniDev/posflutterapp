@@ -9,7 +9,6 @@ final ownerDashboardProvider = StateNotifierProvider<OwnerDashboardNotifier, Own
 });
 
 class OwnerDashboardNotifier extends StateNotifier<OwnerDashboardState> {
-
   OwnerDashboardNotifier(this._repo) : super(const OwnerDashboardInitial());
   final DashboardRepository _repo;
 
@@ -42,7 +41,6 @@ final financialSummaryProvider = StateNotifierProvider<FinancialSummaryNotifier,
 });
 
 class FinancialSummaryNotifier extends StateNotifier<FinancialSummaryState> {
-
   FinancialSummaryNotifier(this._repo) : super(const FinancialSummaryInitial());
   final DashboardRepository _repo;
 
@@ -64,7 +62,6 @@ final staffPerformanceDashboardProvider = StateNotifierProvider<StaffPerformance
 });
 
 class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
-
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
   final DashboardRepository _repo;
 
@@ -86,7 +83,6 @@ final branchOverviewProvider = StateNotifierProvider<BranchOverviewNotifier, Bra
 });
 
 class BranchOverviewNotifier extends StateNotifier<BranchOverviewState> {
-
   BranchOverviewNotifier(this._repo) : super(const BranchOverviewInitial());
   final DashboardRepository _repo;
 

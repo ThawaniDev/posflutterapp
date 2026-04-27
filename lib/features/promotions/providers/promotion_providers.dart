@@ -10,7 +10,6 @@ final promotionsProvider = StateNotifierProvider<PromotionsNotifier, PromotionsS
 });
 
 class PromotionsNotifier extends StateNotifier<PromotionsState> {
-
   PromotionsNotifier(this._repo) : super(const PromotionsInitial());
   final PromotionRepository _repo;
 
@@ -74,7 +73,6 @@ final promotionDetailProvider = StateNotifierProvider.family<PromotionDetailNoti
 });
 
 class PromotionDetailNotifier extends StateNotifier<PromotionDetailState> {
-
   PromotionDetailNotifier(this._repo, this._promotionId) : super(const PromotionDetailInitial());
   final PromotionRepository _repo;
   final String? _promotionId;
@@ -114,7 +112,6 @@ final couponValidationProvider = StateNotifierProvider<CouponValidationNotifier,
 });
 
 class CouponValidationNotifier extends StateNotifier<CouponValidationState> {
-
   CouponValidationNotifier(this._repo) : super(const CouponValidationInitial());
   final PromotionRepository _repo;
 
@@ -168,7 +165,6 @@ final promotionAnalyticsProvider = StateNotifierProvider.family<PromotionAnalyti
 });
 
 class PromotionAnalyticsNotifier extends StateNotifier<PromotionAnalyticsState> {
-
   PromotionAnalyticsNotifier(this._repo, this._promotionId) : super(const PromotionAnalyticsInitial());
   final PromotionRepository _repo;
   final String _promotionId;
@@ -216,12 +212,7 @@ class PromotionUsageLogNotifier extends StateNotifier<PromotionUsageLogState> {
     _dateTo = dateTo;
     if (state is! PromotionUsageLogLoaded) state = const PromotionUsageLogLoading();
     try {
-      final result = await _repo.getPromotionUsageLog(
-        _promotionId,
-        page: page,
-        dateFrom: dateFrom,
-        dateTo: dateTo,
-      );
+      final result = await _repo.getPromotionUsageLog(_promotionId, page: page, dateFrom: dateFrom, dateTo: dateTo);
       state = PromotionUsageLogLoaded(
         items: result.items,
         total: result.total,
@@ -248,11 +239,7 @@ class PromotionUsageLogNotifier extends StateNotifier<PromotionUsageLogState> {
         dateFrom: _dateFrom,
         dateTo: _dateTo,
       );
-      state = s.copyWith(
-        items: [...s.items, ...result.items],
-        currentPage: result.currentPage,
-        lastPage: result.lastPage,
-      );
+      state = s.copyWith(items: [...s.items, ...result.items], currentPage: result.currentPage, lastPage: result.lastPage);
     } on DioException catch (e) {
       // silently fail on pagination, keep existing items
       state = PromotionUsageLogError(message: _extractError(e));

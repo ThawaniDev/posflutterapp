@@ -506,7 +506,10 @@ final branchAssignmentsProvider = FutureProvider.family<List<BranchAssignment>, 
 // Staff Documents Provider (by staff ID)
 // ═══════════════════════════════════════════════════════════════
 
-final staffDocumentsProvider = StateNotifierProvider.family<StaffDocumentsNotifier, AsyncValue<List<StaffDocument>>, String>((ref, staffId) {
+final staffDocumentsProvider = StateNotifierProvider.family<StaffDocumentsNotifier, AsyncValue<List<StaffDocument>>, String>((
+  ref,
+  staffId,
+) {
   return StaffDocumentsNotifier(ref.watch(staffApiServiceProvider), staffId);
 });
 
@@ -546,7 +549,10 @@ class StaffDocumentsNotifier extends StateNotifier<AsyncValue<List<StaffDocument
 // Training Sessions Provider (by staff ID)
 // ═══════════════════════════════════════════════════════════════
 
-final trainingSessionsProvider = StateNotifierProvider.family<TrainingSessionsNotifier, TrainingSessionsState, String>((ref, staffId) {
+final trainingSessionsProvider = StateNotifierProvider.family<TrainingSessionsNotifier, TrainingSessionsState, String>((
+  ref,
+  staffId,
+) {
   return TrainingSessionsNotifier(ref.watch(staffApiServiceProvider), staffId);
 });
 
@@ -568,7 +574,14 @@ class TrainingSessionsState {
 
   bool get hasMore => currentPage < lastPage;
 
-  TrainingSessionsState copyWith({List<TrainingSession>? sessions, bool? isLoading, String? error, int? total, int? currentPage, int? lastPage}) {
+  TrainingSessionsState copyWith({
+    List<TrainingSession>? sessions,
+    bool? isLoading,
+    String? error,
+    int? total,
+    int? currentPage,
+    int? lastPage,
+  }) {
     return TrainingSessionsState(
       sessions: sessions ?? this.sessions,
       isLoading: isLoading ?? this.isLoading,
@@ -618,9 +631,7 @@ class TrainingSessionsNotifier extends StateNotifier<TrainingSessionsState> {
   Future<bool> end(String sessionId, {int? transactionsCount, String? notes}) async {
     try {
       final updated = await _api.endTrainingSession(_staffId, sessionId, transactionsCount: transactionsCount, notes: notes);
-      state = state.copyWith(
-        sessions: state.sessions.map((s) => s.id == sessionId ? updated : s).toList(),
-      );
+      state = state.copyWith(sessions: state.sessions.map((s) => s.id == sessionId ? updated : s).toList());
       return true;
     } catch (e) {
       state = state.copyWith(error: e.toString());
@@ -631,10 +642,7 @@ class TrainingSessionsNotifier extends StateNotifier<TrainingSessionsState> {
   Future<bool> remove(String sessionId) async {
     try {
       await _api.deleteTrainingSession(_staffId, sessionId);
-      state = state.copyWith(
-        sessions: state.sessions.where((s) => s.id != sessionId).toList(),
-        total: state.total - 1,
-      );
+      state = state.copyWith(sessions: state.sessions.where((s) => s.id != sessionId).toList(), total: state.total - 1);
       return true;
     } catch (e) {
       state = state.copyWith(error: e.toString());
@@ -730,12 +738,7 @@ class RoleAuditLogNotifier extends StateNotifier<RoleAuditLogState> {
   }
 
   void applyFilters({String? action, String? dateFrom, String? dateTo}) {
-    state = RoleAuditLogState(
-      isLoading: true,
-      filterAction: action,
-      filterDateFrom: dateFrom,
-      filterDateTo: dateTo,
-    );
+    state = RoleAuditLogState(isLoading: true, filterAction: action, filterDateFrom: dateFrom, filterDateTo: dateTo);
     load(page: 1, refresh: true);
   }
 

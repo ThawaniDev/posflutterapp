@@ -91,23 +91,15 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _ActiveSessionBanner(
-                    session: activeSession,
-                    staffId: widget.staffId,
-                    l10n: l10n,
-                  ),
+                  child: _ActiveSessionBanner(session: activeSession, staffId: widget.staffId, l10n: l10n),
                 ),
               ),
 
-            if (state.isLoading && state.sessions.isEmpty)
-              SliverToBoxAdapter(child: PosLoadingSkeleton.list()),
+            if (state.isLoading && state.sessions.isEmpty) SliverToBoxAdapter(child: PosLoadingSkeleton.list()),
 
             if (!state.isLoading && state.sessions.isEmpty)
               SliverToBoxAdapter(
-                child: PosEmptyState(
-                  title: l10n.staffNoTrainingSessions,
-                  icon: Icons.fitness_center_outlined,
-                ),
+                child: PosEmptyState(title: l10n.staffNoTrainingSessions, icon: Icons.fitness_center_outlined),
               ),
 
             if (state.sessions.isNotEmpty)
@@ -154,9 +146,9 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
             label: l10n.staffStartTraining,
             onPressed: () async {
               Navigator.pop(ctx);
-              await ref.read(trainingSessionsProvider(widget.staffId).notifier).start(
-                notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
-              );
+              await ref
+                  .read(trainingSessionsProvider(widget.staffId).notifier)
+                  .start(notes: notesController.text.trim().isEmpty ? null : notesController.text.trim());
             },
           ),
         ],
@@ -203,11 +195,13 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
             onPressed: () async {
               if (!formKey.currentState!.validate()) return;
               Navigator.pop(ctx);
-              await ref.read(trainingSessionsProvider(widget.staffId).notifier).end(
-                session.id,
-                transactionsCount: countController.text.isEmpty ? null : int.parse(countController.text),
-                notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
-              );
+              await ref
+                  .read(trainingSessionsProvider(widget.staffId).notifier)
+                  .end(
+                    session.id,
+                    transactionsCount: countController.text.isEmpty ? null : int.parse(countController.text),
+                    notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
+                  );
             },
           ),
         ],
@@ -247,18 +241,14 @@ class _ActiveSessionBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elapsed = session.startedAt != null
-        ? DateTime.now().difference(DateTime.parse(session.startedAt!))
-        : Duration.zero;
+    final elapsed = session.startedAt != null ? DateTime.now().difference(DateTime.parse(session.startedAt!)) : Duration.zero;
     final mins = elapsed.inMinutes;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.success.withOpacity(0.15), AppColors.success.withOpacity(0.05)],
-        ),
+        gradient: LinearGradient(colors: [AppColors.success.withOpacity(0.15), AppColors.success.withOpacity(0.05)]),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.success.withOpacity(0.3)),
       ),
@@ -267,10 +257,7 @@ class _ActiveSessionBanner extends ConsumerWidget {
           Container(
             width: 40,
             height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.success.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: AppColors.success.withOpacity(0.2), shape: BoxShape.circle),
             child: const Icon(Icons.play_circle_filled, color: AppColors.success, size: 24),
           ),
           AppSpacing.gapW12,
@@ -278,7 +265,10 @@ class _ActiveSessionBanner extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.staffTrainingActive, style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.success)),
+                Text(
+                  l10n.staffTrainingActive,
+                  style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.success),
+                ),
                 Text(l10n.staffTrainingDuration(mins), style: const TextStyle(fontSize: 12)),
               ],
             ),
@@ -352,11 +342,7 @@ class _SessionCard extends StatelessWidget {
               ),
               if (session.endedAt != null) ...[
                 AppSpacing.gapW12,
-                _InfoChip(
-                  icon: Icons.stop_rounded,
-                  label: fmt.format(DateTime.parse(session.endedAt!)),
-                  color: AppColors.error,
-                ),
+                _InfoChip(icon: Icons.stop_rounded, label: fmt.format(DateTime.parse(session.endedAt!)), color: AppColors.error),
               ],
             ],
           ),

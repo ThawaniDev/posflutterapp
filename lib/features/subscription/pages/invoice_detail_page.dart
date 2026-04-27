@@ -11,7 +11,6 @@ import 'package:wameedpos/features/subscription/providers/subscription_state.dar
 
 /// Page that shows full invoice details with line items, totals, and PDF download.
 class InvoiceDetailPage extends ConsumerStatefulWidget {
-
   const InvoiceDetailPage({super.key, required this.invoiceId});
   final String invoiceId;
 
@@ -136,10 +135,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                                         '${l10n.subUnit}: ${item.unitPrice.toStringAsFixed(2)}',
                                         style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
                                       ),
-                                      Text(
-                                        item.total.toStringAsFixed(2),
-                                        style: const TextStyle(fontWeight: FontWeight.w600),
-                                      ),
+                                      Text(item.total.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.w600)),
                                     ],
                                   ),
                                   const Divider(),
@@ -159,7 +155,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             flex: 4,
                             child: Text(
                               l10n.description,
-                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -167,7 +167,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.wameedAIQty,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -175,7 +179,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.subscriptionUnitPrice,
                               textAlign: TextAlign.end,
-                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -183,7 +191,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                             child: Text(
                               l10n.posTotal,
                               textAlign: TextAlign.end,
-                              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondaryLight,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ],

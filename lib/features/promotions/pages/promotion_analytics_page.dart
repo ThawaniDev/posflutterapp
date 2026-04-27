@@ -110,15 +110,9 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
                 const Divider(height: 1),
                 _InfoRow(label: l10n.promotionsCouponRedemptionRate, value: _redemptionRate(data)),
                 const Divider(height: 1),
-                _InfoRow(
-                  label: l10n.couponUses,
-                  value: '${data['coupon_uses'] ?? 0}',
-                ),
+                _InfoRow(label: l10n.couponUses, value: '${data['coupon_uses'] ?? 0}'),
                 const Divider(height: 1),
-                _InfoRow(
-                  label: l10n.autoUses,
-                  value: '${data['auto_uses'] ?? 0}',
-                ),
+                _InfoRow(label: l10n.autoUses, value: '${data['auto_uses'] ?? 0}'),
                 if (data['max_uses'] != null) ...[
                   const Divider(height: 1),
                   _InfoRow(
@@ -212,23 +206,32 @@ class _DailyUsageChart extends StatelessWidget {
   Widget _buildChart(BuildContext context) {
     final spots = <BarChartGroupData>[];
     final dates = <int, String>{};
-    final maxY = dailyData.fold<double>(0, (max, d) => (d['uses'] as num? ?? 0).toDouble() > max ? (d['uses'] as num).toDouble() : max);
+    final maxY = dailyData.fold<double>(
+      0,
+      (max, d) => (d['uses'] as num? ?? 0).toDouble() > max ? (d['uses'] as num).toDouble() : max,
+    );
 
     for (var i = 0; i < dailyData.length; i++) {
       final d = dailyData[i];
       final uses = (d['uses'] as num? ?? 0).toDouble();
       dates[i] = (d['date'] as String).substring(5); // MM-DD
-      spots.add(BarChartGroupData(
-        x: i,
-        barRods: [
-          BarChartRodData(
-            toY: uses,
-            color: AppColors.primary,
-            width: dailyData.length <= 7 ? 16 : dailyData.length <= 14 ? 10 : 6,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
-          ),
-        ],
-      ));
+      spots.add(
+        BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              toY: uses,
+              color: AppColors.primary,
+              width: dailyData.length <= 7
+                  ? 16
+                  : dailyData.length <= 14
+                  ? 10
+                  : 6,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
+            ),
+          ],
+        ),
+      );
     }
 
     return BarChart(
@@ -247,10 +250,8 @@ class _DailyUsageChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: 28,
-              getTitlesWidget: (v, meta) => Text(
-                v.toInt().toString(),
-                style: TextStyle(fontSize: 10, color: AppColors.neutral400),
-              ),
+              getTitlesWidget: (v, meta) =>
+                  Text(v.toInt().toString(), style: TextStyle(fontSize: 10, color: AppColors.neutral400)),
             ),
           ),
           bottomTitles: AxisTitles(
@@ -269,10 +270,8 @@ class _DailyUsageChart extends StatelessWidget {
         ),
         barTouchData: BarTouchData(
           touchTooltipData: BarTouchTooltipData(
-            getTooltipItem: (group, _, rod, __) => BarTooltipItem(
-              '${dates[group.x] ?? ''}\n${rod.toY.toInt()} uses',
-              TextStyle(color: Colors.white, fontSize: 11),
-            ),
+            getTooltipItem: (group, _, rod, __) =>
+                BarTooltipItem('${dates[group.x] ?? ''}\n${rod.toY.toInt()} uses', TextStyle(color: Colors.white, fontSize: 11)),
           ),
         ),
       ),
@@ -310,15 +309,11 @@ class _UsageHistorySection extends ConsumerWidget {
         switch (logState) {
           PromotionUsageLogInitial() || PromotionUsageLogLoading() => const Center(child: PosLoading()),
           PromotionUsageLogError(:final message) => PosErrorState(
-              message: message,
-              onRetry: () => ref.read(promotionUsageLogProvider(promotionId).notifier).load(),
-            ),
-          PromotionUsageLogLoaded(:final items) => items.isEmpty
-              ? PosEmptyState(
-                  icon: Icons.history_rounded,
-                  title: l10n.noUsageHistory,
-                )
-              : _UsageLogTable(items: items),
+            message: message,
+            onRetry: () => ref.read(promotionUsageLogProvider(promotionId).notifier).load(),
+          ),
+          PromotionUsageLogLoaded(:final items) =>
+            items.isEmpty ? PosEmptyState(icon: Icons.history_rounded, title: l10n.noUsageHistory) : _UsageLogTable(items: items),
         },
       ],
     );
@@ -346,10 +341,22 @@ class _UsageLogTable extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Expanded(flex: 2, child: Text(l10n.orderId, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500))),
-                Expanded(flex: 2, child: Text(l10n.customer, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500))),
-                Expanded(flex: 2, child: Text(l10n.discountAmount, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500))),
-                Expanded(flex: 2, child: Text(l10n.date, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500))),
+                Expanded(
+                  flex: 2,
+                  child: Text(l10n.orderId, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(l10n.customer, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(l10n.discountAmount, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(l10n.date, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                ),
               ],
             ),
           ),
@@ -375,7 +382,9 @@ class _UsageLogTable extends StatelessWidget {
                         flex: 2,
                         child: Text(
                           log.customerId != null
-                              ? (log.customerId!.length > 8 ? '...${log.customerId!.substring(log.customerId!.length - 8)}' : log.customerId!)
+                              ? (log.customerId!.length > 8
+                                    ? '...${log.customerId!.substring(log.customerId!.length - 8)}'
+                                    : log.customerId!)
                               : l10n.guest,
                           style: theme.textTheme.bodySmall,
                         ),
@@ -384,10 +393,7 @@ class _UsageLogTable extends StatelessWidget {
                         flex: 2,
                         child: Text(
                           'SAR ${log.discountAmount.toStringAsFixed(2)}',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: AppColors.success,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: theme.textTheme.bodySmall?.copyWith(color: AppColors.success, fontWeight: FontWeight.w500),
                         ),
                       ),
                       Expanded(
@@ -415,12 +421,7 @@ class _UsageLogTable extends StatelessWidget {
 // ─── Helper Widgets ─────────────────────────────────────────────
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    required this.label,
-    required this.value,
-    this.showProgress = false,
-    this.progressValue,
-  });
+  const _InfoRow({required this.label, required this.value, this.showProgress = false, this.progressValue});
   final String label;
   final String value;
   final bool showProgress;
@@ -450,7 +451,11 @@ class _InfoRow extends StatelessWidget {
                 minHeight: 6,
                 backgroundColor: AppColors.neutral200,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  progressValue! >= 0.9 ? AppColors.error : progressValue! >= 0.6 ? AppColors.warning : AppColors.primary,
+                  progressValue! >= 0.9
+                      ? AppColors.error
+                      : progressValue! >= 0.6
+                      ? AppColors.warning
+                      : AppColors.primary,
                 ),
               ),
             ),

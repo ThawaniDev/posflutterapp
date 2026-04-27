@@ -16,7 +16,6 @@ class PromotionsLoading extends PromotionsState {
 }
 
 class PromotionsLoaded extends PromotionsState {
-
   const PromotionsLoaded({
     required this.promotions,
     required this.total,
@@ -107,7 +106,6 @@ class CouponValidationLoading extends CouponValidationState {
 }
 
 class CouponValidationValid extends CouponValidationState {
-
   const CouponValidationValid({
     required this.promotionId,
     required this.couponCodeId,

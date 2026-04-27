@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/delivery_integration/data/remote/delivery_api_service.dart';
 
 class DeliveryRepository {
-
   DeliveryRepository(this._apiService);
   final DeliveryApiService _apiService;
 

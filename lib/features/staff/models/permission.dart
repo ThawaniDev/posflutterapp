@@ -1,5 +1,4 @@
 class Permission {
-
   const Permission({
     required this.id,
     required this.name,

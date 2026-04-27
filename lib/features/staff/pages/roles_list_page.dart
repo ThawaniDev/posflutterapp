@@ -122,11 +122,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.admin_panel_settings_outlined,
-                size: 64,
-                color: AppColors.mutedFor(context),
-              ),
+              Icon(Icons.admin_panel_settings_outlined, size: 64, color: AppColors.mutedFor(context)),
               const SizedBox(height: AppSpacing.md),
               Text(
                 l10n.staffNoRoles,
@@ -169,7 +165,6 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 
 /// Card widget for a single role in the list
 class _RoleCard extends StatelessWidget {
-
   const _RoleCard({required this.role, required this.isDark, required this.l10n, required this.onTap, this.onDelete});
   final Role role;
   final bool isDark;
@@ -250,9 +245,7 @@ class _RoleCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       l10n.staffPermissionCount(permCount),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
                     ),
                   ],
                 ),

@@ -18,7 +18,6 @@ final staffApiServiceProvider = Provider<StaffApiService>((ref) {
 });
 
 class StaffApiService {
-
   StaffApiService(this._dio);
   final Dio _dio;
 
@@ -221,11 +220,7 @@ class StaffApiService {
   Future<Map<String, dynamic>> getAttendanceSummary({String? staffUserId, String? dateFrom, String? dateTo}) async {
     final response = await _dio.get(
       ApiEndpoints.attendanceSummary,
-      queryParameters: {
-        'staff_user_id': ?staffUserId,
-        'date_from': ?dateFrom,
-        'date_to': ?dateTo,
-      },
+      queryParameters: {'staff_user_id': ?staffUserId, 'date_from': ?dateFrom, 'date_to': ?dateTo},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -300,11 +295,7 @@ class StaffApiService {
   Future<Map<String, dynamic>> exportAttendance({String? staffUserId, String? dateFrom, String? dateTo}) async {
     final response = await _dio.get(
       ApiEndpoints.attendanceExport,
-      queryParameters: {
-        'staff_user_id': ?staffUserId,
-        'date_from': ?dateFrom,
-        'date_to': ?dateTo,
-      },
+      queryParameters: {'staff_user_id': ?staffUserId, 'date_from': ?dateFrom, 'date_to': ?dateTo},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
@@ -338,12 +329,16 @@ class StaffApiService {
     return apiResponse.dataList.map((j) => StaffDocument.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  Future<StaffDocument> addDocument(String staffId, {required String documentType, required String fileUrl, String? expiryDate}) async {
-    final response = await _dio.post(ApiEndpoints.staffMemberDocuments(staffId), data: {
-      'document_type': documentType,
-      'file_url': fileUrl,
-      if (expiryDate != null) 'expiry_date': expiryDate,
-    });
+  Future<StaffDocument> addDocument(
+    String staffId, {
+    required String documentType,
+    required String fileUrl,
+    String? expiryDate,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.staffMemberDocuments(staffId),
+      data: {'document_type': documentType, 'file_url': fileUrl, if (expiryDate != null) 'expiry_date': expiryDate},
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return StaffDocument.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -370,18 +365,19 @@ class StaffApiService {
   }
 
   Future<TrainingSession> startTrainingSession(String staffId, {String? notes}) async {
-    final response = await _dio.post(ApiEndpoints.staffMemberTrainingSessions(staffId), data: {
-      if (notes != null) 'notes': notes,
-    });
+    final response = await _dio.post(
+      ApiEndpoints.staffMemberTrainingSessions(staffId),
+      data: {if (notes != null) 'notes': notes},
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return TrainingSession.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
   Future<TrainingSession> endTrainingSession(String staffId, String sessionId, {int? transactionsCount, String? notes}) async {
-    final response = await _dio.put(ApiEndpoints.staffMemberTrainingSessionEnd(staffId, sessionId), data: {
-      if (transactionsCount != null) 'transactions_count': transactionsCount,
-      if (notes != null) 'notes': notes,
-    });
+    final response = await _dio.put(
+      ApiEndpoints.staffMemberTrainingSessionEnd(staffId, sessionId),
+      data: {if (transactionsCount != null) 'transactions_count': transactionsCount, if (notes != null) 'notes': notes},
+    );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return TrainingSession.fromJson(apiResponse.data as Map<String, dynamic>);
   }

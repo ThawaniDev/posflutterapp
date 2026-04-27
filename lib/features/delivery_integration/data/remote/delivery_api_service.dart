@@ -4,7 +4,6 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class DeliveryApiService {
-
   DeliveryApiService(this._dio);
   final Dio _dio;
 

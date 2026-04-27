@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
 
 class DeliveryPlatformConfig {
-
   const DeliveryPlatformConfig({
     required this.id,
     required this.storeId,
@@ -65,6 +64,7 @@ class DeliveryPlatformConfig {
   final String id;
   final String storeId;
   final DeliveryConfigPlatform platform;
+
   /// Always empty from server (hidden for security). Only populated locally before sending to API.
   final String apiKey;
   final String? merchantId;

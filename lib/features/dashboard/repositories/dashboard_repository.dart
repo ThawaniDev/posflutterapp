@@ -6,7 +6,6 @@ final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
 });
 
 class DashboardRepository {
-
   DashboardRepository(this._api);
   final DashboardApiService _api;
 

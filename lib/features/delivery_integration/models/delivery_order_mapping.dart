@@ -2,7 +2,6 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_config_pl
 import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
 
 class DeliveryOrderMapping {
-
   const DeliveryOrderMapping({
     required this.id,
     this.orderId,

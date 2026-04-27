@@ -73,7 +73,6 @@ class MenuSyncPage extends ConsumerWidget {
 }
 
 class _SyncTriggerSection extends StatefulWidget {
-
   const _SyncTriggerSection({required this.syncState, required this.configsState, required this.onSync});
   final DeliveryMenuSyncState syncState;
   final DeliveryConfigsState configsState;

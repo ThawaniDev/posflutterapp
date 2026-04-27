@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/staff/enums/staff_document_type.dart';
 
 class StaffDocument {
-
   const StaffDocument({
     required this.id,
     required this.staffUserId,

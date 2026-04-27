@@ -8,7 +8,6 @@ final dashboardApiServiceProvider = Provider<DashboardApiService>((ref) {
 });
 
 class DashboardApiService {
-
   DashboardApiService(this._dio);
   final Dio _dio;
 

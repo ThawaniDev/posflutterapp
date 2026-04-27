@@ -1,5 +1,4 @@
 class TrainingSession {
-
   const TrainingSession({
     required this.id,
     required this.staffUserId,
@@ -74,13 +73,12 @@ class TrainingSession {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TrainingSession && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is TrainingSession && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'TrainingSession(id: $id, staffUserId: $staffUserId, storeId: $storeId, startedAt: $startedAt, endedAt: $endedAt, transactionsCount: $transactionsCount, ...)';
+  String toString() =>
+      'TrainingSession(id: $id, staffUserId: $staffUserId, storeId: $storeId, startedAt: $startedAt, endedAt: $endedAt, transactionsCount: $transactionsCount, ...)';
 }

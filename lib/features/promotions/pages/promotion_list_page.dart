@@ -41,11 +41,13 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
   }
 
   void _applyFilters() {
-    ref.read(promotionsProvider.notifier).load(
-      search: _searchController.text.isNotEmpty ? _searchController.text : null,
-      type: _typeFilter,
-      isActive: _activeFilter,
-    );
+    ref
+        .read(promotionsProvider.notifier)
+        .load(
+          search: _searchController.text.isNotEmpty ? _searchController.text : null,
+          type: _typeFilter,
+          isActive: _activeFilter,
+        );
   }
 
   @override
@@ -62,7 +64,11 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
         searchController: _searchController,
         onSearchChanged: (_) => _applyFilters(),
         actions: [
-          PosButton.icon(icon: Icons.info_outline, tooltip: l10n.featureInfoTooltip, onPressed: () => showPromotionListInfo(context)),
+          PosButton.icon(
+            icon: Icons.info_outline,
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showPromotionListInfo(context),
+          ),
           PosButton.icon(icon: Icons.filter_list, tooltip: l10n.promoFilter, onPressed: _showFilterSheet),
           PosButton(
             label: l10n.promoNew,
@@ -77,13 +83,19 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             Chip(
               label: Text(_typeFilter!),
               deleteIcon: const Icon(Icons.close, size: 14),
-              onDeleted: () { setState(() => _typeFilter = null); _applyFilters(); },
+              onDeleted: () {
+                setState(() => _typeFilter = null);
+                _applyFilters();
+              },
             ),
           if (_activeFilter != null)
             Chip(
               label: Text(_activeFilter! ? l10n.active : l10n.inactive),
               deleteIcon: const Icon(Icons.close, size: 14),
-              onDeleted: () { setState(() => _activeFilter = null); _applyFilters(); },
+              onDeleted: () {
+                setState(() => _activeFilter = null);
+                _applyFilters();
+              },
             ),
         ],
         child: PosDataTable<Promotion>(
@@ -133,7 +145,9 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
               isVisible: (p) => p.isCoupon == true,
               onTap: (p) => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => CouponManagementPage(promotionId: p.id, promotionName: p.name)),
+                MaterialPageRoute(
+                  builder: (_) => CouponManagementPage(promotionId: p.id, promotionName: p.name),
+                ),
               ),
             ),
             PosTableRowAction<Promotion>(
@@ -153,9 +167,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: (promo.isActive ?? false)
-                            ? AppColors.primary.withValues(alpha: 0.12)
-                            : AppColors.neutral200,
+                        color: (promo.isActive ?? false) ? AppColors.primary.withValues(alpha: 0.12) : AppColors.neutral200,
                         borderRadius: AppRadius.borderMd,
                       ),
                       child: Icon(
@@ -185,11 +197,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                 );
 
               case 1: // Type
-                return PosBadge(
-                  label: promo.type.label,
-                  color: _typeColor(promo.type),
-                  size: PosBadgeSize.sm,
-                );
+                return PosBadge(label: promo.type.label, color: _typeColor(promo.type), size: PosBadgeSize.sm);
 
               case 2: // Status
                 return GestureDetector(
@@ -202,11 +210,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                         color: (promo.isActive ?? false) ? AppColors.success : AppColors.neutral400,
                       ),
                       AppSpacing.gapW4,
-                      Icon(
-                        Icons.swap_horiz_rounded,
-                        size: 14,
-                        color: AppColors.neutral400,
-                      ),
+                      Icon(Icons.swap_horiz_rounded, size: 14, color: AppColors.neutral400),
                     ],
                   ),
                 );
@@ -220,14 +224,13 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (from != null)
-                      Text(_formatDate(from), style: Theme.of(context).textTheme.bodySmall),
+                    if (from != null) Text(_formatDate(from), style: Theme.of(context).textTheme.bodySmall),
                     if (to != null) ...[
                       Text(
                         '→ ${_formatDate(to)}',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isExpired ? AppColors.error : AppColors.neutral400,
-                        ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: isExpired ? AppColors.error : AppColors.neutral400),
                       ),
                     ] else
                       Text(l10n.noExpiry, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.neutral400)),
@@ -242,10 +245,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      max != null ? '$used / $max' : '$used',
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
+                    Text(max != null ? '$used / $max' : '$used', style: Theme.of(context).textTheme.labelSmall),
                     if (pct != null) ...[
                       AppSpacing.gapH4,
                       SizedBox(
@@ -257,7 +257,11 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                             minHeight: 4,
                             backgroundColor: AppColors.neutral200,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              pct >= 0.9 ? AppColors.error : pct >= 0.6 ? AppColors.warning : AppColors.success,
+                              pct >= 0.9
+                                  ? AppColors.error
+                                  : pct >= 0.6
+                                  ? AppColors.warning
+                                  : AppColors.success,
                             ),
                           ),
                         ),
@@ -276,22 +280,19 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
   }
 
   Color _typeColor(PromotionType type) => switch (type) {
-    PromotionType.percentage  => AppColors.primary,
+    PromotionType.percentage => AppColors.primary,
     PromotionType.fixedAmount => AppColors.info,
-    PromotionType.bogo        => AppColors.success,
-    PromotionType.bundle      => AppColors.warning,
-    PromotionType.happyHour   => const Color(0xFF8B5CF6),
+    PromotionType.bogo => AppColors.success,
+    PromotionType.bundle => AppColors.warning,
+    PromotionType.happyHour => const Color(0xFF8B5CF6),
   };
 
-  String _formatDate(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _formatDate(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   void _showFilterSheet() {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) => Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
         child: Column(
@@ -338,7 +339,10 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                 Expanded(
                   child: PosButton(
                     onPressed: () {
-                      setState(() { _typeFilter = null; _activeFilter = null; });
+                      setState(() {
+                        _typeFilter = null;
+                        _activeFilter = null;
+                      });
                       Navigator.pop(ctx);
                       _applyFilters();
                     },
@@ -366,7 +370,10 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
   }
 
   void _openPromotionForm(BuildContext context, {String? promotionId}) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => PromotionFormPage(promotionId: promotionId))).then((_) => _applyFilters());
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PromotionFormPage(promotionId: promotionId)),
+    ).then((_) => _applyFilters());
   }
 
   Future<void> _duplicatePromotion(Promotion promo) async {
@@ -420,7 +427,9 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
               final maxUses = maxUsesController.text.isNotEmpty ? int.tryParse(maxUsesController.text) : null;
               Navigator.pop(ctx);
               try {
-                await ref.read(promotionRepositoryProvider).generateCoupons(promo.id, count: count, prefix: prefix, maxUses: maxUses);
+                await ref
+                    .read(promotionRepositoryProvider)
+                    .generateCoupons(promo.id, count: count, prefix: prefix, maxUses: maxUses);
                 if (!mounted) return;
                 showPosInfoSnackbar(context, l10n.generatingCoupons(count.toString()));
               } catch (e) {
