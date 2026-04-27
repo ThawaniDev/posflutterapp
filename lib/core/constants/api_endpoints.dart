@@ -77,6 +77,7 @@ class ApiEndpoints {
   static const String labelPrintHistory = '/labels/print-history';
 
   // Owner Dashboard
+  static const String ownerDashboardSummary = '/owner-dashboard/summary';
   static const String ownerDashboardStats = '/owner-dashboard/stats';
   static const String ownerDashboardSalesTrend = '/owner-dashboard/sales-trend';
   static const String ownerDashboardTopProducts = '/owner-dashboard/top-products';
@@ -128,6 +129,14 @@ class ApiEndpoints {
   static String staffMemberLinkUser(String id) => '/staff/members/$id/link-user';
   static const String staffLinkableUsers = '/staff/members/linkable-users';
   static const String staffStats = '/staff/members/stats';
+  // Staff Documents
+  static String staffMemberDocuments(String id) => '/staff/members/$id/documents';
+  static String staffMemberDocumentById(String id, String docId) => '/staff/members/$id/documents/$docId';
+  // Training Sessions
+  static String staffMemberTrainingSessions(String id) => '/staff/members/$id/training-sessions';
+  static String staffMemberTrainingSessionEnd(String id, String sessionId) =>
+      '/staff/members/$id/training-sessions/$sessionId/end';
+  static String staffMemberTrainingSessionById(String id, String sessionId) => '/staff/members/$id/training-sessions/$sessionId';
   static const String attendance = '/staff/attendance';
   static const String attendanceClock = '/staff/attendance/clock';
   static const String attendanceSummary = '/staff/attendance/summary';
@@ -139,6 +148,8 @@ class ApiEndpoints {
   static String shiftTemplateById(String id) => '/staff/shift-templates/$id';
   static const String roles = '/staff/roles';
   static const String userPermissions = '/staff/roles/user-permissions';
+  static const String rolesAuditLog = '/staff/roles/audit-log';
+  static String roleById(String id) => '/staff/roles/$id';
   static const String permissions = '/staff/permissions';
   static const String permissionsGrouped = '/staff/permissions/grouped';
   static const String permissionsModules = '/staff/permissions/modules';
@@ -220,6 +231,7 @@ class ApiEndpoints {
   static String subscriptionInvoicePdf(String id) => '/subscription/invoices/$id/pdf';
   static const String subscriptionSyncEntitlements = '/subscription/sync/entitlements';
   static const String subscriptionStoreAddOns = '/subscription/store-add-ons';
+  static String subscriptionActivateAddOn(String id) => '/subscription/store-add-ons/$id/activate';
   static String subscriptionRemoveAddOn(String id) => '/subscription/store-add-ons/$id';
 
   // Provider Payments (PayTabs)
@@ -238,6 +250,7 @@ class ApiEndpoints {
   static String promotionGenerateCoupons(String id) => '/promotions/$id/generate-coupons';
   static String promotionCoupons(String id) => '/promotions/$id/coupons';
   static String promotionAnalytics(String id) => '/promotions/$id/analytics';
+  static String promotionUsageLog(String id) => '/promotions/$id/usage-log';
   static const String couponValidate = '/coupons/validate';
   static const String couponRedeem = '/coupons/redeem';
   static const String couponBatchGenerate = '/coupons/batch-generate';
@@ -809,6 +822,15 @@ class ApiEndpoints {
   static const String thawaniSyncLogs = '/thawani/sync-logs';
   static const String thawaniQueueStats = '/thawani/queue-stats';
   static const String thawaniProcessQueue = '/thawani/process-queue';
+  static String thawaniOrderDetail(String id) => '/thawani/orders/$id';
+  static String thawaniOrderAccept(String id) => '/thawani/orders/$id/accept';
+  static String thawaniOrderReject(String id) => '/thawani/orders/$id/reject';
+  static String thawaniOrderStatus(String id) => '/thawani/orders/$id/status';
+  static const String thawaniProducts = '/thawani/products';
+  static String thawaniProductPublish(String id) => '/thawani/products/$id/publish';
+  static const String thawaniProductsBulkPublish = '/thawani/products/bulk-publish';
+  static const String thawaniStoreAvailability = '/thawani/store/availability';
+  static const String thawaniInventorySync = '/thawani/inventory/sync';
 
   // ─── Predefined Catalog ───────────────────────────────────
   static const String predefinedCategories = '/predefined-catalog/categories';

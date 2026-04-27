@@ -6,6 +6,7 @@ import 'package:wameedpos/core/network/dio_client.dart';
 import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:wameedpos/features/promotions/models/coupon_code.dart';
 import 'package:wameedpos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/models/promotion_usage_log.dart';
 
 final promotionApiServiceProvider = Provider<PromotionApiService>((ref) {
   return PromotionApiService(ref.watch(dioClientProvider));
@@ -115,6 +116,34 @@ class PromotionApiService {
     final response = await _dio.get(ApiEndpoints.promotionAnalytics(promotionId));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
+  }
+
+  Future<PaginatedResult<PromotionUsageLog>> getPromotionUsageLog(
+    String promotionId, {
+    int page = 1,
+    int perPage = 20,
+    String? dateFrom,
+    String? dateTo,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.promotionUsageLog(promotionId),
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (dateFrom != null) 'date_from': dateFrom,
+        if (dateTo != null) 'date_to': dateTo,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => PromotionUsageLog.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
   }
 
   // ─── New Endpoints ────────────────────────────────────────────

@@ -5,7 +5,7 @@ class DeliveryOrderMapping {
 
   const DeliveryOrderMapping({
     required this.id,
-    required this.orderId,
+    this.orderId,
     this.storeId,
     required this.platform,
     required this.externalOrderId,
@@ -35,7 +35,7 @@ class DeliveryOrderMapping {
   factory DeliveryOrderMapping.fromJson(Map<String, dynamic> json) {
     return DeliveryOrderMapping(
       id: json['id'] as String,
-      orderId: json['order_id'] as String,
+      orderId: json['order_id'] as String?,
       storeId: json['store_id'] as String?,
       platform: DeliveryConfigPlatform.fromValue(json['platform'] as String),
       externalOrderId: json['external_order_id'] as String,
@@ -63,7 +63,7 @@ class DeliveryOrderMapping {
     );
   }
   final String id;
-  final String orderId;
+  final String? orderId;
   final String? storeId;
   final DeliveryConfigPlatform platform;
   final String externalOrderId;

@@ -232,11 +232,11 @@ class DeliveryMenuSyncNotifier extends StateNotifier<DeliveryMenuSyncState> {
   DeliveryMenuSyncNotifier(this._repository) : super(const DeliveryMenuSyncIdle());
   final DeliveryRepository _repository;
 
-  Future<void> sync({String? platform, required List<Map<String, dynamic>> products}) async {
+  Future<void> sync({String? platform, List<Map<String, dynamic>>? products}) async {
     state = const DeliveryMenuSyncLoading();
     try {
       final result = await _repository.triggerMenuSync(platform: platform, products: products);
-      state = DeliveryMenuSyncSuccess(result['message'] as String? ?? 'Sync completed');
+      state = DeliveryMenuSyncSuccess(result['message'] as String? ?? 'Sync queued successfully');
     } catch (e) {
       state = DeliveryMenuSyncError(e.toString());
     }

@@ -482,6 +482,17 @@
   "deliveryAttempt": "المحاولة",
   "deliveryRequestPayload": "بيانات الطلب",
   "deliveryResponsePayload": "بيانات الاستجابة",
+  "deliveryThrottleLimit": "حد التقييد",
+  "deliveryThrottleLimitDesc": "الحد الأقصى للطلبات كل 15 دقيقة (0 = غير محدود)",
+  "deliveryAutoAcceptTimeout": "مدة الرفض التلقائي",
+  "deliveryAutoAcceptTimeoutDesc": "الثواني قبل رفض الطلب غير المقبول تلقائيًا (60–1800)",
+  "deliverySeconds": "ثانية",
+  "deliveryWebhookUrl": "رابط Webhook",
+  "deliveryWebhookUrlDesc": "رابط استقبال الأحداث من منصة التوصيل (للقراءة فقط، انسخه وألصقه في إعدادات منصتك)",
+  "deliveryWebhookSecret": "كلمة سر Webhook",
+  "deliveryWebhookSecretHint": "اتركه فارغًا للاحتفاظ بالكلمة الحالية",
+  "deliveryKeepCurrentKey": "اتركه فارغًا للاحتفاظ بالمفتاح الحالي",
+  "deliveryBranchId": "معرّف الفرع في المنصة",
   "thawaniIntegration": "ربط ثواني",
   "thawaniOverview": "نظرة عامة",
   "thawaniSettings": "الإعدادات",
@@ -1046,7 +1057,57 @@
   "staffPrimary": "رئيسي",
   "staffNoAttendance": "لا توجد سجلات حضور",
   "staffNoActivity": "لا توجد سجلات نشاط",
-  "staffRolesPermissions": "الأدوار والصلاحيات",
+  "staffDocuments": "الوثائق",
+  "staffNoDocuments": "لا توجد وثائق مرفوعة",
+  "staffAddDocument": "إضافة وثيقة",
+  "staffDocumentType": "نوع الوثيقة",
+  "staffDocumentUrl": "رابط الملف",
+  "staffDocumentExpiry": "تاريخ الانتهاء",
+  "staffDocumentNationalId": "الهوية الوطنية",
+  "staffDocumentContract": "عقد العمل",
+  "staffDocumentCertificate": "شهادة",
+  "staffDocumentVisa": "تأشيرة",
+  "staffDocumentOther": "أخرى",
+  "staffDocumentExpired": "منتهي الصلاحية",
+  "staffDocumentExpiringSoon": "ينتهي قريباً",
+  "staffDocumentDaysLeft": "{days} يوم متبقي",
+  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "staffDeleteDocumentConfirm": "حذف هذه الوثيقة؟",
+  "staffTrainingSessions": "التدريب",
+  "staffNoTrainingSessions": "لا توجد جلسات تدريب",
+  "staffStartTraining": "بدء التدريب",
+  "staffEndTraining": "إنهاء الجلسة",
+  "staffDeleteTraining": "حذف الجلسة",
+  "staffTrainingActive": "نشطة",
+  "staffTrainingCompleted": "مكتملة",
+  "staffTrainingDuration": "{minutes} دقيقة",
+  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "staffTrainingTransactions": "{count} معاملة",
+  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "staffTrainingNotes": "ملاحظات التدريب (اختياري)",
+  "staffTrainingEndNotes": "ملاحظات الإنهاء (اختياري)",
+  "staffTrainingTransactionsCount": "المعاملات المتدربة",
+  "staffRoleAuditLog": "سجل تدقيق الأدوار",
+  "staffRoleAuditNoLogs": "لا توجد إدخالات في سجل التدقيق",
+  "staffRoleAuditAction": "الإجراء",
+  "staffRoleAuditActionCreated": "تم إنشاء الدور",
+  "staffRoleAuditActionUpdated": "تم تحديث الدور",
+  "staffRoleAuditActionPermissionGranted": "تم منح الصلاحية",
+  "staffRoleAuditActionPermissionRevoked": "تم سحب الصلاحية",
+  "staffRoleAuditPerformedBy": "بواسطة",
+  "staffCommissionConfig": "إعداد العمولة",
+  "staffEditCommission": "تعديل العمولة",
+  "staffCommissionType": "نوع العمولة",
+  "staffCommissionPercentage": "النسبة المئوية",
+  "staffCommissionFlat": "نسبة ثابتة",
+  "staffCommissionPerItem": "لكل عنصر",
+  "staffCommissionTiered": "متدرجة",
+  "staffCommissionTiers": "الطبقات",
+  "staffAddTier": "إضافة طبقة",
+  "staffTierMin": "الحد الأدنى للمبلغ",
+  "staffTierMax": "الحد الأقصى للمبلغ",
+  "staffTierRate": "النسبة (%)",
+  "staffCommissionSaveSuccess": "تم حفظ إعداد العمولة",
   "staffNewRole": "دور جديد",
   "staffCreateRole": "إنشاء دور",
   "staffRoleDetails": "تفاصيل الدور",
@@ -2895,6 +2956,15 @@
   "sidebarCustomerReports": "تقارير العملاء",
   "sidebarPromotions": "العروض",
   "sidebarThawaniIntegration": "ربط ثواني",
+  "sidebarGroupThawani": "سوق ثواني",
+  "sidebarThawaniDashboard": "لوحة التحكم",
+  "sidebarThawaniSync": "إعدادات المزامنة",
+  "sidebarThawaniCategories": "تعيين الفئات",
+  "sidebarThawaniProductMappings": "تعيين المنتجات",
+  "sidebarThawaniOrders": "قائمة الطلبات",
+  "sidebarThawaniOnlineMenu": "القائمة الإلكترونية",
+  "sidebarThawaniSettlements": "التسويات",
+  "sidebarThawaniSyncLogs": "سجلات المزامنة",
   "sidebarDelivery": "التوصيل",
   "sidebarZatca": "زاتكا",
   "sidebarHardware": "الأجهزة",
@@ -6278,6 +6348,81 @@
       }
     }
   },
+  "thawaniOrdersQueue": "قائمة الطلبات",
+  "thawaniAcceptOrder": "قبول الطلب",
+  "thawaniRejectOrder": "رفض الطلب",
+  "thawaniRejectReason": "سبب الرفض",
+  "thawaniUpdateStatus": "تحديث الحالة",
+  "thawaniNewOrder": "طلب جديد",
+  "thawaniOrderAccepted": "مقبول",
+  "thawaniOrderPreparing": "قيد التحضير",
+  "thawaniOrderReady": "جاهز",
+  "thawaniOrderDispatched": "تم الإرسال",
+  "thawaniOrderCompleted": "مكتمل",
+  "thawaniOrderRejected": "مرفوض",
+  "thawaniOrderCancelled": "ملغي",
+  "thawaniDeliveryType": "توصيل",
+  "thawaniPickupType": "استلام",
+  "thawaniMenuManagement": "القائمة الإلكترونية",
+  "thawaniPublishProduct": "نشر",
+  "thawaniUnpublishProduct": "إلغاء النشر",
+  "thawaniOnlinePrice": "السعر الإلكتروني",
+  "thawaniBulkPublish": "نشر الكل",
+  "thawaniBulkUnpublish": "إلغاء نشر الكل",
+  "thawaniPublished": "منشور",
+  "thawaniUnpublished": "غير منشور",
+  "thawaniSettlementsTitle": "التسويات",
+  "thawaniGrossAmount": "المبلغ الإجمالي",
+  "thawaniCommissionAmount": "العمولة",
+  "thawaniNetAmount": "الصافي",
+  "thawaniReconcile": "مطابقة",
+  "thawaniReconciled": "تمت المطابقة",
+  "thawaniUnreconciled": "لم تتم المطابقة",
+  "thawaniStoreOpen": "المتجر مفتوح",
+  "thawaniStoreClosed": "المتجر مغلق",
+  "thawaniCloseStore": "إغلاق المتجر",
+  "thawaniOpenStore": "فتح المتجر",
+  "thawaniClosedReason": "سبب الإغلاق",
+  "thawaniInventorySync": "مزامنة المخزون",
+  "thawaniOrderAlert": "طلب جديد وصل!",
+  "thawaniOrderItems": "عناصر الطلب",
+  "thawaniDeliveryFee": "رسوم التوصيل",
+  "thawaniOrderNotes": "ملاحظات الطلب",
+  "thawaniCustomerName": "العميل",
+  "thawaniCustomerPhone": "الهاتف",
+  "thawaniDeliveryAddress": "عنوان التوصيل",
+  "thawaniViewAllOrders": "عرض جميع الطلبات",
+  "thawaniStoreAvailability": "توفر المتجر",
+  "thawaniOrderTotal": "إجمالي الطلب",
+  "thawaniOrderNumber": "طلب #",
+  "thawaniFilterAll": "الكل",
+  "thawaniFilterNew": "جديد",
+  "thawaniFilterActive": "نشط",
+  "thawaniNoOrders": "لا توجد طلبات",
+  "thawaniNoOrdersDesc": "ستظهر طلبات ثواني هنا",
+  "thawaniNoProducts": "لا توجد منتجات",
+  "thawaniNoProductsDesc": "ستظهر المنتجات هنا بعد المزامنة",
+  "thawaniNoSettlements": "لا توجد تسويات",
+  "thawaniNoSettlementsDesc": "ستظهر تقارير التسويات هنا",
+  "thawaniOrdersManage": "إدارة الطلبات",
+  "thawaniMenuManage": "إدارة القائمة",
+  "thawaniSettlementsManage": "عرض التسويات",
+  "thawaniAcceptSuccess": "تم قبول الطلب",
+  "thawaniRejectSuccess": "تم رفض الطلب",
+  "thawaniStatusUpdated": "تم تحديث الحالة",
+  "thawaniRejectReasonHint": "أدخل سبب الرفض",
+  "thawaniDisplayOrder": "ترتيب العرض",
+  "thawaniLastSynced": "آخر مزامنة",
+  "thawaniSyncStatus": "حالة المزامنة",
+  "thawaniReconcileConfirm": "تحديد كمطابق؟",
+  "thawaniOrderCount": "{count} طلبات",
+  "@thawaniOrderCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "genericProcessing": "قيد المعالجة",
   "genericEntityType": "نوع الكيان",
   "genericPaginationInfo": "صفحة {current} من {total} ({count} إجمالاً)",
@@ -6742,6 +6887,30 @@
   "@subAddOnRemoveFailed": {
     "placeholders": {
       "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivatedSuccess": "تم تفعيل {name}",
+  "@subAddOnActivatedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivateFailed": "فشل تفعيل الإضافة: {error}",
+  "@subAddOnActivateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnFreeConfirmMessage": "هل تريد تفعيل {name} مجاناً؟",
+  "@subAddOnFreeConfirmMessage": {
+    "placeholders": {
+      "name": {
         "type": "String"
       }
     }
@@ -7451,5 +7620,45 @@
   },
   "syncLogs": "سجلات المزامنة",
   "syncLogHistory": "سجل تاريخ المزامنة",
-  "viewAllLogs": "عرض كل السجلات"
+  "viewAllLogs": "عرض كل السجلات",
+
+  "validityPeriod": "الصلاحية",
+  "usage": "الاستخدام",
+  "noExpiry": "بدون انتهاء",
+  "guest": "زائر",
+
+  "dailyUsageLast30Days": "الاستخدام اليومي (آخر 30 يوماً)",
+  "noUsageData": "لا توجد بيانات استخدام بعد",
+  "usageHistory": "سجل الاستخدام",
+  "noUsageHistory": "لا يوجد سجل استخدام بعد",
+  "loadMore": "تحميل المزيد",
+  "couponUses": "استخدامات الكوبون",
+  "autoUses": "الاستخدامات التلقائية",
+  "usageLimitProgress": "حد الاستخدام",
+  "notApplicable": "غير متاح",
+
+  "orderId": "الطلب",
+  "customer": "العميل",
+  "date": "التاريخ",
+
+  "copyCode": "نسخ الرمز",
+  "codeCopied": "تم نسخ الرمز إلى الحافظة",
+  "used": "مستخدم",
+  "promoNoFoundSubtitle": "أنشئ عرضك الترويجي الأول لزيادة المبيعات",
+  "promoCouponsEmptySubtitle": "أنشئ رموز الكوبون لهذا العرض الترويجي",
+
+  "showingOf": "{count} من {total}",
+  "@showingOf": {
+    "placeholders": {
+      "count": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "pageOf": "صفحة {page} من {total}",
+  "@pageOf": {
+    "placeholders": {
+      "page": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  }
 }

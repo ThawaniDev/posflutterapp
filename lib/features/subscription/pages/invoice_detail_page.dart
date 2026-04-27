@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
@@ -298,7 +299,12 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
     try {
       final pdfUrl = await ref.read(invoiceDetailProvider(widget.invoiceId).notifier).getInvoicePdfUrl();
       if (pdfUrl != null && mounted) {
-        showPosSuccessSnackbar(context, 'PDF URL: $pdfUrl');
+        final uri = Uri.parse(pdfUrl);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else if (mounted) {
+          showPosErrorSnackbar(context, AppLocalizations.of(context)!.failedToDownloadPdf(pdfUrl));
+        }
       } else if (mounted) {
         showPosWarningSnackbar(context, AppLocalizations.of(context)!.pdfNotAvailable);
       }

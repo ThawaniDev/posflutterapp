@@ -12,6 +12,66 @@ class DashboardApiService {
   DashboardApiService(this._dio);
   final Dio _dio;
 
+  // ─── Single aggregated endpoint ────────────────────────────
+
+  Future<Map<String, dynamic>> getDashboardSummary({int? days}) async {
+    final params = <String, dynamic>{};
+    if (days != null) params['days'] = days;
+    final response = await _dio.get(ApiEndpoints.ownerDashboardSummary, queryParameters: params);
+    final raw = response.data['data'] as Map<String, dynamic>;
+
+    // Reuse the same flattening helpers so the rest of the app is unchanged
+    final statsRaw = raw['stats'] as Map<String, dynamic>;
+    final stats = {
+      'today_sales': _extractValue(statsRaw['today_sales']),
+      'sales_trend': _extractChange(statsRaw['today_sales']),
+      'today_transactions': _extractValue(statsRaw['transactions']),
+      'transactions_trend': _extractChange(statsRaw['transactions']),
+      'avg_basket': _extractValue(statsRaw['avg_basket']),
+      'basket_trend': _extractChange(statsRaw['avg_basket']),
+      'net_profit': _extractValue(statsRaw['net_profit']),
+      'profit_trend': _extractChange(statsRaw['net_profit']),
+      'unique_customers': statsRaw['unique_customers'] ?? 0,
+      'total_refunds': statsRaw['total_refunds'] ?? 0,
+    };
+
+    final finRaw = raw['financial_summary'] as Map<String, dynamic>;
+    final revenue = finRaw['revenue'] as Map<String, dynamic>? ?? {};
+    final payments = finRaw['payments'] as List? ?? [];
+    final paymentMethods = <String, dynamic>{};
+    for (final p in payments) {
+      if (p is Map<String, dynamic>) {
+        paymentMethods[p['method']?.toString() ?? 'other'] = p['total'] ?? 0;
+      }
+    }
+    final financialSummary = {
+      'total_revenue': revenue['total'] ?? 0,
+      'total_cost': revenue['cost'] ?? 0,
+      'net_profit': revenue['net'] ?? 0,
+      'total_tax': revenue['tax'] ?? 0,
+      'total_discount': revenue['discounts'] ?? 0,
+      'total_refunds': revenue['refunds'] ?? 0,
+      'payment_methods': paymentMethods,
+      'period': finRaw['period'],
+      'daily': finRaw['daily'],
+    };
+
+    return {
+      'stats': stats,
+      'sales_trend': raw['sales_trend'] as Map<String, dynamic>,
+      'top_products': (raw['top_products'] as List).cast<Map<String, dynamic>>(),
+      'low_stock': (raw['low_stock'] as List).cast<Map<String, dynamic>>(),
+      'active_cashiers': (raw['active_cashiers'] as List).cast<Map<String, dynamic>>(),
+      'recent_orders': (raw['recent_orders'] as List).cast<Map<String, dynamic>>(),
+      'financial_summary': financialSummary,
+      'hourly_sales': (raw['hourly_sales'] as List).cast<Map<String, dynamic>>(),
+      'branches': (raw['branches'] as List).cast<Map<String, dynamic>>(),
+      'staff_performance': (raw['staff_performance'] as List).cast<Map<String, dynamic>>(),
+    };
+  }
+
+  // ─── Individual endpoints (kept for targeted refreshes) ────
+
   Future<Map<String, dynamic>> getStats({int? days}) async {
     final params = <String, dynamic>{};
     if (days != null) params['days'] = days;

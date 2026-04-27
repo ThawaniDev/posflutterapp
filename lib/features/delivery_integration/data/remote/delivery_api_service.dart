@@ -103,9 +103,12 @@ class DeliveryApiService {
   }
 
   /// POST /delivery/menu-sync
-  Future<Map<String, dynamic>> triggerMenuSync({String? platform, required List<Map<String, dynamic>> products}) async {
-    final data = <String, dynamic>{'products': products};
+  Future<Map<String, dynamic>> triggerMenuSync({String? platform, List<Map<String, dynamic>>? products}) async {
+    final data = <String, dynamic>{};
     if (platform != null) data['platform'] = platform;
+    // Only include products if explicitly provided; omitting it lets the backend
+    // load the full store catalog from the product catalog at job dispatch time.
+    if (products != null && products.isNotEmpty) data['products'] = products;
     final response = await _dio.post(ApiEndpoints.deliveryMenuSync, data: data);
     return response.data as Map<String, dynamic>;
   }

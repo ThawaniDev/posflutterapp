@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 class CommissionSummaryPage extends ConsumerStatefulWidget {
 
@@ -47,6 +48,12 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
       title: l10n.staffCommissionTitle(widget.staffName, l10n.staffCommissions),
       showSearch: false,
       actions: [
+        PosButton.icon(
+          icon: Icons.settings_outlined,
+          tooltip: l10n.staffCommissionConfig,
+          onPressed: () => _showConfigDialog(context, l10n),
+          variant: PosButtonVariant.ghost,
+        ),
         PosButton.icon(
           icon: Icons.date_range,
           tooltip: l10n.staffFilterByDate,
@@ -186,6 +193,149 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
       setState(() => _dateRange = range);
       _load();
     }
+  }
+
+  void _showConfigDialog(BuildContext context, AppLocalizations l10n) {
+    String selectedType = 'flat_percentage';
+    final percentageController = TextEditingController();
+    final tiers = <Map<String, TextEditingController>>[];
+    final formKey = GlobalKey<FormState>();
+
+    void addTier() {
+      tiers.add({'min': TextEditingController(), 'max': TextEditingController(), 'rate': TextEditingController()});
+    }
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setStateDialog) => AlertDialog(
+          title: Text(l10n.staffCommissionConfig),
+          content: SizedBox(
+            width: 380,
+            child: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DropdownButtonFormField<String>(
+                      value: selectedType,
+                      decoration: InputDecoration(labelText: l10n.staffCommissionType),
+                      items: [
+                        DropdownMenuItem(value: 'flat_percentage', child: Text(l10n.staffCommissionFlat)),
+                        DropdownMenuItem(value: 'per_item', child: Text(l10n.staffCommissionPerItem)),
+                        DropdownMenuItem(value: 'tiered', child: Text(l10n.staffCommissionTiered)),
+                      ],
+                      onChanged: (v) => setStateDialog(() {
+                        selectedType = v ?? selectedType;
+                        if (selectedType == 'tiered' && tiers.isEmpty) addTier();
+                      }),
+                    ),
+                    if (selectedType != 'tiered') ...[
+                      AppSpacing.gapH16,
+                      TextFormField(
+                        controller: percentageController,
+                        decoration: InputDecoration(labelText: l10n.staffCommissionPercentage, suffixText: '%'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return l10n.required;
+                          if (double.tryParse(v) == null) return 'Invalid number';
+                          return null;
+                        },
+                      ),
+                    ] else ...[
+                      AppSpacing.gapH16,
+                      Text(l10n.staffCommissionTiers, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      AppSpacing.gapH8,
+                      ...tiers.asMap().entries.map((entry) {
+                        final i = entry.key;
+                        final t = entry.value;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: t['min'],
+                                  decoration: InputDecoration(labelText: l10n.staffTierMin),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              AppSpacing.gapW8,
+                              Expanded(
+                                child: TextFormField(
+                                  controller: t['max'],
+                                  decoration: InputDecoration(labelText: l10n.staffTierMax),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              AppSpacing.gapW8,
+                              Expanded(
+                                child: TextFormField(
+                                  controller: t['rate'],
+                                  decoration: InputDecoration(labelText: l10n.staffTierRate, suffixText: '%'),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.remove_circle_outline, color: AppColors.error),
+                                onPressed: () => setStateDialog(() => tiers.removeAt(i)),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      TextButton.icon(
+                        onPressed: () => setStateDialog(addTier),
+                        icon: const Icon(Icons.add),
+                        label: Text(l10n.staffAddTier),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+            PosButton(
+              label: l10n.save,
+              onPressed: () async {
+                if (!formKey.currentState!.validate()) return;
+                Navigator.pop(ctx);
+                final data = <String, dynamic>{'commission_type': selectedType};
+                if (selectedType != 'tiered') {
+                  data['percentage'] = double.parse(percentageController.text);
+                } else {
+                  data['tiers'] = tiers
+                      .map((t) => {
+                            'min_amount': double.tryParse(t['min']!.text) ?? 0,
+                            'max_amount': double.tryParse(t['max']!.text),
+                            'rate': double.tryParse(t['rate']!.text) ?? 0,
+                          })
+                      .toList();
+                }
+                try {
+                  await ref.read(staffRepositoryProvider).setCommissionConfig(widget.staffId, data);
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l10n.staffCommissionSaveSuccess), backgroundColor: AppColors.success),
+                    );
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

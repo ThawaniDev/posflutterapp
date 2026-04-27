@@ -28,7 +28,7 @@ class DeliveryRepository {
       _apiService.updateOrderStatus(id, status: status, rejectionReason: rejectionReason);
   Future<Map<String, dynamic>> getSyncLogs({String? platform, int? perPage, int? page}) =>
       _apiService.getSyncLogs(platform: platform, perPage: perPage, page: page);
-  Future<Map<String, dynamic>> triggerMenuSync({String? platform, required List<Map<String, dynamic>> products}) =>
+  Future<Map<String, dynamic>> triggerMenuSync({String? platform, List<Map<String, dynamic>>? products}) =>
       _apiService.triggerMenuSync(platform: platform, products: products);
   Future<Map<String, dynamic>> getPlatforms() => _apiService.getPlatforms();
   Future<Map<String, dynamic>> getWebhookLogs({String? platform, int? perPage, int? page}) =>

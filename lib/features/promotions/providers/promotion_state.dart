@@ -1,4 +1,5 @@
 import 'package:wameedpos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/models/promotion_usage_log.dart';
 
 // ─── Promotions List State ──────────────────────────────────────
 
@@ -153,5 +154,63 @@ class PromotionAnalyticsLoaded extends PromotionAnalyticsState {
 
 class PromotionAnalyticsError extends PromotionAnalyticsState {
   const PromotionAnalyticsError({required this.message});
+  final String message;
+}
+
+// ─── Promotion Usage Log State ──────────────────────────────────
+
+sealed class PromotionUsageLogState {
+  const PromotionUsageLogState();
+}
+
+class PromotionUsageLogInitial extends PromotionUsageLogState {
+  const PromotionUsageLogInitial();
+}
+
+class PromotionUsageLogLoading extends PromotionUsageLogState {
+  const PromotionUsageLogLoading();
+}
+
+class PromotionUsageLogLoaded extends PromotionUsageLogState {
+  const PromotionUsageLogLoaded({
+    required this.items,
+    required this.total,
+    required this.currentPage,
+    required this.lastPage,
+    required this.perPage,
+    this.dateFrom,
+    this.dateTo,
+  });
+  final List<PromotionUsageLog> items;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? dateFrom;
+  final String? dateTo;
+
+  bool get hasMore => currentPage < lastPage;
+
+  PromotionUsageLogLoaded copyWith({
+    List<PromotionUsageLog>? items,
+    int? total,
+    int? currentPage,
+    int? lastPage,
+    int? perPage,
+    String? dateFrom,
+    String? dateTo,
+  }) => PromotionUsageLogLoaded(
+    items: items ?? this.items,
+    total: total ?? this.total,
+    currentPage: currentPage ?? this.currentPage,
+    lastPage: lastPage ?? this.lastPage,
+    perPage: perPage ?? this.perPage,
+    dateFrom: dateFrom ?? this.dateFrom,
+    dateTo: dateTo ?? this.dateTo,
+  );
+}
+
+class PromotionUsageLogError extends PromotionUsageLogState {
+  const PromotionUsageLogError({required this.message});
   final String message;
 }

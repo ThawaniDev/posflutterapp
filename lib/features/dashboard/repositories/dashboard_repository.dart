@@ -10,6 +10,8 @@ class DashboardRepository {
   DashboardRepository(this._api);
   final DashboardApiService _api;
 
+  Future<Map<String, dynamic>> getDashboardSummary({int? days}) => _api.getDashboardSummary(days: days);
+
   Future<Map<String, dynamic>> getStats({int? days}) => _api.getStats(days: days);
 
   Future<Map<String, dynamic>> getSalesTrend({String? dateFrom, String? dateTo, int? days}) =>

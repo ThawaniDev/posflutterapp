@@ -3,6 +3,7 @@ import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart'
 import 'package:wameedpos/features/promotions/data/remote/promotion_api_service.dart';
 import 'package:wameedpos/features/promotions/models/coupon_code.dart';
 import 'package:wameedpos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/models/promotion_usage_log.dart';
 
 final promotionRepositoryProvider = Provider<PromotionRepository>((ref) {
   return PromotionRepository(apiService: ref.watch(promotionApiServiceProvider));
@@ -72,6 +73,14 @@ class PromotionRepository {
   }) => _apiService.batchGenerateCoupons(promotionId: promotionId, count: count, maxUses: maxUses, prefix: prefix);
 
   Future<void> deleteCoupon(String couponId) => _apiService.deleteCoupon(couponId);
+
+  Future<PaginatedResult<PromotionUsageLog>> getPromotionUsageLog(
+    String promotionId, {
+    int page = 1,
+    int perPage = 20,
+    String? dateFrom,
+    String? dateTo,
+  }) => _apiService.getPromotionUsageLog(promotionId, page: page, perPage: perPage, dateFrom: dateFrom, dateTo: dateTo);
 
   Future<Map<String, dynamic>> evaluateCart({
     required List<Map<String, dynamic>> items,

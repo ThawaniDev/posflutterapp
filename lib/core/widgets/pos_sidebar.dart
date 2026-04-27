@@ -363,18 +363,75 @@ class PosSidebar extends StatefulWidget {
       ],
     ),
 
+    // Thawani Marketplace
+    PosSidebarGroup(
+      label: l10n.sidebarGroupThawani,
+      icon: Icons.storefront_rounded,
+      items: [
+        PosSidebarItem(
+          label: l10n.sidebarThawaniDashboard,
+          icon: Icons.dashboard_rounded,
+          route: Routes.thawaniIntegration,
+          permission: Permissions.thawaniViewDashboard,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniOrders,
+          icon: Icons.receipt_long_rounded,
+          route: Routes.thawaniOrders,
+          permission: Permissions.thawaniManageOrders,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniOnlineMenu,
+          icon: Icons.menu_book_rounded,
+          route: Routes.thawaniMenu,
+          permission: Permissions.thawaniMenu,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniSettlements,
+          icon: Icons.account_balance_wallet_rounded,
+          route: Routes.thawaniSettlements,
+          permission: Permissions.thawaniManageOrders,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniCategories,
+          icon: Icons.category_rounded,
+          route: Routes.thawaniCategoryMappings,
+          permission: Permissions.thawaniMenu,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniProductMappings,
+          icon: Icons.inventory_2_rounded,
+          route: Routes.thawaniProductMappings,
+          permission: Permissions.thawaniMenu,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniSync,
+          icon: Icons.sync_rounded,
+          route: Routes.thawaniSync,
+          permission: Permissions.thawaniManageSync,
+          featureKey: 'custom_integrations',
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniSyncLogs,
+          icon: Icons.description_rounded,
+          route: Routes.thawaniSyncLogs,
+          permission: Permissions.thawaniViewSyncLogs,
+          featureKey: 'custom_integrations',
+        ),
+      ],
+    ),
+
     // Integrations
     PosSidebarGroup(
       label: l10n.sidebarGroupIntegrations,
       icon: Icons.extension_rounded,
       items: [
-        PosSidebarItem(
-          label: l10n.sidebarThawaniIntegration,
-          icon: Icons.delivery_dining_sharp,
-          route: '/thawani-integration',
-          permission: Permissions.thawaniViewDashboard,
-          featureKey: 'custom_integrations',
-        ),
         PosSidebarItem(
           label: l10n.sidebarDelivery,
           icon: Icons.local_shipping_rounded,

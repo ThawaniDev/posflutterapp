@@ -40,15 +40,9 @@ class MenuSyncPage extends ConsumerWidget {
             syncState: syncState,
             configsState: configsState,
             onSync: (platform) {
-              // trigger sync with dummy products payload — the API expects product list
-              ref
-                  .read(deliveryMenuSyncProvider.notifier)
-                  .sync(
-                    platform: platform,
-                    products: [
-                      {'name': 'Full menu sync', 'price': 0, 'is_available': true},
-                    ],
-                  );
+              // Pass no explicit products — the backend MenuSyncJob will load the
+              // full store catalog automatically when the products array is omitted.
+              ref.read(deliveryMenuSyncProvider.notifier).sync(platform: platform);
             },
           ),
           AppSpacing.gapH24,

@@ -186,3 +186,150 @@ class ThawaniQueueStatsError extends ThawaniQueueStatsState {
   const ThawaniQueueStatsError(this.message);
   final String message;
 }
+
+// ─── Thawani Orders List State ──────────────────────────
+sealed class ThawaniOrdersState {
+  const ThawaniOrdersState();
+}
+
+class ThawaniOrdersInitial extends ThawaniOrdersState {
+  const ThawaniOrdersInitial();
+}
+
+class ThawaniOrdersLoading extends ThawaniOrdersState {
+  const ThawaniOrdersLoading();
+}
+
+class ThawaniOrdersLoaded extends ThawaniOrdersState {
+  const ThawaniOrdersLoaded(this.orders, {this.pagination, this.statusFilter});
+  final List<dynamic> orders;
+  final Map<String, dynamic>? pagination;
+  final String? statusFilter;
+}
+
+class ThawaniOrdersError extends ThawaniOrdersState {
+  const ThawaniOrdersError(this.message);
+  final String message;
+}
+
+// ─── Thawani Order Action State ─────────────────────────
+sealed class ThawaniOrderActionState {
+  const ThawaniOrderActionState();
+}
+
+class ThawaniOrderActionInitial extends ThawaniOrderActionState {
+  const ThawaniOrderActionInitial();
+}
+
+class ThawaniOrderActionLoading extends ThawaniOrderActionState {
+  const ThawaniOrderActionLoading({required this.operation, this.orderId});
+  final String operation;
+  final String? orderId;
+}
+
+class ThawaniOrderActionSuccess extends ThawaniOrderActionState {
+  const ThawaniOrderActionSuccess(this.message, {this.updatedOrder});
+  final String message;
+  final Map<String, dynamic>? updatedOrder;
+}
+
+class ThawaniOrderActionError extends ThawaniOrderActionState {
+  const ThawaniOrderActionError(this.message);
+  final String message;
+}
+
+// ─── Thawani Settlements State ──────────────────────────
+sealed class ThawaniSettlementsState {
+  const ThawaniSettlementsState();
+}
+
+class ThawaniSettlementsInitial extends ThawaniSettlementsState {
+  const ThawaniSettlementsInitial();
+}
+
+class ThawaniSettlementsLoading extends ThawaniSettlementsState {
+  const ThawaniSettlementsLoading();
+}
+
+class ThawaniSettlementsLoaded extends ThawaniSettlementsState {
+  const ThawaniSettlementsLoaded(this.settlements, {this.pagination});
+  final List<dynamic> settlements;
+  final Map<String, dynamic>? pagination;
+}
+
+class ThawaniSettlementsError extends ThawaniSettlementsState {
+  const ThawaniSettlementsError(this.message);
+  final String message;
+}
+
+// ─── Thawani Menu (Products) State ──────────────────────
+sealed class ThawaniMenuState {
+  const ThawaniMenuState();
+}
+
+class ThawaniMenuInitial extends ThawaniMenuState {
+  const ThawaniMenuInitial();
+}
+
+class ThawaniMenuLoading extends ThawaniMenuState {
+  const ThawaniMenuLoading();
+}
+
+class ThawaniMenuLoaded extends ThawaniMenuState {
+  const ThawaniMenuLoaded(this.products, {this.pagination, this.filter});
+  final List<dynamic> products;
+  final Map<String, dynamic>? pagination;
+  final String? filter;
+}
+
+class ThawaniMenuError extends ThawaniMenuState {
+  const ThawaniMenuError(this.message);
+  final String message;
+}
+
+// ─── Thawani Menu Action State ───────────────────────────
+sealed class ThawaniMenuActionState {
+  const ThawaniMenuActionState();
+}
+
+class ThawaniMenuActionInitial extends ThawaniMenuActionState {
+  const ThawaniMenuActionInitial();
+}
+
+class ThawaniMenuActionLoading extends ThawaniMenuActionState {
+  const ThawaniMenuActionLoading();
+}
+
+class ThawaniMenuActionSuccess extends ThawaniMenuActionState {
+  const ThawaniMenuActionSuccess(this.message);
+  final String message;
+}
+
+class ThawaniMenuActionError extends ThawaniMenuActionState {
+  const ThawaniMenuActionError(this.message);
+  final String message;
+}
+
+// ─── Thawani Store Availability State ───────────────────
+sealed class ThawaniStoreAvailabilityState {
+  const ThawaniStoreAvailabilityState();
+}
+
+class ThawaniStoreAvailabilityInitial extends ThawaniStoreAvailabilityState {
+  const ThawaniStoreAvailabilityInitial();
+}
+
+class ThawaniStoreAvailabilityLoading extends ThawaniStoreAvailabilityState {
+  const ThawaniStoreAvailabilityLoading();
+}
+
+class ThawaniStoreAvailabilityLoaded extends ThawaniStoreAvailabilityState {
+  const ThawaniStoreAvailabilityLoaded({required this.isOpen, this.closedReason});
+  final bool isOpen;
+  final String? closedReason;
+}
+
+class ThawaniStoreAvailabilityError extends ThawaniStoreAvailabilityState {
+  const ThawaniStoreAvailabilityError(this.message);
+  final String message;
+}

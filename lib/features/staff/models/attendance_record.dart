@@ -31,6 +31,7 @@ class AttendanceRecord {
     required this.clockInAt,
     this.clockOutAt,
     this.breakMinutes,
+    this.workMinutes,
     this.scheduledShiftId,
     this.overtimeMinutes,
     this.notes,
@@ -49,6 +50,7 @@ class AttendanceRecord {
       clockInAt: DateTime.parse(json['clock_in_at'] as String),
       clockOutAt: json['clock_out_at'] != null ? DateTime.parse(json['clock_out_at'] as String) : null,
       breakMinutes: (json['break_minutes'] as num?)?.toInt(),
+      workMinutes: (json['work_minutes'] as num?)?.toInt(),
       scheduledShiftId: json['scheduled_shift_id'] as String?,
       overtimeMinutes: (json['overtime_minutes'] as num?)?.toInt(),
       notes: json['notes'] as String?,
@@ -69,6 +71,8 @@ class AttendanceRecord {
   final DateTime clockInAt;
   final DateTime? clockOutAt;
   final int? breakMinutes;
+  /// Net work minutes from API (total time minus breaks), pre-calculated by backend.
+  final int? workMinutes;
   final String? scheduledShiftId;
   final int? overtimeMinutes;
   final String? notes;
@@ -100,6 +104,7 @@ class AttendanceRecord {
       'clock_in_at': clockInAt.toIso8601String(),
       'clock_out_at': clockOutAt?.toIso8601String(),
       'break_minutes': breakMinutes,
+      'work_minutes': workMinutes,
       'scheduled_shift_id': scheduledShiftId,
       'overtime_minutes': overtimeMinutes,
       'notes': notes,
@@ -116,6 +121,7 @@ class AttendanceRecord {
     DateTime? clockInAt,
     DateTime? clockOutAt,
     int? breakMinutes,
+    int? workMinutes,
     String? scheduledShiftId,
     int? overtimeMinutes,
     String? notes,
@@ -132,6 +138,7 @@ class AttendanceRecord {
       clockInAt: clockInAt ?? this.clockInAt,
       clockOutAt: clockOutAt ?? this.clockOutAt,
       breakMinutes: breakMinutes ?? this.breakMinutes,
+      workMinutes: workMinutes ?? this.workMinutes,
       scheduledShiftId: scheduledShiftId ?? this.scheduledShiftId,
       overtimeMinutes: overtimeMinutes ?? this.overtimeMinutes,
       notes: notes ?? this.notes,

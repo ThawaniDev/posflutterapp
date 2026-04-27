@@ -113,6 +113,10 @@ class Routes {
   static const String thawaniSync = '/thawani-integration/sync';
   static const String thawaniCategoryMappings = '/thawani-integration/category-mappings';
   static const String thawaniSyncLogs = '/thawani-integration/sync-logs';
+  static const String thawaniOrders = '/thawani-integration/orders';
+  static const String thawaniSettlements = '/thawani-integration/settlements';
+  static const String thawaniMenu = '/thawani-integration/menu';
+  static const String thawaniProductMappings = '/thawani-integration/product-mappings';
 
   // Delivery
   static const String delivery = '/delivery';
@@ -144,6 +148,8 @@ class Routes {
   static const String staffAttendance = '/staff/attendance';
   static const String staffShifts = '/staff/shifts';
   static const String staffCommission = '/staff/commission'; // + /:id
+  static const String staffTraining = '/staff/training'; // + /:staffId
+  static const String staffRoleAudit = '/staff/roles/audit';
 
   // Onboarding & Store Setup
   static const String onboarding = '/onboarding';

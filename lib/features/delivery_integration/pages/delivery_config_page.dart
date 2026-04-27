@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -22,15 +23,23 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   String? _selectedPlatformSlug;
   bool _isEnabled = true;
   bool _autoAccept = false;
+  int _autoAcceptTimeoutSeconds = 300;
   bool _syncMenuOnProductChange = true;
   int _menuSyncIntervalHours = 24;
   int _maxDailyOrders = 0;
+  int _throttleLimit = 0;
+  String? _webhookUrl;
+
   final _apiKeyController = TextEditingController();
-  final _apiSecretController = TextEditingController();
+  final _webhookSecretController = TextEditingController();
   final _merchantIdController = TextEditingController();
+  final _branchIdController = TextEditingController();
   late final TextEditingController _menuIntervalController;
   late final TextEditingController _maxOrdersController;
+  late final TextEditingController _throttleLimitController;
+  late final TextEditingController _autoAcceptTimeoutController;
   bool _isSaving = false;
+  bool _configLoaded = false;
 
   bool get _isEditing => widget.configId != null;
 
@@ -39,48 +48,77 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     super.initState();
     _menuIntervalController = TextEditingController(text: '$_menuSyncIntervalHours');
     _maxOrdersController = TextEditingController(text: '$_maxDailyOrders');
+    _throttleLimitController = TextEditingController(text: '0');
+    _autoAcceptTimeoutController = TextEditingController(text: '$_autoAcceptTimeoutSeconds');
     Future.microtask(() {
       ref.read(deliveryPlatformsProvider.notifier).load();
-      if (_isEditing) _loadExistingConfig();
+      if (_isEditing) {
+        // Ensure configs are loaded so we can find the one to edit
+        ref.read(deliveryConfigsProvider.notifier).load();
+      }
     });
   }
 
-  void _loadExistingConfig() {
+  void _tryLoadConfigFromState() {
+    if (_configLoaded || !_isEditing) return;
     final configsState = ref.read(deliveryConfigsProvider);
     if (configsState is DeliveryConfigsLoaded) {
-      final config = configsState.configs.firstWhere((c) => '${c['id']}' == widget.configId, orElse: () => <String, dynamic>{});
-      if (config.isNotEmpty) {
-        setState(() {
-          _selectedPlatformSlug = config['platform'] as String?;
-          _isEnabled = config['is_enabled'] == true;
-          _autoAccept = config['auto_accept'] == true;
-          _syncMenuOnProductChange = config['sync_menu_on_product_change'] == true;
-          _menuSyncIntervalHours = config['menu_sync_interval_hours'] as int? ?? 24;
-          _maxDailyOrders = config['max_daily_orders'] as int? ?? 0;
-          _menuIntervalController.text = '$_menuSyncIntervalHours';
-          _maxOrdersController.text = '$_maxDailyOrders';
-          final credentials = config['credentials'] as Map<String, dynamic>? ?? {};
-          _apiKeyController.text = credentials['api_key'] as String? ?? '';
-          _apiSecretController.text = credentials['api_secret'] as String? ?? '';
-          _merchantIdController.text = credentials['merchant_id'] as String? ?? '';
-        });
+      final configs = configsState.configs;
+      final config = configs.where((c) => '${c['id']}' == widget.configId).firstOrNull;
+      if (config != null && config.isNotEmpty) {
+        _applyConfigMap(config);
       }
     }
+  }
+
+  void _applyConfigMap(Map<String, dynamic> config) {
+    if (_configLoaded) return;
+    setState(() {
+      _configLoaded = true;
+      _selectedPlatformSlug = config['platform'] as String?;
+      _isEnabled = config['is_enabled'] == true;
+      _autoAccept = config['auto_accept'] == true;
+      _autoAcceptTimeoutSeconds = (config['auto_accept_timeout_seconds'] as num?)?.toInt() ?? 300;
+      _syncMenuOnProductChange = config['sync_menu_on_product_change'] == true;
+      _menuSyncIntervalHours = (config['menu_sync_interval_hours'] as num?)?.toInt() ?? 24;
+      _maxDailyOrders = (config['max_daily_orders'] as num?)?.toInt() ?? 0;
+      _throttleLimit = (config['throttle_limit'] as num?)?.toInt() ?? 0;
+      _webhookUrl = config['webhook_url'] as String?;
+      // api_key is hidden by the server for security — always start blank
+      _apiKeyController.text = '';
+      _merchantIdController.text = config['merchant_id'] as String? ?? '';
+      _branchIdController.text = config['branch_id_on_platform'] as String? ?? '';
+      _menuIntervalController.text = '$_menuSyncIntervalHours';
+      _maxOrdersController.text = '$_maxDailyOrders';
+      _throttleLimitController.text = '$_throttleLimit';
+      _autoAcceptTimeoutController.text = '$_autoAcceptTimeoutSeconds';
+    });
   }
 
   @override
   void dispose() {
     _apiKeyController.dispose();
-    _apiSecretController.dispose();
+    _webhookSecretController.dispose();
     _merchantIdController.dispose();
+    _branchIdController.dispose();
     _menuIntervalController.dispose();
     _maxOrdersController.dispose();
+    _throttleLimitController.dispose();
+    _autoAcceptTimeoutController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    // Watch config state and auto-populate when loaded
+    if (_isEditing && !_configLoaded) {
+      ref.listen<DeliveryConfigsState>(deliveryConfigsProvider, (_, next) {
+        if (next is DeliveryConfigsLoaded) _tryLoadConfigFromState();
+      });
+      _tryLoadConfigFromState();
+    }
 
     return PosFormPage(
       title: _isEditing ? l10n.deliveryEditPlatform : l10n.deliveryAddPlatform,
@@ -117,16 +155,32 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  PosTextField(controller: _apiKeyController, label: l10n.deliveryApiKey, prefixIcon: Icons.key),
-                  AppSpacing.gapH12,
                   PosTextField(
-                    controller: _apiSecretController,
-                    label: l10n.deliveryApiSecret,
-                    prefixIcon: Icons.lock_outline,
-                    obscureText: true,
+                    controller: _apiKeyController,
+                    label: l10n.deliveryApiKey,
+                    prefixIcon: Icons.key,
+                    helperText: _isEditing ? l10n.deliveryKeepCurrentKey : null,
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(controller: _merchantIdController, label: l10n.deliveryMerchantId, prefixIcon: Icons.store),
+                  PosTextField(
+                    controller: _webhookSecretController,
+                    label: l10n.deliveryWebhookSecret,
+                    prefixIcon: Icons.lock_outline,
+                    obscureText: true,
+                    helperText: _isEditing ? l10n.deliveryWebhookSecretHint : null,
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: _merchantIdController,
+                    label: l10n.deliveryMerchantId,
+                    prefixIcon: Icons.store,
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: _branchIdController,
+                    label: l10n.deliveryBranchId,
+                    prefixIcon: Icons.business,
+                  ),
                 ],
               ),
             ),
@@ -151,6 +205,21 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                     label: l10n.deliveryAutoAccept,
                     subtitle: l10n.deliveryAutoAcceptDesc,
                   ),
+                  if (_autoAccept) ...[
+                    AppSpacing.gapH12,
+                    PosTextField(
+                      controller: _autoAcceptTimeoutController,
+                      label: l10n.deliveryAutoAcceptTimeout,
+                      helperText: l10n.deliveryAutoAcceptTimeoutDesc,
+                      prefixIcon: Icons.timer_outlined,
+                      suffix: Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 12),
+                        child: Text(l10n.deliverySeconds),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (v) => _autoAcceptTimeoutSeconds = int.tryParse(v) ?? 300,
+                    ),
+                  ],
                   AppSpacing.gapH12,
                   PosToggle(
                     value: _syncMenuOnProductChange,
@@ -165,7 +234,10 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                         child: PosTextField(
                           controller: _menuIntervalController,
                           label: l10n.deliverySyncInterval,
-                          suffix: Padding(padding: const EdgeInsetsDirectional.only(end: 12), child: Text(l10n.deliveryHours)),
+                          suffix: Padding(
+                            padding: const EdgeInsetsDirectional.only(end: 12),
+                            child: Text(l10n.deliveryHours),
+                          ),
                           keyboardType: TextInputType.number,
                           onChanged: (v) => _menuSyncIntervalHours = int.tryParse(v) ?? 24,
                         ),
@@ -182,9 +254,62 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                       ),
                     ],
                   ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: _throttleLimitController,
+                    label: l10n.deliveryThrottleLimit,
+                    helperText: l10n.deliveryThrottleLimitDesc,
+                    prefixIcon: Icons.speed,
+                    keyboardType: TextInputType.number,
+                    onChanged: (v) => _throttleLimit = int.tryParse(v) ?? 0,
+                  ),
                 ],
               ),
             ),
+            AppSpacing.gapH16,
+
+            // Webhook URL (read-only, shown only when editing and webhook_url is set)
+            if (_isEditing && _webhookUrl != null && _webhookUrl!.isNotEmpty) ...[
+              PosFormCard(
+                title: l10n.deliveryWebhookUrl,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      l10n.deliveryWebhookUrlDesc,
+                      style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    ),
+                    AppSpacing.gapH8,
+                    Container(
+                      padding: AppSpacing.paddingAll12,
+                      decoration: BoxDecoration(
+                      color: AppColors.surfaceLight,
+                      borderRadius: AppRadius.borderMd,
+                      border: Border.all(color: AppColors.borderLight),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.link, size: 16, color: AppColors.textSecondary),
+                          AppSpacing.gapW8,
+                          Expanded(
+                            child: SelectableText(
+                              _webhookUrl!,
+                              style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.copy, size: 16),
+                            tooltip: 'Copy',
+                            onPressed: () => Clipboard.setData(ClipboardData(text: _webhookUrl!)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              AppSpacing.gapH16,
+            ],
           ],
         ),
       ),
@@ -281,30 +406,50 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context)!;
-    if (_apiKeyController.text.trim().isEmpty) {
-      showPosWarningSnackbar(context, l10n.deliveryFieldRequired);
+
+    // Platform required when creating
+    if (!_isEditing && _selectedPlatformSlug == null) {
+      showPosWarningSnackbar(context, l10n.deliverySelectPlatform);
       return;
     }
-    if (_selectedPlatformSlug == null && !_isEditing) {
-      showPosWarningSnackbar(context, l10n.deliverySelectPlatform);
+
+    // API key required when creating; optional when editing (leave blank = keep current)
+    if (!_isEditing && _apiKeyController.text.trim().isEmpty) {
+      showPosWarningSnackbar(context, l10n.deliveryFieldRequired);
       return;
     }
 
     setState(() => _isSaving = true);
 
+    // Build flat payload — backend expects top-level fields, not nested credentials
     final data = <String, dynamic>{
       if (!_isEditing) 'platform': _selectedPlatformSlug!,
       'is_enabled': _isEnabled,
       'auto_accept': _autoAccept,
+      'auto_accept_timeout_seconds': _autoAcceptTimeoutSeconds,
       'sync_menu_on_product_change': _syncMenuOnProductChange,
       'menu_sync_interval_hours': _menuSyncIntervalHours,
-      'max_daily_orders': _maxDailyOrders,
-      'credentials': {
-        'api_key': _apiKeyController.text,
-        if (_apiSecretController.text.isNotEmpty) 'api_secret': _apiSecretController.text,
-        if (_merchantIdController.text.isNotEmpty) 'merchant_id': _merchantIdController.text,
-      },
     };
+
+    // Only send credential fields when they have a value
+    if (_apiKeyController.text.trim().isNotEmpty) {
+      data['api_key'] = _apiKeyController.text.trim();
+    }
+    if (_webhookSecretController.text.trim().isNotEmpty) {
+      data['webhook_secret'] = _webhookSecretController.text.trim();
+    }
+    if (_merchantIdController.text.trim().isNotEmpty) {
+      data['merchant_id'] = _merchantIdController.text.trim();
+    }
+    if (_branchIdController.text.trim().isNotEmpty) {
+      data['branch_id_on_platform'] = _branchIdController.text.trim();
+    }
+    if (_maxDailyOrders > 0) {
+      data['max_daily_orders'] = _maxDailyOrders;
+    }
+    if (_throttleLimit > 0) {
+      data['throttle_limit'] = _throttleLimit;
+    }
 
     await ref.read(deliveryConfigsProvider.notifier).saveConfig(data);
 
@@ -315,3 +460,4 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     }
   }
 }
+

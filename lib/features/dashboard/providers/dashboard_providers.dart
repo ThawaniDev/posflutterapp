@@ -16,29 +16,18 @@ class OwnerDashboardNotifier extends StateNotifier<OwnerDashboardState> {
   Future<void> load({int? days}) async {
     if (state is! OwnerDashboardLoaded) state = const OwnerDashboardLoading();
     try {
-      final results = await Future.wait([
-        _repo.getStats(days: days),
-        _repo.getSalesTrend(days: days ?? 7),
-        _repo.getTopProducts(limit: 5),
-        _repo.getLowStock(limit: 10),
-        _repo.getActiveCashiers(),
-        _repo.getRecentOrders(limit: 10),
-        _repo.getFinancialSummary(days: days),
-        _repo.getHourlySales(),
-        _repo.getStaffPerformance(days: days),
-        _repo.getBranches(),
-      ]);
+      final summary = await _repo.getDashboardSummary(days: days);
       state = OwnerDashboardLoaded(
-        stats: results[0] as Map<String, dynamic>,
-        salesTrend: results[1] as Map<String, dynamic>,
-        topProducts: results[2] as List<Map<String, dynamic>>,
-        lowStock: results[3] as List<Map<String, dynamic>>,
-        activeCashiers: results[4] as List<Map<String, dynamic>>,
-        recentOrders: results[5] as List<Map<String, dynamic>>,
-        financialSummary: results[6] as Map<String, dynamic>,
-        hourlySales: results[7] as List<Map<String, dynamic>>,
-        staffPerformance: results[8] as List<Map<String, dynamic>>,
-        branches: results[9] as List<Map<String, dynamic>>,
+        stats: summary['stats'] as Map<String, dynamic>,
+        salesTrend: summary['sales_trend'] as Map<String, dynamic>,
+        topProducts: (summary['top_products'] as List).cast<Map<String, dynamic>>(),
+        lowStock: (summary['low_stock'] as List).cast<Map<String, dynamic>>(),
+        activeCashiers: (summary['active_cashiers'] as List).cast<Map<String, dynamic>>(),
+        recentOrders: (summary['recent_orders'] as List).cast<Map<String, dynamic>>(),
+        financialSummary: summary['financial_summary'] as Map<String, dynamic>,
+        hourlySales: (summary['hourly_sales'] as List).cast<Map<String, dynamic>>(),
+        staffPerformance: (summary['staff_performance'] as List).cast<Map<String, dynamic>>(),
+        branches: (summary['branches'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
       if (state is! OwnerDashboardLoaded) state = OwnerDashboardError(message: e.toString());

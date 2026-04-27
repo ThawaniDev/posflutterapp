@@ -9,7 +9,9 @@ import 'package:wameedpos/features/staff/models/commission_rule.dart';
 import 'package:wameedpos/features/staff/models/shift_schedule.dart';
 import 'package:wameedpos/features/staff/models/shift_template.dart';
 import 'package:wameedpos/features/staff/models/staff_activity_log.dart';
+import 'package:wameedpos/features/staff/models/staff_document.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/models/training_session.dart';
 
 final staffApiServiceProvider = Provider<StaffApiService>((ref) {
   return StaffApiService(ref.watch(dioClientProvider));
@@ -326,5 +328,65 @@ class StaffApiService {
     final response = await _dio.get(ApiEndpoints.staffLinkableUsers);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.dataList.map((j) => j as Map<String, dynamic>).toList();
+  }
+
+  // ─── Staff Documents ──────────────────────────────────────
+
+  Future<List<StaffDocument>> listDocuments(String staffId) async {
+    final response = await _dio.get(ApiEndpoints.staffMemberDocuments(staffId));
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.dataList.map((j) => StaffDocument.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<StaffDocument> addDocument(String staffId, {required String documentType, required String fileUrl, String? expiryDate}) async {
+    final response = await _dio.post(ApiEndpoints.staffMemberDocuments(staffId), data: {
+      'document_type': documentType,
+      'file_url': fileUrl,
+      if (expiryDate != null) 'expiry_date': expiryDate,
+    });
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return StaffDocument.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteDocument(String staffId, String docId) async {
+    await _dio.delete(ApiEndpoints.staffMemberDocumentById(staffId, docId));
+  }
+
+  // ─── Training Sessions ────────────────────────────────────
+
+  Future<Map<String, dynamic>> listTrainingSessions(String staffId, {int page = 1, int perPage = 20}) async {
+    final response = await _dio.get(
+      ApiEndpoints.staffMemberTrainingSessions(staffId),
+      queryParameters: {'page': page, 'per_page': perPage},
+    );
+    final data = response.data['data'] as Map<String, dynamic>;
+    return {
+      'sessions': (data['data'] as List).map((j) => TrainingSession.fromJson(j as Map<String, dynamic>)).toList(),
+      'total': data['total'] as int,
+      'per_page': data['per_page'] as int,
+      'current_page': data['current_page'] as int,
+      'last_page': data['last_page'] as int,
+    };
+  }
+
+  Future<TrainingSession> startTrainingSession(String staffId, {String? notes}) async {
+    final response = await _dio.post(ApiEndpoints.staffMemberTrainingSessions(staffId), data: {
+      if (notes != null) 'notes': notes,
+    });
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return TrainingSession.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<TrainingSession> endTrainingSession(String staffId, String sessionId, {int? transactionsCount, String? notes}) async {
+    final response = await _dio.put(ApiEndpoints.staffMemberTrainingSessionEnd(staffId, sessionId), data: {
+      if (transactionsCount != null) 'transactions_count': transactionsCount,
+      if (notes != null) 'notes': notes,
+    });
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return TrainingSession.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteTrainingSession(String staffId, String sessionId) async {
+    await _dio.delete(ApiEndpoints.staffMemberTrainingSessionById(staffId, sessionId));
   }
 }

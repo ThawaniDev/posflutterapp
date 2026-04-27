@@ -64,7 +64,8 @@ import 'app_localizations_ur.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,7 +73,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,15 +86,21 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ar'), Locale('bn'), Locale('en'), Locale('ur')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('bn'),
+    Locale('en'),
+    Locale('ur'),
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -2691,6 +2699,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Response Payload'**
   String get deliveryResponsePayload;
+
+  /// No description provided for @deliveryThrottleLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Throttle Limit'**
+  String get deliveryThrottleLimit;
+
+  /// No description provided for @deliveryThrottleLimitDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Max orders per 15 minutes (0 = unlimited)'**
+  String get deliveryThrottleLimitDesc;
+
+  /// No description provided for @deliveryAutoAcceptTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Reject Timeout'**
+  String get deliveryAutoAcceptTimeout;
+
+  /// No description provided for @deliveryAutoAcceptTimeoutDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds before unaccepted order is auto-rejected (60–1800)'**
+  String get deliveryAutoAcceptTimeoutDesc;
+
+  /// No description provided for @deliverySeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'seconds'**
+  String get deliverySeconds;
+
+  /// No description provided for @deliveryWebhookUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL'**
+  String get deliveryWebhookUrl;
+
+  /// No description provided for @deliveryWebhookUrlDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your delivery platform webhook endpoint (read-only, copy and paste into your platform settings)'**
+  String get deliveryWebhookUrlDesc;
+
+  /// No description provided for @deliveryWebhookSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook Secret'**
+  String get deliveryWebhookSecret;
+
+  /// No description provided for @deliveryWebhookSecretHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank to keep current secret'**
+  String get deliveryWebhookSecretHint;
+
+  /// No description provided for @deliveryKeepCurrentKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank to keep current key'**
+  String get deliveryKeepCurrentKey;
+
+  /// No description provided for @deliveryBranchId.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch ID on Platform'**
+  String get deliveryBranchId;
 
   /// No description provided for @thawaniIntegration.
   ///
@@ -5884,6 +5958,294 @@ abstract class AppLocalizations {
   /// **'No activity records'**
   String get staffNoActivity;
 
+  /// No description provided for @staffDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get staffDocuments;
+
+  /// No description provided for @staffNoDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'No documents uploaded'**
+  String get staffNoDocuments;
+
+  /// No description provided for @staffAddDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Document'**
+  String get staffAddDocument;
+
+  /// No description provided for @staffDocumentType.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Type'**
+  String get staffDocumentType;
+
+  /// No description provided for @staffDocumentUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'File URL'**
+  String get staffDocumentUrl;
+
+  /// No description provided for @staffDocumentExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date'**
+  String get staffDocumentExpiry;
+
+  /// No description provided for @staffDocumentNationalId.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID'**
+  String get staffDocumentNationalId;
+
+  /// No description provided for @staffDocumentContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get staffDocumentContract;
+
+  /// No description provided for @staffDocumentCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get staffDocumentCertificate;
+
+  /// No description provided for @staffDocumentVisa.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa'**
+  String get staffDocumentVisa;
+
+  /// No description provided for @staffDocumentOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get staffDocumentOther;
+
+  /// No description provided for @staffDocumentExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get staffDocumentExpired;
+
+  /// No description provided for @staffDocumentExpiringSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring Soon'**
+  String get staffDocumentExpiringSoon;
+
+  /// No description provided for @staffDocumentDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days left'**
+  String staffDocumentDaysLeft(int days);
+
+  /// No description provided for @staffDeleteDocumentConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this document?'**
+  String get staffDeleteDocumentConfirm;
+
+  /// No description provided for @staffTrainingSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get staffTrainingSessions;
+
+  /// No description provided for @staffNoTrainingSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'No training sessions'**
+  String get staffNoTrainingSessions;
+
+  /// No description provided for @staffStartTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Training'**
+  String get staffStartTraining;
+
+  /// No description provided for @staffEndTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'End Session'**
+  String get staffEndTraining;
+
+  /// No description provided for @staffDeleteTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Session'**
+  String get staffDeleteTraining;
+
+  /// No description provided for @staffTrainingActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get staffTrainingActive;
+
+  /// No description provided for @staffTrainingCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get staffTrainingCompleted;
+
+  /// No description provided for @staffTrainingDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String staffTrainingDuration(int minutes);
+
+  /// No description provided for @staffTrainingTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} transactions'**
+  String staffTrainingTransactions(int count);
+
+  /// No description provided for @staffTrainingNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Training notes (optional)'**
+  String get staffTrainingNotes;
+
+  /// No description provided for @staffTrainingEndNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'End notes (optional)'**
+  String get staffTrainingEndNotes;
+
+  /// No description provided for @staffTrainingTransactionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions practiced'**
+  String get staffTrainingTransactionsCount;
+
+  /// No description provided for @staffRoleAuditLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Role Audit Log'**
+  String get staffRoleAuditLog;
+
+  /// No description provided for @staffRoleAuditNoLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'No audit log entries'**
+  String get staffRoleAuditNoLogs;
+
+  /// No description provided for @staffRoleAuditAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get staffRoleAuditAction;
+
+  /// No description provided for @staffRoleAuditActionCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Role Created'**
+  String get staffRoleAuditActionCreated;
+
+  /// No description provided for @staffRoleAuditActionUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Role Updated'**
+  String get staffRoleAuditActionUpdated;
+
+  /// No description provided for @staffRoleAuditActionPermissionGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Granted'**
+  String get staffRoleAuditActionPermissionGranted;
+
+  /// No description provided for @staffRoleAuditActionPermissionRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Revoked'**
+  String get staffRoleAuditActionPermissionRevoked;
+
+  /// No description provided for @staffRoleAuditPerformedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Performed by'**
+  String get staffRoleAuditPerformedBy;
+
+  /// No description provided for @staffCommissionConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Commission Configuration'**
+  String get staffCommissionConfig;
+
+  /// No description provided for @staffEditCommission.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Commission'**
+  String get staffEditCommission;
+
+  /// No description provided for @staffCommissionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Commission Type'**
+  String get staffCommissionType;
+
+  /// No description provided for @staffCommissionPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage'**
+  String get staffCommissionPercentage;
+
+  /// No description provided for @staffCommissionFlat.
+  ///
+  /// In en, this message translates to:
+  /// **'Flat Percentage'**
+  String get staffCommissionFlat;
+
+  /// No description provided for @staffCommissionPerItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Per Item'**
+  String get staffCommissionPerItem;
+
+  /// No description provided for @staffCommissionTiered.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiered'**
+  String get staffCommissionTiered;
+
+  /// No description provided for @staffCommissionTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiers'**
+  String get staffCommissionTiers;
+
+  /// No description provided for @staffAddTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Tier'**
+  String get staffAddTier;
+
+  /// No description provided for @staffTierMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum Amount'**
+  String get staffTierMin;
+
+  /// No description provided for @staffTierMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum Amount'**
+  String get staffTierMax;
+
+  /// No description provided for @staffTierRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate (%)'**
+  String get staffTierRate;
+
+  /// No description provided for @staffCommissionSaveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Commission configuration saved'**
+  String get staffCommissionSaveSuccess;
+
   /// No description provided for @staffRolesPermissions.
   ///
   /// In en, this message translates to:
@@ -6632,7 +6994,11 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} /{billingCycle}'**
-  String subscriptionSubscribeConfirm(String planName, String billingCycle, String price);
+  String subscriptionSubscribeConfirm(
+    String planName,
+    String billingCycle,
+    String price,
+  );
 
   /// No description provided for @subscriptionSubscribe.
   ///
@@ -14931,6 +15297,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thawani Integration'**
   String get sidebarThawaniIntegration;
+
+  /// No description provided for @sidebarGroupThawani.
+  ///
+  /// In en, this message translates to:
+  /// **'Thawani Marketplace'**
+  String get sidebarGroupThawani;
+
+  /// No description provided for @sidebarThawaniDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get sidebarThawaniDashboard;
+
+  /// No description provided for @sidebarThawaniSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Settings'**
+  String get sidebarThawaniSync;
+
+  /// No description provided for @sidebarThawaniCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Mappings'**
+  String get sidebarThawaniCategories;
+
+  /// No description provided for @sidebarThawaniProductMappings.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Mappings'**
+  String get sidebarThawaniProductMappings;
+
+  /// No description provided for @sidebarThawaniOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Queue'**
+  String get sidebarThawaniOrders;
+
+  /// No description provided for @sidebarThawaniOnlineMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Menu'**
+  String get sidebarThawaniOnlineMenu;
+
+  /// No description provided for @sidebarThawaniSettlements.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlements'**
+  String get sidebarThawaniSettlements;
+
+  /// No description provided for @sidebarThawaniSyncLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Logs'**
+  String get sidebarThawaniSyncLogs;
 
   /// No description provided for @sidebarDelivery.
   ///
@@ -29896,6 +30316,414 @@ abstract class AppLocalizations {
   /// **'Category #{id}'**
   String thawaniCategoryNum(String id);
 
+  /// No description provided for @thawaniOrdersQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Queue'**
+  String get thawaniOrdersQueue;
+
+  /// No description provided for @thawaniAcceptOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Order'**
+  String get thawaniAcceptOrder;
+
+  /// No description provided for @thawaniRejectOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Order'**
+  String get thawaniRejectOrder;
+
+  /// No description provided for @thawaniRejectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Reason'**
+  String get thawaniRejectReason;
+
+  /// No description provided for @thawaniUpdateStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Status'**
+  String get thawaniUpdateStatus;
+
+  /// No description provided for @thawaniNewOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'New Order'**
+  String get thawaniNewOrder;
+
+  /// No description provided for @thawaniOrderAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get thawaniOrderAccepted;
+
+  /// No description provided for @thawaniOrderPreparing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing'**
+  String get thawaniOrderPreparing;
+
+  /// No description provided for @thawaniOrderReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get thawaniOrderReady;
+
+  /// No description provided for @thawaniOrderDispatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispatched'**
+  String get thawaniOrderDispatched;
+
+  /// No description provided for @thawaniOrderCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get thawaniOrderCompleted;
+
+  /// No description provided for @thawaniOrderRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get thawaniOrderRejected;
+
+  /// No description provided for @thawaniOrderCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get thawaniOrderCancelled;
+
+  /// No description provided for @thawaniDeliveryType.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get thawaniDeliveryType;
+
+  /// No description provided for @thawaniPickupType.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup'**
+  String get thawaniPickupType;
+
+  /// No description provided for @thawaniMenuManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Menu'**
+  String get thawaniMenuManagement;
+
+  /// No description provided for @thawaniPublishProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish'**
+  String get thawaniPublishProduct;
+
+  /// No description provided for @thawaniUnpublishProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish'**
+  String get thawaniUnpublishProduct;
+
+  /// No description provided for @thawaniOnlinePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Price'**
+  String get thawaniOnlinePrice;
+
+  /// No description provided for @thawaniBulkPublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish All'**
+  String get thawaniBulkPublish;
+
+  /// No description provided for @thawaniBulkUnpublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish All'**
+  String get thawaniBulkUnpublish;
+
+  /// No description provided for @thawaniPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Published'**
+  String get thawaniPublished;
+
+  /// No description provided for @thawaniUnpublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublished'**
+  String get thawaniUnpublished;
+
+  /// No description provided for @thawaniSettlementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlements'**
+  String get thawaniSettlementsTitle;
+
+  /// No description provided for @thawaniGrossAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross Amount'**
+  String get thawaniGrossAmount;
+
+  /// No description provided for @thawaniCommissionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Commission'**
+  String get thawaniCommissionAmount;
+
+  /// No description provided for @thawaniNetAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Amount'**
+  String get thawaniNetAmount;
+
+  /// No description provided for @thawaniReconcile.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconcile'**
+  String get thawaniReconcile;
+
+  /// No description provided for @thawaniReconciled.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconciled'**
+  String get thawaniReconciled;
+
+  /// No description provided for @thawaniUnreconciled.
+  ///
+  /// In en, this message translates to:
+  /// **'Unreconciled'**
+  String get thawaniUnreconciled;
+
+  /// No description provided for @thawaniStoreOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Store is Open'**
+  String get thawaniStoreOpen;
+
+  /// No description provided for @thawaniStoreClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Store is Closed'**
+  String get thawaniStoreClosed;
+
+  /// No description provided for @thawaniCloseStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Store'**
+  String get thawaniCloseStore;
+
+  /// No description provided for @thawaniOpenStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Store'**
+  String get thawaniOpenStore;
+
+  /// No description provided for @thawaniClosedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed Reason'**
+  String get thawaniClosedReason;
+
+  /// No description provided for @thawaniInventorySync.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Inventory'**
+  String get thawaniInventorySync;
+
+  /// No description provided for @thawaniOrderAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'New order received!'**
+  String get thawaniOrderAlert;
+
+  /// No description provided for @thawaniOrderItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Items'**
+  String get thawaniOrderItems;
+
+  /// No description provided for @thawaniDeliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fee'**
+  String get thawaniDeliveryFee;
+
+  /// No description provided for @thawaniOrderNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Notes'**
+  String get thawaniOrderNotes;
+
+  /// No description provided for @thawaniCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get thawaniCustomerName;
+
+  /// No description provided for @thawaniCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get thawaniCustomerPhone;
+
+  /// No description provided for @thawaniDeliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Address'**
+  String get thawaniDeliveryAddress;
+
+  /// No description provided for @thawaniViewAllOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'View All Orders'**
+  String get thawaniViewAllOrders;
+
+  /// No description provided for @thawaniStoreAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Availability'**
+  String get thawaniStoreAvailability;
+
+  /// No description provided for @thawaniOrderTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Total'**
+  String get thawaniOrderTotal;
+
+  /// No description provided for @thawaniOrderNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Order #'**
+  String get thawaniOrderNumber;
+
+  /// No description provided for @thawaniFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get thawaniFilterAll;
+
+  /// No description provided for @thawaniFilterNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get thawaniFilterNew;
+
+  /// No description provided for @thawaniFilterActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get thawaniFilterActive;
+
+  /// No description provided for @thawaniNoOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders yet'**
+  String get thawaniNoOrders;
+
+  /// No description provided for @thawaniNoOrdersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Thawani orders will appear here'**
+  String get thawaniNoOrdersDesc;
+
+  /// No description provided for @thawaniNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No products'**
+  String get thawaniNoProducts;
+
+  /// No description provided for @thawaniNoProductsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Products will appear here once synced'**
+  String get thawaniNoProductsDesc;
+
+  /// No description provided for @thawaniNoSettlements.
+  ///
+  /// In en, this message translates to:
+  /// **'No settlements'**
+  String get thawaniNoSettlements;
+
+  /// No description provided for @thawaniNoSettlementsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement reports will appear here'**
+  String get thawaniNoSettlementsDesc;
+
+  /// No description provided for @thawaniOrdersManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Orders'**
+  String get thawaniOrdersManage;
+
+  /// No description provided for @thawaniMenuManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Menu'**
+  String get thawaniMenuManage;
+
+  /// No description provided for @thawaniSettlementsManage.
+  ///
+  /// In en, this message translates to:
+  /// **'View Settlements'**
+  String get thawaniSettlementsManage;
+
+  /// No description provided for @thawaniAcceptSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Order accepted'**
+  String get thawaniAcceptSuccess;
+
+  /// No description provided for @thawaniRejectSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Order rejected'**
+  String get thawaniRejectSuccess;
+
+  /// No description provided for @thawaniStatusUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Status updated'**
+  String get thawaniStatusUpdated;
+
+  /// No description provided for @thawaniRejectReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter rejection reason'**
+  String get thawaniRejectReasonHint;
+
+  /// No description provided for @thawaniDisplayOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Order'**
+  String get thawaniDisplayOrder;
+
+  /// No description provided for @thawaniLastSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Synced'**
+  String get thawaniLastSynced;
+
+  /// No description provided for @thawaniSyncStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Status'**
+  String get thawaniSyncStatus;
+
+  /// No description provided for @thawaniReconcileConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as reconciled?'**
+  String get thawaniReconcileConfirm;
+
+  /// No description provided for @thawaniOrderCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} orders'**
+  String thawaniOrderCount(int count);
+
   /// No description provided for @genericProcessing.
   ///
   /// In en, this message translates to:
@@ -31628,7 +32456,12 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Add {name} for {price} {currency}/{cycle}?'**
-  String subAddOnConfirmMessage(String name, String price, String currency, String cycle);
+  String subAddOnConfirmMessage(
+    String name,
+    String price,
+    String currency,
+    String cycle,
+  );
 
   /// No description provided for @subAddOnRemovedSuccess.
   ///
@@ -31642,11 +32475,34 @@ abstract class AppLocalizations {
   /// **'Failed to remove add-on: {error}'**
   String subAddOnRemoveFailed(String error);
 
+  /// No description provided for @subAddOnActivatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has been activated'**
+  String subAddOnActivatedSuccess(String name);
+
+  /// No description provided for @subAddOnActivateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to activate add-on: {error}'**
+  String subAddOnActivateFailed(String error);
+
+  /// No description provided for @subAddOnFreeConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate {name} for free?'**
+  String subAddOnFreeConfirmMessage(String name);
+
   /// No description provided for @subConfirmSubscriptionMessage.
   ///
   /// In en, this message translates to:
   /// **'Subscribe to {planName} ({billingCycle}) for {price} {currency}?'**
-  String subConfirmSubscriptionMessage(String planName, String billingCycle, String price, String currency);
+  String subConfirmSubscriptionMessage(
+    String planName,
+    String billingCycle,
+    String price,
+    String currency,
+  );
 
   /// No description provided for @subBillingLabel.
   ///
@@ -34413,9 +35269,142 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View All Logs'**
   String get viewAllLogs;
+
+  /// No description provided for @validityPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Validity'**
+  String get validityPeriod;
+
+  /// No description provided for @noExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get noExpiry;
+
+  /// No description provided for @guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get guest;
+
+  /// No description provided for @dailyUsageLast30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Usage (Last 30 Days)'**
+  String get dailyUsageLast30Days;
+
+  /// No description provided for @noUsageData.
+  ///
+  /// In en, this message translates to:
+  /// **'No usage data yet'**
+  String get noUsageData;
+
+  /// No description provided for @usageHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage History'**
+  String get usageHistory;
+
+  /// No description provided for @noUsageHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'No usage history yet'**
+  String get noUsageHistory;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load More'**
+  String get loadMore;
+
+  /// No description provided for @couponUses.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Uses'**
+  String get couponUses;
+
+  /// No description provided for @autoUses.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Applied Uses'**
+  String get autoUses;
+
+  /// No description provided for @usageLimitProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Limit'**
+  String get usageLimitProgress;
+
+  /// No description provided for @notApplicable.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get notApplicable;
+
+  /// No description provided for @orderId.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get orderId;
+
+  /// No description provided for @customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get customer;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @copyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Code'**
+  String get copyCode;
+
+  /// No description provided for @codeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied to clipboard'**
+  String get codeCopied;
+
+  /// No description provided for @used.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get used;
+
+  /// No description provided for @promoNoFoundSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first promotion to start driving sales'**
+  String get promoNoFoundSubtitle;
+
+  /// No description provided for @promoCouponsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate coupon codes for this promotion'**
+  String get promoCouponsEmptySubtitle;
+
+  /// No description provided for @showingOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total}'**
+  String showingOf(String count, String total);
+
+  /// No description provided for @pageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {total}'**
+  String pageOf(String page, String total);
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -34424,7 +35413,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'bn', 'en', 'ur'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['ar', 'bn', 'en', 'ur'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

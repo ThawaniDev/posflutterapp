@@ -5,6 +5,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_providers.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
@@ -208,6 +209,27 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
               onTap: () => context.push(Routes.thawaniSync),
             ),
             _actionTile(
+              icon: Icons.receipt_long,
+              title: l10n.thawaniOrdersQueue,
+              subtitle: l10n.thawaniOrdersManage,
+              color: AppColors.warning,
+              onTap: () => context.push(Routes.thawaniOrders),
+            ),
+            _actionTile(
+              icon: Icons.restaurant_menu,
+              title: l10n.thawaniMenuManagement,
+              subtitle: l10n.thawaniMenuManage,
+              color: AppColors.primary,
+              onTap: () => context.push(Routes.thawaniMenu),
+            ),
+            _actionTile(
+              icon: Icons.payments_outlined,
+              title: l10n.thawaniSettlementsTitle,
+              subtitle: l10n.thawaniSettlementsManage,
+              color: AppColors.success,
+              onTap: () => context.push(Routes.thawaniSettlements),
+            ),
+            _actionTile(
               icon: Icons.category,
               title: l10n.categoryMappings,
               subtitle: l10n.thawaniCategoriesMapped(totalCategoriesMapped.toString()),
@@ -280,6 +302,43 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
               ],
             ),
           ),
+          AppSpacing.gapH16,
+          // Store Availability
+          PosFormCard(
+            title: l10n.thawaniStoreAvailability,
+            child: Consumer(
+              builder: (context, ref, _) {
+                final availState = ref.watch(thawaniStoreAvailabilityProvider);
+                // Initialize from config on first load
+                if (availState is ThawaniStoreAvailabilityInitial && config != null) {
+                  Future.microtask(() => ref.read(thawaniStoreAvailabilityProvider.notifier).initFromConfig(config));
+                }
+                final isOpen = availState is ThawaniStoreAvailabilityLoaded
+                    ? availState.isOpen
+                    : (config?['is_store_open'] as bool? ?? true);
+                final closedReason = availState is ThawaniStoreAvailabilityLoaded ? availState.closedReason : null;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    PosToggle(
+                      value: isOpen,
+                      onChanged: availState is ThawaniStoreAvailabilityLoading
+                          ? (_) {}
+                          : (v) => ref.read(thawaniStoreAvailabilityProvider.notifier).updateAvailability(v),
+                      label: isOpen ? l10n.thawaniStoreOpen : l10n.thawaniStoreClosed,
+                    ),
+                    if (!isOpen && closedReason != null && closedReason.isNotEmpty) ...[
+                      AppSpacing.gapH8,
+                      Text(
+                        '${l10n.thawaniClosedReason}: $closedReason',
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
+          ),
           if (config?['is_connected'] == true) ...[
             AppSpacing.gapH16,
             PosButton(
@@ -296,7 +355,75 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
   }
 
   Widget _buildOrders() {
-    return PosEmptyState(title: AppLocalizations.of(context)!.thawaniOrdersPlaceholder, icon: Icons.receipt_long);
+    final ordersState = ref.watch(thawaniOrdersProvider);
+
+    // Load orders when tab is shown
+    if (ordersState is ThawaniOrdersInitial) {
+      Future.microtask(() => ref.read(thawaniOrdersProvider.notifier).load(perPage: 5));
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(l10n.thawaniOrdersQueue, style: AppTypography.headlineSmall),
+              PosButton(
+                label: l10n.thawaniViewAllOrders,
+                icon: Icons.arrow_forward,
+                variant: PosButtonVariant.ghost,
+                onPressed: () => context.push(Routes.thawaniOrders),
+              ),
+            ],
+          ),
+          AppSpacing.gapH12,
+          switch (ordersState) {
+            ThawaniOrdersLoading() => const Center(child: CircularProgressIndicator()),
+            ThawaniOrdersError() => PosEmptyState(
+              title: l10n.thawaniNoOrders,
+              subtitle: l10n.thawaniNoOrdersDesc,
+              icon: Icons.receipt_long,
+            ),
+            ThawaniOrdersLoaded(:final orders) when orders.isEmpty => PosEmptyState(
+              title: l10n.thawaniNoOrders,
+              subtitle: l10n.thawaniNoOrdersDesc,
+              icon: Icons.receipt_long,
+            ),
+            ThawaniOrdersLoaded(:final orders) => Column(
+              children: orders.take(5).map((raw) {
+                final o = raw as Map<String, dynamic>;
+                final status = o['status'] as String? ?? '';
+                final variant = switch (status) {
+                  'new' => PosStatusBadgeVariant.warning,
+                  'accepted' => PosStatusBadgeVariant.info,
+                  'preparing' => PosStatusBadgeVariant.info,
+                  'ready' => PosStatusBadgeVariant.success,
+                  'dispatched' => PosStatusBadgeVariant.info,
+                  'completed' => PosStatusBadgeVariant.success,
+                  'rejected' => PosStatusBadgeVariant.error,
+                  _ => PosStatusBadgeVariant.neutral,
+                };
+                return PosCard(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    dense: true,
+                    leading: const Icon(Icons.receipt_long_outlined),
+                    title: Text(o['thawani_order_number'] as String? ?? '-'),
+                    subtitle: Text(o['customer_name'] as String? ?? '-'),
+                    trailing: PosStatusBadge(label: status, variant: variant),
+                    onTap: () => context.push(Routes.thawaniOrders),
+                  ),
+                );
+              }).toList(),
+            ),
+            _ => const SizedBox.shrink(),
+          },
+        ],
+      ),
+    );
   }
 
   Widget _actionTile({
@@ -318,10 +445,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
           child: Icon(icon, color: color, size: 20),
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(
-          subtitle,
-          style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
-        ),
+        subtitle: Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context))),
         trailing: Icon(Icons.chevron_right, color: AppColors.mutedFor(context)),
         onTap: onTap,
       ),

@@ -1,9 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/auth/enums/auth_method.dart';
+import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
+import 'package:wameedpos/features/staff/data/remote/staff_api_service.dart';
 import 'package:wameedpos/features/staff/models/attendance_record.dart';
 import 'package:wameedpos/features/staff/models/shift_template.dart';
+import 'package:wameedpos/features/staff/models/staff_document.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/models/training_session.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
 import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
@@ -497,3 +501,246 @@ class StaffFormNotifier extends StateNotifier<StaffFormState> {
 final branchAssignmentsProvider = FutureProvider.family<List<BranchAssignment>, String>((ref, staffId) async {
   return ref.watch(staffRepositoryProvider).listBranchAssignments(staffId);
 });
+
+// ═══════════════════════════════════════════════════════════════
+// Staff Documents Provider (by staff ID)
+// ═══════════════════════════════════════════════════════════════
+
+final staffDocumentsProvider = StateNotifierProvider.family<StaffDocumentsNotifier, AsyncValue<List<StaffDocument>>, String>((ref, staffId) {
+  return StaffDocumentsNotifier(ref.watch(staffApiServiceProvider), staffId);
+});
+
+class StaffDocumentsNotifier extends StateNotifier<AsyncValue<List<StaffDocument>>> {
+  StaffDocumentsNotifier(this._api, this._staffId) : super(const AsyncValue.loading()) {
+    load();
+  }
+  final StaffApiService _api;
+  final String _staffId;
+
+  Future<void> load() async {
+    state = const AsyncValue.loading();
+    try {
+      final docs = await _api.listDocuments(_staffId);
+      state = AsyncValue.data(docs);
+    } catch (e, s) {
+      state = AsyncValue.error(e, s);
+    }
+  }
+
+  Future<void> add({required String documentType, required String fileUrl, String? expiryDate}) async {
+    try {
+      final doc = await _api.addDocument(_staffId, documentType: documentType, fileUrl: fileUrl, expiryDate: expiryDate);
+      state = AsyncValue.data([...state.value ?? [], doc]);
+    } catch (e, s) {
+      state = AsyncValue.error(e, s);
+    }
+  }
+
+  Future<void> remove(String docId) async {
+    await _api.deleteDocument(_staffId, docId);
+    state = AsyncValue.data((state.value ?? []).where((d) => d.id != docId).toList());
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Training Sessions Provider (by staff ID)
+// ═══════════════════════════════════════════════════════════════
+
+final trainingSessionsProvider = StateNotifierProvider.family<TrainingSessionsNotifier, TrainingSessionsState, String>((ref, staffId) {
+  return TrainingSessionsNotifier(ref.watch(staffApiServiceProvider), staffId);
+});
+
+class TrainingSessionsState {
+  const TrainingSessionsState({
+    this.sessions = const [],
+    this.isLoading = false,
+    this.error,
+    this.total = 0,
+    this.currentPage = 1,
+    this.lastPage = 1,
+  });
+  final List<TrainingSession> sessions;
+  final bool isLoading;
+  final String? error;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+
+  bool get hasMore => currentPage < lastPage;
+
+  TrainingSessionsState copyWith({List<TrainingSession>? sessions, bool? isLoading, String? error, int? total, int? currentPage, int? lastPage}) {
+    return TrainingSessionsState(
+      sessions: sessions ?? this.sessions,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+      total: total ?? this.total,
+      currentPage: currentPage ?? this.currentPage,
+      lastPage: lastPage ?? this.lastPage,
+    );
+  }
+}
+
+class TrainingSessionsNotifier extends StateNotifier<TrainingSessionsState> {
+  TrainingSessionsNotifier(this._api, this._staffId) : super(const TrainingSessionsState(isLoading: true)) {
+    load();
+  }
+  final StaffApiService _api;
+  final String _staffId;
+
+  Future<void> load({int page = 1}) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final result = await _api.listTrainingSessions(_staffId, page: page, perPage: 20);
+      final sessions = result['sessions'] as List<TrainingSession>;
+      state = state.copyWith(
+        sessions: page == 1 ? sessions : [...state.sessions, ...sessions],
+        isLoading: false,
+        total: result['total'] as int,
+        currentPage: result['current_page'] as int,
+        lastPage: result['last_page'] as int,
+      );
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  Future<TrainingSession?> start({String? notes}) async {
+    try {
+      final session = await _api.startTrainingSession(_staffId, notes: notes);
+      state = state.copyWith(sessions: [session, ...state.sessions], total: state.total + 1);
+      return session;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      return null;
+    }
+  }
+
+  Future<bool> end(String sessionId, {int? transactionsCount, String? notes}) async {
+    try {
+      final updated = await _api.endTrainingSession(_staffId, sessionId, transactionsCount: transactionsCount, notes: notes);
+      state = state.copyWith(
+        sessions: state.sessions.map((s) => s.id == sessionId ? updated : s).toList(),
+      );
+      return true;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> remove(String sessionId) async {
+    try {
+      await _api.deleteTrainingSession(_staffId, sessionId);
+      state = state.copyWith(
+        sessions: state.sessions.where((s) => s.id != sessionId).toList(),
+        total: state.total - 1,
+      );
+      return true;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      return false;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Role Audit Log Provider
+// ═══════════════════════════════════════════════════════════════
+
+final roleAuditLogProvider = StateNotifierProvider<RoleAuditLogNotifier, RoleAuditLogState>((ref) {
+  return RoleAuditLogNotifier(ref.watch(roleApiServiceProvider));
+});
+
+class RoleAuditLogState {
+  const RoleAuditLogState({
+    this.entries = const [],
+    this.isLoading = false,
+    this.error,
+    this.total = 0,
+    this.currentPage = 1,
+    this.lastPage = 1,
+    this.filterAction,
+    this.filterDateFrom,
+    this.filterDateTo,
+  });
+  final List<Map<String, dynamic>> entries;
+  final bool isLoading;
+  final String? error;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final String? filterAction;
+  final String? filterDateFrom;
+  final String? filterDateTo;
+
+  bool get hasMore => currentPage < lastPage;
+
+  RoleAuditLogState copyWith({
+    List<Map<String, dynamic>>? entries,
+    bool? isLoading,
+    String? error,
+    int? total,
+    int? currentPage,
+    int? lastPage,
+    String? filterAction,
+    String? filterDateFrom,
+    String? filterDateTo,
+  }) {
+    return RoleAuditLogState(
+      entries: entries ?? this.entries,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+      total: total ?? this.total,
+      currentPage: currentPage ?? this.currentPage,
+      lastPage: lastPage ?? this.lastPage,
+      filterAction: filterAction ?? this.filterAction,
+      filterDateFrom: filterDateFrom ?? this.filterDateFrom,
+      filterDateTo: filterDateTo ?? this.filterDateTo,
+    );
+  }
+}
+
+class RoleAuditLogNotifier extends StateNotifier<RoleAuditLogState> {
+  RoleAuditLogNotifier(this._api) : super(const RoleAuditLogState(isLoading: true)) {
+    load();
+  }
+  final RoleApiService _api;
+
+  Future<void> load({int page = 1, bool refresh = false}) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final result = await _api.getRoleAuditLog(
+        action: state.filterAction,
+        dateFrom: state.filterDateFrom,
+        dateTo: state.filterDateTo,
+        page: page,
+        perPage: 25,
+      );
+      final entries = result['entries'] as List<Map<String, dynamic>>;
+      state = state.copyWith(
+        entries: (page == 1 || refresh) ? entries : [...state.entries, ...entries],
+        isLoading: false,
+        total: result['total'] as int,
+        currentPage: result['current_page'] as int,
+        lastPage: result['last_page'] as int,
+      );
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  void applyFilters({String? action, String? dateFrom, String? dateTo}) {
+    state = RoleAuditLogState(
+      isLoading: true,
+      filterAction: action,
+      filterDateFrom: dateFrom,
+      filterDateTo: dateTo,
+    );
+    load(page: 1, refresh: true);
+  }
+
+  void clearFilters() {
+    state = const RoleAuditLogState(isLoading: true);
+    load(page: 1, refresh: true);
+  }
+}

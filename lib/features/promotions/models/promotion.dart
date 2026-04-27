@@ -174,6 +174,10 @@ class Promotion {
     int? syncVersion,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<String>? productIds,
+    List<String>? categoryIds,
+    List<String>? customerGroupIds,
+    List<BundleProductEntry>? bundleProducts,
   }) {
     return Promotion(
       id: id ?? this.id,
@@ -202,6 +206,10 @@ class Promotion {
       syncVersion: syncVersion ?? this.syncVersion,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      productIds: productIds ?? this.productIds,
+      categoryIds: categoryIds ?? this.categoryIds,
+      customerGroupIds: customerGroupIds ?? this.customerGroupIds,
+      bundleProducts: bundleProducts ?? this.bundleProducts,
     );
   }
 

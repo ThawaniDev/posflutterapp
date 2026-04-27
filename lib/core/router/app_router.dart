@@ -90,6 +90,7 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_terminals_page.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_cashier_page.dart';
 import 'package:wameedpos/features/staff/pages/attendance_page.dart';
 import 'package:wameedpos/features/staff/pages/commission_summary_page.dart';
+import 'package:wameedpos/features/staff/pages/role_audit_log_page.dart';
 import 'package:wameedpos/features/staff/pages/role_create_page.dart';
 import 'package:wameedpos/features/staff/pages/role_detail_page.dart';
 import 'package:wameedpos/features/staff/pages/roles_list_page.dart';
@@ -97,6 +98,7 @@ import 'package:wameedpos/features/staff/pages/shift_schedule_page.dart';
 import 'package:wameedpos/features/staff/pages/staff_detail_page.dart';
 import 'package:wameedpos/features/staff/pages/staff_form_page.dart';
 import 'package:wameedpos/features/staff/pages/staff_list_page.dart';
+import 'package:wameedpos/features/staff/pages/training_sessions_page.dart';
 import 'package:wameedpos/features/subscription/pages/billing_history_page.dart';
 import 'package:wameedpos/features/subscription/pages/plan_selection_page.dart';
 import 'package:wameedpos/features/subscription/pages/subscription_status_page.dart';
@@ -282,6 +284,9 @@ import 'package:wameedpos/features/thawani_integration/pages/thawani_dashboard_p
 import 'package:wameedpos/features/thawani_integration/pages/thawani_sync_page.dart';
 import 'package:wameedpos/features/thawani_integration/pages/thawani_category_mappings_page.dart';
 import 'package:wameedpos/features/thawani_integration/pages/thawani_sync_logs_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_orders_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_settlements_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_menu_page.dart';
 // Branches
 import 'package:wameedpos/features/branches/pages/branch_list_page.dart';
 import 'package:wameedpos/features/branches/pages/branch_detail_page.dart';
@@ -572,6 +577,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(path: Routes.staffAttendance, name: 'staffAttendance', builder: (context, state) => const AttendancePage()),
           GoRoute(path: Routes.staffShifts, name: 'staffShifts', builder: (context, state) => const ShiftSchedulePage()),
+          GoRoute(
+            path: '${Routes.staffTraining}/:staffId',
+            name: 'staffTraining',
+            builder: (context, state) {
+              final staffId = state.pathParameters['staffId']!;
+              return TrainingSessionsPage(staffId: staffId);
+            },
+          ),
+          GoRoute(path: Routes.staffRoleAudit, name: 'staffRoleAudit', builder: (context, state) => const RoleAuditLogPage()),
           GoRoute(
             path: '${Routes.staffCommission}/:id',
             name: 'staffCommission',
@@ -1422,6 +1436,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: 'thawaniSyncLogs',
             builder: (context, state) => const ThawaniSyncLogsPage(),
           ),
+          GoRoute(path: Routes.thawaniOrders, name: 'thawaniOrders', builder: (context, state) => const ThawaniOrdersPage()),
+          GoRoute(
+            path: Routes.thawaniSettlements,
+            name: 'thawaniSettlements',
+            builder: (context, state) => const ThawaniSettlementsPage(),
+          ),
+          GoRoute(path: Routes.thawaniMenu, name: 'thawaniMenu', builder: (context, state) => const ThawaniMenuPage()),
 
           // ─── Delivery Integration ───
           GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),

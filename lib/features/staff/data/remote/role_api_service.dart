@@ -152,6 +152,38 @@ class RoleApiService {
     final response = await _dio.get(ApiEndpoints.pinOverrideCheck, queryParameters: {'permission_code': permissionCode});
     return response.data['data']['requires_pin'] as bool;
   }
+
+  /// GET /staff/roles/audit-log
+  Future<Map<String, dynamic>> getRoleAuditLog({
+    String? userId,
+    String? roleId,
+    String? action,
+    String? dateFrom,
+    String? dateTo,
+    int page = 1,
+    int perPage = 25,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.rolesAuditLog,
+      queryParameters: {
+        if (userId != null) 'user_id': userId,
+        if (roleId != null) 'role_id': roleId,
+        if (action != null) 'action': action,
+        if (dateFrom != null) 'date_from': dateFrom,
+        if (dateTo != null) 'date_to': dateTo,
+        'page': page,
+        'per_page': perPage,
+      },
+    );
+    final data = response.data['data'] as Map<String, dynamic>;
+    return {
+      'entries': (data['data'] as List).cast<Map<String, dynamic>>(),
+      'total': data['total'] as int,
+      'per_page': data['per_page'] as int,
+      'current_page': data['current_page'] as int,
+      'last_page': data['last_page'] as int,
+    };
+  }
 }
 
 /// Per-branch role information returned by the user-permissions API.

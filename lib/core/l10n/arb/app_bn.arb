@@ -482,6 +482,17 @@
   "deliveryAttempt": "চেষ্টা",
   "deliveryRequestPayload": "অনুরোধ পেলোড",
   "deliveryResponsePayload": "Response পেলোড",
+  "deliveryThrottleLimit": "থ্রটল সীমা",
+  "deliveryThrottleLimitDesc": "প্রতি ১৫ মিনিটে সর্বোচ্চ অর্ডার (0 = সীমাহীন)",
+  "deliveryAutoAcceptTimeout": "স্বয়ংক্রিয় প্রত্যাখ্যান সময়",
+  "deliveryAutoAcceptTimeoutDesc": "গৃহীত না হওয়া অর্ডার স্বয়ংক্রিয়ভাবে প্রত্যাখ্যানের আগে সেকেন্ড (60–1800)",
+  "deliverySeconds": "সেকেন্ড",
+  "deliveryWebhookUrl": "Webhook URL",
+  "deliveryWebhookUrlDesc": "ডেলিভারি প্ল্যাটফর্মের Webhook লিংক (শুধু পড়ার জন্য)",
+  "deliveryWebhookSecret": "Webhook সিক্রেট",
+  "deliveryWebhookSecretHint": "বর্তমান সিক্রেট রাখতে খালি রাখুন",
+  "deliveryKeepCurrentKey": "বর্তমান কী রাখতে খালি রাখুন",
+  "deliveryBranchId": "প্ল্যাটফর্মে শাখার ID",
   "thawaniIntegration": "থাওয়ানি ইন্টিগ্রেশন",
   "thawaniOverview": "সংক্ষিপ্ত বিবরণ",
   "thawaniSettings": "সেটিংস",
@@ -1041,7 +1052,57 @@
   "staffPrimary": "প্রাথমিক",
   "staffNoAttendance": "না attendance records",
   "staffNoActivity": "না activity records",
-  "staffRolesPermissions": "ভূমিকা & অনুমতি",
+  "staffDocuments": "দলিলপত্র",
+  "staffNoDocuments": "কোনো দলিল আপলোড হয়নি",
+  "staffAddDocument": "দলিল যোগ করুন",
+  "staffDocumentType": "দলিলের ধরন",
+  "staffDocumentUrl": "ফাইল লিঙ্ক",
+  "staffDocumentExpiry": "মেয়াদ শেষের তারিখ",
+  "staffDocumentNationalId": "জাতীয় পরিচয়পত্র",
+  "staffDocumentContract": "চুক্তি",
+  "staffDocumentCertificate": "সার্টিফিকেট",
+  "staffDocumentVisa": "ভিসা",
+  "staffDocumentOther": "অন্যান্য",
+  "staffDocumentExpired": "মেয়াদ সমাপ্ত",
+  "staffDocumentExpiringSoon": "শীঘ্রই মেয়াদ শেষ",
+  "staffDocumentDaysLeft": "{days} দিন বাকি",
+  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "staffDeleteDocumentConfirm": "এই দলিল মুছুন?",
+  "staffTrainingSessions": "প্রশিক্ষণ",
+  "staffNoTrainingSessions": "কোনো প্রশিক্ষণ সেশন নেই",
+  "staffStartTraining": "প্রশিক্ষণ শুরু",
+  "staffEndTraining": "সেশন শেষ করুন",
+  "staffDeleteTraining": "সেশন মুছুন",
+  "staffTrainingActive": "সক্রিয়",
+  "staffTrainingCompleted": "সমাপ্ত",
+  "staffTrainingDuration": "{minutes} মিনিট",
+  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "staffTrainingTransactions": "{count} লেনদেন",
+  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "staffTrainingNotes": "প্রশিক্ষণ নোট (ঐচ্ছিক)",
+  "staffTrainingEndNotes": "সমাপ্তির নোট (ঐচ্ছিক)",
+  "staffTrainingTransactionsCount": "অনুশীলিত লেনদেন",
+  "staffRoleAuditLog": "রোল অডিট লগ",
+  "staffRoleAuditNoLogs": "কোনো অডিট লগ নেই",
+  "staffRoleAuditAction": "পদক্ষেপ",
+  "staffRoleAuditActionCreated": "রোল তৈরি",
+  "staffRoleAuditActionUpdated": "রোল আপডেট",
+  "staffRoleAuditActionPermissionGranted": "অনুমতি প্রদান",
+  "staffRoleAuditActionPermissionRevoked": "অনুমতি রদ্দ",
+  "staffRoleAuditPerformedBy": "সম্পাদিত",
+  "staffCommissionConfig": "কমিশন সেটআপ",
+  "staffEditCommission": "কমিশন সম্পাদন",
+  "staffCommissionType": "কমিশনের ধরন",
+  "staffCommissionPercentage": "শতাংশ",
+  "staffCommissionFlat": "স্থির শতাংশ",
+  "staffCommissionPerItem": "প্রতি আইটেম",
+  "staffCommissionTiered": "স্তরবিশিষ্ট",
+  "staffCommissionTiers": "স্তর",
+  "staffAddTier": "স্তর যোগ করুন",
+  "staffTierMin": "সর্বনিম্ন পরিমাণ",
+  "staffTierMax": "সর্বোচ্চ পরিমাণ",
+  "staffTierRate": "হার (%)",
+  "staffCommissionSaveSuccess": "কমিশন সেটআপ সংরক্ষিত",
   "staffNewRole": "নতুন ভূমিকা",
   "staffCreateRole": "তৈরি করুন ভূমিকা",
   "staffRoleDetails": "ভূমিকা বিস্তারিত",
@@ -6721,6 +6782,30 @@
       }
     }
   },
+  "subAddOnActivatedSuccess": "{name} সক্রিয় করা হয়েছে",
+  "@subAddOnActivatedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivateFailed": "অ্যাড-অন সক্রিয় করতে ব্যর্থ: {error}",
+  "@subAddOnActivateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnFreeConfirmMessage": "{name} বিনামূল্যে সক্রিয় করবেন?",
+  "@subAddOnFreeConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "@subConfirmSubscriptionMessage": {
     "placeholders": {
       "planName": {
@@ -7201,5 +7286,45 @@
   "finReconInfoMessage": "আর্থিক মিলন পর্যালোচনা ও নিশ্চিত করুন।",
 
   "allCategories": "সব বিভাগ",
-  "newExpense": "নতুন ব্যয়"
+  "newExpense": "নতুন ব্যয়",
+
+  "validityPeriod": "মেয়াদ",
+  "usage": "ব্যবহার",
+  "noExpiry": "মেয়াদ নেই",
+  "guest": "অতিথি",
+
+  "dailyUsageLast30Days": "দৈনিক ব্যবহার (শেষ ৩০ দিন)",
+  "noUsageData": "এখনও কোনো ব্যবহারের তথ্য নেই",
+  "usageHistory": "ব্যবহারের ইতিহাস",
+  "noUsageHistory": "এখনও কোনো ব্যবহারের ইতিহাস নেই",
+  "loadMore": "আরও লোড করুন",
+  "couponUses": "কুপন ব্যবহার",
+  "autoUses": "স্বয়ংক্রিয় ব্যবহার",
+  "usageLimitProgress": "ব্যবহারের সীমা",
+  "notApplicable": "প্রযোজ্য নয়",
+
+  "orderId": "অর্ডার",
+  "customer": "গ্রাহক",
+  "date": "তারিখ",
+
+  "copyCode": "কোড কপি করুন",
+  "codeCopied": "কোড ক্লিপবোর্ডে কপি করা হয়েছে",
+  "used": "ব্যবহৃত",
+  "promoNoFoundSubtitle": "বিক্রয় বাড়াতে আপনার প্রথম প্রমোশন তৈরি করুন",
+  "promoCouponsEmptySubtitle": "এই প্রমোশনের জন্য কুপন কোড তৈরি করুন",
+
+  "showingOf": "{count} এর মধ্যে {total}",
+  "@showingOf": {
+    "placeholders": {
+      "count": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "pageOf": "পৃষ্ঠা {page} এর {total}",
+  "@pageOf": {
+    "placeholders": {
+      "page": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  }
 }

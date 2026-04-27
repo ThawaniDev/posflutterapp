@@ -63,6 +63,12 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
       showSearch: false,
       actions: [
         PosButton.icon(
+          icon: Icons.history_outlined,
+          tooltip: l10n.staffRoleAuditLog,
+          onPressed: () => context.push(Routes.staffRoleAudit),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
           icon: Icons.info_outline,
           tooltip: l10n.featureInfoTooltip,
           onPressed: () => showRolesListInfo(context),

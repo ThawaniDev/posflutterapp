@@ -482,6 +482,17 @@
   "deliveryAttempt": "Attempt",
   "deliveryRequestPayload": "Request Payload",
   "deliveryResponsePayload": "Response Payload",
+  "deliveryThrottleLimit": "Throttle Limit",
+  "deliveryThrottleLimitDesc": "Max orders per 15 minutes (0 = unlimited)",
+  "deliveryAutoAcceptTimeout": "Auto-Reject Timeout",
+  "deliveryAutoAcceptTimeoutDesc": "Seconds before unaccepted order is auto-rejected (60–1800)",
+  "deliverySeconds": "seconds",
+  "deliveryWebhookUrl": "Webhook URL",
+  "deliveryWebhookUrlDesc": "Your delivery platform webhook endpoint (read-only, copy and paste into your platform settings)",
+  "deliveryWebhookSecret": "Webhook Secret",
+  "deliveryWebhookSecretHint": "Leave blank to keep current secret",
+  "deliveryKeepCurrentKey": "Leave blank to keep current key",
+  "deliveryBranchId": "Branch ID on Platform",
   "thawaniIntegration": "Thawani Integration",
   "thawaniOverview": "Overview",
   "thawaniSettings": "Settings",
@@ -1048,6 +1059,57 @@
   "staffPrimary": "Primary",
   "staffNoAttendance": "No attendance records",
   "staffNoActivity": "No activity records",
+  "staffDocuments": "Documents",
+  "staffNoDocuments": "No documents uploaded",
+  "staffAddDocument": "Add Document",
+  "staffDocumentType": "Document Type",
+  "staffDocumentUrl": "File URL",
+  "staffDocumentExpiry": "Expiry Date",
+  "staffDocumentNationalId": "National ID",
+  "staffDocumentContract": "Contract",
+  "staffDocumentCertificate": "Certificate",
+  "staffDocumentVisa": "Visa",
+  "staffDocumentOther": "Other",
+  "staffDocumentExpired": "Expired",
+  "staffDocumentExpiringSoon": "Expiring Soon",
+  "staffDocumentDaysLeft": "{days} days left",
+  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "staffDeleteDocumentConfirm": "Delete this document?",
+  "staffTrainingSessions": "Training",
+  "staffNoTrainingSessions": "No training sessions",
+  "staffStartTraining": "Start Training",
+  "staffEndTraining": "End Session",
+  "staffDeleteTraining": "Delete Session",
+  "staffTrainingActive": "Active",
+  "staffTrainingCompleted": "Completed",
+  "staffTrainingDuration": "{minutes} min",
+  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "staffTrainingTransactions": "{count} transactions",
+  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "staffTrainingNotes": "Training notes (optional)",
+  "staffTrainingEndNotes": "End notes (optional)",
+  "staffTrainingTransactionsCount": "Transactions practiced",
+  "staffRoleAuditLog": "Role Audit Log",
+  "staffRoleAuditNoLogs": "No audit log entries",
+  "staffRoleAuditAction": "Action",
+  "staffRoleAuditActionCreated": "Role Created",
+  "staffRoleAuditActionUpdated": "Role Updated",
+  "staffRoleAuditActionPermissionGranted": "Permission Granted",
+  "staffRoleAuditActionPermissionRevoked": "Permission Revoked",
+  "staffRoleAuditPerformedBy": "Performed by",
+  "staffCommissionConfig": "Commission Configuration",
+  "staffEditCommission": "Edit Commission",
+  "staffCommissionType": "Commission Type",
+  "staffCommissionPercentage": "Percentage",
+  "staffCommissionFlat": "Flat Percentage",
+  "staffCommissionPerItem": "Per Item",
+  "staffCommissionTiered": "Tiered",
+  "staffCommissionTiers": "Tiers",
+  "staffAddTier": "Add Tier",
+  "staffTierMin": "Minimum Amount",
+  "staffTierMax": "Maximum Amount",
+  "staffTierRate": "Rate (%)",
+  "staffCommissionSaveSuccess": "Commission configuration saved",
   "staffRolesPermissions": "Roles & Permissions",
   "staffNewRole": "New Role",
   "staffCreateRole": "Create Role",
@@ -3039,6 +3101,15 @@
   "sidebarCustomerReports": "Customer Reports",
   "sidebarPromotions": "Promotions",
   "sidebarThawaniIntegration": "Thawani Integration",
+  "sidebarGroupThawani": "Thawani Marketplace",
+  "sidebarThawaniDashboard": "Dashboard",
+  "sidebarThawaniSync": "Sync Settings",
+  "sidebarThawaniCategories": "Category Mappings",
+  "sidebarThawaniProductMappings": "Product Mappings",
+  "sidebarThawaniOrders": "Orders Queue",
+  "sidebarThawaniOnlineMenu": "Online Menu",
+  "sidebarThawaniSettlements": "Settlements",
+  "sidebarThawaniSyncLogs": "Sync Logs",
   "sidebarDelivery": "Delivery",
   "sidebarZatca": "ZATCA",
   "sidebarHardware": "Hardware",
@@ -6537,6 +6608,81 @@
       }
     }
   },
+  "thawaniOrdersQueue": "Orders Queue",
+  "thawaniAcceptOrder": "Accept Order",
+  "thawaniRejectOrder": "Reject Order",
+  "thawaniRejectReason": "Rejection Reason",
+  "thawaniUpdateStatus": "Update Status",
+  "thawaniNewOrder": "New Order",
+  "thawaniOrderAccepted": "Accepted",
+  "thawaniOrderPreparing": "Preparing",
+  "thawaniOrderReady": "Ready",
+  "thawaniOrderDispatched": "Dispatched",
+  "thawaniOrderCompleted": "Completed",
+  "thawaniOrderRejected": "Rejected",
+  "thawaniOrderCancelled": "Cancelled",
+  "thawaniDeliveryType": "Delivery",
+  "thawaniPickupType": "Pickup",
+  "thawaniMenuManagement": "Online Menu",
+  "thawaniPublishProduct": "Publish",
+  "thawaniUnpublishProduct": "Unpublish",
+  "thawaniOnlinePrice": "Online Price",
+  "thawaniBulkPublish": "Publish All",
+  "thawaniBulkUnpublish": "Unpublish All",
+  "thawaniPublished": "Published",
+  "thawaniUnpublished": "Unpublished",
+  "thawaniSettlementsTitle": "Settlements",
+  "thawaniGrossAmount": "Gross Amount",
+  "thawaniCommissionAmount": "Commission",
+  "thawaniNetAmount": "Net Amount",
+  "thawaniReconcile": "Reconcile",
+  "thawaniReconciled": "Reconciled",
+  "thawaniUnreconciled": "Unreconciled",
+  "thawaniStoreOpen": "Store is Open",
+  "thawaniStoreClosed": "Store is Closed",
+  "thawaniCloseStore": "Close Store",
+  "thawaniOpenStore": "Open Store",
+  "thawaniClosedReason": "Closed Reason",
+  "thawaniInventorySync": "Sync Inventory",
+  "thawaniOrderAlert": "New order received!",
+  "thawaniOrderItems": "Order Items",
+  "thawaniDeliveryFee": "Delivery Fee",
+  "thawaniOrderNotes": "Order Notes",
+  "thawaniCustomerName": "Customer",
+  "thawaniCustomerPhone": "Phone",
+  "thawaniDeliveryAddress": "Delivery Address",
+  "thawaniViewAllOrders": "View All Orders",
+  "thawaniStoreAvailability": "Store Availability",
+  "thawaniOrderTotal": "Order Total",
+  "thawaniOrderNumber": "Order #",
+  "thawaniFilterAll": "All",
+  "thawaniFilterNew": "New",
+  "thawaniFilterActive": "Active",
+  "thawaniNoOrders": "No orders yet",
+  "thawaniNoOrdersDesc": "Thawani orders will appear here",
+  "thawaniNoProducts": "No products",
+  "thawaniNoProductsDesc": "Products will appear here once synced",
+  "thawaniNoSettlements": "No settlements",
+  "thawaniNoSettlementsDesc": "Settlement reports will appear here",
+  "thawaniOrdersManage": "Manage Orders",
+  "thawaniMenuManage": "Manage Menu",
+  "thawaniSettlementsManage": "View Settlements",
+  "thawaniAcceptSuccess": "Order accepted",
+  "thawaniRejectSuccess": "Order rejected",
+  "thawaniStatusUpdated": "Status updated",
+  "thawaniRejectReasonHint": "Enter rejection reason",
+  "thawaniDisplayOrder": "Display Order",
+  "thawaniLastSynced": "Last Synced",
+  "thawaniSyncStatus": "Sync Status",
+  "thawaniReconcileConfirm": "Mark as reconciled?",
+  "thawaniOrderCount": "{count} orders",
+  "@thawaniOrderCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "genericProcessing": "Processing",
   "genericEntityType": "Entity Type",
   "genericPaginationInfo": "Page {current} of {total} ({count} total)",
@@ -7001,6 +7147,30 @@
   "@subAddOnRemoveFailed": {
     "placeholders": {
       "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivatedSuccess": "{name} has been activated",
+  "@subAddOnActivatedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivateFailed": "Failed to activate add-on: {error}",
+  "@subAddOnActivateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnFreeConfirmMessage": "Activate {name} for free?",
+  "@subAddOnFreeConfirmMessage": {
+    "placeholders": {
+      "name": {
         "type": "String"
       }
     }
@@ -7775,5 +7945,45 @@
   },
   "syncLogs": "Sync Logs",
   "syncLogHistory": "Sync Log History",
-  "viewAllLogs": "View All Logs"
+  "viewAllLogs": "View All Logs",
+
+  "validityPeriod": "Validity",
+  "usage": "Usage",
+  "noExpiry": "No expiry",
+  "guest": "Guest",
+
+  "dailyUsageLast30Days": "Daily Usage (Last 30 Days)",
+  "noUsageData": "No usage data yet",
+  "usageHistory": "Usage History",
+  "noUsageHistory": "No usage history yet",
+  "loadMore": "Load More",
+  "couponUses": "Coupon Uses",
+  "autoUses": "Auto Applied Uses",
+  "usageLimitProgress": "Usage Limit",
+  "notApplicable": "N/A",
+
+  "orderId": "Order",
+  "customer": "Customer",
+  "date": "Date",
+
+  "copyCode": "Copy Code",
+  "codeCopied": "Code copied to clipboard",
+  "used": "Used",
+  "promoNoFoundSubtitle": "Create your first promotion to start driving sales",
+  "promoCouponsEmptySubtitle": "Generate coupon codes for this promotion",
+
+  "showingOf": "{count} of {total}",
+  "@showingOf": {
+    "placeholders": {
+      "count": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "pageOf": "Page {page} of {total}",
+  "@pageOf": {
+    "placeholders": {
+      "page": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  }
 }

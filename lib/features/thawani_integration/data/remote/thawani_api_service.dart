@@ -4,7 +4,6 @@ import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 
 class ThawaniApiService {
-
   ThawaniApiService(this._dio);
   final Dio _dio;
 
@@ -125,6 +124,89 @@ class ThawaniApiService {
   /// POST /thawani/process-queue
   Future<Map<String, dynamic>> processQueue() async {
     final response = await _dio.post(ApiEndpoints.thawaniProcessQueue);
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── Order Management ──────────────────────────────────
+
+  /// GET /thawani/orders/{id}
+  Future<Map<String, dynamic>> getOrderDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.thawaniOrderDetail(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// POST /thawani/orders/{id}/accept
+  Future<Map<String, dynamic>> acceptOrder(String id) async {
+    final response = await _dio.post(ApiEndpoints.thawaniOrderAccept(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// POST /thawani/orders/{id}/reject
+  Future<Map<String, dynamic>> rejectOrder(String id, String reason) async {
+    final response = await _dio.post(ApiEndpoints.thawaniOrderReject(id), data: {'reason': reason});
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// PUT /thawani/orders/{id}/status
+  Future<Map<String, dynamic>> updateOrderStatus(String id, String status) async {
+    final response = await _dio.put(ApiEndpoints.thawaniOrderStatus(id), data: {'status': status});
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── Online Menu Management ────────────────────────────
+
+  /// GET /thawani/products
+  Future<Map<String, dynamic>> getProducts({String? search, bool? isPublished, int? perPage, int? page}) async {
+    final params = <String, dynamic>{};
+    if (search != null) params['search'] = search;
+    if (isPublished != null) params['is_published'] = isPublished;
+    if (perPage != null) params['per_page'] = perPage;
+    if (page != null) params['page'] = page;
+
+    final response = await _dio.get(ApiEndpoints.thawaniProducts, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// PUT /thawani/products/{id}/publish
+  Future<Map<String, dynamic>> publishProduct(
+    String id, {
+    required bool isPublished,
+    double? onlinePrice,
+    int? displayOrder,
+  }) async {
+    final data = <String, dynamic>{'is_published': isPublished};
+    if (onlinePrice != null) data['online_price'] = onlinePrice;
+    if (displayOrder != null) data['display_order'] = displayOrder;
+
+    final response = await _dio.put(ApiEndpoints.thawaniProductPublish(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// POST /thawani/products/bulk-publish
+  Future<Map<String, dynamic>> bulkPublishProducts(List<String> productIds, bool isPublished) async {
+    final response = await _dio.post(
+      ApiEndpoints.thawaniProductsBulkPublish,
+      data: {'product_ids': productIds, 'is_published': isPublished},
+    );
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── Store Availability ────────────────────────────────
+
+  /// PUT /thawani/store/availability
+  Future<Map<String, dynamic>> updateStoreAvailability(bool isOpen, {String? closedReason}) async {
+    final data = <String, dynamic>{'is_open': isOpen};
+    if (closedReason != null) data['closed_reason'] = closedReason;
+
+    final response = await _dio.put(ApiEndpoints.thawaniStoreAvailability, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── Inventory Sync ────────────────────────────────────
+
+  /// POST /thawani/inventory/sync
+  Future<Map<String, dynamic>> syncInventory() async {
+    final response = await _dio.post(ApiEndpoints.thawaniInventorySync);
     return response.data as Map<String, dynamic>;
   }
 }

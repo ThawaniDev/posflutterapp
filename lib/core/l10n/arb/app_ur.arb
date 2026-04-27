@@ -482,6 +482,17 @@
   "deliveryAttempt": "کوشش",
   "deliveryRequestPayload": "درخواست پے لوڈ",
   "deliveryResponsePayload": "جواب پے لوڈ",
+  "deliveryThrottleLimit": "تھروٹل حد",
+  "deliveryThrottleLimitDesc": "ہر 15 منٹ میں زیادہ سے زیادہ آرڈرز (0 = لامحدود)",
+  "deliveryAutoAcceptTimeout": "خودکار رد کا وقت",
+  "deliveryAutoAcceptTimeoutDesc": "قبول نہ ہونے والے آرڈر کو خودکار رد کرنے سے پہلے کے سیکنڈ (60–1800)",
+  "deliverySeconds": "سیکنڈ",
+  "deliveryWebhookUrl": "Webhook URL",
+  "deliveryWebhookUrlDesc": "ڈیلیوری پلیٹ فارم کا Webhook لنک (صرف پڑھنے کے لیے)",
+  "deliveryWebhookSecret": "Webhook خفیہ کوڈ",
+  "deliveryWebhookSecretHint": "موجودہ کوڈ رکھنے کے لیے خالی چھوڑیں",
+  "deliveryKeepCurrentKey": "موجودہ کلید رکھنے کے لیے خالی چھوڑیں",
+  "deliveryBranchId": "پلیٹ فارم پر برانچ ID",
   "thawaniIntegration": "ثوانی انضمام",
   "thawaniOverview": "جائزہ",
   "thawaniSettings": "ترتیبات",
@@ -1041,7 +1052,57 @@
   "staffPrimary": "بنیادی",
   "staffNoAttendance": "حاضری کا کوئی ریکارڈ نہیں",
   "staffNoActivity": "سرگرمی کا کوئی ریکارڈ نہیں",
-  "staffRolesPermissions": "کردار اور اجازتیں",
+  "staffDocuments": "دستاویز",
+  "staffNoDocuments": "کوئی دستاویز اپلوڈ نہیں ہوئیں",
+  "staffAddDocument": "دستاویز شامل کریں",
+  "staffDocumentType": "دستاویز کی قسم",
+  "staffDocumentUrl": "فائل کا لنک",
+  "staffDocumentExpiry": "میعاد ختم ہونے کی تاریخ",
+  "staffDocumentNationalId": "قومی شناخت",
+  "staffDocumentContract": "معاہدہ",
+  "staffDocumentCertificate": "سرٹیفیکیٹ",
+  "staffDocumentVisa": "ویزہ",
+  "staffDocumentOther": "دیگر",
+  "staffDocumentExpired": "میعاد ختم",
+  "staffDocumentExpiringSoon": "جلد ختم ہونے والا",
+  "staffDocumentDaysLeft": "{days} دن باقی",
+  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "staffDeleteDocumentConfirm": "یہ دستاویز حذف کریں؟",
+  "staffTrainingSessions": "تربیت",
+  "staffNoTrainingSessions": "کوئی تربیتی سیشن نہیں",
+  "staffStartTraining": "تربیت شروع کریں",
+  "staffEndTraining": "سیشن ختم کریں",
+  "staffDeleteTraining": "سیشن حذف کریں",
+  "staffTrainingActive": "فعال",
+  "staffTrainingCompleted": "مکمل",
+  "staffTrainingDuration": "{minutes} منٹ",
+  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "staffTrainingTransactions": "{count} لیندیں",
+  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "staffTrainingNotes": "تربیتی نوٹس (اختیاری)",
+  "staffTrainingEndNotes": "ختم کی نوٹس (اختیاری)",
+  "staffTrainingTransactionsCount": "مشق کی گئی لیندیں",
+  "staffRoleAuditLog": "کردار آڈیٹ لاگ",
+  "staffRoleAuditNoLogs": "کوئی آڈیٹ لاگ انٹریاں نہیں",
+  "staffRoleAuditAction": "عمل",
+  "staffRoleAuditActionCreated": "کردار بنایا گیا",
+  "staffRoleAuditActionUpdated": "کردار اپڈیٹ کیا گیا",
+  "staffRoleAuditActionPermissionGranted": "اجازت دی گئی",
+  "staffRoleAuditActionPermissionRevoked": "اجازت واپس لی گئی",
+  "staffRoleAuditPerformedBy": "کارکردگی",
+  "staffCommissionConfig": "کمیشن سیٹاپ",
+  "staffEditCommission": "کمیشن ترمیم",
+  "staffCommissionType": "کمیشن کی قسم",
+  "staffCommissionPercentage": "فیصد",
+  "staffCommissionFlat": "ثابت فیصد",
+  "staffCommissionPerItem": "فی المرہ آئٹم",
+  "staffCommissionTiered": "درجہ بندی",
+  "staffCommissionTiers": "درجات",
+  "staffAddTier": "درجہ شامل کریں",
+  "staffTierMin": "کم سے کم رقم",
+  "staffTierMax": "زیادہ سے زیادہ رقم",
+  "staffTierRate": "شرح (%)",
+  "staffCommissionSaveSuccess": "کمیشن سیٹاپ محفوظ ہو گیا",
   "staffNewRole": "نیا کردار",
   "staffCreateRole": "کردار بنائیں",
   "staffRoleDetails": "کردار تفصیلات",
@@ -6721,6 +6782,30 @@
       }
     }
   },
+  "subAddOnActivatedSuccess": "{name} فعال کر دیا گیا",
+  "@subAddOnActivatedSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnActivateFailed": "ایڈ آن فعال کرنے میں ناکامی: {error}",
+  "@subAddOnActivateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subAddOnFreeConfirmMessage": "کیا آپ {name} مفت فعال کرنا چاہتے ہیں؟",
+  "@subAddOnFreeConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "@subConfirmSubscriptionMessage": {
     "placeholders": {
       "planName": {
@@ -7201,5 +7286,45 @@
   "finReconInfoMessage": "مالی مصالحت کا جائزہ لیں اور تصدیق کریں۔",
 
   "allCategories": "تمام زمرے",
-  "newExpense": "نیا خرچ"
+  "newExpense": "نیا خرچ",
+
+  "validityPeriod": "میعاد",
+  "usage": "استعمال",
+  "noExpiry": "کوئی میعاد نہیں",
+  "guest": "مہمان",
+
+  "dailyUsageLast30Days": "یومیہ استعمال (آخری 30 دن)",
+  "noUsageData": "ابھی تک کوئی استعمال کا ڈیٹا نہیں",
+  "usageHistory": "استعمال کی تاریخ",
+  "noUsageHistory": "ابھی تک کوئی استعمال کی تاریخ نہیں",
+  "loadMore": "مزید لوڈ کریں",
+  "couponUses": "کوپن کا استعمال",
+  "autoUses": "خودکار استعمال",
+  "usageLimitProgress": "استعمال کی حد",
+  "notApplicable": "قابل اطلاق نہیں",
+
+  "orderId": "آرڈر",
+  "customer": "گاہک",
+  "date": "تاریخ",
+
+  "copyCode": "کوڈ کاپی کریں",
+  "codeCopied": "کوڈ کلپ بورڈ میں کاپی ہو گیا",
+  "used": "استعمال شدہ",
+  "promoNoFoundSubtitle": "فروخت بڑھانے کے لیے اپنی پہلی پروموشن بنائیں",
+  "promoCouponsEmptySubtitle": "اس پروموشن کے لیے کوپن کوڈ بنائیں",
+
+  "showingOf": "{count} از {total}",
+  "@showingOf": {
+    "placeholders": {
+      "count": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "pageOf": "صفحہ {page} از {total}",
+  "@pageOf": {
+    "placeholders": {
+      "page": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  }
 }

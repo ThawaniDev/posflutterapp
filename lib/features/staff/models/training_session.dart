@@ -8,6 +8,8 @@ class TrainingSession {
     this.endedAt,
     this.transactionsCount,
     this.notes,
+    this.durationMinutes,
+    this.isActive = false,
   });
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,8 @@ class TrainingSession {
       endedAt: json['ended_at'] != null ? DateTime.parse(json['ended_at'] as String) : null,
       transactionsCount: (json['transactions_count'] as num?)?.toInt(),
       notes: json['notes'] as String?,
+      durationMinutes: (json['duration_minutes'] as num?)?.toInt(),
+      isActive: json['is_active'] as bool? ?? false,
     );
   }
   final String id;
@@ -28,6 +32,8 @@ class TrainingSession {
   final DateTime? endedAt;
   final int? transactionsCount;
   final String? notes;
+  final int? durationMinutes;
+  final bool isActive;
 
   Map<String, dynamic> toJson() {
     return {
@@ -38,6 +44,8 @@ class TrainingSession {
       'ended_at': endedAt?.toIso8601String(),
       'transactions_count': transactionsCount,
       'notes': notes,
+      'duration_minutes': durationMinutes,
+      'is_active': isActive,
     };
   }
 
@@ -49,6 +57,8 @@ class TrainingSession {
     DateTime? endedAt,
     int? transactionsCount,
     String? notes,
+    int? durationMinutes,
+    bool? isActive,
   }) {
     return TrainingSession(
       id: id ?? this.id,
@@ -58,6 +68,8 @@ class TrainingSession {
       endedAt: endedAt ?? this.endedAt,
       transactionsCount: transactionsCount ?? this.transactionsCount,
       notes: notes ?? this.notes,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      isActive: isActive ?? this.isActive,
     );
   }
 

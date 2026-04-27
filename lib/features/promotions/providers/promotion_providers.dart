@@ -193,3 +193,69 @@ String _extractError(DioException e) {
   if (data is Map && data['message'] != null) return data['message'] as String;
   return e.message ?? 'An unexpected error occurred';
 }
+
+// ─── Promotion Usage Log Provider ───────────────────────────────
+
+final promotionUsageLogProvider = StateNotifierProvider.family<PromotionUsageLogNotifier, PromotionUsageLogState, String>((
+  ref,
+  promotionId,
+) {
+  return PromotionUsageLogNotifier(ref.watch(promotionRepositoryProvider), promotionId);
+});
+
+class PromotionUsageLogNotifier extends StateNotifier<PromotionUsageLogState> {
+  PromotionUsageLogNotifier(this._repo, this._promotionId) : super(const PromotionUsageLogInitial());
+  final PromotionRepository _repo;
+  final String _promotionId;
+
+  String? _dateFrom;
+  String? _dateTo;
+
+  Future<void> load({int page = 1, String? dateFrom, String? dateTo}) async {
+    _dateFrom = dateFrom;
+    _dateTo = dateTo;
+    if (state is! PromotionUsageLogLoaded) state = const PromotionUsageLogLoading();
+    try {
+      final result = await _repo.getPromotionUsageLog(
+        _promotionId,
+        page: page,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+      );
+      state = PromotionUsageLogLoaded(
+        items: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+        perPage: result.perPage,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+      );
+    } on DioException catch (e) {
+      if (state is! PromotionUsageLogLoaded) state = PromotionUsageLogError(message: _extractError(e));
+    } catch (e) {
+      if (state is! PromotionUsageLogLoaded) state = PromotionUsageLogError(message: e.toString());
+    }
+  }
+
+  Future<void> loadMore() async {
+    final s = state;
+    if (s is! PromotionUsageLogLoaded || !s.hasMore) return;
+    try {
+      final result = await _repo.getPromotionUsageLog(
+        _promotionId,
+        page: s.currentPage + 1,
+        dateFrom: _dateFrom,
+        dateTo: _dateTo,
+      );
+      state = s.copyWith(
+        items: [...s.items, ...result.items],
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+      );
+    } on DioException catch (e) {
+      // silently fail on pagination, keep existing items
+      state = PromotionUsageLogError(message: _extractError(e));
+    }
+  }
+}

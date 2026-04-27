@@ -169,6 +169,14 @@ class SubscriptionApiService {
     return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
+  /// Activate an add-on for the current store.
+  Future<Map<String, dynamic>> activateAddOn(String addOnId) async {
+    final response = await _dio.post(ApiEndpoints.subscriptionActivateAddOn(addOnId));
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
   /// Remove (deactivate) an add-on from the current store.
   Future<void> removeAddOn(String addOnId) async {
     await _dio.delete(ApiEndpoints.subscriptionRemoveAddOn(addOnId));

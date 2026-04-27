@@ -160,28 +160,58 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
     final name = _localizedAddOnName(addOn);
     final price = (addOn['monthly_price'] != null ? double.tryParse(addOn['monthly_price'].toString()) : null) ?? 0;
     final cycle = addOn['billing_cycle']?.toString() ?? l10n.subBillingCycleMonthly;
+    final addOnId = addOn['id']?.toString();
 
-    final confirmed = await showPosConfirmDialog(
-      context,
-      title: l10n.subAddNamedAddon(name),
-      message: l10n.subAddOnConfirmMessage(name, price.toStringAsFixed(2), '', cycle),
-      confirmLabel: l10n.subActionAdd,
-      cancelLabel: l10n.commonCancel,
-    );
-    if (confirmed == true && mounted) {
-      context.push(
-        Routes.providerPaymentCheckout,
-        extra: {
-          'purpose': 'plan_addon',
-          'purpose_label': name,
-          'amount': price,
-          'add_on_id': addOn['id']?.toString(),
-          'notes': 'Add-on: $name',
-        },
+    if (addOnId == null) {
+      showPosErrorSnackbar(context, l10n.subUnableToIdentifyAddOn);
+      return;
+    }
+
+    if (price > 0) {
+      // Paid add-on: go through payment flow
+      final confirmed = await showPosConfirmDialog(
+        context,
+        title: l10n.subAddNamedAddon(name),
+        message: l10n.subAddOnConfirmMessage(name, price.toStringAsFixed(2), '', cycle),
+        confirmLabel: l10n.subProceedToPayment,
+        cancelLabel: l10n.commonCancel,
       );
+      if (confirmed == true && mounted) {
+        context.push(
+          Routes.providerPaymentCheckout,
+          extra: {
+            'purpose': 'plan_addon',
+            'purpose_label': name,
+            'amount': price,
+            'add_on_id': addOnId,
+            'notes': 'Add-on: $name',
+          },
+        );
+      }
+    } else {
+      // Free add-on: activate directly via API
+      final confirmed = await showPosConfirmDialog(
+        context,
+        title: l10n.subAddNamedAddon(name),
+        message: l10n.subAddOnFreeConfirmMessage(name),
+        confirmLabel: l10n.subActionAdd,
+        cancelLabel: l10n.commonCancel,
+      );
+      if (confirmed == true) {
+        try {
+          await ref.read(subscriptionApiServiceProvider).activateAddOn(addOnId);
+          if (mounted) {
+            showPosSuccessSnackbar(context, l10n.subAddOnActivatedSuccess(name));
+            ref.read(addOnsProvider.notifier).loadAddOns();
+          }
+        } catch (e) {
+          if (mounted) {
+            showPosErrorSnackbar(context, l10n.subAddOnActivateFailed(e.toString()));
+          }
+        }
+      }
     }
   }
-
   void _confirmRemoveAddOn(Map<String, dynamic> addOn) async {
     final addOnData = addOn['add_on'] ?? addOn['plan_add_on'];
     final nameSource = addOnData is Map<String, dynamic> ? addOnData : addOn;

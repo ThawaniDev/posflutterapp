@@ -241,3 +241,242 @@ class ThawaniQueueStatsNotifier extends StateNotifier<ThawaniQueueStatsState> {
 final thawaniQueueStatsProvider = StateNotifierProvider<ThawaniQueueStatsNotifier, ThawaniQueueStatsState>((ref) {
   return ThawaniQueueStatsNotifier(ref.watch(thawaniRepositoryProvider));
 });
+
+// ─── Thawani Orders Provider ─────────────────────────────
+class ThawaniOrdersNotifier extends StateNotifier<ThawaniOrdersState> {
+  ThawaniOrdersNotifier(this._repository) : super(const ThawaniOrdersInitial());
+  final ThawaniRepository _repository;
+
+  Future<void> load({String? status, int perPage = 20}) async {
+    if (state is! ThawaniOrdersLoaded) state = const ThawaniOrdersLoading();
+    try {
+      final result = await _repository.getOrders(status: status, perPage: perPage);
+      final data = result['data'];
+      List<dynamic> orders;
+      Map<String, dynamic>? pagination;
+      if (data is Map<String, dynamic>) {
+        orders = data['data'] as List? ?? [];
+        pagination = {'current_page': data['current_page'], 'last_page': data['last_page'], 'total': data['total']};
+      } else if (data is List) {
+        orders = data;
+      } else {
+        orders = [];
+      }
+      state = ThawaniOrdersLoaded(orders, pagination: pagination, statusFilter: status);
+    } catch (e) {
+      if (state is! ThawaniOrdersLoaded) state = ThawaniOrdersError(e.toString());
+    }
+  }
+
+  Future<void> refresh({String? status}) async {
+    state = const ThawaniOrdersLoading();
+    await load(status: status);
+  }
+}
+
+final thawaniOrdersProvider = StateNotifierProvider<ThawaniOrdersNotifier, ThawaniOrdersState>((ref) {
+  return ThawaniOrdersNotifier(ref.watch(thawaniRepositoryProvider));
+});
+
+// ─── Thawani Order Action Provider ───────────────────────
+class ThawaniOrderActionNotifier extends StateNotifier<ThawaniOrderActionState> {
+  ThawaniOrderActionNotifier(this._repository) : super(const ThawaniOrderActionInitial());
+  final ThawaniRepository _repository;
+
+  void reset() => state = const ThawaniOrderActionInitial();
+
+  Future<bool> acceptOrder(String orderId) async {
+    state = ThawaniOrderActionLoading(operation: 'accept', orderId: orderId);
+    try {
+      final result = await _repository.acceptOrder(orderId);
+      final msg = result['message'] as String? ?? 'Order accepted';
+      final order = result['data'] as Map<String, dynamic>?;
+      state = ThawaniOrderActionSuccess(msg, updatedOrder: order);
+      return true;
+    } catch (e) {
+      state = ThawaniOrderActionError(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> rejectOrder(String orderId, String reason) async {
+    state = ThawaniOrderActionLoading(operation: 'reject', orderId: orderId);
+    try {
+      final result = await _repository.rejectOrder(orderId, reason);
+      final msg = result['message'] as String? ?? 'Order rejected';
+      final order = result['data'] as Map<String, dynamic>?;
+      state = ThawaniOrderActionSuccess(msg, updatedOrder: order);
+      return true;
+    } catch (e) {
+      state = ThawaniOrderActionError(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateStatus(String orderId, String status) async {
+    state = ThawaniOrderActionLoading(operation: 'status', orderId: orderId);
+    try {
+      final result = await _repository.updateOrderStatus(orderId, status);
+      final msg = result['message'] as String? ?? 'Status updated';
+      final order = result['data'] as Map<String, dynamic>?;
+      state = ThawaniOrderActionSuccess(msg, updatedOrder: order);
+      return true;
+    } catch (e) {
+      state = ThawaniOrderActionError(e.toString());
+      return false;
+    }
+  }
+}
+
+final thawaniOrderActionProvider = StateNotifierProvider<ThawaniOrderActionNotifier, ThawaniOrderActionState>((ref) {
+  return ThawaniOrderActionNotifier(ref.watch(thawaniRepositoryProvider));
+});
+
+// ─── Thawani Settlements Provider ────────────────────────
+class ThawaniSettlementsNotifier extends StateNotifier<ThawaniSettlementsState> {
+  ThawaniSettlementsNotifier(this._repository) : super(const ThawaniSettlementsInitial());
+  final ThawaniRepository _repository;
+
+  Future<void> load({int perPage = 20}) async {
+    if (state is! ThawaniSettlementsLoaded) state = const ThawaniSettlementsLoading();
+    try {
+      final result = await _repository.getSettlements(perPage: perPage);
+      final data = result['data'];
+      List<dynamic> settlements;
+      Map<String, dynamic>? pagination;
+      if (data is Map<String, dynamic>) {
+        settlements = data['data'] as List? ?? [];
+        pagination = {'current_page': data['current_page'], 'last_page': data['last_page'], 'total': data['total']};
+      } else if (data is List) {
+        settlements = data;
+      } else {
+        settlements = [];
+      }
+      state = ThawaniSettlementsLoaded(settlements, pagination: pagination);
+    } catch (e) {
+      if (state is! ThawaniSettlementsLoaded) state = ThawaniSettlementsError(e.toString());
+    }
+  }
+}
+
+final thawaniSettlementsProvider = StateNotifierProvider<ThawaniSettlementsNotifier, ThawaniSettlementsState>((ref) {
+  return ThawaniSettlementsNotifier(ref.watch(thawaniRepositoryProvider));
+});
+
+// ─── Thawani Menu (Online Products) Provider ─────────────
+class ThawaniMenuNotifier extends StateNotifier<ThawaniMenuState> {
+  ThawaniMenuNotifier(this._repository) : super(const ThawaniMenuInitial());
+  final ThawaniRepository _repository;
+
+  Future<void> load({String? search, bool? isPublished, int perPage = 20}) async {
+    if (state is! ThawaniMenuLoaded) state = const ThawaniMenuLoading();
+    try {
+      final result = await _repository.getProducts(search: search, isPublished: isPublished, perPage: perPage);
+      final data = result['data'];
+      List<dynamic> products;
+      Map<String, dynamic>? pagination;
+      if (data is Map<String, dynamic>) {
+        products = data['data'] as List? ?? [];
+        pagination = {'current_page': data['current_page'], 'last_page': data['last_page'], 'total': data['total']};
+      } else if (data is List) {
+        products = data;
+      } else {
+        products = [];
+      }
+      String? filter;
+      if (isPublished == true) filter = 'published';
+      if (isPublished == false) filter = 'unpublished';
+      state = ThawaniMenuLoaded(products, pagination: pagination, filter: filter);
+    } catch (e) {
+      if (state is! ThawaniMenuLoaded) state = ThawaniMenuError(e.toString());
+    }
+  }
+
+  Future<void> refresh({bool? isPublished}) async {
+    state = const ThawaniMenuLoading();
+    await load(isPublished: isPublished);
+  }
+}
+
+final thawaniMenuProvider = StateNotifierProvider<ThawaniMenuNotifier, ThawaniMenuState>((ref) {
+  return ThawaniMenuNotifier(ref.watch(thawaniRepositoryProvider));
+});
+
+// ─── Thawani Menu Action Provider ────────────────────────
+class ThawaniMenuActionNotifier extends StateNotifier<ThawaniMenuActionState> {
+  ThawaniMenuActionNotifier(this._repository) : super(const ThawaniMenuActionInitial());
+  final ThawaniRepository _repository;
+
+  void reset() => state = const ThawaniMenuActionInitial();
+
+  Future<bool> publishProduct(String id, {required bool isPublished, double? onlinePrice, int? displayOrder}) async {
+    state = const ThawaniMenuActionLoading();
+    try {
+      await _repository.publishProduct(id, isPublished: isPublished, onlinePrice: onlinePrice, displayOrder: displayOrder);
+      state = ThawaniMenuActionSuccess(isPublished ? 'Product published' : 'Product unpublished');
+      return true;
+    } catch (e) {
+      state = ThawaniMenuActionError(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> bulkPublish(List<String> productIds, bool isPublished) async {
+    state = const ThawaniMenuActionLoading();
+    try {
+      await _repository.bulkPublishProducts(productIds, isPublished);
+      state = ThawaniMenuActionSuccess(isPublished ? 'Products published' : 'Products unpublished');
+      return true;
+    } catch (e) {
+      state = ThawaniMenuActionError(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> syncInventory() async {
+    state = const ThawaniMenuActionLoading();
+    try {
+      await _repository.syncInventory();
+      state = const ThawaniMenuActionSuccess('Inventory synced');
+      return true;
+    } catch (e) {
+      state = ThawaniMenuActionError(e.toString());
+      return false;
+    }
+  }
+}
+
+final thawaniMenuActionProvider = StateNotifierProvider<ThawaniMenuActionNotifier, ThawaniMenuActionState>((ref) {
+  return ThawaniMenuActionNotifier(ref.watch(thawaniRepositoryProvider));
+});
+
+// ─── Thawani Store Availability Provider ─────────────────
+class ThawaniStoreAvailabilityNotifier extends StateNotifier<ThawaniStoreAvailabilityState> {
+  ThawaniStoreAvailabilityNotifier(this._repository) : super(const ThawaniStoreAvailabilityInitial());
+  final ThawaniRepository _repository;
+
+  void initFromConfig(Map<String, dynamic> config) {
+    state = ThawaniStoreAvailabilityLoaded(
+      isOpen: config['is_store_open'] as bool? ?? true,
+      closedReason: config['store_closed_reason'] as String?,
+    );
+  }
+
+  Future<bool> updateAvailability(bool isOpen, {String? closedReason}) async {
+    final prev = state;
+    state = const ThawaniStoreAvailabilityLoading();
+    try {
+      await _repository.updateStoreAvailability(isOpen, closedReason: closedReason);
+      state = ThawaniStoreAvailabilityLoaded(isOpen: isOpen, closedReason: isOpen ? null : closedReason);
+      return true;
+    } catch (e) {
+      state = prev;
+      return false;
+    }
+  }
+}
+
+final thawaniStoreAvailabilityProvider =
+    StateNotifierProvider<ThawaniStoreAvailabilityNotifier, ThawaniStoreAvailabilityState>((ref) {
+  return ThawaniStoreAvailabilityNotifier(ref.watch(thawaniRepositoryProvider));
+});

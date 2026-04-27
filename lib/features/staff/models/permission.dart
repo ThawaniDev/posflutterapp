@@ -5,9 +5,12 @@ class Permission {
     required this.name,
     required this.displayName,
     this.displayNameAr,
+    this.description,
+    this.descriptionAr,
     required this.module,
     this.guardName = 'staff',
     this.requiresPin,
+    this.sortOrder,
     this.createdAt,
     this.updatedAt,
   });
@@ -18,9 +21,12 @@ class Permission {
       name: json['name'] as String,
       displayName: json['display_name'] as String,
       displayNameAr: json['display_name_ar'] as String?,
+      description: json['description'] as String?,
+      descriptionAr: json['description_ar'] as String?,
       module: json['module'] as String? ?? (json['name'] as String).split('.').first,
       guardName: json['guard_name'] as String? ?? 'staff',
       requiresPin: json['requires_pin'] as bool? ?? false,
+      sortOrder: (json['sort_order'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -29,9 +35,12 @@ class Permission {
   final String name;
   final String displayName;
   final String? displayNameAr;
+  final String? description;
+  final String? descriptionAr;
   final String module;
   final String guardName;
   final bool? requiresPin;
+  final int? sortOrder;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -44,15 +53,25 @@ class Permission {
     return displayName;
   }
 
+  String? localizedDescription(String locale) {
+    if (locale == 'ar' && descriptionAr != null && descriptionAr!.isNotEmpty) {
+      return descriptionAr;
+    }
+    return description;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
       'display_name': displayName,
       'display_name_ar': displayNameAr,
+      'description': description,
+      'description_ar': descriptionAr,
       'module': module,
       'guard_name': guardName,
       'requires_pin': requiresPin,
+      'sort_order': sortOrder,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
@@ -63,9 +82,12 @@ class Permission {
     String? name,
     String? displayName,
     String? displayNameAr,
+    String? description,
+    String? descriptionAr,
     String? module,
     String? guardName,
     bool? requiresPin,
+    int? sortOrder,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -74,9 +96,12 @@ class Permission {
       name: name ?? this.name,
       displayName: displayName ?? this.displayName,
       displayNameAr: displayNameAr ?? this.displayNameAr,
+      description: description ?? this.description,
+      descriptionAr: descriptionAr ?? this.descriptionAr,
       module: module ?? this.module,
       guardName: guardName ?? this.guardName,
       requiresPin: requiresPin ?? this.requiresPin,
+      sortOrder: sortOrder ?? this.sortOrder,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

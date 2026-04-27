@@ -8,6 +8,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/staff/enums/staff_status.dart';
+import 'package:wameedpos/features/staff/models/staff_document.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
@@ -88,6 +89,7 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> {
               PosTabItem(label: l10n.staffBranches),
               PosTabItem(label: l10n.staffAttendanceTab),
               PosTabItem(label: l10n.staffActivity),
+              PosTabItem(label: l10n.staffDocuments),
             ],
           ),
         ),
@@ -100,6 +102,7 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> {
               _BranchAssignmentsTab(staff: staff, isDark: isDark, l10n: l10n),
               _AttendanceTab(staffId: staff.id, isDark: isDark, l10n: l10n),
               _ActivityTab(staffId: staff.id, isDark: isDark, l10n: l10n),
+              _DocumentsTab(staffId: staff.id, isDark: isDark, l10n: l10n),
             ],
           ),
         ),
@@ -913,6 +916,282 @@ class _InfoRow extends StatelessWidget {
                 color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Documents Tab
+// ═══════════════════════════════════════════════════════════════
+
+class _DocumentsTab extends ConsumerStatefulWidget {
+  const _DocumentsTab({required this.staffId, required this.isDark, required this.l10n});
+  final String staffId;
+  final bool isDark;
+  final AppLocalizations l10n;
+
+  @override
+  ConsumerState<_DocumentsTab> createState() => _DocumentsTabState();
+}
+
+class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
+  static const _docTypes = ['national_id', 'contract', 'certificate', 'visa', 'other'];
+
+  String _docTypeLabel(String type) {
+    return switch (type) {
+      'national_id' => widget.l10n.staffDocumentNationalId,
+      'contract' => widget.l10n.staffDocumentContract,
+      'certificate' => widget.l10n.staffDocumentCertificate,
+      'visa' => widget.l10n.staffDocumentVisa,
+      _ => widget.l10n.staffDocumentOther,
+    };
+  }
+
+  IconData _docTypeIcon(String type) {
+    return switch (type) {
+      'national_id' => Icons.badge_outlined,
+      'contract' => Icons.description_outlined,
+      'certificate' => Icons.workspace_premium_outlined,
+      'visa' => Icons.flight_outlined,
+      _ => Icons.attach_file_outlined,
+    };
+  }
+
+  void _showAddDialog() {
+    final formKey = GlobalKey<FormState>();
+    String selectedType = _docTypes.first;
+    final urlController = TextEditingController();
+    DateTime? expiryDate;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setStateDialog) => AlertDialog(
+          title: Text(widget.l10n.staffAddDocument),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: selectedType,
+                  decoration: InputDecoration(labelText: widget.l10n.staffDocumentType),
+                  items: _docTypes.map((t) => DropdownMenuItem(value: t, child: Text(_docTypeLabel(t)))).toList(),
+                  onChanged: (v) => setStateDialog(() => selectedType = v ?? selectedType),
+                ),
+                AppSpacing.gapH16,
+                TextFormField(
+                  controller: urlController,
+                  decoration: InputDecoration(labelText: widget.l10n.staffDocumentUrl, hintText: 'https://...'),
+                  validator: (v) => (v == null || v.trim().isEmpty) ? widget.l10n.required : null,
+                ),
+                AppSpacing.gapH16,
+                InkWell(
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: ctx,
+                      initialDate: DateTime.now().add(const Duration(days: 365)),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(const Duration(days: 3650)),
+                    );
+                    if (picked != null) setStateDialog(() => expiryDate = picked);
+                  },
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: widget.l10n.staffDocumentExpiry,
+                      suffixIcon: const Icon(Icons.calendar_today_outlined, size: 16),
+                    ),
+                    child: Text(
+                      expiryDate != null ? DateFormat('yyyy-MM-dd').format(expiryDate!) : '—',
+                      style: TextStyle(color: expiryDate != null ? null : AppColors.mutedFor(context)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(widget.l10n.cancel)),
+            PosButton(
+              label: widget.l10n.save,
+              onPressed: () async {
+                if (!formKey.currentState!.validate()) return;
+                Navigator.pop(ctx);
+                await ref.read(staffDocumentsProvider(widget.staffId).notifier).add(
+                  documentType: selectedType,
+                  fileUrl: urlController.text.trim(),
+                  expiryDate: expiryDate != null ? DateFormat('yyyy-MM-dd').format(expiryDate!) : null,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDelete(StaffDocument doc) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(widget.l10n.staffDeleteDocumentConfirm),
+        content: Text(_docTypeLabel(doc.documentType)),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(widget.l10n.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text(widget.l10n.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await ref.read(staffDocumentsProvider(widget.staffId).notifier).remove(doc.id);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(staffDocumentsProvider(widget.staffId));
+
+    return state.when(
+      loading: () => PosLoadingSkeleton.list(),
+      error: (e, _) => PosErrorState(
+        message: e.toString(),
+        onRetry: () => ref.invalidate(staffDocumentsProvider(widget.staffId)),
+      ),
+      data: (docs) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Row(
+              children: [
+                Text(
+                  widget.l10n.staffDocuments,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                const Spacer(),
+                PosButton.outlined(
+                  label: widget.l10n.staffAddDocument,
+                  icon: Icons.add,
+                  onPressed: _showAddDialog,
+                  size: PosButtonSize.sm,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: docs.isEmpty
+                ? PosEmptyState(title: widget.l10n.staffNoDocuments, icon: Icons.folder_open_outlined)
+                : ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    itemCount: docs.length,
+                    separatorBuilder: (_, __) => AppSpacing.gapH12,
+                    itemBuilder: (ctx, i) {
+                      final doc = docs[i];
+                      return _DocumentCard(
+                        doc: doc,
+                        typeLabel: _docTypeLabel(doc.documentType),
+                        typeIcon: _docTypeIcon(doc.documentType),
+                        isDark: widget.isDark,
+                        l10n: widget.l10n,
+                        onDelete: () => _confirmDelete(doc),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DocumentCard extends StatelessWidget {
+  const _DocumentCard({
+    required this.doc,
+    required this.typeLabel,
+    required this.typeIcon,
+    required this.isDark,
+    required this.l10n,
+    required this.onDelete,
+  });
+  final StaffDocument doc;
+  final String typeLabel;
+  final IconData typeIcon;
+  final bool isDark;
+  final AppLocalizations l10n;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final expiryColor = doc.isExpired
+        ? AppColors.error
+        : doc.expiringSoon
+            ? AppColors.warning
+            : AppColors.success;
+
+    return PosCard(
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(typeIcon, color: AppColors.primary, size: 22),
+          ),
+          AppSpacing.gapW12,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(typeLabel, style: const TextStyle(fontWeight: FontWeight.w600)),
+                if (doc.expiryDate != null) ...[
+                  AppSpacing.gapH4,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: expiryColor.withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          doc.isExpired
+                              ? l10n.staffDocumentExpired
+                              : doc.expiringSoon
+                                  ? l10n.staffDocumentExpiringSoon
+                                  : l10n.staffDocumentDaysLeft(doc.daysUntilExpiry ?? 0),
+                          style: TextStyle(fontSize: 11, color: expiryColor, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      AppSpacing.gapW8,
+                      Text(
+                        DateFormat('dd MMM yyyy').format(DateTime.parse(doc.expiryDate!)),
+                        style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.open_in_new_outlined, color: AppColors.mutedFor(context)),
+            tooltip: 'Open',
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete_outline, color: AppColors.error),
+            tooltip: l10n.delete,
+            onPressed: onDelete,
           ),
         ],
       ),
