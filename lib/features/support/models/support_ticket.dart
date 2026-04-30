@@ -3,7 +3,6 @@ import 'package:wameedpos/features/support/enums/ticket_priority.dart';
 import 'package:wameedpos/features/support/enums/ticket_status.dart';
 
 class SupportTicket {
-
   const SupportTicket({
     required this.id,
     required this.ticketNumber,
@@ -16,6 +15,10 @@ class SupportTicket {
     required this.status,
     required this.subject,
     required this.description,
+    this.slaBadge,
+    this.messagesCount,
+    this.satisfactionRating,
+    this.satisfactionComment,
     this.slaDeadlineAt,
     this.firstResponseAt,
     this.resolvedAt,
@@ -37,6 +40,10 @@ class SupportTicket {
       status: TicketStatus.fromValue(json['status'] as String),
       subject: json['subject'] as String,
       description: json['description'] as String,
+      slaBadge: json['sla_badge'] as String?,
+      messagesCount: json['messages_count'] as int?,
+      satisfactionRating: json['satisfaction_rating'] as int?,
+      satisfactionComment: json['satisfaction_comment'] as String?,
       slaDeadlineAt: json['sla_deadline_at'] != null ? DateTime.parse(json['sla_deadline_at'] as String) : null,
       firstResponseAt: json['first_response_at'] != null ? DateTime.parse(json['first_response_at'] as String) : null,
       resolvedAt: json['resolved_at'] != null ? DateTime.parse(json['resolved_at'] as String) : null,
@@ -56,12 +63,24 @@ class SupportTicket {
   final TicketStatus status;
   final String subject;
   final String description;
+
+  /// 'none' | 'met' | 'on_track' | 'breached'
+  final String? slaBadge;
+  final int? messagesCount;
+  final int? satisfactionRating;
+  final String? satisfactionComment;
   final DateTime? slaDeadlineAt;
   final DateTime? firstResponseAt;
   final DateTime? resolvedAt;
   final DateTime? closedAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+
+  /// Whether the ticket's SLA deadline has been breached.
+  bool get isSlaBreached => slaBadge == 'breached';
+
+  /// Whether the ticket has been rated by the provider.
+  bool get isRated => satisfactionRating != null;
 
   Map<String, dynamic> toJson() {
     return {
@@ -76,6 +95,10 @@ class SupportTicket {
       'status': status.value,
       'subject': subject,
       'description': description,
+      'sla_badge': slaBadge,
+      'messages_count': messagesCount,
+      'satisfaction_rating': satisfactionRating,
+      'satisfaction_comment': satisfactionComment,
       'sla_deadline_at': slaDeadlineAt?.toIso8601String(),
       'first_response_at': firstResponseAt?.toIso8601String(),
       'resolved_at': resolvedAt?.toIso8601String(),
@@ -97,6 +120,10 @@ class SupportTicket {
     TicketStatus? status,
     String? subject,
     String? description,
+    String? slaBadge,
+    int? messagesCount,
+    int? satisfactionRating,
+    String? satisfactionComment,
     DateTime? slaDeadlineAt,
     DateTime? firstResponseAt,
     DateTime? resolvedAt,
@@ -116,6 +143,10 @@ class SupportTicket {
       status: status ?? this.status,
       subject: subject ?? this.subject,
       description: description ?? this.description,
+      slaBadge: slaBadge ?? this.slaBadge,
+      messagesCount: messagesCount ?? this.messagesCount,
+      satisfactionRating: satisfactionRating ?? this.satisfactionRating,
+      satisfactionComment: satisfactionComment ?? this.satisfactionComment,
       slaDeadlineAt: slaDeadlineAt ?? this.slaDeadlineAt,
       firstResponseAt: firstResponseAt ?? this.firstResponseAt,
       resolvedAt: resolvedAt ?? this.resolvedAt,

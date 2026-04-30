@@ -1,163 +1,124 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
-import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsStoresPage extends ConsumerStatefulWidget {
   const AdminAnalyticsStoresPage({super.key});
-
   @override
-  ConsumerState<AdminAnalyticsStoresPage> createState() => _AdminAnalyticsStoresPageState();
+  ConsumerState<AdminAnalyticsStoresPage> createState() => _State();
 }
 
-class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresPage> {
-
-  AppLocalizations get l10n => AppLocalizations.of(context)!;
-  String? _storeId;
-
+class _State extends ConsumerState<AdminAnalyticsStoresPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      _storeId = ref.read(resolvedStoreIdProvider);
-      ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId);
-    });
-  }
-
-  void _onBranchChanged(String? storeId) {
-    setState(() => _storeId = storeId);
-    ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId);
+    Future.microtask(() => ref.read(analyticsStoresProvider.notifier).load());
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n  = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsStoresProvider);
-    final exportState = ref.watch(analyticsExportProvider);
 
     return PosListPage(
-  title: l10n.analyticsStores,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(), tooltip: l10n.adminExportStores,
-  ),
-],
-  child: Column(
-        children: [
-          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          if (exportState is AnalyticsExportSuccess)
-            MaterialBanner(
-              content: Text(l10n.adminExportReadyRecords(exportState.recordCount.toString())),
-              backgroundColor: AppColors.success.withValues(alpha: 0.08),
-              actions: [
-                PosButton(
-                  onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
-                  variant: PosButtonVariant.ghost,
-                  label: l10n.adminExportAgain,
-                ),
-              ],
+      title: l10n.analyticsStorePerformance,
+      showSearch: false,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.download_outlined),
+          tooltip: l10n.adminExportStores,
+          onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
+        ),
+      ],
+      child: switch (state) {
+        AnalyticsStoresLoading() => PosLoadingSkeleton.list(),
+        AnalyticsStoresLoaded(
+          totalStores: final total,
+          activeStores: final active,
+          topStores: final topList,
+          healthSummary: final health,
+        ) => RefreshIndicator(
+          onRefresh: () async => ref.read(analyticsStoresProvider.notifier).load(),
+          child: ListView(padding: const EdgeInsets.all(AppSpacing.md), children: [
+            PosKpiGrid(desktopCols: 3, mobileCols: 2, cards: [
+              PosKpiCard(label: l10n.analyticsTotalStores, value: '$total', icon: Icons.storefront_outlined, iconColor: AppColors.info),
+              PosKpiCard(label: l10n.analyticsActiveStores, value: '$active', icon: Icons.store_outlined, iconColor: AppColors.success),
+              PosKpiCard(label: l10n.analyticsInactiveStores, value: '${total - active}', icon: Icons.store, iconColor: AppColors.textSecondary),
+            ]),
+            const SizedBox(height: AppSpacing.xl),
+            // Health summary pie
+            Text(l10n.analyticsStoreHealthSummary, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: AppSpacing.sm),
+            PosCard(
+              child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: health.isEmpty
+                ? PosEmptyState(title: l10n.adminNoHealthData)
+                : ReportPieChart(
+                    data: health.entries.map((e) => {'status': e.key, 'count': e.value}).toList(),
+                    labelKey: 'status', valueKey: 'count', height: 200,
+                  )),
             ),
-          Expanded(
-            child: switch (state) {
-              AnalyticsStoresLoading() => const Center(child: CircularProgressIndicator()),
-              AnalyticsStoresLoaded(
-                totalStores: final total,
-                activeStores: final active,
-                topStores: final stores,
-                healthSummary: final health,
-              ) =>
-                RefreshIndicator(
-                  onRefresh: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
-                  child: ListView(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    children: [
-                      // Overview cards
-                      PosKpiGrid(
-                        desktopCols: 3,
-                        mobileCols: 2,
-                        cards: [
-                          PosKpiCard(label: l10n.adminTotalStores, value: '$total', iconColor: AppColors.info),
-                          PosKpiCard(label: l10n.active, value: '$active', iconColor: AppColors.success),
-                          PosKpiCard(label: l10n.inactive, value: '${total - active}', iconColor: AppColors.textSecondary),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-
-                      // Health Summary
-                      Text(l10n.adminHealthSummary, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: AppSpacing.sm),
-                      if (health.isEmpty)
-                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoHealthDataToday)),
-                        )
-                      else
-                        ...health.entries.map(
-                          (e) => PosCard(
-                            margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-                            child: ListTile(
-                              leading: Icon(
-                                e.key == 'ok' ? Icons.check_circle : Icons.warning,
-                                color: e.key == 'ok' ? AppColors.success : AppColors.warning,
-                              ),
-                              title: Text(e.key.toUpperCase()),
-                              trailing: Text('${e.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                            ),
-                          ),
+            const SizedBox(height: AppSpacing.xl),
+            // Top stores list
+            Text(l10n.analyticsTopStores, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: AppSpacing.sm),
+            if (topList.isEmpty)
+              PosEmptyState(title: l10n.adminNoStoresData)
+            else
+              PosCard(
+                child: Column(children: [
+                  ...topList.asMap().entries.map((entry) {
+                    final idx = entry.key;
+                    final s = entry.value;
+                    return Column(children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: idx == 0
+                            ? AppColors.warning.withValues(alpha: 0.2)
+                            : AppColors.primary.withValues(alpha: 0.1),
+                          child: Text('${idx + 1}', style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: idx == 0 ? AppColors.warning : AppColors.primary,
+                          )),
                         ),
-
-                      const SizedBox(height: AppSpacing.lg),
-
-                      // Top Stores
-                      Text(l10n.adminTopStores, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: AppSpacing.sm),
-                      ...stores.map(
-                        (s) => PosCard(
-                          margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: (s['is_active'] == true)
-                                  ? AppColors.success.withValues(alpha: 0.08)
-                                  : AppColors.textSecondary.withValues(alpha: 0.08),
-                              child: Icon(
-                                Icons.store,
-                                color: (s['is_active'] == true) ? AppColors.success : AppColors.textSecondary,
-                              ),
-                            ),
-                            title: Text(s['name'] as String? ?? 'Store #${s['id']}'),
-                            trailing: Icon(
-                              (s['is_active'] == true) ? Icons.check_circle : Icons.cancel,
-                              color: (s['is_active'] == true) ? AppColors.success : AppColors.error,
+                        title: Text(s['name'] as String? ?? 'Store', style: const TextStyle(fontWeight: FontWeight.w600)),
+                        subtitle: s['last_activity'] != null
+                          ? Text(s['last_activity'] as String, style: const TextStyle(fontSize: 12))
+                          : null,
+                        trailing: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: (s['is_active'] == true ? AppColors.success : AppColors.error).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            s['is_active'] == true ? l10n.analyticsActive : l10n.analyticsInactive,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: s['is_active'] == true ? AppColors.success : AppColors.error,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              AnalyticsStoresError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(l10n.genericError(msg)),
-                    const SizedBox(height: AppSpacing.sm),
-                    PosButton(
-                      onPressed: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
-                      label: l10n.retry,
-                    ),
-                  ],
-                ),
+                      if (idx < topList.length - 1) const Divider(height: 1, indent: 56),
+                    ]);
+                  }),
+                ]),
               ),
-              _ => Center(child: Text(l10n.adminLoadingStoreAnalytics)),
-            },
-          ),
-        ],
-      ),
-);
+          ]),
+        ),
+        AnalyticsStoresError(message: final msg) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+          PosErrorState(message: msg), const SizedBox(height: AppSpacing.sm),
+          PosButton(onPressed: () => ref.read(analyticsStoresProvider.notifier).load(), label: l10n.retry),
+        ])),
+        _ => PosLoadingSkeleton.list(),
+      },
+    );
   }
 }

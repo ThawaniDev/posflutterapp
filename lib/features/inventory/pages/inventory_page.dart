@@ -80,6 +80,25 @@ class InventoryPage extends ConsumerWidget {
             subtitle: l10n.supplierReturnsSubtitle,
             onTap: () => context.push(Routes.supplierReturns),
           ),
+          _InventoryTile(
+            icon: Icons.fact_check_outlined,
+            title: l10n.inventoryStocktakes,
+            subtitle: l10n.inventoryStocktakesSubtitle,
+            onTap: () => context.push(Routes.stocktakes),
+          ),
+          _InventoryTile(
+            icon: Icons.delete_sweep_outlined,
+            title: l10n.inventoryWasteRecords,
+            subtitle: l10n.inventoryWasteRecordsSubtitle,
+            onTap: () => context.push(Routes.wasteRecords),
+          ),
+          _InventoryTile(
+            icon: Icons.timer_off_outlined,
+            title: l10n.inventoryExpiryDashboard,
+            subtitle: l10n.inventoryExpiryDashboardSubtitle,
+            color: AppColors.warning,
+            onTap: () => context.push(Routes.expiryDashboard),
+          ),
         ],
       ),
     );
@@ -88,14 +107,16 @@ class InventoryPage extends ConsumerWidget {
 
 class _InventoryTile extends StatelessWidget {
 
-  const _InventoryTile({required this.icon, required this.title, required this.subtitle, required this.onTap});
+  const _InventoryTile({required this.icon, required this.title, required this.subtitle, required this.onTap, this.color});
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    final tileColor = color ?? AppColors.primary;
     return PosCard(
       onTap: onTap,
       child: Padding(
@@ -103,7 +124,7 @@ class _InventoryTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 36, color: AppColors.primary),
+            Icon(icon, size: 36, color: tileColor),
             const SizedBox(height: AppSpacing.sm),
             Text(title, style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.xs),

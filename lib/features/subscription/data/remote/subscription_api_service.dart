@@ -57,10 +57,16 @@ class SubscriptionApiService {
     return StoreSubscription.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
-  Future<StoreSubscription> subscribe({required String planId, String billingCycle = 'monthly', String? paymentMethod}) async {
+  Future<StoreSubscription> subscribe({
+    required String planId,
+    String billingCycle = 'monthly',
+    String? paymentMethod,
+    String? discountCode,
+  }) async {
     final response = await _dio.post(
       ApiEndpoints.subscriptionSubscribe,
-      data: {'plan_id': planId, 'billing_cycle': billingCycle, 'payment_method': paymentMethod}..removeWhere((_, v) => v == null),
+      data: {'plan_id': planId, 'billing_cycle': billingCycle, 'payment_method': paymentMethod, 'discount_code': discountCode}
+        ..removeWhere((_, v) => v == null),
     );
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
@@ -112,6 +118,25 @@ class SubscriptionApiService {
 
   Future<Map<String, dynamic>> checkLimit(String limitKey) async {
     final response = await _dio.get('${ApiEndpoints.subscriptionCheckLimit}/$limitKey');
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  // ─── Discount Code Validation ──────────────────────────────────
+
+  /// Validate a discount code and return pricing preview.
+  /// Returns a map with: code, type, value, original_price, discount_amount,
+  /// final_price, currency, billing_cycle.
+  Future<Map<String, dynamic>> validateDiscount({
+    required String code,
+    required String planId,
+    String billingCycle = 'monthly',
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.subscriptionValidateDiscount,
+      data: {'code': code, 'plan_id': planId, 'billing_cycle': billingCycle},
+    );
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;

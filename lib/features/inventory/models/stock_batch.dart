@@ -4,6 +4,7 @@ class StockBatch {
     required this.id,
     required this.storeId,
     required this.productId,
+    this.productName,
     this.batchNumber,
     this.expiryDate,
     required this.quantity,
@@ -17,6 +18,7 @@ class StockBatch {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       productId: json['product_id'] as String,
+      productName: (json['product'] as Map<String, dynamic>?)?['name'] as String?,
       batchNumber: json['batch_number'] as String?,
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
       quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
@@ -28,6 +30,7 @@ class StockBatch {
   final String id;
   final String storeId;
   final String productId;
+  final String? productName;
   final String? batchNumber;
   final DateTime? expiryDate;
   final double quantity;
@@ -53,6 +56,7 @@ class StockBatch {
     String? id,
     String? storeId,
     String? productId,
+    String? productName,
     String? batchNumber,
     DateTime? expiryDate,
     double? quantity,
@@ -64,6 +68,7 @@ class StockBatch {
       id: id ?? this.id,
       storeId: storeId ?? this.storeId,
       productId: productId ?? this.productId,
+      productName: productName ?? this.productName,
       batchNumber: batchNumber ?? this.batchNumber,
       expiryDate: expiryDate ?? this.expiryDate,
       quantity: quantity ?? this.quantity,

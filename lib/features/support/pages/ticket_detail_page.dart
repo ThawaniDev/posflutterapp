@@ -101,15 +101,18 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
             // Ticket info header
             _buildHeader(ticket, isDark, l10n),
             const Divider(height: 1),
+            // Rating banner for resolved/closed unrated tickets
+            if ((ticket.status == TicketStatus.resolved || ticket.status == TicketStatus.closed) && !ticket.isRated)
+              _RatingBanner(ticketId: widget.ticketId, actionState: actionState, l10n: l10n, isDark: isDark),
+            // Already-rated satisfaction display
+            if (ticket.isRated) _SatisfactionDisplay(ticket: ticket, l10n: l10n),
             // Messages
             Expanded(
               child: messages.isEmpty
                   ? Center(
                       child: Text(
                         l10n.supportNoMessages,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.mutedFor(context),
-                        ),
+                        style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                       ),
                     )
                   : ListView.builder(
@@ -154,10 +157,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
           // Top row: ticket number + status badge
           Row(
             children: [
-              Text(
-                '#${ticket.ticketNumber}',
-                style: AppTypography.labelMedium.copyWith(color: AppColors.mutedFor(context)),
-              ),
+              Text('#${ticket.ticketNumber}', style: AppTypography.labelMedium.copyWith(color: AppColors.mutedFor(context))),
               const Spacer(),
               TicketStatusBadge(status: ticket.status),
             ],
@@ -183,16 +183,9 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               TicketPriorityBadge(priority: ticket.priority, isSmall: true),
               Text(
                 ticket.category.value.replaceAll('_', ' ').toUpperCase(),
-                style: AppTypography.micro.copyWith(
-                  color: AppColors.mutedFor(context),
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context), fontWeight: FontWeight.w600),
               ),
-              if (dateStr.isNotEmpty)
-                Text(
-                  dateStr,
-                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
-                ),
+              if (dateStr.isNotEmpty) Text(dateStr, style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
             ],
           ),
           // SLA info
@@ -276,6 +269,178 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
             variant: PosButtonVariant.primary,
             tooltip: l10n.supportSend,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Rating Banner Widget ────────────────────────────────────────────────────
+
+class _RatingBanner extends ConsumerStatefulWidget {
+  const _RatingBanner({required this.ticketId, required this.actionState, required this.l10n, required this.isDark});
+
+  final String ticketId;
+  final TicketActionState actionState;
+  final AppLocalizations l10n;
+  final bool isDark;
+
+  @override
+  ConsumerState<_RatingBanner> createState() => _RatingBannerState();
+}
+
+class _RatingBannerState extends ConsumerState<_RatingBanner> {
+  int _selectedRating = 0;
+  final _commentController = TextEditingController();
+  bool _expanded = false;
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (_selectedRating == 0) return;
+    ref
+        .read(ticketActionProvider.notifier)
+        .rateTicket(
+          widget.ticketId,
+          rating: _selectedRating,
+          comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isLoading = widget.actionState is TicketActionLoading;
+
+    return Container(
+      margin: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: widget.isDark ? AppColors.cardDark : AppColors.primaryLight.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+      ),
+      child: Column(
+        children: [
+          // Header row — always visible
+          InkWell(
+            onTap: () => setState(() => _expanded = !_expanded),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  Icon(Icons.star_rounded, color: AppColors.warning, size: 20),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: Text(
+                      widget.l10n.supportRateTicket,
+                      style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Icon(_expanded ? Icons.expand_less : Icons.expand_more, color: AppColors.mutedFor(context)),
+                ],
+              ),
+            ),
+          ),
+          if (_expanded) ...[
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.l10n.supportRateTicketHint,
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                  ),
+                  AppSpacing.gapH12,
+                  // Star row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (i) {
+                      final star = i + 1;
+                      return GestureDetector(
+                        onTap: () => setState(() => _selectedRating = star),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Icon(
+                            star <= _selectedRating ? Icons.star_rounded : Icons.star_border_rounded,
+                            color: AppColors.warning,
+                            size: 36,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  AppSpacing.gapH12,
+                  // Optional comment
+                  PosTextField(controller: _commentController, hint: widget.l10n.supportRateTicketHint, maxLines: 3, minLines: 1),
+                  AppSpacing.gapH12,
+                  SizedBox(
+                    width: double.infinity,
+                    child: PosButton(
+                      label: widget.l10n.supportRateSubmit,
+                      onPressed: (isLoading || _selectedRating == 0) ? null : _submit,
+                      variant: PosButtonVariant.primary,
+                      isLoading: isLoading,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Satisfaction Display Widget ─────────────────────────────────────────────
+
+class _SatisfactionDisplay extends StatelessWidget {
+  const _SatisfactionDisplay({required this.ticket, required this.l10n});
+
+  final SupportTicket ticket;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final rating = ticket.satisfactionRating ?? 0;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.success.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.success.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
+              AppSpacing.gapW8,
+              Text(
+                l10n.supportTicketRated,
+                style: AppTypography.labelMedium.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
+              ),
+              const Spacer(),
+              Row(
+                children: List.generate(
+                  5,
+                  (i) => Icon(i < rating ? Icons.star_rounded : Icons.star_border_rounded, color: AppColors.warning, size: 18),
+                ),
+              ),
+            ],
+          ),
+          if (ticket.satisfactionComment != null && ticket.satisfactionComment!.isNotEmpty) ...[
+            AppSpacing.gapH4,
+            Text(ticket.satisfactionComment!, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
+          ],
         ],
       ),
     );

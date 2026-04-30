@@ -56,6 +56,9 @@ import 'package:wameedpos/features/inventory/pages/recipes_page.dart';
 import 'package:wameedpos/features/inventory/pages/supplier_returns_page.dart';
 import 'package:wameedpos/features/inventory/pages/supplier_return_form_page.dart';
 import 'package:wameedpos/features/inventory/pages/supplier_return_detail_page.dart';
+import 'package:wameedpos/features/inventory/pages/stocktakes_page.dart';
+import 'package:wameedpos/features/inventory/pages/waste_records_page.dart';
+import 'package:wameedpos/features/inventory/pages/expiry_dashboard_page.dart';
 import 'package:wameedpos/features/inventory/pages/stock_adjustments_page.dart';
 import 'package:wameedpos/features/inventory/pages/stock_levels_page.dart';
 import 'package:wameedpos/features/inventory/pages/stock_movements_page.dart';
@@ -166,6 +169,8 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytic
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_subscriptions_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_features_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_system_health_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_support_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_notifications_page.dart';
 // P7: Support Tickets
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_support_ticket_list_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_canned_response_list_page.dart';
@@ -464,6 +469,29 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               final id = state.uri.queryParameters['id'] ?? '';
               return SupplierReturnDetailPage(returnId: id);
             },
+          ),
+          GoRoute(
+            path: Routes.stocktakes,
+            name: 'stocktakes',
+            builder: (context, state) => const StocktakesPage(),
+          ),
+          GoRoute(
+            path: Routes.stocktakeDetail,
+            name: 'stocktakeDetail',
+            builder: (context, state) {
+              final id = state.uri.queryParameters['id'] ?? '';
+              return StocktakesPage(initialDetailId: id);
+            },
+          ),
+          GoRoute(
+            path: Routes.wasteRecords,
+            name: 'wasteRecords',
+            builder: (context, state) => const WasteRecordsPage(),
+          ),
+          GoRoute(
+            path: Routes.expiryDashboard,
+            name: 'expiryDashboard',
+            builder: (context, state) => const ExpiryDashboardPage(),
           ),
 
           // ─── POS Terminal ─────────────────────────────
@@ -922,6 +950,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.adminAnalyticsSystemHealth,
             name: 'adminAnalyticsSystemHealth',
             builder: (context, state) => const AdminAnalyticsSystemHealthPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsSupport,
+            name: 'adminAnalyticsSupport',
+            builder: (context, state) => const AdminAnalyticsSupportPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsNotifications,
+            name: 'adminAnalyticsNotifications',
+            builder: (context, state) => const AdminAnalyticsNotificationsPage(),
           ),
 
           // ─── Admin Panel – P7: Support Tickets ────────

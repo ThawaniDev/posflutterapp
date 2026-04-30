@@ -23,6 +23,10 @@ class ApiEndpoints {
   static const String purchaseOrders = '/inventory/purchase-orders';
   static const String recipes = '/inventory/recipes';
   static const String supplierReturns = '/inventory/supplier-returns';
+  static const String stocktakes = '/inventory/stocktakes';
+  static const String wasteRecords = '/inventory/waste-records';
+  static const String expiryAlerts = '/inventory/expiry-alerts';
+  static const String lowStock = '/inventory/low-stock';
 
   // POS
   static const String posBase = '/pos';
@@ -158,11 +162,24 @@ class ApiEndpoints {
   static const String pinOverrideCheck = '/staff/pin-override/check';
   static const String pinOverrideHistory = '/staff/pin-override/history';
 
-  // Settings
+  // Settings (admin-facing)
   static const String settings = '/settings';
-  static const String featureFlags = '/settings/feature-flags';
 
-  // Localization & Translations
+  // ─── Provider-Facing Config API (/config/*) ──────────────────────────────
+  // Used by the Flutter POS app (store token). All require auth:sanctum.
+  // /config/maintenance is public (no auth).
+  static const String configFeatureFlags = '/config/feature-flags';
+  static const String configMaintenance = '/config/maintenance';
+  static const String configTax = '/config/tax';
+  static const String configAgeRestrictions = '/config/age-restrictions';
+  static const String configPaymentMethods = '/config/payment-methods';
+  static const String configHardwareCatalog = '/config/hardware-catalog';
+  static const String configTranslationVersion = '/config/translations/version';
+  static String configTranslations(String locale) => '/config/translations/$locale';
+  static const String configLocales = '/config/locales';
+  static const String configSecurityPolicies = '/config/security-policies';
+
+  // Localization & Translations (admin-only routes, kept for backward compat)
   static const String locales = '/settings/locales';
   static const String translations = '/settings/translations';
   static const String translationsBulkImport = '/settings/translations/bulk-import';
@@ -216,6 +233,25 @@ class ApiEndpoints {
   static const String onboardingDismissChecklist = '/core/onboarding/dismiss-checklist';
   static const String onboardingReset = '/core/onboarding/reset';
 
+  // Business Type Defaults (public, no auth)
+  static const String businessTypesPublic = '/onboarding/business-types';
+  static String businessTypeDefaults(String slug) => '/onboarding/business-types/$slug/defaults';
+  static String businessTypeCategoryTemplates(String slug) => '/onboarding/business-types/$slug/category-templates';
+  static String businessTypeShiftTemplates(String slug) => '/onboarding/business-types/$slug/shift-templates';
+  static String businessTypeReceiptTemplate(String slug) => '/onboarding/business-types/$slug/receipt-template';
+  static String businessTypeIndustryConfig(String slug) => '/onboarding/business-types/$slug/industry-config';
+  static String businessTypeLoyaltyConfig(String slug) => '/onboarding/business-types/$slug/loyalty-config';
+  static String businessTypeCustomerGroups(String slug) => '/onboarding/business-types/$slug/customer-groups';
+  static String businessTypeReturnPolicy(String slug) => '/onboarding/business-types/$slug/return-policy';
+  static String businessTypeWasteReasons(String slug) => '/onboarding/business-types/$slug/waste-reasons';
+  static String businessTypeAppointmentConfig(String slug) => '/onboarding/business-types/$slug/appointment-config';
+  static String businessTypeGiftRegistryTypes(String slug) => '/onboarding/business-types/$slug/gift-registry-types';
+  static String businessTypeGamificationTemplates(String slug) => '/onboarding/business-types/$slug/gamification-templates';
+
+  // Help Articles (public)
+  static const String helpArticles = '/help-articles';
+  static String helpArticle(String slug) => '/help-articles/$slug';
+
   // Subscription
   static const String subscriptionPlans = '/subscription/plans';
   static const String subscriptionAddOns = '/subscription/add-ons';
@@ -233,6 +269,7 @@ class ApiEndpoints {
   static const String subscriptionStoreAddOns = '/subscription/store-add-ons';
   static String subscriptionActivateAddOn(String id) => '/subscription/store-add-ons/$id/activate';
   static String subscriptionRemoveAddOn(String id) => '/subscription/store-add-ons/$id';
+  static const String subscriptionValidateDiscount = '/subscription/validate-discount';
 
   // Provider Payments (PayTabs)
   static const String providerPayments = '/provider-payments';
@@ -291,6 +328,9 @@ class ApiEndpoints {
   static String adminStoreActivate(String id) => '/admin/providers/stores/$id/activate';
   static String adminStoreLimits(String id) => '/admin/providers/stores/$id/limits';
   static String adminStoreLimitDelete(String storeId, String key) => '/admin/providers/stores/$storeId/limits/$key';
+  static String adminStoreImpersonate(String id) => '/admin/providers/stores/$id/impersonate';
+  static const String adminImpersonateEnd = '/admin/providers/impersonate/end';
+  static const String adminImpersonateExtend = '/admin/providers/impersonate/extend';
   static const String adminRegistrations = '/admin/providers/registrations';
   static String adminRegistrationApprove(String id) => '/admin/providers/registrations/$id/approve';
   static String adminRegistrationReject(String id) => '/admin/providers/registrations/$id/reject';
@@ -784,6 +824,7 @@ class ApiEndpoints {
   static String supportTicketById(String id) => '/support/tickets/$id';
   static String supportTicketMessages(String id) => '/support/tickets/$id/messages';
   static String supportTicketClose(String id) => '/support/tickets/$id/close';
+  static String supportTicketRate(String id) => '/support/tickets/$id/rate';
   static const String supportKb = '/support/kb';
   static String supportKbArticle(String slug) => '/support/kb/$slug';
 

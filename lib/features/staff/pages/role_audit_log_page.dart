@@ -241,6 +241,7 @@ class _AuditLogCard extends StatefulWidget {
 
 class _AuditLogCardState extends State<_AuditLogCard> {
   bool _expanded = false;
+  AppLocalizations get l10n => widget.l10n;
 
   @override
   Widget build(BuildContext context) {

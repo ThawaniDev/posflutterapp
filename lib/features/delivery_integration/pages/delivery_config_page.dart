@@ -7,6 +7,8 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_field_type.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_platform.dart';
 import 'package:wameedpos/features/delivery_integration/providers/delivery_providers.dart';
 import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
@@ -30,10 +32,23 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   int _throttleLimit = 0;
   String? _webhookUrl;
 
-  final _apiKeyController = TextEditingController();
-  final _webhookSecretController = TextEditingController();
-  final _merchantIdController = TextEditingController();
-  final _branchIdController = TextEditingController();
+  // Dynamic credential controllers keyed by field_key.
+  // Populated when a platform is selected based on platform.fields from API.
+  final Map<String, TextEditingController> _credControllers = {};
+  // Typed platform for easy access to fields list.
+  DeliveryPlatform? _selectedPlatform;
+
+  void _rebuildCredControllers(DeliveryPlatform platform, [Map<String, dynamic>? existing]) {
+    for (final c in _credControllers.values) {
+      c.dispose();
+    }
+    _credControllers.clear();
+
+    for (final field in platform.fields) {
+      _credControllers[field.fieldKey] = TextEditingController(text: existing?[field.fieldKey]?.toString() ?? '');
+    }
+  }
+
   late final TextEditingController _menuIntervalController;
   late final TextEditingController _maxOrdersController;
   late final TextEditingController _throttleLimitController;
@@ -84,10 +99,26 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
       _maxDailyOrders = (config['max_daily_orders'] as num?)?.toInt() ?? 0;
       _throttleLimit = (config['throttle_limit'] as num?)?.toInt() ?? 0;
       _webhookUrl = config['webhook_url'] as String?;
-      // api_key is hidden by the server for security — always start blank
-      _apiKeyController.text = '';
-      _merchantIdController.text = config['merchant_id'] as String? ?? '';
-      _branchIdController.text = config['branch_id_on_platform'] as String? ?? '';
+      // Rebuild cred controllers with the platform's field definitions
+      if (_selectedPlatformSlug != null) {
+        final platformsState = ref.read(deliveryPlatformsProvider);
+        if (platformsState is DeliveryPlatformsLoaded) {
+          final platform = platformsState.platforms
+              .where((p) => p.slug == _selectedPlatformSlug)
+              .firstOrNull;
+          if (platform != null) {
+            _selectedPlatform = platform;
+            // Pass existing credentials so controllers can be pre-filled (except passwords)
+            final existingCreds = <String, dynamic>{};
+            for (final field in platform.fields) {
+              if (field.fieldType != DeliveryFieldType.password) {
+                existingCreds[field.fieldKey] = config[field.fieldKey];
+              }
+            }
+            _rebuildCredControllers(platform, existingCreds);
+          }
+        }
+      }
       _menuIntervalController.text = '$_menuSyncIntervalHours';
       _maxOrdersController.text = '$_maxDailyOrders';
       _throttleLimitController.text = '$_throttleLimit';
@@ -97,10 +128,9 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
   @override
   void dispose() {
-    _apiKeyController.dispose();
-    _webhookSecretController.dispose();
-    _merchantIdController.dispose();
-    _branchIdController.dispose();
+    for (final c in _credControllers.values) {
+      c.dispose();
+    }
     _menuIntervalController.dispose();
     _maxOrdersController.dispose();
     _throttleLimitController.dispose();
@@ -154,26 +184,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
               title: l10n.deliveryCredentials,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  PosTextField(
-                    controller: _apiKeyController,
-                    label: l10n.deliveryApiKey,
-                    prefixIcon: Icons.key,
-                    helperText: _isEditing ? l10n.deliveryKeepCurrentKey : null,
-                  ),
-                  AppSpacing.gapH12,
-                  PosTextField(
-                    controller: _webhookSecretController,
-                    label: l10n.deliveryWebhookSecret,
-                    prefixIcon: Icons.lock_outline,
-                    obscureText: true,
-                    helperText: _isEditing ? l10n.deliveryWebhookSecretHint : null,
-                  ),
-                  AppSpacing.gapH12,
-                  PosTextField(controller: _merchantIdController, label: l10n.deliveryMerchantId, prefixIcon: Icons.store),
-                  AppSpacing.gapH12,
-                  PosTextField(controller: _branchIdController, label: l10n.deliveryBranchId, prefixIcon: Icons.business),
-                ],
+                children: _buildDynamicCredentialFields(l10n),
               ),
             ),
             AppSpacing.gapH16,
@@ -306,8 +317,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         spacing: 8,
         runSpacing: 8,
         children: platforms.map((p) {
-          final slug = p['value'] as String? ?? '';
-          final label = p['label'] as String? ?? slug;
+          final slug = p.slug;
+          final label = p.name;
           final enumPlatform = DeliveryConfigPlatform.tryFromValue(slug);
           final isSelected = _selectedPlatformSlug == slug;
           final color = enumPlatform?.color ?? AppColors.primary;
@@ -320,7 +331,13 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
             onSelected: _isEditing
                 ? null
                 : (selected) {
-                    if (selected) setState(() => _selectedPlatformSlug = slug);
+                    if (selected) {
+                      setState(() {
+                        _selectedPlatformSlug = slug;
+                        _selectedPlatform = p;
+                        _rebuildCredControllers(p);
+                      });
+                    }
                   },
           );
         }).toList(),
@@ -384,6 +401,36 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     };
   }
 
+  List<Widget> _buildDynamicCredentialFields(AppLocalizations l10n) {
+    if (_credControllers.isEmpty) {
+      return [
+        Text(
+          _selectedPlatformSlug == null ? l10n.deliverySelectPlatform : l10n.deliveryNoDynamicFields,
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+        ),
+      ];
+    }
+    final platform = _selectedPlatform;
+    final widgets = <Widget>[];
+    var first = true;
+    for (final entry in _credControllers.entries) {
+      final field = platform?.fields.where((f) => f.fieldKey == entry.key).firstOrNull;
+      final isPassword = field?.fieldType == DeliveryFieldType.password;
+      if (!first) widgets.add(AppSpacing.gapH12);
+      first = false;
+      widgets.add(
+        PosTextField(
+          controller: entry.value,
+          label: field?.fieldLabel ?? entry.key,
+          prefixIcon: isPassword ? Icons.key : (field?.fieldType == DeliveryFieldType.url ? Icons.link : Icons.text_fields),
+          obscureText: isPassword,
+          helperText: _isEditing && isPassword ? l10n.deliveryKeepCurrentKey : null,
+        ),
+      );
+    }
+    return widgets;
+  }
+
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context)!;
 
@@ -393,10 +440,18 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
       return;
     }
 
-    // API key required when creating; optional when editing (leave blank = keep current)
-    if (!_isEditing && _apiKeyController.text.trim().isEmpty) {
-      showPosWarningSnackbar(context, l10n.deliveryFieldRequired);
-      return;
+    // API key required when creating: at least one required field must be filled
+    if (!_isEditing && _credControllers.isNotEmpty) {
+      final platform = _selectedPlatform;
+      if (platform != null) {
+        final requiredFields = platform.fields.where((f) => f.isRequired ?? false);
+        for (final field in requiredFields) {
+          if (_credControllers[field.fieldKey]?.text.trim().isEmpty ?? true) {
+            showPosWarningSnackbar(context, '${l10n.deliveryFieldRequired}: ${field.fieldLabel}');
+            return;
+          }
+        }
+      }
     }
 
     setState(() => _isSaving = true);
@@ -411,18 +466,11 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
       'menu_sync_interval_hours': _menuSyncIntervalHours,
     };
 
-    // Only send credential fields when they have a value
-    if (_apiKeyController.text.trim().isNotEmpty) {
-      data['api_key'] = _apiKeyController.text.trim();
-    }
-    if (_webhookSecretController.text.trim().isNotEmpty) {
-      data['webhook_secret'] = _webhookSecretController.text.trim();
-    }
-    if (_merchantIdController.text.trim().isNotEmpty) {
-      data['merchant_id'] = _merchantIdController.text.trim();
-    }
-    if (_branchIdController.text.trim().isNotEmpty) {
-      data['branch_id_on_platform'] = _branchIdController.text.trim();
+    // Send dynamic credential fields — only non-empty values (password fields: empty = keep existing)
+    for (final entry in _credControllers.entries) {
+      if (entry.value.text.trim().isNotEmpty) {
+        data[entry.key] = entry.value.text.trim();
+      }
     }
     if (_maxDailyOrders > 0) {
       data['max_daily_orders'] = _maxDailyOrders;

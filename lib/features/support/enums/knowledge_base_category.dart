@@ -1,4 +1,5 @@
 enum KnowledgeBaseCategory {
+  general('general'),
   gettingStarted('getting_started'),
   posUsage('pos_usage'),
   inventory('inventory'),

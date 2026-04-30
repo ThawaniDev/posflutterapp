@@ -638,4 +638,200 @@ void main() {
       expect(state.syncStatusBreakdown.length, 3);
     });
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P6: State – AnalyticsSupportState
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P6 State - AnalyticsSupportState', () {
+    test('AnalyticsSupportInitial is correct type', () {
+      const state = AnalyticsSupportInitial();
+      expect(state, isA<AnalyticsSupportState>());
+    });
+
+    test('AnalyticsSupportLoading is correct type', () {
+      const state = AnalyticsSupportLoading();
+      expect(state, isA<AnalyticsSupportState>());
+    });
+
+    test('AnalyticsSupportLoaded holds all fields', () {
+      const state = AnalyticsSupportLoaded(
+        totalTickets: 200,
+        openTickets: 40,
+        inProgressTickets: 15,
+        resolvedTickets: 130,
+        closedTickets: 15,
+        slaComplianceRate: 92.5,
+        slaBreached: 15,
+        avgFirstResponseHours: 1.2,
+        avgResolutionHours: 8.5,
+        byCategory: {'billing': 80, 'technical': 70, 'general': 50},
+        byPriority: {'low': 60, 'medium': 100, 'high': 30, 'urgent': 10},
+      );
+      expect(state, isA<AnalyticsSupportState>());
+      expect(state.totalTickets, 200);
+      expect(state.openTickets, 40);
+      expect(state.inProgressTickets, 15);
+      expect(state.resolvedTickets, 130);
+      expect(state.closedTickets, 15);
+      expect(state.slaComplianceRate, 92.5);
+      expect(state.slaBreached, 15);
+      expect(state.avgFirstResponseHours, 1.2);
+      expect(state.avgResolutionHours, 8.5);
+      expect(state.byCategory['billing'], 80);
+      expect(state.byPriority['urgent'], 10);
+    });
+
+    test('AnalyticsSupportError holds message', () {
+      const state = AnalyticsSupportError('server error');
+      expect(state, isA<AnalyticsSupportState>());
+      expect(state.message, 'server error');
+    });
+
+    test('exhaustive switch covers all variants', () {
+      const states = <AnalyticsSupportState>[
+        AnalyticsSupportInitial(),
+        AnalyticsSupportLoading(),
+        AnalyticsSupportLoaded(
+          totalTickets: 0,
+          openTickets: 0,
+          inProgressTickets: 0,
+          resolvedTickets: 0,
+          closedTickets: 0,
+          slaComplianceRate: 0,
+          slaBreached: 0,
+          avgFirstResponseHours: 0,
+          avgResolutionHours: 0,
+          byCategory: {},
+          byPriority: {},
+        ),
+        AnalyticsSupportError('err'),
+      ];
+
+      for (final s in states) {
+        final label = switch (s) {
+          AnalyticsSupportInitial() => 'init',
+          AnalyticsSupportLoading() => 'loading',
+          AnalyticsSupportLoaded() => 'loaded',
+          AnalyticsSupportError() => 'error',
+        };
+        expect(label, isNotEmpty);
+      }
+    });
+
+    test('AnalyticsSupportLoaded ticket counts sum to totalTickets', () {
+      const state = AnalyticsSupportLoaded(
+        totalTickets: 100,
+        openTickets: 30,
+        inProgressTickets: 20,
+        resolvedTickets: 40,
+        closedTickets: 10,
+        slaComplianceRate: 95.0,
+        slaBreached: 5,
+        avgFirstResponseHours: 0.5,
+        avgResolutionHours: 6.0,
+        byCategory: {},
+        byPriority: {},
+      );
+      expect(state.openTickets + state.inProgressTickets + state.resolvedTickets + state.closedTickets, state.totalTickets);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P6: State – AnalyticsNotificationsState
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P6 State - AnalyticsNotificationsState', () {
+    test('AnalyticsNotificationsInitial is correct type', () {
+      const state = AnalyticsNotificationsInitial();
+      expect(state, isA<AnalyticsNotificationsState>());
+    });
+
+    test('AnalyticsNotificationsLoading is correct type', () {
+      const state = AnalyticsNotificationsLoading();
+      expect(state, isA<AnalyticsNotificationsState>());
+    });
+
+    test('AnalyticsNotificationsLoaded holds all fields', () {
+      const state = AnalyticsNotificationsLoaded(
+        totalSent: 50000,
+        totalDelivered: 48000,
+        totalFailed: 2000,
+        totalOpened: 15000,
+        deliveryRate: 96.0,
+        openRate: 31.25,
+        avgLatencyMs: 250.5,
+        byChannel: [
+          {'channel': 'push', 'total_sent': 30000, 'total_delivered': 29000},
+          {'channel': 'email', 'total_sent': 15000, 'total_delivered': 14500},
+          {'channel': 'sms', 'total_sent': 5000, 'total_delivered': 4500},
+        ],
+        batchStats: {'total_batches': 120, 'total_recipients': 50000},
+      );
+      expect(state, isA<AnalyticsNotificationsState>());
+      expect(state.totalSent, 50000);
+      expect(state.totalDelivered, 48000);
+      expect(state.totalFailed, 2000);
+      expect(state.totalOpened, 15000);
+      expect(state.deliveryRate, 96.0);
+      expect(state.openRate, 31.25);
+      expect(state.avgLatencyMs, 250.5);
+      expect(state.byChannel.length, 3);
+      expect(state.byChannel.first['channel'], 'push');
+      expect(state.batchStats['total_batches'], 120);
+    });
+
+    test('AnalyticsNotificationsError holds message', () {
+      const state = AnalyticsNotificationsError('timeout');
+      expect(state, isA<AnalyticsNotificationsState>());
+      expect(state.message, 'timeout');
+    });
+
+    test('exhaustive switch covers all variants', () {
+      const states = <AnalyticsNotificationsState>[
+        AnalyticsNotificationsInitial(),
+        AnalyticsNotificationsLoading(),
+        AnalyticsNotificationsLoaded(
+          totalSent: 0,
+          totalDelivered: 0,
+          totalFailed: 0,
+          totalOpened: 0,
+          deliveryRate: 0,
+          openRate: 0,
+          avgLatencyMs: 0,
+          byChannel: [],
+          batchStats: {},
+        ),
+        AnalyticsNotificationsError('err'),
+      ];
+
+      for (final s in states) {
+        final label = switch (s) {
+          AnalyticsNotificationsInitial() => 'init',
+          AnalyticsNotificationsLoading() => 'loading',
+          AnalyticsNotificationsLoaded() => 'loaded',
+          AnalyticsNotificationsError() => 'error',
+        };
+        expect(label, isNotEmpty);
+      }
+    });
+
+    test('AnalyticsNotificationsLoaded delivery rate calculation consistency', () {
+      const state = AnalyticsNotificationsLoaded(
+        totalSent: 1000,
+        totalDelivered: 950,
+        totalFailed: 50,
+        totalOpened: 200,
+        deliveryRate: 95.0,
+        openRate: 21.05,
+        avgLatencyMs: 180.0,
+        byChannel: [],
+        batchStats: {},
+      );
+      // delivered + failed should equal sent
+      expect(state.totalDelivered + state.totalFailed, state.totalSent);
+      // deliveryRate should match delivered/sent
+      expect(state.deliveryRate, 95.0);
+    });
+  });
 }

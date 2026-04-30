@@ -1,7 +1,7 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_auth_method.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_platform_field.dart';
 
 class DeliveryPlatform {
-
   const DeliveryPlatform({
     required this.id,
     required this.name,
@@ -20,6 +20,7 @@ class DeliveryPlatform {
     this.sortOrder,
     this.createdAt,
     this.updatedAt,
+    this.fields = const [],
   });
 
   factory DeliveryPlatform.fromJson(Map<String, dynamic> json) {
@@ -43,6 +44,9 @@ class DeliveryPlatform {
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+      fields: (json['fields'] as List<dynamic>? ?? [])
+          .map((f) => DeliveryPlatformField.fromJson(f as Map<String, dynamic>))
+          .toList(),
     );
   }
   final String id;
@@ -62,6 +66,7 @@ class DeliveryPlatform {
   final int? sortOrder;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final List<DeliveryPlatformField> fields;
 
   Map<String, dynamic> toJson() {
     return {

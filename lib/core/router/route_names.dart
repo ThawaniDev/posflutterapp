@@ -40,6 +40,11 @@ class Routes {
   static const String supplierReturns = '/inventory/supplier-returns';
   static const String supplierReturnsAdd = '/inventory/supplier-returns/add';
   static const String supplierReturnDetail = '/inventory/supplier-returns/detail';
+  static const String stocktakes = '/inventory/stocktakes';
+  static const String stocktakesAdd = '/inventory/stocktakes/add';
+  static const String stocktakeDetail = '/inventory/stocktakes/detail';
+  static const String wasteRecords = '/inventory/waste-records';
+  static const String expiryDashboard = '/inventory/expiry-dashboard';
 
   // Orders
   static const String orders = '/orders';
@@ -257,6 +262,8 @@ class Routes {
   static const String adminAnalyticsSubscriptions = '/admin/analytics/subscriptions';
   static const String adminAnalyticsFeatures = '/admin/analytics/features';
   static const String adminAnalyticsSystemHealth = '/admin/analytics/system-health';
+  static const String adminAnalyticsSupport = '/admin/analytics/support';
+  static const String adminAnalyticsNotifications = '/admin/analytics/notifications';
 
   // ─── P7: Support Tickets ────────────────────────────────────────
   static const String adminSupportTickets = '/admin/support/tickets';

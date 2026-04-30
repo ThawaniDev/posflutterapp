@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
 import 'package:wameedpos/features/accessibility/repositories/accessibility_repository.dart';
+import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
 
 // ─── Preferences Provider ─────────────────────────────
 final accessibilityPrefsProvider = StateNotifierProvider<AccessibilityPrefsNotifier, AccessibilityPrefsState>(
@@ -119,3 +120,17 @@ class ShortcutsNotifier extends StateNotifier<ShortcutsState> {
     }
   }
 }
+
+// ─── Keyboard Shortcut Service Provider ──────────────
+/// Singleton service that always reflects the latest custom shortcuts
+/// loaded from the API. Auto-updates whenever [shortcutsProvider] changes.
+final keyboardShortcutServiceProvider = Provider<KeyboardShortcutService>((ref) {
+  final service = KeyboardShortcutService();
+  ref.listen<ShortcutsState>(shortcutsProvider, (_, next) {
+    if (next is ShortcutsLoaded) {
+      service.resetToDefaults();
+      service.applyCustomShortcuts(next.shortcuts);
+    }
+  });
+  return service;
+});

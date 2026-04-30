@@ -10,7 +10,6 @@ import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderNotesPage extends ConsumerStatefulWidget {
-
   const ProviderNotesPage({super.key, required this.organizationId});
   final String organizationId;
 
@@ -118,8 +117,9 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
   Widget _buildNoteCard(Map<String, dynamic> note, ThemeData theme) {
     final noteText = note['note_text'] as String? ?? '';
     final createdAt = note['created_at'] as String? ?? '';
-    final adminUser = note['admin_user'] as Map<String, dynamic>?;
-    final adminName = adminUser?['name'] as String? ?? 'Admin';
+    // API now returns admin_user_name directly (loaded via relation)
+    final adminName =
+        note['admin_user_name'] as String? ?? (note['admin_user'] as Map<String, dynamic>?)?['name'] as String? ?? 'Admin';
 
     return PosCard(
       elevation: 0,

@@ -953,7 +953,7 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
                 TextFormField(
                   controller: urlController,
                   decoration: InputDecoration(labelText: widget.l10n.staffDocumentUrl, hintText: 'https://...'),
-                  validator: (v) => (v == null || v.trim().isEmpty) ? widget.l10n.required : null,
+                  validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
                 ),
                 AppSpacing.gapH16,
                 InkWell(
@@ -1007,7 +1007,7 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(widget.l10n.staffDeleteDocumentConfirm),
-        content: Text(_docTypeLabel(doc.documentType)),
+        content: Text(_docTypeLabel(doc.documentType.value)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(widget.l10n.cancel)),
           TextButton(
@@ -1042,10 +1042,11 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const Spacer(),
-                PosButton.outlined(
+                PosButton(
                   label: widget.l10n.staffAddDocument,
                   icon: Icons.add,
                   onPressed: _showAddDialog,
+                  variant: PosButtonVariant.outline,
                   size: PosButtonSize.sm,
                 ),
               ],
@@ -1062,8 +1063,8 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
                       final doc = docs[i];
                       return _DocumentCard(
                         doc: doc,
-                        typeLabel: _docTypeLabel(doc.documentType),
-                        typeIcon: _docTypeIcon(doc.documentType),
+                        typeLabel: _docTypeLabel(doc.documentType.value),
+                        typeIcon: _docTypeIcon(doc.documentType.value),
                         isDark: widget.isDark,
                         l10n: widget.l10n,
                         onDelete: () => _confirmDelete(doc),
@@ -1134,7 +1135,7 @@ class _DocumentCard extends StatelessWidget {
                       ),
                       AppSpacing.gapW8,
                       Text(
-                        DateFormat('dd MMM yyyy').format(DateTime.parse(doc.expiryDate!)),
+                        DateFormat('dd MMM yyyy').format(doc.expiryDate!),
                         style: TextStyle(fontSize: 12, color: AppColors.mutedFor(context)),
                       ),
                     ],

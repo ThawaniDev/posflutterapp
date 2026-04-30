@@ -679,6 +679,39 @@ class AppLocalizationsUr extends AppLocalizations {
   String get supportKbTroubleshooting => 'مسئلہ حل';
 
   @override
+  String get supportKbGeneral => 'عمومی';
+
+  @override
+  String get supportSenderYou => 'آپ';
+
+  @override
+  String get supportSenderSupport => 'سپورٹ';
+
+  @override
+  String get supportRateTicket => 'اس ٹکٹ کو ریٹ کریں';
+
+  @override
+  String get supportRateTicketHint => 'آپ سپورٹ سے کتنے مطمئن تھے؟';
+
+  @override
+  String get supportRateSubmit => 'ریٹنگ جمع کریں';
+
+  @override
+  String get supportRateSuccess => 'آپ کی رائے کا شکریہ!';
+
+  @override
+  String get supportTicketRated => 'ٹکٹ کامیابی سے ریٹ کیا گیا';
+
+  @override
+  String get supportFilterCategory => 'زمرہ';
+
+  @override
+  String get supportFilterPriority => 'ترجیح';
+
+  @override
+  String get supportCriticalPriority => 'نازک';
+
+  @override
   String get branches => 'شاخیں';
 
   @override
@@ -1367,6 +1400,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get deliveryKeepCurrentKey => 'موجودہ کلید رکھنے کے لیے خالی چھوڑیں';
 
   @override
+  String get deliveryNoDynamicFields =>
+      'اس پلیٹ فارم کے لیے کوئی اسناد فیلڈ ترتیب نہیں دی گئی';
+
+  @override
   String get deliveryBranchId => 'پلیٹ فارم پر برانچ ID';
 
   @override
@@ -1952,6 +1989,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get accessibilityReset => 'ری سیٹ تک ڈیفالٹ';
+
+  @override
+  String get accessibilityPreview => 'لائیو پیش نظارہ';
 
   @override
   String get accessibilityFontSize => 'فونٹ سائز';
@@ -6540,6 +6580,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryUnitCostLabel => 'یونٹ لاگت';
 
   @override
+  String get inventoryUnitCost => 'یونٹ لاگت';
+
+  @override
   String get inventoryWastePercent => 'ضائع %';
 
   @override
@@ -6547,6 +6590,225 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get inventoryYieldQuantity => 'Yield مقدار';
+
+  @override
+  String get inventoryStocktakes => 'اسٹاک جائزے';
+
+  @override
+  String get inventoryStocktakesSubtitle => 'جسمانی انوینٹری گنتی کریں';
+
+  @override
+  String get inventoryNewStocktake => 'نیا اسٹاک جائزہ';
+
+  @override
+  String get inventoryStartStocktake => 'اسٹاک جائزہ شروع کریں';
+
+  @override
+  String get inventoryStocktakeCreated => 'اسٹاک جائزہ شروع ہوا';
+
+  @override
+  String get inventoryStocktakeApplied => 'اسٹاک جائزہ لاگو اور ایڈجسٹمنٹ پوسٹ';
+
+  @override
+  String get inventoryStocktakeCancelled => 'اسٹاک جائزہ منسوخ';
+
+  @override
+  String get inventoryApplyStocktake => 'اسٹاک جائزہ لاگو کریں';
+
+  @override
+  String get inventoryStocktakeApplyWarning =>
+      'جائزہ لاگو کرنے سے اسٹاک ایڈجسٹمنٹ پوسٹ ہوگی۔ اسے واپس نہیں لیا جا سکتا۔';
+
+  @override
+  String get inventoryStocktakeCancelWarning =>
+      'کیا آپ یقیناً یہ جائزہ منسوخ کرنا چاہتے ہیں؟ تمام گنتیاں ضائع ہو جائیں گی۔';
+
+  @override
+  String get inventoryStocktakeType => 'جائزے کی قسم';
+
+  @override
+  String get inventoryStocktakeTypeFull => 'مکمل';
+
+  @override
+  String get inventoryStocktakeTypePartial => 'جزوی';
+
+  @override
+  String get inventoryStocktakeTypeCategory => 'زمرے کے مطابق';
+
+  @override
+  String get inventoryStocktakeStatusInProgress => 'جاری';
+
+  @override
+  String get inventoryStocktakeStatusReview => 'جائزہ';
+
+  @override
+  String get inventoryStocktakeStatusCompleted => 'مکمل';
+
+  @override
+  String get inventoryStocktakeStatusCancelled => 'منسوخ';
+
+  @override
+  String get inventoryNoStocktakes => 'کوئی جائزہ نہیں';
+
+  @override
+  String get inventoryNoStocktakesHint =>
+      'انوینٹری گنتی کے لیے نیا جائزہ شروع کریں';
+
+  @override
+  String get inventoryCountSheet => 'گنتی شیٹ';
+
+  @override
+  String get inventoryExpectedQty => 'متوقع';
+
+  @override
+  String get inventoryCountedQty => 'گنا گیا';
+
+  @override
+  String get inventoryVariance => 'فرق';
+
+  @override
+  String get inventoryCostImpact => 'لاگت اثر';
+
+  @override
+  String get inventoryViewCounts => 'گنتیاں دیکھیں';
+
+  @override
+  String get inventorySaveCounts => 'گنتیاں محفوظ کریں';
+
+  @override
+  String get inventoryCountsSaved => 'گنتیاں محفوظ ہوئیں';
+
+  @override
+  String get inventoryNoItemsToCount => 'گنتی کے لیے کوئی آئٹم نہیں';
+
+  @override
+  String get inventoryItemCount => 'آئٹمز';
+
+  @override
+  String get inventoryStartedAt => 'شروع ہوا';
+
+  @override
+  String get inventoryAllStatuses => 'تمام حالتیں';
+
+  @override
+  String get inventoryAllCategories => 'تمام زمرے';
+
+  @override
+  String get inventoryWasteRecords => 'ضیاع کے ریکارڈ';
+
+  @override
+  String get inventoryWasteRecordsSubtitle => 'مصنوعات کے ضیاع کو ٹریک کریں';
+
+  @override
+  String get inventoryRecordWaste => 'ضیاع درج کریں';
+
+  @override
+  String get inventoryWasteRecorded => 'ضیاع درج ہوا';
+
+  @override
+  String get inventoryWasteReason => 'ضیاع کی وجہ';
+
+  @override
+  String get inventoryAllReasons => 'تمام وجوہات';
+
+  @override
+  String get inventoryWasteReasonExpired => 'میعاد ختم';
+
+  @override
+  String get inventoryWasteReasonDamaged => 'خراب';
+
+  @override
+  String get inventoryWasteReasonSpillage => 'گرا ہوا';
+
+  @override
+  String get inventoryWasteReasonOverproduction => 'زیادہ پیداوار';
+
+  @override
+  String get inventoryWasteReasonQualityIssue => 'معیار کا مسئلہ';
+
+  @override
+  String get inventoryWasteReasonOther => 'دیگر';
+
+  @override
+  String get inventoryNoWasteRecords => 'کوئی ضیاع ریکارڈ نہیں';
+
+  @override
+  String get inventoryNoWasteRecordsHint =>
+      'نقصانات ٹریک کرنے کے لیے ضیاع درج کریں';
+
+  @override
+  String get inventoryTotalRecords => 'کل ریکارڈ';
+
+  @override
+  String get inventoryTotalWasteCost => 'کل ضیاع لاگت';
+
+  @override
+  String get inventoryExpiryDashboard => 'میعاد ڈیش بورڈ';
+
+  @override
+  String get inventoryExpiryDashboardSubtitle =>
+      'میعاد ختم ہونے والی مصنوعات کی نگرانی';
+
+  @override
+  String get inventoryExpired => 'میعاد ختم';
+
+  @override
+  String get inventoryExpiringSoon => 'جلد ختم ہو رہا ہے';
+
+  @override
+  String get inventoryExpiring7Days => '7 دنوں سے کم میں ختم';
+
+  @override
+  String get inventoryExpiring30Days => '30 دنوں سے کم میں ختم';
+
+  @override
+  String get inventoryExpiryDate => 'میعاد تاریخ';
+
+  @override
+  String get inventoryDaysUntilExpiry => 'ختم ہونے تک دن';
+
+  @override
+  String get inventoryExpiryLookAhead => 'آگے دیکھیں';
+
+  @override
+  String get inventoryDays => 'دن';
+
+  @override
+  String get inventoryNoExpiryIssues => 'تمام بیچز محفوظ ہیں';
+
+  @override
+  String inventoryAllBatchesSafe(int days) {
+    return 'اگلے $days دنوں میں کوئی بیچ ختم نہیں ہو رہی';
+  }
+
+  @override
+  String get inventoryExpiredBatches => 'ختم شدہ بیچز';
+
+  @override
+  String get inventoryExpiringIn7Days => '7 دنوں سے کم میں ختم';
+
+  @override
+  String get inventoryExpiringIn30Days => '7-30 دنوں میں ختم';
+
+  @override
+  String get inventoryMarkAsWasted => 'ضائع کے طور پر نشان زد کریں';
+
+  @override
+  String inventoryMarkAsWastedConfirm(double quantity, String product) {
+    return 'کیا آپ $product کی $quantity یونٹس کو ضائع نشان زد کرنا چاہتے ہیں؟';
+  }
+
+  @override
+  String get inventoryNoBatches => 'کوئی بیچ نہیں';
+
+  @override
+  String get inventoryBatchNumber => 'بیچ نمبر';
+
+  @override
+  String get inventoryBatchNumberHint => 'مثال: BATCH-001';
+
+  @override
+  String get inventoryOptional => 'اختیاری';
 
   @override
   String get notificationsCategories => 'اطلاع زمرہ جات';
@@ -15023,6 +15285,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminLoadMetrics => 'میٹرکس لوڈ کریں';
 
   @override
+  String get adminPosTerminals => 'پی او ایس ٹرمینلز';
+
+  @override
+  String get adminInternalNotes => 'داخلی نوٹس';
+
+  @override
   String get adminAddOverride => 'اوور رائڈ شامل کریں';
 
   @override
@@ -15615,6 +15883,37 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get subProceedToPayment => 'ادائیگی پر جائیں';
+
+  @override
+  String get subDiscountCode => 'ڈسکاؤنٹ کوڈ';
+
+  @override
+  String get subEnterDiscountCode => 'ڈسکاؤنٹ کوڈ درج کریں';
+
+  @override
+  String get subApplyDiscount => 'لاگو کریں';
+
+  @override
+  String get subValidatingDiscount => 'تصدیق ہو رہی ہے...';
+
+  @override
+  String get subDiscountApplied => 'ڈسکاؤنٹ لاگو ہوا';
+
+  @override
+  String get subDiscountInvalid => 'غلط یا میعاد ختم ڈسکاؤنٹ کوڈ۔';
+
+  @override
+  String get subRemoveDiscount => 'ہٹائیں';
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'آپ نے $amount بچائے';
+  }
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value چھوٹ';
+  }
 
   @override
   String subPageOfLast(String current, String last) {
@@ -17022,6 +17321,42 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get adminNoSecurityAlertsShort => 'کوئی سیکیورٹی الرٹ نہیں';
+
+  @override
+  String get adminOpenAlerts => 'کھلے الرٹس';
+
+  @override
+  String get adminCriticalAlerts => 'اہم الرٹس';
+
+  @override
+  String get adminFailedLogins24h => 'ناکام لاگ انز (24 گھنٹے)';
+
+  @override
+  String get adminBlockedIps => 'بلاک شدہ IP ایڈریسز';
+
+  @override
+  String get adminAlertType => 'الرٹ کی قسم';
+
+  @override
+  String get adminDescription => 'تفصیل';
+
+  @override
+  String get adminIpAddress => 'IP ایڈریس';
+
+  @override
+  String get adminResolveAlert => 'الرٹ حل کریں';
+
+  @override
+  String get adminAlertResolved => 'الرٹ کامیابی سے حل ہو گیا';
+
+  @override
+  String get adminResolutionNotes => 'حل کے نوٹس';
+
+  @override
+  String get adminResolutionNotesHint => 'بتائیں کہ یہ الرٹ کیسے حل ہوا...';
+
+  @override
+  String get securityAlertsBySeverity => 'شدت کے مطابق الرٹس';
 
   @override
   String get adminWhatsApp => 'واٹس ایپ';
@@ -18819,4 +19154,484 @@ class AppLocalizationsUr extends AppLocalizations {
   String pageOf(String page, String total) {
     return 'صفحہ $page از $total';
   }
+
+  @override
+  String get analyticsSelectDateRange => 'تاریخ کی حد منتخب کریں';
+
+  @override
+  String get analyticsActiveStores => 'فعال اسٹورز';
+
+  @override
+  String get analyticsNewSignups => 'نئی رجسٹریشن';
+
+  @override
+  String get analyticsChurnRate => 'اخراج کی شرح';
+
+  @override
+  String get analyticsTotalOrders => 'کل آرڈر';
+
+  @override
+  String get analyticsTotalGmv => 'کل GMV';
+
+  @override
+  String get analyticsZatcaCompliance => 'ZATCA تعمیل';
+
+  @override
+  String get analyticsActiveSubscriptions => 'فعال سبسکرپشنز';
+
+  @override
+  String get analyticsTrialSubscriptions => 'آزمائشی سبسکرپشنز';
+
+  @override
+  String get analyticsChurnInPeriod => 'مدت میں اخراج';
+
+  @override
+  String get analyticsConversionRate => 'تبدیلی کی شرح';
+
+  @override
+  String get analyticsAvgSubscriptionAge => 'اوسط سبسکرپشن عمر';
+
+  @override
+  String get analyticsSubscriptionLifecycle => 'سبسکرپشن لائف سائیکل';
+
+  @override
+  String get analyticsSubscriptionStatus => 'سبسکرپشن کی حالت';
+
+  @override
+  String get analyticsActive => 'فعال';
+
+  @override
+  String get analyticsTrial => 'آزمائشی';
+
+  @override
+  String get analyticsChurned => 'منسوخ';
+
+  @override
+  String get analyticsTotalStores => 'کل اسٹورز';
+
+  @override
+  String get analyticsInactiveStores => 'غیر فعال اسٹورز';
+
+  @override
+  String get analyticsStoreHealthSummary => 'اسٹور صحت کا خلاصہ';
+
+  @override
+  String get analyticsTopStores => 'بہترین اسٹورز';
+
+  @override
+  String get analyticsInactive => 'غیر فعال';
+
+  @override
+  String get analyticsStorePerformance => 'اسٹور کارکردگی';
+
+  @override
+  String get analyticsSystemHealthy => 'تمام سسٹم فعال ہیں';
+
+  @override
+  String get analyticsSystemHasErrors => 'سسٹم میں خامیاں ہیں';
+
+  @override
+  String analyticsMonitoringStores(int count) {
+    return '$count اسٹورز کی نگرانی';
+  }
+
+  @override
+  String get analyticsStoresMonitored => 'نگرانی کیے گئے اسٹورز';
+
+  @override
+  String get analyticsStoresWithErrors => 'خامیوں والے اسٹورز';
+
+  @override
+  String get analyticsTotalErrorsToday => 'آج کی کل خامیاں';
+
+  @override
+  String get analyticsSyncStatusBreakdown => 'مطابقت کی حالت';
+
+  @override
+  String get analyticsStatusDetails => 'حالت کی تفصیلات';
+
+  @override
+  String get analyticsSupportDashboard => 'سپورٹ تجزیات';
+
+  @override
+  String get analyticsSlaCompliance => 'SLA تعمیل';
+
+  @override
+  String get analyticsSlaBreached => 'SLA خلاف ورزی';
+
+  @override
+  String get analyticsAvgFirstResponse => 'اوسط پہلا جواب (گھنٹے)';
+
+  @override
+  String get analyticsAvgResolution => 'اوسط حل (گھنٹے)';
+
+  @override
+  String get analyticsByCategory => 'زمرے کے مطابق';
+
+  @override
+  String get analyticsByPriority => 'ترجیح کے مطابق';
+
+  @override
+  String get analyticsNotificationsDashboard => 'اطلاع تجزیات';
+
+  @override
+  String get analyticsDeliveryRate => 'ترسیل کی شرح';
+
+  @override
+  String get analyticsOpenRate => 'کھلنے کی شرح';
+
+  @override
+  String get analyticsTotalSent => 'کل بھیجا گیا';
+
+  @override
+  String get analyticsTotalDelivered => 'کل پہنچایا گیا';
+
+  @override
+  String get analyticsTotalFailed => 'کل ناکام';
+
+  @override
+  String get analyticsTotalOpened => 'کل کھولا گیا';
+
+  @override
+  String get analyticsByChannel => 'چینل کے مطابق';
+
+  @override
+  String get analyticsBatchStats => 'بیچ اعداد و شمار';
+
+  @override
+  String get analyticsAvgLatency => 'اوسط تاخیر';
+
+  @override
+  String get analyticsFeatureAdoption => 'فیچر اپنانا';
+
+  @override
+  String get analyticsFeatureAdoptionRates => 'فیچر اپنانے کی شرحیں';
+
+  @override
+  String get analyticsFeatureDetails => 'فیچر کی تفصیلات';
+
+  @override
+  String get adminNoFeatureData => 'فیچر ڈیٹا دستیاب نہیں';
+
+  @override
+  String get adminNoHealthData => 'صحت کا ڈیٹا دستیاب نہیں';
+
+  @override
+  String get adminNoStoresData => 'اسٹور ڈیٹا دستیاب نہیں';
+
+  @override
+  String get adminNoActivity => 'حالیہ سرگرمی نہیں';
+
+  @override
+  String get adminNoDataAvailable => 'ڈیٹا دستیاب نہیں';
+
+  @override
+  String get adminTotalBatches => 'کل بیچ';
+
+  @override
+  String get adminTotalRecipients => 'کل وصول کنندگان';
+
+  @override
+  String get adminTotalTickets => 'کل ٹکٹ';
+
+  @override
+  String get adminOpenTickets => 'کھلے ٹکٹ';
+
+  @override
+  String get adminInProgressTickets => 'جاری';
+
+  @override
+  String get adminResolvedTickets => 'حل شدہ';
+
+  @override
+  String get adminClosedTickets => 'بند';
+
+  @override
+  String get onboardingSelectBusinessType => 'کاروبار کی قسم منتخب کریں';
+
+  @override
+  String get onboardingBusinessTypeDefaultsTitle => 'شامل ڈیفالٹس';
+
+  @override
+  String get onboardingBusinessTypeDefaultsLoading => 'ڈیفالٹس لوڈ ہو رہے ہیں…';
+
+  @override
+  String get onboardingBusinessTypeNoDefaults =>
+      'اس قسم کے لیے کوئی ڈیفالٹس نہیں';
+
+  @override
+  String get onboardingHardwareStepTitle => 'ہارڈویئر سیٹ اپ';
+
+  @override
+  String get onboardingHardwareStepSubtitle =>
+      'ہمیں بتائیں آپ کے پاس کون سا ہارڈویئر ہے';
+
+  @override
+  String get onboardingHardwarePrinterLabel => 'رسید پرنٹر';
+
+  @override
+  String get onboardingHardwarePrinterDesc =>
+      'رسیدیں اور آرڈر ٹکٹ پرنٹ کرتا ہے';
+
+  @override
+  String get onboardingHardwareScannerLabel => 'بارکوڈ اسکینر';
+
+  @override
+  String get onboardingHardwareScannerDesc => 'چیک آؤٹ پر بارکوڈ اسکین کرتا ہے';
+
+  @override
+  String get onboardingHardwareCashDrawerLabel => 'کیش دراز';
+
+  @override
+  String get onboardingHardwareCashDrawerDesc =>
+      'نقد ادائیگی پر خودکار کھلتا ہے';
+
+  @override
+  String get onboardingHardwareCustomerDisplayLabel => 'کسٹمر ڈسپلے (CFD)';
+
+  @override
+  String get onboardingHardwareCustomerDisplayDesc =>
+      'کسٹمر کی طرف دوسری اسکرین';
+
+  @override
+  String get onboardingHardwareInfoNote =>
+      'آپ ہارڈویئر سیٹنگز سے کسی بھی وقت ہارڈویئر تبدیل کر سکتے ہیں۔';
+
+  @override
+  String get onboardingProductsStepTitle => 'پروڈکٹس سیٹ اپ';
+
+  @override
+  String get onboardingProductsStepSubtitle =>
+      'پروڈکٹس شامل کرنے کا طریقہ منتخب کریں';
+
+  @override
+  String get onboardingProductsOptionLaterLabel => 'بعد میں سیٹ اپ کریں';
+
+  @override
+  String get onboardingProductsOptionLaterSubtitle =>
+      'ابھی چھوڑیں — پروڈکٹس کے صفحے سے شامل کریں';
+
+  @override
+  String get onboardingProductsOptionTemplateLabel => 'ڈیفالٹ استعمال کریں';
+
+  @override
+  String get onboardingProductsOptionTemplateSubtitle =>
+      'تیار شدہ کیٹیگریز اور ڈھانچے سے شروع کریں';
+
+  @override
+  String get onboardingProductsOptionCsvLabel => 'CSV فہرست اپ لوڈ کریں';
+
+  @override
+  String get onboardingProductsOptionCsvSubtitle =>
+      'اپنا موجودہ پروڈکٹ کیٹلاگ درآمد کریں';
+
+  @override
+  String get onboardingProductsUploadCsv => 'CSV فائل منتخب کریں';
+
+  @override
+  String get onboardingStaffStepTitle => 'عملہ مدعو کریں';
+
+  @override
+  String get onboardingStaffStepSubtitle => 'پہلا ٹیم ممبر شامل کریں (اختیاری)';
+
+  @override
+  String get onboardingStaffNameLabel => 'پورا نام';
+
+  @override
+  String get onboardingStaffEmailLabel => 'ای میل ایڈریس';
+
+  @override
+  String get onboardingStaffRoleLabel => 'کردار';
+
+  @override
+  String get onboardingStaffRoleCashier => 'کیشئر';
+
+  @override
+  String get onboardingStaffRoleManager => 'مینیجر';
+
+  @override
+  String get onboardingStaffRoleSupervisor => 'سپروائزر';
+
+  @override
+  String get onboardingStaffRoleAdmin => 'ایڈمن';
+
+  @override
+  String get onboardingStaffSkipNote =>
+      'آپ یہ مرحلہ چھوڑ کر بعد میں ٹیم سیٹنگز سے مدعو کر سکتے ہیں۔';
+
+  @override
+  String get onboardingReviewHardware => 'ہارڈویئر';
+
+  @override
+  String get onboardingReviewNoneSelected => 'کچھ منتخب نہیں';
+
+  @override
+  String get onboardingReviewProducts => 'پروڈکٹس';
+
+  @override
+  String get onboardingReviewStaff => 'ٹیم ممبر';
+
+  @override
+  String get onboardingReviewStaffNone => 'کوئی نہیں (بعد میں مدعو کریں)';
+
+  @override
+  String get helpArticlesTitle => 'مدد مرکز';
+
+  @override
+  String get helpArticlesSearchHint => 'مضامین تلاش کریں…';
+
+  @override
+  String get helpArticlesCategoryAll => 'سب';
+
+  @override
+  String get helpArticleNotFound => 'مضمون نہیں ملا';
+
+  @override
+  String get auDashboard => 'اپ ڈیٹ ڈیش بورڈ';
+
+  @override
+  String get auDashboardTitle => 'ایپ اپ ڈیٹ مینجمنٹ';
+
+  @override
+  String get auTotalReleases => 'کل ریلیز';
+
+  @override
+  String get auActiveReleases => 'فعال ریلیز';
+
+  @override
+  String get auInstallationRate => 'انسٹالیشن شرح';
+
+  @override
+  String get auInstalledCount => 'انسٹال شدہ';
+
+  @override
+  String get auFailedCount => 'ناکام';
+
+  @override
+  String get auLast30Days => 'آخری 30 دن';
+
+  @override
+  String get auLatestByPlatform => 'پلیٹ فارم کے مطابق تازہ ترین';
+
+  @override
+  String get auAdoptionFunnel => 'اپنانے کا فنل';
+
+  @override
+  String get auFunnelNote => 'گزشتہ 30 دنوں میں فعال ریلیز انسٹالیشنز';
+
+  @override
+  String get auRollbackCandidates => 'خودکار رول بیک امیدوار';
+
+  @override
+  String get auFailureRate => 'ناکامی کی شرح';
+
+  @override
+  String get auReview => 'جائزہ';
+
+  @override
+  String get auRecentFailures => 'حالیہ ناکامیاں';
+
+  @override
+  String get auNoActiveRelease => 'کوئی فعال ریلیز نہیں';
+
+  @override
+  String get auNoReleasesYet => 'ابھی تک کوئی ریلیز نہیں';
+
+  @override
+  String get auUnknownError => 'نامعلوم خرابی';
+
+  @override
+  String get auFileIntegrity => 'فائل سالمیت';
+
+  @override
+  String get auFileIntegrityHelper =>
+      'اپ ڈیٹ کی سالمیت کی تصدیق کے لیے SHA-256';
+
+  @override
+  String get auFileChecksum => 'فائل چیک سم SHA-256';
+
+  @override
+  String get auFileChecksumHelper => 'ریلیز بائنری کا 64 کردار ہیکس';
+
+  @override
+  String get auFileSizeBytes => 'فائل سائز بائٹس';
+
+  @override
+  String get auFileSizeHelper => 'ریلیز بائنری کی بائٹ گنتی';
+
+  @override
+  String get auStatRecordDetails => 'ریکارڈ کی تفصیلات';
+
+  @override
+  String get auErrorDetails => 'خرابی کی تفصیلات';
+
+  @override
+  String get auErrorMessage => 'خرابی کا پیغام';
+
+  @override
+  String get auAddRelease => 'ریلیز شامل کریں';
+
+  @override
+  String get auViewAllStats => 'تمام اعداد و شمار دیکھیں';
+
+  @override
+  String get commonTimestamps => 'ٹائم اسٹامپس';
+
+  @override
+  String get commonCreatedAt => 'بنایا گیا';
+
+  @override
+  String get commonUpdatedAt => 'تازہ کیا گیا';
+
+  @override
+  String get commonTime => 'وقت';
+
+  @override
+  String get configFeatureFlags => 'فیچر فلیگز';
+
+  @override
+  String get configMaintenanceMode => 'مینٹیننس موڈ';
+
+  @override
+  String get configMaintenanceActive => 'سسٹم مینٹیننس میں ہے';
+
+  @override
+  String configMaintenanceExpected(String time) {
+    return 'متوقع اختتام: $time';
+  }
+
+  @override
+  String get configTax => 'ٹیکس کنفیگریشن';
+
+  @override
+  String get configVatRate => 'VAT شرح';
+
+  @override
+  String get configVatEnabled => 'VAT فعال';
+
+  @override
+  String get configSecurityPolicies => 'سیکیورٹی پالیسیاں';
+
+  @override
+  String get configSessionTimeout => 'سیشن ٹائم آؤٹ';
+
+  @override
+  String configSessionTimeoutMinutes(int count) {
+    return '$count منٹ';
+  }
+
+  @override
+  String get configPinMinLength => 'PIN کی کم از کم لمبائی';
+
+  @override
+  String get configMaxFailedAttempts => 'ناکام لاگ ان کی زیادہ سے زیادہ کوششیں';
+
+  @override
+  String get configLockoutDuration => 'لاک آؤٹ مدت';
+
+  @override
+  String get configBiometricDefault => 'بائیومیٹرک بطور ڈیفالٹ فعال';
+
+  @override
+  String get configRequireReauth => 'جاگنے پر دوبارہ تصدیق ضروری ہے';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -30,10 +31,7 @@ class TicketCardWidget extends StatelessWidget {
           // Top row: ticket number + status
           Row(
             children: [
-              Text(
-                '#${ticket.ticketNumber}',
-                style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
-              ),
+              Text('#${ticket.ticketNumber}', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
               const Spacer(),
               TicketStatusBadge(status: ticket.status, isSmall: true),
             ],
@@ -65,11 +63,7 @@ class TicketCardWidget extends StatelessWidget {
                 style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
               ),
               const Spacer(),
-              if (dateStr.isNotEmpty)
-                Text(
-                  dateStr,
-                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
-                ),
+              if (dateStr.isNotEmpty) Text(dateStr, style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
             ],
           ),
           // SLA countdown
@@ -93,6 +87,7 @@ class _SlaIndicator extends StatelessWidget {
     final now = DateTime.now();
     final remaining = deadline.difference(now);
     final isOverdue = remaining.isNegative;
+    final l10n = AppLocalizations.of(context)!;
 
     final String text;
     final Color color;
@@ -100,19 +95,19 @@ class _SlaIndicator extends StatelessWidget {
 
     if (isOverdue) {
       final overdue = now.difference(deadline);
-      text = 'SLA overdue by ${_formatDuration(overdue)}';
+      text = '${l10n.supportSlaOverdue} ${_formatDuration(overdue)}';
       color = AppColors.error;
       icon = Icons.warning_amber_rounded;
     } else if (remaining.inMinutes < 30) {
-      text = 'SLA due in ${_formatDuration(remaining)}';
+      text = '${l10n.supportSlaDueIn} ${_formatDuration(remaining)}';
       color = AppColors.error;
       icon = Icons.access_alarm_rounded;
     } else if (remaining.inHours < 2) {
-      text = 'SLA due in ${_formatDuration(remaining)}';
+      text = '${l10n.supportSlaDueIn} ${_formatDuration(remaining)}';
       color = AppColors.warning;
       icon = Icons.access_time_rounded;
     } else {
-      text = 'SLA due in ${_formatDuration(remaining)}';
+      text = '${l10n.supportSlaDueIn} ${_formatDuration(remaining)}';
       color = AppColors.success;
       icon = Icons.schedule_rounded;
     }

@@ -6,7 +6,6 @@ final adminRepositoryProvider = Provider<AdminRepository>((ref) {
 });
 
 class AdminRepository {
-
   AdminRepository(this._apiService);
   final AdminApiService _apiService;
 
@@ -96,6 +95,11 @@ class AdminRepository {
       _apiService.addNote(organizationId: organizationId, noteText: noteText);
 
   Future<Map<String, dynamic>> listNotes(String organizationId) => _apiService.listNotes(organizationId);
+
+  // ─── Impersonation ────────────────────────────────────────────
+  Future<Map<String, dynamic>> startImpersonation(String storeId) => _apiService.startImpersonation(storeId);
+  Future<Map<String, dynamic>> endImpersonation(String token) => _apiService.endImpersonation(token);
+  Future<Map<String, dynamic>> extendImpersonation(String token) => _apiService.extendImpersonation(token);
 
   // ─── Platform Roles (P2) ──────────────────────────────
   Future<Map<String, dynamic>> listRoles() => _apiService.listRoles();

@@ -8,7 +8,6 @@ final adminApiServiceProvider = Provider<AdminApiService>((ref) {
 });
 
 class AdminApiService {
-
   AdminApiService(this._dio);
   final Dio _dio;
 
@@ -100,12 +99,7 @@ class AdminApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.adminStoreLimits(storeId),
-      data: {
-        'limit_key': limitKey,
-        'override_value': overrideValue,
-        'reason': ?reason,
-        'expires_at': ?expiresAt,
-      },
+      data: {'limit_key': limitKey, 'override_value': overrideValue, 'reason': ?reason, 'expires_at': ?expiresAt},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -158,6 +152,23 @@ class AdminApiService {
     return response.data as Map<String, dynamic>;
   }
 
+  // ─── Impersonation ────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> startImpersonation(String storeId) async {
+    final response = await _dio.post(ApiEndpoints.adminStoreImpersonate(storeId));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> endImpersonation(String token) async {
+    final response = await _dio.post(ApiEndpoints.adminImpersonateEnd, data: {'token': token});
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> extendImpersonation(String token) async {
+    final response = await _dio.post(ApiEndpoints.adminImpersonateExtend, data: {'token': token});
+    return response.data as Map<String, dynamic>;
+  }
+
   // ─── Platform Roles (P2) ─────────────────────────────────
 
   Future<Map<String, dynamic>> listRoles() async {
@@ -178,12 +189,7 @@ class AdminApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.adminRoles,
-      data: {
-        'name': name,
-        'slug': ?slug,
-        'description': ?description,
-        'permission_ids': ?permissionIds,
-      },
+      data: {'name': name, 'slug': ?slug, 'description': ?description, 'permission_ids': ?permissionIds},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -191,11 +197,7 @@ class AdminApiService {
   Future<Map<String, dynamic>> updateRole(String roleId, {String? name, String? description, List<String>? permissionIds}) async {
     final response = await _dio.put(
       ApiEndpoints.adminRoleById(roleId),
-      data: {
-        'name': ?name,
-        'description': ?description,
-        'permission_ids': ?permissionIds,
-      },
+      data: {'name': ?name, 'description': ?description, 'permission_ids': ?permissionIds},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -269,12 +271,7 @@ class AdminApiService {
   }) async {
     final response = await _dio.put(
       ApiEndpoints.adminTeamUserById(userId),
-      data: {
-        'name': ?name,
-        'phone': ?phone,
-        'is_active': ?isActive,
-        'role_ids': ?roleIds,
-      },
+      data: {'name': ?name, 'phone': ?phone, 'is_active': ?isActive, 'role_ids': ?roleIds},
     );
     return response.data as Map<String, dynamic>;
   }

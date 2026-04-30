@@ -50,6 +50,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
       KnowledgeBaseCategory.delivery => l10n.supportKbDelivery,
       KnowledgeBaseCategory.billing => l10n.supportKbBilling,
       KnowledgeBaseCategory.troubleshooting => l10n.supportKbTroubleshooting,
+      KnowledgeBaseCategory.general => l10n.supportKbGeneral,
     };
   }
 
@@ -57,7 +58,6 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(kbListProvider);
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
       title: l10n.supportKnowledgeBase,
@@ -121,7 +121,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         itemCount: articles.length,
-                        separatorBuilder: (_, __) => AppSpacing.gapH8,
+                        separatorBuilder: (context, index) => AppSpacing.gapH8,
                         itemBuilder: (context, index) {
                           final article = articles[index];
                           final isAr = Localizations.localeOf(context).languageCode == 'ar';
@@ -145,10 +145,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                                       ),
                                     ),
                                     AppSpacing.gapW8,
-                                    Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: AppColors.mutedFor(context),
-                                    ),
+                                    Icon(Icons.chevron_right_rounded, color: AppColors.mutedFor(context)),
                                   ],
                                 ),
                                 AppSpacing.gapH4,

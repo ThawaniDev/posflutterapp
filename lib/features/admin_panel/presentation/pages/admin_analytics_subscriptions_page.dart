@@ -1,156 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
-import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsSubscriptionsPage extends ConsumerStatefulWidget {
   const AdminAnalyticsSubscriptionsPage({super.key});
-
   @override
-  ConsumerState<AdminAnalyticsSubscriptionsPage> createState() => _AdminAnalyticsSubscriptionsPageState();
+  ConsumerState<AdminAnalyticsSubscriptionsPage> createState() => _State();
 }
 
-class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalyticsSubscriptionsPage> {
-
-  AppLocalizations get l10n => AppLocalizations.of(context)!;
-  String? _storeId;
+class _State extends ConsumerState<AdminAnalyticsSubscriptionsPage> {
+  late String _dateFrom;
+  late String _dateTo;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      _storeId = ref.read(resolvedStoreIdProvider);
-      ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId);
-    });
+    final now = DateTime.now();
+    _dateTo   = now.toIso8601String().substring(0, 10);
+    _dateFrom = now.subtract(const Duration(days: 30)).toIso8601String().substring(0, 10);
+    Future.microtask(_load);
   }
 
-  void _onBranchChanged(String? storeId) {
-    setState(() => _storeId = storeId);
-    ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId);
-  }
+  void _load() => ref.read(analyticsSubscriptionsProvider.notifier).load(dateFrom: _dateFrom, dateTo: _dateTo);
 
-  Color _statusColor(String status) {
-    return switch (status) {
-      'active' => AppColors.success,
-      'trial' => AppColors.info,
-      'cancelled' => AppColors.error,
-      'past_due' => AppColors.warning,
-      'expired' => AppColors.textSecondary,
-      _ => AppColors.info,
-    };
+  Future<void> _pickRange() async {
+    final now = DateTime.now();
+    final r = await showPosDateRangePicker(context, firstDate: DateTime(now.year - 2), lastDate: now);
+    if (r != null && mounted) {
+      setState(() {
+        _dateFrom = r.start.toIso8601String().substring(0, 10);
+        _dateTo   = r.end.toIso8601String().substring(0, 10);
+      });
+      _load();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n  = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsSubscriptionsProvider);
 
     return PosListPage(
-  title: l10n.analyticsSubscriptions,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(), tooltip: l10n.adminExportSubscriptions,
-  ),
-],
-  child: Column(
-        children: [
-          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          Expanded(
-            child: switch (state) {
-              AnalyticsSubscriptionsLoading() => const Center(child: CircularProgressIndicator()),
-              AnalyticsSubscriptionsLoaded(
-                statusCounts: final counts,
-                averageSubscriptionAgeDays: final avgAge,
-                totalChurnInPeriod: final churn,
-                trialToPaidConversionRate: final conversion,
-                lifecycleTrend: final trend,
-              ) =>
-                RefreshIndicator(
-                  onRefresh: () => ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId),
-                  child: ListView(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    children: [
-                      // Conversion & Churn highlights
-                      PosKpiGrid(
-                        desktopCols: 3,
-                        mobileCols: 2,
-                        cards: [
-                          PosKpiCard(
-                            label: l10n.adminConversionRate,
-                            value: '${conversion.toStringAsFixed(1)}%',
-                            iconColor: AppColors.success,
-                          ),
-                          PosKpiCard(label: l10n.adminChurnPeriod, value: '$churn', iconColor: AppColors.error),
-                          PosKpiCard(label: l10n.adminAvgSubAge, value: '${avgAge.toStringAsFixed(0)} days', iconColor: AppColors.info),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-
-                      // Status breakdown
-                      Text(l10n.adminStatusBreakdown, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: AppSpacing.sm),
-                      ...counts.entries.map(
-                        (e) => PosCard(
-                          margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: _statusColor(e.key).withValues(alpha: 0.2),
-                              child: Icon(Icons.circle, color: _statusColor(e.key), size: 16),
-                            ),
-                            title: Text(e.key.toUpperCase()),
-                            trailing: Text('${e.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: AppSpacing.lg),
-
-                      // Lifecycle trend
-                      Text(l10n.adminLifecycleTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: AppSpacing.sm),
-                      if (trend.isEmpty)
-                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoTrendData)),
-                        )
-                      else
-                        ...trend.map(
-                          (t) => PosCard(
-                            margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-                            child: ListTile(
-                              title: Text(t['date'] as String? ?? ''),
-                              subtitle: Text(
-                                'Active: ${t['active'] ?? 0} | Trial: ${t['trial'] ?? 0} | Churned: ${t['churned'] ?? 0}',
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              AnalyticsSubscriptionsError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(l10n.genericError(msg)),
-                    const SizedBox(height: AppSpacing.sm),
-                    PosButton(
-                      onPressed: () => ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId),
-                      label: l10n.retry,
-                    ),
-                  ],
-                ),
-              ),
-              _ => Center(child: Text(l10n.adminLoadingSubAnalytics)),
-            },
-          ),
-        ],
-      ),
-);
+      title: l10n.analyticsSubscriptions,
+      showSearch: false,
+      actions: [
+        IconButton(icon: const Icon(Icons.date_range_outlined), onPressed: _pickRange, tooltip: l10n.analyticsSelectDateRange),
+        IconButton(
+          icon: const Icon(Icons.download_outlined),
+          tooltip: l10n.adminExportSubscriptions,
+          onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(dateFrom: _dateFrom, dateTo: _dateTo),
+        ),
+      ],
+      child: switch (state) {
+        AnalyticsSubscriptionsLoading() => PosLoadingSkeleton.list(),
+        AnalyticsSubscriptionsLoaded(
+          statusCounts: final counts,
+          lifecycleTrend: final trend,
+        ) => RefreshIndicator(
+          onRefresh: () async => _load(),
+          child: ListView(padding: const EdgeInsets.all(AppSpacing.md), children: [
+            // ignore: prefer_const_constructors
+            Chip(
+              avatar: const Icon(Icons.date_range, size: 14),
+              // ignore: prefer_const_constructors
+              label: Text('$_dateFrom → $_dateTo', style: const TextStyle(fontSize: 12)),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            PosKpiGrid(desktopCols: 4, mobileCols: 2, cards: [
+              PosKpiCard(label: l10n.analyticsActiveSubscriptions, value: '\${counts["active"] ?? 0}', icon: Icons.check_circle_outline, iconColor: AppColors.success),
+              PosKpiCard(label: l10n.analyticsTrialSubscriptions, value: '\${counts["trial"] ?? 0}', icon: Icons.hourglass_bottom, iconColor: AppColors.warning),
+              PosKpiCard(label: l10n.analyticsChurnInPeriod, value: '\$churn', icon: Icons.trending_down, iconColor: AppColors.error),
+              PosKpiCard(label: l10n.analyticsConversionRate, value: '\${convRate.toStringAsFixed(1)}%', icon: Icons.swap_horiz, iconColor: AppColors.info),
+              PosKpiCard(label: l10n.analyticsAvgSubscriptionAge, value: '\${avgAge.toStringAsFixed(1)} days', icon: Icons.schedule, iconColor: AppColors.purple),
+            ]),
+            const SizedBox(height: AppSpacing.xl),
+            Text(l10n.analyticsSubscriptionLifecycle, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: AppSpacing.sm),
+            PosCard(
+              child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: trend.isEmpty
+                ? PosEmptyState(title: l10n.adminNoTrendData)
+                : ReportLineChart(
+                    data: trend, xKey: 'date',
+                    yKeys: const ['active', 'trial', 'churned'],
+                    yLabels: [l10n.analyticsActive, l10n.analyticsTrial, l10n.analyticsChurned],
+                    colors: const [AppColors.success, AppColors.warning, AppColors.error],
+                    height: 240,
+                  )),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            Text(l10n.analyticsSubscriptionStatus, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: AppSpacing.sm),
+            PosCard(
+              child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: counts.isEmpty
+                ? PosEmptyState(title: l10n.adminNoTrendData)
+                : ReportPieChart(
+                    data: counts.entries.map((e) => {'status': e.key, 'count': e.value}).toList(),
+                    labelKey: 'status', valueKey: 'count', height: 200,
+                  )),
+            ),
+          ]),
+        ),
+        AnalyticsSubscriptionsError(message: final msg) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+          PosErrorState(message: msg), const SizedBox(height: AppSpacing.sm),
+          PosButton(onPressed: _load, label: l10n.retry),
+        ])),
+        _ => PosLoadingSkeleton.list(),
+      },
+    );
   }
 }

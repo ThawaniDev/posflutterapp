@@ -8,6 +8,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/features/auto_update/services/update_checker_service.dart';
 
 /// Service that checks for app updates on login and shows
 /// a force-update dialog when the backend requires it.
@@ -20,6 +21,7 @@ class AppUpdateService {
   /// Call after the user becomes authenticated.
   /// Checks the backend for available updates and shows
   /// a blocking dialog if a force update is required.
+  /// Also starts a 6-hour periodic background check timer.
   Future<void> checkOnLogin(BuildContext context) async {
     // Only check once per app session to avoid spamming
     if (_hasChecked) return;
@@ -32,7 +34,11 @@ class AppUpdateService {
 
       if (platform == null) return; // unsupported platform
 
-      // Fire the check
+      // Start periodic 6-hour background timer so the app always
+      // picks up a new forced update even while the user is active.
+      _ref.read(updateCheckerServiceProvider).startPeriodicChecks(currentVersion: currentVersion, platform: platform);
+
+      // Fire the immediate check
       await _ref.read(updateCheckProvider.notifier).check(currentVersion: currentVersion, platform: platform);
 
       final state = _ref.read(updateCheckProvider);

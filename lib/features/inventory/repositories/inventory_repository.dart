@@ -6,10 +6,13 @@ import 'package:wameedpos/features/inventory/models/goods_receipt.dart';
 import 'package:wameedpos/features/inventory/models/purchase_order.dart';
 import 'package:wameedpos/features/inventory/models/recipe.dart';
 import 'package:wameedpos/features/inventory/models/stock_adjustment.dart';
+import 'package:wameedpos/features/inventory/models/stock_batch.dart';
 import 'package:wameedpos/features/inventory/models/stock_level.dart';
 import 'package:wameedpos/features/inventory/models/stock_movement.dart';
 import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/stocktake.dart';
 import 'package:wameedpos/features/inventory/models/supplier_return.dart';
+import 'package:wameedpos/features/inventory/models/waste_record.dart';
 
 final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
   return InventoryRepository(
@@ -166,4 +169,70 @@ class InventoryRepository {
   Future<SupplierReturn> approveSupplierReturn(String id) => _apiService.approveSupplierReturn(id);
   Future<SupplierReturn> completeSupplierReturn(String id) => _apiService.completeSupplierReturn(id);
   Future<SupplierReturn> cancelSupplierReturn(String id) => _apiService.cancelSupplierReturn(id);
+
+  // ─── Stocktakes ───────────────────────────────────────────────
+
+  Future<PaginatedResult<Stocktake>> listStocktakes({int page = 1, int perPage = 25, String? status}) async {
+    final storeId = await _getStoreId();
+    return _apiService.listStocktakes(storeId: storeId, page: page, perPage: perPage, status: status);
+  }
+
+  Future<Stocktake> createStocktake(Map<String, dynamic> data) async {
+    final storeId = await _getStoreId();
+    return _apiService.createStocktake({'store_id': storeId, ...data});
+  }
+
+  Future<Stocktake> getStocktake(String id) => _apiService.getStocktake(id);
+
+  Future<Stocktake> updateStocktakeCounts(String id, List<Map<String, dynamic>> items) =>
+      _apiService.updateStocktakeCounts(id, items);
+
+  Future<Stocktake> applyStocktake(String id) => _apiService.applyStocktake(id);
+
+  Future<Stocktake> cancelStocktake(String id) => _apiService.cancelStocktake(id);
+
+  // ─── Waste Records ────────────────────────────────────────────
+
+  Future<PaginatedResult<WasteRecord>> listWasteRecords({
+    int page = 1,
+    int perPage = 25,
+    String? productId,
+    String? reason,
+    String? dateFrom,
+    String? dateTo,
+  }) async {
+    final storeId = await _getStoreId();
+    return _apiService.listWasteRecords(
+      storeId: storeId,
+      page: page,
+      perPage: perPage,
+      productId: productId,
+      reason: reason,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+    );
+  }
+
+  Future<WasteRecord> createWasteRecord(Map<String, dynamic> data) async {
+    final storeId = await _getStoreId();
+    return _apiService.createWasteRecord({'store_id': storeId, ...data});
+  }
+
+  // ─── Expiry Alerts ────────────────────────────────────────────
+
+  Future<PaginatedResult<StockBatch>> listExpiryAlerts({
+    int page = 1,
+    int perPage = 100,
+    int daysAhead = 30,
+  }) async {
+    final storeId = await _getStoreId();
+    return _apiService.listExpiryAlerts(storeId: storeId, page: page, perPage: perPage, daysAhead: daysAhead);
+  }
+
+  // ─── Low Stock ────────────────────────────────────────────────
+
+  Future<List<StockLevel>> getLowStockItems() async {
+    final storeId = await _getStoreId();
+    return _apiService.getLowStockItems(storeId);
+  }
 }

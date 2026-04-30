@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
+import 'package:wameedpos/features/accessibility/services/accessibility_service.dart';
 
 void main() {
   // ═══════════════ AccessibilityPrefsState ═══════════════
@@ -210,6 +211,71 @@ void main() {
       );
       expect(low.fontScale, 0.8);
       expect(high.fontScale, 1.5);
+    });
+  });
+
+  // ═══════════════ AccessibilitySettings ═══════════════
+  group('AccessibilitySettings', () {
+    test('default values', () {
+      const s = AccessibilitySettings();
+      expect(s.fontScale, 1.0);
+      expect(s.highContrast, isFalse);
+      expect(s.reducedMotion, isFalse);
+      expect(s.audioFeedback, isTrue);
+      expect(s.largeTouchTargets, isFalse);
+      expect(s.visibleFocus, isTrue);
+    });
+
+    test('animationDuration is zero when reducedMotion is true', () {
+      const s = AccessibilitySettings(reducedMotion: true);
+      expect(s.animationDuration, Duration.zero);
+    });
+
+    test('animationDuration is non-zero when reducedMotion is false', () {
+      const s = AccessibilitySettings(reducedMotion: false);
+      expect(s.animationDuration, isNot(Duration.zero));
+    });
+
+    test('minInteractiveSize is 48 when largeTouchTargets is true', () {
+      const s = AccessibilitySettings(largeTouchTargets: true);
+      expect(s.minInteractiveSize, 48.0);
+    });
+
+    test('minInteractiveSize is 36 when largeTouchTargets is false', () {
+      const s = AccessibilitySettings(largeTouchTargets: false);
+      expect(s.minInteractiveSize, 36.0);
+    });
+
+    test('copyWith preserves unchanged values', () {
+      const original = AccessibilitySettings(fontScale: 1.3, highContrast: true);
+      final updated = original.copyWith(reducedMotion: true);
+      expect(updated.fontScale, 1.3);
+      expect(updated.highContrast, isTrue);
+      expect(updated.reducedMotion, isTrue);
+    });
+
+    test('copyWith can override all fields', () {
+      const original = AccessibilitySettings();
+      final updated = original.copyWith(
+        fontScale: 1.5,
+        highContrast: true,
+        colorBlindMode: 'deuteranopia',
+        reducedMotion: true,
+        audioFeedback: false,
+        audioVolume: 0.3,
+        largeTouchTargets: true,
+        visibleFocus: false,
+        screenReaderHints: false,
+      );
+      expect(updated.fontScale, 1.5);
+      expect(updated.highContrast, isTrue);
+      expect(updated.colorBlindMode, 'deuteranopia');
+      expect(updated.reducedMotion, isTrue);
+      expect(updated.audioFeedback, isFalse);
+      expect(updated.audioVolume, 0.3);
+      expect(updated.largeTouchTargets, isTrue);
+      expect(updated.visibleFocus, isFalse);
+      expect(updated.screenReaderHints, isFalse);
     });
   });
 }

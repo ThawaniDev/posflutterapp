@@ -679,6 +679,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportKbTroubleshooting => 'Troubleshooting';
 
   @override
+  String get supportKbGeneral => 'General';
+
+  @override
+  String get supportSenderYou => 'You';
+
+  @override
+  String get supportSenderSupport => 'Support';
+
+  @override
+  String get supportRateTicket => 'Rate this ticket';
+
+  @override
+  String get supportRateTicketHint =>
+      'How satisfied were you with the support?';
+
+  @override
+  String get supportRateSubmit => 'Submit Rating';
+
+  @override
+  String get supportRateSuccess => 'Thank you for your feedback!';
+
+  @override
+  String get supportTicketRated => 'Ticket rated successfully';
+
+  @override
+  String get supportFilterCategory => 'Category';
+
+  @override
+  String get supportFilterPriority => 'Priority';
+
+  @override
+  String get supportCriticalPriority => 'Critical';
+
+  @override
   String get branches => 'Branches';
 
   @override
@@ -1367,6 +1401,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryKeepCurrentKey => 'Leave blank to keep current key';
 
   @override
+  String get deliveryNoDynamicFields =>
+      'No credential fields configured for this platform';
+
+  @override
   String get deliveryBranchId => 'Branch ID on Platform';
 
   @override
@@ -1954,6 +1992,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accessibilityReset => 'Reset to Default';
+
+  @override
+  String get accessibilityPreview => 'Live Preview';
 
   @override
   String get accessibilityFontSize => 'Font Size';
@@ -6536,6 +6577,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryUnitCostLabel => 'Unit Cost';
 
   @override
+  String get inventoryUnitCost => 'Unit Cost';
+
+  @override
   String get inventoryWastePercent => 'Waste %';
 
   @override
@@ -6543,6 +6587,226 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inventoryYieldQuantity => 'Yield Quantity';
+
+  @override
+  String get inventoryStocktakes => 'Stocktakes';
+
+  @override
+  String get inventoryStocktakesSubtitle => 'Conduct physical inventory counts';
+
+  @override
+  String get inventoryNewStocktake => 'New Stocktake';
+
+  @override
+  String get inventoryStartStocktake => 'Start Stocktake';
+
+  @override
+  String get inventoryStocktakeCreated => 'Stocktake started';
+
+  @override
+  String get inventoryStocktakeApplied =>
+      'Stocktake applied and adjustments posted';
+
+  @override
+  String get inventoryStocktakeCancelled => 'Stocktake cancelled';
+
+  @override
+  String get inventoryApplyStocktake => 'Apply Stocktake';
+
+  @override
+  String get inventoryStocktakeApplyWarning =>
+      'Applying the stocktake will post stock adjustments for all counted items. This cannot be undone.';
+
+  @override
+  String get inventoryStocktakeCancelWarning =>
+      'Are you sure you want to cancel this stocktake? All counts will be lost.';
+
+  @override
+  String get inventoryStocktakeType => 'Stocktake Type';
+
+  @override
+  String get inventoryStocktakeTypeFull => 'Full';
+
+  @override
+  String get inventoryStocktakeTypePartial => 'Partial';
+
+  @override
+  String get inventoryStocktakeTypeCategory => 'By Category';
+
+  @override
+  String get inventoryStocktakeStatusInProgress => 'In Progress';
+
+  @override
+  String get inventoryStocktakeStatusReview => 'Review';
+
+  @override
+  String get inventoryStocktakeStatusCompleted => 'Completed';
+
+  @override
+  String get inventoryStocktakeStatusCancelled => 'Cancelled';
+
+  @override
+  String get inventoryNoStocktakes => 'No stocktakes';
+
+  @override
+  String get inventoryNoStocktakesHint =>
+      'Start a new stocktake to count your inventory';
+
+  @override
+  String get inventoryCountSheet => 'Count Sheet';
+
+  @override
+  String get inventoryExpectedQty => 'Expected';
+
+  @override
+  String get inventoryCountedQty => 'Counted';
+
+  @override
+  String get inventoryVariance => 'Variance';
+
+  @override
+  String get inventoryCostImpact => 'Cost Impact';
+
+  @override
+  String get inventoryViewCounts => 'View Counts';
+
+  @override
+  String get inventorySaveCounts => 'Save Counts';
+
+  @override
+  String get inventoryCountsSaved => 'Counts saved';
+
+  @override
+  String get inventoryNoItemsToCount => 'No items to count';
+
+  @override
+  String get inventoryItemCount => 'Items';
+
+  @override
+  String get inventoryStartedAt => 'Started';
+
+  @override
+  String get inventoryAllStatuses => 'All Statuses';
+
+  @override
+  String get inventoryAllCategories => 'All Categories';
+
+  @override
+  String get inventoryWasteRecords => 'Waste Records';
+
+  @override
+  String get inventoryWasteRecordsSubtitle => 'Track and analyse product waste';
+
+  @override
+  String get inventoryRecordWaste => 'Record Waste';
+
+  @override
+  String get inventoryWasteRecorded => 'Waste recorded';
+
+  @override
+  String get inventoryWasteReason => 'Waste Reason';
+
+  @override
+  String get inventoryAllReasons => 'All Reasons';
+
+  @override
+  String get inventoryWasteReasonExpired => 'Expired';
+
+  @override
+  String get inventoryWasteReasonDamaged => 'Damaged';
+
+  @override
+  String get inventoryWasteReasonSpillage => 'Spillage';
+
+  @override
+  String get inventoryWasteReasonOverproduction => 'Overproduction';
+
+  @override
+  String get inventoryWasteReasonQualityIssue => 'Quality Issue';
+
+  @override
+  String get inventoryWasteReasonOther => 'Other';
+
+  @override
+  String get inventoryNoWasteRecords => 'No waste records';
+
+  @override
+  String get inventoryNoWasteRecordsHint =>
+      'Record product waste to track losses';
+
+  @override
+  String get inventoryTotalRecords => 'Total Records';
+
+  @override
+  String get inventoryTotalWasteCost => 'Total Waste Cost';
+
+  @override
+  String get inventoryExpiryDashboard => 'Expiry Dashboard';
+
+  @override
+  String get inventoryExpiryDashboardSubtitle =>
+      'Monitor batches nearing or past expiry';
+
+  @override
+  String get inventoryExpired => 'Expired';
+
+  @override
+  String get inventoryExpiringSoon => 'Expiring Soon';
+
+  @override
+  String get inventoryExpiring7Days => 'Expiring < 7 Days';
+
+  @override
+  String get inventoryExpiring30Days => 'Expiring < 30 Days';
+
+  @override
+  String get inventoryExpiryDate => 'Expiry Date';
+
+  @override
+  String get inventoryDaysUntilExpiry => 'Days Until Expiry';
+
+  @override
+  String get inventoryExpiryLookAhead => 'Look Ahead';
+
+  @override
+  String get inventoryDays => 'days';
+
+  @override
+  String get inventoryNoExpiryIssues => 'All batches are safe';
+
+  @override
+  String inventoryAllBatchesSafe(int days) {
+    return 'No batches expiring in the next $days days';
+  }
+
+  @override
+  String get inventoryExpiredBatches => 'Expired Batches';
+
+  @override
+  String get inventoryExpiringIn7Days => 'Expiring in < 7 Days';
+
+  @override
+  String get inventoryExpiringIn30Days => 'Expiring in 7–30 Days';
+
+  @override
+  String get inventoryMarkAsWasted => 'Mark as Wasted';
+
+  @override
+  String inventoryMarkAsWastedConfirm(double quantity, String product) {
+    return 'Mark $quantity units of $product as wasted?';
+  }
+
+  @override
+  String get inventoryNoBatches => 'No batches';
+
+  @override
+  String get inventoryBatchNumber => 'Batch Number';
+
+  @override
+  String get inventoryBatchNumberHint => 'e.g. BATCH-001';
+
+  @override
+  String get inventoryOptional => 'Optional';
 
   @override
   String get notificationsCategories => 'Notification Categories';
@@ -14988,6 +15252,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminLoadMetrics => 'Load Metrics';
 
   @override
+  String get adminPosTerminals => 'POS Terminals';
+
+  @override
+  String get adminInternalNotes => 'Internal Notes';
+
+  @override
   String get adminAddOverride => 'Add Override';
 
   @override
@@ -15578,6 +15848,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subProceedToPayment => 'Proceed to Payment';
+
+  @override
+  String get subDiscountCode => 'Discount Code';
+
+  @override
+  String get subEnterDiscountCode => 'Enter discount code';
+
+  @override
+  String get subApplyDiscount => 'Apply';
+
+  @override
+  String get subValidatingDiscount => 'Validating...';
+
+  @override
+  String get subDiscountApplied => 'Discount Applied';
+
+  @override
+  String get subDiscountInvalid => 'Invalid or expired discount code.';
+
+  @override
+  String get subRemoveDiscount => 'Remove';
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'You save $amount';
+  }
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value off';
+  }
 
   @override
   String subPageOfLast(String current, String last) {
@@ -16984,6 +17285,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminNoSecurityAlertsShort => 'No security alerts';
+
+  @override
+  String get adminOpenAlerts => 'Open Alerts';
+
+  @override
+  String get adminCriticalAlerts => 'Critical Alerts';
+
+  @override
+  String get adminFailedLogins24h => 'Failed Logins (24h)';
+
+  @override
+  String get adminBlockedIps => 'Blocked IPs';
+
+  @override
+  String get adminAlertType => 'Alert Type';
+
+  @override
+  String get adminDescription => 'Description';
+
+  @override
+  String get adminIpAddress => 'IP Address';
+
+  @override
+  String get adminResolveAlert => 'Resolve Alert';
+
+  @override
+  String get adminAlertResolved => 'Alert resolved successfully';
+
+  @override
+  String get adminResolutionNotes => 'Resolution Notes';
+
+  @override
+  String get adminResolutionNotesHint =>
+      'Describe how this alert was resolved...';
+
+  @override
+  String get securityAlertsBySeverity => 'Alerts by Severity';
 
   @override
   String get adminWhatsApp => 'WhatsApp';
@@ -18788,4 +19126,488 @@ class AppLocalizationsEn extends AppLocalizations {
   String pageOf(String page, String total) {
     return 'Page $page of $total';
   }
+
+  @override
+  String get analyticsSelectDateRange => 'Select Date Range';
+
+  @override
+  String get analyticsActiveStores => 'Active Stores';
+
+  @override
+  String get analyticsNewSignups => 'New Signups';
+
+  @override
+  String get analyticsChurnRate => 'Churn Rate';
+
+  @override
+  String get analyticsTotalOrders => 'Total Orders';
+
+  @override
+  String get analyticsTotalGmv => 'Total GMV';
+
+  @override
+  String get analyticsZatcaCompliance => 'ZATCA Compliance';
+
+  @override
+  String get analyticsActiveSubscriptions => 'Active Subscriptions';
+
+  @override
+  String get analyticsTrialSubscriptions => 'Trial Subscriptions';
+
+  @override
+  String get analyticsChurnInPeriod => 'Churn in Period';
+
+  @override
+  String get analyticsConversionRate => 'Conversion Rate';
+
+  @override
+  String get analyticsAvgSubscriptionAge => 'Avg Subscription Age';
+
+  @override
+  String get analyticsSubscriptionLifecycle => 'Subscription Lifecycle';
+
+  @override
+  String get analyticsSubscriptionStatus => 'Subscription Status';
+
+  @override
+  String get analyticsActive => 'Active';
+
+  @override
+  String get analyticsTrial => 'Trial';
+
+  @override
+  String get analyticsChurned => 'Churned';
+
+  @override
+  String get analyticsTotalStores => 'Total Stores';
+
+  @override
+  String get analyticsInactiveStores => 'Inactive Stores';
+
+  @override
+  String get analyticsStoreHealthSummary => 'Store Health Summary';
+
+  @override
+  String get analyticsTopStores => 'Top Stores';
+
+  @override
+  String get analyticsInactive => 'Inactive';
+
+  @override
+  String get analyticsStorePerformance => 'Store Performance';
+
+  @override
+  String get analyticsSystemHealthy => 'All Systems Operational';
+
+  @override
+  String get analyticsSystemHasErrors => 'System Has Errors';
+
+  @override
+  String analyticsMonitoringStores(int count) {
+    return 'Monitoring $count stores';
+  }
+
+  @override
+  String get analyticsStoresMonitored => 'Stores Monitored';
+
+  @override
+  String get analyticsStoresWithErrors => 'Stores with Errors';
+
+  @override
+  String get analyticsTotalErrorsToday => 'Total Errors Today';
+
+  @override
+  String get analyticsSyncStatusBreakdown => 'Sync Status Breakdown';
+
+  @override
+  String get analyticsStatusDetails => 'Status Details';
+
+  @override
+  String get analyticsSupportDashboard => 'Support Analytics';
+
+  @override
+  String get analyticsSlaCompliance => 'SLA Compliance';
+
+  @override
+  String get analyticsSlaBreached => 'SLA Breached';
+
+  @override
+  String get analyticsAvgFirstResponse => 'Avg First Response (hrs)';
+
+  @override
+  String get analyticsAvgResolution => 'Avg Resolution (hrs)';
+
+  @override
+  String get analyticsByCategory => 'By Category';
+
+  @override
+  String get analyticsByPriority => 'By Priority';
+
+  @override
+  String get analyticsNotificationsDashboard => 'Notifications Analytics';
+
+  @override
+  String get analyticsDeliveryRate => 'Delivery Rate';
+
+  @override
+  String get analyticsOpenRate => 'Open Rate';
+
+  @override
+  String get analyticsTotalSent => 'Total Sent';
+
+  @override
+  String get analyticsTotalDelivered => 'Total Delivered';
+
+  @override
+  String get analyticsTotalFailed => 'Total Failed';
+
+  @override
+  String get analyticsTotalOpened => 'Total Opened';
+
+  @override
+  String get analyticsByChannel => 'By Channel';
+
+  @override
+  String get analyticsBatchStats => 'Batch Statistics';
+
+  @override
+  String get analyticsAvgLatency => 'Avg Latency';
+
+  @override
+  String get analyticsFeatureAdoption => 'Feature Adoption';
+
+  @override
+  String get analyticsFeatureAdoptionRates => 'Feature Adoption Rates';
+
+  @override
+  String get analyticsFeatureDetails => 'Feature Details';
+
+  @override
+  String get adminNoFeatureData => 'No feature data available';
+
+  @override
+  String get adminNoHealthData => 'No health data available';
+
+  @override
+  String get adminNoStoresData => 'No store data available';
+
+  @override
+  String get adminNoActivity => 'No recent activity';
+
+  @override
+  String get adminNoDataAvailable => 'No data available';
+
+  @override
+  String get adminTotalBatches => 'Total Batches';
+
+  @override
+  String get adminTotalRecipients => 'Total Recipients';
+
+  @override
+  String get adminTotalTickets => 'Total Tickets';
+
+  @override
+  String get adminOpenTickets => 'Open Tickets';
+
+  @override
+  String get adminInProgressTickets => 'In Progress';
+
+  @override
+  String get adminResolvedTickets => 'Resolved';
+
+  @override
+  String get adminClosedTickets => 'Closed';
+
+  @override
+  String get onboardingSelectBusinessType => 'Select Business Type';
+
+  @override
+  String get onboardingBusinessTypeDefaultsTitle => 'Included Defaults';
+
+  @override
+  String get onboardingBusinessTypeDefaultsLoading => 'Loading defaults…';
+
+  @override
+  String get onboardingBusinessTypeNoDefaults =>
+      'No defaults available for this business type';
+
+  @override
+  String get onboardingHardwareStepTitle => 'Hardware Setup';
+
+  @override
+  String get onboardingHardwareStepSubtitle =>
+      'Let us know which hardware you have connected';
+
+  @override
+  String get onboardingHardwarePrinterLabel => 'Receipt Printer';
+
+  @override
+  String get onboardingHardwarePrinterDesc =>
+      'Prints receipts and order tickets';
+
+  @override
+  String get onboardingHardwareScannerLabel => 'Barcode Scanner';
+
+  @override
+  String get onboardingHardwareScannerDesc =>
+      'Scans product barcodes at checkout';
+
+  @override
+  String get onboardingHardwareCashDrawerLabel => 'Cash Drawer';
+
+  @override
+  String get onboardingHardwareCashDrawerDesc =>
+      'Automatically opens when a cash payment is made';
+
+  @override
+  String get onboardingHardwareCustomerDisplayLabel => 'Customer Display (CFD)';
+
+  @override
+  String get onboardingHardwareCustomerDisplayDesc =>
+      'Second screen facing the customer';
+
+  @override
+  String get onboardingHardwareInfoNote =>
+      'You can add or change hardware at any time from the Hardware settings page.';
+
+  @override
+  String get onboardingProductsStepTitle => 'Product Setup';
+
+  @override
+  String get onboardingProductsStepSubtitle =>
+      'Choose how to add your products';
+
+  @override
+  String get onboardingProductsOptionLaterLabel => 'Set up later';
+
+  @override
+  String get onboardingProductsOptionLaterSubtitle =>
+      'Skip for now — you can add products from the Products page';
+
+  @override
+  String get onboardingProductsOptionTemplateLabel =>
+      'Use business type defaults';
+
+  @override
+  String get onboardingProductsOptionTemplateSubtitle =>
+      'Start with pre-built categories and product structure';
+
+  @override
+  String get onboardingProductsOptionCsvLabel => 'Upload product list (CSV)';
+
+  @override
+  String get onboardingProductsOptionCsvSubtitle =>
+      'Import your existing product catalog';
+
+  @override
+  String get onboardingProductsUploadCsv => 'Choose CSV File';
+
+  @override
+  String get onboardingStaffStepTitle => 'Invite Staff';
+
+  @override
+  String get onboardingStaffStepSubtitle =>
+      'Add your first team member (optional)';
+
+  @override
+  String get onboardingStaffNameLabel => 'Full Name';
+
+  @override
+  String get onboardingStaffEmailLabel => 'Email Address';
+
+  @override
+  String get onboardingStaffRoleLabel => 'Role';
+
+  @override
+  String get onboardingStaffRoleCashier => 'Cashier';
+
+  @override
+  String get onboardingStaffRoleManager => 'Manager';
+
+  @override
+  String get onboardingStaffRoleSupervisor => 'Supervisor';
+
+  @override
+  String get onboardingStaffRoleAdmin => 'Admin';
+
+  @override
+  String get onboardingStaffSkipNote =>
+      'You can skip this step and invite staff later from the Team settings page.';
+
+  @override
+  String get onboardingReviewHardware => 'Hardware';
+
+  @override
+  String get onboardingReviewNoneSelected => 'None selected';
+
+  @override
+  String get onboardingReviewProducts => 'Products';
+
+  @override
+  String get onboardingReviewStaff => 'Staff Member';
+
+  @override
+  String get onboardingReviewStaffNone => 'None (invite later)';
+
+  @override
+  String get helpArticlesTitle => 'Help Center';
+
+  @override
+  String get helpArticlesSearchHint => 'Search articles…';
+
+  @override
+  String get helpArticlesCategoryAll => 'All';
+
+  @override
+  String get helpArticleNotFound => 'Article not found';
+
+  @override
+  String get auDashboard => 'Update Dashboard';
+
+  @override
+  String get auDashboardTitle => 'App Update Management';
+
+  @override
+  String get auTotalReleases => 'Total Releases';
+
+  @override
+  String get auActiveReleases => 'Active Releases';
+
+  @override
+  String get auInstallationRate => 'Installation Rate';
+
+  @override
+  String get auInstalledCount => 'Installed';
+
+  @override
+  String get auFailedCount => 'Failed';
+
+  @override
+  String get auLast30Days => 'Last 30 days';
+
+  @override
+  String get auLatestByPlatform => 'Latest by Platform';
+
+  @override
+  String get auAdoptionFunnel => 'Adoption Funnel';
+
+  @override
+  String get auFunnelNote => 'Active release installations in the past 30 days';
+
+  @override
+  String get auRollbackCandidates => 'Auto-Rollback Candidates';
+
+  @override
+  String get auFailureRate => 'Failure Rate';
+
+  @override
+  String get auReview => 'Review';
+
+  @override
+  String get auRecentFailures => 'Recent Failures';
+
+  @override
+  String get auNoActiveRelease => 'No active release';
+
+  @override
+  String get auNoReleasesYet => 'No releases yet';
+
+  @override
+  String get auUnknownError => 'Unknown error';
+
+  @override
+  String get auFileIntegrity => 'File Integrity';
+
+  @override
+  String get auFileIntegrityHelper =>
+      'SHA-256 checksum and file size for update integrity verification';
+
+  @override
+  String get auFileChecksum => 'File Checksum (SHA-256)';
+
+  @override
+  String get auFileChecksumHelper =>
+      '64-character hex digest of the release binary';
+
+  @override
+  String get auFileSizeBytes => 'File Size (bytes)';
+
+  @override
+  String get auFileSizeHelper => 'Exact byte count of the release binary';
+
+  @override
+  String get auStatRecordDetails => 'Record Details';
+
+  @override
+  String get auErrorDetails => 'Error Details';
+
+  @override
+  String get auErrorMessage => 'Error Message';
+
+  @override
+  String get auAddRelease => 'Add Release';
+
+  @override
+  String get auViewAllStats => 'View All Stats';
+
+  @override
+  String get commonTimestamps => 'Timestamps';
+
+  @override
+  String get commonCreatedAt => 'Created At';
+
+  @override
+  String get commonUpdatedAt => 'Updated At';
+
+  @override
+  String get commonTime => 'Time';
+
+  @override
+  String get configFeatureFlags => 'Feature Flags';
+
+  @override
+  String get configMaintenanceMode => 'Maintenance Mode';
+
+  @override
+  String get configMaintenanceActive => 'System is under maintenance';
+
+  @override
+  String configMaintenanceExpected(String time) {
+    return 'Expected to end: $time';
+  }
+
+  @override
+  String get configTax => 'Tax Configuration';
+
+  @override
+  String get configVatRate => 'VAT Rate';
+
+  @override
+  String get configVatEnabled => 'VAT Enabled';
+
+  @override
+  String get configSecurityPolicies => 'Security Policies';
+
+  @override
+  String get configSessionTimeout => 'Session Timeout';
+
+  @override
+  String configSessionTimeoutMinutes(int count) {
+    return '$count minutes';
+  }
+
+  @override
+  String get configPinMinLength => 'Minimum PIN Length';
+
+  @override
+  String get configMaxFailedAttempts => 'Max Failed Login Attempts';
+
+  @override
+  String get configLockoutDuration => 'Lockout Duration';
+
+  @override
+  String get configBiometricDefault => 'Biometric Enabled by Default';
+
+  @override
+  String get configRequireReauth => 'Require Re-auth on Wake';
 }

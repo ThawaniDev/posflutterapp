@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_platform.dart';
 import 'package:wameedpos/features/delivery_integration/repositories/delivery_repository.dart';
 import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
@@ -189,12 +190,14 @@ class DeliveryPlatformsNotifier extends StateNotifier<DeliveryPlatformsState> {
     try {
       final result = await _repository.getPlatforms();
       final data = result['data'] as List<dynamic>? ?? [];
-      state = DeliveryPlatformsLoaded(data.cast<Map<String, dynamic>>());
+      state = DeliveryPlatformsLoaded(data.map((p) => DeliveryPlatform.fromJson(p as Map<String, dynamic>)).toList());
     } catch (e) {
       if (state is! DeliveryPlatformsLoaded) state = DeliveryPlatformsError(e.toString());
     }
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 final deliveryPlatformsProvider = StateNotifierProvider<DeliveryPlatformsNotifier, DeliveryPlatformsState>((ref) {
   return DeliveryPlatformsNotifier(ref.watch(deliveryRepositoryProvider));

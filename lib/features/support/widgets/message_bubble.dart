@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -15,12 +16,13 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final isProvider = message.senderType == TicketSenderType.provider;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     final bubbleColor = isProvider
         ? (isDark ? AppColors.primary.withValues(alpha: 0.2) : AppColors.primary10)
         : (isDark ? AppColors.cardDark : Theme.of(context).colorScheme.surfaceContainerHigh);
 
-    final senderLabel = isProvider ? 'You' : 'Support';
+    final senderLabel = isProvider ? l10n.supportSenderYou : l10n.supportSenderSupport;
     final senderColor = isProvider ? AppColors.primary : AppColors.info;
 
     final timeStr = message.sentAt != null ? DateFormat.jm().format(message.sentAt!) : '';
@@ -109,10 +111,7 @@ class MessageBubble extends StatelessWidget {
             if (timeStr.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
-                child: Text(
-                  '$dateStr, $timeStr',
-                  style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
-                ),
+                child: Text('$dateStr, $timeStr', style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
               ),
           ],
         ),

@@ -1,4 +1,46 @@
 // ════════════════════════════════════════════════════════
+// Impersonation State
+// ════════════════════════════════════════════════════════
+
+sealed class ImpersonationState {
+  const ImpersonationState();
+}
+
+class ImpersonationInitial extends ImpersonationState {
+  const ImpersonationInitial();
+}
+
+class ImpersonationLoading extends ImpersonationState {
+  const ImpersonationLoading();
+}
+
+class ImpersonationActive extends ImpersonationState {
+  const ImpersonationActive({
+    required this.sessionId,
+    required this.token,
+    required this.expiresAt,
+    required this.targetUser,
+    required this.storeName,
+    required this.organizationName,
+  });
+  final String sessionId;
+  final String token;
+  final String expiresAt;
+  final Map<String, dynamic> targetUser;
+  final String storeName;
+  final String organizationName;
+}
+
+class ImpersonationEnded extends ImpersonationState {
+  const ImpersonationEnded();
+}
+
+class ImpersonationError extends ImpersonationState {
+  const ImpersonationError(this.message);
+  final String message;
+}
+
+// ════════════════════════════════════════════════════════
 // Admin Store List State
 // ════════════════════════════════════════════════════════
 
@@ -15,7 +57,6 @@ class AdminStoreListLoading extends AdminStoreListState {
 }
 
 class AdminStoreListLoaded extends AdminStoreListState {
-
   const AdminStoreListLoaded({required this.stores, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> stores;
   final int total;
@@ -45,7 +86,6 @@ class AdminStoreDetailLoading extends AdminStoreDetailState {
 }
 
 class AdminStoreDetailLoaded extends AdminStoreDetailState {
-
   const AdminStoreDetailLoaded(this.store);
   final Map<String, dynamic> store;
 }
@@ -99,7 +139,6 @@ class RegistrationListLoading extends RegistrationListState {
 }
 
 class RegistrationListLoaded extends RegistrationListState {
-
   const RegistrationListLoaded({
     required this.registrations,
     required this.total,
@@ -134,7 +173,6 @@ class LimitOverrideListLoading extends LimitOverrideListState {
 }
 
 class LimitOverrideListLoaded extends LimitOverrideListState {
-
   const LimitOverrideListLoaded(this.overrides);
   final List<Map<String, dynamic>> overrides;
 }
@@ -161,7 +199,6 @@ class ProviderNotesLoading extends ProviderNotesState {
 }
 
 class ProviderNotesLoaded extends ProviderNotesState {
-
   const ProviderNotesLoaded(this.notes);
   final List<Map<String, dynamic>> notes;
 }
@@ -188,7 +225,6 @@ class AdminRoleListLoading extends AdminRoleListState {
 }
 
 class AdminRoleListLoaded extends AdminRoleListState {
-
   const AdminRoleListLoaded(this.roles);
   final List<Map<String, dynamic>> roles;
 }
@@ -215,7 +251,6 @@ class AdminRoleDetailLoading extends AdminRoleDetailState {
 }
 
 class AdminRoleDetailLoaded extends AdminRoleDetailState {
-
   const AdminRoleDetailLoaded(this.role);
   final Map<String, dynamic> role;
 }
@@ -242,7 +277,6 @@ class PermissionListLoading extends PermissionListState {
 }
 
 class PermissionListLoaded extends PermissionListState {
-
   const PermissionListLoaded(this.groupedPermissions);
   final Map<String, List<Map<String, dynamic>>> groupedPermissions;
 }
@@ -269,7 +303,6 @@ class AdminTeamListLoading extends AdminTeamListState {
 }
 
 class AdminTeamListLoaded extends AdminTeamListState {
-
   const AdminTeamListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> users;
   final int total;
@@ -299,7 +332,6 @@ class AdminTeamUserDetailLoading extends AdminTeamUserDetailState {
 }
 
 class AdminTeamUserDetailLoaded extends AdminTeamUserDetailState {
-
   const AdminTeamUserDetailLoaded(this.user);
   final Map<String, dynamic> user;
 }
@@ -326,7 +358,6 @@ class AdminProfileLoading extends AdminProfileState {
 }
 
 class AdminProfileLoaded extends AdminProfileState {
-
   const AdminProfileLoaded(this.profile);
   final Map<String, dynamic> profile;
 }
@@ -353,7 +384,6 @@ class ActivityLogLoading extends ActivityLogState {
 }
 
 class ActivityLogLoaded extends ActivityLogState {
-
   const ActivityLogLoaded({required this.logs, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> logs;
   final int total;
@@ -461,7 +491,6 @@ class DiscountListLoading extends DiscountListState {
 }
 
 class DiscountListLoaded extends DiscountListState {
-
   const DiscountListLoaded({required this.discounts, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> discounts;
   final int total;
@@ -491,7 +520,6 @@ class SubscriptionListLoading extends SubscriptionListState {
 }
 
 class SubscriptionListLoaded extends SubscriptionListState {
-
   const SubscriptionListLoaded({
     required this.subscriptions,
     required this.total,
@@ -526,7 +554,6 @@ class InvoiceListLoading extends InvoiceListState {
 }
 
 class InvoiceListLoaded extends InvoiceListState {
-
   const InvoiceListLoaded({required this.invoices, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> invoices;
   final int total;
@@ -562,7 +589,6 @@ class ProviderUserListLoading extends ProviderUserListState {
 }
 
 class ProviderUserListLoaded extends ProviderUserListState {
-
   const ProviderUserListLoaded({required this.users, required this.total, required this.currentPage, required this.lastPage});
   final List<Map<String, dynamic>> users;
   final int total;
@@ -1072,15 +1098,116 @@ class AnalyticsExportLoading extends AnalyticsExportState {
 }
 
 class AnalyticsExportSuccess extends AnalyticsExportState {
-  const AnalyticsExportSuccess({required this.exportType, required this.format, required this.recordCount, this.downloadUrl});
+  const AnalyticsExportSuccess({
+    required this.exportType,
+    required this.format,
+    this.recordCount,
+    this.downloadUrl,
+    this.filename,
+    this.expiresAt,
+  });
   final String exportType;
   final String format;
-  final int recordCount;
+  final int? recordCount;
   final String? downloadUrl;
+  final String? filename;
+  final String? expiresAt;
 }
 
 class AnalyticsExportError extends AnalyticsExportState {
   const AnalyticsExportError(this.message);
+  final String message;
+}
+
+// ════════════════════════════════════════════════════════
+// P6b: Analytics Support State
+// ════════════════════════════════════════════════════════
+
+sealed class AnalyticsSupportState {
+  const AnalyticsSupportState();
+}
+
+class AnalyticsSupportInitial extends AnalyticsSupportState {
+  const AnalyticsSupportInitial();
+}
+
+class AnalyticsSupportLoading extends AnalyticsSupportState {
+  const AnalyticsSupportLoading();
+}
+
+class AnalyticsSupportLoaded extends AnalyticsSupportState {
+  const AnalyticsSupportLoaded({
+    required this.totalTickets,
+    required this.openTickets,
+    required this.inProgressTickets,
+    required this.resolvedTickets,
+    required this.closedTickets,
+    required this.slaComplianceRate,
+    required this.slaBreached,
+    required this.avgFirstResponseHours,
+    required this.avgResolutionHours,
+    required this.byCategory,
+    required this.byPriority,
+  });
+  final int totalTickets;
+  final int openTickets;
+  final int inProgressTickets;
+  final int resolvedTickets;
+  final int closedTickets;
+  final double slaComplianceRate;
+  final int slaBreached;
+  final double avgFirstResponseHours;
+  final double avgResolutionHours;
+  final Map<String, dynamic> byCategory;
+  final Map<String, dynamic> byPriority;
+}
+
+class AnalyticsSupportError extends AnalyticsSupportState {
+  const AnalyticsSupportError(this.message);
+  final String message;
+}
+
+// ════════════════════════════════════════════════════════
+// P6c: Analytics Notifications State
+// ════════════════════════════════════════════════════════
+
+sealed class AnalyticsNotificationsState {
+  const AnalyticsNotificationsState();
+}
+
+class AnalyticsNotificationsInitial extends AnalyticsNotificationsState {
+  const AnalyticsNotificationsInitial();
+}
+
+class AnalyticsNotificationsLoading extends AnalyticsNotificationsState {
+  const AnalyticsNotificationsLoading();
+}
+
+class AnalyticsNotificationsLoaded extends AnalyticsNotificationsState {
+  const AnalyticsNotificationsLoaded({
+    required this.totalSent,
+    required this.totalDelivered,
+    required this.totalFailed,
+    required this.totalOpened,
+    required this.deliveryRate,
+    required this.openRate,
+    required this.avgLatencyMs,
+    required this.byChannel,
+    required this.batchStats,
+  });
+  final int totalSent;
+  final int totalDelivered;
+  final int totalFailed;
+  final int totalOpened;
+  final double deliveryRate;
+  final double openRate;
+  final double avgLatencyMs;
+  final List<Map<String, dynamic>> byChannel;
+  final Map<String, dynamic> batchStats;
+}
+
+class AnalyticsNotificationsError extends AnalyticsNotificationsState {
+  const AnalyticsNotificationsError(this.message);
   final String message;
 }
 

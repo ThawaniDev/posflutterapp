@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -32,6 +33,7 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
       KnowledgeBaseCategory.delivery => l10n.supportKbDelivery,
       KnowledgeBaseCategory.billing => l10n.supportKbBilling,
       KnowledgeBaseCategory.troubleshooting => l10n.supportKbTroubleshooting,
+      KnowledgeBaseCategory.general => l10n.supportKbGeneral,
     };
   }
 
@@ -42,9 +44,9 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
-  title: l10n.supportKnowledgeBase,
-  showSearch: false,
-    child: switch (state) {
+      title: l10n.supportKnowledgeBase,
+      showSearch: false,
+      child: switch (state) {
         KbArticleInitial() || KbArticleLoading() => Center(child: PosLoadingSkeleton.list()),
         KbArticleError(:final message) => PosErrorState(
           message: message,
@@ -70,13 +72,27 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
                   // Title
                   Text(title, style: AppTypography.titleLarge),
                   AppSpacing.gapH16,
-                  // Body
-                  SelectableText(
-                    body,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                      height: 1.7,
-                    ),
+                  // Body — rendered as HTML
+                  Html(
+                    data: body,
+                    style: {
+                      'body': Style(
+                        fontFamily: 'inherit',
+                        fontSize: FontSize(AppTypography.bodyMedium.fontSize ?? 14),
+                        lineHeight: const LineHeight(1.7),
+                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        margin: Margins.zero,
+                        padding: HtmlPaddings.zero,
+                      ),
+                      'h1': Style(fontSize: FontSize(22), fontWeight: FontWeight.bold),
+                      'h2': Style(fontSize: FontSize(18), fontWeight: FontWeight.bold),
+                      'h3': Style(fontSize: FontSize(16), fontWeight: FontWeight.w600),
+                      'a': Style(color: AppColors.primary),
+                      'code': Style(
+                        backgroundColor: isDark ? AppColors.cardDark : const Color(0xFFF4F4F4),
+                        fontFamily: 'monospace',
+                      ),
+                    },
                   ),
                 ],
               ),
@@ -84,6 +100,6 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
           );
         }(),
       },
-);
+    );
   }
 }

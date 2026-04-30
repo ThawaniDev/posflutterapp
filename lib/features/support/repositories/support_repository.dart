@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/support/data/remote/support_api_service.dart';
 
 class SupportRepository {
-
   SupportRepository(this._apiService);
   final SupportApiService _apiService;
 
@@ -37,6 +36,9 @@ class SupportRepository {
       _apiService.addMessage(ticketId, message: message);
 
   Future<Map<String, dynamic>> closeTicket(String id) => _apiService.closeTicket(id);
+
+  Future<Map<String, dynamic>> rateTicket(String id, {required int rating, String? comment}) =>
+      _apiService.rateTicket(id, rating: rating, comment: comment);
 
   Future<Map<String, dynamic>> getKbArticles({String? category, String? search}) =>
       _apiService.getKbArticles(category: category, search: search);

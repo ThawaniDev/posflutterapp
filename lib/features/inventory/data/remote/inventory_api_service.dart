@@ -11,6 +11,9 @@ import 'package:wameedpos/features/inventory/models/stock_adjustment.dart';
 import 'package:wameedpos/features/inventory/models/stock_level.dart';
 import 'package:wameedpos/features/inventory/models/stock_movement.dart';
 import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/stock_batch.dart';
+import 'package:wameedpos/features/inventory/models/stocktake.dart';
+import 'package:wameedpos/features/inventory/models/waste_record.dart';
 import 'package:wameedpos/features/inventory/models/supplier_return.dart';
 
 final inventoryApiServiceProvider = Provider<InventoryApiService>((ref) {
@@ -406,5 +409,153 @@ class InventoryApiService {
     final response = await _dio.post('${ApiEndpoints.supplierReturns}/$id/cancel');
     final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
     return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Stocktakes ───────────────────────────────────────────────
+
+  /// GET /inventory/stocktakes
+  Future<PaginatedResult<Stocktake>> listStocktakes({
+    required String storeId,
+    int page = 1,
+    int perPage = 25,
+    String? status,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.stocktakes,
+      queryParameters: {
+        'store_id': storeId,
+        'page': page,
+        'per_page': perPage,
+        'status': ?status,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Stocktake.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  /// POST /inventory/stocktakes
+  Future<Stocktake> createStocktake(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.stocktakes, data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return Stocktake.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// GET /inventory/stocktakes/:id
+  Future<Stocktake> getStocktake(String id) async {
+    final response = await _dio.get('${ApiEndpoints.stocktakes}/$id');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return Stocktake.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// PUT /inventory/stocktakes/:id/counts
+  Future<Stocktake> updateStocktakeCounts(String id, List<Map<String, dynamic>> items) async {
+    final response = await _dio.put('${ApiEndpoints.stocktakes}/$id/counts', data: {'items': items});
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return Stocktake.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// POST /inventory/stocktakes/:id/apply
+  Future<Stocktake> applyStocktake(String id) async {
+    final response = await _dio.post('${ApiEndpoints.stocktakes}/$id/apply');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return Stocktake.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// POST /inventory/stocktakes/:id/cancel
+  Future<Stocktake> cancelStocktake(String id) async {
+    final response = await _dio.post('${ApiEndpoints.stocktakes}/$id/cancel');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return Stocktake.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Waste Records ────────────────────────────────────────────
+
+  /// GET /inventory/waste-records
+  Future<PaginatedResult<WasteRecord>> listWasteRecords({
+    required String storeId,
+    int page = 1,
+    int perPage = 25,
+    String? productId,
+    String? reason,
+    String? dateFrom,
+    String? dateTo,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.wasteRecords,
+      queryParameters: {
+        'store_id': storeId,
+        'page': page,
+        'per_page': perPage,
+        'product_id': ?productId,
+        'reason': ?reason,
+        'date_from': ?dateFrom,
+        'date_to': ?dateTo,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => WasteRecord.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  /// POST /inventory/waste-records
+  Future<WasteRecord> createWasteRecord(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.wasteRecords, data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return WasteRecord.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Expiry Alerts ────────────────────────────────────────────
+
+  /// GET /inventory/expiry-alerts
+  Future<PaginatedResult<StockBatch>> listExpiryAlerts({
+    required String storeId,
+    int page = 1,
+    int perPage = 25,
+    int daysAhead = 30,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.expiryAlerts,
+      queryParameters: {
+        'store_id': storeId,
+        'page': page,
+        'per_page': perPage,
+        'days_ahead': daysAhead,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => StockBatch.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  // ─── Low Stock ────────────────────────────────────────────────
+
+  /// GET /inventory/low-stock
+  Future<List<StockLevel>> getLowStockItems(String storeId) async {
+    final response = await _dio.get(ApiEndpoints.lowStock, queryParameters: {'store_id': storeId});
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final list = apiResponse.data as List;
+    return list.map((j) => StockLevel.fromJson(j as Map<String, dynamic>)).toList();
   }
 }

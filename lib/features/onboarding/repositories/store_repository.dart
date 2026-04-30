@@ -3,7 +3,9 @@ import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
 import 'package:wameedpos/features/branches/models/store.dart';
 import 'package:wameedpos/features/onboarding/data/remote/onboarding_api_service.dart';
 import 'package:wameedpos/features/onboarding/data/remote/store_api_service.dart';
+import 'package:wameedpos/features/onboarding/models/business_type.dart';
 import 'package:wameedpos/features/onboarding/models/business_type_template.dart';
+import 'package:wameedpos/features/onboarding/models/knowledge_base_article.dart';
 import 'package:wameedpos/features/onboarding/models/onboarding_progress.dart';
 import 'package:wameedpos/features/onboarding/models/store_settings.dart';
 import 'package:wameedpos/features/onboarding/models/store_working_hour.dart';
@@ -18,7 +20,6 @@ final storeRepositoryProvider = Provider<StoreRepository>((ref) {
 
 /// Orchestrates store, settings, working hours, and onboarding APIs.
 class StoreRepository {
-
   StoreRepository({required this.storeApi, required this.onboardingApi, required this.localStorage});
   final StoreApiService storeApi;
   final OnboardingApiService onboardingApi;
@@ -58,7 +59,14 @@ class StoreRepository {
 
   // ─── Business Types ────────────────────────────────────────────
 
+  /// Legacy: business types from the core/business-types (auth required) endpoint.
   Future<List<BusinessTypeTemplate>> getBusinessTypes() => storeApi.getBusinessTypes();
+
+  /// Public list from /onboarding/business-types — used in wizard before store exists.
+  Future<List<BusinessType>> getBusinessTypesPublic() => onboardingApi.getBusinessTypesPublic();
+
+  /// Full defaults bundle for a business type slug — used for preview card in wizard.
+  Future<Map<String, dynamic>> getBusinessTypeDefaults(String slug) => onboardingApi.getBusinessTypeDefaults(slug);
 
   Future<Store> applyBusinessType(String storeId, String code) => storeApi.applyBusinessType(storeId, code);
 
@@ -99,4 +107,13 @@ class StoreRepository {
     storeId ??= await _resolveStoreId();
     return onboardingApi.resetOnboarding(storeId);
   }
+
+  // ─── Help Articles ─────────────────────────────────────────────
+
+  /// Paginated list of published help articles.
+  Future<Map<String, dynamic>> getHelpArticles({String? category, String? deliveryPlatformId, int perPage = 20, int page = 1}) =>
+      onboardingApi.getHelpArticles(category: category, deliveryPlatformId: deliveryPlatformId, perPage: perPage, page: page);
+
+  /// Single article by slug (includes body content).
+  Future<KnowledgeBaseArticle> getHelpArticle(String slug) => onboardingApi.getHelpArticle(slug);
 }

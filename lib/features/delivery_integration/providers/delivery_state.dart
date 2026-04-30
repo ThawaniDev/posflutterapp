@@ -1,4 +1,6 @@
 // ─── Delivery Stats State ───────────────────────────────
+import 'package:wameedpos/features/delivery_integration/models/delivery_platform.dart';
+
 sealed class DeliveryStatsState {
   const DeliveryStatsState();
 }
@@ -12,7 +14,6 @@ class DeliveryStatsLoading extends DeliveryStatsState {
 }
 
 class DeliveryStatsLoaded extends DeliveryStatsState {
-
   const DeliveryStatsLoaded({
     required this.totalPlatforms,
     required this.activePlatforms,
@@ -129,7 +130,7 @@ class DeliveryPlatformsLoading extends DeliveryPlatformsState {
 
 class DeliveryPlatformsLoaded extends DeliveryPlatformsState {
   const DeliveryPlatformsLoaded(this.platforms);
-  final List<Map<String, dynamic>> platforms;
+  final List<DeliveryPlatform> platforms;
 }
 
 class DeliveryPlatformsError extends DeliveryPlatformsState {

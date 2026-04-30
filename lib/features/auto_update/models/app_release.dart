@@ -1,5 +1,4 @@
 class AppRelease {
-
   const AppRelease({
     required this.id,
     required this.versionNumber,
@@ -16,6 +15,10 @@ class AppRelease {
     this.rolloutPercentage = 0,
     this.isActive = true,
     this.releasedAt,
+    this.fileChecksum,
+    this.fileSizeBytes,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory AppRelease.fromJson(Map<String, dynamic> json) {
@@ -26,7 +29,8 @@ class AppRelease {
       channel: json['channel'] as String? ?? 'stable',
       downloadUrl: json['download_url'] as String?,
       storeUrl: json['store_url'] as String?,
-      buildNumber: json['build_number'] as int?,
+      // build_number is stored as VARCHAR(20) in DB — accept both int and string
+      buildNumber: json['build_number']?.toString(),
       submissionStatus: json['submission_status'] as String?,
       releaseNotes: json['release_notes'] as String?,
       releaseNotesAr: json['release_notes_ar'] as String?,
@@ -35,6 +39,10 @@ class AppRelease {
       rolloutPercentage: json['rollout_percentage'] as int? ?? 0,
       isActive: json['is_active'] as bool? ?? true,
       releasedAt: json['released_at'] != null ? DateTime.parse(json['released_at'] as String) : null,
+      fileChecksum: json['checksum'] as String? ?? json['file_checksum'] as String?,
+      fileSizeBytes: json['file_size_bytes'] as int?,
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
   }
   final String id;
@@ -43,7 +51,9 @@ class AppRelease {
   final String channel;
   final String? downloadUrl;
   final String? storeUrl;
-  final int? buildNumber;
+
+  /// Stored as VARCHAR in DB — serialised as string to avoid parse errors.
+  final String? buildNumber;
   final String? submissionStatus;
   final String? releaseNotes;
   final String? releaseNotesAr;
@@ -52,6 +62,13 @@ class AppRelease {
   final int rolloutPercentage;
   final bool isActive;
   final DateTime? releasedAt;
+
+  /// SHA-256 checksum of the binary (stored at upload time). Used by app to
+  /// verify download integrity before installation.
+  final String? fileChecksum;
+  final int? fileSizeBytes;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() {
     return {
@@ -70,6 +87,8 @@ class AppRelease {
       'rollout_percentage': rolloutPercentage,
       'is_active': isActive,
       if (releasedAt != null) 'released_at': releasedAt!.toIso8601String(),
+      if (fileChecksum != null) 'checksum': fileChecksum,
+      if (fileSizeBytes != null) 'file_size_bytes': fileSizeBytes,
     };
   }
 }

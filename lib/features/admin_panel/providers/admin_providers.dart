@@ -11,7 +11,6 @@ final adminStoreListProvider = StateNotifierProvider<AdminStoreListNotifier, Adm
 });
 
 class AdminStoreListNotifier extends StateNotifier<AdminStoreListState> {
-
   AdminStoreListNotifier(this._repository) : super(const AdminStoreListInitial());
   final AdminRepository _repository;
 
@@ -56,7 +55,6 @@ final adminStoreDetailProvider = StateNotifierProvider<AdminStoreDetailNotifier,
 });
 
 class AdminStoreDetailNotifier extends StateNotifier<AdminStoreDetailState> {
-
   AdminStoreDetailNotifier(this._repository) : super(const AdminStoreDetailInitial());
   final AdminRepository _repository;
 
@@ -90,7 +88,6 @@ final adminActionProvider = StateNotifierProvider<AdminActionNotifier, AdminActi
 });
 
 class AdminActionNotifier extends StateNotifier<AdminActionState> {
-
   AdminActionNotifier(this._repository) : super(const AdminActionInitial());
   final AdminRepository _repository;
 
@@ -175,7 +172,6 @@ final registrationListProvider = StateNotifierProvider<RegistrationListNotifier,
 });
 
 class RegistrationListNotifier extends StateNotifier<RegistrationListState> {
-
   RegistrationListNotifier(this._repository) : super(const RegistrationListInitial());
   final AdminRepository _repository;
 
@@ -212,7 +208,6 @@ final limitOverrideProvider = StateNotifierProvider<LimitOverrideNotifier, Limit
 });
 
 class LimitOverrideNotifier extends StateNotifier<LimitOverrideListState> {
-
   LimitOverrideNotifier(this._repository) : super(const LimitOverrideListInitial());
   final AdminRepository _repository;
 
@@ -268,7 +263,6 @@ final providerNotesProvider = StateNotifierProvider<ProviderNotesNotifier, Provi
 });
 
 class ProviderNotesNotifier extends StateNotifier<ProviderNotesState> {
-
   ProviderNotesNotifier(this._repository) : super(const ProviderNotesInitial());
   final AdminRepository _repository;
 
@@ -303,7 +297,6 @@ final adminRoleListProvider = StateNotifierProvider<AdminRoleListNotifier, Admin
 });
 
 class AdminRoleListNotifier extends StateNotifier<AdminRoleListState> {
-
   AdminRoleListNotifier(this._repository) : super(const AdminRoleListInitial());
   final AdminRepository _repository;
 
@@ -311,7 +304,7 @@ class AdminRoleListNotifier extends StateNotifier<AdminRoleListState> {
     state = const AdminRoleListLoading();
     try {
       final response = await _repository.listRoles();
-      final data = response['data'] as List;
+      final data = (response['data'] as Map<String, dynamic>)['roles'] as List;
       state = AdminRoleListLoaded(List<Map<String, dynamic>>.from(data));
     } catch (e) {
       state = AdminRoleListError(e.toString());
@@ -328,7 +321,6 @@ final adminRoleDetailProvider = StateNotifierProvider<AdminRoleDetailNotifier, A
 });
 
 class AdminRoleDetailNotifier extends StateNotifier<AdminRoleDetailState> {
-
   AdminRoleDetailNotifier(this._repository) : super(const AdminRoleDetailInitial());
   final AdminRepository _repository;
 
@@ -336,7 +328,7 @@ class AdminRoleDetailNotifier extends StateNotifier<AdminRoleDetailState> {
     state = const AdminRoleDetailLoading();
     try {
       final response = await _repository.showRole(roleId);
-      state = AdminRoleDetailLoaded(response['data'] as Map<String, dynamic>);
+      state = AdminRoleDetailLoaded((response['data'] as Map<String, dynamic>)['role'] as Map<String, dynamic>);
     } catch (e) {
       state = AdminRoleDetailError(e.toString());
     }
@@ -352,7 +344,6 @@ final roleActionProvider = StateNotifierProvider<RoleActionNotifier, AdminAction
 });
 
 class RoleActionNotifier extends StateNotifier<AdminActionState> {
-
   RoleActionNotifier(this._repository) : super(const AdminActionInitial());
   final AdminRepository _repository;
 
@@ -409,7 +400,6 @@ final permissionListProvider = StateNotifierProvider<PermissionListNotifier, Per
 });
 
 class PermissionListNotifier extends StateNotifier<PermissionListState> {
-
   PermissionListNotifier(this._repository) : super(const PermissionListInitial());
   final AdminRepository _repository;
 
@@ -417,7 +407,7 @@ class PermissionListNotifier extends StateNotifier<PermissionListState> {
     state = const PermissionListLoading();
     try {
       final response = await _repository.listPermissions();
-      final raw = response['data'] as Map<String, dynamic>;
+      final raw = (response['data'] as Map<String, dynamic>)['permissions'] as Map<String, dynamic>;
       final grouped = raw.map<String, List<Map<String, dynamic>>>(
         (key, value) => MapEntry(key, List<Map<String, dynamic>>.from(value as List)),
       );
@@ -437,7 +427,6 @@ final adminTeamListProvider = StateNotifierProvider<AdminTeamListNotifier, Admin
 });
 
 class AdminTeamListNotifier extends StateNotifier<AdminTeamListState> {
-
   AdminTeamListNotifier(this._repository) : super(const AdminTeamListInitial());
   final AdminRepository _repository;
 
@@ -475,7 +464,6 @@ final adminTeamUserDetailProvider = StateNotifierProvider<AdminTeamUserDetailNot
 });
 
 class AdminTeamUserDetailNotifier extends StateNotifier<AdminTeamUserDetailState> {
-
   AdminTeamUserDetailNotifier(this._repository) : super(const AdminTeamUserDetailInitial());
   final AdminRepository _repository;
 
@@ -483,7 +471,7 @@ class AdminTeamUserDetailNotifier extends StateNotifier<AdminTeamUserDetailState
     state = const AdminTeamUserDetailLoading();
     try {
       final response = await _repository.showTeamUser(userId);
-      state = AdminTeamUserDetailLoaded(response['data'] as Map<String, dynamic>);
+      state = AdminTeamUserDetailLoaded((response['data'] as Map<String, dynamic>)['user'] as Map<String, dynamic>);
     } catch (e) {
       state = AdminTeamUserDetailError(e.toString());
     }
@@ -499,7 +487,6 @@ final teamActionProvider = StateNotifierProvider<TeamActionNotifier, AdminAction
 });
 
 class TeamActionNotifier extends StateNotifier<AdminActionState> {
-
   TeamActionNotifier(this._repository) : super(const AdminActionInitial());
   final AdminRepository _repository;
 
@@ -575,7 +562,6 @@ final adminProfileProvider = StateNotifierProvider<AdminProfileNotifier, AdminPr
 });
 
 class AdminProfileNotifier extends StateNotifier<AdminProfileState> {
-
   AdminProfileNotifier(this._repository) : super(const AdminProfileInitial());
   final AdminRepository _repository;
 
@@ -583,7 +569,7 @@ class AdminProfileNotifier extends StateNotifier<AdminProfileState> {
     state = const AdminProfileLoading();
     try {
       final response = await _repository.getMyProfile();
-      state = AdminProfileLoaded(response['data'] as Map<String, dynamic>);
+      state = AdminProfileLoaded((response['data'] as Map<String, dynamic>)['profile'] as Map<String, dynamic>);
     } catch (e) {
       state = AdminProfileError(e.toString());
     }
@@ -599,7 +585,6 @@ final activityLogProvider = StateNotifierProvider<ActivityLogNotifier, ActivityL
 });
 
 class ActivityLogNotifier extends StateNotifier<ActivityLogState> {
-
   ActivityLogNotifier(this._repository) : super(const ActivityLogInitial());
   final AdminRepository _repository;
 
@@ -1837,8 +1822,9 @@ class AnalyticsExportNotifier extends StateNotifier<AnalyticsExportState> {
       state = AnalyticsExportSuccess(
         exportType: result['export_type'] as String,
         format: result['format'] as String,
-        recordCount: result['record_count'] as int,
         downloadUrl: result['download_url'] as String?,
+        filename: result['filename'] as String?,
+        expiresAt: result['expires_at'] as String?,
       );
     } catch (e) {
       state = AnalyticsExportError(e.toString());
@@ -1857,27 +1843,112 @@ class AnalyticsExportNotifier extends StateNotifier<AnalyticsExportState> {
       state = AnalyticsExportSuccess(
         exportType: result['export_type'] as String,
         format: result['format'] as String,
-        recordCount: result['record_count'] as int,
         downloadUrl: result['download_url'] as String?,
+        filename: result['filename'] as String?,
+        expiresAt: result['expires_at'] as String?,
       );
     } catch (e) {
       state = AnalyticsExportError(e.toString());
     }
   }
 
-  Future<void> exportStores({String format = 'xlsx'}) async {
+  Future<void> exportStores({String? dateFrom, String? dateTo, String format = 'xlsx'}) async {
     state = const AnalyticsExportLoading();
     try {
-      final response = await _repo.exportAnalyticsStores({'format': format});
+      final data = <String, dynamic>{'format': format};
+      if (dateFrom != null) data['date_from'] = dateFrom;
+      if (dateTo != null) data['date_to'] = dateTo;
+      final response = await _repo.exportAnalyticsStores(data);
       final result = response['data'] as Map<String, dynamic>;
       state = AnalyticsExportSuccess(
         exportType: result['export_type'] as String,
         format: result['format'] as String,
-        recordCount: result['record_count'] as int,
         downloadUrl: result['download_url'] as String?,
+        filename: result['filename'] as String?,
+        expiresAt: result['expires_at'] as String?,
       );
     } catch (e) {
       state = AnalyticsExportError(e.toString());
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// P6b: Analytics Support Providers
+// ════════════════════════════════════════════════════════
+
+final analyticsSupportProvider = StateNotifierProvider<AnalyticsSupportNotifier, AnalyticsSupportState>((ref) {
+  return AnalyticsSupportNotifier(ref.watch(adminRepositoryProvider));
+});
+
+class AnalyticsSupportNotifier extends StateNotifier<AnalyticsSupportState> {
+  AnalyticsSupportNotifier(this._repo) : super(const AnalyticsSupportInitial());
+  final AdminRepository _repo;
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    state = const AnalyticsSupportLoading();
+    try {
+      final params = <String, dynamic>{};
+      if (dateFrom != null) params['date_from'] = dateFrom;
+      if (dateTo != null) params['date_to'] = dateTo;
+
+      final response = await _repo.getAnalyticsSupport(params: params.isEmpty ? null : params);
+      final d = response['data'] as Map<String, dynamic>;
+      state = AnalyticsSupportLoaded(
+        totalTickets: (d['total_tickets'] as num).toInt(),
+        openTickets: (d['open_tickets'] as num).toInt(),
+        inProgressTickets: (d['in_progress_tickets'] as num? ?? 0).toInt(),
+        resolvedTickets: (d['resolved_tickets'] as num? ?? 0).toInt(),
+        closedTickets: (d['closed_tickets'] as num? ?? 0).toInt(),
+        slaComplianceRate: (d['sla_compliance_rate'] as num).toDouble(),
+        slaBreached: (d['sla_breached'] as num).toInt(),
+        avgFirstResponseHours: (d['avg_first_response_hours'] as num).toDouble(),
+        avgResolutionHours: (d['avg_resolution_hours'] as num).toDouble(),
+        byCategory: Map<String, dynamic>.from(d['by_category'] as Map? ?? {}),
+        byPriority: Map<String, dynamic>.from(d['by_priority'] as Map? ?? {}),
+      );
+    } catch (e) {
+      state = AnalyticsSupportError(e.toString());
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// P6c: Analytics Notifications Providers
+// ════════════════════════════════════════════════════════
+
+final analyticsNotificationsProvider = StateNotifierProvider<AnalyticsNotificationsNotifier, AnalyticsNotificationsState>((ref) {
+  return AnalyticsNotificationsNotifier(ref.watch(adminRepositoryProvider));
+});
+
+class AnalyticsNotificationsNotifier extends StateNotifier<AnalyticsNotificationsState> {
+  AnalyticsNotificationsNotifier(this._repo) : super(const AnalyticsNotificationsInitial());
+  final AdminRepository _repo;
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    state = const AnalyticsNotificationsLoading();
+    try {
+      final params = <String, dynamic>{};
+      if (dateFrom != null) params['date_from'] = dateFrom;
+      if (dateTo != null) params['date_to'] = dateTo;
+
+      final response = await _repo.getAnalyticsNotifications(params: params.isEmpty ? null : params);
+      final d = response['data'] as Map<String, dynamic>;
+      state = AnalyticsNotificationsLoaded(
+        totalSent: (d['total_sent'] as num).toInt(),
+        totalDelivered: (d['total_delivered'] as num).toInt(),
+        totalFailed: (d['total_failed'] as num).toInt(),
+        totalOpened: (d['total_opened'] as num).toInt(),
+        deliveryRate: (d['delivery_rate'] as num).toDouble(),
+        openRate: (d['open_rate'] as num).toDouble(),
+        avgLatencyMs: (d['avg_latency_ms'] as num? ?? 0).toDouble(),
+        byChannel: List<Map<String, dynamic>>.from(
+          (d['by_channel'] as List? ?? []).map((e) => Map<String, dynamic>.from(e as Map)),
+        ),
+        batchStats: Map<String, dynamic>.from(d['batch_stats'] as Map? ?? {}),
+      );
+    } catch (e) {
+      state = AnalyticsNotificationsError(e.toString());
     }
   }
 }
@@ -4974,4 +5045,65 @@ class SupportStatsNotifier extends StateNotifier<AdminStatsState> {
       state = AdminStatsError(e.toString());
     }
   }
+}
+
+// ─── Impersonation ──────────────────────────────────────────
+
+final impersonationProvider = StateNotifierProvider<ImpersonationNotifier, ImpersonationState>(
+  (ref) => ImpersonationNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class ImpersonationNotifier extends StateNotifier<ImpersonationState> {
+  ImpersonationNotifier(this._repo) : super(const ImpersonationInitial());
+  final AdminRepository _repo;
+
+  Future<void> start(String storeId) async {
+    state = const ImpersonationLoading();
+    try {
+      final response = await _repo.startImpersonation(storeId);
+      final data = response['data'] as Map<String, dynamic>;
+      state = ImpersonationActive(
+        sessionId: data['session_id'] as String,
+        token: data['token'] as String,
+        expiresAt: data['expires_at'] as String,
+        targetUser: data['target_user'] as Map<String, dynamic>,
+        storeName: data['store_name'] as String,
+        organizationName: data['organization_name'] as String,
+      );
+    } catch (e) {
+      state = ImpersonationError(e.toString());
+    }
+  }
+
+  Future<void> end() async {
+    final current = state;
+    if (current is! ImpersonationActive) return;
+    try {
+      await _repo.endImpersonation(current.token);
+      state = const ImpersonationEnded();
+    } catch (e) {
+      state = ImpersonationError(e.toString());
+    }
+  }
+
+  Future<void> extend() async {
+    final current = state;
+    if (current is! ImpersonationActive) return;
+    try {
+      final response = await _repo.extendImpersonation(current.token);
+      final data = response['data'] as Map<String, dynamic>;
+      state = ImpersonationActive(
+        sessionId: current.sessionId,
+        token: current.token,
+        expiresAt: data['expires_at'] as String,
+        targetUser: current.targetUser,
+        storeName: current.storeName,
+        organizationName: current.organizationName,
+      );
+    } catch (e) {
+      state = ImpersonationError(e.toString());
+    }
+  }
+
+  void reset() => state = const ImpersonationInitial();
 }

@@ -153,6 +153,16 @@ class TicketActionNotifier extends StateNotifier<TicketActionState> {
     }
   }
 
+  Future<void> rateTicket(String ticketId, {required int rating, String? comment}) async {
+    state = const TicketActionLoading();
+    try {
+      await _repository.rateTicket(ticketId, rating: rating, comment: comment);
+      state = const TicketActionSuccess('Thank you for your feedback!');
+    } catch (e) {
+      state = TicketActionError(e.toString());
+    }
+  }
+
   void reset() => state = const TicketActionInitial();
 }
 

@@ -680,6 +680,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get supportKbTroubleshooting => 'استكشاف الأخطاء';
 
   @override
+  String get supportKbGeneral => 'عام';
+
+  @override
+  String get supportSenderYou => 'أنت';
+
+  @override
+  String get supportSenderSupport => 'الدعم';
+
+  @override
+  String get supportRateTicket => 'قيّم هذه التذكرة';
+
+  @override
+  String get supportRateTicketHint => 'ما مدى رضاك عن الدعم المقدم؟';
+
+  @override
+  String get supportRateSubmit => 'إرسال التقييم';
+
+  @override
+  String get supportRateSuccess => 'شكراً على ملاحظاتك!';
+
+  @override
+  String get supportTicketRated => 'تم تقييم التذكرة بنجاح';
+
+  @override
+  String get supportFilterCategory => 'الفئة';
+
+  @override
+  String get supportFilterPriority => 'الأولوية';
+
+  @override
+  String get supportCriticalPriority => 'حرج';
+
+  @override
   String get branches => 'الفروع';
 
   @override
@@ -1366,6 +1399,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deliveryKeepCurrentKey => 'اتركه فارغًا للاحتفاظ بالمفتاح الحالي';
 
   @override
+  String get deliveryNoDynamicFields => 'لم يتم تكوين حقول اعتماد لهذه المنصة';
+
+  @override
   String get deliveryBranchId => 'معرّف الفرع في المنصة';
 
   @override
@@ -1951,6 +1987,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accessibilityReset => 'إعادة التعيين للافتراضي';
+
+  @override
+  String get accessibilityPreview => 'معاينة مباشرة';
 
   @override
   String get accessibilityFontSize => 'حجم الخط';
@@ -6512,6 +6551,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryUnitCostLabel => 'تكلفة الوحدة';
 
   @override
+  String get inventoryUnitCost => 'تكلفة الوحدة';
+
+  @override
   String get inventoryWastePercent => 'نسبة الهدر %';
 
   @override
@@ -6519,6 +6561,224 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inventoryYieldQuantity => 'كمية العائد';
+
+  @override
+  String get inventoryStocktakes => 'الجردات';
+
+  @override
+  String get inventoryStocktakesSubtitle => 'إجراء عمليات جرد المخزون';
+
+  @override
+  String get inventoryNewStocktake => 'جردة جديدة';
+
+  @override
+  String get inventoryStartStocktake => 'بدء الجردة';
+
+  @override
+  String get inventoryStocktakeCreated => 'تم بدء الجردة';
+
+  @override
+  String get inventoryStocktakeApplied =>
+      'تم تطبيق الجردة وترحيل تسويات المخزون';
+
+  @override
+  String get inventoryStocktakeCancelled => 'تم إلغاء الجردة';
+
+  @override
+  String get inventoryApplyStocktake => 'تطبيق الجردة';
+
+  @override
+  String get inventoryStocktakeApplyWarning =>
+      'سيؤدي تطبيق الجردة إلى ترحيل تسويات المخزون لجميع العناصر المحسوبة. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get inventoryStocktakeCancelWarning =>
+      'هل أنت متأكد من إلغاء هذه الجردة؟ سيتم فقدان جميع الأعداد.';
+
+  @override
+  String get inventoryStocktakeType => 'نوع الجردة';
+
+  @override
+  String get inventoryStocktakeTypeFull => 'كاملة';
+
+  @override
+  String get inventoryStocktakeTypePartial => 'جزئية';
+
+  @override
+  String get inventoryStocktakeTypeCategory => 'حسب الفئة';
+
+  @override
+  String get inventoryStocktakeStatusInProgress => 'جارية';
+
+  @override
+  String get inventoryStocktakeStatusReview => 'مراجعة';
+
+  @override
+  String get inventoryStocktakeStatusCompleted => 'مكتملة';
+
+  @override
+  String get inventoryStocktakeStatusCancelled => 'ملغاة';
+
+  @override
+  String get inventoryNoStocktakes => 'لا توجد جردات';
+
+  @override
+  String get inventoryNoStocktakesHint => 'ابدأ جردة جديدة لحصر المخزون';
+
+  @override
+  String get inventoryCountSheet => 'ورقة العد';
+
+  @override
+  String get inventoryExpectedQty => 'المتوقع';
+
+  @override
+  String get inventoryCountedQty => 'المعدود';
+
+  @override
+  String get inventoryVariance => 'الفارق';
+
+  @override
+  String get inventoryCostImpact => 'أثر التكلفة';
+
+  @override
+  String get inventoryViewCounts => 'عرض الأعداد';
+
+  @override
+  String get inventorySaveCounts => 'حفظ الأعداد';
+
+  @override
+  String get inventoryCountsSaved => 'تم حفظ الأعداد';
+
+  @override
+  String get inventoryNoItemsToCount => 'لا توجد عناصر للعد';
+
+  @override
+  String get inventoryItemCount => 'العناصر';
+
+  @override
+  String get inventoryStartedAt => 'بدأت في';
+
+  @override
+  String get inventoryAllStatuses => 'كل الحالات';
+
+  @override
+  String get inventoryAllCategories => 'كل الفئات';
+
+  @override
+  String get inventoryWasteRecords => 'سجلات الهدر';
+
+  @override
+  String get inventoryWasteRecordsSubtitle => 'تتبع وتحليل هدر المنتجات';
+
+  @override
+  String get inventoryRecordWaste => 'تسجيل هدر';
+
+  @override
+  String get inventoryWasteRecorded => 'تم تسجيل الهدر';
+
+  @override
+  String get inventoryWasteReason => 'سبب الهدر';
+
+  @override
+  String get inventoryAllReasons => 'كل الأسباب';
+
+  @override
+  String get inventoryWasteReasonExpired => 'منتهي الصلاحية';
+
+  @override
+  String get inventoryWasteReasonDamaged => 'تالف';
+
+  @override
+  String get inventoryWasteReasonSpillage => 'انسكاب';
+
+  @override
+  String get inventoryWasteReasonOverproduction => 'إنتاج زائد';
+
+  @override
+  String get inventoryWasteReasonQualityIssue => 'مشكلة جودة';
+
+  @override
+  String get inventoryWasteReasonOther => 'أخرى';
+
+  @override
+  String get inventoryNoWasteRecords => 'لا توجد سجلات هدر';
+
+  @override
+  String get inventoryNoWasteRecordsHint => 'سجّل هدر المنتجات لتتبع الخسائر';
+
+  @override
+  String get inventoryTotalRecords => 'إجمالي السجلات';
+
+  @override
+  String get inventoryTotalWasteCost => 'إجمالي تكلفة الهدر';
+
+  @override
+  String get inventoryExpiryDashboard => 'لوحة الصلاحيات';
+
+  @override
+  String get inventoryExpiryDashboardSubtitle =>
+      'مراقبة الدفعات المنتهية أو القريبة من الانتهاء';
+
+  @override
+  String get inventoryExpired => 'منتهي الصلاحية';
+
+  @override
+  String get inventoryExpiringSoon => 'ينتهي قريبًا';
+
+  @override
+  String get inventoryExpiring7Days => 'ينتهي خلال أقل من 7 أيام';
+
+  @override
+  String get inventoryExpiring30Days => 'ينتهي خلال أقل من 30 يومًا';
+
+  @override
+  String get inventoryExpiryDate => 'تاريخ الصلاحية';
+
+  @override
+  String get inventoryDaysUntilExpiry => 'أيام حتى الانتهاء';
+
+  @override
+  String get inventoryExpiryLookAhead => 'المدى الزمني';
+
+  @override
+  String get inventoryDays => 'أيام';
+
+  @override
+  String get inventoryNoExpiryIssues => 'جميع الدفعات آمنة';
+
+  @override
+  String inventoryAllBatchesSafe(int days) {
+    return 'لا توجد دفعات تنتهي خلال $days أيام القادمة';
+  }
+
+  @override
+  String get inventoryExpiredBatches => 'الدفعات المنتهية';
+
+  @override
+  String get inventoryExpiringIn7Days => 'ينتهي خلال أقل من 7 أيام';
+
+  @override
+  String get inventoryExpiringIn30Days => 'ينتهي خلال 7-30 يومًا';
+
+  @override
+  String get inventoryMarkAsWasted => 'تسجيل كهدر';
+
+  @override
+  String inventoryMarkAsWastedConfirm(double quantity, String product) {
+    return 'هل تريد تسجيل $quantity وحدة من $product كهدر؟';
+  }
+
+  @override
+  String get inventoryNoBatches => 'لا توجد دفعات';
+
+  @override
+  String get inventoryBatchNumber => 'رقم الدفعة';
+
+  @override
+  String get inventoryBatchNumberHint => 'مثال: BATCH-001';
+
+  @override
+  String get inventoryOptional => 'اختياري';
 
   @override
   String get notificationsCategories => 'فئات الإشعارات';
@@ -14936,6 +15196,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminLoadMetrics => 'تحميل المقاييس';
 
   @override
+  String get adminPosTerminals => 'محطات نقاط البيع';
+
+  @override
+  String get adminInternalNotes => 'الملاحظات الداخلية';
+
+  @override
   String get adminAddOverride => 'إضافة تجاوز';
 
   @override
@@ -15523,6 +15789,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get subProceedToPayment => 'المتابعة إلى الدفع';
+
+  @override
+  String get subDiscountCode => 'رمز الخصم';
+
+  @override
+  String get subEnterDiscountCode => 'أدخل رمز الخصم';
+
+  @override
+  String get subApplyDiscount => 'تطبيق';
+
+  @override
+  String get subValidatingDiscount => 'جارٍ التحقق...';
+
+  @override
+  String get subDiscountApplied => 'تم تطبيق الخصم';
+
+  @override
+  String get subDiscountInvalid => 'رمز الخصم غير صالح أو منتهي الصلاحية.';
+
+  @override
+  String get subRemoveDiscount => 'إزالة';
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'وفّرت $amount';
+  }
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value خصم';
+  }
 
   @override
   String subPageOfLast(String current, String last) {
@@ -16928,6 +17225,42 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adminNoSecurityAlertsShort => 'لا توجد تنبيهات أمنية';
+
+  @override
+  String get adminOpenAlerts => 'التنبيهات المفتوحة';
+
+  @override
+  String get adminCriticalAlerts => 'التنبيهات الحرجة';
+
+  @override
+  String get adminFailedLogins24h => 'تسجيلات الدخول الفاشلة (24 ساعة)';
+
+  @override
+  String get adminBlockedIps => 'عناوين IP المحظورة';
+
+  @override
+  String get adminAlertType => 'نوع التنبيه';
+
+  @override
+  String get adminDescription => 'الوصف';
+
+  @override
+  String get adminIpAddress => 'عنوان IP';
+
+  @override
+  String get adminResolveAlert => 'حل التنبيه';
+
+  @override
+  String get adminAlertResolved => 'تم حل التنبيه بنجاح';
+
+  @override
+  String get adminResolutionNotes => 'ملاحظات الحل';
+
+  @override
+  String get adminResolutionNotesHint => 'صف كيفية حل هذا التنبيه...';
+
+  @override
+  String get securityAlertsBySeverity => 'التنبيهات حسب الخطورة';
 
   @override
   String get adminWhatsApp => 'واتساب';
@@ -18727,4 +19060,480 @@ class AppLocalizationsAr extends AppLocalizations {
   String pageOf(String page, String total) {
     return 'صفحة $page من $total';
   }
+
+  @override
+  String get analyticsSelectDateRange => 'اختر نطاق التاريخ';
+
+  @override
+  String get analyticsActiveStores => 'المتاجر النشطة';
+
+  @override
+  String get analyticsNewSignups => 'التسجيلات الجديدة';
+
+  @override
+  String get analyticsChurnRate => 'معدل الإلغاء';
+
+  @override
+  String get analyticsTotalOrders => 'إجمالي الطلبات';
+
+  @override
+  String get analyticsTotalGmv => 'إجمالي قيمة المبيعات';
+
+  @override
+  String get analyticsZatcaCompliance => 'امتثال زاتكا';
+
+  @override
+  String get analyticsActiveSubscriptions => 'الاشتراكات النشطة';
+
+  @override
+  String get analyticsTrialSubscriptions => 'اشتراكات تجريبية';
+
+  @override
+  String get analyticsChurnInPeriod => 'الإلغاءات في الفترة';
+
+  @override
+  String get analyticsConversionRate => 'معدل التحويل';
+
+  @override
+  String get analyticsAvgSubscriptionAge => 'متوسط عمر الاشتراك';
+
+  @override
+  String get analyticsSubscriptionLifecycle => 'دورة حياة الاشتراك';
+
+  @override
+  String get analyticsSubscriptionStatus => 'حالة الاشتراك';
+
+  @override
+  String get analyticsActive => 'نشط';
+
+  @override
+  String get analyticsTrial => 'تجريبي';
+
+  @override
+  String get analyticsChurned => 'ملغى';
+
+  @override
+  String get analyticsTotalStores => 'إجمالي المتاجر';
+
+  @override
+  String get analyticsInactiveStores => 'المتاجر غير النشطة';
+
+  @override
+  String get analyticsStoreHealthSummary => 'ملخص صحة المتاجر';
+
+  @override
+  String get analyticsTopStores => 'أفضل المتاجر';
+
+  @override
+  String get analyticsInactive => 'غير نشط';
+
+  @override
+  String get analyticsStorePerformance => 'أداء المتاجر';
+
+  @override
+  String get analyticsSystemHealthy => 'جميع الأنظمة تعمل';
+
+  @override
+  String get analyticsSystemHasErrors => 'يوجد أخطاء في النظام';
+
+  @override
+  String analyticsMonitoringStores(int count) {
+    return 'مراقبة $count متجر';
+  }
+
+  @override
+  String get analyticsStoresMonitored => 'المتاجر المراقبة';
+
+  @override
+  String get analyticsStoresWithErrors => 'المتاجر ذات الأخطاء';
+
+  @override
+  String get analyticsTotalErrorsToday => 'إجمالي الأخطاء اليوم';
+
+  @override
+  String get analyticsSyncStatusBreakdown => 'توزيع حالة المزامنة';
+
+  @override
+  String get analyticsStatusDetails => 'تفاصيل الحالة';
+
+  @override
+  String get analyticsSupportDashboard => 'تحليلات الدعم';
+
+  @override
+  String get analyticsSlaCompliance => 'الامتثال لاتفاقية الخدمة';
+
+  @override
+  String get analyticsSlaBreached => 'خروقات الاتفاقية';
+
+  @override
+  String get analyticsAvgFirstResponse => 'متوسط وقت الاستجابة الأولى (ساعة)';
+
+  @override
+  String get analyticsAvgResolution => 'متوسط وقت الحل (ساعة)';
+
+  @override
+  String get analyticsByCategory => 'حسب الفئة';
+
+  @override
+  String get analyticsByPriority => 'حسب الأولوية';
+
+  @override
+  String get analyticsNotificationsDashboard => 'تحليلات الإشعارات';
+
+  @override
+  String get analyticsDeliveryRate => 'معدل التسليم';
+
+  @override
+  String get analyticsOpenRate => 'معدل الفتح';
+
+  @override
+  String get analyticsTotalSent => 'إجمالي المرسل';
+
+  @override
+  String get analyticsTotalDelivered => 'إجمالي المُسلّم';
+
+  @override
+  String get analyticsTotalFailed => 'إجمالي الفاشل';
+
+  @override
+  String get analyticsTotalOpened => 'إجمالي المفتوح';
+
+  @override
+  String get analyticsByChannel => 'حسب القناة';
+
+  @override
+  String get analyticsBatchStats => 'إحصائيات الدُفعات';
+
+  @override
+  String get analyticsAvgLatency => 'متوسط زمن الاستجابة';
+
+  @override
+  String get analyticsFeatureAdoption => 'اعتماد الميزات';
+
+  @override
+  String get analyticsFeatureAdoptionRates => 'معدلات اعتماد الميزات';
+
+  @override
+  String get analyticsFeatureDetails => 'تفاصيل الميزات';
+
+  @override
+  String get adminNoFeatureData => 'لا توجد بيانات ميزات';
+
+  @override
+  String get adminNoHealthData => 'لا توجد بيانات صحة';
+
+  @override
+  String get adminNoStoresData => 'لا توجد بيانات متاجر';
+
+  @override
+  String get adminNoActivity => 'لا يوجد نشاط حديث';
+
+  @override
+  String get adminNoDataAvailable => 'لا توجد بيانات';
+
+  @override
+  String get adminTotalBatches => 'إجمالي الدُفعات';
+
+  @override
+  String get adminTotalRecipients => 'إجمالي المستلمين';
+
+  @override
+  String get adminTotalTickets => 'إجمالي التذاكر';
+
+  @override
+  String get adminOpenTickets => 'التذاكر المفتوحة';
+
+  @override
+  String get adminInProgressTickets => 'قيد التنفيذ';
+
+  @override
+  String get adminResolvedTickets => 'محلولة';
+
+  @override
+  String get adminClosedTickets => 'مغلقة';
+
+  @override
+  String get onboardingSelectBusinessType => 'اختر نوع النشاط التجاري';
+
+  @override
+  String get onboardingBusinessTypeDefaultsTitle => 'الافتراضيات المضمنة';
+
+  @override
+  String get onboardingBusinessTypeDefaultsLoading => 'جارٍ تحميل الافتراضيات…';
+
+  @override
+  String get onboardingBusinessTypeNoDefaults => 'لا توجد افتراضيات لهذا النوع';
+
+  @override
+  String get onboardingHardwareStepTitle => 'إعداد الأجهزة';
+
+  @override
+  String get onboardingHardwareStepSubtitle => 'أخبرنا بالأجهزة المتصلة لديك';
+
+  @override
+  String get onboardingHardwarePrinterLabel => 'طابعة الإيصالات';
+
+  @override
+  String get onboardingHardwarePrinterDesc => 'تطبع الإيصالات وتذاكر الطلبات';
+
+  @override
+  String get onboardingHardwareScannerLabel => 'ماسح الباركود';
+
+  @override
+  String get onboardingHardwareScannerDesc => 'يمسح بارکود المنتجات عند الدفع';
+
+  @override
+  String get onboardingHardwareCashDrawerLabel => 'درج النقود';
+
+  @override
+  String get onboardingHardwareCashDrawerDesc =>
+      'يفتح تلقائياً عند استلام الدفع النقدي';
+
+  @override
+  String get onboardingHardwareCustomerDisplayLabel => 'شاشة العميل (CFD)';
+
+  @override
+  String get onboardingHardwareCustomerDisplayDesc =>
+      'شاشة ثانية في مواجهة العميل';
+
+  @override
+  String get onboardingHardwareInfoNote =>
+      'يمكنك إضافة الأجهزة أو تغييرها في أي وقت من صفحة إعدادات الأجهزة.';
+
+  @override
+  String get onboardingProductsStepTitle => 'إعداد المنتجات';
+
+  @override
+  String get onboardingProductsStepSubtitle => 'اختر طريقة إضافة المنتجات';
+
+  @override
+  String get onboardingProductsOptionLaterLabel => 'الإعداد لاحقاً';
+
+  @override
+  String get onboardingProductsOptionLaterSubtitle =>
+      'تخطَّ الآن — يمكنك الإضافة من صفحة المنتجات';
+
+  @override
+  String get onboardingProductsOptionTemplateLabel => 'استخدام الافتراضيات';
+
+  @override
+  String get onboardingProductsOptionTemplateSubtitle =>
+      'ابدأ بفئات وهيكل منتجات جاهز';
+
+  @override
+  String get onboardingProductsOptionCsvLabel => 'رفع قائمة المنتجات (CSV)';
+
+  @override
+  String get onboardingProductsOptionCsvSubtitle =>
+      'استيراد كتالوج منتجاتك الحالي';
+
+  @override
+  String get onboardingProductsUploadCsv => 'اختر ملف CSV';
+
+  @override
+  String get onboardingStaffStepTitle => 'دعوة موظف';
+
+  @override
+  String get onboardingStaffStepSubtitle => 'أضف أول عضو في فريقك (اختياري)';
+
+  @override
+  String get onboardingStaffNameLabel => 'الاسم الكامل';
+
+  @override
+  String get onboardingStaffEmailLabel => 'البريد الإلكتروني';
+
+  @override
+  String get onboardingStaffRoleLabel => 'الدور';
+
+  @override
+  String get onboardingStaffRoleCashier => 'كاشير';
+
+  @override
+  String get onboardingStaffRoleManager => 'مدير';
+
+  @override
+  String get onboardingStaffRoleSupervisor => 'مشرف';
+
+  @override
+  String get onboardingStaffRoleAdmin => 'مسؤول';
+
+  @override
+  String get onboardingStaffSkipNote =>
+      'يمكنك تخطي هذه الخطوة ودعوة الموظفين لاحقاً من صفحة إعدادات الفريق.';
+
+  @override
+  String get onboardingReviewHardware => 'الأجهزة';
+
+  @override
+  String get onboardingReviewNoneSelected => 'لم يتم الاختيار';
+
+  @override
+  String get onboardingReviewProducts => 'المنتجات';
+
+  @override
+  String get onboardingReviewStaff => 'عضو الفريق';
+
+  @override
+  String get onboardingReviewStaffNone => 'لا أحد (الدعوة لاحقاً)';
+
+  @override
+  String get helpArticlesTitle => 'مركز المساعدة';
+
+  @override
+  String get helpArticlesSearchHint => 'ابحث في المقالات…';
+
+  @override
+  String get helpArticlesCategoryAll => 'الكل';
+
+  @override
+  String get helpArticleNotFound => 'المقالة غير موجودة';
+
+  @override
+  String get auDashboard => 'لوحة التحديثات';
+
+  @override
+  String get auDashboardTitle => 'إدارة تحديثات التطبيق';
+
+  @override
+  String get auTotalReleases => 'إجمالي الإصدارات';
+
+  @override
+  String get auActiveReleases => 'الإصدارات النشطة';
+
+  @override
+  String get auInstallationRate => 'معدل التثبيت';
+
+  @override
+  String get auInstalledCount => 'مثبت';
+
+  @override
+  String get auFailedCount => 'فشل';
+
+  @override
+  String get auLast30Days => 'آخر 30 يوما';
+
+  @override
+  String get auLatestByPlatform => 'أحدث إصدار لكل منصة';
+
+  @override
+  String get auAdoptionFunnel => 'قمع التبني';
+
+  @override
+  String get auFunnelNote => 'تثبيتات الإصدارات النشطة في آخر 30 يوما';
+
+  @override
+  String get auRollbackCandidates => 'مرشحون للتراجع التلقائي';
+
+  @override
+  String get auFailureRate => 'معدل الفشل';
+
+  @override
+  String get auReview => 'مراجعة';
+
+  @override
+  String get auRecentFailures => 'أحدث الإخفاقات';
+
+  @override
+  String get auNoActiveRelease => 'لا يوجد إصدار نشط';
+
+  @override
+  String get auNoReleasesYet => 'لا توجد إصدارات بعد';
+
+  @override
+  String get auUnknownError => 'خطأ غير معروف';
+
+  @override
+  String get auFileIntegrity => 'سلامة الملف';
+
+  @override
+  String get auFileIntegrityHelper => 'مجموع التحقق SHA-256 وحجم الملف';
+
+  @override
+  String get auFileChecksum => 'مجموع تحقق الملف SHA-256';
+
+  @override
+  String get auFileChecksumHelper => 'ملخص سداسي عشري من 64 رمزا';
+
+  @override
+  String get auFileSizeBytes => 'حجم الملف بالبايت';
+
+  @override
+  String get auFileSizeHelper => 'عدد البايت الدقيق';
+
+  @override
+  String get auStatRecordDetails => 'تفاصيل السجل';
+
+  @override
+  String get auErrorDetails => 'تفاصيل الخطأ';
+
+  @override
+  String get auErrorMessage => 'رسالة الخطأ';
+
+  @override
+  String get auAddRelease => 'إضافة إصدار';
+
+  @override
+  String get auViewAllStats => 'عرض كل الإحصائيات';
+
+  @override
+  String get commonTimestamps => 'التوقيتات';
+
+  @override
+  String get commonCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get commonUpdatedAt => 'تاريخ التعديل';
+
+  @override
+  String get commonTime => 'الوقت';
+
+  @override
+  String get configFeatureFlags => 'إشارات الميزات';
+
+  @override
+  String get configMaintenanceMode => 'وضع الصيانة';
+
+  @override
+  String get configMaintenanceActive => 'النظام تحت الصيانة';
+
+  @override
+  String configMaintenanceExpected(String time) {
+    return 'متوقع الانتهاء: $time';
+  }
+
+  @override
+  String get configTax => 'إعداد الضريبة';
+
+  @override
+  String get configVatRate => 'نسبة ضريبة القيمة المضافة';
+
+  @override
+  String get configVatEnabled => 'ضريبة القيمة المضافة مفعلة';
+
+  @override
+  String get configSecurityPolicies => 'سياسات الأمان';
+
+  @override
+  String get configSessionTimeout => 'مهلة الجلسة';
+
+  @override
+  String configSessionTimeoutMinutes(int count) {
+    return '$count دقيقة';
+  }
+
+  @override
+  String get configPinMinLength => 'الحد الأدنى لطول رمز PIN';
+
+  @override
+  String get configMaxFailedAttempts =>
+      'الحد الأقصى لمحاولات تسجيل الدخول الفاشلة';
+
+  @override
+  String get configLockoutDuration => 'مدة القفل';
+
+  @override
+  String get configBiometricDefault => 'القياسات الحيوية مفعلة افتراضيا';
+
+  @override
+  String get configRequireReauth => 'طلب إعادة المصادقة عند الاستيقاظ';
 }

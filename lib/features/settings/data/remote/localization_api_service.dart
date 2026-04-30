@@ -8,15 +8,14 @@ final localizationApiServiceProvider = Provider<LocalizationApiService>((ref) {
 });
 
 class LocalizationApiService {
-
   LocalizationApiService(this._dio);
   final Dio _dio;
 
-  /// GET /settings/locales
+  /// GET /config/locales — provider-facing (store token)
   Future<Response> listLocales({bool? activeOnly}) async {
     final params = <String, dynamic>{};
     if (activeOnly != null) params['active_only'] = activeOnly;
-    return _dio.get(ApiEndpoints.locales, queryParameters: params);
+    return _dio.get(ApiEndpoints.configLocales, queryParameters: params);
   }
 
   /// POST /settings/locales
@@ -24,7 +23,7 @@ class LocalizationApiService {
     return _dio.post(ApiEndpoints.locales, data: data);
   }
 
-  /// GET /settings/translations
+  /// GET /config/translations/{locale} — provider-facing (store token)
   Future<Response> getTranslations({
     required String locale,
     String? category,
@@ -32,12 +31,14 @@ class LocalizationApiService {
     String? storeId,
     int? perPage,
   }) async {
-    final params = <String, dynamic>{'locale': locale};
+    // Provider apps fetch from /config/translations/{locale}
+    // Optional query params for filtering/pagination (if backend supports them)
+    final params = <String, dynamic>{};
     if (category != null) params['category'] = category;
     if (search != null) params['search'] = search;
     if (storeId != null) params['store_id'] = storeId;
     if (perPage != null) params['per_page'] = perPage;
-    return _dio.get(ApiEndpoints.translations, queryParameters: params);
+    return _dio.get(ApiEndpoints.configTranslations(locale), queryParameters: params);
   }
 
   /// POST /settings/translations
@@ -79,10 +80,10 @@ class LocalizationApiService {
     return _dio.post(ApiEndpoints.publishTranslations, data: {'notes': notes});
   }
 
-  /// GET /settings/translation-versions
+  /// GET /config/translations/version — provider-facing (store token)
   Future<Response> listVersions({int? perPage}) async {
     final params = <String, dynamic>{};
     if (perPage != null) params['per_page'] = perPage;
-    return _dio.get(ApiEndpoints.translationVersions, queryParameters: params);
+    return _dio.get(ApiEndpoints.configTranslationVersion, queryParameters: params);
   }
 }

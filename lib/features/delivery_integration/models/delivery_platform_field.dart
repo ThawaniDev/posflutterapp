@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/delivery_integration/enums/delivery_field_type.dart';
 
 class DeliveryPlatformField {
-
   const DeliveryPlatformField({
     required this.id,
     required this.deliveryPlatformId,
@@ -14,11 +13,11 @@ class DeliveryPlatformField {
 
   factory DeliveryPlatformField.fromJson(Map<String, dynamic> json) {
     return DeliveryPlatformField(
-      id: json['id'] as String,
-      deliveryPlatformId: json['delivery_platform_id'] as String,
+      id: json['id'] as String? ?? '',
+      deliveryPlatformId: json['delivery_platform_id'] as String? ?? '',
       fieldLabel: json['field_label'] as String,
       fieldKey: json['field_key'] as String,
-      fieldType: DeliveryFieldType.fromValue(json['field_type'] as String),
+      fieldType: DeliveryFieldType.tryFromValue(json['field_type'] as String?) ?? DeliveryFieldType.text,
       isRequired: json['is_required'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );

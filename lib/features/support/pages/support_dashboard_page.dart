@@ -19,6 +19,8 @@ class SupportDashboardPage extends ConsumerStatefulWidget {
 
 class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
   String? _statusFilter;
+  String? _categoryFilter;
+  String? _priorityFilter;
   final _searchController = TextEditingController();
 
   @override
@@ -40,11 +42,47 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     setState(() => _statusFilter = status);
     ref
         .read(ticketListProvider.notifier)
-        .load(status: status, search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null);
+        .load(
+          status: status,
+          category: _categoryFilter,
+          priority: _priorityFilter,
+          search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+        );
+  }
+
+  void _applyCategory(String? category) {
+    setState(() => _categoryFilter = category);
+    ref
+        .read(ticketListProvider.notifier)
+        .load(
+          status: _statusFilter,
+          category: category,
+          priority: _priorityFilter,
+          search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+        );
+  }
+
+  void _applyPriority(String? priority) {
+    setState(() => _priorityFilter = priority);
+    ref
+        .read(ticketListProvider.notifier)
+        .load(
+          status: _statusFilter,
+          category: _categoryFilter,
+          priority: priority,
+          search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+        );
   }
 
   void _onSearch(String query) {
-    ref.read(ticketListProvider.notifier).load(status: _statusFilter, search: query.trim().isNotEmpty ? query.trim() : null);
+    ref
+        .read(ticketListProvider.notifier)
+        .load(
+          status: _statusFilter,
+          category: _categoryFilter,
+          priority: _priorityFilter,
+          search: query.trim().isNotEmpty ? query.trim() : null,
+        );
   }
 
   @override
@@ -71,6 +109,8 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
                 .read(ticketListProvider.notifier)
                 .load(
                   status: _statusFilter,
+                  category: _categoryFilter,
+                  priority: _priorityFilter,
                   search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
                 );
           },
@@ -97,7 +137,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
               onClear: () => _onSearch(''),
             ),
           ),
-          // Status filter pills
+          // Status + Category + Priority filter pills
           _buildFilterPills(l10n),
           const Divider(height: 1),
           // Ticket list
@@ -227,28 +267,57 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
   }
 
   Widget _buildFilterPills(AppLocalizations l10n) {
-    final filters = <String, String>{
+    final statusFilters = <String, String>{
       'open': l10n.supportOpen,
       'in_progress': l10n.supportInProgress,
       'resolved': l10n.supportResolved,
       'closed': l10n.supportClosed,
     };
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: [
-          PosButton.pill(label: l10n.supportAll, isSelected: _statusFilter == null, onPressed: () => _applyFilter(null)),
-          AppSpacing.gapW8,
-          ...filters.entries.map(
-            (e) => Padding(
-              padding: const EdgeInsetsDirectional.only(end: 8),
-              child: PosButton.pill(label: e.value, isSelected: _statusFilter == e.key, onPressed: () => _applyFilter(e.key)),
-            ),
-          ),
-        ],
-      ),
+    final categoryFilters = <String, String>{
+      'billing': l10n.supportCategoryBilling,
+      'technical': l10n.supportCategoryTechnical,
+      'zatca': l10n.supportCategoryZatca,
+      'feature_request': l10n.supportCategoryFeatureRequest,
+      'general': l10n.supportKbGeneral,
+      'hardware': l10n.supportCategoryHardware,
+    };
+
+    final priorityFilters = <String, String>{
+      'low': l10n.supportPriorityLow,
+      'medium': l10n.supportPriorityMedium,
+      'high': l10n.supportPriorityHigh,
+      'critical': l10n.supportCriticalPriority,
+    };
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Status row
+        _FilterRow(
+          label: null,
+          options: statusFilters,
+          selected: _statusFilter,
+          allLabel: l10n.supportAll,
+          onSelect: _applyFilter,
+        ),
+        // Category row
+        _FilterRow(
+          label: l10n.supportFilterCategory,
+          options: categoryFilters,
+          selected: _categoryFilter,
+          allLabel: l10n.supportAll,
+          onSelect: _applyCategory,
+        ),
+        // Priority row
+        _FilterRow(
+          label: l10n.supportFilterPriority,
+          options: priorityFilters,
+          selected: _priorityFilter,
+          allLabel: l10n.supportAll,
+          onSelect: _applyPriority,
+        ),
+      ],
     );
   }
 
@@ -273,6 +342,8 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
                     .read(ticketListProvider.notifier)
                     .load(
                       status: _statusFilter,
+                      category: _categoryFilter,
+                      priority: _priorityFilter,
                       search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
                     ),
                 child: ListView.builder(
@@ -321,6 +392,46 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
                 onPressed: state.hasMore ? () => ref.read(ticketListProvider.notifier).nextPage() : null,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Filter Row Widget ────────────────────────────────────────────────────────
+
+class _FilterRow extends StatelessWidget {
+  const _FilterRow({required this.options, required this.selected, required this.allLabel, required this.onSelect, this.label});
+
+  final String? label;
+  final Map<String, String> options;
+  final String? selected;
+  final String allLabel;
+  final void Function(String?) onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+      child: Row(
+        children: [
+          if (label != null) ...[
+            Text('$label:', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
+            AppSpacing.gapW8,
+          ],
+          PosButton.pill(label: allLabel, isSelected: selected == null, onPressed: () => onSelect(null)),
+          AppSpacing.gapW8,
+          ...options.entries.map(
+            (e) => Padding(
+              padding: const EdgeInsetsDirectional.only(end: 6),
+              child: PosButton.pill(
+                label: e.value,
+                isSelected: selected == e.key,
+                onPressed: () => onSelect(selected == e.key ? null : e.key),
+              ),
+            ),
           ),
         ],
       ),

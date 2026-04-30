@@ -13,6 +13,7 @@ import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_sync_serv
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/services/subscription_sync_service.dart';
 import 'package:wameedpos/features/promotions/services/promotion_sync_service.dart';
+import 'package:wameedpos/features/accessibility/services/accessibility_service.dart';
 
 /// Global key so we can show dialogs (e.g. force-update) from services.
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -25,6 +26,8 @@ class WameedPosApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
+    final highContrastTheme = ref.watch(highContrastThemeProvider);
+    final fontScale = ref.watch(fontScaleProvider);
 
     // Initialize FCM + subscription sync when the user becomes authenticated
     ref.listen<AuthState>(authProvider, (previous, next) {
@@ -64,29 +67,35 @@ class WameedPosApp extends ConsumerWidget {
       });
     }
 
-    return MaterialApp.router(
-      title: 'Wameed POS',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: themeMode,
-      locale: locale,
-      routerConfig: router,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
+    return MediaQuery(
+      data: MediaQueryData(textScaler: TextScaler.linear(fontScale)),
+      child: MaterialApp.router(
+        title: 'Wameed POS',
+        debugShowCheckedModeBanner: false,
+        theme: highContrastTheme ?? AppTheme.light(),
+        darkTheme: highContrastTheme ?? AppTheme.dark(),
+        themeMode: themeMode,
+        locale: locale,
+        routerConfig: router,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 
   void _checkForUpdate(WidgetRef ref) {
-    // Delay slightly so the router/navigator context is available
+    // Delay slightly so the router/navigator context is available.
+    // rootNavigatorKey.currentContext is a GlobalKey access (not a Widget BuildContext),
+    // so use_build_context_synchronously does not apply here.
     Future.delayed(const Duration(seconds: 2), () {
       final ctx = rootNavigatorKey.currentContext;
       if (ctx != null) {
+        // ignore: use_build_context_synchronously
         ref.read(appUpdateServiceProvider).checkOnLogin(ctx);
       }
     });

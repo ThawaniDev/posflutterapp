@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/models/stocktake.dart';
 import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
 import 'package:wameedpos/features/inventory/models/supplier_return.dart';
 import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
@@ -622,4 +623,215 @@ String _extractError(DioException e) {
     }
   }
   return e.message ?? 'An unexpected error occurred.';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Stocktakes
+// ═══════════════════════════════════════════════════════════════════
+
+final stocktakesProvider = StateNotifierProvider<StocktakesNotifier, StocktakesState>((ref) {
+  return StocktakesNotifier(ref.watch(inventoryRepositoryProvider));
+});
+
+class StocktakesNotifier extends StateNotifier<StocktakesState> {
+  StocktakesNotifier(this._repository) : super(const StocktakesInitial());
+  final InventoryRepository _repository;
+
+  String? _statusFilter;
+
+  Future<void> load({int page = 1}) async {
+    state = const StocktakesLoading();
+    try {
+      final result = await _repository.listStocktakes(page: page, status: _statusFilter);
+      state = StocktakesLoaded(
+        stocktakes: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+        statusFilter: _statusFilter,
+      );
+    } on DioException catch (e) {
+      state = StocktakesError(message: _extractError(e));
+    } catch (e) {
+      state = StocktakesError(message: e.toString());
+    }
+  }
+
+  Future<void> filterByStatus(String? status) async {
+    _statusFilter = status;
+    await load();
+  }
+
+  Future<Stocktake> createStocktake(Map<String, dynamic> data) async {
+    try {
+      final created = await _repository.createStocktake(data);
+      if (state is StocktakesLoaded) {
+        final loaded = state as StocktakesLoaded;
+        state = StocktakesLoaded(
+          stocktakes: [created, ...loaded.stocktakes],
+          total: loaded.total + 1,
+          currentPage: loaded.currentPage,
+          lastPage: loaded.lastPage,
+          statusFilter: loaded.statusFilter,
+        );
+      }
+      return created;
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<Stocktake> updateCounts(String id, List<Map<String, dynamic>> items) async {
+    try {
+      final updated = await _repository.updateStocktakeCounts(id, items);
+      _updateInState(id, updated);
+      return updated;
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> applyStocktake(String id) async {
+    try {
+      final updated = await _repository.applyStocktake(id);
+      _updateInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> cancelStocktake(String id) async {
+    try {
+      final updated = await _repository.cancelStocktake(id);
+      _updateInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  void _updateInState(String id, Stocktake updated) {
+    if (state is StocktakesLoaded) {
+      final loaded = state as StocktakesLoaded;
+      state = StocktakesLoaded(
+        stocktakes: loaded.stocktakes.map((s) => s.id == id ? updated : s).toList(),
+        total: loaded.total,
+        currentPage: loaded.currentPage,
+        lastPage: loaded.lastPage,
+        statusFilter: loaded.statusFilter,
+      );
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Waste Records
+// ═══════════════════════════════════════════════════════════════════
+
+final wasteRecordsProvider = StateNotifierProvider<WasteRecordsNotifier, WasteRecordsState>((ref) {
+  return WasteRecordsNotifier(ref.watch(inventoryRepositoryProvider));
+});
+
+class WasteRecordsNotifier extends StateNotifier<WasteRecordsState> {
+  WasteRecordsNotifier(this._repository) : super(const WasteRecordsInitial());
+  final InventoryRepository _repository;
+
+  String? _productFilter;
+  String? _reasonFilter;
+  String? _dateFrom;
+  String? _dateTo;
+
+  Future<void> load({int page = 1}) async {
+    state = const WasteRecordsLoading();
+    try {
+      final result = await _repository.listWasteRecords(
+        page: page,
+        productId: _productFilter,
+        reason: _reasonFilter,
+        dateFrom: _dateFrom,
+        dateTo: _dateTo,
+      );
+      state = WasteRecordsLoaded(
+        records: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+      );
+    } on DioException catch (e) {
+      state = WasteRecordsError(message: _extractError(e));
+    } catch (e) {
+      state = WasteRecordsError(message: e.toString());
+    }
+  }
+
+  Future<void> filterByProduct(String? productId) async {
+    _productFilter = productId;
+    await load();
+  }
+
+  Future<void> filterByReason(String? reason) async {
+    _reasonFilter = reason;
+    await load();
+  }
+
+  Future<void> filterByDateRange(String? from, String? to) async {
+    _dateFrom = from;
+    _dateTo = to;
+    await load();
+  }
+
+  Future<void> nextPage() async {
+    if (state is WasteRecordsLoaded) {
+      final loaded = state as WasteRecordsLoaded;
+      if (loaded.hasMore) await load(page: loaded.currentPage + 1);
+    }
+  }
+
+  Future<void> previousPage() async {
+    if (state is WasteRecordsLoaded) {
+      final loaded = state as WasteRecordsLoaded;
+      if (loaded.currentPage > 1) await load(page: loaded.currentPage - 1);
+    }
+  }
+
+  Future<void> createWasteRecord(Map<String, dynamic> data) async {
+    try {
+      final created = await _repository.createWasteRecord(data);
+      if (state is WasteRecordsLoaded) {
+        final loaded = state as WasteRecordsLoaded;
+        state = WasteRecordsLoaded(
+          records: [created, ...loaded.records],
+          total: loaded.total + 1,
+          currentPage: loaded.currentPage,
+          lastPage: loaded.lastPage,
+        );
+      }
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Expiry Alerts
+// ═══════════════════════════════════════════════════════════════════
+
+final expiryAlertsProvider = StateNotifierProvider<ExpiryAlertsNotifier, ExpiryAlertsState>((ref) {
+  return ExpiryAlertsNotifier(ref.watch(inventoryRepositoryProvider));
+});
+
+class ExpiryAlertsNotifier extends StateNotifier<ExpiryAlertsState> {
+  ExpiryAlertsNotifier(this._repository) : super(const ExpiryAlertsInitial());
+  final InventoryRepository _repository;
+
+  Future<void> load({int daysAhead = 30}) async {
+    state = const ExpiryAlertsLoading();
+    try {
+      final result = await _repository.listExpiryAlerts(perPage: 200, daysAhead: daysAhead);
+      state = ExpiryAlertsLoaded(batches: result.items, total: result.total);
+    } on DioException catch (e) {
+      state = ExpiryAlertsError(message: _extractError(e));
+    } catch (e) {
+      state = ExpiryAlertsError(message: e.toString());
+    }
+  }
 }

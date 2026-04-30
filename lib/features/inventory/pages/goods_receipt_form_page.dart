@@ -190,6 +190,48 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(
+                              controller: item.batchNumberController,
+                              label: l10n.inventoryBatchNumber,
+                              hint: l10n.inventoryBatchNumberHint,
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                final picked = await showDatePicker(
+                                  context: context,
+                                  initialDate: item.expiryDate ?? DateTime.now().add(const Duration(days: 90)),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now().add(const Duration(days: 3650)),
+                                );
+                                if (picked != null) setState(() => item.expiryDate = picked);
+                              },
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: l10n.inventoryExpiryDate,
+                                  suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
+                                ),
+                                child: Text(
+                                  item.expiryDate != null
+                                      ? '${item.expiryDate!.day}/${item.expiryDate!.month}/${item.expiryDate!.year}'
+                                      : l10n.inventoryOptional,
+                                  style: TextStyle(
+                                    color: item.expiryDate == null
+                                        ? Theme.of(context).hintColor
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -207,15 +249,22 @@ class _LineItem {
   String? productId;
   final quantityController = TextEditingController();
   final unitCostController = TextEditingController();
+  final batchNumberController = TextEditingController();
+  DateTime? expiryDate;
 
   void dispose() {
     quantityController.dispose();
     unitCostController.dispose();
+    batchNumberController.dispose();
   }
 
   Map<String, dynamic> toJson() => {
     'product_id': productId ?? '',
     'quantity': double.tryParse(quantityController.text) ?? 0,
     'unit_cost': double.tryParse(unitCostController.text) ?? 0,
+    if (batchNumberController.text.trim().isNotEmpty)
+      'batch_number': batchNumberController.text.trim(),
+    if (expiryDate != null)
+      'expiry_date': expiryDate!.toIso8601String().substring(0, 10),
   };
 }

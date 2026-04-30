@@ -89,7 +89,7 @@ class _ShortcutReassignDialogState extends State<ShortcutReassignDialog> {
       if (entry.key != widget.actionName && entry.value.label == label) {
         setState(() {
           _capturedLabel = null;
-          _error = '${AppLocalizations.of(context)!.accessibilityShortcutConflict} "${entry.value.description}"';
+          _error = AppLocalizations.of(context)!.accessibilityShortcutConflict(entry.value.description);
         });
         return;
       }

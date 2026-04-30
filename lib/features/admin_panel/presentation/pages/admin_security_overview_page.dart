@@ -36,7 +36,6 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(securityOverviewProvider);
 
     return PosListPage(
@@ -47,23 +46,12 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
             child: switch (state) {
-              SecurityOverviewLoading() => const Center(child: CircularProgressIndicator()),
-              SecurityOverviewError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.error_outline, size: 48, color: AppColors.error),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(msg, textAlign: TextAlign.center),
-                    const SizedBox(height: AppSpacing.md),
-                    PosButton(
-                      onPressed: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
-                      label: l10n.retry,
-                    ),
-                  ],
-                ),
+              SecurityOverviewLoading() => const PosLoading(),
+              SecurityOverviewError(message: final msg) => PosErrorState(
+                message: msg,
+                onRetry: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
               ),
-              SecurityOverviewLoaded(data: final data) => _buildOverview(data),
+              SecurityOverviewLoaded(data: final data) => _buildContent(data),
               _ => const SizedBox.shrink(),
             },
           ),
@@ -72,92 +60,195 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
     );
   }
 
-  Widget _buildOverview(Map<String, dynamic> data) {
+  Widget _buildContent(Map<String, dynamic> data) {
     final overview = data['data'] as Map<String, dynamic>? ?? data;
+    final alerts = overview['alerts'] as Map<String, dynamic>? ?? {};
+    final sessions = overview['sessions'] as Map<String, dynamic>? ?? {};
+    final devices = overview['devices'] as Map<String, dynamic>? ?? {};
+    final logins = overview['login_attempts'] as Map<String, dynamic>? ?? {};
+    final ipMgmt = overview['ip_management'] as Map<String, dynamic>? ?? {};
+
+    final openAlerts = alerts['open'] ?? alerts['total'] ?? 0;
+    final criticalAlerts = alerts['critical'] ?? 0;
+    final activeSessions = sessions['active'] ?? sessions['total'] ?? 0;
+    final activeDevices = devices['active'] ?? devices['total'] ?? 0;
+    final failedLogins = logins['failed_24h'] ?? logins['failed'] ?? 0;
+    final blockedIps = ipMgmt['blocked'] ?? 0;
+
     return RefreshIndicator(
       onRefresh: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
-          _SectionCard(
-            title: l10n.securityAlerts,
-            icon: Icons.warning_amber_rounded,
-            color: AppColors.error,
-            stats: overview['security_alerts'] as Map<String, dynamic>? ?? {},
+          // ── KPI Grid ───────────────────────────────────────
+          PosKpiGrid(
+            desktopCols: 3,
+            tabletCols: 3,
+            mobileCols: 2,
+            cards: [
+              PosKpiCard(
+                label: l10n.adminOpenAlerts,
+                value: '$openAlerts',
+                icon: Icons.warning_amber_rounded,
+                iconColor: openAlerts > 0 ? AppColors.error : AppColors.success,
+              ),
+              PosKpiCard(
+                label: l10n.adminCriticalAlerts,
+                value: '$criticalAlerts',
+                icon: Icons.crisis_alert,
+                iconColor: criticalAlerts > 0 ? AppColors.error : AppColors.success,
+              ),
+              PosKpiCard(
+                label: l10n.securityActiveSessions,
+                value: '$activeSessions',
+                icon: Icons.computer,
+                iconColor: AppColors.info,
+              ),
+              PosKpiCard(
+                label: l10n.securityActiveDevices,
+                value: '$activeDevices',
+                icon: Icons.phone_android,
+                iconColor: AppColors.success,
+              ),
+              PosKpiCard(
+                label: l10n.adminFailedLogins24h,
+                value: '$failedLogins',
+                icon: Icons.lock_outline,
+                iconColor: failedLogins > 10 ? AppColors.error : AppColors.warning,
+              ),
+              PosKpiCard(label: l10n.adminBlockedIps, value: '$blockedIps', icon: Icons.block, iconColor: AppColors.purple),
+            ],
           ),
-          const SizedBox(height: AppSpacing.md),
-          _SectionCard(
-            title: l10n.companionSessions,
-            icon: Icons.devices,
-            color: AppColors.info,
-            stats: overview['sessions'] as Map<String, dynamic>? ?? {},
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _SectionCard(
-            title: l10n.securityDevices,
-            icon: Icons.phone_android,
-            color: AppColors.success,
-            stats: overview['devices'] as Map<String, dynamic>? ?? {},
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _SectionCard(
-            title: l10n.adminLoginAttempts,
-            icon: Icons.login,
-            color: AppColors.warning,
-            stats: overview['login_attempts'] as Map<String, dynamic>? ?? {},
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _SectionCard(
-            title: l10n.adminIpManagement,
-            icon: Icons.shield,
-            color: AppColors.purple,
-            stats: overview['ip_management'] as Map<String, dynamic>? ?? {},
-          ),
+
+          AppSpacing.gapH20,
+
+          // ── Alert Severity Breakdown ──────────────────────
+          if (alerts.isNotEmpty) ...[
+            _SectionHeader(title: l10n.securityAlertsBySeverity, icon: Icons.warning_amber_rounded, color: AppColors.error),
+            AppSpacing.gapH8,
+            _SeverityRow(stats: alerts),
+            AppSpacing.gapH20,
+          ],
+
+          // ── Sessions Section ──────────────────────────────
+          if (sessions.isNotEmpty) ...[
+            _SectionHeader(title: l10n.companionSessions, icon: Icons.devices, color: AppColors.info),
+            AppSpacing.gapH8,
+            _StatGrid(stats: sessions),
+            AppSpacing.gapH20,
+          ],
+
+          // ── Device Section ────────────────────────────────
+          if (devices.isNotEmpty) ...[
+            _SectionHeader(title: l10n.securityDevices, icon: Icons.phone_android, color: AppColors.success),
+            AppSpacing.gapH8,
+            _StatGrid(stats: devices),
+            AppSpacing.gapH20,
+          ],
+
+          // ── Login Attempts Section ────────────────────────
+          if (logins.isNotEmpty) ...[
+            _SectionHeader(title: l10n.adminLoginAttempts, icon: Icons.login, color: AppColors.warning),
+            AppSpacing.gapH8,
+            _StatGrid(stats: logins),
+            AppSpacing.gapH20,
+          ],
+
+          // ── IP Management Section ─────────────────────────
+          if (ipMgmt.isNotEmpty) ...[
+            _SectionHeader(title: l10n.adminIpManagement, icon: Icons.shield_outlined, color: AppColors.purple),
+            AppSpacing.gapH8,
+            _StatGrid(stats: ipMgmt),
+            AppSpacing.gapH20,
+          ],
         ],
       ),
     );
   }
 }
 
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({required this.title, required this.icon, required this.color, required this.stats});
+// ── Shared helpers ────────────────────────────────────────────────────────────
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title, required this.icon, required this.color});
   final String title;
   final IconData icon;
   final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 20),
+        const SizedBox(width: AppSpacing.sm),
+        Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+      ],
+    );
+  }
+}
+
+/// A responsive 2-column grid of numeric stats from a flat Map.
+class _StatGrid extends StatelessWidget {
+  const _StatGrid({required this.stats});
   final Map<String, dynamic> stats;
 
   @override
   Widget build(BuildContext context) {
-    return PosCard(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color),
-                const SizedBox(width: AppSpacing.sm),
-                Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            ...stats.entries.map(
-              (e) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(e.key.replaceAll('_', ' ').toUpperCase(), style: Theme.of(context).textTheme.bodySmall),
-                    Text('${e.value}', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-                  ],
-                ),
+    final entries = stats.entries.toList();
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: entries.map((e) {
+        return SizedBox(
+          width: 150,
+          child: PosCard(
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    e.key.replaceAll('_', ' '),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.mutedFor(context)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text('${e.value}', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+/// Color-coded severity chip row for alert severity breakdown.
+class _SeverityRow extends StatelessWidget {
+  const _SeverityRow({required this.stats});
+  final Map<String, dynamic> stats;
+
+  @override
+  Widget build(BuildContext context) {
+    final levels = <String, Color>{
+      'critical': AppColors.error,
+      'high': AppColors.warning,
+      'medium': AppColors.info,
+      'low': AppColors.success,
+    };
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: levels.entries.map((e) {
+        final count = stats[e.key] ?? 0;
+        return Chip(
+          label: Text('${e.key[0].toUpperCase()}${e.key.substring(1)}: $count'),
+          backgroundColor: e.value.withOpacity(0.12),
+          labelStyle: TextStyle(color: e.value, fontWeight: FontWeight.w600),
+        );
+      }).toList(),
     );
   }
 }

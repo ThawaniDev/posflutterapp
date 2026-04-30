@@ -682,6 +682,39 @@ class AppLocalizationsBn extends AppLocalizations {
   String get supportKbTroubleshooting => 'সমস্যা সমাধান';
 
   @override
+  String get supportKbGeneral => 'সাধারণ';
+
+  @override
+  String get supportSenderYou => 'আপনি';
+
+  @override
+  String get supportSenderSupport => 'সাপোর্ট';
+
+  @override
+  String get supportRateTicket => 'এই টিকেট রেট করুন';
+
+  @override
+  String get supportRateTicketHint => 'সাপোর্টে আপনি কতটা সন্তুষ্ট ছিলেন?';
+
+  @override
+  String get supportRateSubmit => 'রেটিং জমা দিন';
+
+  @override
+  String get supportRateSuccess => 'আপনার মতামতের জন্য ধন্যবাদ!';
+
+  @override
+  String get supportTicketRated => 'টিকেট সফলভাবে রেট করা হয়েছে';
+
+  @override
+  String get supportFilterCategory => 'বিভাগ';
+
+  @override
+  String get supportFilterPriority => 'অগ্রাধিকার';
+
+  @override
+  String get supportCriticalPriority => 'সংকটময়';
+
+  @override
   String get branches => 'শাখা';
 
   @override
@@ -1371,6 +1404,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get deliveryKeepCurrentKey => 'বর্তমান কী রাখতে খালি রাখুন';
 
   @override
+  String get deliveryNoDynamicFields =>
+      'এই প্ল্যাটফর্মের জন্য কোনো ক্রেডেনশিয়াল ফিল্ড কনফিগার করা হয়নি';
+
+  @override
   String get deliveryBranchId => 'প্ল্যাটফর্মে শাখার ID';
 
   @override
@@ -1957,6 +1994,9 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get accessibilityReset => 'রিসেট থেকে ডিফল্ট';
+
+  @override
+  String get accessibilityPreview => 'লাইভ প্রিভিউ';
 
   @override
   String get accessibilityFontSize => 'ফন্ট আকার';
@@ -6546,6 +6586,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get inventoryUnitCostLabel => 'একক খরচ';
 
   @override
+  String get inventoryUnitCost => 'একক খরচ';
+
+  @override
   String get inventoryWastePercent => 'অপচয় %';
 
   @override
@@ -6553,6 +6596,227 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get inventoryYieldQuantity => 'Yield পরিমাণ';
+
+  @override
+  String get inventoryStocktakes => 'স্টক গণনা';
+
+  @override
+  String get inventoryStocktakesSubtitle =>
+      'শারীরিক ইনভেন্টরি গণনা পরিচালনা করুন';
+
+  @override
+  String get inventoryNewStocktake => 'নতুন স্টক গণনা';
+
+  @override
+  String get inventoryStartStocktake => 'স্টক গণনা শুরু করুন';
+
+  @override
+  String get inventoryStocktakeCreated => 'স্টক গণনা শুরু হয়েছে';
+
+  @override
+  String get inventoryStocktakeApplied =>
+      'স্টক গণনা প্রয়োগ এবং সমন্বয় পোস্ট হয়েছে';
+
+  @override
+  String get inventoryStocktakeCancelled => 'স্টক গণনা বাতিল হয়েছে';
+
+  @override
+  String get inventoryApplyStocktake => 'স্টক গণনা প্রয়োগ করুন';
+
+  @override
+  String get inventoryStocktakeApplyWarning =>
+      'গণনা প্রয়োগ করলে সমন্বয় পোস্ট হবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।';
+
+  @override
+  String get inventoryStocktakeCancelWarning =>
+      'আপনি কি এই গণনা বাতিল করতে চান? সমস্ত গণনা হারিয়ে যাবে।';
+
+  @override
+  String get inventoryStocktakeType => 'গণনার ধরন';
+
+  @override
+  String get inventoryStocktakeTypeFull => 'সম্পূর্ণ';
+
+  @override
+  String get inventoryStocktakeTypePartial => 'আংশিক';
+
+  @override
+  String get inventoryStocktakeTypeCategory => 'বিভাগ অনুযায়ী';
+
+  @override
+  String get inventoryStocktakeStatusInProgress => 'চলমান';
+
+  @override
+  String get inventoryStocktakeStatusReview => 'পর্যালোচনা';
+
+  @override
+  String get inventoryStocktakeStatusCompleted => 'সম্পন্ন';
+
+  @override
+  String get inventoryStocktakeStatusCancelled => 'বাতিল';
+
+  @override
+  String get inventoryNoStocktakes => 'কোনো গণনা নেই';
+
+  @override
+  String get inventoryNoStocktakesHint =>
+      'ইনভেন্টরি গণনার জন্য নতুন স্টক গণনা শুরু করুন';
+
+  @override
+  String get inventoryCountSheet => 'গণনা শিট';
+
+  @override
+  String get inventoryExpectedQty => 'প্রত্যাশিত';
+
+  @override
+  String get inventoryCountedQty => 'গণিত';
+
+  @override
+  String get inventoryVariance => 'পার্থক্য';
+
+  @override
+  String get inventoryCostImpact => 'খরচের প্রভাব';
+
+  @override
+  String get inventoryViewCounts => 'গণনা দেখুন';
+
+  @override
+  String get inventorySaveCounts => 'গণনা সংরক্ষণ করুন';
+
+  @override
+  String get inventoryCountsSaved => 'গণনা সংরক্ষিত হয়েছে';
+
+  @override
+  String get inventoryNoItemsToCount => 'গণনার কোনো আইটেম নেই';
+
+  @override
+  String get inventoryItemCount => 'আইটেম';
+
+  @override
+  String get inventoryStartedAt => 'শুরু হয়েছে';
+
+  @override
+  String get inventoryAllStatuses => 'সকল অবস্থা';
+
+  @override
+  String get inventoryAllCategories => 'সকল বিভাগ';
+
+  @override
+  String get inventoryWasteRecords => 'অপচয় রেকর্ড';
+
+  @override
+  String get inventoryWasteRecordsSubtitle => 'পণ্য অপচয় ট্র্যাক করুন';
+
+  @override
+  String get inventoryRecordWaste => 'অপচয় রেকর্ড করুন';
+
+  @override
+  String get inventoryWasteRecorded => 'অপচয় রেকর্ড হয়েছে';
+
+  @override
+  String get inventoryWasteReason => 'অপচয়ের কারণ';
+
+  @override
+  String get inventoryAllReasons => 'সকল কারণ';
+
+  @override
+  String get inventoryWasteReasonExpired => 'মেয়াদোত্তীর্ণ';
+
+  @override
+  String get inventoryWasteReasonDamaged => 'ক্ষতিগ্রস্ত';
+
+  @override
+  String get inventoryWasteReasonSpillage => 'ছড়িয়ে পড়া';
+
+  @override
+  String get inventoryWasteReasonOverproduction => 'অতিরিক্ত উৎপাদন';
+
+  @override
+  String get inventoryWasteReasonQualityIssue => 'মানের সমস্যা';
+
+  @override
+  String get inventoryWasteReasonOther => 'অন্যান্য';
+
+  @override
+  String get inventoryNoWasteRecords => 'কোনো অপচয় রেকর্ড নেই';
+
+  @override
+  String get inventoryNoWasteRecordsHint =>
+      'ক্ষতি ট্র্যাক করতে পণ্য অপচয় রেকর্ড করুন';
+
+  @override
+  String get inventoryTotalRecords => 'মোট রেকর্ড';
+
+  @override
+  String get inventoryTotalWasteCost => 'মোট অপচয় খরচ';
+
+  @override
+  String get inventoryExpiryDashboard => 'মেয়াদ ড্যাশবোর্ড';
+
+  @override
+  String get inventoryExpiryDashboardSubtitle =>
+      'মেয়াদোত্তীর্ণ বা মেয়াদ শেষ হওয়া ব্যাচ পর্যবেক্ষণ করুন';
+
+  @override
+  String get inventoryExpired => 'মেয়াদোত্তীর্ণ';
+
+  @override
+  String get inventoryExpiringSoon => 'শীঘ্রই মেয়াদ শেষ';
+
+  @override
+  String get inventoryExpiring7Days => '৭ দিনের কম মেয়াদ বাকি';
+
+  @override
+  String get inventoryExpiring30Days => '৩০ দিনের কম মেয়াদ বাকি';
+
+  @override
+  String get inventoryExpiryDate => 'মেয়াদ তারিখ';
+
+  @override
+  String get inventoryDaysUntilExpiry => 'মেয়াদ শেষ হতে দিন';
+
+  @override
+  String get inventoryExpiryLookAhead => 'আগাম দেখুন';
+
+  @override
+  String get inventoryDays => 'দিন';
+
+  @override
+  String get inventoryNoExpiryIssues => 'সকল ব্যাচ নিরাপদ';
+
+  @override
+  String inventoryAllBatchesSafe(int days) {
+    return 'পরের $days দিনে কোনো ব্যাচ মেয়াদ শেষ হচ্ছে না';
+  }
+
+  @override
+  String get inventoryExpiredBatches => 'মেয়াদোত্তীর্ণ ব্যাচ';
+
+  @override
+  String get inventoryExpiringIn7Days => '৭ দিনের কম মেয়াদ বাকি';
+
+  @override
+  String get inventoryExpiringIn30Days => '৭-৩০ দিনে মেয়াদ শেষ';
+
+  @override
+  String get inventoryMarkAsWasted => 'অপচয় হিসেবে চিহ্নিত করুন';
+
+  @override
+  String inventoryMarkAsWastedConfirm(double quantity, String product) {
+    return '$product এর $quantity একক অপচয় হিসেবে চিহ্নিত করবেন?';
+  }
+
+  @override
+  String get inventoryNoBatches => 'কোনো ব্যাচ নেই';
+
+  @override
+  String get inventoryBatchNumber => 'ব্যাচ নম্বর';
+
+  @override
+  String get inventoryBatchNumberHint => 'যেমন: BATCH-001';
+
+  @override
+  String get inventoryOptional => 'ঐচ্ছিক';
 
   @override
   String get notificationsCategories => 'বিজ্ঞপ্তি বিভাগ';
@@ -15047,6 +15311,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adminLoadMetrics => 'মেট্রিক্স লোড';
 
   @override
+  String get adminPosTerminals => 'পিওএস টার্মিনাল';
+
+  @override
+  String get adminInternalNotes => 'অভ্যন্তরীণ নোট';
+
+  @override
   String get adminAddOverride => 'ওভাররাইড যোগ করুন';
 
   @override
@@ -15639,6 +15909,37 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get subProceedToPayment => 'পেমেন্টে এগিয়ে যান';
+
+  @override
+  String get subDiscountCode => 'ছাড়ের কোড';
+
+  @override
+  String get subEnterDiscountCode => 'ছাড়ের কোড লিখুন';
+
+  @override
+  String get subApplyDiscount => 'প্রয়োগ করুন';
+
+  @override
+  String get subValidatingDiscount => 'যাচাই হচ্ছে...';
+
+  @override
+  String get subDiscountApplied => 'ছাড় প্রয়োগ হয়েছে';
+
+  @override
+  String get subDiscountInvalid => 'অবৈধ বা মেয়াদোত্তীর্ণ ছাড়ের কোড।';
+
+  @override
+  String get subRemoveDiscount => 'সরান';
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'আপনি $amount সাশ্রয় করেছেন';
+  }
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value ছাড়';
+  }
 
   @override
   String subPageOfLast(String current, String last) {
@@ -17048,6 +17349,43 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get adminNoSecurityAlertsShort => 'কোনো নিরাপত্তা সতর্কতা নেই';
+
+  @override
+  String get adminOpenAlerts => 'খোলা সতর্কতা';
+
+  @override
+  String get adminCriticalAlerts => 'সমালোচনামূলক সতর্কতা';
+
+  @override
+  String get adminFailedLogins24h => 'ব্যর্থ লগইন (২৪ ঘণ্টা)';
+
+  @override
+  String get adminBlockedIps => 'ব্লক করা IP গুলো';
+
+  @override
+  String get adminAlertType => 'সতর্কতার ধরন';
+
+  @override
+  String get adminDescription => 'বিবরণ';
+
+  @override
+  String get adminIpAddress => 'IP ঠিকানা';
+
+  @override
+  String get adminResolveAlert => 'সতর্কতা সমাধান করুন';
+
+  @override
+  String get adminAlertResolved => 'সতর্কতা সফলভাবে সমাধান হয়েছে';
+
+  @override
+  String get adminResolutionNotes => 'সমাধানের নোট';
+
+  @override
+  String get adminResolutionNotesHint =>
+      'এই সতর্কতা কীভাবে সমাধান হয়েছে তা বর্ণনা করুন...';
+
+  @override
+  String get securityAlertsBySeverity => 'তীব্রতা অনুযায়ী সতর্কতা';
 
   @override
   String get adminWhatsApp => 'হোয়াটসঅ্যাপ';
@@ -18848,4 +19186,484 @@ class AppLocalizationsBn extends AppLocalizations {
   String pageOf(String page, String total) {
     return 'পৃষ্ঠা $page এর $total';
   }
+
+  @override
+  String get analyticsSelectDateRange => 'তারিখের পরিসর নির্বাচন করুন';
+
+  @override
+  String get analyticsActiveStores => 'সক্রিয় স্টোর';
+
+  @override
+  String get analyticsNewSignups => 'নতুন নিবন্ধন';
+
+  @override
+  String get analyticsChurnRate => 'চার্ন রেট';
+
+  @override
+  String get analyticsTotalOrders => 'মোট অর্ডার';
+
+  @override
+  String get analyticsTotalGmv => 'মোট GMV';
+
+  @override
+  String get analyticsZatcaCompliance => 'ZATCA সম্মতি';
+
+  @override
+  String get analyticsActiveSubscriptions => 'সক্রিয় সাবস্ক্রিপশন';
+
+  @override
+  String get analyticsTrialSubscriptions => 'ট্রায়াল সাবস্ক্রিপশন';
+
+  @override
+  String get analyticsChurnInPeriod => 'মেয়াদে চার্ন';
+
+  @override
+  String get analyticsConversionRate => 'রূপান্তর হার';
+
+  @override
+  String get analyticsAvgSubscriptionAge => 'গড় সাবস্ক্রিপশন বয়স';
+
+  @override
+  String get analyticsSubscriptionLifecycle => 'সাবস্ক্রিপশন জীবনচক্র';
+
+  @override
+  String get analyticsSubscriptionStatus => 'সাবস্ক্রিপশন স্ট্যাটাস';
+
+  @override
+  String get analyticsActive => 'সক্রিয়';
+
+  @override
+  String get analyticsTrial => 'ট্রায়াল';
+
+  @override
+  String get analyticsChurned => 'বাতিল';
+
+  @override
+  String get analyticsTotalStores => 'মোট স্টোর';
+
+  @override
+  String get analyticsInactiveStores => 'নিষ্ক্রিয় স্টোর';
+
+  @override
+  String get analyticsStoreHealthSummary => 'স্টোর স্বাস্থ্য সারসংক্ষেপ';
+
+  @override
+  String get analyticsTopStores => 'শীর্ষ স্টোর';
+
+  @override
+  String get analyticsInactive => 'নিষ্ক্রিয়';
+
+  @override
+  String get analyticsStorePerformance => 'স্টোর পারফরম্যান্স';
+
+  @override
+  String get analyticsSystemHealthy => 'সব সিস্টেম চালু';
+
+  @override
+  String get analyticsSystemHasErrors => 'সিস্টেমে ত্রুটি আছে';
+
+  @override
+  String analyticsMonitoringStores(int count) {
+    return '$countটি স্টোর পর্যবেক্ষণ করা হচ্ছে';
+  }
+
+  @override
+  String get analyticsStoresMonitored => 'পর্যবেক্ষণ করা স্টোর';
+
+  @override
+  String get analyticsStoresWithErrors => 'ত্রুটিযুক্ত স্টোর';
+
+  @override
+  String get analyticsTotalErrorsToday => 'আজকের মোট ত্রুটি';
+
+  @override
+  String get analyticsSyncStatusBreakdown => 'সিঙ্ক স্ট্যাটাস বিভাজন';
+
+  @override
+  String get analyticsStatusDetails => 'স্ট্যাটাস বিবরণ';
+
+  @override
+  String get analyticsSupportDashboard => 'সাপোর্ট বিশ্লেষণ';
+
+  @override
+  String get analyticsSlaCompliance => 'SLA সম্মতি';
+
+  @override
+  String get analyticsSlaBreached => 'SLA লঙ্ঘন';
+
+  @override
+  String get analyticsAvgFirstResponse => 'গড় প্রথম প্রতিক্রিয়া (ঘন্টা)';
+
+  @override
+  String get analyticsAvgResolution => 'গড় সমাধান (ঘন্টা)';
+
+  @override
+  String get analyticsByCategory => 'বিভাগ অনুযায়ী';
+
+  @override
+  String get analyticsByPriority => 'অগ্রাধিকার অনুযায়ী';
+
+  @override
+  String get analyticsNotificationsDashboard => 'বিজ্ঞপ্তি বিশ্লেষণ';
+
+  @override
+  String get analyticsDeliveryRate => 'ডেলিভারি হার';
+
+  @override
+  String get analyticsOpenRate => 'ওপেন রেট';
+
+  @override
+  String get analyticsTotalSent => 'মোট পাঠানো';
+
+  @override
+  String get analyticsTotalDelivered => 'মোট ডেলিভারি';
+
+  @override
+  String get analyticsTotalFailed => 'মোট ব্যর্থ';
+
+  @override
+  String get analyticsTotalOpened => 'মোট খোলা';
+
+  @override
+  String get analyticsByChannel => 'চ্যানেল অনুযায়ী';
+
+  @override
+  String get analyticsBatchStats => 'ব্যাচ পরিসংখ্যান';
+
+  @override
+  String get analyticsAvgLatency => 'গড় লেটেন্সি';
+
+  @override
+  String get analyticsFeatureAdoption => 'ফিচার গ্রহণ';
+
+  @override
+  String get analyticsFeatureAdoptionRates => 'ফিচার গ্রহণের হার';
+
+  @override
+  String get analyticsFeatureDetails => 'ফিচার বিবরণ';
+
+  @override
+  String get adminNoFeatureData => 'ফিচার ডেটা নেই';
+
+  @override
+  String get adminNoHealthData => 'স্বাস্থ্য ডেটা নেই';
+
+  @override
+  String get adminNoStoresData => 'স্টোর ডেটা নেই';
+
+  @override
+  String get adminNoActivity => 'কোনো সাম্প্রতিক কার্যকলাপ নেই';
+
+  @override
+  String get adminNoDataAvailable => 'ডেটা নেই';
+
+  @override
+  String get adminTotalBatches => 'মোট ব্যাচ';
+
+  @override
+  String get adminTotalRecipients => 'মোট প্রাপক';
+
+  @override
+  String get adminTotalTickets => 'মোট টিকেট';
+
+  @override
+  String get adminOpenTickets => 'খোলা টিকেট';
+
+  @override
+  String get adminInProgressTickets => 'চলমান';
+
+  @override
+  String get adminResolvedTickets => 'সমাধান হয়েছে';
+
+  @override
+  String get adminClosedTickets => 'বন্ধ';
+
+  @override
+  String get onboardingSelectBusinessType => 'ব্যবসার ধরন নির্বাচন করুন';
+
+  @override
+  String get onboardingBusinessTypeDefaultsTitle => 'অন্তর্ভুক্ত ডিফল্ট';
+
+  @override
+  String get onboardingBusinessTypeDefaultsLoading => 'ডিফল্ট লোড হচ্ছে…';
+
+  @override
+  String get onboardingBusinessTypeNoDefaults =>
+      'এই ধরনের জন্য কোনো ডিফল্ট নেই';
+
+  @override
+  String get onboardingHardwareStepTitle => 'হার্ডওয়্যার সেটআপ';
+
+  @override
+  String get onboardingHardwareStepSubtitle =>
+      'আপনার কাছে কোন হার্ডওয়্যার আছে তা জানান';
+
+  @override
+  String get onboardingHardwarePrinterLabel => 'রিসিট প্রিন্টার';
+
+  @override
+  String get onboardingHardwarePrinterDesc =>
+      'রিসিট ও অর্ডার টিকিট প্রিন্ট করে';
+
+  @override
+  String get onboardingHardwareScannerLabel => 'বারকোড স্ক্যানার';
+
+  @override
+  String get onboardingHardwareScannerDesc =>
+      'চেকআউটে পণ্যের বারকোড স্ক্যান করে';
+
+  @override
+  String get onboardingHardwareCashDrawerLabel => 'ক্যাশ ড্রয়ার';
+
+  @override
+  String get onboardingHardwareCashDrawerDesc =>
+      'নগদ পেমেন্টে স্বয়ংক্রিয়ভাবে খোলে';
+
+  @override
+  String get onboardingHardwareCustomerDisplayLabel => 'কাস্টমার ডিসপ্লে (CFD)';
+
+  @override
+  String get onboardingHardwareCustomerDisplayDesc =>
+      'গ্রাহকের দিকে দ্বিতীয় স্ক্রিন';
+
+  @override
+  String get onboardingHardwareInfoNote =>
+      'আপনি যেকোনো সময় হার্ডওয়্যার সেটিংস থেকে পরিবর্তন করতে পারবেন।';
+
+  @override
+  String get onboardingProductsStepTitle => 'পণ্য সেটআপ';
+
+  @override
+  String get onboardingProductsStepSubtitle => 'পণ্য যোগ করার পদ্ধতি বেছে নিন';
+
+  @override
+  String get onboardingProductsOptionLaterLabel => 'পরে সেটআপ করুন';
+
+  @override
+  String get onboardingProductsOptionLaterSubtitle =>
+      'এখন এড়িয়ে যান — পণ্য পাতা থেকে যোগ করুন';
+
+  @override
+  String get onboardingProductsOptionTemplateLabel => 'ডিফল্ট ব্যবহার করুন';
+
+  @override
+  String get onboardingProductsOptionTemplateSubtitle =>
+      'প্রি-বিল্ট ক্যাটাগরি ও কাঠামো দিয়ে শুরু করুন';
+
+  @override
+  String get onboardingProductsOptionCsvLabel => 'CSV তালিকা আপলোড করুন';
+
+  @override
+  String get onboardingProductsOptionCsvSubtitle =>
+      'আপনার বিদ্যমান পণ্য ক্যাটালগ আমদানি করুন';
+
+  @override
+  String get onboardingProductsUploadCsv => 'CSV ফাইল বেছে নিন';
+
+  @override
+  String get onboardingStaffStepTitle => 'স্টাফ আমন্ত্রণ';
+
+  @override
+  String get onboardingStaffStepSubtitle =>
+      'প্রথম দলের সদস্য যোগ করুন (ঐচ্ছিক)';
+
+  @override
+  String get onboardingStaffNameLabel => 'পুরো নাম';
+
+  @override
+  String get onboardingStaffEmailLabel => 'ইমেইল ঠিকানা';
+
+  @override
+  String get onboardingStaffRoleLabel => 'ভূমিকা';
+
+  @override
+  String get onboardingStaffRoleCashier => 'ক্যাশিয়ার';
+
+  @override
+  String get onboardingStaffRoleManager => 'ম্যানেজার';
+
+  @override
+  String get onboardingStaffRoleSupervisor => 'সুপারভাইজার';
+
+  @override
+  String get onboardingStaffRoleAdmin => 'অ্যাডমিন';
+
+  @override
+  String get onboardingStaffSkipNote =>
+      'এই ধাপ এড়িয়ে পরে টিম সেটিংস থেকে আমন্ত্রণ জানাতে পারবেন।';
+
+  @override
+  String get onboardingReviewHardware => 'হার্ডওয়্যার';
+
+  @override
+  String get onboardingReviewNoneSelected => 'কিছু নির্বাচিত হয়নি';
+
+  @override
+  String get onboardingReviewProducts => 'পণ্য';
+
+  @override
+  String get onboardingReviewStaff => 'দলের সদস্য';
+
+  @override
+  String get onboardingReviewStaffNone => 'কেউ নয় (পরে আমন্ত্রণ)';
+
+  @override
+  String get helpArticlesTitle => 'সাহায্য কেন্দ্র';
+
+  @override
+  String get helpArticlesSearchHint => 'নিবন্ধ খুঁজুন…';
+
+  @override
+  String get helpArticlesCategoryAll => 'সব';
+
+  @override
+  String get helpArticleNotFound => 'নিবন্ধ পাওয়া যায়নি';
+
+  @override
+  String get auDashboard => 'আপডেট ড্যাশবোর্ড';
+
+  @override
+  String get auDashboardTitle => 'অ্যাপ আপডেট ম্যানেজমেন্ট';
+
+  @override
+  String get auTotalReleases => 'মোট রিলিজ';
+
+  @override
+  String get auActiveReleases => 'সক্রিয় রিলিজ';
+
+  @override
+  String get auInstallationRate => 'ইনস্টলেশন হার';
+
+  @override
+  String get auInstalledCount => 'ইনস্টল হয়েছে';
+
+  @override
+  String get auFailedCount => 'ব্যর্থ';
+
+  @override
+  String get auLast30Days => 'গত ৩০ দিন';
+
+  @override
+  String get auLatestByPlatform => 'প্ল্যাটফর্ম অনুযায়ী সর্বশেষ';
+
+  @override
+  String get auAdoptionFunnel => 'অ্যাডপশন ফানেল';
+
+  @override
+  String get auFunnelNote => 'গত ৩০ দিনে রিলিজ ইনস্টলেশন';
+
+  @override
+  String get auRollbackCandidates => 'রোলব্যাক প্রার্থী';
+
+  @override
+  String get auFailureRate => 'ব্যর্থতার হার';
+
+  @override
+  String get auReview => 'পর্যালোচনা';
+
+  @override
+  String get auRecentFailures => 'সাম্প্রতিক ব্যর্থতা';
+
+  @override
+  String get auNoActiveRelease => 'কোনো সক্রিয় রিলিজ নেই';
+
+  @override
+  String get auNoReleasesYet => 'এখনো কোনো রিলিজ নেই';
+
+  @override
+  String get auUnknownError => 'অজানা ত্রুটি';
+
+  @override
+  String get auFileIntegrity => 'ফাইল অখণ্ডতা';
+
+  @override
+  String get auFileIntegrityHelper => 'SHA-256 চেকসাম এবং ফাইলের আকার';
+
+  @override
+  String get auFileChecksum => 'ফাইল চেকসাম SHA-256';
+
+  @override
+  String get auFileChecksumHelper => '৩৬ অক্ষরের হেক্স';
+
+  @override
+  String get auFileSizeBytes => 'ফাইলের আকার বাইট';
+
+  @override
+  String get auFileSizeHelper => 'সঠিক বাইট সংখ্যা';
+
+  @override
+  String get auStatRecordDetails => 'রেকর্ডের বিবরণ';
+
+  @override
+  String get auErrorDetails => 'ত্রুটির বিবরণ';
+
+  @override
+  String get auErrorMessage => 'ত্রুটির বার্তা';
+
+  @override
+  String get auAddRelease => 'রিলিজ যোগ করুন';
+
+  @override
+  String get auViewAllStats => 'সব পরিসংখ্যান দেখুন';
+
+  @override
+  String get commonTimestamps => 'টাইমস্ট্যাম্প';
+
+  @override
+  String get commonCreatedAt => 'তৈরির সময়';
+
+  @override
+  String get commonUpdatedAt => 'আপডেটের সময়';
+
+  @override
+  String get commonTime => 'সময়';
+
+  @override
+  String get configFeatureFlags => 'ফিচার ফ্ল্যাগ';
+
+  @override
+  String get configMaintenanceMode => 'রক্ষণাবেক্ষণ মোড';
+
+  @override
+  String get configMaintenanceActive => 'সিস্টেম রক্ষণাবেক্ষণে রয়েছে';
+
+  @override
+  String configMaintenanceExpected(String time) {
+    return 'শেষ হওয়ার সময়: $time';
+  }
+
+  @override
+  String get configTax => 'ট্যাক্স কনফিগারেশন';
+
+  @override
+  String get configVatRate => 'ভ্যাট হার';
+
+  @override
+  String get configVatEnabled => 'ভ্যাট সক্রিয়';
+
+  @override
+  String get configSecurityPolicies => 'নিরাপত্তা নীতি';
+
+  @override
+  String get configSessionTimeout => 'সেশন টাইমআউট';
+
+  @override
+  String configSessionTimeoutMinutes(int count) {
+    return '$count মিনিট';
+  }
+
+  @override
+  String get configPinMinLength => 'PIN এর ন্যূনতম দৈর্ঘ্য';
+
+  @override
+  String get configMaxFailedAttempts => 'সর্বোচ্চ ব্যর্থ লগইন';
+
+  @override
+  String get configLockoutDuration => 'লকআউটের সময়কাল';
+
+  @override
+  String get configBiometricDefault => 'বায়োমেট্রিক ডিফল্ট সক্রিয়';
+
+  @override
+  String get configRequireReauth => 'পুনরায় প্রমাণীকরণ প্রয়োজন';
 }

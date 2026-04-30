@@ -10,6 +10,7 @@ import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
 import 'package:wameedpos/features/onboarding/models/business_type_template.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
+import 'package:wameedpos/features/onboarding/repositories/store_repository.dart';
 
 /// Multi-step onboarding wizard.
 /// Displays one step at a time with Next/Back/Skip controls.
@@ -37,11 +38,30 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
 
   // Business Type
   String? _selectedBusinessType;
+  Map<String, dynamic>? _businessTypeDefaults;
+  bool _loadingDefaults = false;
 
   // Tax
   final _taxLabelController = TextEditingController(text: 'VAT');
   final _taxRateController = TextEditingController(text: '15');
   bool _pricesIncludeTax = true;
+
+  // Hardware
+  bool _hasPrinter = false;
+  bool _hasScanner = false;
+  bool _hasCashDrawer = false;
+  bool _hasCustomerDisplay = false;
+
+  // Products
+  static const String _productSetupNone = 'later';
+  static const String _productSetupTemplate = 'template';
+  static const String _productSetupCsv = 'csv';
+  String _productSetupChoice = _productSetupNone;
+
+  // Staff
+  final _staffEmailController = TextEditingController();
+  final _staffNameController = TextEditingController();
+  String _staffRole = 'cashier';
 
   @override
   void initState() {
@@ -62,6 +82,8 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     _emailController.dispose();
     _taxLabelController.dispose();
     _taxRateController.dispose();
+    _staffEmailController.dispose();
+    _staffNameController.dispose();
     super.dispose();
   }
 
@@ -131,6 +153,24 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
           'tax_rate': double.tryParse(_taxRateController.text) ?? 15.0,
           'prices_include_tax': _pricesIncludeTax,
         };
+      case OnboardingStep.hardware:
+        return {
+          'has_printer': _hasPrinter,
+          'has_scanner': _hasScanner,
+          'has_cash_drawer': _hasCashDrawer,
+          'has_customer_display': _hasCustomerDisplay,
+        };
+      case OnboardingStep.products:
+        return {'product_setup_choice': _productSetupChoice};
+      case OnboardingStep.staff:
+        if (_staffEmailController.text.isNotEmpty) {
+          return {
+            'staff_email': _staffEmailController.text,
+            'staff_name': _staffNameController.text,
+            'staff_role': _staffRole,
+          };
+        }
+        return {};
       default:
         return {};
     }
@@ -138,7 +178,6 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final onboardingState = ref.watch(onboardingProvider);
     final businessTypesState = ref.watch(businessTypesProvider);
 
@@ -232,26 +271,11 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       case OnboardingStep.tax:
         return _buildTaxStep();
       case OnboardingStep.hardware:
-        return _buildPlaceholderStep(
-          Icons.print_rounded,
-          'Hardware Setup',
-          'Connect your receipt printer, barcode scanner, and cash drawer. '
-              'You can configure this later from Settings.',
-        );
+        return _buildHardwareStep();
       case OnboardingStep.products:
-        return _buildPlaceholderStep(
-          Icons.inventory_2_rounded,
-          'Add Products',
-          'You can import products from a template, upload a CSV file, '
-              'or add them manually later.',
-        );
+        return _buildProductsStep();
       case OnboardingStep.staff:
-        return _buildPlaceholderStep(
-          Icons.people_rounded,
-          'Invite Staff',
-          'Add team members and assign roles. You can do this later '
-              'from Staff Management.',
-        );
+        return _buildStaffStep();
       case OnboardingStep.review:
         return _buildReviewStep();
     }
@@ -400,7 +424,74 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         ),
         const SizedBox(height: AppSpacing.lg),
         ...templates.map((t) => _buildBusinessTypeCard(t)),
+        // ── Defaults Preview ────────────────────────────────────────
+        if (_selectedBusinessType != null) ...[
+          const SizedBox(height: AppSpacing.lg),
+          if (_loadingDefaults)
+            const Center(child: Padding(padding: EdgeInsets.all(AppSpacing.xl), child: CircularProgressIndicator()))
+          else if (_businessTypeDefaults != null)
+            _buildDefaultsPreview(_businessTypeDefaults!),
+        ],
       ],
+    );
+  }
+
+  Widget _buildDefaultsPreview(Map<String, dynamic> defaults) {
+    final categories = (defaults['category_templates'] as List?)?.length ?? 0;
+    final shifts = (defaults['shift_templates'] as List?)?.length ?? 0;
+    final promotions = (defaults['promotion_templates'] as List?)?.length ?? 0;
+    final badges = ((defaults['gamification_templates'] as Map?)?['badges'] as List?)?.length ?? 0;
+    final loyaltyConfig = defaults['loyalty_config'];
+    final returnPolicy = defaults['return_policy'];
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.base),
+      decoration: BoxDecoration(
+        color: AppColors.primary10,
+        borderRadius: BorderRadius.circular(AppSpacing.md),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.auto_awesome, color: AppColors.primary, size: 18),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                'What gets set up for you:',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.xs,
+            children: [
+              if (categories > 0) _defaultsChip('$categories Categories'),
+              if (shifts > 0) _defaultsChip('$shifts Shifts'),
+              if (promotions > 0) _defaultsChip('$promotions Promotions'),
+              if (badges > 0) _defaultsChip('$badges Badges'),
+              if (loyaltyConfig != null) _defaultsChip('Loyalty Config'),
+              if (returnPolicy != null) _defaultsChip('Return Policy'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _defaultsChip(String label) {
+    return Chip(
+      label: Text(label, style: const TextStyle(fontSize: 12, color: AppColors.primary)),
+      backgroundColor: Colors.white,
+      side: BorderSide(color: AppColors.primary.withValues(alpha: 0.4)),
+      visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.zero,
     );
   }
 
@@ -408,7 +499,19 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     final isSelected = _selectedBusinessType == template.code;
 
     return GestureDetector(
-      onTap: () => setState(() => _selectedBusinessType = template.code),
+      onTap: () {
+        setState(() {
+          _selectedBusinessType = template.code;
+          _businessTypeDefaults = null;
+          _loadingDefaults = true;
+        });
+        // Fetch defaults for preview
+        ref.read(storeRepositoryProvider).getBusinessTypeDefaults(template.code).then((defaults) {
+          if (mounted) setState(() { _businessTypeDefaults = defaults; _loadingDefaults = false; });
+        }).catchError((_) {
+          if (mounted) setState(() => _loadingDefaults = false);
+        });
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: AppSpacing.md),
         padding: const EdgeInsets.all(AppSpacing.base),
@@ -505,24 +608,283 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
     );
   }
 
-  // ─── Step: Placeholder (Hardware, Products, Staff) ─────────────
+  // ─── Step: Hardware ────────────────────────────────────────────
 
-  Widget _buildPlaceholderStep(IconData icon, String title, String message) {
+  Widget _buildHardwareStep() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: AppSpacing.xxl),
-        Container(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          decoration: BoxDecoration(color: AppColors.primary10, shape: BoxShape.circle),
-          child: Icon(icon, size: 56, color: AppColors.primary),
+        Text(
+          'Tell us which hardware you plan to connect. '
+          'You can change this anytime in Settings → Hardware.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
         ),
         const SizedBox(height: AppSpacing.xl),
-        Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(height: AppSpacing.md),
+        _buildHardwareToggle(
+          icon: Icons.print_rounded,
+          title: 'Receipt Printer',
+          subtitle: 'Thermal or laser printer for receipts',
+          value: _hasPrinter,
+          onChanged: (v) => setState(() => _hasPrinter = v),
+        ),
+        _buildHardwareToggle(
+          icon: Icons.qr_code_scanner_rounded,
+          title: 'Barcode / QR Scanner',
+          subtitle: 'USB or Bluetooth scanner',
+          value: _hasScanner,
+          onChanged: (v) => setState(() => _hasScanner = v),
+        ),
+        _buildHardwareToggle(
+          icon: Icons.point_of_sale_rounded,
+          title: 'Cash Drawer',
+          subtitle: 'Connected via printer or USB',
+          value: _hasCashDrawer,
+          onChanged: (v) => setState(() => _hasCashDrawer = v),
+        ),
+        _buildHardwareToggle(
+          icon: Icons.tv_rounded,
+          title: 'Customer Display (CFD)',
+          subtitle: 'Second screen showing items to customer',
+          value: _hasCustomerDisplay,
+          onChanged: (v) => setState(() => _hasCustomerDisplay = v),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        Container(
+          padding: const EdgeInsets.all(AppSpacing.base),
+          decoration: BoxDecoration(
+            color: AppColors.info.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.info_outline, color: AppColors.info, size: 18),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  'Saying "no" now won\'t prevent you from connecting hardware later.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.infoDark),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHardwareToggle({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      decoration: BoxDecoration(
+        color: value ? AppColors.primary10 : Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(AppSpacing.md),
+        border: Border.all(color: value ? AppColors.primary : Theme.of(context).dividerColor, width: value ? 2 : 1),
+      ),
+      child: SwitchListTile(
+        secondary: Container(
+          padding: const EdgeInsets.all(AppSpacing.sm),
+          decoration: BoxDecoration(color: value ? AppColors.primary20 : AppColors.primary10, shape: BoxShape.circle),
+          child: Icon(icon, color: AppColors.primary, size: 22),
+        ),
+        title: Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+        subtitle: Text(subtitle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
+        value: value,
+        activeThumbColor: AppColors.primary,
+        onChanged: onChanged,
+        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.base, vertical: AppSpacing.xs),
+      ),
+    );
+  }
+
+  // ─── Step: Products ────────────────────────────────────────────
+
+  Widget _buildProductsStep() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         Text(
-          message,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedFor(context)),
-          textAlign: TextAlign.center,
+          'How would you like to start your product catalog?',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        _buildProductOption(
+          value: _productSetupNone,
+          icon: Icons.schedule_rounded,
+          title: 'Set Up Later',
+          subtitle: 'Skip for now — you can add products from the catalog anytime',
+        ),
+        _buildProductOption(
+          value: _productSetupTemplate,
+          icon: Icons.auto_awesome_rounded,
+          title: 'Use Business Type Defaults',
+          subtitle: _selectedBusinessType != null
+              ? 'Import the pre-built catalog for your business type'
+              : 'Select a business type first to unlock this option',
+          enabled: _selectedBusinessType != null,
+        ),
+        _buildProductOption(
+          value: _productSetupCsv,
+          icon: Icons.upload_file_rounded,
+          title: 'Upload CSV File',
+          subtitle: 'Import products from your own spreadsheet',
+        ),
+        if (_productSetupChoice == _productSetupCsv) ...[
+          const SizedBox(height: AppSpacing.lg),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.file_upload_outlined),
+            label: const Text('Choose CSV File'),
+            style: OutlinedButton.styleFrom(foregroundColor: AppColors.primary),
+            onPressed: () {
+              // CSV import is handled in the catalog module — navigate there post-wizard
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('CSV import is available in Catalog after setup.'),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildProductOption({
+    required String value,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    bool enabled = true,
+  }) {
+    final isSelected = _productSetupChoice == value;
+    final color = enabled ? AppColors.primary : AppColors.mutedFor(context);
+
+    return GestureDetector(
+      onTap: enabled ? () => setState(() => _productSetupChoice = value) : null,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.base),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary10 : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(AppSpacing.md),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : Theme.of(context).dividerColor,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              decoration: BoxDecoration(
+                color: enabled ? (isSelected ? AppColors.primary20 : AppColors.primary10) : AppColors.mutedFor(context).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(AppSpacing.sm),
+              ),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: enabled ? null : AppColors.mutedFor(context),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                  ),
+                ],
+              ),
+            ),
+            if (isSelected) Icon(Icons.check_circle, color: color),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── Step: Staff ───────────────────────────────────────────────
+
+  Widget _buildStaffStep() {
+    const roles = ['cashier', 'supervisor', 'manager', 'inventory_officer'];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Invite your first team member or skip to set up staff later.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        _buildFieldLabel('Staff Name'),
+        const SizedBox(height: AppSpacing.sm),
+        PosTextField(controller: _staffNameController, decoration: _inputDecoration('e.g., Ahmed Al-Rashidi')),
+        const SizedBox(height: AppSpacing.lg),
+        _buildFieldLabel('Email Address'),
+        const SizedBox(height: AppSpacing.sm),
+        PosTextField(
+          controller: _staffEmailController,
+          decoration: _inputDecoration('staff@yourstore.com'),
+          keyboardType: TextInputType.emailAddress,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _buildFieldLabel('Role'),
+        const SizedBox(height: AppSpacing.sm),
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+            border: Border.all(color: Theme.of(context).dividerColor),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: _staffRole,
+              isExpanded: true,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              onChanged: (v) => setState(() => _staffRole = v ?? 'cashier'),
+              items: roles
+                  .map((r) => DropdownMenuItem(
+                        value: r,
+                        child: Text(r.replaceAll('_', ' ').split(' ').map((w) => w.isEmpty ? '' : w[0].toUpperCase() + w.substring(1)).join(' ')),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        Container(
+          padding: const EdgeInsets.all(AppSpacing.base),
+          decoration: BoxDecoration(
+            color: AppColors.info.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.info_outline, color: AppColors.info, size: 18),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  'Leave the fields blank to skip. '
+                  'You can add and manage staff from Staff Management after setup.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.infoDark),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -556,6 +918,36 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         _buildSummaryItem('Store Name', _nameController.text.isNotEmpty ? _nameController.text : 'Not set'),
         _buildSummaryItem('Business Type', _selectedBusinessType ?? 'Not set'),
         _buildSummaryItem('Tax Rate', '${_taxRateController.text}%'),
+        _buildSummaryItem(
+          'Hardware',
+          [
+            if (_hasPrinter) 'Printer',
+            if (_hasScanner) 'Scanner',
+            if (_hasCashDrawer) 'Cash Drawer',
+            if (_hasCustomerDisplay) 'CFD',
+          ].isEmpty
+              ? 'None selected'
+              : [
+                  if (_hasPrinter) 'Printer',
+                  if (_hasScanner) 'Scanner',
+                  if (_hasCashDrawer) 'Cash Drawer',
+                  if (_hasCustomerDisplay) 'CFD',
+                ].join(', '),
+        ),
+        _buildSummaryItem(
+          'Products',
+          switch (_productSetupChoice) {
+            _productSetupTemplate => 'Use business type defaults',
+            _productSetupCsv     => 'CSV import (later)',
+            _                    => 'Set up later',
+          },
+        ),
+        _buildSummaryItem(
+          'Staff',
+          _staffEmailController.text.isNotEmpty
+              ? '${_staffNameController.text.isNotEmpty ? _staffNameController.text : _staffEmailController.text} — $_staffRole'
+              : 'Set up later',
+        ),
       ],
     );
   }

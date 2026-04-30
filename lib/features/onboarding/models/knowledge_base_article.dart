@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/pos_customization/enums/knowledge_base_category.dart';
 
 class KnowledgeBaseArticle {
-
   const KnowledgeBaseArticle({
     required this.id,
     required this.title,
@@ -23,9 +22,9 @@ class KnowledgeBaseArticle {
       title: json['title'] as String,
       titleAr: json['title_ar'] as String,
       slug: json['slug'] as String,
-      body: json['body'] as String,
-      bodyAr: json['body_ar'] as String,
-      category: KnowledgeBaseCategory.fromValue(json['category'] as String),
+      body: (json['body'] as String?) ?? '',
+      bodyAr: (json['body_ar'] as String?) ?? '',
+      category: KnowledgeBaseCategory.tryFromValue(json['category'] as String?) ?? KnowledgeBaseCategory.general,
       deliveryPlatformId: json['delivery_platform_id'] as String?,
       isPublished: json['is_published'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),

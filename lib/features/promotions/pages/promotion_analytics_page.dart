@@ -190,9 +190,9 @@ class _DailyUsageChart extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.bar_chart_rounded, size: 40, color: AppColors.neutral300),
+                          Icon(Icons.bar_chart_rounded, size: 40, color: Colors.grey.shade300),
                           AppSpacing.gapH8,
-                          Text(l10n.noUsageData, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400)),
+                          Text(l10n.noUsageData, style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade400)),
                         ],
                       ),
                     ),
@@ -242,7 +242,7 @@ class _DailyUsageChart extends StatelessWidget {
         gridData: FlGridData(
           show: true,
           drawVerticalLine: false,
-          getDrawingHorizontalLine: (_) => FlLine(color: AppColors.neutral200, strokeWidth: 1),
+          getDrawingHorizontalLine: (_) => FlLine(color: Colors.grey.shade200, strokeWidth: 1),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -251,7 +251,7 @@ class _DailyUsageChart extends StatelessWidget {
               showTitles: true,
               reservedSize: 28,
               getTitlesWidget: (v, meta) =>
-                  Text(v.toInt().toString(), style: TextStyle(fontSize: 10, color: AppColors.neutral400)),
+                  Text(v.toInt().toString(), style: TextStyle(fontSize: 10, color: Colors.grey.shade400)),
             ),
           ),
           bottomTitles: AxisTitles(
@@ -261,7 +261,7 @@ class _DailyUsageChart extends StatelessWidget {
               getTitlesWidget: (v, meta) {
                 final idx = v.toInt();
                 final label = dates[idx] ?? '';
-                return Text(label, style: TextStyle(fontSize: 9, color: AppColors.neutral400));
+                return Text(label, style: TextStyle(fontSize: 9, color: Colors.grey.shade400));
               },
             ),
           ),
@@ -336,26 +336,26 @@ class _UsageLogTable extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: AppColors.neutral100,
+              color: Colors.grey.shade100,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               children: [
                 Expanded(
                   flex: 2,
-                  child: Text(l10n.orderId, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                  child: Text(l10n.orderId, style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade500)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(l10n.customer, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                  child: Text(l10n.customer, style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade500)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(l10n.discountAmount, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                  child: Text(l10n.discountAmount, style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade500)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(l10n.date, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.neutral500)),
+                  child: Text(l10n.date, style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade500)),
                 ),
               ],
             ),
@@ -400,7 +400,7 @@ class _UsageLogTable extends StatelessWidget {
                         flex: 2,
                         child: Text(
                           log.createdAt != null ? _formatDate(log.createdAt!) : '-',
-                          style: theme.textTheme.bodySmall?.copyWith(color: AppColors.neutral400),
+                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade400),
                         ),
                       ),
                     ],
@@ -443,13 +443,13 @@ class _InfoRow extends StatelessWidget {
             ],
           ),
           if (showProgress && progressValue != null) ...[
-            AppSpacing.gapH6,
+            const SizedBox(height: 6),
             ClipRRect(
               borderRadius: AppRadius.borderSm,
               child: LinearProgressIndicator(
                 value: progressValue,
                 minHeight: 6,
-                backgroundColor: AppColors.neutral200,
+                backgroundColor: Colors.grey.shade200,
                 valueColor: AlwaysStoppedAnimation<Color>(
                   progressValue! >= 0.9
                       ? AppColors.error
@@ -466,136 +466,3 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class PromotionAnalyticsPage extends ConsumerStatefulWidget {
-  const PromotionAnalyticsPage({super.key, required this.promotionId});
-  final String promotionId;
-
-  @override
-  ConsumerState<PromotionAnalyticsPage> createState() => _PromotionAnalyticsPageState();
-}
-
-class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(promotionAnalyticsProvider(widget.promotionId));
-    final isLoading = state is PromotionAnalyticsInitial || state is PromotionAnalyticsLoading;
-    final hasError = state is PromotionAnalyticsError;
-
-    return PosListPage(
-      title: l10n.promotionsAnalytics,
-      showSearch: false,
-      isLoading: isLoading,
-      hasError: hasError,
-      errorMessage: hasError ? state.message : null,
-      onRetry: () => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load(),
-      child: state is PromotionAnalyticsLoaded ? _buildAnalytics(context, state.analytics) : const SizedBox.shrink(),
-    );
-  }
-
-  Widget _buildAnalytics(BuildContext context, Map<String, dynamic> data) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        // Summary cards
-        PosKpiGrid(
-          desktopCols: 3,
-          mobileCols: 2,
-          cards: [
-            PosKpiCard(
-              label: l10n.promotionsTotalUses,
-              value: '${data['usage_count'] ?? 0}',
-              icon: Icons.receipt_long,
-              iconColor: theme.colorScheme.primary,
-            ),
-            PosKpiCard(
-              label: l10n.promotionsTotalDiscount,
-              value: (data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00',
-              icon: Icons.discount,
-              iconColor: theme.colorScheme.tertiary,
-            ),
-            PosKpiCard(
-              label: l10n.promotionsUniqueCustomers,
-              value: '${data['unique_customers'] ?? 0}',
-              icon: Icons.people,
-              iconColor: theme.colorScheme.secondary,
-            ),
-            PosKpiCard(
-              label: l10n.promotionsActiveCoupons,
-              value: '${data['active_coupons'] ?? 0}',
-              icon: Icons.confirmation_number,
-              iconColor: AppColors.success,
-            ),
-            PosKpiCard(
-              label: l10n.promotionsTotalCoupons,
-              value: '${data['total_coupons'] ?? 0}',
-              icon: Icons.inventory_2,
-              iconColor: AppColors.warning,
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        Text(l10n.promotionsPerformance, style: theme.textTheme.titleMedium),
-        const SizedBox(height: 8),
-        PosCard(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _InfoRow(label: l10n.promotionsAvgDiscountPerUse, value: _avgDiscount(data)),
-                const Divider(),
-                _InfoRow(label: l10n.promotionsCouponRedemptionRate, value: _redemptionRate(data)),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  String _avgDiscount(Map<String, dynamic> data) {
-    final total = (data['total_discount_given'] != null ? double.tryParse(data['total_discount_given'].toString()) : null) ?? 0;
-    final count = (data['usage_count'] as num?)?.toInt() ?? 0;
-    if (count == 0) return '0.00';
-    return (total / count).toStringAsFixed(2);
-  }
-
-  String _redemptionRate(Map<String, dynamic> data) {
-    final totalCoupons = (data['total_coupons'] as num?)?.toInt() ?? 0;
-    final activeCoupons = (data['active_coupons'] as num?)?.toInt() ?? 0;
-    if (totalCoupons == 0) return 'N/A';
-    final used = totalCoupons - activeCoupons;
-    return '${(used / totalCoupons * 100).toStringAsFixed(1)}%';
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: theme.textTheme.bodyMedium),
-          Text(value, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-        ],
-      ),
-    );
-  }
-}

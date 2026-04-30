@@ -143,7 +143,6 @@ class _ShortcutGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return PosCard(
       margin: const EdgeInsets.only(bottom: 16),

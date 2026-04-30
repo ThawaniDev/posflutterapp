@@ -8,7 +8,6 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminStoreDetailPage extends ConsumerStatefulWidget {
-
   const AdminStoreDetailPage({super.key, required this.storeId});
   final String storeId;
 
@@ -26,6 +25,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     Future.microtask(() {
       ref.read(adminStoreDetailProvider.notifier).load(widget.storeId);
       ref.read(limitOverrideProvider.notifier).load(widget.storeId);
+      ref.read(adminStoreDetailProvider.notifier).loadMetrics(widget.storeId);
     });
   }
 
@@ -42,6 +42,17 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
         showPosSuccessSnackbar(context, next.message);
         ref.read(adminStoreDetailProvider.notifier).load(widget.storeId);
       } else if (next is AdminActionError) {
+        showPosErrorSnackbar(context, next.message);
+      }
+    });
+
+    // Listen for impersonation events
+    ref.listen<ImpersonationState>(impersonationProvider, (prev, next) {
+      if (next is ImpersonationActive) {
+        _showImpersonationActiveDialog(next);
+      } else if (next is ImpersonationEnded) {
+        showPosSuccessSnackbar(context, 'Impersonation session ended');
+      } else if (next is ImpersonationError) {
         showPosErrorSnackbar(context, next.message);
       }
     });
@@ -65,6 +76,8 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
               PosTabItem(label: l10n.overview),
               PosTabItem(label: l10n.adminMetrics),
               PosTabItem(label: l10n.settingsPosLimits),
+              PosTabItem(label: l10n.adminPosTerminals),
+              PosTabItem(label: l10n.adminInternalNotes),
             ],
           ),
           Expanded(child: _buildContent(storeState, theme)),
@@ -77,7 +90,13 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     if (storeState is AdminStoreDetailLoaded) {
       return IndexedStack(
         index: _currentTab,
-        children: [_buildOverviewTab(storeState.store, theme), _buildMetricsTab(theme), _buildLimitsTab(theme)],
+        children: [
+          _buildOverviewTab(storeState.store, theme),
+          _buildMetricsTab(theme),
+          _buildLimitsTab(theme),
+          _buildTerminalsTab(storeState.store, theme),
+          _buildNotesTab(storeState.store, theme),
+        ],
       );
     }
     return const SizedBox.shrink();
@@ -142,6 +161,14 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                         ),
                       ),
                       const Spacer(),
+                      PosButton(
+                        label: 'Impersonate',
+                        variant: PosButtonVariant.outline,
+                        size: PosButtonSize.sm,
+                        icon: Icons.manage_accounts_outlined,
+                        onPressed: () => ref.read(impersonationProvider.notifier).start(widget.storeId),
+                      ),
+                      AppSpacing.gapW8,
                       if (isActive)
                         PosButton(
                           label: l10n.suspend,
@@ -203,17 +230,24 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
           if (org != null)
             _buildInfoSection(theme, 'Organization', [
               _infoRow('Name', org['name']?.toString() ?? '—'),
-              _infoRow('Business Type', org['business_type']?.toString() ?? '—'),
-              _infoRow('Country', org['country']?.toString() ?? '—'),
+              _infoRow('CR Number', org['cr_number']?.toString() ?? '—'),
+              _infoRow('VAT Number', org['vat_number']?.toString() ?? '—'),
             ]),
           AppSpacing.gapH16,
 
           // ─── Subscription Info ─────────────────────────
           if (subscription != null)
             _buildInfoSection(theme, 'Active Subscription', [
-              _infoRow('Plan', (subscription['plan'] as Map?)?['name']?.toString() ?? '—'),
+              _infoRow(
+                'Plan',
+                subscription['plan_name']?.toString() ?? (subscription['plan'] as Map?)?['name']?.toString() ?? '—',
+              ),
               _infoRow('Status', subscription['status']?.toString() ?? '—'),
-              _infoRow('Expires', subscription['ends_at']?.toString() ?? '—'),
+              _infoRow('Billing Cycle', subscription['billing_cycle']?.toString() ?? '—'),
+              _infoRow(
+                'Period End',
+                subscription['current_period_end']?.toString() ?? subscription['ends_at']?.toString() ?? '—',
+              ),
             ]),
         ],
       ),
@@ -264,12 +298,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
   Widget _buildMetricsTab(ThemeData theme) {
     return Consumer(
       builder: (context, ref, _) {
-        // Trigger loading metrics on first access
         final storeState = ref.watch(adminStoreDetailProvider);
         if (storeState is AdminStoreDetailLoaded) {
           final data = storeState.store;
-          // Check if metrics data is present (from storeMetrics endpoint)
-          if (data.containsKey('products_count')) {
+          if (data.containsKey('usage')) {
             return _buildMetricsContent(data, theme);
           }
         }
@@ -292,51 +324,152 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
   }
 
   Widget _buildMetricsContent(Map<String, dynamic> data, ThemeData theme) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final cardWidth = (constraints.maxWidth - AppSpacing.md * 2 - AppSpacing.md) / 2;
-        return SingleChildScrollView(
-          padding: AppSpacing.paddingAll16,
-          child: Wrap(
-            spacing: AppSpacing.md,
-            runSpacing: AppSpacing.md,
-            children: [
-              _metricCard(
-                theme,
-                label: l10n.products,
-                value: '${data['products_count'] ?? 0}',
-                icon: Icons.inventory_2_outlined,
-                color: AppColors.info,
-                width: cardWidth,
-              ),
-              _metricCard(
-                theme,
-                label: l10n.orders,
-                value: '${data['orders_count'] ?? 0}',
-                icon: Icons.receipt_outlined,
-                color: AppColors.success,
-                width: cardWidth,
-              ),
-              _metricCard(
-                theme,
-                label: l10n.staff,
-                value: '${data['staff_count'] ?? 0}',
-                icon: Icons.people_outlined,
-                color: AppColors.purple,
-                width: cardWidth,
-              ),
-              _metricCard(
-                theme,
-                label: l10n.reportsRevenue,
-                value: '${data['revenue'] ?? 0}',
-                icon: Icons.attach_money,
-                color: AppColors.primary,
-                width: cardWidth,
-              ),
-            ],
+    final usage = data['usage'] as Map<String, dynamic>? ?? {};
+    final branches = (data['branches'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    final deliveryPlatforms = (data['delivery_platforms'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+
+    return SingleChildScrollView(
+      padding: AppSpacing.paddingAll16,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ─── Usage Stats ──────────────────────────────
+          Text('Usage Statistics', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+          AppSpacing.gapH12,
+          LayoutBuilder(
+            builder: (ctx, constraints) {
+              final w = (constraints.maxWidth - AppSpacing.md) / 2;
+              return Wrap(
+                spacing: AppSpacing.md,
+                runSpacing: AppSpacing.md,
+                children: [
+                  _metricCard(
+                    theme,
+                    label: l10n.products,
+                    value: '${usage['products_count'] ?? 0}',
+                    icon: Icons.inventory_2_outlined,
+                    color: AppColors.info,
+                    width: w,
+                  ),
+                  _metricCard(
+                    theme,
+                    label: 'Orders (30d)',
+                    value: '${usage['recent_orders_30d'] ?? 0}',
+                    icon: Icons.receipt_outlined,
+                    color: AppColors.success,
+                    width: w,
+                  ),
+                  _metricCard(
+                    theme,
+                    label: l10n.staff,
+                    value: '${usage['staff_count'] ?? 0}',
+                    icon: Icons.people_outlined,
+                    color: AppColors.purple,
+                    width: w,
+                  ),
+                  _metricCard(
+                    theme,
+                    label: 'Registers',
+                    value: '${usage['registers_count'] ?? 0}',
+                    icon: Icons.point_of_sale_outlined,
+                    color: AppColors.primary,
+                    width: w,
+                  ),
+                  _metricCard(
+                    theme,
+                    label: 'Branches',
+                    value: '${usage['branches_count'] ?? 0}',
+                    icon: Icons.store_outlined,
+                    color: AppColors.info,
+                    width: w,
+                  ),
+                  _metricCard(
+                    theme,
+                    label: 'Delivery Platforms',
+                    value: '${usage['delivery_platforms_count'] ?? 0}',
+                    icon: Icons.delivery_dining_outlined,
+                    color: AppColors.warning,
+                    width: w,
+                  ),
+                ],
+              );
+            },
           ),
-        );
-      },
+          AppSpacing.gapH24,
+
+          // ─── Branches ────────────────────────────────
+          if (branches.isNotEmpty) ...[
+            Text('Branches', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            AppSpacing.gapH12,
+            ...branches.map(
+              (b) => Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: PosCard(
+                  elevation: 0,
+                  borderRadius: AppRadius.borderMd,
+                  border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
+                  child: ListTile(
+                    leading: Icon(
+                      b['is_main_branch'] == true ? Icons.home_outlined : Icons.store_outlined,
+                      color: b['is_main_branch'] == true ? AppColors.primary : AppColors.mutedFor(context),
+                    ),
+                    title: Text(b['name']?.toString() ?? '—', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(
+                      '${b['city'] ?? ''} • ${b['is_active'] == true ? 'Active' : 'Inactive'}',
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    trailing: b['is_main_branch'] == true
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              borderRadius: AppRadius.borderFull,
+                            ),
+                            child: const Text(
+                              'Main',
+                              style: TextStyle(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.w600),
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
+              ),
+            ),
+            AppSpacing.gapH8,
+          ],
+
+          // ─── Delivery Platforms ───────────────────────
+          if (deliveryPlatforms.isNotEmpty) ...[
+            Text('Delivery Platforms', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            AppSpacing.gapH12,
+            ...deliveryPlatforms.map(
+              (dp) => Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: PosCard(
+                  elevation: 0,
+                  borderRadius: AppRadius.borderMd,
+                  border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
+                  child: ListTile(
+                    leading: const Icon(Icons.delivery_dining, color: AppColors.info),
+                    title: Text(dp['platform_slug']?.toString() ?? '—', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: dp['last_sync_at'] != null
+                        ? Text('Last sync: ${dp['last_sync_at']}', style: const TextStyle(fontSize: 12))
+                        : null,
+                    trailing: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: dp['is_active'] == true ? AppColors.success : AppColors.mutedFor(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -478,6 +611,98 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     );
   }
 
+  // ─── Terminals Tab ─────────────────────────────────────
+
+  Widget _buildTerminalsTab(Map<String, dynamic> store, ThemeData theme) {
+    final registers = (store['registers'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    if (registers.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.point_of_sale_outlined, size: 48, color: AppColors.mutedFor(context)),
+            AppSpacing.gapH12,
+            Text('No POS terminals registered', style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context))),
+          ],
+        ),
+      );
+    }
+    return ListView.separated(
+      padding: AppSpacing.paddingAll16,
+      itemCount: registers.length,
+      separatorBuilder: (_, __) => AppSpacing.gapH8,
+      itemBuilder: (context, i) {
+        final reg = registers[i];
+        final isOnline = reg['is_online'] == true;
+        final isActive = reg['is_active'] == true;
+        return PosCard(
+          elevation: 0,
+          borderRadius: AppRadius.borderLg,
+          border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.point_of_sale, color: isOnline ? AppColors.success : AppColors.mutedFor(context), size: 20),
+                    AppSpacing.gapW8,
+                    Expanded(
+                      child: Text(reg['name']?.toString() ?? 'Terminal', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: (isOnline ? AppColors.success : AppColors.mutedFor(context)).withValues(alpha: 0.1),
+                        borderRadius: AppRadius.borderFull,
+                      ),
+                      child: Text(
+                        isOnline ? 'Online' : 'Offline',
+                        style: TextStyle(
+                          color: isOnline ? AppColors.success : AppColors.mutedFor(context),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    if (!isActive) ...[
+                      AppSpacing.gapW8,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: AppColors.error.withValues(alpha: 0.1),
+                          borderRadius: AppRadius.borderFull,
+                        ),
+                        child: const Text(
+                          'Inactive',
+                          style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600, fontSize: 11),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                AppSpacing.gapH8,
+                if (reg['device_id'] != null) _infoRow('Device ID', reg['device_id'].toString()),
+                if (reg['platform'] != null) _infoRow('Platform', reg['platform'].toString()),
+                if (reg['app_version'] != null) _infoRow('App Version', reg['app_version'].toString()),
+                if (reg['last_sync_at'] != null) _infoRow('Last Sync', reg['last_sync_at'].toString()),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // ─── Notes Tab ─────────────────────────────────────────
+
+  Widget _buildNotesTab(Map<String, dynamic> store, ThemeData theme) {
+    final orgId = store['organization']?['id']?.toString() ?? store['organization_id']?.toString();
+    if (orgId == null) return const Center(child: Text('Organization not found'));
+    return _NotesTabContent(storeId: widget.storeId, organizationId: orgId);
+  }
+
   // ─── Dialogs ───────────────────────────────────────────
 
   void _showSuspendDialog() {
@@ -544,6 +769,201 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showImpersonationActiveDialog(ImpersonationActive session) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            const Icon(Icons.manage_accounts, color: AppColors.warning),
+            AppSpacing.gapW8,
+            const Text('Impersonation Active'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('You are now impersonating:'),
+            AppSpacing.gapH8,
+            Container(
+              padding: AppSpacing.paddingAll12,
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.08),
+                borderRadius: AppRadius.borderMd,
+                border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(session.targetUser['name']?.toString() ?? '—', style: const TextStyle(fontWeight: FontWeight.w700)),
+                  Text(session.targetUser['email']?.toString() ?? '—', style: const TextStyle(fontSize: 12)),
+                  AppSpacing.gapH4,
+                  Text('Store: ${session.storeName}', style: const TextStyle(fontSize: 12)),
+                  Text('Expires: ${session.expiresAt}', style: const TextStyle(fontSize: 11, color: AppColors.warning)),
+                ],
+              ),
+            ),
+            AppSpacing.gapH8,
+            SelectableText('Token: ${session.token}', style: const TextStyle(fontFamily: 'monospace', fontSize: 11)),
+          ],
+        ),
+        actions: [
+          PosButton(
+            label: 'Extend (30 min)',
+            variant: PosButtonVariant.outline,
+            size: PosButtonSize.sm,
+            onPressed: () {
+              ref.read(impersonationProvider.notifier).extend();
+              Navigator.of(ctx).pop();
+            },
+          ),
+          PosButton(
+            label: 'End Session',
+            variant: PosButtonVariant.danger,
+            size: PosButtonSize.sm,
+            onPressed: () {
+              ref.read(impersonationProvider.notifier).end();
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// Notes Tab Content Widget (embedded, loads org notes)
+// ════════════════════════════════════════════════════════
+
+class _NotesTabContent extends ConsumerStatefulWidget {
+  const _NotesTabContent({required this.storeId, required this.organizationId});
+  final String storeId;
+  final String organizationId;
+
+  @override
+  ConsumerState<_NotesTabContent> createState() => _NotesTabContentState();
+}
+
+class _NotesTabContentState extends ConsumerState<_NotesTabContent> {
+  final _noteController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(providerNotesProvider.notifier).load(widget.organizationId));
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(providerNotesProvider);
+    final theme = Theme.of(context);
+
+    ref.listen<ProviderNotesState>(providerNotesProvider, (prev, next) {
+      if (next is ProviderNotesLoaded && prev is! ProviderNotesLoaded) {
+        // refreshed
+      }
+    });
+
+    return Column(
+      children: [
+        // Add note input
+        Padding(
+          padding: AppSpacing.paddingAll16,
+          child: Row(
+            children: [
+              Expanded(
+                child: PosTextField(
+                  controller: _noteController,
+                  label: 'Internal Note',
+                  hint: 'Add a note visible only to admins...',
+                  maxLines: 2,
+                ),
+              ),
+              AppSpacing.gapW8,
+              PosButton(
+                label: 'Add',
+                size: PosButtonSize.sm,
+                icon: Icons.add,
+                onPressed: () {
+                  if (_noteController.text.trim().isNotEmpty) {
+                    ref.read(providerNotesProvider.notifier).addNote(widget.organizationId, _noteController.text.trim());
+                    _noteController.clear();
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: switch (state) {
+            ProviderNotesLoading() => const PosLoading(),
+            ProviderNotesError(:final message) => Center(child: Text(message)),
+            ProviderNotesLoaded(:final notes) when notes.isEmpty => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.sticky_note_2_outlined, size: 48, color: AppColors.mutedFor(context)),
+                  AppSpacing.gapH8,
+                  const Text('No internal notes yet'),
+                ],
+              ),
+            ),
+            ProviderNotesLoaded(:final notes) => ListView.separated(
+              padding: AppSpacing.paddingH16,
+              itemCount: notes.length,
+              separatorBuilder: (_, __) => AppSpacing.gapH8,
+              itemBuilder: (context, i) {
+                final note = notes[i];
+                final adminName = note['admin_user_name']?.toString() ?? note['admin_user_email']?.toString() ?? 'Admin';
+                final createdAt = note['created_at']?.toString() ?? '';
+                return PosCard(
+                  elevation: 0,
+                  borderRadius: AppRadius.borderMd,
+                  border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
+                  child: Padding(
+                    padding: AppSpacing.paddingAll12,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.person_outline, size: 14, color: AppColors.info),
+                            AppSpacing.gapW4,
+                            Text(
+                              adminName,
+                              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.info),
+                            ),
+                            const Spacer(),
+                            Text(
+                              createdAt.length > 10 ? createdAt.substring(0, 10) : createdAt,
+                              style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
+                            ),
+                          ],
+                        ),
+                        AppSpacing.gapH8,
+                        Text(note['note_text']?.toString() ?? '', style: theme.textTheme.bodyMedium),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            _ => const SizedBox.shrink(),
+          },
+        ),
+      ],
     );
   }
 }

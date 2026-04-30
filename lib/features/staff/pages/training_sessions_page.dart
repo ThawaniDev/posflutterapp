@@ -214,7 +214,7 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.staffDeleteTraining),
-        content: Text(l10n.deleteConfirmMessage),
+        content: Text('Are you sure you want to delete this training session?'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
@@ -241,7 +241,7 @@ class _ActiveSessionBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elapsed = session.startedAt != null ? DateTime.now().difference(DateTime.parse(session.startedAt!)) : Duration.zero;
+    final elapsed = DateTime.now().difference(session.startedAt);
     final mins = elapsed.inMinutes;
 
     return Container(
@@ -277,7 +277,7 @@ class _ActiveSessionBanner extends ConsumerWidget {
             label: l10n.staffEndTraining,
             icon: Icons.stop_rounded,
             size: PosButtonSize.sm,
-            color: AppColors.error,
+            variant: PosButtonVariant.danger,
             onPressed: () {},
           ),
         ],
@@ -317,7 +317,7 @@ class _SessionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              PosStatusBadge(label: statusLabel, color: statusColor),
+              PosStatusBadge(label: statusLabel, variant: isActive ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.info),
               const Spacer(),
               if (onEnd != null)
                 IconButton(
@@ -335,14 +335,10 @@ class _SessionCard extends StatelessWidget {
           AppSpacing.gapH8,
           Row(
             children: [
-              _InfoChip(
-                icon: Icons.play_arrow_rounded,
-                label: session.startedAt != null ? fmt.format(DateTime.parse(session.startedAt!)) : '—',
-                color: AppColors.success,
-              ),
+              _InfoChip(icon: Icons.play_arrow_rounded, label: fmt.format(session.startedAt), color: AppColors.success),
               if (session.endedAt != null) ...[
                 AppSpacing.gapW12,
-                _InfoChip(icon: Icons.stop_rounded, label: fmt.format(DateTime.parse(session.endedAt!)), color: AppColors.error),
+                _InfoChip(icon: Icons.stop_rounded, label: fmt.format(session.endedAt!), color: AppColors.error),
               ],
             ],
           ),

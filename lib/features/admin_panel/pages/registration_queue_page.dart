@@ -66,7 +66,18 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
 
     ref.listen<AdminActionState>(adminActionProvider, (prev, next) {
       if (next is AdminActionSuccess) {
-        showPosSuccessSnackbar(context, next.message);
+        final data = next.data;
+        if (data != null && data.containsKey('user') && data.containsKey('temp_password')) {
+          final user = data['user'] as Map<String, dynamic>?;
+          final tempPassword = next.message.contains('approved') ? data['temp_password'] : null;
+          if (tempPassword != null && mounted) {
+            _showApprovalSuccessDialog(user, tempPassword.toString());
+          } else {
+            showPosSuccessSnackbar(context, next.message);
+          }
+        } else {
+          showPosSuccessSnackbar(context, next.message);
+        }
         _load();
       } else if (next is AdminActionError) {
         showPosErrorSnackbar(context, next.message);
@@ -159,9 +170,9 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
   }
 
   Widget _buildRegistrationCard(Map<String, dynamic> reg, ThemeData theme) {
-    final businessName = reg['business_name'] as String? ?? 'Unknown';
-    final contactName = reg['contact_name'] as String? ?? '—';
-    final email = reg['email'] as String? ?? '—';
+    final businessName = reg['organization_name'] as String? ?? reg['business_name'] as String? ?? 'Unknown';
+    final contactName = reg['owner_name'] as String? ?? reg['contact_name'] as String? ?? '—';
+    final email = reg['owner_email'] as String? ?? reg['email'] as String? ?? '—';
     final status = reg['status'] as String? ?? 'pending';
     final createdAt = reg['created_at'] as String? ?? '';
 
@@ -183,7 +194,10 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
                     children: [
                       Text(businessName, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                       AppSpacing.gapH4,
-                      Text('$contactName • $email', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
+                      Text(
+                        '$contactName • $email',
+                        style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                      ),
                     ],
                   ),
                 ),
@@ -285,6 +299,53 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  void _showApprovalSuccessDialog(Map<String, dynamic>? user, String tempPassword) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            const Icon(Icons.check_circle, color: AppColors.success),
+            AppSpacing.gapW8,
+            const Text('Registration Approved'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (user != null) ...[Text('Account created for ${user['name'] ?? user['email'] ?? ''}'), AppSpacing.gapH12],
+            Container(
+              padding: AppSpacing.paddingAll12,
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.08),
+                borderRadius: AppRadius.borderMd,
+                border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Temporary Password', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+                  AppSpacing.gapH4,
+                  SelectableText(
+                    tempPassword,
+                    style: const TextStyle(fontFamily: 'monospace', fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  AppSpacing.gapH4,
+                  const Text(
+                    'Please share this securely. The user will be prompted to change it on first login.',
+                    style: TextStyle(fontSize: 11, color: AppColors.warning),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [PosButton(label: l10n.commonOk, onPressed: () => Navigator.of(ctx).pop())],
       ),
     );
   }

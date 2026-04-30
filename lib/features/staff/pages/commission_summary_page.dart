@@ -234,7 +234,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                         decoration: InputDecoration(labelText: l10n.staffCommissionPercentage, suffixText: '%'),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return l10n.required;
+                          if (v == null || v.isEmpty) return 'Required';
                           if (double.tryParse(v) == null) return 'Invalid number';
                           return null;
                         },

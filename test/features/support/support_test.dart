@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wameedpos/features/support/enums/knowledge_base_category.dart';
 import 'package:wameedpos/features/support/enums/ticket_status.dart';
 import 'package:wameedpos/features/support/enums/ticket_category.dart';
 import 'package:wameedpos/features/support/enums/ticket_priority.dart';
@@ -200,6 +201,146 @@ void main() {
       expect(const TicketActionLoading(), isA<TicketActionState>());
       expect(const TicketActionSuccess('ok'), isA<TicketActionState>());
       expect(const TicketActionError('err'), isA<TicketActionState>());
+    });
+  });
+
+  // ════════════════════════════════════════════════════════
+  // SUPPORT TICKET MODEL SERIALIZATION
+  // ════════════════════════════════════════════════════════
+
+  group('SupportTicket.fromJson', () {
+    final baseJson = <String, dynamic>{
+      'id': 'ticket-1',
+      'ticket_number': 'TKT-2024-0001',
+      'organization_id': 'org-1',
+      'store_id': 'store-1',
+      'user_id': 'user-1',
+      'category': 'technical',
+      'priority': 'high',
+      'status': 'open',
+      'subject': 'Printer not working',
+      'description': 'Printer stops after 5 receipts',
+      'created_at': '2024-06-01T10:00:00Z',
+      'updated_at': '2024-06-01T11:00:00Z',
+      'sla_deadline_at': '2024-06-01T18:00:00Z',
+      'sla_badge': 'on_track',
+      'messages_count': 3,
+      'satisfaction_rating': 4,
+      'satisfaction_comment': 'Good support, thanks!',
+    };
+
+    test('parses all base fields correctly', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.id, 'ticket-1');
+      expect(ticket.ticketNumber, 'TKT-2024-0001');
+      expect(ticket.category, TicketCategory.technical);
+      expect(ticket.priority, TicketPriority.high);
+      expect(ticket.status, TicketStatus.open);
+      expect(ticket.subject, 'Printer not working');
+      expect(ticket.description, 'Printer stops after 5 receipts');
+    });
+
+    test('parses new sla_badge field', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.slaBadge, 'on_track');
+    });
+
+    test('parses messages_count field', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.messagesCount, 3);
+    });
+
+    test('parses satisfaction_rating field', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.satisfactionRating, 4);
+    });
+
+    test('parses satisfaction_comment field', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.satisfactionComment, 'Good support, thanks!');
+    });
+
+    test('isRated returns true when satisfactionRating is set', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.isRated, isTrue);
+    });
+
+    test('isRated returns false when satisfactionRating is null', () {
+      final json = Map<String, dynamic>.from(baseJson)..remove('satisfaction_rating');
+      final ticket = SupportTicket.fromJson(json);
+      expect(ticket.isRated, isFalse);
+    });
+
+    test('isSlaBreached returns true when slaBadge is breached', () {
+      final json = Map<String, dynamic>.from(baseJson)..[('sla_badge')] = 'breached';
+      final ticket = SupportTicket.fromJson(json);
+      expect(ticket.isSlaBreached, isTrue);
+    });
+
+    test('isSlaBreached returns false when slaBadge is on_track', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      expect(ticket.isSlaBreached, isFalse);
+    });
+
+    test('handles null optional fields gracefully', () {
+      final minimalJson = <String, dynamic>{
+        'id': 'ticket-2',
+        'ticket_number': 'TKT-2024-0002',
+        'organization_id': 'org-1',
+        'category': 'general',
+        'priority': 'low',
+        'status': 'open',
+        'subject': 'Minimal',
+        'description': 'Desc',
+      };
+      final ticket = SupportTicket.fromJson(minimalJson);
+      expect(ticket.slaBadge, isNull);
+      expect(ticket.messagesCount, isNull);
+      expect(ticket.satisfactionRating, isNull);
+      expect(ticket.satisfactionComment, isNull);
+      expect(ticket.isRated, isFalse);
+    });
+
+    test('toJson round-trip preserves new fields', () {
+      final ticket = SupportTicket.fromJson(baseJson);
+      final json = ticket.toJson();
+      expect(json['sla_badge'], 'on_track');
+      expect(json['messages_count'], 3);
+      expect(json['satisfaction_rating'], 4);
+      expect(json['satisfaction_comment'], 'Good support, thanks!');
+    });
+
+    test('copyWith updates new fields', () {
+      final original = SupportTicket.fromJson(baseJson);
+      final updated = original.copyWith(satisfactionRating: 5, satisfactionComment: 'Excellent!');
+      expect(updated.satisfactionRating, 5);
+      expect(updated.satisfactionComment, 'Excellent!');
+      // Other fields unchanged
+      expect(updated.id, original.id);
+      expect(updated.subject, original.subject);
+    });
+  });
+
+  // ════════════════════════════════════════════════════════
+  // KNOWLEDGE BASE CATEGORY ENUM
+  // ════════════════════════════════════════════════════════
+
+  group('KnowledgeBaseCategory', () {
+    test('has general value', () {
+      expect(KnowledgeBaseCategory.general.value, 'general');
+    });
+
+    test('includes all expected categories', () {
+      final values = KnowledgeBaseCategory.values.map((c) => c.value).toList();
+      expect(
+        values,
+        containsAll(['general', 'getting_started', 'pos_usage', 'inventory', 'delivery', 'billing', 'troubleshooting']),
+      );
+    });
+
+    test('fromValue works for general', () {
+      final cat = KnowledgeBaseCategory.values.firstWhere((c) => c.value == 'general');
+      expect(cat, KnowledgeBaseCategory.general);
     });
   });
 }

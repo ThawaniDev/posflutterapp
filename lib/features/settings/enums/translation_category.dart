@@ -1,5 +1,7 @@
 enum TranslationCategory {
+  common('common'),
   ui('ui'),
+  pos('pos'),
   receipt('receipt'),
   notification('notification'),
   report('report');
