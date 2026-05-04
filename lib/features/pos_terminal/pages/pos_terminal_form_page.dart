@@ -474,11 +474,9 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
             AppSpacing.gapH24,
 
             // ── Section 6: Fee Schedule (read-only, softpos only) ──
-            if (_softposEnabled && widget.isEditing)
-              _buildBillingSection(context),
+            if (_softposEnabled && widget.isEditing) _buildBillingSection(context),
 
-            if (_softposEnabled && widget.isEditing)
-              AppSpacing.gapH24,
+            if (_softposEnabled && widget.isEditing) AppSpacing.gapH24,
 
             // ── Section 7: Notes ───────────────────
             _buildSectionCard(
@@ -512,8 +510,8 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     final l = AppLocalizations.of(context)!;
     final terminal = _loadedTerminal;
     final madaRate = terminal?.softposMadaMerchantRate ?? 0.006;
-    final cardFee  = terminal?.softposCardMerchantFee  ?? 1.000;
-    final madaPct  = terminal?.softposMadaRatePct ?? (madaRate * 100);
+    final cardFee = terminal?.softposCardMerchantFee ?? 1.000;
+    final madaPct = terminal?.softposMadaRatePct ?? (madaRate * 100);
 
     return _buildSectionCard(
       icon: Icons.receipt_long_outlined,
@@ -540,10 +538,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
           ],
         ),
         const SizedBox(height: 8),
-        Text(
-          l.termFormBillingReadOnly,
-          style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
-        ),
+        Text(l.termFormBillingReadOnly, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
       ],
     );
   }

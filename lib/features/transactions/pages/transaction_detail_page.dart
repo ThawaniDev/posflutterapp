@@ -310,10 +310,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
                         '•••• ${payment.cardLastFour}',
                         style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                       ),
-                      if (schemeRaw != null) ...[
-                        AppSpacing.gapW4,
-                        CardSchemeBadge(scheme: schemeRaw, size: 12),
-                      ],
+                      if (schemeRaw != null) ...[AppSpacing.gapW4, CardSchemeBadge(scheme: schemeRaw, size: 12)],
                     ],
                   ),
               ],

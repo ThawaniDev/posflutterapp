@@ -149,7 +149,10 @@ class _LabelElementView extends StatelessWidget {
         return FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(l10n != null ? l10n.hardwareSkuLabel(data.sku ?? '-') : 'SKU: ${data.sku ?? '-'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
+          child: Text(
+            l10n != null ? l10n.hardwareSkuLabel(data.sku ?? '-') : 'SKU: ${data.sku ?? '-'}',
+            style: const TextStyle(fontSize: 8, color: Colors.black87),
+          ),
         );
       case 'custom_text':
         return FittedBox(

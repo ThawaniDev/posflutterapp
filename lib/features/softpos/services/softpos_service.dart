@@ -157,11 +157,7 @@ class SoftPosService {
   /// [orderId] — Unique reference for this refund operation.
   /// [rrn]     — Retrieval Reference Number from the original sale (required by
   ///             the network to locate the original authorisation).
-  Future<SoftPosPaymentResult> refund({
-    required String amount,
-    required String orderId,
-    String? rrn,
-  }) async {
+  Future<SoftPosPaymentResult> refund({required String amount, required String orderId, String? rrn}) async {
     if (!isAvailable) {
       return SoftPosPaymentResult.failure('SoftPOS is only available on Android.');
     }

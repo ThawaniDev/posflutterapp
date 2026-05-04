@@ -310,18 +310,8 @@ void main() {
 
     test('DeliveryPlatformsLoaded holds platforms', () {
       const state = DeliveryPlatformsLoaded([
-        DeliveryPlatform(
-          id: '1',
-          name: 'Jahez',
-          slug: 'jahez',
-          authMethod: DeliveryAuthMethod.apiKey,
-        ),
-        DeliveryPlatform(
-          id: '2',
-          name: 'HungerStation',
-          slug: 'hungerstation',
-          authMethod: DeliveryAuthMethod.apiKey,
-        ),
+        DeliveryPlatform(id: '1', name: 'Jahez', slug: 'jahez', authMethod: DeliveryAuthMethod.apiKey),
+        DeliveryPlatform(id: '2', name: 'HungerStation', slug: 'hungerstation', authMethod: DeliveryAuthMethod.apiKey),
       ]);
       expect(state.platforms.length, 2);
     });

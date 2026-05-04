@@ -299,16 +299,9 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
         for (final leg in softPosLegs) {
           final legAmount = (leg['amount'] as num).toStringAsFixed(2);
           final originalRrn = _transaction?.payments
-              ?.firstWhere(
-                (p) => p.method.toString().contains('soft_pos'),
-                orElse: () => _transaction!.payments!.first,
-              )
+              ?.firstWhere((p) => p.method.toString().contains('soft_pos'), orElse: () => _transaction!.payments!.first)
               .cardReference;
-          final refundResult = await softPosService.refund(
-            amount: legAmount,
-            orderId: _transaction!.id,
-            rrn: originalRrn,
-          );
+          final refundResult = await softPosService.refund(amount: legAmount, orderId: _transaction!.id, rrn: originalRrn);
           if (!refundResult.success) {
             setState(() {
               _isProcessing = false;

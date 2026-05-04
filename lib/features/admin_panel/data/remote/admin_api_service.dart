@@ -2096,10 +2096,7 @@ class AdminApiService {
 
   /// PATCH /admin/terminals/{terminalId}/softpos-billing
   /// Updates per-terminal bilateral fee rates (admin only).
-  Future<Map<String, dynamic>> updateTerminalSoftposBilling(
-    String terminalId,
-    Map<String, dynamic> data,
-  ) async {
+  Future<Map<String, dynamic>> updateTerminalSoftposBilling(String terminalId, Map<String, dynamic> data) async {
     final response = await _dio.patch(ApiEndpoints.adminTerminalSoftposBilling(terminalId), data: data);
     return response.data as Map<String, dynamic>;
   }

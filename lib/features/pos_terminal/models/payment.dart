@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 
 class Payment {
-
   const Payment({
     required this.id,
     required this.transactionId,
@@ -50,6 +49,7 @@ class Payment {
   final double? tipAmount;
   final String? cardLastFour;
   final String? cardBrand;
+
   /// EdfaPay SoftPOS card scheme (e.g. `mada`, `visa`, `mastercard`).
   final String? cardScheme;
   final String? cardAuthCode;
