@@ -36,7 +36,6 @@ class DeviceConfigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     return PosCard(
       borderRadius: AppRadius.borderMd,
       child: Padding(

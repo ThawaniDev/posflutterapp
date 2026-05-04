@@ -111,7 +111,6 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
       title: '${widget.provider.label} ${l10n.checkout}',
@@ -143,19 +142,6 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
               ],
             ),
     );
-  }
-
-  void _confirmCancel(AppLocalizations l10n) async {
-    final confirmed = await showPosConfirmDialog(
-      context,
-      title: l10n.cancelPayment,
-      message: l10n.cancelPaymentConfirm,
-      confirmLabel: l10n.yes,
-      cancelLabel: l10n.no,
-    );
-    if (confirmed == true) {
-      _onPaymentCancelled();
-    }
   }
 }
 

@@ -400,6 +400,12 @@ class ApiEndpoints {
   static const String adminAnalyticsExportSubscriptions = '/admin/analytics/export/subscriptions';
   static const String adminAnalyticsExportStores = '/admin/analytics/export/stores';
 
+  // ─── SoftPOS Billing & Analytics ──────────────────────────────
+  static const String adminSoftposTransactions = '/admin/analytics/softpos/transactions';
+  static const String adminSoftposFinancials = '/admin/analytics/softpos/financials';
+  static const String adminSoftposTerminalRates = '/admin/analytics/softpos/terminal-rates';
+  static String adminTerminalSoftposBilling(String terminalId) => '/admin/terminals/$terminalId/softpos-billing';
+
   // ─── P7: Feature Flags & A/B Testing ─────────────────────────
   static const String adminFeatureFlagStats = '/admin/feature-flags/stats';
   static const String adminFeatureFlags = '/admin/feature-flags';

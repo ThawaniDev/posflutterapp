@@ -68,6 +68,9 @@ dependencies:
   # Payment Gateway
   flutter_paytabs_bridge: ^2.7.2
 
+  # EdfaPay SoftPOS (NFC tap-to-pay on Android)
+  edfapay_softpos_sdk: ^1.0.6+6
+
   # Image Picker
   image_picker: ^1.1.2
   flutter_html: ^3.0.0-beta.2

@@ -44,7 +44,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
         showSearch: false,
         isLoading: isLoading,
         hasError: hasError,
-        errorMessage: hasError ? (analyticsState as PromotionAnalyticsError).message : null,
+        errorMessage: hasError ? (analyticsState).message : null,
         onRetry: () => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load(),
         child: analyticsState is PromotionAnalyticsLoaded
             ? _buildContent(context, analyticsState.analytics)
@@ -271,7 +271,7 @@ class _DailyUsageChart extends StatelessWidget {
         barTouchData: BarTouchData(
           touchTooltipData: BarTouchTooltipData(
             getTooltipItem: (group, _, rod, __) =>
-                BarTooltipItem('${dates[group.x] ?? ''}\n${rod.toY.toInt()} uses', TextStyle(color: Colors.white, fontSize: 11)),
+                BarTooltipItem('${dates[group.x] ?? ''}\n${rod.toY.toInt()} uses', const TextStyle(color: Colors.white, fontSize: 11)),
           ),
         ),
       ),

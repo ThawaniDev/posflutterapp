@@ -192,7 +192,6 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
   }
 
   Widget _buildNumpadKey(String key) {
-    final isSpecial = key == 'C' || key == '⌫';
 
     return SizedBox(
       width: 72,

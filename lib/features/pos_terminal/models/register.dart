@@ -1,5 +1,6 @@
-class Register {
+double? _parseDouble(dynamic v) => v != null ? double.tryParse(v.toString()) : null;
 
+class Register {
   const Register({
     required this.id,
     required this.storeId,
@@ -14,6 +15,7 @@ class Register {
     this.softposEnabled = false,
     this.nearpayTid,
     this.nearpayMid,
+    this.edfapayToken,
     this.acquirerSource,
     this.acquirerName,
     this.acquirerReference,
@@ -27,6 +29,10 @@ class Register {
     this.feeFlatPerTxn = 0.00,
     this.wameedMarginPercentage = 0.0040,
     this.feeDescription,
+    // Bilateral billing rates (from softpos_fees block)
+    this.softposMadaMerchantRate = 0.006,
+    this.softposCardMerchantFee = 1.000,
+    this.softposMadaRatePct = 0.6,
     this.settlementCycle,
     this.settlementBankName,
     this.settlementIban,
@@ -55,6 +61,7 @@ class Register {
       softposEnabled: (json['softpos_enabled'] as bool?) ?? false,
       nearpayTid: json['nearpay_tid'] as String?,
       nearpayMid: json['nearpay_mid'] as String?,
+      edfapayToken: json['edfapay_token'] as String?,
       // Acquirer
       acquirerSource: json['acquirer_source'] as String?,
       acquirerName: json['acquirer_name'] as String?,
@@ -64,13 +71,21 @@ class Register {
       osVersion: json['os_version'] as String?,
       nfcCapable: (json['nfc_capable'] as bool?) ?? false,
       serialNumber: json['serial_number'] as String?,
-      // Fees
+      // Fees (legacy fields, may still be present)
       feeProfile: json['fee_profile'] as String?,
-      feeMadaPercentage: (json['fee_mada_percentage'] != null ? double.tryParse(json['fee_mada_percentage'].toString()) : null) ?? 0.0150,
-      feeVisaMcPercentage: (json['fee_visa_mc_percentage'] != null ? double.tryParse(json['fee_visa_mc_percentage'].toString()) : null) ?? 0.0200,
+      feeMadaPercentage:
+          (json['fee_mada_percentage'] != null ? double.tryParse(json['fee_mada_percentage'].toString()) : null) ?? 0.0150,
+      feeVisaMcPercentage:
+          (json['fee_visa_mc_percentage'] != null ? double.tryParse(json['fee_visa_mc_percentage'].toString()) : null) ?? 0.0200,
       feeFlatPerTxn: (json['fee_flat_per_txn'] != null ? double.tryParse(json['fee_flat_per_txn'].toString()) : null) ?? 0.00,
-      wameedMarginPercentage: (json['wameed_margin_percentage'] != null ? double.tryParse(json['wameed_margin_percentage'].toString()) : null) ?? 0.0040,
+      wameedMarginPercentage:
+          (json['wameed_margin_percentage'] != null ? double.tryParse(json['wameed_margin_percentage'].toString()) : null) ??
+          0.0040,
       feeDescription: json['fee_description'] as String?,
+      // Bilateral billing rates from softpos_fees block
+      softposMadaMerchantRate: _parseDouble(json['softpos_fees']?['mada_rate']) ?? 0.006,
+      softposCardMerchantFee: _parseDouble(json['softpos_fees']?['card_fee']) ?? 1.000,
+      softposMadaRatePct: _parseDouble(json['softpos_fees']?['mada_rate_pct']) ?? 0.6,
       // Settlement
       settlementCycle: json['settlement_cycle'] as String?,
       settlementBankName: json['settlement_bank_name'] as String?,
@@ -100,6 +115,7 @@ class Register {
   final bool softposEnabled;
   final String? nearpayTid;
   final String? nearpayMid;
+  final String? edfapayToken;
 
   // Acquirer
   final String? acquirerSource;
@@ -119,6 +135,11 @@ class Register {
   final double feeFlatPerTxn;
   final double wameedMarginPercentage;
   final String? feeDescription;
+
+  // Bilateral billing rates (merchant-facing, from softpos_fees API block)
+  final double softposMadaMerchantRate;
+  final double softposCardMerchantFee;
+  final double softposMadaRatePct;
 
   // Settlement
   final String? settlementCycle;
@@ -178,6 +199,9 @@ class Register {
     double? feeFlatPerTxn,
     double? wameedMarginPercentage,
     String? feeDescription,
+    double? softposMadaMerchantRate,
+    double? softposCardMerchantFee,
+    double? softposMadaRatePct,
     String? settlementCycle,
     String? settlementBankName,
     String? settlementIban,
@@ -216,6 +240,9 @@ class Register {
       feeFlatPerTxn: feeFlatPerTxn ?? this.feeFlatPerTxn,
       wameedMarginPercentage: wameedMarginPercentage ?? this.wameedMarginPercentage,
       feeDescription: feeDescription ?? this.feeDescription,
+      softposMadaMerchantRate: softposMadaMerchantRate ?? this.softposMadaMerchantRate,
+      softposCardMerchantFee: softposCardMerchantFee ?? this.softposCardMerchantFee,
+      softposMadaRatePct: softposMadaRatePct ?? this.softposMadaRatePct,
       settlementCycle: settlementCycle ?? this.settlementCycle,
       settlementBankName: settlementBankName ?? this.settlementBankName,
       settlementIban: settlementIban ?? this.settlementIban,

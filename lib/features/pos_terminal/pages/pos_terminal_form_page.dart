@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
 
@@ -40,6 +41,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
   bool _softposEnabled = false;
   final _nearpayTidController = TextEditingController();
   final _nearpayMidController = TextEditingController();
+  final _edfapayTokenController = TextEditingController();
 
   // ── Acquirer controllers ──────────────────────────────────
   String? _selectedAcquirerSource;
@@ -59,6 +61,9 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
   String? _nameError;
   String? _deviceIdError;
 
+  // Loaded terminal reference (for read-only billing display)
+  Register? _loadedTerminal;
+
   static const _platforms = ['windows', 'macos', 'ios', 'android'];
   static const _acquirerSources = ['hala', 'bank_rajhi', 'bank_snb', 'geidea', 'other'];
   static const _settlementCycles = ['T+0', 'T+1', 'T+2', 'T+3', 'weekly'];
@@ -77,6 +82,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     _deviceModelController.dispose();
     _osVersionController.dispose();
     _serialNumberController.dispose();
+    _edfapayTokenController.dispose();
     _nearpayTidController.dispose();
     _nearpayMidController.dispose();
     _acquirerNameController.dispose();
@@ -104,6 +110,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
         _serialNumberController.text = terminal.serialNumber ?? '';
         _nearpayTidController.text = terminal.nearpayTid ?? '';
         _nearpayMidController.text = terminal.nearpayMid ?? '';
+        _edfapayTokenController.text = terminal.edfapayToken ?? '';
         _acquirerNameController.text = terminal.acquirerName ?? '';
         _acquirerRefController.text = terminal.acquirerReference ?? '';
         _settlementBankController.text = terminal.settlementBankName ?? '';
@@ -116,12 +123,13 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
           _selectedAcquirerSource = terminal.acquirerSource;
           _selectedSettlementCycle = terminal.settlementCycle;
           _isLoadingInitial = false;
+          _loadedTerminal = terminal;
         });
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoadingInitial = false);
-        showPosErrorSnackbar(context, 'Failed to load terminal: $e');
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericError(e.toString()));
         context.pop();
       }
     }
@@ -168,6 +176,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
       'softpos_enabled': _softposEnabled,
       if (_nearpayTidController.text.trim().isNotEmpty) 'nearpay_tid': _nearpayTidController.text.trim(),
       if (_nearpayMidController.text.trim().isNotEmpty) 'nearpay_mid': _nearpayMidController.text.trim(),
+      if (_edfapayTokenController.text.trim().isNotEmpty) 'edfapay_token': _edfapayTokenController.text.trim(),
       // Acquirer
       if (_selectedAcquirerSource != null) 'acquirer_source': _selectedAcquirerSource,
       if (_acquirerNameController.text.trim().isNotEmpty) 'acquirer_name': _acquirerNameController.text.trim(),
@@ -375,6 +384,15 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                       textInputAction: TextInputAction.next,
                     ),
                   ),
+                  AppSpacing.gapH16,
+                  PosTextField(
+                    controller: _edfapayTokenController,
+                    label: AppLocalizations.of(context)!.termFormEdfapayTokenLabel,
+                    hint: AppLocalizations.of(context)!.termFormEdfapayTokenHint,
+                    prefixIcon: Icons.key_outlined,
+                    textInputAction: TextInputAction.done,
+                    obscureText: true,
+                  ),
                 ],
               ],
             ),
@@ -455,7 +473,14 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
 
             AppSpacing.gapH24,
 
-            // ── Section 6: Notes ───────────────────
+            // ── Section 6: Fee Schedule (read-only, softpos only) ──
+            if (_softposEnabled && widget.isEditing)
+              _buildBillingSection(context),
+
+            if (_softposEnabled && widget.isEditing)
+              AppSpacing.gapH24,
+
+            // ── Section 7: Notes ───────────────────
             _buildSectionCard(
               icon: Icons.notes_outlined,
               title: AppLocalizations.of(context)!.termFormNotesSection,
@@ -475,6 +500,77 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
             AppSpacing.gapH24,
           ],
         ),
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // Billing section (read-only, shown when softposEnabled and editing)
+  // ──────────────────────────────────────────────────────────
+
+  Widget _buildBillingSection(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final terminal = _loadedTerminal;
+    final madaRate = terminal?.softposMadaMerchantRate ?? 0.006;
+    final cardFee  = terminal?.softposCardMerchantFee  ?? 1.000;
+    final madaPct  = terminal?.softposMadaRatePct ?? (madaRate * 100);
+
+    return _buildSectionCard(
+      icon: Icons.receipt_long_outlined,
+      title: l.termFormBillingSection,
+      subtitle: l.termFormBillingSectionSub,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: _buildBillingTile(
+                label: l.termFormBillingMadaRate,
+                value: l.termFormBillingMadaRateValue(madaPct.toStringAsFixed(3)),
+                icon: Icons.credit_card_outlined,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildBillingTile(
+                label: l.termFormBillingCardFee,
+                value: l.termFormBillingCardFeeValue(cardFee.toStringAsFixed(3)),
+                icon: Icons.payment_outlined,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          l.termFormBillingReadOnly,
+          style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBillingTile({required String label, required String value, required IconData icon}) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceLight,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.borderLight),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 14, color: AppColors.primary),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(label, style: AppTypography.labelSmall.copyWith(color: AppColors.textSecondary)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(value, style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
+        ],
       ),
     );
   }
@@ -517,7 +613,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     required String subtitle,
     required List<Widget> children,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = context.isPhone;
     return PosCard(
       padding: isMobile ? AppSpacing.paddingAll16 : AppSpacing.paddingAll24,
@@ -538,10 +633,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: isMobile ? AppTypography.titleMedium : AppTypography.titleLarge),
-                    Text(
-                      subtitle,
-                      style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
-                    ),
+                    Text(subtitle, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
                   ],
                 ),
               ),

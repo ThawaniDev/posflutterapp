@@ -21,7 +21,6 @@ import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 import 'package:wameedpos/features/catalog/repositories/catalog_repository.dart';
 
 class ProductFormPage extends ConsumerStatefulWidget {
-
   const ProductFormPage({super.key, this.productId, this.initialBarcode});
   final String? productId;
   final String? initialBarcode;
@@ -271,12 +270,12 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     final isLoading = _isEditing && (detailState is ProductDetailLoading || detailState is ProductDetailInitial);
 
     return PosFormPage(
-      title: _isEditing ? 'Edit Product' : 'Add Product',
+      title: _isEditing ? l10n.catalogEditProduct : l10n.catalogAddProduct,
       isLoading: isLoading,
       bottomBar: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosButton(
-          label: isSaving ? 'Saving...' : (_isEditing ? 'Update Product' : 'Create Product'),
+          label: isSaving ? l10n.catalogSaving : (_isEditing ? l10n.catalogUpdateProduct : l10n.catalogCreateProduct),
           onPressed: isSaving || isLoading ? null : _handleSave,
           isLoading: isSaving,
           isFullWidth: true,

@@ -232,7 +232,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.acctSelectProvider, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.acctSelectProvider, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   ...providers.map(
                     (p) => RadioListTile<String>(
@@ -287,29 +287,29 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Connect ${_providerDisplayName(_selectedProvider)}'),
+        title: Text(l10n.accountingConnectProvider(_providerDisplayName(_selectedProvider))),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: accessTokenController,
-                decoration: const InputDecoration(labelText: 'Access Token', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.accountingAccessToken, border: const OutlineInputBorder()),
               ),
               AppSpacing.gapH12,
               TextField(
                 controller: refreshTokenController,
-                decoration: const InputDecoration(labelText: 'Refresh Token', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.accountingRefreshToken, border: const OutlineInputBorder()),
               ),
               AppSpacing.gapH12,
               TextField(
                 controller: expiresAtController,
-                decoration: const InputDecoration(labelText: 'Token Expires At (YYYY-MM-DD)', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.accountingTokenExpiry, border: const OutlineInputBorder()),
               ),
               AppSpacing.gapH12,
               TextField(
                 controller: companyController,
-                decoration: const InputDecoration(labelText: 'Company Name (optional)', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.accountingCompanyNameOptional, border: const OutlineInputBorder()),
               ),
             ],
           ),

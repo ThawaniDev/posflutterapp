@@ -153,7 +153,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
             else if (permState is PermissionsLoaded)
               ..._buildPermissionModules(permState.grouped)
             else if (permState is PermissionsError)
-              Text('Failed to load permissions: ${permState.message}', style: const TextStyle(color: AppColors.error)),
+              Text(l10n.staffPermissionsLoadError(permState.message), style: const TextStyle(color: AppColors.error)),
           ],
         ),
       ),

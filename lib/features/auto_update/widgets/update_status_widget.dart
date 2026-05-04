@@ -59,7 +59,7 @@ class UpdateStatusWidget extends ConsumerWidget {
                   child: PosButton(
                     onPressed: () => _openStore(s.storeUrl ?? s.downloadUrl),
                     icon: Icons.download,
-                    label: s.isForceUpdate ? 'Update Now (Required)' : 'Update Now',
+                    label: s.isForceUpdate ? l10n.autoUpdateNowRequired : l10n.updateNow,
                     isFullWidth: true,
                   ),
                 ),

@@ -36,8 +36,8 @@ void main() {
   });
 
   group('TranslationCategory enum', () {
-    test('has 4 values', () {
-      expect(TranslationCategory.values.length, 4);
+    test('has 6 values', () {
+      expect(TranslationCategory.values.length, 6);
       expect(TranslationCategory.ui.value, 'ui');
       expect(TranslationCategory.receipt.value, 'receipt');
       expect(TranslationCategory.notification.value, 'notification');

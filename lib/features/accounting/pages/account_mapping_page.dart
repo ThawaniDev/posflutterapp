@@ -169,22 +169,22 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
             TextField(
               controller: _accountIdControllers[posAccountKey],
               onChanged: (_) => setState(() => _hasUnsavedChanges = true),
-              decoration: const InputDecoration(
-                labelText: 'Provider Account ID',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.accountingProviderAccountId,
+                border: const OutlineInputBorder(),
                 isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
             ),
             AppSpacing.gapH8,
             TextField(
               controller: _accountNameControllers[posAccountKey],
               onChanged: (_) => setState(() => _hasUnsavedChanges = true),
-              decoration: const InputDecoration(
-                labelText: 'Provider Account Name',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.accountingProviderAccountName,
+                border: const OutlineInputBorder(),
                 isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
             ),
             if (existingMapping != null) ...[

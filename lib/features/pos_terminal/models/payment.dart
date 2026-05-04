@@ -12,6 +12,7 @@ class Payment {
     this.tipAmount,
     this.cardLastFour,
     this.cardBrand,
+    this.cardScheme,
     this.cardAuthCode,
     this.cardReferenceNumber,
     this.giftCardCode,
@@ -31,6 +32,7 @@ class Payment {
       tipAmount: (json['tip_amount'] != null ? double.tryParse(json['tip_amount'].toString()) : null),
       cardLastFour: json['card_last_four'] as String?,
       cardBrand: json['card_brand'] as String?,
+      cardScheme: json['card_scheme'] as String?,
       cardAuthCode: json['card_auth_code'] as String?,
       cardReferenceNumber: json['card_reference_number'] as String?,
       giftCardCode: json['gift_card_code'] as String?,
@@ -48,6 +50,8 @@ class Payment {
   final double? tipAmount;
   final String? cardLastFour;
   final String? cardBrand;
+  /// EdfaPay SoftPOS card scheme (e.g. `mada`, `visa`, `mastercard`).
+  final String? cardScheme;
   final String? cardAuthCode;
   final String? cardReferenceNumber;
   final String? giftCardCode;
@@ -64,6 +68,7 @@ class Payment {
       if (tipAmount != null) 'tip_amount': tipAmount,
       if (cardLastFour != null) 'card_last_four': cardLastFour,
       if (cardBrand != null) 'card_brand': cardBrand,
+      if (cardScheme != null) 'card_scheme': cardScheme,
       if (cardAuthCode != null) 'card_auth_code': cardAuthCode,
       if (cardReferenceNumber != null) 'card_reference_number': cardReferenceNumber,
       if (giftCardCode != null) 'gift_card_code': giftCardCode,

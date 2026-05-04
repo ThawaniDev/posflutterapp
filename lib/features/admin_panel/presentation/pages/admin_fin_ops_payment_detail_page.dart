@@ -57,7 +57,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.adminPaymentInformation, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.adminPaymentInformation, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const Divider(),
                   _infoRow('ID', item['id']),
                   _infoRow('Transaction ID', item['transaction_id']),

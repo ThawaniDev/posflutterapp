@@ -75,7 +75,7 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
                     AppSpacing.gapW12,
                     Expanded(
                       child: PosKpiCard(
-                        label: 'Avg Duration',
+                        label: l10n.staffTrainingAvgDuration,
                         value: l10n.staffTrainingDuration(avgMinutes),
                         icon: Icons.timer_outlined,
                         iconColor: AppColors.warning,
@@ -175,7 +175,7 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
                 keyboardType: TextInputType.number,
                 validator: (v) {
                   if (v == null || v.isEmpty) return null;
-                  if (int.tryParse(v) == null) return 'Enter a valid number';
+                  if (int.tryParse(v) == null) return l10n.staffTrainingValidNumber;
                   return null;
                 },
               ),
@@ -214,7 +214,7 @@ class _TrainingSessionsPageState extends ConsumerState<TrainingSessionsPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.staffDeleteTraining),
-        content: Text('Are you sure you want to delete this training session?'),
+        content: Text(l10n.staffTrainingDeleteConfirm),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
@@ -307,7 +307,6 @@ class _SessionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isActive = session.isActive;
-    final statusColor = isActive ? AppColors.success : AppColors.info;
     final statusLabel = isActive ? l10n.staffTrainingActive : l10n.staffTrainingCompleted;
     final fmt = DateFormat('dd MMM yyyy, hh:mm a');
 

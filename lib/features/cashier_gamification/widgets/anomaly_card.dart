@@ -15,7 +15,6 @@ class AnomalyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final isMobile = context.isPhone;
     final locale = Localizations.localeOf(context).languageCode;
     final title = locale == 'ar' ? (anomaly.titleAr ?? anomaly.titleEn ?? '') : (anomaly.titleEn ?? '');
     final description = locale == 'ar' ? (anomaly.descriptionAr ?? anomaly.descriptionEn ?? '') : (anomaly.descriptionEn ?? '');
@@ -78,7 +77,7 @@ class AnomalyCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
                   AppSpacing.gapW4,
-                  Text(l10n.cgReviewedShort, style: TextStyle(fontSize: 12, color: AppColors.success)),
+                  Text(l10n.cgReviewedShort, style: const TextStyle(fontSize: 12, color: AppColors.success)),
                   if (anomaly.reviewNotes != null && anomaly.reviewNotes!.isNotEmpty) ...[
                     AppSpacing.gapW8,
                     Expanded(
@@ -132,7 +131,6 @@ class _SeverityChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     Color color;
     switch (severity) {
       case 'critical':
@@ -165,7 +163,6 @@ class _InfoTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,

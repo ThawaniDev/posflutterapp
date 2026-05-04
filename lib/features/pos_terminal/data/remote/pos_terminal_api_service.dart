@@ -130,6 +130,27 @@ class PosTerminalApiService {
     return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
+  /// Suggested per-payment-method refund split based on the original sale's
+  /// payments. Use this to pre-fill the return dialog so cashiers don't
+  /// have to manually allocate amounts. `amount` defaults to the full
+  /// transaction total when omitted.
+  Future<Map<String, dynamic>> getRefundMethods(String transactionId, {double? amount}) async {
+    final response = await _dio.get(
+      '${ApiEndpoints.transactions}/$transactionId/refund-methods',
+      queryParameters: {if (amount != null) 'amount': amount},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  /// State payload for the Customer-Facing Display attached to the given
+  /// POS session. Polled by the CFD device every ~2 s.
+  Future<Map<String, dynamic>> getCfdDisplay(String sessionId) async {
+    final response = await _dio.get('${ApiEndpoints.posBase}/sessions/$sessionId/cfd-display');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
   // ─── POS Products ────────────────────────────────────────────
 
   Future<PaginatedResult<Product>> listPosProducts({

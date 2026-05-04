@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/app_shell.dart';
 import 'package:wameedpos/features/auth/pages/login_page.dart';
 import 'package:wameedpos/features/auth/pages/pin_login_page.dart';
 import 'package:wameedpos/features/auth/pages/register_page.dart';
+import 'package:wameedpos/features/customer_facing_display/pages/cfd_page.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
@@ -389,6 +390,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.loginPin, name: 'loginPin', builder: (context, state) => const PinLoginPage()),
       GoRoute(path: Routes.register, name: 'register', builder: (context, state) => const RegisterPage()),
 
+      // Customer-Facing Display: full-screen second screen, no sidebar.
+      GoRoute(
+        path: Routes.posCfd,
+        name: 'posCfd',
+        builder: (context, state) => CfdPage(sessionId: state.pathParameters['sessionId'] ?? ''),
+      ),
+
       // ─── Authenticated Shell (sidebar wrapper) ──
       ShellRoute(
         builder: (context, state, child) {
@@ -470,11 +478,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return SupplierReturnDetailPage(returnId: id);
             },
           ),
-          GoRoute(
-            path: Routes.stocktakes,
-            name: 'stocktakes',
-            builder: (context, state) => const StocktakesPage(),
-          ),
+          GoRoute(path: Routes.stocktakes, name: 'stocktakes', builder: (context, state) => const StocktakesPage()),
           GoRoute(
             path: Routes.stocktakeDetail,
             name: 'stocktakeDetail',
@@ -483,11 +487,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return StocktakesPage(initialDetailId: id);
             },
           ),
-          GoRoute(
-            path: Routes.wasteRecords,
-            name: 'wasteRecords',
-            builder: (context, state) => const WasteRecordsPage(),
-          ),
+          GoRoute(path: Routes.wasteRecords, name: 'wasteRecords', builder: (context, state) => const WasteRecordsPage()),
           GoRoute(
             path: Routes.expiryDashboard,
             name: 'expiryDashboard',

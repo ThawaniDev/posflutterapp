@@ -7,7 +7,6 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Side-by-side plan comparison table widget.
 class PlanComparisonTable extends StatelessWidget {
-
   const PlanComparisonTable({super.key, required this.plans, this.currentPlanId, this.isAnnual = false, this.onSelectPlan});
   final List<SubscriptionPlan> plans;
   final String? currentPlanId;
@@ -41,7 +40,7 @@ class PlanComparisonTable extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width - 32),
+        constraints: BoxConstraints(minWidth: (MediaQuery.of(context).size.width - 32).clamp(0.0, double.infinity)),
         child: DataTable(
           headingRowColor: WidgetStateProperty.all(AppColors.primary10),
           columnSpacing: 24,

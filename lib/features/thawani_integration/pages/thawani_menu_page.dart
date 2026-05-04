@@ -29,7 +29,9 @@ class _ThawaniMenuPageState extends ConsumerState<ThawaniMenuPage> {
 
   @override
   void dispose() {
-    for (final c in _priceControllers.values) c.dispose();
+    for (final c in _priceControllers.values) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -252,7 +254,7 @@ class _ThawaniMenuPageState extends ConsumerState<ThawaniMenuPage> {
               case 4:
                 return Text(syncedStr, style: AppTypography.micro.copyWith(color: AppColors.textSecondary));
               case 5:
-                return Switch(value: isPublished, onChanged: (_) => _togglePublish(p), activeColor: AppColors.primary);
+                return Switch(value: isPublished, onChanged: (_) => _togglePublish(p), activeThumbColor: AppColors.primary);
               default:
                 return const SizedBox.shrink();
             }

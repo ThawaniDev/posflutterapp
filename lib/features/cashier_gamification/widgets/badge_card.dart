@@ -17,7 +17,6 @@ class BadgeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final isMobile = context.isPhone;
     final locale = Localizations.localeOf(context).languageCode;
     final name = locale == 'ar' ? badge.nameAr : badge.nameEn;
     final description = locale == 'ar' ? (badge.descriptionAr ?? '') : (badge.descriptionEn ?? '');

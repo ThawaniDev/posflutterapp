@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/widgets/pos_dialog.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
@@ -104,7 +105,10 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
               ref.read(cartProvider.notifier).setItemDiscount(idx, 0); // ensure no stale discount
             }
           }
-          showPosSuccessSnackbar(context, '${product.name} added (${qty}kg)');
+          showPosSuccessSnackbar(
+            context,
+            AppLocalizations.of(context)!.posProductAddedWeighed(product.name, qty.toStringAsFixed(2)),
+          );
           return;
         }
       }
@@ -136,7 +140,7 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
       case BarcodePopupAction.addToCart:
         if (product != null) {
           ref.read(cartProvider.notifier).addProduct(product);
-          showPosSuccessSnackbar(context, '${product.name} added to cart');
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
         }
       case BarcodePopupAction.viewDetails:
         if (product != null) {

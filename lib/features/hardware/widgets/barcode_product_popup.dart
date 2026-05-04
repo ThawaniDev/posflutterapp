@@ -50,7 +50,6 @@ class _BarcodeProductContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ClipRRect(
@@ -115,11 +114,17 @@ class _BarcodeProductContent extends StatelessWidget {
                   Row(
                     children: [
                       _statusChip(
-                        product.isActive == true ? 'Active' : 'Inactive',
+                        product.isActive == true ? l10n.active : l10n.inactive,
                         product.isActive == true ? AppColors.success : AppColors.error,
                       ),
-                      if (product.isWeighable == true) ...[const SizedBox(width: 6), _statusChip('Weighable', AppColors.info)],
-                      if (product.isCombo == true) ...[const SizedBox(width: 6), _statusChip('Combo', AppColors.purple)],
+                      if (product.isWeighable == true) ...[
+                        const SizedBox(width: 6),
+                        _statusChip(l10n.hardwareWeighable, AppColors.info),
+                      ],
+                      if (product.isCombo == true) ...[
+                        const SizedBox(width: 6),
+                        _statusChip(l10n.hardwareCombo, AppColors.purple),
+                      ],
                     ],
                   ),
                 ],
@@ -148,7 +153,7 @@ class _BarcodeProductContent extends StatelessWidget {
               if (product.sku != null) ...[
                 Container(width: 1, height: 16, color: AppColors.borderFor(context)),
                 AppSpacing.gapW8,
-                Text('SKU: ${product.sku}', style: AppTypography.micro),
+                Text(l10n.hardwareSkuLabel(product.sku!), style: AppTypography.micro),
               ],
             ],
           ),
@@ -212,7 +217,10 @@ class _BarcodeProductContent extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(l10n.wameedAIBillingMargin, style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context))),
+                      Text(
+                        l10n.wameedAIBillingMargin,
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                      ),
                       Text(
                         '${(((product.sellPrice - product.costPrice!) / product.sellPrice) * 100).toStringAsFixed(1)}%',
                         style: AppTypography.labelSmall.copyWith(color: AppColors.success),
@@ -230,11 +238,11 @@ class _BarcodeProductContent extends StatelessWidget {
         // Detail rows
         _detailGrid(context, isDark, [
           if (product.unit != null) _DetailItem('Unit', product.unit!.value),
-          if (product.taxRate != null) _DetailItem('Tax Rate', '${product.taxRate}%'),
-          if (product.categoryId != null) _DetailItem('Category', product.categoryId!),
-          if (product.minOrderQty != null) _DetailItem('Min Qty', '${product.minOrderQty}'),
-          if (product.maxOrderQty != null) _DetailItem('Max Qty', '${product.maxOrderQty}'),
-          if (product.ageRestricted == true) const _DetailItem('Age Restricted', 'Yes'),
+          if (product.taxRate != null) _DetailItem(l10n.productTaxRate, '${product.taxRate}%'),
+          if (product.categoryId != null) _DetailItem(l10n.category, product.categoryId!),
+          if (product.minOrderQty != null) _DetailItem(l10n.productMinQty, '${product.minOrderQty}'),
+          if (product.maxOrderQty != null) _DetailItem(l10n.productMaxQty, '${product.maxOrderQty}'),
+          if (product.ageRestricted == true) _DetailItem(l10n.productAgeRestricted, l10n.yes),
         ]),
 
         if (product.description != null && product.description!.isNotEmpty) ...[

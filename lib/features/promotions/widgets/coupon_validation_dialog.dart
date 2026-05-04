@@ -19,7 +19,6 @@ Future<CouponValidationValid?> showCouponValidationDialog(BuildContext context, 
 }
 
 class _CouponValidationDialog extends ConsumerStatefulWidget {
-
   const _CouponValidationDialog({this.customerId, this.orderTotal});
   final String? customerId;
   final double? orderTotal;
@@ -29,7 +28,6 @@ class _CouponValidationDialog extends ConsumerStatefulWidget {
 }
 
 class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
 
@@ -98,7 +96,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Type: $type', style: theme.textTheme.bodySmall),
+                        Text(l10n.promotionsCouponType(type), style: theme.textTheme.bodySmall),
                         Text(
                           'Discount: ${discountAmount.toStringAsFixed(2)}',
                           style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),

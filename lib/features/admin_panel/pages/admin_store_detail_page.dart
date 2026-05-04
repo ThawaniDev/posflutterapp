@@ -777,18 +777,18 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.manage_accounts, color: AppColors.warning),
+            Icon(Icons.manage_accounts, color: AppColors.warning),
             AppSpacing.gapW8,
-            const Text('Impersonation Active'),
+            Text('Impersonation Active'),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('You are now impersonating:'),
+            const Text('You are now impersonating:'),
             AppSpacing.gapH8,
             Container(
               padding: AppSpacing.paddingAll12,

@@ -144,8 +144,8 @@ class _PaymentDetailContent extends ConsumerWidget {
             title: l10n.providerPaymentTracking,
             children: [
               _DetailRow(
-                'Email Sent',
-                payment.confirmationEmailSent ? 'Yes' : 'No',
+                l10n.providerPaymentEmailSent,
+                payment.confirmationEmailSent ? l10n.yes : l10n.no,
                 trailing: Icon(
                   payment.confirmationEmailSent ? Icons.check_circle : Icons.cancel,
                   size: 18,
@@ -153,8 +153,8 @@ class _PaymentDetailContent extends ConsumerWidget {
                 ),
               ),
               _DetailRow(
-                'Invoice Generated',
-                payment.invoiceGenerated ? 'Yes' : 'No',
+                l10n.providerPaymentInvoiceGenerated,
+                payment.invoiceGenerated ? l10n.yes : l10n.no,
                 trailing: Icon(
                   payment.invoiceGenerated ? Icons.check_circle : Icons.cancel,
                   size: 18,
@@ -294,7 +294,7 @@ class _DetailRow extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
-                      showPosSuccessSnackbar(context, 'Copied to clipboard');
+                      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.copiedToClipboard);
                     },
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(start: 4),

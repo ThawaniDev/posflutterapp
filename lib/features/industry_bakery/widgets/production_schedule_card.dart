@@ -15,7 +15,6 @@ class ProductionScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -77,7 +76,6 @@ class ProductionScheduleCard extends StatelessWidget {
   }
 
   Widget _metric(BuildContext context, String label, String value) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

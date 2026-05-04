@@ -35,7 +35,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
   void _selectCustomer(Customer customer) {
     ref.read(cartProvider.notifier).setCustomer(customer);
     Navigator.pop(context);
-    showPosSuccessSnackbar(context, 'Customer: ${customer.name}');
+    showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posCustomerSelected(customer.name));
   }
 
   Future<void> _handleQuickAdd() async {
@@ -43,7 +43,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
     if (created != null && mounted) {
       ref.read(cartProvider.notifier).setCustomer(created);
       Navigator.pop(context);
-      showPosSuccessSnackbar(context, 'Customer: ${created.name}');
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posCustomerSelected(created.name));
     }
   }
 

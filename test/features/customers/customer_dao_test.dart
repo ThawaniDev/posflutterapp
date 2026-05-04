@@ -72,7 +72,7 @@ void main() {
     });
 
     test('upsertGroups + listGroups round-trip', () async {
-      final g = CustomerGroup(id: 'g-1', organizationId: 'org-1', name: 'VIP', discountPercent: 10.0);
+      const g = CustomerGroup(id: 'g-1', organizationId: 'org-1', name: 'VIP', discountPercent: 10.0);
       await dao.upsertGroups([g]);
       final groups = await dao.listGroups('org-1');
       expect(groups, hasLength(1));

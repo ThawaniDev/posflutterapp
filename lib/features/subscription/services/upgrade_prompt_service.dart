@@ -18,7 +18,6 @@ final upgradePromptServiceProvider = Provider<UpgradePromptService>((ref) {
 /// Service that shows upgrade dialogs when users hit plan limits or try to
 /// access gated features.
 class UpgradePromptService {
-
   UpgradePromptService(this._featureGateService);
   final FeatureGateService _featureGateService;
 
@@ -104,7 +103,6 @@ class UpgradePromptService {
 // ─── Feature Gate Dialog ─────────────────────────────────────────
 
 class _FeatureGateDialog extends ConsumerWidget {
-
   const _FeatureGateDialog({
     required this.featureName,
     required this.featureKey,
@@ -157,7 +155,7 @@ class _FeatureGateDialog extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('This feature requires a higher plan. Upgrade to unlock $featureName and more.', style: AppTypography.bodyMedium),
+          Text(l10n.subscriptionUpgradePrompt(featureName), style: AppTypography.bodyMedium),
           if (currentPlanName != null || requiredPlanName != null) ...[
             AppSpacing.gapH16,
             Container(
@@ -241,7 +239,6 @@ class _FeatureGateDialog extends ConsumerWidget {
 // ─── Limit Reached Dialog ────────────────────────────────────────
 
 class _LimitReachedDialog extends StatelessWidget {
-
   const _LimitReachedDialog({required this.resourceName, required this.currentUsage, required this.planLimit, this.onUpgrade});
   final String resourceName;
   final int currentUsage;

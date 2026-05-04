@@ -332,7 +332,7 @@ class _RatingBannerState extends ConsumerState<_RatingBanner> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
-                  Icon(Icons.star_rounded, color: AppColors.warning, size: 20),
+                  const Icon(Icons.star_rounded, color: AppColors.warning, size: 20),
                   AppSpacing.gapW8,
                   Expanded(
                     child: Text(
@@ -422,7 +422,7 @@ class _SatisfactionDisplay extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
+              const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
               AppSpacing.gapW8,
               Text(
                 l10n.supportTicketRated,

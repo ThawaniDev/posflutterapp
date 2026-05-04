@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wameedpos/core/constants/api_endpoints.dart';
 import 'package:wameedpos/features/auto_update/models/app_release.dart';
-import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
 import 'package:wameedpos/features/settings/enums/translation_category.dart';
 import 'package:wameedpos/features/settings/models/config_models.dart';
 import 'package:wameedpos/features/settings/providers/config_state.dart';

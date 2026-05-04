@@ -144,7 +144,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                 });
               },
               variant: PosButtonVariant.soft,
-              label: isEditing ? 'Update' : 'Create',
+              label: isEditing ? l10n.update : l10n.create,
             ),
           ],
         ),

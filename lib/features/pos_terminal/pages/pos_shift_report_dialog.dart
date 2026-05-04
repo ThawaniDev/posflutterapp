@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -82,7 +83,8 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.isZReport ? 'Z-Report (End of Shift)' : 'X-Report (Mid-Shift Snapshot)';
+    final l10n = AppLocalizations.of(context)!;
+    final title = widget.isZReport ? l10n.posShiftZReportFull : l10n.posShiftXReportFull;
 
     return AlertDialog(
       title: Row(
@@ -97,17 +99,18 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
         child: _loading
             ? const SizedBox(height: 200, child: Center(child: CircularProgressIndicator()))
             : _error != null
-            ? Text(_error!, style: TextStyle(color: AppColors.error))
+            ? Text(_error!, style: const TextStyle(color: AppColors.error))
             : _buildBody(),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close')),
-        FilledButton.icon(onPressed: _loading ? null : _load, icon: const Icon(Icons.refresh), label: const Text('Refresh')),
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.commonClose)),
+        FilledButton.icon(onPressed: _loading ? null : _load, icon: const Icon(Icons.refresh), label: Text(l10n.commonRefresh)),
       ],
     );
   }
 
   Widget _buildBody() {
+    final l10n = AppLocalizations.of(context)!;
     final data = _data!;
     final totals = (data['totals'] as Map?) ?? {};
     final drawer = (data['cash_drawer'] as Map?) ?? {};
@@ -132,8 +135,8 @@ class _PosShiftReportDialogState extends ConsumerState<PosShiftReportDialog> {
           _section('Cash Drawer', [
             _row('Opening Cash', drawer['opening_cash']),
             _row('Net Cash Sales', drawer['cash_sales_net']),
-            _row('Cash In (paid-in)', drawer['cash_in_total'], color: AppColors.success),
-            _row('Cash Out (drops/payouts)', drawer['cash_out_total'], color: AppColors.warning),
+            _row(l10n.posShiftCashInLine, drawer['cash_in_total'], color: AppColors.success),
+            _row(l10n.posShiftCashOutLine, drawer['cash_out_total'], color: AppColors.warning),
             _row('Expected Cash', drawer['expected_cash'], weight: FontWeight.bold, color: AppColors.primary),
           ]),
           if (breakdown.isNotEmpty)

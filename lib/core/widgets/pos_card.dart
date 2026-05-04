@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -684,7 +685,7 @@ class PosSubscriptionCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderFull),
               child: Text(
-                'Popular',
+                AppLocalizations.of(context)!.subscriptionPopular,
                 style: AppTypography.micro.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
               ),
             ),
@@ -736,7 +737,7 @@ class PosSubscriptionCard extends StatelessWidget {
                   backgroundColor: isCurrentPlan ? AppColors.primary10 : AppColors.primary,
                   foregroundColor: isCurrentPlan ? AppColors.primary : Colors.white,
                 ),
-                child: Text(isCurrentPlan ? 'Current Plan' : 'Select Plan'),
+                child: Text(isCurrentPlan ? AppLocalizations.of(context)!.currentPlan : AppLocalizations.of(context)!.selectPlan),
               ),
             ),
           ],

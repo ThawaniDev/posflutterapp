@@ -16,7 +16,6 @@ class FreshnessLogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final daysLeft = _daysUntilExpiry;
 
     return PosCard(

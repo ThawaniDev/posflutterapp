@@ -153,7 +153,6 @@ class _ComparisonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final isUp = (changePercent ?? 0) >= 0;
 
     return PosCard(

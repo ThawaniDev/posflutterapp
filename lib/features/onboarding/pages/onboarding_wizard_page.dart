@@ -164,11 +164,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         return {'product_setup_choice': _productSetupChoice};
       case OnboardingStep.staff:
         if (_staffEmailController.text.isNotEmpty) {
-          return {
-            'staff_email': _staffEmailController.text,
-            'staff_name': _staffNameController.text,
-            'staff_role': _staffRole,
-          };
+          return {'staff_email': _staffEmailController.text, 'staff_name': _staffNameController.text, 'staff_role': _staffRole};
         }
         return {};
       default:
@@ -428,7 +424,9 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         if (_selectedBusinessType != null) ...[
           const SizedBox(height: AppSpacing.lg),
           if (_loadingDefaults)
-            const Center(child: Padding(padding: EdgeInsets.all(AppSpacing.xl), child: CircularProgressIndicator()))
+            const Center(
+              child: Padding(padding: EdgeInsets.all(AppSpacing.xl), child: CircularProgressIndicator()),
+            )
           else if (_businessTypeDefaults != null)
             _buildDefaultsPreview(_businessTypeDefaults!),
         ],
@@ -460,10 +458,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
               const SizedBox(width: AppSpacing.sm),
               Text(
                 'What gets set up for you:',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
               ),
             ],
           ),
@@ -506,11 +501,20 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
           _loadingDefaults = true;
         });
         // Fetch defaults for preview
-        ref.read(storeRepositoryProvider).getBusinessTypeDefaults(template.code).then((defaults) {
-          if (mounted) setState(() { _businessTypeDefaults = defaults; _loadingDefaults = false; });
-        }).catchError((_) {
-          if (mounted) setState(() => _loadingDefaults = false);
-        });
+        ref
+            .read(storeRepositoryProvider)
+            .getBusinessTypeDefaults(template.code)
+            .then((defaults) {
+              if (mounted) {
+                setState(() {
+                  _businessTypeDefaults = defaults;
+                  _loadingDefaults = false;
+                });
+              }
+            })
+            .catchError((_) {
+              if (mounted) setState(() => _loadingDefaults = false);
+            });
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -744,10 +748,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
             onPressed: () {
               // CSV import is handled in the catalog module — navigate there post-wizard
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('CSV import is available in Catalog after setup.'),
-                  duration: Duration(seconds: 3),
-                ),
+                const SnackBar(content: Text('CSV import is available in Catalog after setup.'), duration: Duration(seconds: 3)),
               );
             },
           ),
@@ -774,17 +775,16 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary10 : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSpacing.md),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : Theme.of(context).dividerColor,
-            width: isSelected ? 2 : 1,
-          ),
+          border: Border.all(color: isSelected ? AppColors.primary : Theme.of(context).dividerColor, width: isSelected ? 2 : 1),
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(AppSpacing.sm),
               decoration: BoxDecoration(
-                color: enabled ? (isSelected ? AppColors.primary20 : AppColors.primary10) : AppColors.mutedFor(context).withValues(alpha: 0.1),
+                color: enabled
+                    ? (isSelected ? AppColors.primary20 : AppColors.primary10)
+                    : AppColors.mutedFor(context).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
               ),
               child: Icon(icon, color: color, size: 24),
@@ -802,10 +802,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
-                  ),
+                  Text(subtitle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context))),
                 ],
               ),
             ),
@@ -856,10 +853,18 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               onChanged: (v) => setState(() => _staffRole = v ?? 'cashier'),
               items: roles
-                  .map((r) => DropdownMenuItem(
-                        value: r,
-                        child: Text(r.replaceAll('_', ' ').split(' ').map((w) => w.isEmpty ? '' : w[0].toUpperCase() + w.substring(1)).join(' ')),
-                      ))
+                  .map(
+                    (r) => DropdownMenuItem(
+                      value: r,
+                      child: Text(
+                        r
+                            .replaceAll('_', ' ')
+                            .split(' ')
+                            .map((w) => w.isEmpty ? '' : w[0].toUpperCase() + w.substring(1))
+                            .join(' '),
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),
@@ -921,11 +926,11 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         _buildSummaryItem(
           'Hardware',
           [
-            if (_hasPrinter) 'Printer',
-            if (_hasScanner) 'Scanner',
-            if (_hasCashDrawer) 'Cash Drawer',
-            if (_hasCustomerDisplay) 'CFD',
-          ].isEmpty
+                if (_hasPrinter) 'Printer',
+                if (_hasScanner) 'Scanner',
+                if (_hasCashDrawer) 'Cash Drawer',
+                if (_hasCustomerDisplay) 'CFD',
+              ].isEmpty
               ? 'None selected'
               : [
                   if (_hasPrinter) 'Printer',
@@ -934,14 +939,11 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
                   if (_hasCustomerDisplay) 'CFD',
                 ].join(', '),
         ),
-        _buildSummaryItem(
-          'Products',
-          switch (_productSetupChoice) {
-            _productSetupTemplate => 'Use business type defaults',
-            _productSetupCsv     => 'CSV import (later)',
-            _                    => 'Set up later',
-          },
-        ),
+        _buildSummaryItem('Products', switch (_productSetupChoice) {
+          _productSetupTemplate => 'Use business type defaults',
+          _productSetupCsv => 'CSV import (later)',
+          _ => 'Set up later',
+        }),
         _buildSummaryItem(
           'Staff',
           _staffEmailController.text.isNotEmpty

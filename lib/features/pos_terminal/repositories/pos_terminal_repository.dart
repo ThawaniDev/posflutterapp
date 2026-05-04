@@ -47,6 +47,14 @@ class PosTerminalRepository {
   Future<Transaction> getTransactionByNumber(String number) => _apiService.getTransactionByNumber(number);
   Future<Transaction> returnTransaction(Map<String, dynamic> data) => _apiService.returnTransaction(data);
 
+  /// Suggested per-method refund split for a sale, optionally for a partial
+  /// amount. Returned shape: `{transaction_id, refund_amount, suggested: [...]}`
+  Future<Map<String, dynamic>> getRefundMethods(String transactionId, {double? amount}) =>
+      _apiService.getRefundMethods(transactionId, amount: amount);
+
+  /// Live state payload for the Customer-Facing Display attached to a session.
+  Future<Map<String, dynamic>> getCfdDisplay(String sessionId) => _apiService.getCfdDisplay(sessionId);
+
   // POS Products
   Future<PaginatedResult<Product>> listPosProducts({
     int page = 1,

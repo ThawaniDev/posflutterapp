@@ -173,7 +173,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
                   hint: l10n.paymentListMethod,
                   items: [
                     ...PaymentMethodKey.values.map(
-                      (m) => PosDropdownItem(value: m.value, label: PaymentCalculationService.methodDisplayName(m)),
+                      (m) => PosDropdownItem(value: m.value, label: PaymentCalculationService.methodDisplayName(m, l10n)),
                     ),
                   ],
                   selectedValue: _selectedMethod,
@@ -239,7 +239,7 @@ class _PaymentListPageState extends ConsumerState<PaymentListPage> {
             padding: AppSpacing.paddingAll16,
             child: Center(
               child: PosButton(
-                label: 'Load more',
+                label: l10n.commonLoadMore,
                 variant: PosButtonVariant.outline,
                 onPressed: () => ref.read(paymentsProvider.notifier).loadMore(),
               ),
@@ -319,7 +319,7 @@ class _PaymentRow extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        PaymentCalculationService.methodDisplayName(payment.method),
+                        PaymentCalculationService.methodDisplayName(payment.method, AppLocalizations.of(context)!),
                         style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                       ),
                       AppSpacing.gapW8,
@@ -497,7 +497,7 @@ class _PaymentDetailSheetState extends ConsumerState<_PaymentDetailSheet> {
                     theme: theme,
                     title: l10n.paymentDetailInfo,
                     rows: [
-                      (l10n.paymentDetailMethod, PaymentCalculationService.methodDisplayName(payment.method)),
+                      (l10n.paymentDetailMethod, PaymentCalculationService.methodDisplayName(payment.method, l10n)),
                       (l10n.paymentDetailAmount, '${payment.amount.toStringAsFixed(2)} \u0631'),
                       if (payment.cashTendered != null)
                         (l10n.paymentDetailCashTendered, '${payment.cashTendered!.toStringAsFixed(2)} \u0631'),
@@ -596,7 +596,7 @@ class _PaymentDetailSheetState extends ConsumerState<_PaymentDetailSheet> {
                 PosSearchableDropdown<PaymentMethodKey>(
                   hint: l10n.refundMethod,
                   items: PaymentMethodKey.values
-                      .map((m) => PosDropdownItem(value: m, label: PaymentCalculationService.methodDisplayName(m)))
+                      .map((m) => PosDropdownItem(value: m, label: PaymentCalculationService.methodDisplayName(m, l10n)))
                       .toList(),
                   selectedValue: selectedMethod,
                   onChanged: (v) => setDialogState(() => selectedMethod = v ?? selectedMethod),

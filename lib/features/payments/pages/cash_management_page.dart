@@ -39,7 +39,6 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     final theme = Theme.of(context);
     final sessionsState = ref.watch(cashSessionsProvider);
 
-    final isMobile = context.isPhone;
     return PosListPage(
       title: AppLocalizations.of(context)!.cashMgmtTitle,
       showSearch: false,
@@ -352,7 +351,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                         isActive ? Icons.lock_open : Icons.lock,
                         color: isActive ? AppColors.success : Theme.of(context).hintColor,
                       ),
-                      title: Text('Float: ${session.openingFloat.toStringAsFixed(2)} \u0081'),
+                      title: Text(AppLocalizations.of(context)!.cashMgmtFloatLabel(session.openingFloat.toStringAsFixed(2))),
                       subtitle: Text(
                         isActive ? 'Opened ${_formatTime(session.openedAt)}' : 'Closed ${_formatTime(session.closedAt)}',
                       ),

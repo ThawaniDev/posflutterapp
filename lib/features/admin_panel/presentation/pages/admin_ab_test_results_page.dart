@@ -83,19 +83,19 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                               Column(
                                 children: [
                                   Text('${r['impressions'] ?? 0}'),
-                                  Text(l10n.adminImpressions, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminImpressions, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${r['conversions'] ?? 0}'),
-                                  Text(l10n.adminConversions, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminConversions, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${((r['conversion_rate'] as num?) ?? 0.0).toStringAsFixed(2)}%'),
-                                  Text(l10n.adminRate, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                                  Text(l10n.adminRate, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                             ],

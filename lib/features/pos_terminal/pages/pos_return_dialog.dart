@@ -13,6 +13,7 @@ import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
+import 'package:wameedpos/features/softpos/providers/softpos_providers.dart';
 
 class PosReturnDialog extends ConsumerStatefulWidget {
   const PosReturnDialog({super.key});
@@ -26,6 +27,13 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
   Transaction? _transaction;
   final Map<int, double> _returnQuantities = {};
   PaymentMethod _refundMethod = PaymentMethod.cash;
+
+  /// Optional auto-fill: when the cashier picks an original transaction
+  /// the backend suggests a per-method split mirroring how the sale was
+  /// paid (e.g. 60 cash + 40 card → refund 60% cash, 40% card). When set,
+  /// `_processReturn` sends these legs verbatim instead of the single
+  /// `_refundMethod` selection.
+  List<Map<String, dynamic>> _suggestedRefundLegs = const [];
   bool _isSearching = false;
   bool _isProcessing = false;
   String? _error;
@@ -84,6 +92,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
         }
         _receiptController.text = full.transactionNumber;
       });
+      await _loadRefundSuggestion();
     } catch (e) {
       if (mounted) setState(() => _error = AppLocalizations.of(context)!.posTransactionLookupFailed(e.toString()));
     } finally {
@@ -126,6 +135,36 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
 
   bool get _hasSelectedItems => _returnQuantities.values.any((q) => q > 0);
 
+  /// Pull the suggested per-method refund split from the backend after a
+  /// transaction is selected. Silent on failure \u2014 the dialog falls back to
+  /// the single-method dropdown selection.
+  Future<void> _loadRefundSuggestion() async {
+    final tx = _transaction;
+    if (tx == null) return;
+    try {
+      final repo = ref.read(posTerminalRepositoryProvider);
+      final result = await repo.getRefundMethods(tx.id);
+      final list = result['suggested'];
+      if (!mounted) return;
+      setState(() {
+        _suggestedRefundLegs = list is List
+            ? List<Map<String, dynamic>>.from(list.map((e) => Map<String, dynamic>.from(e as Map)))
+            : const [];
+        // Pre-select the first method as the visible "primary" choice so
+        // the dropdown reflects the suggestion at a glance.
+        if (_suggestedRefundLegs.isNotEmpty) {
+          final m = _suggestedRefundLegs.first['method']?.toString();
+          if (m != null) {
+            final parsed = PaymentMethod.tryFromValue(m);
+            if (parsed != null) _refundMethod = parsed;
+          }
+        }
+      });
+    } catch (_) {
+      if (mounted) setState(() => _suggestedRefundLegs = const []);
+    }
+  }
+
   Future<void> _lookupTransaction() async {
     final number = _receiptController.text.trim();
     if (number.isEmpty) {
@@ -150,6 +189,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
           _returnQuantities[i] = 0;
         }
       });
+      await _loadRefundSuggestion();
     } catch (e) {
       setState(() => _error = AppLocalizations.of(context)!.posTransactionLookupFailed(e.toString()));
     } finally {
@@ -214,9 +254,76 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
 
       final totalAmount = subtotal - discountTotal + taxTotal;
 
-      final payments = [
-        {'method': _refundMethod.value, 'amount': totalAmount},
-      ];
+      // Prefer the backend's suggested split when present (mirrors how the
+      // original sale was paid, scaled to the partial refund amount). The
+      // cashier can still override by changing `_refundMethod` before
+      // confirming, in which case we collapse to a single leg.
+      List<Map<String, dynamic>> payments;
+      if (_suggestedRefundLegs.isNotEmpty && _refundMethod == PaymentMethod.cash) {
+        // Re-scale legs to the actual refund total (lines may have changed
+        // since the suggestion was fetched at full-amount).
+        final suggestedSum = _suggestedRefundLegs.fold<double>(0, (a, l) => a + (double.tryParse(l['amount'].toString()) ?? 0));
+        if (suggestedSum > 0) {
+          payments = [];
+          double allocated = 0;
+          for (int i = 0; i < _suggestedRefundLegs.length; i++) {
+            final leg = _suggestedRefundLegs[i];
+            final legAmount = (double.tryParse(leg['amount'].toString()) ?? 0);
+            final scaled = i == _suggestedRefundLegs.length - 1
+                ? totalAmount - allocated
+                : double.parse((legAmount / suggestedSum * totalAmount).toStringAsFixed(3));
+            allocated += scaled;
+            payments.add({
+              'method': leg['method'],
+              'amount': scaled,
+              if (leg['card_last_four'] != null) 'card_last_four': leg['card_last_four'],
+              if (leg['gift_card_code'] != null) 'gift_card_code': leg['gift_card_code'],
+            });
+          }
+        } else {
+          payments = [
+            {'method': _refundMethod.value, 'amount': totalAmount},
+          ];
+        }
+      } else {
+        payments = [
+          {'method': _refundMethod.value, 'amount': totalAmount},
+        ];
+      }
+
+      // If any payment leg uses soft_pos, trigger the EdfaPay refund SDK flow
+      // before posting to the backend so the card network is refunded first.
+      final softPosLegs = payments.where((p) => p['method'] == 'soft_pos').toList();
+      if (softPosLegs.isNotEmpty) {
+        final softPosService = ref.read(softPosServiceProvider);
+        for (final leg in softPosLegs) {
+          final legAmount = (leg['amount'] as num).toStringAsFixed(2);
+          final originalRrn = _transaction?.payments
+              ?.firstWhere(
+                (p) => p.method.toString().contains('soft_pos'),
+                orElse: () => _transaction!.payments!.first,
+              )
+              .cardReference;
+          final refundResult = await softPosService.refund(
+            amount: legAmount,
+            orderId: _transaction!.id,
+            rrn: originalRrn,
+          );
+          if (!refundResult.success) {
+            setState(() {
+              _isProcessing = false;
+              _error = refundResult.errorMessage ?? AppLocalizations.of(context)!.posReturnFailed('SoftPOS refund failed');
+            });
+            return;
+          }
+          // Attach EdfaPay result fields to this payment leg for the backend.
+          leg['approval_code'] = refundResult.approvalCode;
+          leg['rrn'] = refundResult.rrn;
+          leg['card_scheme'] = refundResult.cardScheme;
+          leg['masked_card'] = refundResult.maskedCard;
+          leg['card_transaction_id'] = refundResult.transactionId;
+        }
+      }
 
       // Anchor the refund to the cashier's currently-active session (not the
       // original sale's session, which might be closed). The backend falls
@@ -423,7 +530,10 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Recent sales', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                            Text(
+                              AppLocalizations.of(context)!.posReturnRecentSales,
+                              style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                            ),
                             AppSpacing.gapH8,
                             Expanded(
                               child: ListView.separated(

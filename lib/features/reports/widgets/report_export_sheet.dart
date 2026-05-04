@@ -103,7 +103,7 @@ class _ReportExportSheetState extends ConsumerState<_ReportExportSheet> {
           if (state is ReportExportError) ...[
             Text(
               state.message,
-              style: TextStyle(color: AppColors.error, fontSize: 13),
+              style: const TextStyle(color: AppColors.error, fontSize: 13),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),

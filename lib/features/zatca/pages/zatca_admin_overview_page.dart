@@ -30,7 +30,7 @@ class ZatcaAdminOverviewPage extends ConsumerWidget {
         ),
         error: (e, _) => Padding(
           padding: AppSpacing.paddingAll20,
-          child: Text(e.toString(), style: TextStyle(color: AppColors.error)),
+          child: Text(e.toString(), style: const TextStyle(color: AppColors.error)),
         ),
         data: (data) => _buildContent(context, l10n, data, ref),
       ),
@@ -92,7 +92,10 @@ class ZatcaAdminOverviewPage extends ConsumerWidget {
                     ),
                     if (s['last_error_message'] != null) ...[
                       AppSpacing.gapH8,
-                      Text('Last error: ${s['last_error_message']}', style: TextStyle(color: AppColors.error, fontSize: 12)),
+                      Text(
+                        l10n.zatcaLastErrorMessage(s['last_error_message'].toString()),
+                        style: const TextStyle(color: AppColors.error, fontSize: 12),
+                      ),
                     ],
                   ],
                 ),

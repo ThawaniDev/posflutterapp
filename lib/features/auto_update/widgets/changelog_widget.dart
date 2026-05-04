@@ -34,7 +34,11 @@ class ChangelogWidget extends ConsumerWidget {
                     child: ListTile(
                       leading: const Icon(Icons.new_releases_outlined),
                       title: Text('v${r['version_number'] ?? r['version'] ?? '?'}', style: theme.textTheme.titleSmall),
-                      subtitle: Text(r['release_notes']?.toString() ?? 'No notes', maxLines: 2, overflow: TextOverflow.ellipsis),
+                      subtitle: Text(
+                        r['release_notes']?.toString() ?? l10n.changelogNoNotes,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       trailing: r['is_force_update'] == true
                           ? Chip(label: Text(l10n.staffRequired), backgroundColor: theme.colorScheme.errorContainer)
                           : null,

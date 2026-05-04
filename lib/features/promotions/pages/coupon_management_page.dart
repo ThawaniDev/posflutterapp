@@ -284,7 +284,7 @@ class _CouponCard extends StatelessWidget {
                 AppSpacing.gapW8,
                 // Delete
                 IconButton(
-                  icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                  icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
                   tooltip: l10n.delete,
                   visualDensity: VisualDensity.compact,
                   onPressed: onDelete,
@@ -366,18 +366,18 @@ class _FilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     String displayLabel;
-    if (value == true)
+    if (value == true) {
       displayLabel = activeLabel;
-    else if (value == false)
+    } else if (value == false)
       displayLabel = inactiveLabel;
     else
       displayLabel = label;
 
     return GestureDetector(
       onTap: () {
-        if (value == null)
+        if (value == null) {
           onChanged(true);
-        else if (value == true)
+        } else if (value == true)
           onChanged(false);
         else
           onChanged(null);

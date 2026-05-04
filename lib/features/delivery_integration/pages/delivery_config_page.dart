@@ -103,9 +103,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
       if (_selectedPlatformSlug != null) {
         final platformsState = ref.read(deliveryPlatformsProvider);
         if (platformsState is DeliveryPlatformsLoaded) {
-          final platform = platformsState.platforms
-              .where((p) => p.slug == _selectedPlatformSlug)
-              .firstOrNull;
+          final platform = platformsState.platforms.where((p) => p.slug == _selectedPlatformSlug).firstOrNull;
           if (platform != null) {
             _selectedPlatform = platform;
             // Pass existing credentials so controllers can be pre-filled (except passwords)
@@ -182,10 +180,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
             // Credentials
             PosFormCard(
               title: l10n.deliveryCredentials,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: _buildDynamicCredentialFields(l10n),
-              ),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: _buildDynamicCredentialFields(l10n)),
             ),
             AppSpacing.gapH16,
 
@@ -290,7 +285,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.copy, size: 16),
-                            tooltip: 'Copy',
+                            tooltip: l10n.copy,
                             onPressed: () => Clipboard.setData(ClipboardData(text: _webhookUrl!)),
                           ),
                         ],

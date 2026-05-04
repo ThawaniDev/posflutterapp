@@ -27,7 +27,6 @@ class _ActiveStaffWidgetState extends ConsumerState<ActiveStaffWidget> {
   Widget build(BuildContext context) {
     final state = ref.watch(activeStaffProvider);
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
@@ -90,7 +89,6 @@ class _StaffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final role = member['role'] as String? ?? '';
     final clockedInAt = member['clocked_in_at'] as String?;

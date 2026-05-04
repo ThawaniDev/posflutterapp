@@ -21,6 +21,8 @@ class StoreSettings {
     this.sessionTimeoutMinutes = 480,
     this.maxDiscountPercent = 100,
     this.enableTips = false,
+    this.tipPresets = const [],
+    this.tipDefaultPresetIndex,
     this.enableKitchenDisplay = false,
     this.lowStockAlert = true,
     this.lowStockThreshold = 5,
@@ -51,6 +53,10 @@ class StoreSettings {
       sessionTimeoutMinutes: (json['session_timeout_minutes'] as num?)?.toInt() ?? 480,
       maxDiscountPercent: (json['max_discount_percent'] as num?)?.toInt() ?? 100,
       enableTips: json['enable_tips'] as bool? ?? false,
+      tipPresets: json['tip_presets'] is List
+          ? List<int>.from((json['tip_presets'] as List).map((e) => (e as num).toInt()))
+          : const [],
+      tipDefaultPresetIndex: (json['tip_default_preset_index'] as num?)?.toInt(),
       enableKitchenDisplay: json['enable_kitchen_display'] as bool? ?? false,
       lowStockAlert: json['low_stock_alert'] as bool? ?? true,
       lowStockThreshold: (json['low_stock_threshold'] as num?)?.toInt() ?? 5,
@@ -83,6 +89,11 @@ class StoreSettings {
   final int sessionTimeoutMinutes;
   final int maxDiscountPercent;
   final bool enableTips;
+
+  /// Optional tip percentage shortcuts shown in the payment dialog
+  /// (e.g. [10, 15, 20, 25]). Empty disables the preset row.
+  final List<int> tipPresets;
+  final int? tipDefaultPresetIndex;
   final bool enableKitchenDisplay;
   // Notifications
   final bool lowStockAlert;
@@ -112,6 +123,8 @@ class StoreSettings {
       'session_timeout_minutes': sessionTimeoutMinutes,
       'max_discount_percent': maxDiscountPercent,
       'enable_tips': enableTips,
+      'tip_presets': tipPresets,
+      'tip_default_preset_index': tipDefaultPresetIndex,
       'enable_kitchen_display': enableKitchenDisplay,
       'low_stock_alert': lowStockAlert,
       'low_stock_threshold': lowStockThreshold,
@@ -141,6 +154,8 @@ class StoreSettings {
     int? sessionTimeoutMinutes,
     int? maxDiscountPercent,
     bool? enableTips,
+    List<int>? tipPresets,
+    int? tipDefaultPresetIndex,
     bool? enableKitchenDisplay,
     bool? lowStockAlert,
     int? lowStockThreshold,
@@ -169,6 +184,8 @@ class StoreSettings {
       sessionTimeoutMinutes: sessionTimeoutMinutes ?? this.sessionTimeoutMinutes,
       maxDiscountPercent: maxDiscountPercent ?? this.maxDiscountPercent,
       enableTips: enableTips ?? this.enableTips,
+      tipPresets: tipPresets ?? this.tipPresets,
+      tipDefaultPresetIndex: tipDefaultPresetIndex ?? this.tipDefaultPresetIndex,
       enableKitchenDisplay: enableKitchenDisplay ?? this.enableKitchenDisplay,
       lowStockAlert: lowStockAlert ?? this.lowStockAlert,
       lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,

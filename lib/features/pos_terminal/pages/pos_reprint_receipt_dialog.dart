@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -21,6 +22,8 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
   Map<String, dynamic>? _receipt;
   String? _error;
   bool _loading = false;
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
 
   @override
   void dispose() {
@@ -68,12 +71,13 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Row(
+      title: Row(
         children: [
-          Icon(Icons.receipt_long, color: AppColors.primary),
-          SizedBox(width: AppSpacing.sm),
-          Text('Reprint Receipt'),
+          const Icon(Icons.receipt_long, color: AppColors.primary),
+          const SizedBox(width: AppSpacing.sm),
+          Text(l10n.posReprintReceipt),
         ],
       ),
       content: ConstrainedBox(
@@ -88,10 +92,10 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
                   child: TextField(
                     controller: _numberController,
                     autofocus: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Receipt Number',
+                    decoration: InputDecoration(
+                      labelText: l10n.posReprintReceiptNumber,
                       hintText: 'TXN-20260421-0001',
-                      prefixIcon: Icon(Icons.qr_code_2),
+                      prefixIcon: const Icon(Icons.qr_code_2),
                     ),
                     onSubmitted: (_) => _lookup(),
                   ),
@@ -101,7 +105,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
                   onPressed: _loading ? null : _lookup,
                   child: _loading
                       ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Text('Find'),
+                      : Text(l10n.commonFind),
                 ),
               ],
             ),
@@ -114,14 +118,14 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close')),
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.commonClose)),
         if (_receipt != null)
           FilledButton.icon(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sent to printer')));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.posPrintSentToPrinter)));
             },
             icon: const Icon(Icons.print),
-            label: const Text('Print'),
+            label: Text(l10n.commonPrint),
           ),
       ],
     );
@@ -139,7 +143,8 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (store['name'] != null) Center(child: Text('${store['name']}', style: AppTypography.titleMedium)),
-          if (store['tax_number'] != null) Center(child: Text('VAT: ${store['tax_number']}', style: AppTypography.bodySmall)),
+          if (store['tax_number'] != null)
+            Center(child: Text(l10n.receiptVatNumber(store['tax_number'].toString()), style: AppTypography.bodySmall)),
           const SizedBox(height: AppSpacing.sm),
           Text('# ${tx['transaction_number'] ?? ''}', style: AppTypography.bodyMedium),
           Text('${tx['type'] ?? ''}  •  ${tx['status'] ?? ''}', style: AppTypography.bodySmall),

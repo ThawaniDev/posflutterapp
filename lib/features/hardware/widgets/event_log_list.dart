@@ -10,7 +10,6 @@ class EventLogList extends StatelessWidget {
   final List<HardwareEventLog> logs;
 
   Color _eventColor(BuildContext context, String event) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     if (event.contains('error') || event.contains('failed') || event.contains('disconnected')) {
       return AppColors.error;
     }

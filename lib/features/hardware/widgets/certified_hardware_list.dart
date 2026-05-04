@@ -12,7 +12,6 @@ class CertifiedHardwareList extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     if (models.isEmpty) {
       return Center(

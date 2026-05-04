@@ -1853,6 +1853,10 @@
   "softposDeactivated": "تم إلغاء تفعيل SoftPOS.",
   "softposActivationFailed": "فشل التفعيل. تأكد من إعداد TID والمعالج.",
   "softposActive": "SoftPOS نشط",
+  "softposTapCard": "قرّب بطاقتك من الجهاز للدفع",
+  "softposInitializing": "جارٍ تهيئة SoftPOS…",
+  "softposNotConfigured": "لم يُعدّ SoftPOS. يرجى إدخال الرمز في إعدادات الجهاز.",
+  "softposPaymentFailed": "فشل الدفع بالبطاقة عبر SoftPOS.",
   "acquirerHala": "هلا",
   "acquirerRajhi": "بنك الراجحي",
   "acquirerSnb": "البنك الأهلي",
@@ -2902,6 +2906,8 @@
   "termFormNearpayTidHint": "معرف الجهاز من NearPay",
   "termFormNearpayMidLabel": "معرف NearPay MID",
   "termFormNearpayMidHint": "معرف التاجر من NearPay",
+  "termFormEdfapayTokenLabel": "رمز جهاز EdfaPay",
+  "termFormEdfapayTokenHint": "أدخل رمز جهاز EdfaPay الخاص بك",
   "termFormAcquirerSection": "بيانات المعالج",
   "termFormAcquirerSectionSub": "إعدادات معالج الدفع",
   "termFormAcquirerSourceLabel": "مصدر المعالج",
@@ -2918,6 +2924,23 @@
   "termFormSettlementBankHint": "مثلاً مصرف الراجحي",
   "termFormSettlementIbanLabel": "IBAN",
   "termFormSettlementIbanHint": "مثلاً SA0380000000608010167519",
+  "termFormBillingSection": "جدول الرسوم",
+  "termFormBillingSectionSub": "معدلات رسوم SoftPOS لكل طرفية",
+  "termFormBillingMadaRate": "معدل مدى",
+  "termFormBillingMadaRateValue": "{rate}% لكل معاملة",
+  "@termFormBillingMadaRateValue": {
+    "placeholders": {
+      "rate": { "type": "String" }
+    }
+  },
+  "termFormBillingCardFee": "رسوم فيزا / ماستر / أمريكان",
+  "termFormBillingCardFeeValue": "{fee} ريال لكل معاملة",
+  "@termFormBillingCardFeeValue": {
+    "placeholders": {
+      "fee": { "type": "String" }
+    }
+  },
+  "termFormBillingReadOnly": "تُحدَّد المعدلات من قِبل المنصة. تواصل مع الدعم للتعديل.",
   "termFormNotesSection": "ملاحظات",
   "termFormNotesSectionSub": "معلومات إضافية",
   "termFormAdminNotesLabel": "ملاحظات المدير",
@@ -6034,29 +6057,6 @@
   },
   "subActionSubscribe": "اشتراك",
   "subProceedToPayment": "المتابعة إلى الدفع",
-  "subDiscountCode": "رمز الخصم",
-  "subEnterDiscountCode": "أدخل رمز الخصم",
-  "subApplyDiscount": "تطبيق",
-  "subValidatingDiscount": "جارٍ التحقق...",
-  "subDiscountApplied": "تم تطبيق الخصم",
-  "subDiscountInvalid": "رمز الخصم غير صالح أو منتهي الصلاحية.",
-  "subRemoveDiscount": "إزالة",
-  "subDiscountSavings": "وفّرت {amount}",
-  "@subDiscountSavings": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "subDiscountOff": "{value} خصم",
-  "@subDiscountOff": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "subPageOfLast": "صفحة {current} من {last}",
   "@subPageOfLast": {
     "placeholders": {
@@ -8062,5 +8062,39 @@
   "configMaxFailedAttempts": "الحد الأقصى لمحاولات تسجيل الدخول الفاشلة",
   "configLockoutDuration": "مدة القفل",
   "configBiometricDefault": "القياسات الحيوية مفعلة افتراضيا",
-  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ"
+  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ",
+  "posTipNone": "بدون بقشيش",
+  "posDiscountRequiresPin": "يلزم رمز المدير لهذا الخصم",
+  "posTaxExemptRequiresPin": "يلزم رمز المدير لإلغاء الضريبة",
+  "posVoidRequiresPin": "يلزم رمز المدير لإلغاء العمليات",
+  "posInvalidPinToken": "انتهت صلاحية موافقة المدير. أعد إدخال الرمز.",
+  "cfdLaunch": "فتح شاشة العميل",
+  "cfdWelcome": "أهلاً بك",
+  "cfdShowingCart": "طلبك",
+  "cfdChangeDue": "الباقي",
+  "modifierPickerTitle": "تخصيص الصنف",
+  "modifierPickerRequired": "مطلوب",
+  "modifierPickerOptional": "اختياري",
+  "modifierAddSelected": "أضف إلى الطلب",
+  "posShiftCashInLine": "إيداع نقدي",
+  "posShiftCashOutLine": "سحب نقدي",
+  "posShiftXReport": "تقرير X",
+  "posShiftZReport": "تقرير Z",
+  "posShiftXReportFull": "تقرير X (خلال الوردية)",
+  "posShiftZReportFull": "تقرير Z (إغلاق الوردية)",
+  "posShiftAlreadyOpen": "الوردية مفتوحة بالفعل",
+  "posShiftAlreadyOpenDesc": "استأنف الوردية الحالية لمتابعة البيع.",
+  "posShiftResume": "استئناف الوردية",
+  "posReprintReceipt": "إعادة طباعة الإيصال",
+  "posReprintReceiptNumber": "رقم الإيصال",
+  "posPrintSentToPrinter": "أُرسل إلى الطابعة",
+  "commonFind": "بحث",
+  "commonPrint": "طباعة",
+  "receiptVatNumber": "ضريبة القيمة المضافة: {value}",
+  "@receiptVatNumber": { "placeholders": { "value": { "type": "String" } } },
+  "posItemDiscount": "خصم البند",
+  "posItemNote": "ملاحظة البند",
+  "posCurrentDiscount": "الحالي: {amount}",
+  "@posCurrentDiscount": { "placeholders": { "amount": { "type": "String" } } },
+  "posReturnRecentSales": "المبيعات الأخيرة"
 }

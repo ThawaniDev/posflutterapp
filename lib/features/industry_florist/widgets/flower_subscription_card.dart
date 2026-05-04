@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -6,7 +7,6 @@ import 'package:wameedpos/features/industry_florist/models/flower_subscription.d
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FlowerSubscriptionCard extends StatelessWidget {
-
   const FlowerSubscriptionCard({super.key, required this.subscription, this.onTap, this.onToggle});
   final FlowerSubscription subscription;
   final VoidCallback? onTap;
@@ -14,8 +14,8 @@ class FlowerSubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isActive = subscription.isActive ?? true;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
       elevation: 0,
@@ -47,7 +47,7 @@ class FlowerSubscriptionCard extends StatelessWidget {
                     ),
                   ),
                   PosStatusBadge(
-                    label: isActive ? 'Active' : 'Paused',
+                    label: isActive ? l10n.active : l10n.floristPaused,
                     variant: isActive ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.neutral,
                   ),
                 ],
@@ -70,10 +70,7 @@ class FlowerSubscriptionCard extends StatelessWidget {
                   ),
                   if (subscription.deliveryDay != null) ...[
                     AppSpacing.gapW8,
-                    Text(
-                      subscription.deliveryDay!,
-                      style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context)),
-                    ),
+                    Text(subscription.deliveryDay!, style: AppTypography.caption.copyWith(color: AppColors.mutedFor(context))),
                   ],
                   const Spacer(),
                   Text(
@@ -86,7 +83,11 @@ class FlowerSubscriptionCard extends StatelessWidget {
                 AppSpacing.gapH8,
                 SizedBox(
                   width: double.infinity,
-                  child: PosButton(onPressed: onToggle, variant: PosButtonVariant.outline, label: isActive ? 'Pause' : 'Resume'),
+                  child: PosButton(
+                    onPressed: onToggle,
+                    variant: PosButtonVariant.outline,
+                    label: isActive ? l10n.pause : l10n.resume,
+                  ),
                 ),
               ],
             ],

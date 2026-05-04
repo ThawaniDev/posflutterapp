@@ -307,11 +307,11 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.check_circle, color: AppColors.success),
+            Icon(Icons.check_circle, color: AppColors.success),
             AppSpacing.gapW8,
-            const Text('Registration Approved'),
+            Text('Registration Approved'),
           ],
         ),
         content: Column(

@@ -401,6 +401,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.28.0"
+  edfapay_softpos_sdk:
+    dependency: "direct main"
+    description:
+      name: edfapay_softpos_sdk
+      sha256: ab87742f6c9fbc078d6f13557a1da7db956e0bf899ce667ab18965a87d0cce25
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6+6"
   equatable:
     dependency: transitive
     description:

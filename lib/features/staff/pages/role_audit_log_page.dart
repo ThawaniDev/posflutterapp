@@ -95,7 +95,7 @@ class _RoleAuditLogPageState extends ConsumerState<RoleAuditLogPage> {
                 // Action filter
                 Expanded(
                   child: DropdownButtonFormField<String?>(
-                    value: _filterAction,
+                    initialValue: _filterAction,
                     decoration: InputDecoration(
                       labelText: l10n.staffRoleAuditAction,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

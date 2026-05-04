@@ -361,7 +361,7 @@ class _ProductBulkImportPageState extends ConsumerState<ProductBulkImportPage> {
                     return ListTile(
                       dense: true,
                       leading: const Icon(Icons.error_outline, color: AppColors.error, size: 18),
-                      title: Text('Row ${e.row}: ${e.message}'),
+                      title: Text(l10n.catalogImportRowError(e.row, e.message)),
                     );
                   },
                 ),

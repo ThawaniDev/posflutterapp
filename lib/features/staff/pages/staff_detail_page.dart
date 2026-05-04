@@ -944,7 +944,7 @@ class _DocumentsTabState extends ConsumerState<_DocumentsTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DropdownButtonFormField<String>(
-                  value: selectedType,
+                  initialValue: selectedType,
                   decoration: InputDecoration(labelText: widget.l10n.staffDocumentType),
                   items: _docTypes.map((t) => DropdownMenuItem(value: t, child: Text(_docTypeLabel(t)))).toList(),
                   onChanged: (v) => setStateDialog(() => selectedType = v ?? selectedType),
@@ -1146,7 +1146,7 @@ class _DocumentCard extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.open_in_new_outlined, color: AppColors.mutedFor(context)),
-            tooltip: 'Open',
+            tooltip: l10n.open,
             onPressed: () {},
           ),
           IconButton(

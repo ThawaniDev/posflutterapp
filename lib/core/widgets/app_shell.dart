@@ -13,8 +13,7 @@ import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/notifications/widgets/maintenance_banner.dart';
 import 'package:wameedpos/features/notifications/widgets/notification_bell.dart';
-import 'package:wameedpos/features/notifications/providers/notification_providers.dart';
-import 'package:wameedpos/features/notifications/providers/notification_state.dart';
+
 import 'package:wameedpos/features/security/repositories/security_repository.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 import 'package:wameedpos/features/staff/providers/roles_state.dart';
@@ -31,15 +30,10 @@ class AppShell extends ConsumerWidget {
 
   final Widget child;
 
-  /// Desktop breakpoint — matches Tailwind `lg`.
-  static const double _desktopBreakpoint = 1024;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isCollapsed = ref.watch(sidebarCollapsedProvider);
+    final userCollapsed = ref.watch(sidebarCollapsedProvider);
     final currentRoute = GoRouterState.of(context).matchedLocation;
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final isDesktop = screenWidth >= _desktopBreakpoint;
     final l10n = AppLocalizations.of(context)!;
 
     // Re-mount the routed page whenever the active branch changes so that
@@ -52,90 +46,87 @@ class AppShell extends ConsumerWidget {
       child: child,
     );
 
+    // Wrap the routed body with device-aware gutters and a soft max-content-width.
+    final wrappedChild = _ResponsiveContentArea(route: currentRoute, child: keyedChild);
+
     // Filter sidebar groups/items based on user permissions
     final permsState = ref.watch(userPermissionsProvider);
     final featureGate = ref.watch(featureGateServiceProvider);
     final allGroups = PosSidebar.getDefaultGroups(l10n);
     final filteredGroups = _filterGroups(allGroups, permsState, featureGate);
 
-    final Widget sidebar = PosSidebar(
-      groups: filteredGroups,
-      currentRoute: currentRoute,
-      isCollapsed: isCollapsed,
-      onToggleCollapse: () => ref.read(sidebarCollapsedProvider.notifier).state = !isCollapsed,
-      onItemTap: (route) {
-        context.go(route);
-        // Close drawer on mobile after navigation
-        if (!isDesktop && Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-      },
-      onLockedItemTap: (item) {
-        ref
-            .read(upgradePromptServiceProvider)
-            .showFeatureGatePrompt(
-              context: context,
-              featureKey: item.featureKey!,
-              featureName: item.label,
-              onUpgrade: () => context.go('/subscription/status'),
-            );
-      },
-    );
-
     final actions = _buildActions(context, ref, l10n, filteredGroups);
-    final mobileActions = _buildMobileActions(context, ref, l10n, filteredGroups);
 
-    if (isDesktop) {
-      return Scaffold(
-        body: Row(
-          children: [
-            sidebar,
-            Expanded(
-              child: Column(
-                children: [
-                  Material(
-                    elevation: 1,
-                    child: Container(
-                      height: 56,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(
-                        children: [
-                          const Expanded(child: BranchSelector()),
-                          ...actions,
-                        ],
-                      ),
-                    ),
-                  ),
-                  const MaintenanceBanner(),
-                  const GlobalSubscriptionBanner(),
-                  Expanded(child: keyedChild),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    // Mobile / tablet: use Drawer
+    // Sidebar is ALWAYS persistent — no drawer. Use LayoutBuilder so we get
+    // the real rendered width rather than the raw MediaQuery size, which can
+    // differ inside a ShellRoute on some platforms.
     return Scaffold(
-      appBar: AppBar(
-        // leading: Builder(
-        //   builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
-        // ),
-        title: const BranchSelector(),
-        actions: mobileActions,
-      ),
-      drawer: SizedBox(
-        width: AppSizes.sidebarWidth,
-        child: Drawer(child: sidebar),
-      ),
-      body: Column(
-        children: [
-          const MaintenanceBanner(),
-          const GlobalSubscriptionBanner(),
-          Expanded(child: keyedChild),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // < 600 dp: auto-collapse to icon rail, hide toggle.
+          // ≥ 600 dp: user-controlled expand/collapse.
+          final isNarrow = constraints.maxWidth < 600;
+          final isCollapsed = isNarrow ? true : userCollapsed;
+
+          final Widget sidebar = PosSidebar(
+            groups: filteredGroups,
+            currentRoute: currentRoute,
+            isCollapsed: isCollapsed,
+            onToggleCollapse: isNarrow ? null : () => ref.read(sidebarCollapsedProvider.notifier).state = !userCollapsed,
+            onItemTap: (route) => context.go(route),
+            onLockedItemTap: (item) {
+              ref
+                  .read(upgradePromptServiceProvider)
+                  .showFeatureGatePrompt(
+                    context: context,
+                    featureKey: item.featureKey!,
+                    featureName: item.label,
+                    onUpgrade: () => context.go('/subscription/status'),
+                  );
+            },
+          );
+
+          // Calculate the actual content width so that every child widget
+          // that reads MediaQuery.sizeOf(context).width (PosTable, PosCard,
+          // PosPageComponents, etc.) gets the real available width rather than
+          // the full screen width. Without this, a 1024px tablet with a 256px
+          // sidebar would report 1024px to children — making them think they
+          // have desktop space — when they only have 768px.
+          final sidebarPx = isCollapsed ? AppSizes.sidebarCollapsedWidth : AppSizes.sidebarWidth;
+          final contentWidth = (constraints.maxWidth - sidebarPx).clamp(0.0, double.infinity);
+          final mqData = MediaQuery.of(context).copyWith(size: Size(contentWidth, MediaQuery.of(context).size.height));
+
+          return Row(
+            children: [
+              sidebar,
+              Expanded(
+                child: MediaQuery(
+                  data: mqData,
+                  child: Column(
+                    children: [
+                      Material(
+                        elevation: 1,
+                        child: Container(
+                          height: 56,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              const Expanded(child: BranchSelector()),
+                              ...actions,
+                            ],
+                          ),
+                        ),
+                      ),
+                      const MaintenanceBanner(),
+                      const GlobalSubscriptionBanner(),
+                      Expanded(child: wrappedChild),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -249,147 +240,6 @@ class AppShell extends ConsumerWidget {
   /// Mobile-only condensed actions: a single overflow button (with the
   /// notification badge) opening a popup menu of all available actions.
   /// Frees up AppBar space so the BranchSelector store dropdown renders well.
-  List<Widget> _buildMobileActions(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocalizations l10n,
-    List<PosSidebarGroup> filteredGroups,
-  ) {
-    final unread = ref.watch(unreadCountProvider);
-    final unreadCount = unread is UnreadCountLoaded ? unread.count : 0;
-    final themeMode = ref.watch(themeModeProvider);
-    final currentLocale = Localizations.localeOf(context);
-    final isDark = themeMode == ThemeMode.dark;
-
-    return [
-      PosCountBadge(
-        count: unreadCount,
-        child: PopupMenuButton<String>(
-          tooltip: l10n.appBarMore,
-          icon: const Icon(Icons.more_vert_rounded),
-          position: PopupMenuPosition.under,
-          onSelected: (value) => _handleMobileAction(context, ref, l10n, value, filteredGroups),
-          itemBuilder: (ctx) => [
-            PopupMenuItem<String>(
-              value: 'notifications',
-              child: Row(
-                children: [
-                  const Icon(Icons.notifications_outlined, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(child: Text(l10n.notifications)),
-                  if (unreadCount > 0)
-                    PosBadge(label: unreadCount > 99 ? '99+' : '$unreadCount', variant: PosBadgeVariant.error, isSmall: true),
-                ],
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'quick_nav',
-              child: Row(
-                children: [
-                  const Icon(Icons.grid_view_rounded, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Text(l10n.quickNavTitle),
-                ],
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'language',
-              child: Row(
-                children: [
-                  const Icon(Icons.language_rounded, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(child: Text(l10n.appBarLanguage)),
-                  Text(_languageButtonLabel(currentLocale.languageCode), style: const TextStyle(fontWeight: FontWeight.bold)),
-                ],
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'theme',
-              child: Row(
-                children: [
-                  Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Text(l10n.appBarTheme),
-                ],
-              ),
-            ),
-            const PopupMenuDivider(),
-            PopupMenuItem<String>(
-              value: 'logout',
-              child: Row(
-                children: [
-                  const Icon(Icons.logout_rounded, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Text(l10n.logout),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ];
-  }
-
-  Future<void> _handleMobileAction(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocalizations l10n,
-    String action,
-    List<PosSidebarGroup> filteredGroups,
-  ) async {
-    switch (action) {
-      case 'notifications':
-        context.go('/notifications');
-        break;
-      case 'quick_nav':
-        showQuickNavGrid(context, groups: filteredGroups);
-        break;
-      case 'language':
-        await _showLanguagePicker(context, ref, l10n);
-        break;
-      case 'theme':
-        final themeMode = ref.read(themeModeProvider);
-        ref.read(themeModeProvider.notifier).set(themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
-        break;
-      case 'logout':
-        await _confirmLogout(context, ref, l10n);
-        break;
-    }
-  }
-
-  Future<void> _showLanguagePicker(BuildContext context, WidgetRef ref, AppLocalizations l10n) async {
-    final current = Localizations.localeOf(context).languageCode;
-    final selected = await showModalBottomSheet<Locale>(
-      context: context,
-      builder: (ctx) {
-        Widget tile(Locale locale, String label) => ListTile(
-          leading: Text(_languageButtonLabel(locale.languageCode), style: const TextStyle(fontWeight: FontWeight.bold)),
-          title: Text(label),
-          trailing: current == locale.languageCode ? const Icon(Icons.check_rounded) : null,
-          onTap: () => Navigator.of(ctx).pop(locale),
-        );
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Text(l10n.appBarLanguage, style: Theme.of(ctx).textTheme.titleMedium),
-              ),
-              tile(const Locale('en'), 'English'),
-              tile(const Locale('ar'), 'Arabic'),
-              tile(const Locale('bn'), 'Bengali'),
-              tile(const Locale('ur'), 'Urdu'),
-            ],
-          ),
-        );
-      },
-    );
-    if (selected != null) {
-      ref.read(localeProvider.notifier).set(selected);
-    }
-  }
-
   String _languageButtonLabel(String languageCode) {
     switch (languageCode) {
       case 'ar':
@@ -421,5 +271,72 @@ class AppShell extends ConsumerWidget {
       }
       ref.read(authProvider.notifier).logout(l10n);
     }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// _ResponsiveContentArea
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Centralised wrapper that gives every routed page consistent device-aware
+// gutters and a soft maximum content width on tablet+/desktop+. Without this,
+// each page renders mobile-style (single column, edge-to-edge cards) at every
+// screen size because individual pages don't opt into ResponsiveBuilder.
+//
+// Routes that need the entire viewport (POS register, customer-facing
+// display, drag-and-drop layout canvas, etc.) bypass the wrapper.
+
+class _ResponsiveContentArea extends StatelessWidget {
+  const _ResponsiveContentArea({required this.route, required this.child});
+
+  final String route;
+  final Widget child;
+
+  /// Route prefixes that must render full-bleed (no gutters, no max-width cap).
+  static const List<String> _fullBleedPrefixes = <String>[
+    '/pos/cashier',
+    '/pos/cfd',
+    '/pos/customer-display',
+    '/layout-builder',
+    '/labels/designer',
+    '/onboarding',
+    '/login',
+    '/auth',
+    '/splash',
+  ];
+
+  bool get _isFullBleed => _fullBleedPrefixes.any(route.startsWith);
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isFullBleed) return child;
+
+    final width = MediaQuery.sizeOf(context).width;
+
+    // Phones / compact (< 600 dp): render as-is. Mobile-friendly padding
+    // already comes from the page itself.
+    if (width < 600) return child;
+
+    // Tablet: modest horizontal gutters, no width cap.
+    if (width < AppSizes.breakpointDesktop) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        child: child,
+      );
+    }
+
+    // Desktop / wide: centered content with max-width and generous gutters.
+    final maxContentWidth = width >= AppSizes.breakpointWide ? 1440.0 : 1200.0;
+    final horizontalGutter = width >= AppSizes.breakpointWide ? AppSpacing.xxxl : AppSpacing.xxl;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxContentWidth),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: horizontalGutter),
+          child: child,
+        ),
+      ),
+    );
   }
 }

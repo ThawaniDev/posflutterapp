@@ -127,7 +127,10 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
             children: [
               _buildStatusChip(status, statusColor),
               AppSpacing.gapW8,
-              Text('$entriesCount entries', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              Text(
+                l10n.accountingEntriesCount(entriesCount),
+                style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+              ),
               AppSpacing.gapW8,
               Icon(triggeredBy == 'scheduled' ? Icons.schedule : Icons.touch_app, size: 14, color: AppColors.textSecondary),
               AppSpacing.gapW4,
@@ -217,10 +220,10 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
               children: [
                 TextField(
                   controller: startController,
-                  decoration: const InputDecoration(
-                    labelText: 'Start Date (YYYY-MM-DD)',
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.calendar_today),
+                  decoration: InputDecoration(
+                    labelText: l10n.accountingExportStartDate,
+                    border: const OutlineInputBorder(),
+                    suffixIcon: const Icon(Icons.calendar_today),
                   ),
                   onTap: () async {
                     final date = await showDatePicker(
@@ -239,10 +242,10 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                 AppSpacing.gapH12,
                 TextField(
                   controller: endController,
-                  decoration: const InputDecoration(
-                    labelText: 'End Date (YYYY-MM-DD)',
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.calendar_today),
+                  decoration: InputDecoration(
+                    labelText: l10n.accountingExportEndDate,
+                    border: const OutlineInputBorder(),
+                    suffixIcon: const Icon(Icons.calendar_today),
                   ),
                   onTap: () async {
                     final date = await showDatePicker(
@@ -259,7 +262,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                   readOnly: true,
                 ),
                 AppSpacing.gapH16,
-                Text(l10n.acctExportTypesOptional, style: TextStyle(fontWeight: FontWeight.w600)),
+                Text(l10n.acctExportTypesOptional, style: const TextStyle(fontWeight: FontWeight.w600)),
                 AppSpacing.gapH8,
                 ...allTypes.map(
                   (t) => CheckboxListTile(

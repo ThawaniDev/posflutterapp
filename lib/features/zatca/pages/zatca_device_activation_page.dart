@@ -80,6 +80,7 @@ class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivatio
   }
 
   Widget _buildActivationCodeBanner(ZatcaDeviceProvisioned state) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: AppSpacing.paddingAll16,
       decoration: BoxDecoration(
@@ -90,14 +91,14 @@ class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivatio
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Activation Code', style: Theme.of(context).textTheme.labelLarge),
+          Text(l10n.zatcaActivationCodeBanner, style: Theme.of(context).textTheme.labelLarge),
           AppSpacing.gapH4,
           SelectableText(
             state.activationCode,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 2),
           ),
           AppSpacing.gapH4,
-          Text('Device UUID: ${state.deviceUuid}', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.zatcaDeviceUuidLabel(state.deviceUuid), style: Theme.of(context).textTheme.bodySmall),
         ],
       ),
     );
@@ -118,7 +119,7 @@ class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivatio
           AppSpacing.gapH8,
           TextField(
             controller: _serialCtrl,
-            decoration: const InputDecoration(labelText: 'Hardware Serial (optional)', border: OutlineInputBorder()),
+            decoration: InputDecoration(labelText: l10n.zatcaHardwareSerial, border: const OutlineInputBorder()),
           ),
           AppSpacing.gapH12,
           PosButton(
@@ -155,7 +156,7 @@ class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivatio
     }
     if (state is ZatcaDeviceError) {
       return PosCard(
-        child: Text('Error: ${state.message}', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(state.message), style: const TextStyle(color: AppColors.error)),
       );
     }
     return const SizedBox.shrink();
@@ -170,8 +171,8 @@ class _ZatcaDeviceActivationPageState extends ConsumerState<ZatcaDeviceActivatio
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('${l10n.zatcaIcv}: ${device.currentIcv}'),
-          Text('Status: ${device.status.value}'),
-          if (device.hardwareSerial != null) Text('Serial: ${device.hardwareSerial}'),
+          Text(l10n.zatcaDeviceStatusLabel(device.status.value)),
+          if (device.hardwareSerial != null) Text(l10n.zatcaDeviceSerialLabel(device.hardwareSerial!)),
         ],
       ),
       trailing: tampered

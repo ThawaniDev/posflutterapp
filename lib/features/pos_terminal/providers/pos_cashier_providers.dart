@@ -20,8 +20,15 @@ final cartProvider = StateNotifierProvider<CartNotifier, CartState>((ref) {
 class CartNotifier extends StateNotifier<CartState> {
   CartNotifier() : super(const CartState());
 
-  void addProduct(Product product, {double qty = 1}) {
-    final existing = state.items.indexWhere((i) => i.product.id == product.id);
+  void addProduct(Product product, {double qty = 1, List<Map<String, dynamic>>? modifierSelections}) {
+    // Items with modifiers always create a new line so the customer can mix
+    // (e.g. 1× burger no-onion + 1× burger extra-cheese stay separate).
+    final canMerge = modifierSelections == null || modifierSelections.isEmpty;
+    final existing = canMerge
+        ? state.items.indexWhere(
+            (i) => i.product.id == product.id && (i.modifierSelections == null || i.modifierSelections!.isEmpty),
+          )
+        : -1;
     if (existing >= 0) {
       final updated = List<CartItem>.from(state.items);
       updated[existing] = updated[existing].copyWith(quantity: updated[existing].quantity + qty);
@@ -38,7 +45,7 @@ class CartNotifier extends StateNotifier<CartState> {
       state = state.copyWith(
         items: [
           ...state.items,
-          CartItem(product: product, quantity: qty, unitPrice: price),
+          CartItem(product: product, quantity: qty, unitPrice: price, modifierSelections: modifierSelections),
         ],
       );
     }

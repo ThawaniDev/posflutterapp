@@ -455,7 +455,7 @@ class _ManageTabState extends ConsumerState<_ManageTab> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(message, style: TextStyle(color: AppColors.error)),
+                  Text(message, style: const TextStyle(color: AppColors.error)),
                   AppSpacing.gapH12,
                   PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _reload),
                 ],
@@ -476,7 +476,7 @@ class _ManageTabState extends ConsumerState<_ManageTab> {
                             padding: AppSpacing.paddingAll16,
                             child: Center(
                               child: PosButton(
-                                label: 'Load more',
+                                label: l10n.commonLoadMore,
                                 variant: PosButtonVariant.outline,
                                 onPressed: () => ref.read(giftCardListProvider.notifier).loadMore(),
                               ),

@@ -4,7 +4,6 @@ import 'package:wameedpos/features/settings/models/translation_version.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class VersionHistoryList extends StatelessWidget {
-
   const VersionHistoryList({super.key, required this.versions});
   final List<TranslationVersion> versions;
 
@@ -36,7 +35,10 @@ class VersionHistoryList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (v.publishedAt != null)
-                Text('Published: ${v.publishedAt!.toLocal().toString().split('.').first}', style: theme.textTheme.bodySmall),
+                Text(
+                  l10n.settingsVersionPublishedAt(v.publishedAt!.toLocal().toString().split('.').first),
+                  style: theme.textTheme.bodySmall,
+                ),
               if (v.notes != null && v.notes!.isNotEmpty)
                 Padding(
                   padding: AppSpacing.paddingV4,

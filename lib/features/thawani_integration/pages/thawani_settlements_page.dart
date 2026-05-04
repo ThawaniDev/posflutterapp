@@ -105,7 +105,7 @@ class _ThawaniSettlementsPageState extends ConsumerState<ThawaniSettlementsPage>
       emptyConfig: PosTableEmptyConfig(icon: Icons.receipt_long_outlined, title: l10n.thawaniNoSettlements),
       columns: [
         PosTableColumn(title: l10n.commonDate),
-        PosTableColumn(title: 'Reference', flex: 2),
+        PosTableColumn(title: l10n.thawaniReferenceCol, flex: 2),
         PosTableColumn(title: l10n.thawaniGrossAmount, numeric: true),
         PosTableColumn(title: l10n.thawaniCommissionAmount, numeric: true),
         PosTableColumn(title: l10n.thawaniNetAmount, numeric: true),

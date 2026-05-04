@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -227,7 +228,11 @@ class _PosWeightDialogState extends State<_PosWeightDialog> {
                 autofocus: true,
                 textAlign: TextAlign.center,
                 style: AppTypography.headlineMedium,
-                decoration: InputDecoration(hintText: widget.hintText, errorText: _error, suffixText: 'kg'),
+                decoration: InputDecoration(
+                  hintText: widget.hintText,
+                  errorText: _error,
+                  suffixText: AppLocalizations.of(context)!.hardwareKg,
+                ),
                 onSubmitted: (_) => _submit(),
               ),
               AppSpacing.gapH24,
@@ -511,7 +516,12 @@ Future<void> showPosInfoDialog(BuildContext context, {required String title, Str
     builder: (_) => AlertDialog(
       title: Text(title),
       content: message != null ? Text(message) : null,
-      actions: [TextButton(onPressed: () => Navigator.of(context, rootNavigator: true).pop(), child: const Text('OK'))],
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+          child: Text(AppLocalizations.of(context)!.ok),
+        ),
+      ],
     ),
   );
 }

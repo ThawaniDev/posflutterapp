@@ -68,21 +68,22 @@ class _LoyaltyConfigPageState extends ConsumerState<LoyaltyConfigPage> {
   }
 
   String _weekdayLabel(int isoDay) {
+    final l = AppLocalizations.of(context)!;
     switch (isoDay) {
       case 1:
-        return 'Mon';
+        return l.monday.substring(0, 3);
       case 2:
-        return 'Tue';
+        return l.tuesday.substring(0, 3);
       case 3:
-        return 'Wed';
+        return l.wednesday.substring(0, 3);
       case 4:
-        return 'Thu';
+        return l.thursday.substring(0, 3);
       case 5:
-        return 'Fri';
+        return l.friday.substring(0, 3);
       case 6:
-        return 'Sat';
+        return l.saturday.substring(0, 3);
       case 7:
-        return 'Sun';
+        return l.sunday.substring(0, 3);
     }
     return '';
   }

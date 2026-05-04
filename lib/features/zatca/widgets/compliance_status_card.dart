@@ -6,7 +6,6 @@ import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ComplianceStatusCard extends StatelessWidget {
-
   const ComplianceStatusCard({super.key, required this.data});
   final ZatcaComplianceSummaryLoaded data;
 
@@ -21,28 +20,24 @@ class ComplianceStatusCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceFor(context),
         borderRadius: AppRadius.borderMd,
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.06),
-        ),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.verified_outlined,
-                  color: data.successRate >= 90
-                      ? AppColors.success
-                      : data.successRate >= 70
-                          ? AppColors.warning
-                          : AppColors.error,
-                  size: 28),
+              Icon(
+                Icons.verified_outlined,
+                color: data.successRate >= 90
+                    ? AppColors.success
+                    : data.successRate >= 70
+                    ? AppColors.warning
+                    : AppColors.error,
+                size: 28,
+              ),
               AppSpacing.gapH8,
-              Text(l10n.zatcaTitle,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w600)),
+              Text(l10n.zatcaTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           AppSpacing.gapH20,
@@ -53,17 +48,11 @@ class ComplianceStatusCard extends StatelessWidget {
                 child: _StatTile(
                   label: l10n.adminWameedAISuccessRate,
                   value: '${data.successRate.toStringAsFixed(1)}%',
-                  color: data.successRate >= 90
-                      ? AppColors.success
-                      : AppColors.warning,
+                  color: data.successRate >= 90 ? AppColors.success : AppColors.warning,
                 ),
               ),
               Expanded(
-                child: _StatTile(
-                  label: l10n.zatcaTotalInvoices,
-                  value: '${data.totalInvoices}',
-                  color: AppColors.info,
-                ),
+                child: _StatTile(label: l10n.zatcaTotalInvoices, value: '${data.totalInvoices}', color: AppColors.info),
               ),
             ],
           ),
@@ -71,42 +60,25 @@ class ComplianceStatusCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _StatTile(
-                  label: l10n.deliveryAccepted,
-                  value: '${data.accepted}',
-                  color: AppColors.success,
-                ),
+                child: _StatTile(label: l10n.deliveryAccepted, value: '${data.accepted}', color: AppColors.success),
               ),
               Expanded(
-                child: _StatTile(
-                  label: l10n.rejected,
-                  value: '${data.rejected}',
-                  color: AppColors.error,
-                ),
+                child: _StatTile(label: l10n.rejected, value: '${data.rejected}', color: AppColors.error),
               ),
               Expanded(
-                child: _StatTile(
-                  label: l10n.pending,
-                  value: '${data.pending}',
-                  color: AppColors.warning,
-                ),
+                child: _StatTile(label: l10n.pending, value: '${data.pending}', color: AppColors.warning),
               ),
             ],
           ),
           if (data.certificate != null) ...[
             AppSpacing.gapH20,
-            Divider(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : Colors.black.withValues(alpha: 0.06)),
+            Divider(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
             AppSpacing.gapH8,
             Row(
               children: [
-                const Icon(Icons.badge_outlined,
-                    size: 18, color: AppColors.info),
+                const Icon(Icons.badge_outlined, size: 18, color: AppColors.info),
                 AppSpacing.gapH4,
-                Text('Certificate: ${data.certificate!.ccsid}',
-                    style: theme.textTheme.bodySmall),
+                Text(l10n.zatcaCertificateId(data.certificate!.ccsid), style: theme.textTheme.bodySmall),
               ],
             ),
           ],
@@ -117,30 +89,23 @@ class ComplianceStatusCard extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-
-  const _StatTile({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
+  const _StatTile({required this.label, required this.value, required this.color});
   final String label;
   final String value;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(value,
-            style: theme.textTheme.headlineSmall
-                ?.copyWith(fontWeight: FontWeight.w700, color: color)),
+        Text(
+          value,
+          style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700, color: color),
+        ),
         AppSpacing.gapH2,
-        Text(label,
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.hintColor)),
+        Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
       ],
     );
   }

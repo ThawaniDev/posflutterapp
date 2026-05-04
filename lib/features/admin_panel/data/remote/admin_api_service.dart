@@ -2070,4 +2070,37 @@ class AdminApiService {
     final response = await _dio.put(ApiEndpoints.adminWameedAIBillingSettings, data: data);
     return response.data as Map<String, dynamic>;
   }
+
+  // ─── SoftPOS Billing & Analytics ────────────────────────────────────────
+
+  /// GET /admin/analytics/softpos/transactions
+  /// Returns paginated SoftPOS transactions with full fee breakdown.
+  Future<Map<String, dynamic>> getSoftposTransactions({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminSoftposTransactions, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /admin/analytics/softpos/financials
+  /// Returns aggregated SoftPOS P&L summary (KPIs, by_scheme, by_terminal, etc).
+  Future<Map<String, dynamic>> getSoftposFinancials({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminSoftposFinancials, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /admin/analytics/softpos/terminal-rates
+  /// Returns bilateral billing config for all SoftPOS-enabled terminals.
+  Future<Map<String, dynamic>> getSoftposTerminalRates({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminSoftposTerminalRates, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// PATCH /admin/terminals/{terminalId}/softpos-billing
+  /// Updates per-terminal bilateral fee rates (admin only).
+  Future<Map<String, dynamic>> updateTerminalSoftposBilling(
+    String terminalId,
+    Map<String, dynamic> data,
+  ) async {
+    final response = await _dio.patch(ApiEndpoints.adminTerminalSoftposBilling(terminalId), data: data);
+    return response.data as Map<String, dynamic>;
+  }
 }

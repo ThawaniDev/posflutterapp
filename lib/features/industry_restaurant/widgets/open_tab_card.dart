@@ -20,7 +20,6 @@ class OpenTabCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final isOpen = tab.closedAt == null;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final canSplitBill = ref.watch(userPermissionsProvider).hasPermission(Permissions.restaurantSplitBill);
 
     return PosCard(

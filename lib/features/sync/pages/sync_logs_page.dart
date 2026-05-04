@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/sync/providers/sync_providers.dart';
 import 'package:wameedpos/features/sync/providers/sync_state.dart';
@@ -255,7 +254,7 @@ class _ErrorCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, color: AppColors.error, size: 40),
+            const Icon(Icons.error_outline, color: AppColors.error, size: 40),
             AppSpacing.gapH12,
             Text(message, textAlign: TextAlign.center),
             AppSpacing.gapH16,

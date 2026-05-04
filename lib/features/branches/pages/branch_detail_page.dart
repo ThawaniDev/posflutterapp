@@ -206,7 +206,6 @@ class BranchDetailPage extends ConsumerWidget {
   }
 
   Widget _headerCard(BuildContext context, Store branch, AppLocalizations l10n) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -254,7 +253,6 @@ class BranchDetailPage extends ConsumerWidget {
   }
 
   Widget _actionButton(BuildContext context, IconData icon, String label, VoidCallback onTap) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -285,7 +283,6 @@ class BranchDetailPage extends ConsumerWidget {
 
   Widget _infoSection(BuildContext context, String title, IconData icon, List<Widget> children) {
     if (children.isEmpty) return const SizedBox.shrink();
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -319,7 +316,6 @@ class BranchDetailPage extends ConsumerWidget {
   Widget _infoRow(String label, String value) {
     return Builder(
       builder: (context) {
-        final isDark = Theme.of(context).brightness == Brightness.dark;
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: Row(

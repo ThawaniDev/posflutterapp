@@ -290,7 +290,6 @@ class _BranchNameCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final accent = branch.isActive ? AppColors.success : AppColors.mutedFor(context);
 
     return Padding(

@@ -4959,6 +4959,19 @@ class AppLocalizationsBn extends AppLocalizations {
   String get softposActive => 'সফটপিওএস সক্রিয়';
 
   @override
+  String get softposTapCard => 'পেমেন্টের জন্য ডিভাইসে কার্ড ট্যাপ করুন';
+
+  @override
+  String get softposInitializing => 'SoftPOS শুরু হচ্ছে…';
+
+  @override
+  String get softposNotConfigured =>
+      'SoftPOS কনফিগার করা নেই। টার্মিনাল সেটিংসে টোকেন দিন।';
+
+  @override
+  String get softposPaymentFailed => 'SoftPOS কার্ড পেমেন্ট ব্যর্থ।';
+
+  @override
   String get acquirerHala => 'হালা';
 
   @override
@@ -7869,6 +7882,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get termFormNearpayMidHint => 'বণিক আইডি থেকে নিয়ারপে';
 
   @override
+  String get termFormEdfapayTokenLabel => 'EdfaPay টার্মিনাল টোকেন';
+
+  @override
+  String get termFormEdfapayTokenHint => 'আপনার EdfaPay টার্মিনাল টোকেন লিখুন';
+
+  @override
   String get termFormAcquirerSection => 'অর্জনকারী বিস্তারিত';
 
   @override
@@ -7915,6 +7934,32 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get termFormSettlementIbanHint => 'e.g. SA0380000000608010167519';
+
+  @override
+  String get termFormBillingSection => 'ফি তালিকা';
+
+  @override
+  String get termFormBillingSectionSub => 'প্রতি টার্মিনাল SoftPOS বিলিং রেট';
+
+  @override
+  String get termFormBillingMadaRate => 'মাদা রেট';
+
+  @override
+  String termFormBillingMadaRateValue(String rate) {
+    return '$rate% প্রতি লেনদেন';
+  }
+
+  @override
+  String get termFormBillingCardFee => 'ভিসা / মাস্টার / অ্যামেক্স ফি';
+
+  @override
+  String termFormBillingCardFeeValue(String fee) {
+    return '$fee রিয়াল প্রতি লেনদেন';
+  }
+
+  @override
+  String get termFormBillingReadOnly =>
+      'রেট প্ল্যাটফর্ম দ্বারা নির্ধারিত। পরিবর্তনের জন্য সাপোর্টে যোগাযোগ করুন।';
 
   @override
   String get termFormNotesSection => 'নোট';
@@ -15911,37 +15956,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get subProceedToPayment => 'পেমেন্টে এগিয়ে যান';
 
   @override
-  String get subDiscountCode => 'ছাড়ের কোড';
-
-  @override
-  String get subEnterDiscountCode => 'ছাড়ের কোড লিখুন';
-
-  @override
-  String get subApplyDiscount => 'প্রয়োগ করুন';
-
-  @override
-  String get subValidatingDiscount => 'যাচাই হচ্ছে...';
-
-  @override
-  String get subDiscountApplied => 'ছাড় প্রয়োগ হয়েছে';
-
-  @override
-  String get subDiscountInvalid => 'অবৈধ বা মেয়াদোত্তীর্ণ ছাড়ের কোড।';
-
-  @override
-  String get subRemoveDiscount => 'সরান';
-
-  @override
-  String subDiscountSavings(String amount) {
-    return 'আপনি $amount সাশ্রয় করেছেন';
-  }
-
-  @override
-  String subDiscountOff(String value) {
-    return '$value ছাড়';
-  }
-
-  @override
   String subPageOfLast(String current, String last) {
     return 'পেজ $current এর $last';
   }
@@ -19666,4 +19680,484 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get configRequireReauth => 'পুনরায় প্রমাণীকরণ প্রয়োজন';
+
+  @override
+  String get posTipNone => 'কোনো টিপ নেই';
+
+  @override
+  String get posDiscountRequiresPin => 'এই ছাড়ের জন্য ম্যানেজার PIN প্রয়োজন';
+
+  @override
+  String get posTaxExemptRequiresPin =>
+      'ট্যাক্স অপসারণে ম্যানেজার PIN প্রয়োজন';
+
+  @override
+  String get posVoidRequiresPin => 'লেনদেন বাতিলে ম্যানেজার PIN প্রয়োজন';
+
+  @override
+  String get posInvalidPinToken =>
+      'ম্যানেজার অনুমোদনের মেয়াদ শেষ। PIN আবার দিন।';
+
+  @override
+  String get cfdLaunch => 'কাস্টমার ডিসপ্লে খুলুন';
+
+  @override
+  String get cfdWelcome => 'স্বাগতম';
+
+  @override
+  String get cfdShowingCart => 'আপনার অর্ডার';
+
+  @override
+  String get cfdChangeDue => 'ফেরত পরিমাণ';
+
+  @override
+  String get modifierPickerTitle => 'আইটেম কাস্টমাইজ করুন';
+
+  @override
+  String get modifierPickerRequired => 'আবশ্যক';
+
+  @override
+  String get modifierPickerOptional => 'ঐচ্ছিক';
+
+  @override
+  String get modifierAddSelected => 'অর্ডারে যোগ করুন';
+
+  @override
+  String get posShiftCashInLine => 'ক্যাশ ইন';
+
+  @override
+  String get posShiftCashOutLine => 'ক্যাশ আউট';
+
+  @override
+  String get posShiftXReport => 'X রিপোর্ট';
+
+  @override
+  String get posShiftZReport => 'Z রিপোর্ট';
+
+  @override
+  String get posShiftXReportFull => 'X রিপোর্ট (শিফট চলাকালীন)';
+
+  @override
+  String get posShiftZReportFull => 'Z রিপোর্ট (শিফট শেষে)';
+
+  @override
+  String get posShiftAlreadyOpen => 'শিফট ইতিমধ্যে খোলা আছে';
+
+  @override
+  String get posShiftAlreadyOpenDesc =>
+      'বিক্রয় চালিয়ে যেতে বিদ্যমান শিফট পুনরায় শুরু করুন।';
+
+  @override
+  String get posShiftResume => 'শিফট পুনরায় শুরু করুন';
+
+  @override
+  String get posReprintReceipt => 'রসিদ পুনরায় প্রিন্ট করুন';
+
+  @override
+  String get posReprintReceiptNumber => 'রসিদ নম্বর';
+
+  @override
+  String get posPrintSentToPrinter => 'প্রিন্টারে পাঠানো হয়েছে';
+
+  @override
+  String get commonFind => 'খুঁজুন';
+
+  @override
+  String get commonPrint => 'প্রিন্ট';
+
+  @override
+  String receiptVatNumber(String value) {
+    return 'VAT #: $value';
+  }
+
+  @override
+  String get posItemDiscount => 'আইটেম ছাড়';
+
+  @override
+  String get posItemNote => 'আইটেম নোট';
+
+  @override
+  String posCurrentDiscount(String amount) {
+    return 'বর্তমান: $amount';
+  }
+
+  @override
+  String get posReturnRecentSales => 'সাম্প্রতিক বিক্রয়';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get getStarted => 'Get started';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get copiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get currentPlan => 'Current plan';
+
+  @override
+  String get selectPlan => 'Select plan';
+
+  @override
+  String get commonLoadMore => 'Load more';
+
+  @override
+  String commonItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String paginationPageOf(int current, int total) {
+    return 'Page $current of $total';
+  }
+
+  @override
+  String get accountingProviderAccountId => 'Provider account ID';
+
+  @override
+  String get accountingProviderAccountName => 'Provider account name';
+
+  @override
+  String accountingConnectProvider(String provider) {
+    return 'Connect $provider';
+  }
+
+  @override
+  String get accountingAccessToken => 'Access token';
+
+  @override
+  String get accountingRefreshToken => 'Refresh token';
+
+  @override
+  String get accountingTokenExpiry => 'Token expiry';
+
+  @override
+  String get accountingCompanyNameOptional => 'Company name (optional)';
+
+  @override
+  String accountingEntriesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entries',
+      one: '1 entry',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get accountingExportStartDate => 'Start date';
+
+  @override
+  String get accountingExportEndDate => 'End date';
+
+  @override
+  String get changelogNoNotes => 'No release notes';
+
+  @override
+  String get autoUpdateNowRequired => 'Update required';
+
+  @override
+  String get gamificationNameEn => 'Name (English)';
+
+  @override
+  String get gamificationNameAr => 'Name (Arabic)';
+
+  @override
+  String get gamificationTriggerType => 'Trigger type';
+
+  @override
+  String get gamificationThreshold => 'Threshold';
+
+  @override
+  String catalogImportRowError(int row, String message) {
+    return 'Row $row: $message';
+  }
+
+  @override
+  String get catalogEditProduct => 'Edit product';
+
+  @override
+  String get catalogSaving => 'Saving…';
+
+  @override
+  String get catalogUpdateProduct => 'Update product';
+
+  @override
+  String get catalogCreateProduct => 'Create product';
+
+  @override
+  String get catalogListView => 'List view';
+
+  @override
+  String get catalogGridView => 'Grid view';
+
+  @override
+  String get hardwareWeighable => 'Weighable';
+
+  @override
+  String get hardwareCombo => 'Combo';
+
+  @override
+  String hardwareSkuLabel(String sku) {
+    return 'SKU: $sku';
+  }
+
+  @override
+  String get hardwareEditDevice => 'Edit device';
+
+  @override
+  String get productTaxRate => 'Tax rate';
+
+  @override
+  String get productMinQty => 'Minimum quantity';
+
+  @override
+  String get productMaxQty => 'Maximum quantity';
+
+  @override
+  String get productAgeRestricted => 'Age restricted';
+
+  @override
+  String posProductAddedWeighed(String name, String qty) {
+    return 'Added $name ($qty kg)';
+  }
+
+  @override
+  String get floristPaused => 'Paused';
+
+  @override
+  String get labelCoordX => 'X coordinate';
+
+  @override
+  String get labelCoordY => 'Y coordinate';
+
+  @override
+  String labelsExpiryDate(String date) {
+    return 'EXP: $date';
+  }
+
+  @override
+  String cashMgmtFloatLabel(String value) {
+    return 'Opening float: $value';
+  }
+
+  @override
+  String get paymentTabby => 'Tabby';
+
+  @override
+  String get paymentTamara => 'Tamara';
+
+  @override
+  String get paymentMispay => 'MisPay';
+
+  @override
+  String get paymentMadfu => 'Madfu';
+
+  @override
+  String get paymentOther => 'Other';
+
+  @override
+  String get pcAccentColor => 'Accent color';
+
+  @override
+  String pcButtonsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count buttons',
+      one: '1 button',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pcCartMode => 'Cart mode';
+
+  @override
+  String get pcFontScale => 'Font scale';
+
+  @override
+  String get pcGridColumns => 'Grid columns';
+
+  @override
+  String get pcHandedness => 'Handedness';
+
+  @override
+  String get pcLayoutDirection => 'Layout direction';
+
+  @override
+  String get pcPrimaryColor => 'Primary color';
+
+  @override
+  String get pcSecondaryColor => 'Secondary color';
+
+  @override
+  String get pcShowPriceOnGrid => 'Show price on grid';
+
+  @override
+  String get pcShowProductImages => 'Show product images';
+
+  @override
+  String get pcTheme => 'Theme';
+
+  @override
+  String promotionsCouponType(String type) {
+    return 'Type: $type';
+  }
+
+  @override
+  String securityAuditIp(String ip) {
+    return 'IP: $ip';
+  }
+
+  @override
+  String securityAuditUser(String user) {
+    return 'User: $user';
+  }
+
+  @override
+  String settingsVersionPublishedAt(String date) {
+    return 'Published: $date';
+  }
+
+  @override
+  String staffPermissionsLoadError(String message) {
+    return 'Failed to load permissions: $message';
+  }
+
+  @override
+  String get staffTrainingAvgDuration => 'Average duration';
+
+  @override
+  String get staffTrainingDeleteConfirm =>
+      'Are you sure you want to delete this training session?';
+
+  @override
+  String get staffTrainingValidNumber => 'Please enter a valid number';
+
+  @override
+  String get subApplyDiscount => 'প্রয়োগ করুন';
+
+  @override
+  String get subDiscountApplied => 'ছাড় প্রয়োগ হয়েছে';
+
+  @override
+  String get subDiscountCode => 'ছাড়ের কোড';
+
+  @override
+  String get subDiscountInvalid => 'অবৈধ বা মেয়াদোত্তীর্ণ ছাড়ের কোড।';
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value ছাড়';
+  }
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'আপনি $amount সাশ্রয় করেছেন';
+  }
+
+  @override
+  String get subEnterDiscountCode => 'ছাড়ের কোড লিখুন';
+
+  @override
+  String get subRemoveDiscount => 'সরান';
+
+  @override
+  String subscriptionUpgradePrompt(String feature) {
+    return 'Upgrade your plan to use $feature';
+  }
+
+  @override
+  String get subValidatingDiscount => 'যাচাই হচ্ছে...';
+
+  @override
+  String aiRunFeature(String feature) {
+    return 'Run $feature';
+  }
+
+  @override
+  String thawaniHttpStatus(String code) {
+    return 'HTTP $code';
+  }
+
+  @override
+  String get thawaniReferenceCol => 'Reference';
+
+  @override
+  String transactionSerialNumber(String serial) {
+    return 'Serial: $serial';
+  }
+
+  @override
+  String get zatcaActivationCodeBanner =>
+      'Enter your ZATCA activation code to enroll this device';
+
+  @override
+  String zatcaCertificateId(String value) {
+    return 'Certificate ID: $value';
+  }
+
+  @override
+  String zatcaDeviceSerialLabel(String value) {
+    return 'Device serial: $value';
+  }
+
+  @override
+  String zatcaDeviceStatusLabel(String value) {
+    return 'Device status: $value';
+  }
+
+  @override
+  String zatcaDeviceUuidLabel(String value) {
+    return 'Device UUID: $value';
+  }
+
+  @override
+  String get zatcaEnrolling => 'Enrolling…';
+
+  @override
+  String get zatcaEnrollNow => 'Enroll now';
+
+  @override
+  String get zatcaHardwareSerial => 'Hardware serial';
+
+  @override
+  String zatcaInvoicesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices',
+      one: '1 invoice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String zatcaLastErrorMessage(String message) {
+    return 'Last error: $message';
+  }
+
+  @override
+  String zatcaVatAmountLabel(String value) {
+    return 'VAT amount: $value';
+  }
 }

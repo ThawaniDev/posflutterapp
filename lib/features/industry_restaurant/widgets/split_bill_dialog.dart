@@ -31,7 +31,7 @@ class _SplitBillDialogState extends State<SplitBillDialog> {
   final _numPeopleCtrl = TextEditingController(text: '2');
 
   // Custom mode: one controller per person
-  List<TextEditingController> _customCtrls = [TextEditingController(), TextEditingController()];
+  final List<TextEditingController> _customCtrls = [TextEditingController(), TextEditingController()];
 
   double get _total => double.tryParse(_totalCtrl.text) ?? 0.0;
   int get _numPeople => int.tryParse(_numPeopleCtrl.text) ?? 2;

@@ -101,7 +101,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   }
 
   String _formatDate(DateTime? d) {
-    if (d == null) return 'Not set';
+    if (d == null) return l10n.notSet;
     return '${d.day}/${d.month}/${d.year}';
   }
 

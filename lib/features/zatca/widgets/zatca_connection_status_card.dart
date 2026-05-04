@@ -72,7 +72,7 @@ class _ZatcaConnectionStatusCardState extends ConsumerState<ZatcaConnectionStatu
             _envBadge(status.isProduction, l10n),
             const SizedBox(width: 6),
             IconButton(
-              tooltip: 'Refresh',
+              tooltip: l10n.refresh,
               onPressed: () => ref.read(zatcaConnectionProvider.notifier).load(),
               icon: const Icon(Icons.refresh, size: 20),
             ),
@@ -91,7 +91,7 @@ class _ZatcaConnectionStatusCardState extends ConsumerState<ZatcaConnectionStatu
         ),
         AppSpacing.gapH16,
         if (status.certificate == null)
-          Text(l10n.zatcaNoCertificate, style: TextStyle(color: AppColors.error))
+          Text(l10n.zatcaNoCertificate, style: const TextStyle(color: AppColors.error))
         else
           _buildCertRow(theme, l10n, status.certificate!),
         AppSpacing.gapH12,

@@ -53,7 +53,10 @@ class QuickAccessWidget extends ConsumerWidget {
               ),
             ),
             AppSpacing.gapH16,
-            Text('Buttons (${s.buttons.length})', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              l10n.pcButtonsCount(s.buttons.length),
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
             AppSpacing.gapH8,
             if (s.buttons.isEmpty)
               Center(child: Text(l10n.posCustNoQuickAccess, style: theme.textTheme.bodyMedium))

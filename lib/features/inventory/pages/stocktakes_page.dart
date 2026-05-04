@@ -90,7 +90,7 @@ class _StocktakesPageState extends ConsumerState<StocktakesPage> {
     final actionLabel = action == 'apply' ? l10n.inventoryApplyStocktake : l10n.inventoryCancelled;
     final confirmed = await showPosConfirmDialog(
       context,
-      title: '${actionLabel} "$label"?',
+      title: '$actionLabel "$label"?',
       message: action == 'apply'
           ? l10n.inventoryStocktakeApplyWarning
           : l10n.inventoryStocktakeCancelWarning,
@@ -134,7 +134,7 @@ class _StocktakesPageState extends ConsumerState<StocktakesPage> {
         SizedBox(
           width: 180,
           child: DropdownButtonFormField<String?>(
-            value: _selectedStatus,
+            initialValue: _selectedStatus,
             isDense: true,
             decoration: InputDecoration(
               labelText: l10n.inventoryAllStatuses,
@@ -464,7 +464,7 @@ class _StocktakeDetailViewState extends ConsumerState<_StocktakeDetailView> {
           // Count sheet table
           Expanded(
             child: _rows.isEmpty
-                ? Center(child: Text(l10n.inventoryNoItemsToCount, style: TextStyle(color: AppColors.textMutedLight)))
+                ? Center(child: Text(l10n.inventoryNoItemsToCount, style: const TextStyle(color: AppColors.textMutedLight)))
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                     itemCount: _rows.length,
@@ -600,7 +600,7 @@ class _CountRowTile extends StatelessWidget {
                   Text(
                     variance != null ? variance.toStringAsFixed(3) : '-',
                     style: TextStyle(
-                      color: hasVariance ? (variance! > 0 ? AppColors.success : AppColors.error) : null,
+                      color: hasVariance ? (variance > 0 ? AppColors.success : AppColors.error) : null,
                       fontWeight: hasVariance ? FontWeight.w600 : null,
                     ),
                   ),
@@ -666,7 +666,7 @@ class _CategoryDropdown extends ConsumerWidget {
     }
     final l10n = AppLocalizations.of(context)!;
     return DropdownButtonFormField<String?>(
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(labelText: l10n.commonCategory),
       items: [
         DropdownMenuItem(value: null, child: Text(l10n.inventoryAllCategories)),

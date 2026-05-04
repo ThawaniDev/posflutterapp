@@ -104,7 +104,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                   Text(l10n.roles, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   if (roles.isEmpty)
-                    Text(l10n.adminNoRolesAssigned, style: TextStyle(color: AppColors.textSecondary))
+                    Text(l10n.adminNoRolesAssigned, style: const TextStyle(color: AppColors.textSecondary))
                   else
                     ...roles.map((r) {
                       final role = r as Map<String, dynamic>;

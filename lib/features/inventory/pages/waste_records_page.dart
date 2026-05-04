@@ -64,7 +64,7 @@ class _WasteRecordsPageState extends ConsumerState<WasteRecordsPage> {
         SizedBox(
           width: 180,
           child: DropdownButtonFormField<String?>(
-            value: _selectedReason,
+            initialValue: _selectedReason,
             isDense: true,
             decoration: InputDecoration(
               labelText: l10n.inventoryWasteReason,
@@ -232,7 +232,7 @@ class _WasteRecordsPageState extends ConsumerState<WasteRecordsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DropdownButtonFormField<String?>(
-                      value: selectedProductId,
+                      initialValue: selectedProductId,
                       decoration: InputDecoration(labelText: l10n.inventoryProduct),
                       items: products
                           .map((p) => DropdownMenuItem<String?>(value: p.id, child: Text(p.name)))
@@ -241,7 +241,7 @@ class _WasteRecordsPageState extends ConsumerState<WasteRecordsPage> {
                     ),
                     AppSpacing.gapH12,
                     DropdownButtonFormField<WasteReason>(
-                      value: selectedReason,
+                      initialValue: selectedReason,
                       decoration: InputDecoration(labelText: l10n.inventoryWasteReason),
                       items: WasteReason.values
                           .map((r) => DropdownMenuItem(value: r, child: Text(_reasonLabel(r, l10n))))
@@ -340,7 +340,7 @@ class _SummaryChip extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                    Text(label, style: TextStyle(fontSize: 11, color: AppColors.textMutedLight)),
+                    Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight)),
                 Text(value, style: TextStyle(fontWeight: FontWeight.w700, color: color)),
               ],
             ),

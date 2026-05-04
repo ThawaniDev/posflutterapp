@@ -17,6 +17,26 @@ pluginManagement {
     }
 }
 
+// Load EdfaPay partner repo credentials from gradle.properties
+val partnerRepoUsername: String by settings
+val partnerRepoPassword: String by settings
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        // EdfaPay SoftPOS private maven repository
+        maven {
+            url = uri("https://maven.edfapay.com/repository/edfapay-sdk/")
+            credentials {
+                username = partnerRepoUsername
+                password = partnerRepoPassword
+            }
+        }
+    }
+}
+
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
     id("com.android.application") version "8.11.1" apply false

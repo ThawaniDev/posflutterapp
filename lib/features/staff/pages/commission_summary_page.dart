@@ -215,7 +215,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DropdownButtonFormField<String>(
-                      value: selectedType,
+                      initialValue: selectedType,
                       decoration: InputDecoration(labelText: l10n.staffCommissionType),
                       items: [
                         DropdownMenuItem(value: 'flat_percentage', child: Text(l10n.staffCommissionFlat)),

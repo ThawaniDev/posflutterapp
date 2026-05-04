@@ -183,7 +183,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 final method = item['method'] as String? ?? '';
                 final amount = _toDouble(item['amount']);
                 final methodKey = PaymentMethodKey.tryFromValue(method);
-                final displayName = methodKey != null ? PaymentCalculationService.methodDisplayName(methodKey) : method;
+                final displayName = methodKey != null ? PaymentCalculationService.methodDisplayName(methodKey, l10n) : method;
                 final pct = totalRevenue > 0 ? amount / totalRevenue : 0.0;
                 final color = _methodColor(method);
 

@@ -356,14 +356,20 @@ class PosDataTable<T> extends StatelessWidget {
       child: Row(
         children: [
           if (totalItems != null)
-            Text('$totalItems items', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+            Text(
+              AppLocalizations.of(context)!.commonItemsCount(totalItems!),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            ),
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.chevron_left, size: 20),
             onPressed: currentPage! > 1 ? onPreviousPage : null,
             visualDensity: VisualDensity.compact,
           ),
-          Text('$currentPage / $totalPages', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+          Text(
+            AppLocalizations.of(context)!.paginationPageOf(currentPage!, totalPages!),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+          ),
           IconButton(
             icon: const Icon(Icons.chevron_right, size: 20),
             onPressed: currentPage! < totalPages! ? onNextPage : null,
@@ -554,7 +560,7 @@ class PosDataTable<T> extends StatelessWidget {
             splashRadius: 16,
             tooltip: AppLocalizations.of(context)!.tablePreviousPage,
           ),
-          Text('$currentPage / $totalPages', style: AppTypography.labelMedium),
+          Text(AppLocalizations.of(context)!.paginationPageOf(currentPage!, totalPages!), style: AppTypography.labelMedium),
           IconButton(
             onPressed: currentPage! < totalPages! ? onNextPage : null,
             icon: const Icon(Icons.chevron_right_rounded, size: 20),
@@ -608,7 +614,7 @@ class PosTablePagination extends StatelessWidget {
             builder: (ctx) {
               final isDark = Theme.of(ctx).brightness == Brightness.dark;
               return Text(
-                'Showing $start–$end of $totalItems',
+                AppLocalizations.of(ctx)!.tableShowingRange('$start', '$end', '$totalItems'),
                 style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               );
             },
@@ -620,7 +626,7 @@ class PosTablePagination extends StatelessWidget {
                 icon: const Icon(Icons.chevron_left_rounded, size: 20),
                 iconSize: 20,
               ),
-              Text('$currentPage / $totalPages', style: AppTypography.labelMedium),
+              Text(AppLocalizations.of(context)!.paginationPageOf(currentPage, totalPages), style: AppTypography.labelMedium),
               IconButton(
                 onPressed: currentPage < totalPages ? onNext : null,
                 icon: const Icon(Icons.chevron_right_rounded, size: 20),
@@ -852,7 +858,7 @@ class _EmptyState extends StatelessWidget {
         ],
         if (config.action != null) ...[
           const SizedBox(height: AppSpacing.lg),
-          OutlinedButton(onPressed: config.action, child: Text(config.actionLabel ?? 'Get Started')),
+          OutlinedButton(onPressed: config.action, child: Text(config.actionLabel ?? AppLocalizations.of(context)!.getStarted)),
         ],
       ],
     );

@@ -316,7 +316,7 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
                 Text(l10n.reportsType, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<String>(
-                  value: _reportType,
+                  initialValue: _reportType,
                   decoration: const InputDecoration(isDense: true),
                   items: _reportTypes
                       .map((t) => DropdownMenuItem(value: t, child: Text(t.replaceAll('_', ' ').toUpperCase())))

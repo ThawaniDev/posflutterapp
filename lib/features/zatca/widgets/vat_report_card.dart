@@ -6,7 +6,6 @@ import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class VatReportCard extends StatelessWidget {
-
   const VatReportCard({super.key, required this.data});
   final ZatcaVatReportLoaded data;
 
@@ -37,10 +36,7 @@ class VatReportCard extends StatelessWidget {
           // Total summary
           Container(
             padding: AppSpacing.paddingAll12,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.06),
-              borderRadius: AppRadius.borderSm,
-            ),
+            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.06), borderRadius: AppRadius.borderSm),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,8 +72,16 @@ class VatReportCard extends StatelessWidget {
             icon: Icons.description_outlined,
             color: AppColors.info,
             count: (data.standardInvoices['count'] as num?)?.toInt() ?? 0,
-            amount: (data.standardInvoices['total_amount'] != null ? double.tryParse(data.standardInvoices['total_amount'].toString()) : null) ?? 0,
-            vat: (data.standardInvoices['total_vat'] != null ? double.tryParse(data.standardInvoices['total_vat'].toString()) : null) ?? 0,
+            amount:
+                (data.standardInvoices['total_amount'] != null
+                    ? double.tryParse(data.standardInvoices['total_amount'].toString())
+                    : null) ??
+                0,
+            vat:
+                (data.standardInvoices['total_vat'] != null
+                    ? double.tryParse(data.standardInvoices['total_vat'].toString())
+                    : null) ??
+                0,
           ),
           AppSpacing.gapH12,
           _InvoiceBreakdownRow(
@@ -85,8 +89,16 @@ class VatReportCard extends StatelessWidget {
             icon: Icons.receipt_outlined,
             color: AppColors.success,
             count: (data.simplifiedInvoices['count'] as num?)?.toInt() ?? 0,
-            amount: (data.simplifiedInvoices['total_amount'] != null ? double.tryParse(data.simplifiedInvoices['total_amount'].toString()) : null) ?? 0,
-            vat: (data.simplifiedInvoices['total_vat'] != null ? double.tryParse(data.simplifiedInvoices['total_vat'].toString()) : null) ?? 0,
+            amount:
+                (data.simplifiedInvoices['total_amount'] != null
+                    ? double.tryParse(data.simplifiedInvoices['total_amount'].toString())
+                    : null) ??
+                0,
+            vat:
+                (data.simplifiedInvoices['total_vat'] != null
+                    ? double.tryParse(data.simplifiedInvoices['total_vat'].toString())
+                    : null) ??
+                0,
           ),
         ],
       ),
@@ -95,7 +107,6 @@ class VatReportCard extends StatelessWidget {
 }
 
 class _InvoiceBreakdownRow extends StatelessWidget {
-
   const _InvoiceBreakdownRow({
     required this.label,
     required this.icon,
@@ -124,7 +135,7 @@ class _InvoiceBreakdownRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
-              Text('$count invoices', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+              Text(l10n.zatcaInvoicesCount(count), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
             ],
           ),
         ),
@@ -132,7 +143,10 @@ class _InvoiceBreakdownRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text('\u0081 ${amount.toStringAsFixed(2)}', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-            Text('VAT: \u0081 ${vat.toStringAsFixed(2)}', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+            Text(
+              l10n.zatcaVatAmountLabel('\u0081 ${vat.toStringAsFixed(2)}'),
+              style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+            ),
           ],
         ),
       ],

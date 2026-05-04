@@ -153,11 +153,12 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                     DropdownMenuItem(value: 'weekly', child: Text(l10n.backupFrequencyWeekly)),
                   ],
                   onChanged: (v) {
-                    if (v != null)
+                    if (v != null) {
                       setState(() {
                         _frequency = v;
                         _isDirty = true;
                       });
+                    }
                   },
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -207,7 +208,7 @@ class _BackupScheduleWidgetState extends ConsumerState<BackupScheduleWidget> {
                 ),
                 const SizedBox(height: AppSpacing.lg),
 
-                PosDivider(),
+                const PosDivider(),
                 const SizedBox(height: AppSpacing.lg),
 
                 PosToggle(

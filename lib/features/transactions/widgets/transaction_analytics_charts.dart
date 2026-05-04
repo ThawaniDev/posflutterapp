@@ -166,7 +166,6 @@ class _PaymentBreakdownChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (breakdown.isEmpty) {
       return PosCard(

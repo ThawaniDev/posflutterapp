@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/catalog/enums/product_unit.dart';
 
 class Product {
-
   const Product({
     required this.id,
     required this.organizationId,
@@ -31,6 +30,7 @@ class Product {
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
+    this.modifierGroups,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -63,6 +63,9 @@ class Product {
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
+      modifierGroups: json['modifier_groups'] is List
+          ? List<Map<String, dynamic>>.from((json['modifier_groups'] as List).map((e) => Map<String, dynamic>.from(e as Map)))
+          : null,
     );
   }
   final String id;
@@ -94,6 +97,13 @@ class Product {
   final DateTime? updatedAt;
   final DateTime? deletedAt;
 
+  /// Restaurant-style modifier groups loaded from the product detail
+  /// endpoint. Each entry has shape:
+  ///   { id, name, name_ar, is_required, min_select, max_select,
+  ///     options: [ { id, name, name_ar, price_adjustment, is_default } ] }
+  /// Used to drive the modifier picker dialog at add-to-cart time.
+  final List<Map<String, dynamic>>? modifierGroups;
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -124,6 +134,7 @@ class Product {
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
       'deleted_at': deletedAt?.toIso8601String(),
+      'modifier_groups': modifierGroups,
     };
   }
 
@@ -156,6 +167,7 @@ class Product {
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
+    List<Map<String, dynamic>>? modifierGroups,
   }) {
     return Product(
       id: id ?? this.id,
@@ -186,6 +198,7 @@ class Product {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       deletedAt: deletedAt ?? this.deletedAt,
+      modifierGroups: modifierGroups ?? this.modifierGroups,
     );
   }
 

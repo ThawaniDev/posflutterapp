@@ -178,7 +178,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 child: FilledButton.icon(
                   onPressed: _submit,
                   icon: const Icon(Icons.send, size: 18),
-                  label: Text('Run ${widget.featureName}'),
+                  label: Text(l10n.aiRunFeature(widget.featureName)),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 12),

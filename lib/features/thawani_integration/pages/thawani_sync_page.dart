@@ -200,7 +200,6 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
   }
 
   Widget _queueStat(String label, int count, Color color) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Text(

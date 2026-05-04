@@ -37,7 +37,7 @@ class _ExpiryDashboardPageState extends ConsumerState<ExpiryDashboardPage> {
         SizedBox(
           width: 160,
           child: DropdownButtonFormField<int>(
-            value: _daysAhead,
+            initialValue: _daysAhead,
             isDense: true,
             decoration: InputDecoration(
               labelText: l10n.inventoryExpiryLookAhead,
@@ -95,7 +95,7 @@ class _ExpiryDashboardPageState extends ConsumerState<ExpiryDashboardPage> {
               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.success),
             ),
             const SizedBox(height: AppSpacing.sm),
-            Text(l10n.inventoryAllBatchesSafe(_daysAhead), style: TextStyle(color: AppColors.textMutedLight)),
+            Text(l10n.inventoryAllBatchesSafe(_daysAhead), style: const TextStyle(color: AppColors.textMutedLight)),
           ],
         ),
       );

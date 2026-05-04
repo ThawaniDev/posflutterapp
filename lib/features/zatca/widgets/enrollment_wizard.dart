@@ -6,7 +6,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class EnrollmentWizard extends StatefulWidget {
-
   const EnrollmentWizard({super.key, required this.onEnroll});
   final Future<void> Function(String otp, String environment) onEnroll;
 
@@ -83,7 +82,7 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
               onPressed: _isLoading ? null : _handleEnroll,
               isLoading: _isLoading,
               icon: Icons.verified_outlined,
-              label: _isLoading ? 'Enrolling...' : 'Enroll Now',
+              label: _isLoading ? l10n.zatcaEnrolling : l10n.zatcaEnrollNow,
               isFullWidth: true,
             ),
           ),

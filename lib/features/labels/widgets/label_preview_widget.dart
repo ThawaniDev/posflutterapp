@@ -1,5 +1,6 @@
 import 'package:barcode/barcode.dart';
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 
 /// Renders a real visual preview of a label template at a chosen pixel scale.
@@ -110,11 +111,12 @@ class _LabelElementView extends StatelessWidget {
       top: y * scale,
       width: width * scale,
       height: height * scale,
-      child: _buildElement(type, config),
+      child: _buildElement(type, config, context),
     );
   }
 
-  Widget _buildElement(String type, Map<String, dynamic> config) {
+  Widget _buildElement(String type, Map<String, dynamic> config, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     switch (type) {
       case 'barcode':
         return _BarcodeRenderer(
@@ -147,7 +149,7 @@ class _LabelElementView extends StatelessWidget {
         return FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text('SKU: ${data.sku ?? '-'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
+          child: Text(l10n != null ? l10n.hardwareSkuLabel(data.sku ?? '-') : 'SKU: ${data.sku ?? '-'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
         );
       case 'custom_text':
         return FittedBox(
@@ -162,7 +164,10 @@ class _LabelElementView extends StatelessWidget {
         return FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text('EXP: ${data.expiryDate ?? '--/--/--'}', style: const TextStyle(fontSize: 8, color: Colors.black87)),
+          child: Text(
+            l10n != null ? l10n.labelsExpiryDate(data.expiryDate ?? '--/--/--') : 'EXP: ${data.expiryDate ?? '--/--/--'}',
+            style: const TextStyle(fontSize: 8, color: Colors.black87),
+          ),
         );
       case 'weight':
         return FittedBox(

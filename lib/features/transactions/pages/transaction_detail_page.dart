@@ -10,6 +10,7 @@ import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
 import 'package:wameedpos/features/pos_terminal/models/payment.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction_item.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/card_scheme_badge.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/void_reason_dialog.dart';
 import 'package:wameedpos/features/transactions/providers/transaction_explorer_providers.dart';
 import 'package:wameedpos/features/transactions/providers/transaction_explorer_state.dart';
@@ -75,7 +76,6 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     final loaded = state as TransactionDetailLoaded;
     final tx = loaded.transaction;
     final payments = loaded.payments;
-    final isMobile = context.isPhone;
 
     return SingleChildScrollView(
       padding: context.responsivePagePadding,
@@ -229,7 +229,10 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
                 if (item.barcode != null)
                   Text(item.barcode!, style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context))),
                 if (item.serialNumber != null)
-                  Text('S/N: ${item.serialNumber}', style: AppTypography.micro.copyWith(color: AppColors.info)),
+                  Text(
+                    AppLocalizations.of(context)!.transactionSerialNumber(item.serialNumber!),
+                    style: AppTypography.micro.copyWith(color: AppColors.info),
+                  ),
               ],
             ),
           ),
@@ -279,6 +282,9 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
         .map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1)}')
         .join(' ');
 
+    // Prefer cardScheme (EdfaPay SoftPOS) over cardBrand for the badge.
+    final schemeRaw = payment.cardScheme ?? payment.cardBrand;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
@@ -298,9 +304,17 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
               children: [
                 Text(methodName, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600)),
                 if (payment.cardLastFour != null)
-                  Text(
-                    '•••• ${payment.cardLastFour}${payment.cardBrand != null ? ' · ${payment.cardBrand}' : ''}',
-                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
+                  Row(
+                    children: [
+                      Text(
+                        '•••• ${payment.cardLastFour}',
+                        style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
+                      ),
+                      if (schemeRaw != null) ...[
+                        AppSpacing.gapW4,
+                        CardSchemeBadge(scheme: schemeRaw, size: 12),
+                      ],
+                    ],
                   ),
               ],
             ),

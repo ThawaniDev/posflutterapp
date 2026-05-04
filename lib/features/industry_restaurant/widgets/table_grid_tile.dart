@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -6,7 +7,6 @@ import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.d
 import 'package:wameedpos/features/industry_restaurant/enums/restaurant_table_status.dart';
 
 class TableGridTile extends StatelessWidget {
-
   const TableGridTile({super.key, required this.table, this.onTap});
   final RestaurantTable table;
   final VoidCallback? onTap;
@@ -36,7 +36,10 @@ class TableGridTile extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               AppSpacing.gapH2,
-              Text('${table.seats} seats', style: AppTypography.caption.copyWith(color: fgColor.withValues(alpha: 0.7))),
+              Text(
+                '${table.seats} ${AppLocalizations.of(context)!.restaurantSeats.toLowerCase()}',
+                style: AppTypography.caption.copyWith(color: fgColor.withValues(alpha: 0.7)),
+              ),
               if (table.zone != null) ...[
                 AppSpacing.gapH2,
                 Text(

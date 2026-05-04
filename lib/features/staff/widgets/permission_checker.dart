@@ -30,7 +30,6 @@ class PermissionGate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final hasPermission = ref.watch(hasPermissionProvider(permission));
 
     if (hasPermission) return child;

@@ -213,7 +213,7 @@ class BackupStorageWidget extends ConsumerWidget {
                           decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
                         ),
                       ),
-                      if (!isLast) PosDivider(),
+                      if (!isLast) const PosDivider(),
                     ],
                   );
                 }).toList(),

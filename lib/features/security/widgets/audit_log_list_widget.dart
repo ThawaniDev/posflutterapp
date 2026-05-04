@@ -33,6 +33,7 @@ class _AuditLogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final severityColor = switch (log.severity?.value) {
       'critical' => AppColors.error,
       'warning' => AppColors.warning,
@@ -52,8 +53,8 @@ class _AuditLogTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (log.userType != null) Text('User: ${log.userType!.value}', style: theme.textTheme.bodySmall),
-          if (log.ipAddress != null) Text('IP: ${log.ipAddress}', style: theme.textTheme.bodySmall),
+          if (log.userType != null) Text(l10n.securityAuditUser(log.userType!.value), style: theme.textTheme.bodySmall),
+          if (log.ipAddress != null) Text(l10n.securityAuditIp(log.ipAddress!), style: theme.textTheme.bodySmall),
         ],
       ),
       trailing: Column(

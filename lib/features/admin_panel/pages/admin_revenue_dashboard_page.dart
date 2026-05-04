@@ -62,7 +62,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.adminSubscriptionsOverview, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(l10n.adminSubscriptionsOverview, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     AppSpacing.gapH16,
                     PosKpiGrid(
                       desktopCols: 4,
@@ -105,7 +105,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(l10n.adminMRR, style: TextStyle(fontSize: 16)),
+                                Text(l10n.adminMRR, style: const TextStyle(fontSize: 16)),
                                 Text(
                                   '\u0081${loaded.mrr.toStringAsFixed(2)}',
                                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
@@ -116,7 +116,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(l10n.adminARR, style: TextStyle(fontSize: 16)),
+                                Text(l10n.adminARR, style: const TextStyle(fontSize: 16)),
                                 Text(
                                   '\u0081${loaded.arr.toStringAsFixed(2)}',
                                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

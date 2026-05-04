@@ -153,7 +153,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                   const Icon(Icons.devices_other, color: AppColors.primary),
                   AppSpacing.gapW8,
                   Text(
-                    widget.isEditing ? 'Edit Device' : 'Add Device',
+                    widget.isEditing ? l10n.hardwareEditDevice : l10n.hardwareAddDevice,
                     style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                   ),
                   const Spacer(),
@@ -235,7 +235,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                       });
                     },
                     icon: Icons.save,
-                    label: widget.isEditing ? 'Update' : 'Add Device',
+                    label: widget.isEditing ? l10n.update : l10n.hardwareAddDevice,
                   ),
                 ],
               ),

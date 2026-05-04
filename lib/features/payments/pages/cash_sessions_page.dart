@@ -70,7 +70,7 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
             padding: AppSpacing.paddingAll16,
             child: Center(
               child: PosButton(
-                label: 'Load more',
+                label: l10n.commonLoadMore,
                 variant: PosButtonVariant.outline,
                 onPressed: () => ref.read(cashSessionsProvider.notifier).loadMore(),
               ),

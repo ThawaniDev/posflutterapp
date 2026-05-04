@@ -194,7 +194,9 @@ class PromotionEvaluator {
         if (buy > 0 && get > 0 && qualifying.isNotEmpty) {
           final units = <double>[];
           for (final it in qualifying) {
-            for (var i = 0; i < it.quantity; i++) units.add(it.unitPrice);
+            for (var i = 0; i < it.quantity; i++) {
+              units.add(it.unitPrice);
+            }
           }
           units.sort();
           final groupSize = buy + get;

@@ -15,7 +15,6 @@ class QuickStatsWidget extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(quickStatsProvider);
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return switch (state) {
       QuickStatsInitial() || QuickStatsLoading() => const PosLoading(),

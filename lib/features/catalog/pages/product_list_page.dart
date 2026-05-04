@@ -283,7 +283,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           TextButton.icon(
             onPressed: () => setState(() => _isGridView = !_isGridView),
             icon: Icon(_isGridView ? Icons.view_list : Icons.grid_view, size: 16),
-            label: Text(_isGridView ? 'List' : 'Grid', style: const TextStyle(fontSize: 12)),
+            label: Text(_isGridView ? l10n.catalogListView : l10n.catalogGridView, style: const TextStyle(fontSize: 12)),
           ),
         ],
       ),
@@ -1042,7 +1042,10 @@ class _MobilePaginationBar extends StatelessWidget {
       child: Row(
         children: [
           if (totalItems != null)
-            Text('$totalItems items', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+            Text(
+              '$totalItems ${AppLocalizations.of(context)!.posItems}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            ),
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.chevron_left, size: 20),

@@ -141,7 +141,6 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
     final direction = log['direction'] as String? ?? '';
     final directionIcon = direction == 'outgoing' ? Icons.arrow_upward : Icons.arrow_downward;
     final createdAt = log['created_at']?.toString() ?? '';
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
@@ -190,7 +189,10 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
           if (log['http_status_code'] != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-              child: Text('HTTP ${log['http_status_code']}', style: TextStyle(fontSize: 11, color: mutedColor)),
+              child: Text(
+                l10n.thawaniHttpStatus(log['http_status_code'].toString()),
+                style: TextStyle(fontSize: 11, color: mutedColor),
+              ),
             ),
           const SizedBox(height: 8),
         ],

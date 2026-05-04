@@ -433,7 +433,6 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
     required Color color,
     required VoidCallback onTap,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 8),

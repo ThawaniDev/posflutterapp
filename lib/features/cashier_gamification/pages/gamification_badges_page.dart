@@ -50,17 +50,17 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               AppSpacing.gapH8,
               TextField(
                 controller: nameEnC,
-                decoration: const InputDecoration(labelText: 'Name (EN)'),
+                decoration: InputDecoration(labelText: l10n.gamificationNameEn),
               ),
               AppSpacing.gapH8,
               TextField(
                 controller: nameArC,
-                decoration: const InputDecoration(labelText: 'Name (AR)'),
+                decoration: InputDecoration(labelText: l10n.gamificationNameAr),
               ),
               AppSpacing.gapH8,
               DropdownButtonFormField<String>(
                 initialValue: triggerType,
-                decoration: const InputDecoration(labelText: 'Trigger Type'),
+                decoration: InputDecoration(labelText: l10n.gamificationTriggerType),
                 items: [
                   DropdownMenuItem(value: 'items_per_minute', child: Text(l10n.cgItemsPerMin)),
                   DropdownMenuItem(value: 'total_transactions', child: Text(l10n.cgTotalTxn)),
@@ -76,7 +76,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               AppSpacing.gapH8,
               TextField(
                 controller: thresholdC,
-                decoration: const InputDecoration(labelText: 'Threshold'),
+                decoration: InputDecoration(labelText: l10n.gamificationThreshold),
                 keyboardType: TextInputType.number,
               ),
               AppSpacing.gapH8,
@@ -207,7 +207,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: Text(award.badge?.icon ?? '🏅', style: const TextStyle(fontSize: 24)),
-                      title: Text(award.cashier?.name ?? 'Cashier'),
+                      title: Text(award.cashier?.name ?? l10n.posCashier),
                       subtitle: Text('${award.badge?.nameEn ?? ''} • ${award.earnedDate}'),
                       trailing: Text(award.metricValue.toStringAsFixed(1), style: const TextStyle(fontWeight: FontWeight.bold)),
                     ),

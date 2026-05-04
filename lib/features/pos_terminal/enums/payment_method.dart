@@ -15,7 +15,8 @@ enum PaymentMethod {
   tabby('tabby'),
   tamara('tamara'),
   mispay('mispay'),
-  madfu('madfu');
+  madfu('madfu'),
+  softPos('soft_pos');
 
   const PaymentMethod(this.value);
   final String value;
@@ -56,6 +57,7 @@ enum PaymentMethod {
       PaymentMethod.tamara => 'Tamara',
       PaymentMethod.mispay => 'MisPay',
       PaymentMethod.madfu => 'Madfu',
+      PaymentMethod.softPos => 'SoftPOS',
     };
   }
 
@@ -65,6 +67,8 @@ enum PaymentMethod {
       this == PaymentMethod.cardVisa ||
       this == PaymentMethod.cardMastercard ||
       this == PaymentMethod.mada;
+
+  bool get isSoftPos => this == PaymentMethod.softPos;
 
   bool get isInstallment =>
       this == PaymentMethod.tabby || this == PaymentMethod.tamara || this == PaymentMethod.mispay || this == PaymentMethod.madfu;

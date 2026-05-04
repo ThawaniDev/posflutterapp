@@ -32,24 +32,28 @@ class ReceiptTemplateWidget extends ConsumerWidget {
         child: PosCard(
           child: Column(
             children: [
-              ListTile(leading: const Icon(Icons.image), title: Text(l10n.pcReceiptLogo), subtitle: Text(s.logoUrl ?? 'Not set')),
+              ListTile(
+                leading: const Icon(Icons.image),
+                title: Text(l10n.pcReceiptLogo),
+                subtitle: Text(s.logoUrl ?? l10n.notSet),
+              ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.title),
                 title: Text(l10n.pcHeaderLine1),
-                subtitle: Text(s.headerLine1 ?? 'Not set'),
+                subtitle: Text(s.headerLine1 ?? l10n.notSet),
               ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.title),
                 title: Text(l10n.pcHeaderLine2),
-                subtitle: Text(s.headerLine2 ?? 'Not set'),
+                subtitle: Text(s.headerLine2 ?? l10n.notSet),
               ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.article),
                 title: Text(l10n.pcFooter),
-                subtitle: Text(s.footerText ?? 'Not set'),
+                subtitle: Text(s.footerText ?? l10n.notSet),
               ),
               const Divider(height: 1),
               SwitchListTile(

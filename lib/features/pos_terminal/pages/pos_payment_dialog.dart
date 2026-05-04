@@ -14,11 +14,15 @@ import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_ser
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/card_scheme_badge.dart';
 import 'package:wameedpos/features/promotions/services/promotion_evaluator.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
+import 'package:wameedpos/features/softpos/providers/softpos_providers.dart';
+import 'package:wameedpos/features/softpos/providers/softpos_state.dart';
+import 'package:wameedpos/features/softpos/services/softpos_service.dart';
 
 /// A payment entry: method + amount. Supports split payments.
 class _PaymentLeg {
@@ -48,6 +52,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   double _tipAmount = 0;
   final _tipController = TextEditingController();
   String? _error;
+
+  // SoftPOS
+  SoftPosPaymentResult? _softPosResult;
 
   // Gift card
   final _giftCardController = TextEditingController();
@@ -110,7 +117,29 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   }
 
   void _updateLegMethod(int index, PaymentMethod method) {
+    if (method == PaymentMethod.softPos) {
+      _selectSoftPosMethod(index);
+      return;
+    }
     setState(() => _legs[index].method = method);
+  }
+
+  /// Guards SoftPOS method selection: checks that an EdfaPay token is stored
+  /// before allowing the leg to switch.  Shows an inline error if not.
+  Future<void> _selectSoftPosMethod(int index) async {
+    final service = ref.read(softPosServiceProvider);
+    if (!service.isAvailable) {
+      setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
+      return;
+    }
+    final token = await ref.read(softPosTokenProvider.future);
+    if (token == null || token.isEmpty) {
+      if (mounted) {
+        setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
+      }
+      return;
+    }
+    setState(() => _legs[index].method = PaymentMethod.softPos);
   }
 
   void _onQuickCash(double amount) {
@@ -252,6 +281,38 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
     setState(() => _error = null);
 
+    // ── SoftPOS pre-payment via EdfaPay SDK ─────────────────────────────
+    final softPosLegs = _legs.where((l) => l.method == PaymentMethod.softPos).toList();
+    if (softPosLegs.isNotEmpty) {
+      final service = ref.read(softPosServiceProvider);
+      if (!service.isAvailable) {
+        setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
+        return;
+      }
+      // Initialise from secure storage if not already done
+      if (!service.isInitiated) {
+        await ref.read(softPosProvider.notifier).initFromStorage();
+        final initState = ref.read(softPosProvider);
+        if (initState is SoftPosError) {
+          setState(() => _error = initState.message);
+          return;
+        }
+        if (initState is! SoftPosReady) {
+          setState(() => _error = AppLocalizations.of(context)!.softposInitializing);
+          return;
+        }
+      }
+      // Execute NFC payment for each softPos leg
+      for (final leg in softPosLegs) {
+        final result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: '${widget.sessionId}-softpos');
+        if (!result.success) {
+          setState(() => _error = result.errorMessage ?? AppLocalizations.of(context)!.softposPaymentFailed);
+          return;
+        }
+        _softPosResult = result;
+      }
+    }
+
     final cart = ref.read(cartProvider);
     final payments = _legs.map((l) {
       final map = <String, dynamic>{'method': l.method.value, 'amount': l.amount};
@@ -268,6 +329,13 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       if (l.method == PaymentMethod.loyaltyPoints) {
         final pts = cart.customer?.loyaltyPoints ?? 0;
         map['loyalty_points_used'] = pts;
+      }
+      if (l.method == PaymentMethod.softPos && _softPosResult != null) {
+        if (_softPosResult!.approvalCode != null) map['approval_code'] = _softPosResult!.approvalCode;
+        if (_softPosResult!.rrn != null) map['rrn'] = _softPosResult!.rrn;
+        if (_softPosResult!.transactionId != null) map['card_transaction_id'] = _softPosResult!.transactionId;
+        if (_softPosResult!.cardScheme != null) map['card_scheme'] = _softPosResult!.cardScheme;
+        if (_softPosResult!.maskedCard != null) map['masked_card'] = _softPosResult!.maskedCard;
       }
       return map;
     }).toList();
@@ -363,6 +431,11 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   AppLocalizations.of(context)!.amountWithSar(state.totalAmount.toStringAsFixed(2)),
                   style: AppTypography.headlineLarge.copyWith(color: AppColors.primary),
                 ),
+                // Card scheme badge — only shown for SoftPOS payments
+                if (_softPosResult?.cardScheme != null) ...[
+                  AppSpacing.gapH8,
+                  CardSchemeBadge(scheme: _softPosResult!.cardScheme, size: 14),
+                ],
                 if (state.changeGiven != null && state.changeGiven! > 0) ...[
                   AppSpacing.gapH4,
                   Text(
@@ -538,6 +611,63 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                     style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
                   ),
                   AppSpacing.gapH4,
+                  // Percentage preset shortcuts (e.g. 10/15/20/25). Skipped
+                  // if the store admin hasn't configured any presets.
+                  Builder(
+                    builder: (ctx) {
+                      final s = ref.read(storeSettingsProvider);
+                      if (s is! StoreSettingsLoaded) return const SizedBox.shrink();
+                      final presets = s.settings.tipPresets;
+                      if (presets.isEmpty) return const SizedBox.shrink();
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: [
+                            for (final pct in presets)
+                              ChoiceChip(
+                                label: Text('$pct%'),
+                                selected: (widget.totalAmount > 0 && (_tipAmount / widget.totalAmount * 100).round() == pct),
+                                onSelected: (_) {
+                                  final tip = double.parse((widget.totalAmount * pct / 100).toStringAsFixed(2));
+                                  setState(() {
+                                    _tipAmount = tip;
+                                    _tipController.text = tip.toStringAsFixed(2);
+                                    if (_legs.length == 1) {
+                                      _legs.first.amount = _totalWithTip;
+                                      _legs.first.controller.text = _totalWithTip.toStringAsFixed(2);
+                                      if (_legs.first.method == PaymentMethod.cash) {
+                                        _cashTendered = _totalWithTip;
+                                        _cashTenderedController.text = _totalWithTip.toStringAsFixed(2);
+                                      }
+                                    }
+                                  });
+                                },
+                              ),
+                            ChoiceChip(
+                              label: Text(AppLocalizations.of(context)!.posTipNone),
+                              selected: _tipAmount == 0,
+                              onSelected: (_) {
+                                setState(() {
+                                  _tipAmount = 0;
+                                  _tipController.text = '';
+                                  if (_legs.length == 1) {
+                                    _legs.first.amount = _totalWithTip;
+                                    _legs.first.controller.text = _totalWithTip.toStringAsFixed(2);
+                                    if (_legs.first.method == PaymentMethod.cash) {
+                                      _cashTendered = _totalWithTip;
+                                      _cashTenderedController.text = _totalWithTip.toStringAsFixed(2);
+                                    }
+                                  }
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                   PosTextField(
                     controller: _tipController,
                     hint: '0.00',
@@ -1010,6 +1140,26 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
             textAlign: TextAlign.end,
             onChanged: (v) => _updateLegAmount(index, v),
           ),
+          // SoftPOS tap hint
+          if (leg.method == PaymentMethod.softPos) ...[
+            AppSpacing.gapH4,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+              child: Row(
+                children: [
+                  const Icon(Icons.contactless_rounded, color: AppColors.primary, size: 16),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context)!.softposTapCard,
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.primary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -1018,7 +1168,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   // Primary methods shown as cards. Other methods (gift card, store credit, etc.)
   // can be added as additional split legs and chosen here too — keeping the
   // surface small to match real-world POS workflows.
-  List<PaymentMethod> get _quickMethods => const [PaymentMethod.cash, PaymentMethod.card];
+  List<PaymentMethod> get _quickMethods => const [PaymentMethod.cash, PaymentMethod.card, PaymentMethod.softPos];
 
   String _methodLabel(PaymentMethod m) {
     final l10n = AppLocalizations.of(context)!;
@@ -1043,6 +1193,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       PaymentMethod.storeCredit => Icons.account_balance_wallet_rounded,
       PaymentMethod.loyaltyPoints => Icons.stars_rounded,
       PaymentMethod.bankTransfer => Icons.account_balance_rounded,
+      PaymentMethod.softPos => Icons.contactless_rounded,
       PaymentMethod.tabby || PaymentMethod.tamara || PaymentMethod.mispay || PaymentMethod.madfu => Icons.credit_score_rounded,
       _ => Icons.payment_rounded,
     };

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -28,6 +30,7 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_shift_report_dialog.da
 import 'package:wameedpos/features/pos_terminal/pages/pos_reprint_receipt_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/widgets/modifier_picker_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
@@ -273,7 +276,17 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       }
     }
 
-    ref.read(cartProvider.notifier).addProduct(product, qty: qty);
+    // ── Modifier picker (restaurant flow) ───────────────────────
+    // If the product has modifier groups configured the cashier must pick
+    // the customer's choices before the line lands in the cart.
+    List<Map<String, dynamic>>? modifierSelections;
+    if ((product.modifierGroups ?? const []).isNotEmpty) {
+      final picked = await ModifierPickerDialog.show(context, product);
+      if (picked == null) return; // cancelled
+      modifierSelections = picked;
+    }
+
+    ref.read(cartProvider.notifier).addProduct(product, qty: qty, modifierSelections: modifierSelections);
     if (product.ageRestricted == true) {
       final cart = ref.read(cartProvider);
       final idx = cart.items.indexWhere((i) => i.product.id == product.id);
@@ -581,7 +594,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                   AppSpacing.gapH12,
-                  PosTextField(controller: skuCtrl, label: 'SKU'),
+                  PosTextField(controller: skuCtrl, label: l10n.sku),
                   AppSpacing.gapH16,
                   Row(
                     children: [
@@ -792,6 +805,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   );
                 case 'reprint':
                   showDialog(context: context, builder: (_) => const PosReprintReceiptDialog());
+                case 'cfd':
+                  // Pop the customer-facing display in a new window/route.
+                  // The cashier device keeps the cashier UI; the second
+                  // screen (mirrored monitor or paired tablet) navigates to
+                  // /pos/cfd/:sessionId.
+                  context.push(Routes.posCfdFor(session.id));
                 case 'end_shift':
                   showDialog(
                     context: context,
@@ -822,48 +841,57 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 ),
               ),
               const PopupMenuDivider(),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'cash_in',
                 child: ListTile(
-                  leading: Icon(Icons.add_circle_outline, size: 20, color: AppColors.success),
-                  title: Text('Cash In (Paid-In)'),
+                  leading: const Icon(Icons.add_circle_outline, size: 20, color: AppColors.success),
+                  title: Text(AppLocalizations.of(context)!.posShiftCashInLine),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'cash_out',
                 child: ListTile(
-                  leading: Icon(Icons.remove_circle_outline, size: 20, color: AppColors.warning),
-                  title: Text('Cash Out (Drop / Payout)'),
+                  leading: const Icon(Icons.remove_circle_outline, size: 20, color: AppColors.warning),
+                  title: Text(AppLocalizations.of(context)!.posShiftCashOutLine),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
               const PopupMenuDivider(),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'x_report',
                 child: ListTile(
-                  leading: Icon(Icons.insights, size: 20),
-                  title: Text('X-Report (Snapshot)'),
+                  leading: const Icon(Icons.insights, size: 20),
+                  title: Text(AppLocalizations.of(context)!.posShiftXReport),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'z_report',
                 child: ListTile(
-                  leading: Icon(Icons.assessment, size: 20),
-                  title: Text('Z-Report'),
+                  leading: const Icon(Icons.assessment, size: 20),
+                  title: Text(AppLocalizations.of(context)!.posShiftZReport),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'reprint',
                 child: ListTile(
-                  leading: Icon(Icons.receipt_long, size: 20),
-                  title: Text('Reprint Receipt'),
+                  leading: const Icon(Icons.receipt_long, size: 20),
+                  title: Text(AppLocalizations.of(context)!.posReprintReceipt),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'cfd',
+                child: ListTile(
+                  leading: const Icon(Icons.tv_outlined, size: 20),
+                  title: Text(AppLocalizations.of(context)!.cfdLaunch),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1714,11 +1742,11 @@ class _CartItemTile extends ConsumerWidget {
               leading: const Icon(Icons.discount_outlined),
               title: Text(l.posDiscount),
               subtitle: item.discountAmount != null && item.discountAmount! > 0
-                  ? Text('Current: ${item.discountAmount!.toStringAsFixed(2)}')
+                  ? Text(l.posCurrentDiscount(item.discountAmount!.toStringAsFixed(2)))
                   : null,
               onTap: () async {
                 Navigator.pop(ctx);
-                final v = await _promptAmount(context, 'Item discount', item.discountAmount ?? 0);
+                final v = await _promptAmount(context, l.posItemDiscount, item.discountAmount ?? 0);
                 if (v != null) ref.read(cartProvider.notifier).setItemDiscount(index, v);
               },
             ),
@@ -1728,7 +1756,7 @@ class _CartItemTile extends ConsumerWidget {
               subtitle: (item.notes?.isNotEmpty ?? false) ? Text(item.notes!) : null,
               onTap: () async {
                 Navigator.pop(ctx);
-                final v = await _promptText(context, 'Item note', item.notes ?? '');
+                final v = await _promptText(context, l.posItemNote, item.notes ?? '');
                 if (v != null) ref.read(cartProvider.notifier).setItemNotes(index, v);
               },
             ),
@@ -1796,7 +1824,6 @@ class _QtyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadius.borderMd,

@@ -210,7 +210,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                   child: const Icon(Icons.inventory_2_rounded, size: 16, color: AppColors.primary),
                                 ),
                                 title: Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                                subtitle: Text('SKU: ${item.sku}', style: const TextStyle(fontSize: 11)),
+                                subtitle: Text(l10n.hardwareSkuLabel(item.sku), style: const TextStyle(fontSize: 11)),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

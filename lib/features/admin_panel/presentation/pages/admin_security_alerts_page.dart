@@ -140,12 +140,12 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
           children: [
             PosDataTable<Map<String, dynamic>>(
               columns: [
-                PosTableColumn(title: 'Severity', width: 100),
+                const PosTableColumn(title: 'Severity', width: 100),
                 PosTableColumn(title: l10n.adminAlertType, width: 160),
                 PosTableColumn(title: l10n.adminDescription, flex: 2),
                 PosTableColumn(title: l10n.adminIpAddress, width: 140),
                 PosTableColumn(title: l10n.status, width: 120),
-                PosTableColumn(title: 'Created At', width: 140),
+                const PosTableColumn(title: 'Created At', width: 140),
                 PosTableColumn(title: l10n.actions, width: 80),
               ],
               items: rows,

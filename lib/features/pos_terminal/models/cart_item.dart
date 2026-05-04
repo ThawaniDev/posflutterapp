@@ -11,6 +11,7 @@ class CartItem {
     this.discountValue,
     this.notes,
     this.ageVerified = false,
+    this.modifierSelections,
   });
   final Product product;
   final double quantity;
@@ -24,6 +25,23 @@ class CartItem {
   /// age-restricted product. Persisted on the backend as `age_verified`.
   final bool ageVerified;
 
+  /// Selected modifier options for this line item. Each entry is a map
+  /// shaped like the backend `modifier_selections` payload:
+  ///   { modifier_group_id, modifier_option_id, name, price_adjustment, quantity }
+  /// `price_adjustment` is summed into the per-unit price below.
+  final List<Map<String, dynamic>>? modifierSelections;
+
+  /// Total per-unit add-on cost from selected modifiers (e.g. extra cheese
+  /// + large size). Multiplied by `quantity` when computing the line total.
+  double get modifierAdjustment {
+    final list = modifierSelections;
+    if (list == null || list.isEmpty) return 0;
+    return list.fold<double>(
+      0,
+      (s, m) => s + ((m['price_adjustment'] as num?)?.toDouble() ?? 0) * ((m['quantity'] as num?)?.toDouble() ?? 1),
+    );
+  }
+
   /// Raw tax rate as stored in DB (e.g. 15 for 15%).
   double get rawTaxRate => product.taxRate ?? 15.0;
 
@@ -33,7 +51,7 @@ class CartItem {
     return rate > 1 ? rate / 100 : rate;
   }
 
-  double get subtotal => quantity * unitPrice - (discountAmount ?? 0);
+  double get subtotal => quantity * (unitPrice + modifierAdjustment) - (discountAmount ?? 0);
 
   double get taxAmount => subtotal * taxRate;
 
@@ -48,6 +66,7 @@ class CartItem {
     double? discountValue,
     String? notes,
     bool? ageVerified,
+    List<Map<String, dynamic>>? modifierSelections,
   }) {
     return CartItem(
       product: product ?? this.product,
@@ -58,6 +77,7 @@ class CartItem {
       discountValue: discountValue ?? this.discountValue,
       notes: notes ?? this.notes,
       ageVerified: ageVerified ?? this.ageVerified,
+      modifierSelections: modifierSelections ?? this.modifierSelections,
     );
   }
 
@@ -77,6 +97,8 @@ class CartItem {
       'tax_amount': taxAmount,
       'line_total': lineTotal,
       if (ageVerified) 'age_verified': true,
+      if (modifierSelections != null && modifierSelections!.isNotEmpty) 'modifier_selections': modifierSelections,
+      if (notes != null && notes!.isNotEmpty) 'item_notes': notes,
     };
   }
 }

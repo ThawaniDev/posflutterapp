@@ -48,9 +48,12 @@ class _ZatcaInvoiceDetailPageState extends ConsumerState<ZatcaInvoiceDetailPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(message, style: TextStyle(color: AppColors.error)),
+              Text(message, style: const TextStyle(color: AppColors.error)),
               AppSpacing.gapH12,
-              PosButton(label: 'Retry', onPressed: () => ref.read(zatcaInvoiceDetailProvider(widget.invoiceId).notifier).load()),
+              PosButton(
+                label: l10n.commonRetry,
+                onPressed: () => ref.read(zatcaInvoiceDetailProvider(widget.invoiceId).notifier).load(),
+              ),
             ],
           ),
         ),
@@ -208,7 +211,7 @@ class _ZatcaInvoiceDetailPageState extends ConsumerState<ZatcaInvoiceDetailPage>
             children: [
               Expanded(child: Text(title, style: Theme.of(context).textTheme.titleSmall)),
               IconButton(
-                tooltip: 'Copy',
+                tooltip: AppLocalizations.of(context)!.copy,
                 onPressed: () => Clipboard.setData(ClipboardData(text: xml)),
                 icon: const Icon(Icons.copy, size: 18),
               ),

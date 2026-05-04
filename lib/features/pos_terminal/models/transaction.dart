@@ -25,6 +25,8 @@ class Transaction {
     required this.totalAmount,
     this.isTaxExempt,
     this.returnTransactionId,
+    this.tabId,
+    this.approverId,
     this.externalType,
     this.externalId,
     this.notes,
@@ -61,6 +63,8 @@ class Transaction {
       totalAmount: double.tryParse(json['total_amount'].toString()) ?? 0.0,
       isTaxExempt: json['is_tax_exempt'] as bool?,
       returnTransactionId: json['return_transaction_id'] as String?,
+      tabId: json['tab_id'] as String?,
+      approverId: json['approver_id'] as String?,
       externalType: ExternalOrderType.tryFromValue(json['external_type'] as String?),
       externalId: json['external_id'] as String?,
       notes: json['notes'] as String?,
@@ -101,6 +105,8 @@ class Transaction {
   final double totalAmount;
   final bool? isTaxExempt;
   final String? returnTransactionId;
+  final String? tabId;
+  final String? approverId;
   final ExternalOrderType? externalType;
   final String? externalId;
   final String? notes;
@@ -139,6 +145,8 @@ class Transaction {
       'total_amount': totalAmount,
       'is_tax_exempt': isTaxExempt,
       'return_transaction_id': returnTransactionId,
+      'tab_id': tabId,
+      'approver_id': approverId,
       'external_type': externalType?.value,
       'external_id': externalId,
       'notes': notes,

@@ -167,7 +167,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
             padding: AppSpacing.paddingAll16,
             child: Center(
               child: PosButton(
-                label: 'Load more',
+                label: l10n.commonLoadMore,
                 variant: PosButtonVariant.outline,
                 onPressed: () => ref.read(expensesProvider.notifier).loadMore(),
               ),

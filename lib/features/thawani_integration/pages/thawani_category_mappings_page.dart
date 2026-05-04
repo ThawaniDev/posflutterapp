@@ -79,7 +79,6 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
               'pending' => (AppColors.warning, PosStatusBadgeVariant.warning),
               _ => (Colors.grey, PosStatusBadgeVariant.neutral),
             };
-            final isDark = Theme.of(context).brightness == Brightness.dark;
             final mutedColor = AppColors.mutedFor(context);
             final categoryName =
                 category?['name'] ?? category?['name_ar'] ?? l10n.thawaniCategoryNum('${mapping['category_id'] ?? '?'}');

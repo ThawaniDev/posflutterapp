@@ -815,4 +815,18 @@ class AdminRepository {
   Future<Map<String, dynamic>> getWameedAIBillingSettings() => _apiService.getWameedAIBillingSettings();
   Future<Map<String, dynamic>> updateWameedAIBillingSettings(Map<String, dynamic> data) =>
       _apiService.updateWameedAIBillingSettings(data);
+
+  // ─── SoftPOS Billing & Analytics ─────────────────────────────────────────
+
+  Future<Map<String, dynamic>> getSoftposTransactions({Map<String, dynamic>? params}) =>
+      _apiService.getSoftposTransactions(params: params);
+
+  Future<Map<String, dynamic>> getSoftposFinancials({Map<String, dynamic>? params}) =>
+      _apiService.getSoftposFinancials(params: params);
+
+  Future<Map<String, dynamic>> getSoftposTerminalRates({Map<String, dynamic>? params}) =>
+      _apiService.getSoftposTerminalRates(params: params);
+
+  Future<Map<String, dynamic>> updateTerminalSoftposBilling(String terminalId, Map<String, dynamic> data) =>
+      _apiService.updateTerminalSoftposBilling(terminalId, data);
 }

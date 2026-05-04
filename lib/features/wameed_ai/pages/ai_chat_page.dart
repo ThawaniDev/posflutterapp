@@ -704,7 +704,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final l10n = AppLocalizations.of(context)!;
     final chatState = ref.watch(aiActiveChatProvider);
     final isSending = chatState is AIChatLoaded && chatState.isSending;
-    final bottomPad = MediaQuery.of(context).padding.bottom;
     final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
     final hasText = _controller.text.trim().isNotEmpty;
 

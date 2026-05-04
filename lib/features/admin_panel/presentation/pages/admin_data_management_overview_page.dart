@@ -102,7 +102,6 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       elevation: 2,
       child: Padding(

@@ -147,7 +147,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                       const SizedBox(height: 28),
 
                       // Hourly Sales Mini Chart
-                      _HourlySalesMiniChart(),
+                      const _HourlySalesMiniChart(),
 
                       ReportSectionHeader(title: l10n.reportsVsYesterday, icon: Icons.compare_arrows_rounded),
                       ReportDataCard(

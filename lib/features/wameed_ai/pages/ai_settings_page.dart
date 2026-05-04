@@ -24,7 +24,6 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(aiFeaturesProvider);
-    final isMobile = context.isPhone;
 
     return PosListPage(
   title: l10n.wameedAISettings,

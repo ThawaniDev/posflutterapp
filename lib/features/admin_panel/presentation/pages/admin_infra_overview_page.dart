@@ -124,7 +124,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
             const SizedBox(height: AppSpacing.lg),
 
             // Navigation
-            Text(l10n.adminSections, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(l10n.adminSections, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: AppSpacing.sm),
             ...[
               _NavTile(
@@ -217,7 +217,6 @@ class _NavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
       borderRadius: BorderRadius.circular(10,),

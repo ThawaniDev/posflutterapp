@@ -238,10 +238,9 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Open shift already in progress', style: AppTypography.headlineSmall),
+                  Text(AppLocalizations.of(context)!.posShiftAlreadyOpen, style: AppTypography.headlineSmall),
                   Text(
-                    'You can only be linked to one register at a time. '
-                    'Close or resume your existing shift first.',
+                    AppLocalizations.of(context)!.posShiftAlreadyOpenDesc,
                     style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
                   ),
                 ],
@@ -284,7 +283,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                   ),
                 ),
                 PosButton(
-                  label: 'Resume',
+                  label: AppLocalizations.of(context)!.posShiftResume,
                   icon: Icons.login_rounded,
                   onPressed: () {
                     ref.read(activeSessionProvider.notifier).setSession(s);
@@ -308,7 +307,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
             AppSpacing.gapW12,
             Expanded(
               child: PosButton(
-                label: 'Refresh',
+                label: AppLocalizations.of(context)!.commonRefresh,
                 icon: Icons.refresh_rounded,
                 variant: PosButtonVariant.outline,
                 onPressed: () => ref.invalidate(myOpenSessionsProvider),

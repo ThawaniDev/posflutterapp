@@ -102,7 +102,6 @@ class _RiskLevelChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     Color color;
     switch (level) {
       case 'critical':
@@ -144,7 +143,6 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final c = color ?? theme.colorScheme.onSurfaceVariant;
     return Row(

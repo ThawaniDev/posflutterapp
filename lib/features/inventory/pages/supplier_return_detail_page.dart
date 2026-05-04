@@ -227,7 +227,8 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
                       item.productName ?? '-',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                     ),
-                    if (item.productSku != null) Text('SKU: ${item.productSku}', style: Theme.of(context).textTheme.bodySmall),
+                    if (item.productSku != null)
+                      Text(l10n.hardwareSkuLabel(item.productSku!), style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(height: AppSpacing.xs),
                     Row(
                       children: [

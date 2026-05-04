@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 /// \u0081 denomination values (notes and coins)
@@ -129,43 +130,43 @@ class PaymentCalculationService {
   }
 
   /// Get display name for payment method
-  static String methodDisplayName(PaymentMethodKey method) {
+  static String methodDisplayName(PaymentMethodKey method, [AppLocalizations? l10n]) {
     switch (method) {
       case PaymentMethodKey.cash:
-        return 'Cash';
+        return l10n?.paymentCash ?? 'Cash';
       case PaymentMethodKey.card:
-        return 'Card';
+        return l10n?.paymentCard ?? 'Card';
       case PaymentMethodKey.cardMada:
       case PaymentMethodKey.mada:
-        return 'mada';
+        return l10n?.paymentMada ?? 'mada';
       case PaymentMethodKey.cardVisa:
-        return 'Visa';
+        return l10n?.paymentVisa ?? 'Visa';
       case PaymentMethodKey.cardMastercard:
-        return 'Mastercard';
+        return l10n?.paymentMastercard ?? 'Mastercard';
       case PaymentMethodKey.applePay:
-        return 'Apple Pay';
+        return l10n?.paymentApplePay ?? 'Apple Pay';
       case PaymentMethodKey.stcPay:
-        return 'STC Pay';
+        return l10n?.paymentStcPay ?? 'STC Pay';
       case PaymentMethodKey.storeCredit:
-        return 'Store Credit';
+        return l10n?.paymentStoreCredit ?? 'Store Credit';
       case PaymentMethodKey.giftCard:
-        return 'Gift Card';
+        return l10n?.paymentGiftCard ?? 'Gift Card';
       case PaymentMethodKey.mobilePayment:
-        return 'Mobile Payment';
+        return l10n?.paymentMobilePayment ?? 'Mobile Payment';
       case PaymentMethodKey.loyaltyPoints:
-        return 'Loyalty Points';
+        return l10n?.paymentLoyaltyPoints ?? 'Loyalty Points';
       case PaymentMethodKey.bankTransfer:
-        return 'Bank Transfer';
+        return l10n?.paymentBankTransfer ?? 'Bank Transfer';
       case PaymentMethodKey.tabby:
-        return 'Tabby';
+        return l10n?.paymentTabby ?? 'Tabby';
       case PaymentMethodKey.tamara:
-        return 'Tamara';
+        return l10n?.paymentTamara ?? 'Tamara';
       case PaymentMethodKey.mispay:
-        return 'MisPay';
+        return l10n?.paymentMispay ?? 'MisPay';
       case PaymentMethodKey.madfu:
-        return 'Madfu';
+        return l10n?.paymentMadfu ?? 'Madfu';
       case PaymentMethodKey.other:
-        return 'Other';
+        return l10n?.paymentOther ?? 'Other';
     }
   }
 

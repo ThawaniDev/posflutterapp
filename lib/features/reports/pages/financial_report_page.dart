@@ -613,7 +613,7 @@ class _PaymentMethodSummaryTab extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.payment_rounded, size: 18, color: AppColors.primary),
+                      const Icon(Icons.payment_rounded, size: 18, color: AppColors.primary),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(method, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),

@@ -198,7 +198,7 @@ void main() {
 
   group('LabelTemplatesLoaded copyWith presets', () {
     test('copies with new presets list', () {
-      final t1 = const LabelTemplate(
+      const t1 = LabelTemplate(
         id: 't1',
         organizationId: 'org-1',
         name: 'T1',
@@ -206,7 +206,7 @@ void main() {
         labelHeightMm: 30,
         layoutJson: {},
       );
-      final t2 = const LabelTemplate(
+      const t2 = LabelTemplate(
         id: 't2',
         organizationId: 'org-1',
         name: 'T2',

@@ -7,6 +7,8 @@ import 'package:wameedpos/features/delivery_integration/enums/delivery_sync_stat
 import 'package:wameedpos/features/delivery_integration/models/delivery_webhook_log.dart';
 import 'package:wameedpos/features/delivery_integration/models/delivery_status_push_log.dart';
 import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_platform.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_auth_method.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════
@@ -308,8 +310,18 @@ void main() {
 
     test('DeliveryPlatformsLoaded holds platforms', () {
       const state = DeliveryPlatformsLoaded([
-        {'slug': 'jahez', 'name': 'Jahez'},
-        {'slug': 'hungerstation', 'name': 'HungerStation'},
+        DeliveryPlatform(
+          id: '1',
+          name: 'Jahez',
+          slug: 'jahez',
+          authMethod: DeliveryAuthMethod.apiKey,
+        ),
+        DeliveryPlatform(
+          id: '2',
+          name: 'HungerStation',
+          slug: 'hungerstation',
+          authMethod: DeliveryAuthMethod.apiKey,
+        ),
       ]);
       expect(state.platforms.length, 2);
     });

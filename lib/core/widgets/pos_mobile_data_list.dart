@@ -489,14 +489,20 @@ class _MobilePagination extends StatelessWidget {
       child: Row(
         children: [
           if (totalItems != null)
-            Text('$totalItems items', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+            Text(
+              AppLocalizations.of(context)!.commonItemsCount(totalItems!),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            ),
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.chevron_left, size: 20),
             onPressed: currentPage > 1 ? onPrevious : null,
             visualDensity: VisualDensity.compact,
           ),
-          Text('$currentPage / $totalPages', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+          Text(
+            AppLocalizations.of(context)!.paginationPageOf(currentPage, totalPages),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+          ),
           IconButton(
             icon: const Icon(Icons.chevron_right, size: 20),
             onPressed: currentPage < totalPages ? onNext : null,

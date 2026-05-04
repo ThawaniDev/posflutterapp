@@ -58,6 +58,7 @@ class PosOfflineSyncService {
         final transactionEntries = entries.where((e) => e.kind == 'transaction').toList();
         final adjustmentEntries = entries.where((e) => e.kind == 'inventory_adjustment').toList();
         final customerEntries = entries.where((e) => e.kind == 'customer').toList();
+        final softPosEntries = entries.where((e) => e.kind == 'softpos_transaction').toList();
 
         if (transactionEntries.isNotEmpty) {
           await _flushBatch(
@@ -79,6 +80,14 @@ class PosOfflineSyncService {
             await api.quickAddCustomer(payload);
           });
         }
+        // Replay failed SoftPOS transactions individually (each has its own
+        // idempotency_key so the server won't create duplicates).
+        for (final entry in softPosEntries) {
+          await _flushSingle(entry, () async {
+            final payload = jsonDecode(entry.payloadJson) as Map<String, dynamic>;
+            await api.createTransaction(payload);
+          });
+        }
       }
     } finally {
       _isDraining = false;
@@ -95,7 +104,7 @@ class PosOfflineSyncService {
       for (final entry in entries) {
         b.update(
           db.localSyncQueue,
-          LocalSyncQueueCompanion(status: const Value('in_progress')),
+          const LocalSyncQueueCompanion(status: Value('in_progress')),
           where: (t) => t.id.equals(entry.id),
         );
       }

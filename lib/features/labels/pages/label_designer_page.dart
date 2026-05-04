@@ -759,10 +759,10 @@ class _ElementPropertiesPanel extends StatelessWidget {
               child: TextFormField(
                 initialValue: element.x.toStringAsFixed(1),
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'X (mm)',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: InputDecoration(
+                  labelText: l10n.labelCoordX,
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 ),
                 onChanged: (v) => onUpdate(element.copyWith(x: double.tryParse(v) ?? element.x)),
               ),
@@ -772,10 +772,10 @@ class _ElementPropertiesPanel extends StatelessWidget {
               child: TextFormField(
                 initialValue: element.y.toStringAsFixed(1),
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Y (mm)',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: InputDecoration(
+                  labelText: l10n.labelCoordY,
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 ),
                 onChanged: (v) => onUpdate(element.copyWith(y: double.tryParse(v) ?? element.y)),
               ),

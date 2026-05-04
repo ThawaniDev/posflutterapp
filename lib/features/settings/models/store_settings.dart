@@ -30,6 +30,8 @@ class StoreSettings {
     this.sessionTimeoutMinutes = 480,
     this.maxDiscountPercent = 100,
     this.enableTips = false,
+    this.tipPresets = const [],
+    this.tipDefaultPresetIndex,
     this.enableKitchenDisplay = false,
     this.barcodeScanSound = true,
     this.defaultSaleType = 'dine_in',
@@ -94,6 +96,10 @@ class StoreSettings {
       sessionTimeoutMinutes: json['session_timeout_minutes'] as int? ?? 480,
       maxDiscountPercent: json['max_discount_percent'] as int? ?? 100,
       enableTips: json['enable_tips'] as bool? ?? false,
+      tipPresets: json['tip_presets'] is List
+          ? List<int>.from((json['tip_presets'] as List).map((e) => (e as num).toInt()))
+          : const [],
+      tipDefaultPresetIndex: (json['tip_default_preset_index'] as num?)?.toInt(),
       enableKitchenDisplay: json['enable_kitchen_display'] as bool? ?? false,
       barcodeScanSound: json['barcode_scan_sound'] as bool? ?? true,
       defaultSaleType: json['default_sale_type'] as String? ?? 'dine_in',
@@ -166,6 +172,11 @@ class StoreSettings {
   final int sessionTimeoutMinutes;
   final int maxDiscountPercent;
   final bool enableTips;
+
+  /// Optional tip percentage shortcuts (e.g. [10, 15, 20, 25]).
+  /// Empty list disables the preset row in the payment dialog.
+  final List<int> tipPresets;
+  final int? tipDefaultPresetIndex;
   final bool enableKitchenDisplay;
   final bool barcodeScanSound;
   final String defaultSaleType;
@@ -242,6 +253,8 @@ class StoreSettings {
       'session_timeout_minutes': sessionTimeoutMinutes,
       'max_discount_percent': maxDiscountPercent,
       'enable_tips': enableTips,
+      'tip_presets': tipPresets,
+      'tip_default_preset_index': tipDefaultPresetIndex,
       'enable_kitchen_display': enableKitchenDisplay,
       'barcode_scan_sound': barcodeScanSound,
       'default_sale_type': defaultSaleType,
@@ -299,6 +312,8 @@ class StoreSettings {
     int? sessionTimeoutMinutes,
     int? maxDiscountPercent,
     bool? enableTips,
+    List<int>? tipPresets,
+    int? tipDefaultPresetIndex,
     bool? enableKitchenDisplay,
     bool? barcodeScanSound,
     String? defaultSaleType,
@@ -356,6 +371,8 @@ class StoreSettings {
       sessionTimeoutMinutes: sessionTimeoutMinutes ?? this.sessionTimeoutMinutes,
       maxDiscountPercent: maxDiscountPercent ?? this.maxDiscountPercent,
       enableTips: enableTips ?? this.enableTips,
+      tipPresets: tipPresets ?? this.tipPresets,
+      tipDefaultPresetIndex: tipDefaultPresetIndex ?? this.tipDefaultPresetIndex,
       enableKitchenDisplay: enableKitchenDisplay ?? this.enableKitchenDisplay,
       barcodeScanSound: barcodeScanSound ?? this.barcodeScanSound,
       defaultSaleType: defaultSaleType ?? this.defaultSaleType,

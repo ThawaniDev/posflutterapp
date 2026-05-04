@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class TransactionItem {
-
   const TransactionItem({
     required this.id,
     required this.transactionId,
@@ -22,6 +21,8 @@ class TransactionItem {
     this.batchNumber,
     this.expiryDate,
     this.modifierSelections,
+    this.modifierTotal,
+    this.itemNotes,
     this.notes,
     this.isReturnItem,
     this.ageVerified,
@@ -48,9 +49,11 @@ class TransactionItem {
       serialNumber: json['serial_number'] as String?,
       batchNumber: json['batch_number'] as String?,
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
-      modifierSelections: json['modifier_selections'] != null
-          ? Map<String, dynamic>.from(json['modifier_selections'] as Map)
+      modifierSelections: json['modifier_selections'] is List
+          ? List<Map<String, dynamic>>.from((json['modifier_selections'] as List).map((e) => Map<String, dynamic>.from(e as Map)))
           : null,
+      modifierTotal: json['modifier_total'] != null ? double.tryParse(json['modifier_total'].toString()) : null,
+      itemNotes: json['item_notes'] as String?,
       notes: json['notes'] as String?,
       isReturnItem: json['is_return_item'] as bool?,
       ageVerified: json['age_verified'] as bool?,
@@ -75,7 +78,9 @@ class TransactionItem {
   final String? serialNumber;
   final String? batchNumber;
   final DateTime? expiryDate;
-  final Map<String, dynamic>? modifierSelections;
+  final List<Map<String, dynamic>>? modifierSelections;
+  final double? modifierTotal;
+  final String? itemNotes;
   final String? notes;
   final bool? isReturnItem;
   final bool? ageVerified;
@@ -102,6 +107,8 @@ class TransactionItem {
       'batch_number': batchNumber,
       'expiry_date': expiryDate?.toIso8601String(),
       'modifier_selections': modifierSelections,
+      'modifier_total': modifierTotal,
+      'item_notes': itemNotes,
       'notes': notes,
       'is_return_item': isReturnItem,
       'age_verified': ageVerified,
@@ -128,7 +135,9 @@ class TransactionItem {
     String? serialNumber,
     String? batchNumber,
     DateTime? expiryDate,
-    Map<String, dynamic>? modifierSelections,
+    List<Map<String, dynamic>>? modifierSelections,
+    double? modifierTotal,
+    String? itemNotes,
     String? notes,
     bool? isReturnItem,
     bool? ageVerified,
@@ -154,6 +163,8 @@ class TransactionItem {
       batchNumber: batchNumber ?? this.batchNumber,
       expiryDate: expiryDate ?? this.expiryDate,
       modifierSelections: modifierSelections ?? this.modifierSelections,
+      modifierTotal: modifierTotal ?? this.modifierTotal,
+      itemNotes: itemNotes ?? this.itemNotes,
       notes: notes ?? this.notes,
       isReturnItem: isReturnItem ?? this.isReturnItem,
       ageVerified: ageVerified ?? this.ageVerified,

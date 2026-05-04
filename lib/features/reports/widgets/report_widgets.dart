@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_page_scaffolds.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/subscription/services/upgrade_prompt_service.dart';
 
@@ -615,7 +614,7 @@ class ReportErrorBody extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.lock_rounded, size: 56, color: AppColors.warning),
+              const Icon(Icons.lock_rounded, size: 56, color: AppColors.warning),
               const SizedBox(height: 16),
               Text(
                 AppLocalizations.of(context)!.reportsSubscriptionRequired,
