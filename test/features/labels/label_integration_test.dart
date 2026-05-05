@@ -26,28 +26,27 @@ LabelTemplate _template({
   bool isPreset = false,
   double width = 50.0,
   double height = 30.0,
-}) =>
-    LabelTemplate(
-      id: id,
-      organizationId: 'org-1',
-      name: name,
-      labelWidthMm: width,
-      labelHeightMm: height,
-      layoutJson: const {},
-      isPreset: isPreset,
-      isDefault: isDefault,
-      syncVersion: 1,
-    );
+}) => LabelTemplate(
+  id: id,
+  organizationId: 'org-1',
+  name: name,
+  labelWidthMm: width,
+  labelHeightMm: height,
+  layoutJson: const {},
+  isPreset: isPreset,
+  isDefault: isDefault,
+  syncVersion: 1,
+);
 
 LabelPrintHistory _history({String id = 'h1', String? templateId}) => LabelPrintHistory(
-      id: id,
-      storeId: 's1',
-      templateId: templateId,
-      productCount: 3,
-      totalLabels: 6,
-      printedBy: 'u1',
-      printedAt: DateTime.now(),
-    );
+  id: id,
+  storeId: 's1',
+  templateId: templateId,
+  productCount: 3,
+  totalLabels: 6,
+  printedBy: 'u1',
+  printedAt: DateTime.now(),
+);
 
 // ─── Tests ──────────────────────────────────────────────────────
 
@@ -58,9 +57,7 @@ void main() {
     repo = FakeLabelRepository();
   });
 
-  ProviderContainer makeContainer() => ProviderContainer(
-        overrides: [labelRepositoryProvider.overrideWithValue(repo)],
-      );
+  ProviderContainer makeContainer() => ProviderContainer(overrides: [labelRepositoryProvider.overrideWithValue(repo)]);
 
   // ══════════════════════════════════════════════════════════════
   // Flow 1: Load → Duplicate → Verify state appended
@@ -137,7 +134,10 @@ void main() {
       final t2 = _template(id: 't2');
 
       // queue: first load returns [t1, t2], reload after delete returns [t2]
-      repo.listQueue = [[t1, t2], [t2]];
+      repo.listQueue = [
+        [t1, t2],
+        [t2],
+      ];
 
       final container = makeContainer();
       await container.read(labelTemplatesProvider.notifier).load();

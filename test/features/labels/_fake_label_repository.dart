@@ -14,8 +14,8 @@ import 'package:wameedpos/features/labels/repositories/label_repository.dart';
 
 class FakeLabelRepository extends Fake implements LabelRepository {
   // ── Configurable responses ──────────────────────────────────────
-  List<List<LabelTemplate>> listQueue = [];   // sequential results, each pop
-  List<LabelTemplate> listResult = const [];  // used when queue is empty
+  List<List<LabelTemplate>> listQueue = []; // sequential results, each pop
+  List<LabelTemplate> listResult = const []; // used when queue is empty
   List<LabelTemplate> presetsResult = const [];
   final Map<String, LabelTemplate> getResultById = {};
   LabelTemplate? createResult;
@@ -74,16 +74,14 @@ class FakeLabelRepository extends Fake implements LabelRepository {
   @override
   Future<LabelTemplate> getTemplate(String id) async {
     if (getError != null) throw getError!;
-    return getResultById[id] ??
-        (throw StateError('FakeLabelRepository: no stub for getTemplate($id)'));
+    return getResultById[id] ?? (throw StateError('FakeLabelRepository: no stub for getTemplate($id)'));
   }
 
   @override
   Future<LabelTemplate> createTemplate(Map<String, dynamic> data) async {
     lastCreatePayload = data;
     if (createError != null) throw createError!;
-    return createResult ??
-        (throw StateError('FakeLabelRepository: createResult not set'));
+    return createResult ?? (throw StateError('FakeLabelRepository: createResult not set'));
   }
 
   @override
@@ -91,8 +89,7 @@ class FakeLabelRepository extends Fake implements LabelRepository {
     lastUpdateId = id;
     lastUpdatePayload = data;
     if (updateError != null) throw updateError!;
-    return updateResult ??
-        (throw StateError('FakeLabelRepository: updateResult not set'));
+    return updateResult ?? (throw StateError('FakeLabelRepository: updateResult not set'));
   }
 
   @override
@@ -104,24 +101,17 @@ class FakeLabelRepository extends Fake implements LabelRepository {
   Future<LabelTemplate> duplicateTemplate(String id) async {
     lastDuplicatedId = id;
     if (duplicateError != null) throw duplicateError!;
-    return duplicateResult ??
-        (throw StateError('FakeLabelRepository: duplicateResult not set'));
+    return duplicateResult ?? (throw StateError('FakeLabelRepository: duplicateResult not set'));
   }
 
   @override
   Future<LabelTemplate> setDefaultTemplate(String id) async {
     lastSetDefaultId = id;
-    return setDefaultResult ??
-        (throw StateError('FakeLabelRepository: setDefaultResult not set'));
+    return setDefaultResult ?? (throw StateError('FakeLabelRepository: setDefaultResult not set'));
   }
 
   @override
-  Future<List<LabelPrintHistory>> getPrintHistory({
-    DateTime? from,
-    DateTime? to,
-    String? templateId,
-    int? perPage,
-  }) async {
+  Future<List<LabelPrintHistory>> getPrintHistory({DateTime? from, DateTime? to, String? templateId, int? perPage}) async {
     lastHistoryFrom = from;
     lastHistoryTo = to;
     lastHistoryTemplateId = templateId;

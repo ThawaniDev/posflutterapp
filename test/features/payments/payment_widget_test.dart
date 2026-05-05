@@ -144,39 +144,38 @@ Payment _payment({
 }) => Payment(id: id, transactionId: transactionId, method: method, amount: amount, createdAt: DateTime(2024, 1, 15));
 
 CashSession _openSession({String id = 'cs-1'}) => const CashSession(
-      id: 'cs-1',
-      storeId: 'store-1',
-      openedBy: 'user-1',
-      openingFloat: 200.0,
-      status: SessionStatus.open,
-      openedAt: null,
-    );
+  id: 'cs-1',
+  storeId: 'store-1',
+  openedBy: 'user-1',
+  openingFloat: 200.0,
+  status: SessionStatus.open,
+  openedAt: null,
+);
 
 CashSession _closedSession({String id = 'cs-closed'}) => CashSession(
-      id: id,
-      storeId: 'store-1',
-      openedBy: 'user-1',
-      closedBy: 'user-2',
-      openingFloat: 200.0,
-      expectedCash: 350.0,
-      actualCash: 348.0,
-      variance: -2.0,
-      status: SessionStatus.closed,
-      openedAt: DateTime(2024, 1, 15, 8),
-      closedAt: DateTime(2024, 1, 15, 18),
-    );
+  id: id,
+  storeId: 'store-1',
+  openedBy: 'user-1',
+  closedBy: 'user-2',
+  openingFloat: 200.0,
+  expectedCash: 350.0,
+  actualCash: 348.0,
+  variance: -2.0,
+  status: SessionStatus.closed,
+  openedAt: DateTime(2024, 1, 15, 8),
+  closedAt: DateTime(2024, 1, 15, 18),
+);
 
-Expense _expense({String id = 'exp-1', ExpenseCategory category = ExpenseCategory.supplies, double amount = 75.0}) =>
-    Expense(
-      id: id,
-      storeId: 'store-1',
-      amount: amount,
-      category: category,
-      recordedBy: 'user-1',
-      expenseDate: DateTime(2024, 1, 15),
-      createdAt: DateTime(2024, 1, 15, 9),
-      updatedAt: DateTime(2024, 1, 15, 9),
-    );
+Expense _expense({String id = 'exp-1', ExpenseCategory category = ExpenseCategory.supplies, double amount = 75.0}) => Expense(
+  id: id,
+  storeId: 'store-1',
+  amount: amount,
+  category: category,
+  recordedBy: 'user-1',
+  expenseDate: DateTime(2024, 1, 15),
+  createdAt: DateTime(2024, 1, 15, 9),
+  updatedAt: DateTime(2024, 1, 15, 9),
+);
 
 GiftCard _giftCard({
   String id = 'gc-1',
@@ -184,27 +183,27 @@ GiftCard _giftCard({
   GiftCardStatus? status = GiftCardStatus.active,
   double balance = 75.0,
 }) => GiftCard(
-      id: id,
-      organizationId: 'org-1',
-      code: code,
-      initialAmount: 100.0,
-      balance: balance,
-      status: status,
-      issuedBy: 'user-1',
-      issuedAtStore: 'store-1',
-      createdAt: DateTime(2024, 1, 10),
-    );
+  id: id,
+  organizationId: 'org-1',
+  code: code,
+  initialAmount: 100.0,
+  balance: balance,
+  status: status,
+  issuedBy: 'user-1',
+  issuedAtStore: 'store-1',
+  createdAt: DateTime(2024, 1, 10),
+);
 
 Refund _refund({String id = 'ref-1', RefundStatus? status = RefundStatus.completed, double amount = 40.0}) => Refund(
-      id: id,
-      returnId: 'ret-1',
-      paymentId: 'pay-1',
-      method: PaymentMethodKey.cash,
-      amount: amount,
-      status: status,
-      processedBy: 'user-1',
-      createdAt: DateTime(2024, 1, 15, 11),
-    );
+  id: id,
+  returnId: 'ret-1',
+  paymentId: 'pay-1',
+  method: PaymentMethodKey.cash,
+  amount: amount,
+  status: status,
+  processedBy: 'user-1',
+  createdAt: DateTime(2024, 1, 15, 11),
+);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Widget wrapper
@@ -230,25 +229,16 @@ List<Override> _allProviderOverrides({
   RefundsState? refunds,
   DailySummaryState? dailySummary,
   ReconciliationState? reconciliation,
-}) =>
-    [
-      paymentsProvider.overrideWith(
-          (ref) => _FakePaymentsNotifier(payments ?? const PaymentsInitial())),
-      cashSessionsProvider.overrideWith(
-          (ref) => _FakeCashSessionsNotifier(sessions ?? const CashSessionsInitial())),
-      expensesProvider.overrideWith(
-          (ref) => _FakeExpensesNotifier(expenses ?? const ExpensesInitial())),
-      giftCardListProvider.overrideWith(
-          (ref) => _FakeGiftCardListNotifier(giftCardList ?? const GiftCardListInitial())),
-      giftCardProvider.overrideWith(
-          (ref) => _FakeGiftCardNotifier(giftCard ?? const GiftCardInitial())),
-      refundsProvider.overrideWith(
-          (ref) => _FakeRefundsNotifier(refunds ?? const RefundsInitial())),
-      dailySummaryProvider.overrideWith(
-          (ref) => _FakeDailySummaryNotifier(dailySummary ?? const DailySummaryInitial())),
-      reconciliationProvider.overrideWith(
-          (ref) => _FakeReconciliationNotifier(reconciliation ?? const ReconciliationInitial())),
-    ];
+}) => [
+  paymentsProvider.overrideWith((ref) => _FakePaymentsNotifier(payments ?? const PaymentsInitial())),
+  cashSessionsProvider.overrideWith((ref) => _FakeCashSessionsNotifier(sessions ?? const CashSessionsInitial())),
+  expensesProvider.overrideWith((ref) => _FakeExpensesNotifier(expenses ?? const ExpensesInitial())),
+  giftCardListProvider.overrideWith((ref) => _FakeGiftCardListNotifier(giftCardList ?? const GiftCardListInitial())),
+  giftCardProvider.overrideWith((ref) => _FakeGiftCardNotifier(giftCard ?? const GiftCardInitial())),
+  refundsProvider.overrideWith((ref) => _FakeRefundsNotifier(refunds ?? const RefundsInitial())),
+  dailySummaryProvider.overrideWith((ref) => _FakeDailySummaryNotifier(dailySummary ?? const DailySummaryInitial())),
+  reconciliationProvider.overrideWith((ref) => _FakeReconciliationNotifier(reconciliation ?? const ReconciliationInitial())),
+];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Tests
@@ -261,30 +251,30 @@ void main() {
 
   group('PaymentListPage', () {
     testWidgets('shows loading indicator while loading', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(payments: const PaymentsLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const PaymentListPage(), overrides: _allProviderOverrides(payments: const PaymentsLoading())),
+      );
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('shows page title', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(payments: const PaymentsLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const PaymentListPage(), overrides: _allProviderOverrides(payments: const PaymentsLoading())),
+      );
       await tester.pump();
       expect(find.text('Payment History'), findsOneWidget);
     });
 
     testWidgets('shows empty state when no payments', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(
-          payments: const PaymentsLoaded(payments: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
+      await tester.pumpWidget(
+        _wrap(
+          const PaymentListPage(),
+          overrides: _allProviderOverrides(
+            payments: const PaymentsLoaded(payments: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
+          ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('No payments found'), findsOneWidget);
     });
@@ -294,50 +284,47 @@ void main() {
         _payment(id: 'p1', method: PaymentMethodKey.cash, amount: 120.0),
         _payment(id: 'p2', method: PaymentMethodKey.cardMada, amount: 250.0),
       ];
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(
-          payments: PaymentsLoaded(
-            payments: payments,
-            total: 2,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const PaymentListPage(),
+          overrides: _allProviderOverrides(
+            payments: PaymentsLoaded(payments: payments, total: 2, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('TXN-001'), findsWidgets);
     });
 
     testWidgets('shows error state with retry button', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(
-          payments: const PaymentsError(message: 'Network error'),
+      await tester.pumpWidget(
+        _wrap(
+          const PaymentListPage(),
+          overrides: _allProviderOverrides(payments: const PaymentsError(message: 'Network error')),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Network error'), findsOneWidget);
       expect(find.text('Retry'), findsOneWidget);
     });
 
     testWidgets('filter toggle button is present', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(payments: const PaymentsInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const PaymentListPage(), overrides: _allProviderOverrides(payments: const PaymentsInitial())),
+      );
       await tester.pump();
       expect(find.byIcon(Icons.filter_list), findsOneWidget);
     });
 
     testWidgets('tapping filter button expands filter panel', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(
-          payments: const PaymentsLoaded(payments: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
+      await tester.pumpWidget(
+        _wrap(
+          const PaymentListPage(),
+          overrides: _allProviderOverrides(
+            payments: const PaymentsLoaded(payments: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
+          ),
         ),
-      ));
+      );
       await tester.pump();
       await tester.tap(find.byIcon(Icons.filter_list));
       await tester.pump();
@@ -345,10 +332,9 @@ void main() {
     });
 
     testWidgets('info tooltip button is present', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(payments: const PaymentsInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const PaymentListPage(), overrides: _allProviderOverrides(payments: const PaymentsInitial())),
+      );
       await tester.pump();
       expect(find.byIcon(Icons.info_outline), findsOneWidget);
     });
@@ -360,125 +346,102 @@ void main() {
 
   group('CashManagementPage', () {
     testWidgets('shows page title', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(sessions: const CashSessionsLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const CashManagementPage(), overrides: _allProviderOverrides(sessions: const CashSessionsLoading())),
+      );
       await tester.pump();
       expect(find.text('Cash Management'), findsOneWidget);
     });
 
     testWidgets('shows loading while sessions load', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(sessions: const CashSessionsLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const CashManagementPage(), overrides: _allProviderOverrides(sessions: const CashSessionsLoading())),
+      );
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('shows Open Cash Session button when no active session', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: CashSessionsLoaded(
-            sessions: [_closedSession()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(
+            sessions: CashSessionsLoaded(sessions: [_closedSession()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Open Cash Session'), findsOneWidget);
     });
 
     testWidgets('shows active session card when session is open', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: CashSessionsLoaded(
-            sessions: [_openSession()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(
+            sessions: CashSessionsLoaded(sessions: [_openSession()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Active Session'), findsOneWidget);
     });
 
     testWidgets('shows Cash In and Cash Out buttons for active session', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: CashSessionsLoaded(
-            sessions: [_openSession()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(
+            sessions: CashSessionsLoaded(sessions: [_openSession()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Cash In'), findsOneWidget);
       expect(find.text('Cash Out'), findsOneWidget);
     });
 
     testWidgets('shows Close Session button for active session', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: CashSessionsLoaded(
-            sessions: [_openSession()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(
+            sessions: CashSessionsLoaded(sessions: [_openSession()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Close Session'), findsOneWidget);
     });
 
     testWidgets('shows session history section', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: CashSessionsLoaded(
-            sessions: [_closedSession()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(
+            sessions: CashSessionsLoaded(sessions: [_closedSession()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Session History'), findsOneWidget);
     });
 
     testWidgets('denomination counter section is visible', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(sessions: const CashSessionsInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const CashManagementPage(), overrides: _allProviderOverrides(sessions: const CashSessionsInitial())),
+      );
       await tester.pump();
       expect(find.text('Cash Count'), findsOneWidget);
     });
 
     testWidgets('shows error message on session load failure', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(
-          sessions: const CashSessionsError(message: 'Could not load sessions'),
+      await tester.pumpWidget(
+        _wrap(
+          const CashManagementPage(),
+          overrides: _allProviderOverrides(sessions: const CashSessionsError(message: 'Could not load sessions')),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Could not load sessions'), findsOneWidget);
     });
@@ -490,36 +453,26 @@ void main() {
 
   group('ExpensesPage', () {
     testWidgets('shows page title', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(expenses: const ExpensesLoading()),
-      ));
+      await tester.pumpWidget(_wrap(const ExpensesPage(), overrides: _allProviderOverrides(expenses: const ExpensesLoading())));
       await tester.pump();
       expect(find.text('Expenses'), findsOneWidget);
     });
 
     testWidgets('shows loading indicator while loading', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(expenses: const ExpensesLoading()),
-      ));
+      await tester.pumpWidget(_wrap(const ExpensesPage(), overrides: _allProviderOverrides(expenses: const ExpensesLoading())));
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('shows empty state when no expenses', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: const ExpensesLoaded(
-            expenses: [],
-            total: 0,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(
+            expenses: const ExpensesLoaded(expenses: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('No expenses recorded'), findsOneWidget);
     });
@@ -529,18 +482,14 @@ void main() {
         _expense(id: 'e1', category: ExpenseCategory.supplies, amount: 75.0),
         _expense(id: 'e2', category: ExpenseCategory.food, amount: 30.0),
       ];
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: ExpensesLoaded(
-            expenses: expenses,
-            total: 2,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(
+            expenses: ExpensesLoaded(expenses: expenses, total: 2, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       // Each expense renders category in both title and subtitle
       expect(find.text('supplies'), findsWidgets);
@@ -548,47 +497,39 @@ void main() {
     });
 
     testWidgets('shows error with retry', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: const ExpensesError(message: 'Failed to load expenses'),
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(expenses: const ExpensesError(message: 'Failed to load expenses')),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Failed to load expenses'), findsOneWidget);
       expect(find.text('Retry'), findsOneWidget);
     });
 
     testWidgets('New Expense button is visible', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: const ExpensesLoaded(
-            expenses: [],
-            total: 0,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(
+            expenses: const ExpensesLoaded(expenses: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('New Expense'), findsOneWidget);
     });
 
     testWidgets('filter bar with date range picker is present', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: ExpensesLoaded(
-            expenses: [_expense()],
-            total: 1,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(
+            expenses: ExpensesLoaded(expenses: [_expense()], total: 1, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       // Filter bar has a date range icon
       expect(find.byIcon(Icons.date_range), findsOneWidget);
@@ -601,63 +542,53 @@ void main() {
 
   group('GiftCardsPage', () {
     testWidgets('shows page title', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.text('Gift Cards'), findsOneWidget);
     });
 
     testWidgets('shows Issue tab by default', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.text('Issue'), findsOneWidget);
     });
 
     testWidgets('shows Check Balance tab', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.text('Check Balance'), findsOneWidget);
     });
 
     testWidgets('shows Redeem tab', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.text('Redeem'), findsOneWidget);
     });
 
     testWidgets('shows Manage tab', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.text('Manage'), findsOneWidget);
     });
 
     testWidgets('switching to Manage tab shows gift card list', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(
-          giftCardList: GiftCardListLoaded(
-            cards: [_giftCard(), _giftCard(id: 'gc-2', code: 'GC-WXYZ-5678')],
-            total: 2,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const GiftCardsPage(),
+          overrides: _allProviderOverrides(
+            giftCardList: GiftCardListLoaded(
+              cards: [
+                _giftCard(),
+                _giftCard(id: 'gc-2', code: 'GC-WXYZ-5678'),
+              ],
+              total: 2,
+              currentPage: 1,
+              lastPage: 1,
+              perPage: 20,
+            ),
           ),
         ),
-      ));
+      );
       await tester.pump();
       await tester.tap(find.text('Manage'));
       await tester.pump();
@@ -666,18 +597,14 @@ void main() {
     });
 
     testWidgets('Manage tab shows empty state when no cards', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(
-          giftCardList: const GiftCardListLoaded(
-            cards: [],
-            total: 0,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const GiftCardsPage(),
+          overrides: _allProviderOverrides(
+            giftCardList: const GiftCardListLoaded(cards: [], total: 0, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       await tester.tap(find.text('Manage'));
       await tester.pump();
@@ -685,10 +612,7 @@ void main() {
     });
 
     testWidgets('info tooltip button is present', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(),
-      ));
+      await tester.pumpWidget(_wrap(const GiftCardsPage(), overrides: _allProviderOverrides()));
       await tester.pump();
       expect(find.byIcon(Icons.info_outline), findsOneWidget);
     });
@@ -700,69 +624,69 @@ void main() {
 
   group('DailySummaryPage', () {
     testWidgets('shows page title', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const DailySummaryPage(), overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial())),
+      );
       await tester.pump();
       expect(find.text('Daily Summary'), findsOneWidget);
     });
 
     testWidgets('shows loading indicator while loading', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(dailySummary: const DailySummaryLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const DailySummaryPage(), overrides: _allProviderOverrides(dailySummary: const DailySummaryLoading())),
+      );
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('shows date navigation buttons', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const DailySummaryPage(), overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial())),
+      );
       await tester.pump();
       expect(find.byIcon(Icons.chevron_left), findsOneWidget);
       expect(find.byIcon(Icons.chevron_right), findsOneWidget);
     });
 
     testWidgets('shows error state', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(
-          dailySummary: const DailySummaryError(message: 'Could not load summary'),
+      await tester.pumpWidget(
+        _wrap(
+          const DailySummaryPage(),
+          overrides: _allProviderOverrides(dailySummary: const DailySummaryError(message: 'Could not load summary')),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Could not load summary'), findsOneWidget);
     });
 
     testWidgets('shows summary data when loaded', (tester) async {
       final now = DateTime.now();
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(
-          dailySummary: DailySummaryLoaded(data: {
-            'date': '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}',
-            'total_revenue': 1500.00,
-            'total_transactions': 12,
-            'total_refunds': 150.00,
-            'total_expenses': 80.00,
-            'net_revenue': 1270.00,
-            'payment_breakdown': {'cash': 800.00, 'card_mada': 700.00},
-          }),
+      await tester.pumpWidget(
+        _wrap(
+          const DailySummaryPage(),
+          overrides: _allProviderOverrides(
+            dailySummary: DailySummaryLoaded(
+              data: {
+                'date': '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}',
+                'total_revenue': 1500.00,
+                'total_transactions': 12,
+                'total_refunds': 150.00,
+                'total_expenses': 80.00,
+                'net_revenue': 1270.00,
+                'payment_breakdown': {'cash': 800.00, 'card_mada': 700.00},
+              },
+            ),
+          ),
         ),
-      ));
+      );
       await tester.pump();
       expect(find.text('Gross Revenue'), findsOneWidget);
     });
 
     testWidgets('shows info tooltip button', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const DailySummaryPage(), overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial())),
+      );
       await tester.pump();
       expect(find.byIcon(Icons.info_outline), findsOneWidget);
     });
@@ -774,57 +698,50 @@ void main() {
 
   group('State rendering coverage', () {
     testWidgets('PaymentsInitial renders without crash', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(payments: const PaymentsInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const PaymentListPage(), overrides: _allProviderOverrides(payments: const PaymentsInitial())),
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('CashSessionsInitial renders without crash', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const CashManagementPage(),
-        overrides: _allProviderOverrides(sessions: const CashSessionsInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const CashManagementPage(), overrides: _allProviderOverrides(sessions: const CashSessionsInitial())),
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('ExpensesInitial renders without crash', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(expenses: const ExpensesInitial()),
-      ));
+      await tester.pumpWidget(_wrap(const ExpensesPage(), overrides: _allProviderOverrides(expenses: const ExpensesInitial())));
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('DailySummaryInitial renders without crash', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const DailySummaryPage(),
-        overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const DailySummaryPage(), overrides: _allProviderOverrides(dailySummary: const DailySummaryInitial())),
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('GiftCardsPage renders without crash with GiftCardListLoading', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(giftCardList: const GiftCardListLoading()),
-      ));
+      await tester.pumpWidget(
+        _wrap(const GiftCardsPage(), overrides: _allProviderOverrides(giftCardList: const GiftCardListLoading())),
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('GiftCardListError shown in Manage tab', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(
-          giftCardList: const GiftCardListError(message: 'Failed to load gift cards'),
+      await tester.pumpWidget(
+        _wrap(
+          const GiftCardsPage(),
+          overrides: _allProviderOverrides(giftCardList: const GiftCardListError(message: 'Failed to load gift cards')),
         ),
-      ));
+      );
       await tester.pump();
       await tester.tap(find.text('Manage'));
       await tester.pump();
@@ -832,22 +749,15 @@ void main() {
     });
 
     testWidgets('multiple payments list scrolls without crash', (tester) async {
-      final payments = List.generate(
-        15,
-        (i) => _payment(id: 'p$i', transactionId: 'TXN-${i.toString().padLeft(3, '0')}'),
-      );
-      await tester.pumpWidget(_wrap(
-        const PaymentListPage(),
-        overrides: _allProviderOverrides(
-          payments: PaymentsLoaded(
-            payments: payments,
-            total: 15,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      final payments = List.generate(15, (i) => _payment(id: 'p$i', transactionId: 'TXN-${i.toString().padLeft(3, '0')}'));
+      await tester.pumpWidget(
+        _wrap(
+          const PaymentListPage(),
+          overrides: _allProviderOverrides(
+            payments: PaymentsLoaded(payments: payments, total: 15, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
@@ -860,18 +770,14 @@ void main() {
         _expense(id: 'e4', category: ExpenseCategory.maintenance),
         _expense(id: 'e5', category: ExpenseCategory.utility),
       ];
-      await tester.pumpWidget(_wrap(
-        const ExpensesPage(),
-        overrides: _allProviderOverrides(
-          expenses: ExpensesLoaded(
-            expenses: expenses,
-            total: 5,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const ExpensesPage(),
+          overrides: _allProviderOverrides(
+            expenses: ExpensesLoaded(expenses: expenses, total: 5, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       expect(tester.takeException(), isNull);
     });
@@ -883,18 +789,14 @@ void main() {
         _giftCard(id: 'gc-3', status: GiftCardStatus.expired),
         _giftCard(id: 'gc-4', status: GiftCardStatus.deactivated),
       ];
-      await tester.pumpWidget(_wrap(
-        const GiftCardsPage(),
-        overrides: _allProviderOverrides(
-          giftCardList: GiftCardListLoaded(
-            cards: cards,
-            total: 4,
-            currentPage: 1,
-            lastPage: 1,
-            perPage: 20,
+      await tester.pumpWidget(
+        _wrap(
+          const GiftCardsPage(),
+          overrides: _allProviderOverrides(
+            giftCardList: GiftCardListLoaded(cards: cards, total: 4, currentPage: 1, lastPage: 1, perPage: 20),
           ),
         ),
-      ));
+      );
       await tester.pump();
       await tester.tap(find.text('Manage'));
       await tester.pump();

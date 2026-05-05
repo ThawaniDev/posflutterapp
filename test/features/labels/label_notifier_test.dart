@@ -12,12 +12,7 @@ import '_fake_label_repository.dart';
 
 // ─── Helpers ────────────────────────────────────────────────────
 
-LabelTemplate fakeTemplate({
-  String id = 't1',
-  String name = 'Test Template',
-  bool isDefault = false,
-  bool isPreset = false,
-}) =>
+LabelTemplate fakeTemplate({String id = 't1', String name = 'Test Template', bool isDefault = false, bool isPreset = false}) =>
     LabelTemplate(
       id: id,
       organizationId: 'org-1',
@@ -30,14 +25,8 @@ LabelTemplate fakeTemplate({
       syncVersion: 1,
     );
 
-LabelPrintHistory fakeHistory({String id = 'h1'}) => LabelPrintHistory(
-      id: id,
-      storeId: 's1',
-      printedBy: 'u1',
-      productCount: 3,
-      totalLabels: 6,
-      printedAt: DateTime.now(),
-    );
+LabelPrintHistory fakeHistory({String id = 'h1'}) =>
+    LabelPrintHistory(id: id, storeId: 's1', printedBy: 'u1', productCount: 3, totalLabels: 6, printedAt: DateTime.now());
 
 // ─── Tests ──────────────────────────────────────────────────────
 
@@ -53,9 +42,7 @@ void main() {
   // ══════════════════════════════════════════════════════════════
 
   group('LabelTemplatesNotifier', () {
-    ProviderContainer makeContainer() => ProviderContainer(
-          overrides: [labelRepositoryProvider.overrideWithValue(repo)],
-        );
+    ProviderContainer makeContainer() => ProviderContainer(overrides: [labelRepositoryProvider.overrideWithValue(repo)]);
 
     test('initial state is LabelTemplatesInitial', () {
       expect(makeContainer().read(labelTemplatesProvider), isA<LabelTemplatesInitial>());
@@ -123,7 +110,7 @@ void main() {
     test('deleteTemplate calls repo delete and reloads', () async {
       repo.listQueue = [
         [fakeTemplate(id: 't1'), fakeTemplate(id: 't2')], // initial load
-        [fakeTemplate(id: 't2')],                          // reload post-delete
+        [fakeTemplate(id: 't2')], // reload post-delete
       ];
 
       final container = makeContainer();
@@ -132,10 +119,7 @@ void main() {
 
       expect(repo.lastDeletedId, 't1');
       expect(repo.listCallCount, 2);
-      expect(
-        (container.read(labelTemplatesProvider) as LabelTemplatesLoaded).templates,
-        hasLength(1),
-      );
+      expect((container.read(labelTemplatesProvider) as LabelTemplatesLoaded).templates, hasLength(1));
     });
 
     test('duplicateTemplate appends copy to current list', () async {
@@ -165,10 +149,7 @@ void main() {
     });
 
     test('setDefaultTemplate updates isDefault flags in list', () async {
-      repo.listResult = [
-        fakeTemplate(id: 't1', isDefault: true),
-        fakeTemplate(id: 't2', isDefault: false),
-      ];
+      repo.listResult = [fakeTemplate(id: 't1', isDefault: true), fakeTemplate(id: 't2', isDefault: false)];
       repo.setDefaultResult = fakeTemplate(id: 't2', isDefault: true);
 
       final container = makeContainer();
@@ -184,10 +165,7 @@ void main() {
     });
 
     test('setDefaultTemplate clears previous default', () async {
-      repo.listResult = [
-        fakeTemplate(id: 't1', isDefault: true),
-        fakeTemplate(id: 't2', isDefault: false),
-      ];
+      repo.listResult = [fakeTemplate(id: 't1', isDefault: true), fakeTemplate(id: 't2', isDefault: false)];
       repo.setDefaultResult = fakeTemplate(id: 't2', isDefault: true);
 
       final container = makeContainer();
@@ -204,9 +182,7 @@ void main() {
   // ══════════════════════════════════════════════════════════════
 
   group('LabelDetailNotifier', () {
-    ProviderContainer makeContainer() => ProviderContainer(
-          overrides: [labelRepositoryProvider.overrideWithValue(repo)],
-        );
+    ProviderContainer makeContainer() => ProviderContainer(overrides: [labelRepositoryProvider.overrideWithValue(repo)]);
 
     test('initial state is LabelDetailInitial', () {
       expect(makeContainer().read(labelDetailProvider(null)), isA<LabelDetailInitial>());
@@ -287,9 +263,7 @@ void main() {
   // ══════════════════════════════════════════════════════════════
 
   group('LabelHistoryNotifier', () {
-    ProviderContainer makeContainer() => ProviderContainer(
-          overrides: [labelRepositoryProvider.overrideWithValue(repo)],
-        );
+    ProviderContainer makeContainer() => ProviderContainer(overrides: [labelRepositoryProvider.overrideWithValue(repo)]);
 
     test('initial state is LabelHistoryInitial', () {
       expect(makeContainer().read(labelHistoryProvider), isA<LabelHistoryInitial>());
@@ -351,20 +325,14 @@ void main() {
   // ══════════════════════════════════════════════════════════════
 
   group('LabelPrintStatsNotifier', () {
-    ProviderContainer makeContainer() => ProviderContainer(
-          overrides: [labelRepositoryProvider.overrideWithValue(repo)],
-        );
+    ProviderContainer makeContainer() => ProviderContainer(overrides: [labelRepositoryProvider.overrideWithValue(repo)]);
 
     test('initial state is LabelPrintStatsInitial', () {
       expect(makeContainer().read(labelPrintStatsProvider), isA<LabelPrintStatsInitial>());
     });
 
     test('load transitions through Loading to Loaded', () async {
-      repo.statsResult = const LabelPrintStats(
-        jobsLast30Days: 3,
-        productsLast30Days: 9,
-        labelsLast30Days: 27,
-      );
+      repo.statsResult = const LabelPrintStats(jobsLast30Days: 3, productsLast30Days: 9, labelsLast30Days: 27);
 
       final container = makeContainer();
       await container.read(labelPrintStatsProvider.notifier).load();

@@ -36,23 +36,22 @@ Map<String, dynamic> _paymentJson({
   String? giftCardCode,
   String? status,
   String? createdAt,
-}) =>
-    {
-      'id': id,
-      'transaction_id': transactionId,
-      'method': method,
-      'amount': amount,
-      'cash_tendered': cashTendered,
-      'change_given': changeGiven,
-      'tip_amount': tipAmount,
-      'card_brand': cardBrand,
-      'card_last_four': cardLastFour,
-      'card_auth_code': cardAuthCode,
-      'card_reference': cardReference,
-      'gift_card_code': giftCardCode,
-      'status': status,
-      'created_at': createdAt ?? '2024-01-15T10:30:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'transaction_id': transactionId,
+  'method': method,
+  'amount': amount,
+  'cash_tendered': cashTendered,
+  'change_given': changeGiven,
+  'tip_amount': tipAmount,
+  'card_brand': cardBrand,
+  'card_last_four': cardLastFour,
+  'card_auth_code': cardAuthCode,
+  'card_reference': cardReference,
+  'gift_card_code': giftCardCode,
+  'status': status,
+  'created_at': createdAt ?? '2024-01-15T10:30:00.000000Z',
+};
 
 Map<String, dynamic> _cashEventJson({
   String id = 'evt-001',
@@ -63,17 +62,16 @@ Map<String, dynamic> _cashEventJson({
   String? notes,
   String performedBy = 'user-001',
   String? createdAt,
-}) =>
-    {
-      'id': id,
-      'cash_session_id': cashSessionId,
-      'type': type,
-      'amount': amount,
-      'reason': reason,
-      'notes': notes,
-      'performed_by': performedBy,
-      'created_at': createdAt ?? '2024-01-15T08:00:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'cash_session_id': cashSessionId,
+  'type': type,
+  'amount': amount,
+  'reason': reason,
+  'notes': notes,
+  'performed_by': performedBy,
+  'created_at': createdAt ?? '2024-01-15T08:00:00.000000Z',
+};
 
 Map<String, dynamic> _cashSessionJson({
   String id = 'cs-001',
@@ -91,24 +89,23 @@ Map<String, dynamic> _cashSessionJson({
   String? closeNotes,
   List<Map<String, dynamic>>? cashEvents,
   List<Map<String, dynamic>>? expenses,
-}) =>
-    {
-      'id': id,
-      'store_id': storeId,
-      'terminal_id': terminalId,
-      'opened_by': openedBy,
-      'closed_by': closedBy,
-      'opening_float': openingFloat,
-      'expected_cash': expectedCash,
-      'actual_cash': actualCash,
-      'variance': variance,
-      'status': status,
-      'opened_at': openedAt ?? '2024-01-15T08:00:00.000000Z',
-      'closed_at': closedAt,
-      'close_notes': closeNotes,
-      'cash_events': cashEvents,
-      'expenses': expenses,
-    };
+}) => {
+  'id': id,
+  'store_id': storeId,
+  'terminal_id': terminalId,
+  'opened_by': openedBy,
+  'closed_by': closedBy,
+  'opening_float': openingFloat,
+  'expected_cash': expectedCash,
+  'actual_cash': actualCash,
+  'variance': variance,
+  'status': status,
+  'opened_at': openedAt ?? '2024-01-15T08:00:00.000000Z',
+  'closed_at': closedAt,
+  'close_notes': closeNotes,
+  'cash_events': cashEvents,
+  'expenses': expenses,
+};
 
 Map<String, dynamic> _expenseJson({
   String id = 'exp-001',
@@ -120,20 +117,19 @@ Map<String, dynamic> _expenseJson({
   String recordedBy = 'user-001',
   String expenseDate = '2024-01-15',
   String? createdAt,
-}) =>
-    {
-      'id': id,
-      'store_id': storeId,
-      'cash_session_id': cashSessionId,
-      'amount': amount,
-      'category': category,
-      'description': description,
-      'receipt_image_url': null,
-      'recorded_by': recordedBy,
-      'expense_date': expenseDate,
-      'created_at': createdAt ?? '2024-01-15T09:00:00.000000Z',
-      'updated_at': createdAt ?? '2024-01-15T09:00:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'store_id': storeId,
+  'cash_session_id': cashSessionId,
+  'amount': amount,
+  'category': category,
+  'description': description,
+  'receipt_image_url': null,
+  'recorded_by': recordedBy,
+  'expense_date': expenseDate,
+  'created_at': createdAt ?? '2024-01-15T09:00:00.000000Z',
+  'updated_at': createdAt ?? '2024-01-15T09:00:00.000000Z',
+};
 
 Map<String, dynamic> _giftCardJson({
   String id = 'gc-001',
@@ -148,21 +144,20 @@ Map<String, dynamic> _giftCardJson({
   String issuedAtStore = 'store-001',
   String? expiresAt,
   String? createdAt,
-}) =>
-    {
-      'id': id,
-      'organization_id': organizationId,
-      'code': code,
-      'barcode': barcode,
-      'initial_amount': initialAmount,
-      'balance': balance,
-      'recipient_name': recipientName,
-      'status': status,
-      'issued_by': issuedBy,
-      'issued_at_store': issuedAtStore,
-      'expires_at': expiresAt,
-      'created_at': createdAt ?? '2024-01-10T12:00:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'organization_id': organizationId,
+  'code': code,
+  'barcode': barcode,
+  'initial_amount': initialAmount,
+  'balance': balance,
+  'recipient_name': recipientName,
+  'status': status,
+  'issued_by': issuedBy,
+  'issued_at_store': issuedAtStore,
+  'expires_at': expiresAt,
+  'created_at': createdAt ?? '2024-01-10T12:00:00.000000Z',
+};
 
 Map<String, dynamic> _refundJson({
   String id = 'ref-001',
@@ -174,36 +169,25 @@ Map<String, dynamic> _refundJson({
   String status = 'completed',
   String processedBy = 'user-001',
   String? createdAt,
-}) =>
-    {
-      'id': id,
-      'return_id': returnId,
-      'payment_id': paymentId,
-      'method': method,
-      'amount': amount,
-      'reference_number': referenceNumber,
-      'status': status,
-      'processed_by': processedBy,
-      'created_at': createdAt ?? '2024-01-15T11:00:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'return_id': returnId,
+  'payment_id': paymentId,
+  'method': method,
+  'amount': amount,
+  'reference_number': referenceNumber,
+  'status': status,
+  'processed_by': processedBy,
+  'created_at': createdAt ?? '2024-01-15T11:00:00.000000Z',
+};
 
 Map<String, dynamic> _paginatedResponse(List<Map<String, dynamic>> items) => {
-      'success': true,
-      'message': 'OK',
-      'data': {
-        'data': items,
-        'total': items.length,
-        'current_page': 1,
-        'last_page': 1,
-        'per_page': 20,
-      },
-    };
+  'success': true,
+  'message': 'OK',
+  'data': {'data': items, 'total': items.length, 'current_page': 1, 'last_page': 1, 'per_page': 20},
+};
 
-Map<String, dynamic> _singleResponse(Map<String, dynamic> item) => {
-      'success': true,
-      'message': 'OK',
-      'data': item,
-    };
+Map<String, dynamic> _singleResponse(Map<String, dynamic> item) => {'success': true, 'message': 'OK', 'data': item};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Tests
@@ -291,13 +275,15 @@ void main() {
     });
 
     test('parses card payment fields', () {
-      final p = Payment.fromJson(_paymentJson(
-        method: 'card_mada',
-        cardBrand: 'mada',
-        cardLastFour: '1234',
-        cardAuthCode: 'AUTH9999',
-        cardReference: 'REF-ABC',
-      ));
+      final p = Payment.fromJson(
+        _paymentJson(
+          method: 'card_mada',
+          cardBrand: 'mada',
+          cardLastFour: '1234',
+          cardAuthCode: 'AUTH9999',
+          cardReference: 'REF-ABC',
+        ),
+      );
       expect(p.method, PaymentMethodKey.cardMada);
       expect(p.cardBrand, 'mada');
       expect(p.cardLastFour, '1234');
@@ -306,19 +292,13 @@ void main() {
     });
 
     test('parses cash payment with change', () {
-      final p = Payment.fromJson(_paymentJson(
-        cashTendered: '150.00',
-        changeGiven: '49.50',
-      ));
+      final p = Payment.fromJson(_paymentJson(cashTendered: '150.00', changeGiven: '49.50'));
       expect(p.cashTendered, 150.00);
       expect(p.changeGiven, 49.50);
     });
 
     test('parses gift card payment', () {
-      final p = Payment.fromJson(_paymentJson(
-        method: 'gift_card',
-        giftCardCode: 'GC-XYZW-9999',
-      ));
+      final p = Payment.fromJson(_paymentJson(method: 'gift_card', giftCardCode: 'GC-XYZW-9999'));
       expect(p.method, PaymentMethodKey.giftCard);
       expect(p.giftCardCode, 'GC-XYZW-9999');
     });
@@ -358,11 +338,7 @@ void main() {
     });
 
     test('toJson round-trips', () {
-      final p = Payment.fromJson(_paymentJson(
-        cashTendered: '200.00',
-        changeGiven: '99.50',
-        cardBrand: 'visa',
-      ));
+      final p = Payment.fromJson(_paymentJson(cashTendered: '200.00', changeGiven: '99.50', cardBrand: 'visa'));
       final json = p.toJson();
       expect(json['id'], p.id);
       expect(json['transaction_id'], p.transactionId);
@@ -431,15 +407,17 @@ void main() {
     });
 
     test('parses closed session with variance', () {
-      final s = CashSession.fromJson(_cashSessionJson(
-        status: 'closed',
-        closedBy: 'user-002',
-        expectedCash: '350.00',
-        actualCash: '345.00',
-        variance: '-5.00',
-        closedAt: '2024-01-15T18:00:00.000000Z',
-        closeNotes: 'Slight variance on drawer 3',
-      ));
+      final s = CashSession.fromJson(
+        _cashSessionJson(
+          status: 'closed',
+          closedBy: 'user-002',
+          expectedCash: '350.00',
+          actualCash: '345.00',
+          variance: '-5.00',
+          closedAt: '2024-01-15T18:00:00.000000Z',
+          closeNotes: 'Slight variance on drawer 3',
+        ),
+      );
       expect(s.status, SessionStatus.closed);
       expect(s.closedBy, 'user-002');
       expect(s.expectedCash, 350.00);
@@ -450,18 +428,21 @@ void main() {
     });
 
     test('parses embedded cash_events list', () {
-      final s = CashSession.fromJson(_cashSessionJson(
-        cashEvents: [_cashEventJson(type: 'cash_in'), _cashEventJson(id: 'evt-002', type: 'cash_out')],
-      ));
+      final s = CashSession.fromJson(
+        _cashSessionJson(
+          cashEvents: [
+            _cashEventJson(type: 'cash_in'),
+            _cashEventJson(id: 'evt-002', type: 'cash_out'),
+          ],
+        ),
+      );
       expect(s.cashEvents, hasLength(2));
       expect(s.cashEvents![0].type, CashEventType.cashIn);
       expect(s.cashEvents![1].type, CashEventType.cashOut);
     });
 
     test('parses embedded expenses list', () {
-      final s = CashSession.fromJson(_cashSessionJson(
-        expenses: [_expenseJson(cashSessionId: 'cs-001')],
-      ));
+      final s = CashSession.fromJson(_cashSessionJson(expenses: [_expenseJson(cashSessionId: 'cs-001')]));
       expect(s.expenses, hasLength(1));
       expect(s.expenses![0].category, ExpenseCategory.supplies);
     });
@@ -512,8 +493,16 @@ void main() {
 
     test('parses each expense category', () {
       final categories = [
-        'supplies', 'food', 'transport', 'maintenance', 'utility',
-        'cleaning', 'rent', 'salary', 'marketing', 'other',
+        'supplies',
+        'food',
+        'transport',
+        'maintenance',
+        'utility',
+        'cleaning',
+        'rent',
+        'salary',
+        'marketing',
+        'other',
       ];
       for (final cat in categories) {
         final e = Expense.fromJson(_expenseJson(category: cat));
@@ -689,7 +678,9 @@ void main() {
       final response = ApiResponse.fromJson({
         'success': false,
         'message': 'Validation failed',
-        'errors': {'amount': ['The amount field is required.']},
+        'errors': {
+          'amount': ['The amount field is required.'],
+        },
       }, (d) => d);
       expect(response.success, false);
       expect(response.message, 'Validation failed');
@@ -808,7 +799,18 @@ void main() {
 
   group('ExpenseCategory', () {
     test('fromValue parses all values', () {
-      final values = ['supplies', 'food', 'transport', 'maintenance', 'utility', 'cleaning', 'rent', 'salary', 'marketing', 'other'];
+      final values = [
+        'supplies',
+        'food',
+        'transport',
+        'maintenance',
+        'utility',
+        'cleaning',
+        'rent',
+        'salary',
+        'marketing',
+        'other',
+      ];
       for (final v in values) {
         expect(ExpenseCategory.fromValue(v).value, v);
       }
@@ -952,21 +954,23 @@ void main() {
     });
 
     test('cash session with nested events and expenses', () {
-      final rawResponse = _singleResponse(_cashSessionJson(
-        id: 'cs-full',
-        status: 'closed',
-        expectedCash: '500.00',
-        actualCash: '498.00',
-        variance: '-2.00',
-        cashEvents: [
-          _cashEventJson(type: 'cash_in', amount: '100.00'),
-          _cashEventJson(id: 'evt-2', type: 'cash_out', amount: '30.00'),
-        ],
-        expenses: [
-          _expenseJson(amount: '45.00', category: 'food'),
-          _expenseJson(id: 'exp-002', amount: '20.00', category: 'transport'),
-        ],
-      ));
+      final rawResponse = _singleResponse(
+        _cashSessionJson(
+          id: 'cs-full',
+          status: 'closed',
+          expectedCash: '500.00',
+          actualCash: '498.00',
+          variance: '-2.00',
+          cashEvents: [
+            _cashEventJson(type: 'cash_in', amount: '100.00'),
+            _cashEventJson(id: 'evt-2', type: 'cash_out', amount: '30.00'),
+          ],
+          expenses: [
+            _expenseJson(amount: '45.00', category: 'food'),
+            _expenseJson(id: 'exp-002', amount: '20.00', category: 'transport'),
+          ],
+        ),
+      );
       final session = CashSession.fromJson(rawResponse['data'] as Map<String, dynamic>);
 
       expect(session.status, SessionStatus.closed);
