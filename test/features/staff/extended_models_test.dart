@@ -148,11 +148,7 @@ void main() {
 
     test('fromJson parses all document types', () {
       for (final type in StaffDocumentType.values) {
-        final doc = StaffDocument.fromJson({
-          ...baseJson,
-          'id': 'doc-${type.value}',
-          'document_type': type.value,
-        });
+        final doc = StaffDocument.fromJson({...baseJson, 'id': 'doc-${type.value}', 'document_type': type.value});
         expect(doc.documentType, type);
       }
     });
@@ -173,23 +169,14 @@ void main() {
     });
 
     test('fromJson marks expired document', () {
-      final doc = StaffDocument.fromJson({
-        ...baseJson,
-        'is_expired': true,
-        'days_until_expiry': -5,
-        'expiring_soon': false,
-      });
+      final doc = StaffDocument.fromJson({...baseJson, 'is_expired': true, 'days_until_expiry': -5, 'expiring_soon': false});
 
       expect(doc.isExpired, true);
       expect(doc.daysUntilExpiry, -5);
     });
 
     test('fromJson marks expiring_soon document', () {
-      final doc = StaffDocument.fromJson({
-        ...baseJson,
-        'expiring_soon': true,
-        'days_until_expiry': 14,
-      });
+      final doc = StaffDocument.fromJson({...baseJson, 'expiring_soon': true, 'days_until_expiry': 14});
 
       expect(doc.expiringSoon, true);
     });
@@ -240,10 +227,7 @@ void main() {
     });
 
     test('fromJson handles active break (null break_end)', () {
-      final record = BreakRecord.fromJson({
-        ...baseJson,
-        'break_end': null,
-      });
+      final record = BreakRecord.fromJson({...baseJson, 'break_end': null});
 
       expect(record.breakEnd, isNull);
     });
@@ -330,11 +314,7 @@ void main() {
     });
 
     test('fromJson handles zero commission (complimentary)', () {
-      final earning = CommissionEarning.fromJson({
-        ...baseJson,
-        'order_total': '0.00',
-        'commission_amount': '0.00',
-      });
+      final earning = CommissionEarning.fromJson({...baseJson, 'order_total': '0.00', 'commission_amount': '0.00'});
 
       expect(earning.orderTotal, 0.0);
       expect(earning.commissionAmount, 0.0);
@@ -371,7 +351,10 @@ void main() {
 
   group('StaffDocumentType', () {
     test('has the expected values', () {
-      expect(StaffDocumentType.values.map((e) => e.value).toList(), containsAll(['national_id', 'contract', 'certificate', 'visa']));
+      expect(
+        StaffDocumentType.values.map((e) => e.value).toList(),
+        containsAll(['national_id', 'contract', 'certificate', 'visa']),
+      );
     });
 
     test('fromValue parses known values', () {

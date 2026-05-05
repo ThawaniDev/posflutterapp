@@ -35,7 +35,6 @@ class PricingPlan {
 }
 
 class PricingPageContent {
-
   const PricingPageContent({
     required this.id,
     required this.plan,
@@ -83,26 +82,13 @@ class PricingPageContent {
       id: json['id'] as String,
       plan: PricingPlan.fromJson(json['plan'] as Map<String, dynamic>),
       // API returns arrays — cast properly
-      featureBulletList: (json['feature_bullet_list'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
-      featureCategories: (json['feature_categories'] as List<dynamic>?)
-              ?.map((e) => Map<String, dynamic>.from(e as Map))
-              .toList() ??
-          [],
-      faq: (json['faq'] as List<dynamic>?)
-              ?.map((e) => Map<String, dynamic>.from(e as Map))
-              .toList() ??
-          [],
-      testimonials: (json['testimonials'] as List<dynamic>?)
-              ?.map((e) => Map<String, dynamic>.from(e as Map))
-              .toList() ??
-          [],
-      comparisonHighlights: (json['comparison_highlights'] as List<dynamic>?)
-              ?.map((e) => Map<String, dynamic>.from(e as Map))
-              .toList() ??
-          [],
+      featureBulletList: (json['feature_bullet_list'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
+      featureCategories:
+          (json['feature_categories'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [],
+      faq: (json['faq'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [],
+      testimonials: (json['testimonials'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [],
+      comparisonHighlights:
+          (json['comparison_highlights'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [],
       heroTitle: json['hero_title'] as String?,
       heroTitleAr: json['hero_title_ar'] as String?,
       heroSubtitle: json['hero_subtitle'] as String?,
@@ -179,14 +165,11 @@ class PricingPageContent {
   final DateTime? updatedAt;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PricingPageContent && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PricingPageContent && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() =>
-      'PricingPageContent(id: $id, plan: ${plan.slug}, heroTitle: $heroTitle)';
+  String toString() => 'PricingPageContent(id: $id, plan: ${plan.slug}, heroTitle: $heroTitle)';
 }

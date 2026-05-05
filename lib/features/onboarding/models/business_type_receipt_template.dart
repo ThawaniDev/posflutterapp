@@ -2,7 +2,6 @@ import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
 import 'package:wameedpos/features/zatca/enums/zatca_qr_position.dart';
 
 class BusinessTypeReceiptTemplate {
-
   const BusinessTypeReceiptTemplate({
     required this.id,
     required this.businessTypeId,

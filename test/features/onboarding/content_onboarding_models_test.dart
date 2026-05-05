@@ -56,12 +56,7 @@ void main() {
     });
 
     test('handles null optional fields', () {
-      final json = {
-        'id': 'bt-uuid-2',
-        'name': 'Restaurant',
-        'name_ar': 'مطعم',
-        'slug': 'restaurant',
-      };
+      final json = {'id': 'bt-uuid-2', 'name': 'Restaurant', 'name_ar': 'مطعم', 'slug': 'restaurant'};
 
       final bt = BusinessType.fromJson(json);
 
@@ -346,11 +341,7 @@ void main() {
     });
 
     test('handles null active_modules', () {
-      final json = {
-        'id': 'industry-2',
-        'business_type_id': 'bt-uuid-1',
-        'active_modules': null,
-      };
+      final json = {'id': 'industry-2', 'business_type_id': 'bt-uuid-1', 'active_modules': null};
 
       final config = BusinessTypeIndustryConfig.fromJson(json);
       expect(config.activeModules, isNull);
@@ -651,11 +642,7 @@ void main() {
         };
 
         final article = KnowledgeBaseArticle.fromJson(json);
-        expect(
-          article.category,
-          entry.value,
-          reason: 'Category "${entry.key}" should parse to ${entry.value}',
-        );
+        expect(article.category, entry.value, reason: 'Category "${entry.key}" should parse to ${entry.value}');
         idx++;
       }
     });
@@ -707,12 +694,7 @@ void main() {
     });
 
     test('handles optional fields as null', () {
-      final json = {
-        'id': 'step-2',
-        'step_number': 2,
-        'title': 'Tax',
-        'title_ar': 'الضريبة',
-      };
+      final json = {'id': 'step-2', 'step_number': 2, 'title': 'Tax', 'title_ar': 'الضريبة'};
 
       final step = OnboardingStep.fromJson(json);
 
@@ -722,12 +704,7 @@ void main() {
     });
 
     test('step_number is integer', () {
-      final json = {
-        'id': 'step-3',
-        'step_number': 3,
-        'title': 'Products',
-        'title_ar': 'المنتجات',
-      };
+      final json = {'id': 'step-3', 'step_number': 3, 'title': 'Products', 'title_ar': 'المنتجات'};
 
       final step = OnboardingStep.fromJson(json);
       expect(step.stepNumber, isA<int>());
@@ -739,63 +716,66 @@ void main() {
   // ═══════════════════════════════════════════════════════════════════════
   group('PricingPageContent.fromJson', () {
     Map<String, dynamic> _buildFullJson() => {
-          'id': 'pricing-1',
-          'plan': {
-            'id': 'plan-uuid-1',
-            'name': 'Starter',
-            'name_ar': 'مبتدئ',
-            'slug': 'starter',
-            'monthly_price': 99.0,
-            'annual_price': 990.0,
-            'trial_days': 14,
-            'is_highlighted': false,
-          },
-          'hero_title': 'Start Your Journey',
-          'hero_title_ar': 'ابدأ رحلتك',
-          'hero_subtitle': 'Everything you need',
-          'hero_subtitle_ar': 'كل ما تحتاجه',
-          'highlight_badge': 'Best Value',
-          'highlight_badge_ar': 'أفضل قيمة',
-          'highlight_color': 'primary',
-          'is_highlighted': true,
-          'cta_label': 'Get Started',
-          'cta_label_ar': 'ابدأ الآن',
-          'cta_secondary_label': 'Learn More',
-          'cta_secondary_label_ar': 'اعرف المزيد',
-          'cta_url': 'https://example.com/start',
-          'price_prefix': 'SAR',
-          'price_prefix_ar': 'ر.س',
-          'price_suffix': '/month',
-          'price_suffix_ar': '/شهر',
-          'annual_discount_label': 'Save 20%',
-          'annual_discount_label_ar': 'وفر 20%',
-          'trial_label': '14-day free trial',
-          'trial_label_ar': '14 يوم تجربة مجانية',
-          'money_back_days': 30,
-          'feature_bullet_list': ['Feature A', 'Feature B', 'Feature C'],
-          'feature_categories': [
-            {'title': 'Core', 'features': ['Inventory', 'POS']},
-          ],
-          'faq': [
-            {'q': 'Can I cancel?', 'a': 'Yes, anytime.'},
-          ],
-          'testimonials': [
-            {'name': 'Ahmed', 'text': 'Great product!'},
-          ],
-          'comparison_highlights': [
-            {'feature': 'Branches', 'value': '1'},
-          ],
-          'meta_title': 'Starter Plan | Wameed',
-          'meta_title_ar': 'الباقة المبتدئة | وميض',
-          'meta_description': 'Perfect for small businesses.',
-          'meta_description_ar': 'مثالي للأعمال الصغيرة.',
-          'color_theme': 'primary',
-          'card_icon': '⭐',
-          'card_image_url': 'https://example.com/card.png',
-          'is_published': true,
-          'sort_order': 1,
-          'updated_at': '2024-06-15T10:30:00.000Z',
-        };
+      'id': 'pricing-1',
+      'plan': {
+        'id': 'plan-uuid-1',
+        'name': 'Starter',
+        'name_ar': 'مبتدئ',
+        'slug': 'starter',
+        'monthly_price': 99.0,
+        'annual_price': 990.0,
+        'trial_days': 14,
+        'is_highlighted': false,
+      },
+      'hero_title': 'Start Your Journey',
+      'hero_title_ar': 'ابدأ رحلتك',
+      'hero_subtitle': 'Everything you need',
+      'hero_subtitle_ar': 'كل ما تحتاجه',
+      'highlight_badge': 'Best Value',
+      'highlight_badge_ar': 'أفضل قيمة',
+      'highlight_color': 'primary',
+      'is_highlighted': true,
+      'cta_label': 'Get Started',
+      'cta_label_ar': 'ابدأ الآن',
+      'cta_secondary_label': 'Learn More',
+      'cta_secondary_label_ar': 'اعرف المزيد',
+      'cta_url': 'https://example.com/start',
+      'price_prefix': 'SAR',
+      'price_prefix_ar': 'ر.س',
+      'price_suffix': '/month',
+      'price_suffix_ar': '/شهر',
+      'annual_discount_label': 'Save 20%',
+      'annual_discount_label_ar': 'وفر 20%',
+      'trial_label': '14-day free trial',
+      'trial_label_ar': '14 يوم تجربة مجانية',
+      'money_back_days': 30,
+      'feature_bullet_list': ['Feature A', 'Feature B', 'Feature C'],
+      'feature_categories': [
+        {
+          'title': 'Core',
+          'features': ['Inventory', 'POS'],
+        },
+      ],
+      'faq': [
+        {'q': 'Can I cancel?', 'a': 'Yes, anytime.'},
+      ],
+      'testimonials': [
+        {'name': 'Ahmed', 'text': 'Great product!'},
+      ],
+      'comparison_highlights': [
+        {'feature': 'Branches', 'value': '1'},
+      ],
+      'meta_title': 'Starter Plan | Wameed',
+      'meta_title_ar': 'الباقة المبتدئة | وميض',
+      'meta_description': 'Perfect for small businesses.',
+      'meta_description_ar': 'مثالي للأعمال الصغيرة.',
+      'color_theme': 'primary',
+      'card_icon': '⭐',
+      'card_image_url': 'https://example.com/card.png',
+      'is_published': true,
+      'sort_order': 1,
+      'updated_at': '2024-06-15T10:30:00.000Z',
+    };
 
     test('parses full payload correctly', () {
       final content = PricingPageContent.fromJson(_buildFullJson());
@@ -865,15 +845,16 @@ void main() {
     });
 
     test('null annual_price preserved', () {
-      final json = _buildFullJson()..['plan'] = {
-            'id': 'plan-uuid-3',
-            'name': 'Basic',
-            'name_ar': 'أساسية',
-            'slug': 'basic',
-            'monthly_price': 49.0,
-            'annual_price': null,
-            'is_highlighted': false,
-          };
+      final json = _buildFullJson()
+        ..['plan'] = {
+          'id': 'plan-uuid-3',
+          'name': 'Basic',
+          'name_ar': 'أساسية',
+          'slug': 'basic',
+          'monthly_price': 49.0,
+          'annual_price': null,
+          'is_highlighted': false,
+        };
 
       final content = PricingPageContent.fromJson(json);
       expect(content.plan.annualPrice, isNull);

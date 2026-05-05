@@ -31,11 +31,7 @@ import 'package:wameedpos/features/inventory/repositories/inventory_repository.d
 // ═══════════════════════════════════════════════════════════════════
 
 class _WorkflowRepo extends InventoryRepository {
-  _WorkflowRepo()
-      : super(
-          apiService: InventoryApiService(Dio()),
-          localStorage: _NoOpAuth(),
-        );
+  _WorkflowRepo() : super(apiService: InventoryApiService(Dio()), localStorage: _NoOpAuth());
 
   // ── Stock Levels ──────────────────────────────────────────────
   final List<StockLevel> _levels = [];
@@ -45,20 +41,22 @@ class _WorkflowRepo extends InventoryRepository {
 
   @override
   Future<PaginatedResult<StockLevel>> listStockLevels({
-    int page = 1, int perPage = 25, String? productId, bool? lowStock, String? search,
+    int page = 1,
+    int perPage = 25,
+    String? productId,
+    bool? lowStock,
+    String? search,
   }) async => PaginatedResult(items: _levels, total: _levels.length, currentPage: 1, lastPage: 1, perPage: 25);
 
   @override
-  Future<StockLevel> setReorderPoint(String id, {required double reorderPoint, double? maxStockLevel}) async =>
-      _reorderResult!;
+  Future<StockLevel> setReorderPoint(String id, {required double reorderPoint, double? maxStockLevel}) async => _reorderResult!;
 
   // ── Stock Movements ───────────────────────────────────────────
   final List<StockMovement> _movements = [];
 
   @override
-  Future<PaginatedResult<StockMovement>> listStockMovements({
-    int page = 1, int perPage = 25, String? productId,
-  }) async => PaginatedResult(items: _movements, total: _movements.length, currentPage: 1, lastPage: 1, perPage: 25);
+  Future<PaginatedResult<StockMovement>> listStockMovements({int page = 1, int perPage = 25, String? productId}) async =>
+      PaginatedResult(items: _movements, total: _movements.length, currentPage: 1, lastPage: 1, perPage: 25);
 
   // ── Stock Adjustments ─────────────────────────────────────────
   final List<StockAdjustment> _adjustments = [];
@@ -108,8 +106,7 @@ class _WorkflowRepo extends InventoryRepository {
   Future<StockTransfer> approveTransfer(String id) async => _transferUpdates[id]!;
 
   @override
-  Future<StockTransfer> receiveTransfer(String id, {List<Map<String, dynamic>>? items}) async =>
-      _transferUpdates[id]!;
+  Future<StockTransfer> receiveTransfer(String id, {List<Map<String, dynamic>>? items}) async => _transferUpdates[id]!;
 
   @override
   Future<StockTransfer> cancelTransfer(String id) async => _transferUpdates[id]!;
@@ -133,8 +130,7 @@ class _WorkflowRepo extends InventoryRepository {
   Future<PurchaseOrder> sendPurchaseOrder(String id) async => _orderUpdates[id]!;
 
   @override
-  Future<PurchaseOrder> receivePurchaseOrder(String id, List<Map<String, dynamic>> items) async =>
-      _orderUpdates[id]!;
+  Future<PurchaseOrder> receivePurchaseOrder(String id, List<Map<String, dynamic>> items) async => _orderUpdates[id]!;
 
   @override
   Future<PurchaseOrder> cancelPurchaseOrder(String id) async => _orderUpdates[id]!;
@@ -176,8 +172,7 @@ class _WorkflowRepo extends InventoryRepository {
   Future<Stocktake> createStocktake(Map<String, dynamic> data) async => _newStocktake!;
 
   @override
-  Future<Stocktake> updateStocktakeCounts(String id, List<Map<String, dynamic>> items) async =>
-      _stocktakeUpdates[id]!;
+  Future<Stocktake> updateStocktakeCounts(String id, List<Map<String, dynamic>> items) async => _stocktakeUpdates[id]!;
 
   @override
   Future<Stocktake> applyStocktake(String id) async => _stocktakeUpdates[id]!;
@@ -195,7 +190,11 @@ class _WorkflowRepo extends InventoryRepository {
 
   @override
   Future<PaginatedResult<SupplierReturn>> listSupplierReturns({
-    int page = 1, int perPage = 25, String? status, String? supplierId, String? search,
+    int page = 1,
+    int perPage = 25,
+    String? status,
+    String? supplierId,
+    String? search,
   }) async => PaginatedResult(items: _supplierReturns, total: _supplierReturns.length, currentPage: 1, lastPage: 1, perPage: 25);
 
   @override
@@ -221,7 +220,12 @@ class _WorkflowRepo extends InventoryRepository {
 
   @override
   Future<PaginatedResult<WasteRecord>> listWasteRecords({
-    int page = 1, int perPage = 25, String? productId, String? reason, String? dateFrom, String? dateTo,
+    int page = 1,
+    int perPage = 25,
+    String? productId,
+    String? reason,
+    String? dateFrom,
+    String? dateTo,
   }) async => PaginatedResult(items: _wasteRecords, total: _wasteRecords.length, currentPage: 1, lastPage: 1, perPage: 25);
 
   @override
@@ -229,39 +233,40 @@ class _WorkflowRepo extends InventoryRepository {
 }
 
 class _NoOpAuth extends AuthLocalStorage {
-  @override Future<String?> getStoreId() async => 'store-test';
-  @override Future<String?> getToken() async => null;
-  @override Future<void> saveToken(String token) async {}
-  @override Future<void> deleteToken() async {}
+  @override
+  Future<String?> getStoreId() async => 'store-test';
+  @override
+  Future<String?> getToken() async => null;
+  @override
+  Future<void> saveToken(String token) async {}
+  @override
+  Future<void> deleteToken() async {}
 }
 
 // ─── Model helpers ───────────────────────────────────────────────
 
-GoodsReceipt _receipt({String id = 'gr-1'}) =>
-    GoodsReceipt(id: id, storeId: 'store-1', receivedBy: 'user-1');
+GoodsReceipt _receipt({String id = 'gr-1'}) => GoodsReceipt(id: id, storeId: 'store-1', receivedBy: 'user-1');
 
 StockTransfer _transfer({String id = 'st-1', StockTransferStatus? status}) => StockTransfer(
-  id: id, organizationId: 'org-1', fromStoreId: 'store-1', toStoreId: 'store-2',
-  status: status, createdBy: 'user-1',
+  id: id,
+  organizationId: 'org-1',
+  fromStoreId: 'store-1',
+  toStoreId: 'store-2',
+  status: status,
+  createdBy: 'user-1',
 );
 
-PurchaseOrder _order({String id = 'po-1', PurchaseOrderStatus? status}) => PurchaseOrder(
-  id: id, organizationId: 'org-1', storeId: 'store-1', supplierId: 'sup-1',
-  status: status, createdBy: 'user-1',
-);
+PurchaseOrder _order({String id = 'po-1', PurchaseOrderStatus? status}) =>
+    PurchaseOrder(id: id, organizationId: 'org-1', storeId: 'store-1', supplierId: 'sup-1', status: status, createdBy: 'user-1');
 
 Stocktake _stocktake({String id = 'skt-1'}) => Stocktake(id: id, storeId: 'store-1');
 
-Recipe _recipe({String id = 'rec-1'}) =>
-    Recipe(id: id, organizationId: 'org-1', productId: 'prod-1', yieldQuantity: 1.0);
+Recipe _recipe({String id = 'rec-1'}) => Recipe(id: id, organizationId: 'org-1', productId: 'prod-1', yieldQuantity: 1.0);
 
-SupplierReturn _supplierReturn({String id = 'sr-1', SupplierReturnStatus? status}) => SupplierReturn(
-  id: id, organizationId: 'org-1', storeId: 'store-1', supplierId: 'sup-1',
-  status: status, createdBy: 'user-1',
-);
+SupplierReturn _supplierReturn({String id = 'sr-1', SupplierReturnStatus? status}) =>
+    SupplierReturn(id: id, organizationId: 'org-1', storeId: 'store-1', supplierId: 'sup-1', status: status, createdBy: 'user-1');
 
-WasteRecord _waste({String id = 'wr-1'}) =>
-    WasteRecord(id: id, storeId: 'store-1', productId: 'prod-1', quantity: 2.0);
+WasteRecord _waste({String id = 'wr-1'}) => WasteRecord(id: id, storeId: 'store-1', productId: 'prod-1', quantity: 2.0);
 
 StockAdjustment _adjustment({String id = 'sa-1'}) => StockAdjustment(id: id, storeId: 'store-1');
 
@@ -270,9 +275,8 @@ StockLevel _level({String id = 'sl-1', double qty = 10.0}) =>
 
 // ─── Container factory ───────────────────────────────────────────
 
-ProviderContainer _container(_WorkflowRepo repo) => ProviderContainer(
-  overrides: [inventoryRepositoryProvider.overrideWithValue(repo)],
-);
+ProviderContainer _container(_WorkflowRepo repo) =>
+    ProviderContainer(overrides: [inventoryRepositoryProvider.overrideWithValue(repo)]);
 
 // ═══════════════════════════════════════════════════════════════════
 // Tests
@@ -573,9 +577,7 @@ void main() {
 
       await container.read(stockLevelsProvider.notifier).load();
 
-      repo.stubReorderPoint(StockLevel(
-        id: 'sl-1', storeId: 'store-1', productId: 'prod-1', quantity: 10.0, reorderPoint: 3.0,
-      ));
+      repo.stubReorderPoint(StockLevel(id: 'sl-1', storeId: 'store-1', productId: 'prod-1', quantity: 10.0, reorderPoint: 3.0));
       await container.read(stockLevelsProvider.notifier).setReorderPoint('sl-1', reorderPoint: 3.0);
 
       final state = container.read(stockLevelsProvider) as StockLevelsLoaded;

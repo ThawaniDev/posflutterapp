@@ -77,12 +77,8 @@ Widget _dialogHarness({required SecurityApiService api}) {
       home: Scaffold(
         body: Builder(
           builder: (ctx) => TextButton(
-            onPressed: () => showPinOverrideDialog(
-              ctx,
-              storeId: 'store-001',
-              requestingUserId: 'user-001',
-              permissionCode: 'pos.discount',
-            ),
+            onPressed: () =>
+                showPinOverrideDialog(ctx, storeId: 'store-001', requestingUserId: 'user-001', permissionCode: 'pos.discount'),
             child: const Text('OPEN DIALOG'),
           ),
         ),
@@ -103,9 +99,11 @@ void main() {
     testWidgets('renders dialog with permission code and numpad', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi(respondWith: {
-        'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
-      });
+      final api = _FakeSecurityApi(
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
+      );
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();
@@ -132,9 +130,11 @@ void main() {
     testWidgets('tapping digit keys adds digits without auto-submit until 6', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi(respondWith: {
-        'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
-      });
+      final api = _FakeSecurityApi(
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
+      );
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();
@@ -158,9 +158,11 @@ void main() {
     testWidgets('auto-submits when 6th digit is tapped', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi(respondWith: {
-        'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
-      });
+      final api = _FakeSecurityApi(
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
+      );
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();
@@ -188,9 +190,11 @@ void main() {
     testWidgets('backspace removes last digit', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi(respondWith: {
-        'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
-      });
+      final api = _FakeSecurityApi(
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
+      );
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();
@@ -225,7 +229,9 @@ void main() {
       // Use a Completer so we can hold the API in-flight without real timers.
       final hang = Completer<void>();
       final api = _FakeSecurityApi(
-        respondWith: {'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'}},
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
       )..hangUntil = hang;
 
       await tester.pumpWidget(_dialogHarness(api: api));
@@ -255,9 +261,11 @@ void main() {
     testWidgets('cancel button closes the dialog', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi(respondWith: {
-        'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
-      });
+      final api = _FakeSecurityApi(
+        respondWith: {
+          'data': {'id': 'ov-1', 'authorizing_user_id': 'mgr-1'},
+        },
+      );
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();
@@ -281,8 +289,7 @@ void main() {
     testWidgets('shows error message when API throws', (tester) async {
       await tester.binding.setSurfaceSize(const Size(800, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
-      final api = _FakeSecurityApi()
-        ..throwError = Exception('Invalid PIN for override');
+      final api = _FakeSecurityApi()..throwError = Exception('Invalid PIN for override');
 
       await tester.pumpWidget(_dialogHarness(api: api));
       await tester.pump();

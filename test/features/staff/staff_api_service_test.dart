@@ -20,17 +20,9 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
       onRequest: (opts, requestHandler) {
         try {
           final data = handler(opts);
-          requestHandler.resolve(
-            Response(
-              data: data,
-              requestOptions: opts,
-              statusCode: 200,
-            ),
-          );
+          requestHandler.resolve(Response(data: data, requestOptions: opts, statusCode: 200));
         } catch (e) {
-          requestHandler.reject(
-            DioException(requestOptions: opts, error: e),
-          );
+          requestHandler.reject(DioException(requestOptions: opts, error: e));
         }
       },
     ),
@@ -39,28 +31,20 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
 }
 
 /// Standard API envelope wrapping [data].
-Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) => {
-      'success': true,
-      'message': message,
-      'data': data,
-    };
+Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) => {'success': true, 'message': message, 'data': data};
 
 /// Minimal valid StaffUser JSON.
-Map<String, dynamic> _staffJson({
-  String id = 'su-001',
-  String? nfcBadgeUid,
-}) =>
-    {
-      'id': id,
-      'store_id': 'store-001',
-      'first_name': 'Test',
-      'last_name': 'User',
-      'employment_type': 'full_time',
-      'salary_type': 'monthly',
-      'hire_date': '2024-01-01',
-      'status': 'active',
-      if (nfcBadgeUid != null) 'nfc_badge_uid': nfcBadgeUid,
-    };
+Map<String, dynamic> _staffJson({String id = 'su-001', String? nfcBadgeUid}) => {
+  'id': id,
+  'store_id': 'store-001',
+  'first_name': 'Test',
+  'last_name': 'User',
+  'employment_type': 'full_time',
+  'salary_type': 'monthly',
+  'hire_date': '2024-01-01',
+  'status': 'active',
+  if (nfcBadgeUid != null) 'nfc_badge_uid': nfcBadgeUid,
+};
 
 // ─── Tests ────────────────────────────────────────────────────────
 
@@ -106,13 +90,7 @@ void main() {
       final dio = _fakeDio((opts) {
         expect(opts.queryParameters['page'], 2);
         expect(opts.queryParameters['per_page'], 10);
-        return _envelope({
-          'data': [],
-          'total': 0,
-          'current_page': 2,
-          'last_page': 2,
-          'per_page': 10,
-        });
+        return _envelope({'data': [], 'total': 0, 'current_page': 2, 'last_page': 2, 'per_page': 10});
       });
 
       final svc = StaffApiService(dio);
@@ -225,13 +203,15 @@ void main() {
     // ─ listStaff pagination hasMore ──────────────────────────
 
     test('listStaff: hasMore=true when currentPage < lastPage', () async {
-      final dio = _fakeDio((_) => _envelope({
-            'data': [_staffJson()],
-            'total': 50,
-            'current_page': 1,
-            'last_page': 5,
-            'per_page': 10,
-          }));
+      final dio = _fakeDio(
+        (_) => _envelope({
+          'data': [_staffJson()],
+          'total': 50,
+          'current_page': 1,
+          'last_page': 5,
+          'per_page': 10,
+        }),
+      );
 
       final svc = StaffApiService(dio);
       final result = await svc.listStaff();

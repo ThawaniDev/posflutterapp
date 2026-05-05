@@ -32,8 +32,7 @@ class _FakeStaffRepository extends StaffRepository {
     _pageResults[result.currentPage] = result;
   }
 
-  void stubPage(int page, PaginatedResult<StaffUser> result) =>
-      _pageResults[page] = result;
+  void stubPage(int page, PaginatedResult<StaffUser> result) => _pageResults[page] = result;
 
   void stubListError(Exception e) => _listError = e;
 
@@ -58,20 +57,20 @@ class _FakeStaffRepository extends StaffRepository {
 
 /// Avoids FlutterSecureStorage native calls in tests by overriding all methods.
 class _NoOpAuthLocalStorage extends AuthLocalStorage {
-  @override Future<String?> getStoreId() async => 'store-test';
-  @override Future<String?> getToken() async => null;
-  @override Future<void> saveToken(String token) async {}
-  @override Future<void> deleteToken() async {}
+  @override
+  Future<String?> getStoreId() async => 'store-test';
+  @override
+  Future<String?> getToken() async => null;
+  @override
+  Future<void> saveToken(String token) async {}
+  @override
+  Future<void> deleteToken() async {}
 }
 
 // ─── Fake RolesRepository ─────────────────────────────────────────
 
 class _FakeRolesRepository extends RolesRepository {
-  _FakeRolesRepository()
-      : super(
-          apiService: RoleApiService(Dio()),
-          localStorage: _NoOpAuthLocalStorage(),
-        );
+  _FakeRolesRepository() : super(apiService: RoleApiService(Dio()), localStorage: _NoOpAuthLocalStorage());
 
   List<Role>? _rolesResult;
   Exception? _rolesError;
@@ -92,12 +91,7 @@ class _FakeRolesRepository extends RolesRepository {
   }
 
   @override
-  Future<Role> createRole({
-    String? name,
-    String? displayName,
-    String? description,
-    List<int>? permissionIds,
-  }) async =>
+  Future<Role> createRole({String? name, String? displayName, String? description, List<int>? permissionIds}) async =>
       _createResult!;
 
   @override
@@ -139,34 +133,25 @@ class _FakeRolesRepository extends RolesRepository {
     String? pin,
     String? permissionCode,
     Map<String, dynamic>? context,
-  }) async =>
-      {};
+  }) async => {};
 }
 
 // ─── Helper factories ─────────────────────────────────────────────
 
-StaffUser _makeStaff({String id = 'su-001', String firstName = 'Test'}) =>
-    StaffUser(
-      id: id,
-      storeId: 'store-001',
-      firstName: firstName,
-      lastName: 'User',
-      employmentType: EmploymentType.fullTime,
-      salaryType: SalaryType.monthly,
-      hireDate: DateTime(2024, 1, 1),
-    );
+StaffUser _makeStaff({String id = 'su-001', String firstName = 'Test'}) => StaffUser(
+  id: id,
+  storeId: 'store-001',
+  firstName: firstName,
+  lastName: 'User',
+  employmentType: EmploymentType.fullTime,
+  salaryType: SalaryType.monthly,
+  hireDate: DateTime(2024, 1, 1),
+);
 
-Role _makeRole({int id = 1, String name = 'cashier'}) =>
-    Role(id: id, name: name, displayName: name.replaceAll('_', ' '));
+Role _makeRole({int id = 1, String name = 'cashier'}) => Role(id: id, name: name, displayName: name.replaceAll('_', ' '));
 
 PaginatedResult<StaffUser> _singlePage(List<StaffUser> items) =>
-    PaginatedResult<StaffUser>(
-      items: items,
-      total: items.length,
-      currentPage: 1,
-      lastPage: 1,
-      perPage: 20,
-    );
+    PaginatedResult<StaffUser>(items: items, total: items.length, currentPage: 1, lastPage: 1, perPage: 20);
 
 // ─── Tests ────────────────────────────────────────────────────────
 
@@ -180,9 +165,7 @@ void main() {
 
     setUp(() {
       fakeRepo = _FakeStaffRepository();
-      container = ProviderContainer(
-        overrides: [staffRepositoryProvider.overrideWithValue(fakeRepo)],
-      );
+      container = ProviderContainer(overrides: [staffRepositoryProvider.overrideWithValue(fakeRepo)]);
     });
 
     tearDown(() => container.dispose());
@@ -218,9 +201,7 @@ void main() {
     });
 
     test('deleteStaff removes item and decrements total', () async {
-      fakeRepo.stubList(
-        _singlePage([_makeStaff(id: 'su-001'), _makeStaff(id: 'su-002')]),
-      );
+      fakeRepo.stubList(_singlePage([_makeStaff(id: 'su-001'), _makeStaff(id: 'su-002')]));
 
       await container.read(staffListProvider.notifier).load();
       await container.read(staffListProvider.notifier).deleteStaff('su-001');
@@ -233,20 +214,13 @@ void main() {
     });
 
     test('loadMore appends items when hasMore=true', () async {
-      fakeRepo.stubList(PaginatedResult<StaffUser>(
-        items: [_makeStaff(id: 'su-001')],
-        total: 2,
-        currentPage: 1,
-        lastPage: 2,
-        perPage: 1,
-      ));
-      fakeRepo.stubPage(2, PaginatedResult<StaffUser>(
-        items: [_makeStaff(id: 'su-002')],
-        total: 2,
-        currentPage: 2,
-        lastPage: 2,
-        perPage: 1,
-      ));
+      fakeRepo.stubList(
+        PaginatedResult<StaffUser>(items: [_makeStaff(id: 'su-001')], total: 2, currentPage: 1, lastPage: 2, perPage: 1),
+      );
+      fakeRepo.stubPage(
+        2,
+        PaginatedResult<StaffUser>(items: [_makeStaff(id: 'su-002')], total: 2, currentPage: 2, lastPage: 2, perPage: 1),
+      );
 
       final notifier = container.read(staffListProvider.notifier);
       await notifier.load();
@@ -280,9 +254,7 @@ void main() {
 
     setUp(() {
       fakeRepo = _FakeRolesRepository();
-      container = ProviderContainer(
-        overrides: [rolesRepositoryProvider.overrideWithValue(fakeRepo)],
-      );
+      container = ProviderContainer(overrides: [rolesRepositoryProvider.overrideWithValue(fakeRepo)]);
     });
 
     tearDown(() => container.dispose());
@@ -317,10 +289,7 @@ void main() {
       fakeRepo.stubCreate(_makeRole(id: 2, name: 'supervisor'));
 
       await container.read(rolesProvider.notifier).load();
-      await container.read(rolesProvider.notifier).createRole(
-            name: 'supervisor',
-            displayName: 'Supervisor',
-          );
+      await container.read(rolesProvider.notifier).createRole(name: 'supervisor', displayName: 'Supervisor');
 
       final state = container.read(rolesProvider) as RolesLoaded;
       expect(state.roles.length, 2);
@@ -348,9 +317,7 @@ void main() {
 
     setUp(() {
       fakeRepo = _FakeRolesRepository();
-      container = ProviderContainer(
-        overrides: [rolesRepositoryProvider.overrideWithValue(fakeRepo)],
-      );
+      container = ProviderContainer(overrides: [rolesRepositoryProvider.overrideWithValue(fakeRepo)]);
     });
 
     tearDown(() => container.dispose());

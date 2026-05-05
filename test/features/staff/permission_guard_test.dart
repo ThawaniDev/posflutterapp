@@ -18,21 +18,22 @@ import 'package:wameedpos/features/staff/models/role.dart';
 // ─── No-op AuthLocalStorage ────────────────────────────────────────────────
 
 class _NoOpAuthLocalStorage extends AuthLocalStorage {
-  @override Future<String?> getStoreId() async => 'store-test';
-  @override Future<String?> getToken() async => null;
-  @override Future<void> saveToken(String token) async {}
-  @override Future<void> deleteToken() async {}
+  @override
+  Future<String?> getStoreId() async => 'store-test';
+  @override
+  Future<String?> getToken() async => null;
+  @override
+  Future<void> saveToken(String token) async {}
+  @override
+  Future<void> deleteToken() async {}
 }
 
 // ─── Fake RolesRepository ─────────────────────────────────────────
 
 class _FakeRolesRepository extends RolesRepository {
   _FakeRolesRepository(UserPermissionsState initialState)
-      : _initialState = initialState,
-        super(
-          apiService: RoleApiService(Dio()),
-          localStorage: _NoOpAuthLocalStorage(),
-        );
+    : _initialState = initialState,
+      super(apiService: RoleApiService(Dio()), localStorage: _NoOpAuthLocalStorage());
 
   final UserPermissionsState _initialState;
 
@@ -46,18 +47,36 @@ class _FakeRolesRepository extends RolesRepository {
     };
   }
 
-  @override Future<List<Role>> listRoles() async => [];
-  @override Future<Role> createRole({String? name, String? displayName, String? description, List<int>? permissionIds}) async => throw UnimplementedError();
-  @override Future<void> deleteRole(int roleId) async {}
-  @override Future<void> assignRole(int roleId, String userId) async {}
-  @override Future<void> unassignRole(int roleId, String userId) async {}
-  @override Future<bool> checkPinRequired(String permissionCode) async => false;
-  @override Future<List<Permission>> listPermissions() async => [];
-  @override Future<Map<String, List<Permission>>> getPermissionsGrouped() async => {};
-  @override Future<List<String>> getModules() async => [];
-  @override Future<List<String>> getMyPermissions() async => [];
-  @override Future<List<Permission>> getPinProtected() async => [];
-  @override Future<Map<String, dynamic>> requestPinOverride({String? storeId, String? pin, String? permissionCode, Map<String, dynamic>? context}) async => {};
+  @override
+  Future<List<Role>> listRoles() async => [];
+  @override
+  Future<Role> createRole({String? name, String? displayName, String? description, List<int>? permissionIds}) async =>
+      throw UnimplementedError();
+  @override
+  Future<void> deleteRole(int roleId) async {}
+  @override
+  Future<void> assignRole(int roleId, String userId) async {}
+  @override
+  Future<void> unassignRole(int roleId, String userId) async {}
+  @override
+  Future<bool> checkPinRequired(String permissionCode) async => false;
+  @override
+  Future<List<Permission>> listPermissions() async => [];
+  @override
+  Future<Map<String, List<Permission>>> getPermissionsGrouped() async => {};
+  @override
+  Future<List<String>> getModules() async => [];
+  @override
+  Future<List<String>> getMyPermissions() async => [];
+  @override
+  Future<List<Permission>> getPinProtected() async => [];
+  @override
+  Future<Map<String, dynamic>> requestPinOverride({
+    String? storeId,
+    String? pin,
+    String? permissionCode,
+    Map<String, dynamic>? context,
+  }) async => {};
 }
 
 // ─── Helper: sets up a loaded permissions state via the notifier ──
@@ -71,10 +90,7 @@ class _PreloadedNotifier extends UserPermissionsNotifier {
 
 // ─── Widget harness ───────────────────────────────────────────────
 
-Widget _harness(
-  Widget child, {
-  required RolesRepository repo,
-}) {
+Widget _harness(Widget child, {required RolesRepository repo}) {
   return ProviderScope(
     overrides: [rolesRepositoryProvider.overrideWithValue(repo)],
     child: MaterialApp(
@@ -102,10 +118,7 @@ void main() {
 
       await tester.pumpWidget(
         _harness(
-          PermissionGuardPage(
-            permission: 'staff.view',
-            child: const Text('SECRET CONTENT'),
-          ),
+          PermissionGuardPage(permission: 'staff.view', child: const Text('SECRET CONTENT')),
           repo: repo,
         ),
       );
@@ -141,10 +154,7 @@ void main() {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: PermissionGuardPage(
-              permission: 'staff.view',
-              child: const Text('ALLOWED CONTENT'),
-            ),
+            home: PermissionGuardPage(permission: 'staff.view', child: const Text('ALLOWED CONTENT')),
           ),
         ),
       );
@@ -181,10 +191,7 @@ void main() {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: PermissionGuardPage(
-              permission: 'staff.delete',
-              child: const Text('RESTRICTED CONTENT'),
-            ),
+            home: PermissionGuardPage(permission: 'staff.delete', child: const Text('RESTRICTED CONTENT')),
           ),
         ),
       );
@@ -257,10 +264,7 @@ void main() {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: PermissionGuardPage(
-              anyOf: const ['reports.view', 'reports.export'],
-              child: const Text('REPORTS PAGE'),
-            ),
+            home: PermissionGuardPage(anyOf: const ['reports.view', 'reports.export'], child: const Text('REPORTS PAGE')),
           ),
         ),
       );

@@ -1,5 +1,4 @@
 class BusinessTypeShiftTemplate {
-
   const BusinessTypeShiftTemplate({
     required this.id,
     required this.businessTypeId,
@@ -21,7 +20,9 @@ class BusinessTypeShiftTemplate {
       nameAr: json['name_ar'] as String,
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String,
-      daysOfWeek: json['days_of_week'] != null ? (json['days_of_week'] as List<dynamic>).map((e) => (e as num).toInt()).toList() : null,
+      daysOfWeek: json['days_of_week'] != null
+          ? (json['days_of_week'] as List<dynamic>).map((e) => (e as num).toInt()).toList()
+          : null,
       breakDurationMinutes: (json['break_duration_minutes'] as num?)?.toInt(),
       isDefault: json['is_default'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
@@ -80,13 +81,12 @@ class BusinessTypeShiftTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeShiftTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeShiftTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeShiftTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, startTime: $startTime, endTime: $endTime, ...)';
+  String toString() =>
+      'BusinessTypeShiftTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, startTime: $startTime, endTime: $endTime, ...)';
 }

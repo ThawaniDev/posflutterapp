@@ -19,11 +19,7 @@ class _RouteMockAdapter implements HttpClientAdapter {
   final Map<String, dynamic Function(RequestOptions)> _routes;
 
   @override
-  Future<ResponseBody> fetch(
-    RequestOptions options,
-    Stream<List<int>>? requestStream,
-    Future<void>? cancelFuture,
-  ) async {
+  Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>>? requestStream, Future<void>? cancelFuture) async {
     // Strip base-url prefix for routing
     final path = options.path.replaceFirst(RegExp(r'^https?://[^/]+'), '');
 
@@ -35,8 +31,13 @@ class _RouteMockAdapter implements HttpClientAdapter {
         orElse: () => MapEntry(path, (_) => <String, dynamic>{'error': 'not found'}),
       );
       final body = json.encode(entry.value(options));
-      return ResponseBody.fromString(body, 200,
-          headers: {'content-type': ['application/json']});
+      return ResponseBody.fromString(
+        body,
+        200,
+        headers: {
+          'content-type': ['application/json'],
+        },
+      );
     }
 
     final responseData = handler(options);
@@ -46,7 +47,9 @@ class _RouteMockAdapter implements HttpClientAdapter {
     return ResponseBody.fromString(
       json.encode(bodyMap),
       statusCode,
-      headers: {'content-type': ['application/json']},
+      headers: {
+        'content-type': ['application/json'],
+      },
     );
   }
 
@@ -70,18 +73,17 @@ Map<String, dynamic> _businessTypeJson({
   String slug = 'retail',
   bool isActive = true,
   int sortOrder = 1,
-}) =>
-    {
-      'id': id,
-      'name': name,
-      'name_ar': nameAr,
-      'slug': slug,
-      'icon': '🛍️',
-      'is_active': isActive,
-      'sort_order': sortOrder,
-      'created_at': '2024-01-01T00:00:00.000Z',
-      'updated_at': '2024-06-15T10:30:00.000Z',
-    };
+}) => {
+  'id': id,
+  'name': name,
+  'name_ar': nameAr,
+  'slug': slug,
+  'icon': '🛍️',
+  'is_active': isActive,
+  'sort_order': sortOrder,
+  'created_at': '2024-01-01T00:00:00.000Z',
+  'updated_at': '2024-06-15T10:30:00.000Z',
+};
 
 // ════════════════════════════════════════════════════════════════════════════
 //  Tests
@@ -95,11 +97,11 @@ void main() {
     test('parses list of BusinessType objects', () async {
       final service = _makeService({
         '/onboarding/business-types': (_) => {
-              'data': [
-                _businessTypeJson(id: 'bt-1', slug: 'retail'),
-                _businessTypeJson(id: 'bt-2', name: 'Restaurant', nameAr: 'مطعم', slug: 'restaurant'),
-              ],
-            },
+          'data': [
+            _businessTypeJson(id: 'bt-1', slug: 'retail'),
+            _businessTypeJson(id: 'bt-2', name: 'Restaurant', nameAr: 'مطعم', slug: 'restaurant'),
+          ],
+        },
       });
 
       final result = await service.getBusinessTypesPublic();
@@ -122,8 +124,8 @@ void main() {
     test('each item is fully parsed BusinessType', () async {
       final service = _makeService({
         '/onboarding/business-types': (_) => {
-              'data': [_businessTypeJson()],
-            },
+          'data': [_businessTypeJson()],
+        },
       });
 
       final result = await service.getBusinessTypesPublic();
@@ -142,14 +144,14 @@ void main() {
     test('returns raw defaults bundle as Map', () async {
       final service = _makeService({
         '/onboarding/business-types/retail/defaults': (_) => {
-              'data': {
-                'business_type': _businessTypeJson(),
-                'category_templates': <dynamic>[],
-                'shift_templates': <dynamic>[],
-                'loyalty_config': null,
-                'gamification_templates': {'badges': [], 'challenges': [], 'milestones': []},
-              },
-            },
+          'data': {
+            'business_type': _businessTypeJson(),
+            'category_templates': <dynamic>[],
+            'shift_templates': <dynamic>[],
+            'loyalty_config': null,
+            'gamification_templates': {'badges': [], 'challenges': [], 'milestones': []},
+          },
+        },
       });
 
       final result = await service.getBusinessTypeDefaults('retail');
@@ -168,16 +170,16 @@ void main() {
     test('returns raw list of category template maps', () async {
       final service = _makeService({
         '/onboarding/business-types/retail/category-templates': (_) => {
-              'data': [
-                {
-                  'id': 'cat-1',
-                  'business_type_id': 'bt-1',
-                  'category_name': 'Electronics',
-                  'category_name_ar': 'إلكترونيات',
-                  'sort_order': 0,
-                },
-              ],
+          'data': [
+            {
+              'id': 'cat-1',
+              'business_type_id': 'bt-1',
+              'category_name': 'Electronics',
+              'category_name_ar': 'إلكترونيات',
+              'sort_order': 0,
             },
+          ],
+        },
       });
 
       final result = await service.getBusinessTypeCategoryTemplates('retail');
@@ -209,21 +211,21 @@ void main() {
     test('returns shift templates with HH:MM time format', () async {
       final service = _makeService({
         '/onboarding/business-types/retail/shift-templates': (_) => {
-              'data': [
-                {
-                  'id': 'shift-1',
-                  'business_type_id': 'bt-1',
-                  'name': 'Morning',
-                  'name_ar': 'صباح',
-                  'start_time': '08:00',
-                  'end_time': '16:00',
-                  'days_of_week': [1, 2, 3, 4, 5],
-                  'break_duration_minutes': 30,
-                  'is_default': true,
-                  'sort_order': 0,
-                },
-              ],
+          'data': [
+            {
+              'id': 'shift-1',
+              'business_type_id': 'bt-1',
+              'name': 'Morning',
+              'name_ar': 'صباح',
+              'start_time': '08:00',
+              'end_time': '16:00',
+              'days_of_week': [1, 2, 3, 4, 5],
+              'break_duration_minutes': 30,
+              'is_default': true,
+              'sort_order': 0,
             },
+          ],
+        },
       });
 
       final result = await service.getBusinessTypeShiftTemplates('retail');
@@ -254,17 +256,17 @@ void main() {
     test('returns Map when loyalty config exists', () async {
       final service = _makeService({
         '/onboarding/business-types/retail/loyalty-config': (_) => {
-              'data': {
-                'id': 'loyalty-1',
-                'business_type_id': 'bt-1',
-                'program_type': 'points',
-                'earning_rate': 1.5,
-                'redemption_value': 0.01,
-                'min_redemption_points': 100,
-                'tier_definitions': <dynamic>[],
-                'is_active': false,
-              },
-            },
+          'data': {
+            'id': 'loyalty-1',
+            'business_type_id': 'bt-1',
+            'program_type': 'points',
+            'earning_rate': 1.5,
+            'redemption_value': 0.01,
+            'min_redemption_points': 100,
+            'tier_definitions': <dynamic>[],
+            'is_active': false,
+          },
+        },
       });
 
       final result = await service.getBusinessTypeLoyaltyConfig('retail');
@@ -287,22 +289,22 @@ void main() {
     test('returns bundle with badges/challenges/milestones arrays', () async {
       final service = _makeService({
         '/onboarding/business-types/retail/gamification-templates': (_) => {
-              'data': {
-                'badges': [
-                  {
-                    'id': 'badge-1',
-                    'business_type_id': 'bt-1',
-                    'name': 'First Purchase',
-                    'name_ar': 'أول شراء',
-                    'trigger_type': 'purchase_count',
-                    'trigger_threshold': 1,
-                    'points_reward': 50,
-                  },
-                ],
-                'challenges': <dynamic>[],
-                'milestones': <dynamic>[],
+          'data': {
+            'badges': [
+              {
+                'id': 'badge-1',
+                'business_type_id': 'bt-1',
+                'name': 'First Purchase',
+                'name_ar': 'أول شراء',
+                'trigger_type': 'purchase_count',
+                'trigger_threshold': 1,
+                'points_reward': 50,
               },
-            },
+            ],
+            'challenges': <dynamic>[],
+            'milestones': <dynamic>[],
+          },
+        },
       });
 
       final result = await service.getBusinessTypeGamificationTemplates('retail');
@@ -316,12 +318,8 @@ void main() {
     test('returns empty arrays when no gamification configured', () async {
       final service = _makeService({
         '/onboarding/business-types/simple/gamification-templates': (_) => {
-              'data': {
-                'badges': <dynamic>[],
-                'challenges': <dynamic>[],
-                'milestones': <dynamic>[],
-              },
-            },
+          'data': {'badges': <dynamic>[], 'challenges': <dynamic>[], 'milestones': <dynamic>[]},
+        },
       });
 
       final result = await service.getBusinessTypeGamificationTemplates('simple');
@@ -337,26 +335,26 @@ void main() {
   // ═══════════════════════════════════════════════════════════════════════
   group('OnboardingApiService.getHelpArticles', () {
     Map<String, dynamic> _articleJson({String id = 'article-1'}) => {
-          'id': id,
-          'slug': 'article-$id',
-          'title': 'Article $id',
-          'title_ar': 'مقالة $id',
-          'body': null, // list endpoint — no body
-          'body_ar': null,
-          'category': 'general',
-          'is_published': true,
-          'sort_order': 0,
-          'created_at': '2024-01-01T00:00:00.000Z',
-          'updated_at': '2024-06-15T10:30:00.000Z',
-        };
+      'id': id,
+      'slug': 'article-$id',
+      'title': 'Article $id',
+      'title_ar': 'مقالة $id',
+      'body': null, // list endpoint — no body
+      'body_ar': null,
+      'category': 'general',
+      'is_published': true,
+      'sort_order': 0,
+      'created_at': '2024-01-01T00:00:00.000Z',
+      'updated_at': '2024-06-15T10:30:00.000Z',
+    };
 
     test('returns paginated response map', () async {
       final service = _makeService({
         '/help-articles': (_) => {
-              'data': [_articleJson()],
-              'meta': {'total': 1, 'per_page': 20, 'current_page': 1, 'last_page': 1},
-              'links': {'first': null, 'last': null, 'prev': null, 'next': null},
-            },
+          'data': [_articleJson()],
+          'meta': {'total': 1, 'per_page': 20, 'current_page': 1, 'last_page': 1},
+          'links': {'first': null, 'last': null, 'prev': null, 'next': null},
+        },
       });
 
       final result = await service.getHelpArticles();
@@ -370,9 +368,9 @@ void main() {
     test('articles in list can be parsed by KnowledgeBaseArticle.fromJson', () async {
       final service = _makeService({
         '/help-articles': (_) => {
-              'data': [_articleJson(id: 'article-1')],
-              'meta': {'total': 1, 'per_page': 20, 'current_page': 1, 'last_page': 1},
-            },
+          'data': [_articleJson(id: 'article-1')],
+          'meta': {'total': 1, 'per_page': 20, 'current_page': 1, 'last_page': 1},
+        },
       });
 
       final result = await service.getHelpArticles();
@@ -441,21 +439,21 @@ void main() {
     test('returns KnowledgeBaseArticle with body', () async {
       final service = _makeService({
         '/help-articles/getting-started': (_) => {
-              'data': {
-                'id': 'article-gs',
-                'slug': 'getting-started',
-                'title': 'Getting Started',
-                'title_ar': 'البداية',
-                'body': '<h1>Welcome</h1>',
-                'body_ar': '<h1>أهلاً</h1>',
-                'category': 'getting_started',
-                'delivery_platform_id': null,
-                'is_published': true,
-                'sort_order': 1,
-                'created_at': '2024-01-01T00:00:00.000Z',
-                'updated_at': '2024-06-15T10:30:00.000Z',
-              },
-            },
+          'data': {
+            'id': 'article-gs',
+            'slug': 'getting-started',
+            'title': 'Getting Started',
+            'title_ar': 'البداية',
+            'body': '<h1>Welcome</h1>',
+            'body_ar': '<h1>أهلاً</h1>',
+            'category': 'getting_started',
+            'delivery_platform_id': null,
+            'is_published': true,
+            'sort_order': 1,
+            'created_at': '2024-01-01T00:00:00.000Z',
+            'updated_at': '2024-06-15T10:30:00.000Z',
+          },
+        },
       });
 
       final article = await service.getHelpArticle('getting-started');
@@ -470,19 +468,13 @@ void main() {
     test('throws DioException for 404', () async {
       final dio = Dio(BaseOptions(baseUrl: 'https://mock.local'));
       dio.httpClientAdapter = _RouteMockAdapter({
-        '/help-articles/missing': (_) => {
-              '_status': 404,
-              'message': 'Not Found',
-            },
+        '/help-articles/missing': (_) => {'_status': 404, 'message': 'Not Found'},
       });
       final service = OnboardingApiService(dio);
 
       // Dio should throw DioException with status 404
       // (unless your service catches it, which this one doesn't)
-      expect(
-        () async => await service.getHelpArticle('missing'),
-        throwsA(isA<DioException>()),
-      );
+      expect(() async => await service.getHelpArticle('missing'), throwsA(isA<DioException>()));
     });
   });
 
@@ -493,25 +485,18 @@ void main() {
     test('returns list of step maps', () async {
       final service = _makeService({
         '/core/onboarding/steps': (_) => {
-              'data': [
-                {
-                  'id': 'step-1',
-                  'step_number': 1,
-                  'title': 'Welcome',
-                  'title_ar': 'مرحباً',
-                  'is_required': true,
-                  'sort_order': 0,
-                },
-                {
-                  'id': 'step-2',
-                  'step_number': 2,
-                  'title': 'Business Type',
-                  'title_ar': 'نوع النشاط',
-                  'is_required': true,
-                  'sort_order': 1,
-                },
-              ],
+          'data': [
+            {'id': 'step-1', 'step_number': 1, 'title': 'Welcome', 'title_ar': 'مرحباً', 'is_required': true, 'sort_order': 0},
+            {
+              'id': 'step-2',
+              'step_number': 2,
+              'title': 'Business Type',
+              'title_ar': 'نوع النشاط',
+              'is_required': true,
+              'sort_order': 1,
             },
+          ],
+        },
       });
 
       final steps = await service.getSteps();
@@ -525,15 +510,10 @@ void main() {
     test('step_number is an integer in response', () async {
       final service = _makeService({
         '/core/onboarding/steps': (_) => {
-              'data': [
-                {
-                  'id': 'step-1',
-                  'step_number': 1,
-                  'title': 'Welcome',
-                  'title_ar': 'مرحباً',
-                },
-              ],
-            },
+          'data': [
+            {'id': 'step-1', 'step_number': 1, 'title': 'Welcome', 'title_ar': 'مرحباً'},
+          ],
+        },
       });
 
       final steps = await service.getSteps();

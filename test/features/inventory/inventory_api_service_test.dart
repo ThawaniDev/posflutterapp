@@ -26,9 +26,7 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
     InterceptorsWrapper(
       onRequest: (opts, requestHandler) {
         try {
-          requestHandler.resolve(
-            Response(data: handler(opts), requestOptions: opts, statusCode: 200),
-          );
+          requestHandler.resolve(Response(data: handler(opts), requestOptions: opts, statusCode: 200));
         } catch (e) {
           requestHandler.reject(DioException(requestOptions: opts, error: e));
         }
@@ -39,20 +37,10 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
 }
 
 /// Standard API envelope.
-Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) => {
-      'success': true,
-      'message': message,
-      'data': data,
-    };
+Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) => {'success': true, 'message': message, 'data': data};
 
 /// Standard paginated envelope wrapping a list.
-Map<String, dynamic> _paginated(
-  List<dynamic> items, {
-  int total = 0,
-  int currentPage = 1,
-  int lastPage = 1,
-  int perPage = 25,
-}) =>
+Map<String, dynamic> _paginated(List<dynamic> items, {int total = 0, int currentPage = 1, int lastPage = 1, int perPage = 25}) =>
     _envelope({
       'data': items,
       'total': total == 0 ? items.length : total,
@@ -64,97 +52,97 @@ Map<String, dynamic> _paginated(
 // ─── Minimal model fixtures ───────────────────────────────────────
 
 Map<String, dynamic> _stockLevelJson({String id = 'sl-001', double qty = 10.0}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'product_id': 'prod-001',
-      'quantity': qty.toString(),
-      'sync_version': 1,
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'product_id': 'prod-001',
+  'quantity': qty.toString(),
+  'sync_version': 1,
+};
 
 Map<String, dynamic> _stockMovementJson({String id = 'sm-001'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'product_id': 'prod-001',
-      'type': 'receipt',
-      'quantity': '10.00',
-      'reference_type': 'goods_receipt',
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'product_id': 'prod-001',
+  'type': 'receipt',
+  'quantity': '10.00',
+  'reference_type': 'goods_receipt',
+};
 
 Map<String, dynamic> _goodsReceiptJson({String id = 'gr-001', String status = 'draft'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'received_by': 'user-001',
-      'status': status,
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'received_by': 'user-001',
+  'status': status,
+};
 
 Map<String, dynamic> _stockAdjustmentJson({String id = 'adj-001'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'type': 'increase',
-      'reason': 'Found extra stock',
-      'created_by': 'user-001',
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'type': 'increase',
+  'reason': 'Found extra stock',
+  'created_by': 'user-001',
+};
 
 Map<String, dynamic> _stockTransferJson({String id = 'st-001', String status = 'draft'}) => {
-      'id': id,
-      'organization_id': 'org-001',
-      'from_store_id': 'store-001',
-      'to_store_id': 'store-002',
-      'status': status,
-      'created_by': 'user-001',
-    };
+  'id': id,
+  'organization_id': 'org-001',
+  'from_store_id': 'store-001',
+  'to_store_id': 'store-002',
+  'status': status,
+  'created_by': 'user-001',
+};
 
 Map<String, dynamic> _purchaseOrderJson({String id = 'po-001', String status = 'draft'}) => {
-      'id': id,
-      'organization_id': 'org-001',
-      'store_id': 'store-001',
-      'supplier_id': 'sup-001',
-      'status': status,
-      'created_by': 'user-001',
-    };
+  'id': id,
+  'organization_id': 'org-001',
+  'store_id': 'store-001',
+  'supplier_id': 'sup-001',
+  'status': status,
+  'created_by': 'user-001',
+};
 
 Map<String, dynamic> _recipeJson({String id = 'rec-001'}) => {
-      'id': id,
-      'organization_id': 'org-001',
-      'product_id': 'prod-001',
-      'name': 'Test Recipe',
-      'yield_quantity': '1.00',
-      'is_active': true,
-      'ingredients': <dynamic>[],
-    };
+  'id': id,
+  'organization_id': 'org-001',
+  'product_id': 'prod-001',
+  'name': 'Test Recipe',
+  'yield_quantity': '1.00',
+  'is_active': true,
+  'ingredients': <dynamic>[],
+};
 
 Map<String, dynamic> _stocktakeJson({String id = 'skt-001', String status = 'in_progress'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'status': status,
-      'type': 'full',
-      'created_by': 'user-001',
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'status': status,
+  'type': 'full',
+  'created_by': 'user-001',
+};
 
 Map<String, dynamic> _wasteRecordJson({String id = 'wr-001'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'product_id': 'prod-001',
-      'quantity': '2.00',
-      'reason': 'expired',
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'product_id': 'prod-001',
+  'quantity': '2.00',
+  'reason': 'expired',
+};
 
 Map<String, dynamic> _supplierReturnJson({String id = 'sr-001', String status = 'draft'}) => {
-      'id': id,
-      'organization_id': 'org-001',
-      'store_id': 'store-001',
-      'supplier_id': 'sup-001',
-      'status': status,
-      'created_by': 'user-001',
-    };
+  'id': id,
+  'organization_id': 'org-001',
+  'store_id': 'store-001',
+  'supplier_id': 'sup-001',
+  'status': status,
+  'created_by': 'user-001',
+};
 
 Map<String, dynamic> _stockBatchJson({String id = 'sb-001'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'product_id': 'prod-001',
-      'quantity': '5.00',
-      'batch_number': 'BATCH-001',
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'product_id': 'prod-001',
+  'quantity': '5.00',
+  'batch_number': 'BATCH-001',
+};
 
 // ═══════════════════════════════════════════════════════════════════
 // Tests
@@ -213,8 +201,7 @@ void main() {
 
     test('handles pagination metadata', () async {
       final dio = _fakeDio(
-        (_) => _paginated([_stockLevelJson(), _stockLevelJson(id: 'sl-002')],
-            total: 50, currentPage: 2, lastPage: 5),
+        (_) => _paginated([_stockLevelJson(), _stockLevelJson(id: 'sl-002')], total: 50, currentPage: 2, lastPage: 5),
       );
 
       final svc = InventoryApiService(dio);
@@ -688,12 +675,7 @@ void main() {
       });
 
       final svc = InventoryApiService(dio);
-      await svc.listWasteRecords(
-        storeId: 'store-001',
-        productId: 'prod-001',
-        reason: 'expired',
-        dateFrom: '2024-01-01',
-      );
+      await svc.listWasteRecords(storeId: 'store-001', productId: 'prod-001', reason: 'expired', dateFrom: '2024-01-01');
     });
   });
 

@@ -1,5 +1,4 @@
 class BusinessTypeReturnPolicy {
-
   const BusinessTypeReturnPolicy({
     required this.id,
     required this.businessTypeId,
@@ -21,12 +20,18 @@ class BusinessTypeReturnPolicy {
       id: json['id'] as String,
       businessTypeId: json['business_type_id'] as String,
       returnWindowDays: (json['return_window_days'] as num).toInt(),
-      refundMethods: json['refund_methods'] != null ? (json['refund_methods'] as List<dynamic>).map((e) => e as String).toList() : null,
+      refundMethods: json['refund_methods'] != null
+          ? (json['refund_methods'] as List<dynamic>).map((e) => e as String).toList()
+          : null,
       requireReceipt: json['require_receipt'] as bool?,
-      restockingFeePercentage: (json['restocking_fee_percentage'] != null ? double.tryParse(json['restocking_fee_percentage'].toString()) : null),
+      restockingFeePercentage: (json['restocking_fee_percentage'] != null
+          ? double.tryParse(json['restocking_fee_percentage'].toString())
+          : null),
       voidGracePeriodMinutes: (json['void_grace_period_minutes'] as num?)?.toInt(),
       requireManagerApproval: json['require_manager_approval'] as bool?,
-      maxReturnWithoutApproval: (json['max_return_without_approval'] != null ? double.tryParse(json['max_return_without_approval'].toString()) : null),
+      maxReturnWithoutApproval: (json['max_return_without_approval'] != null
+          ? double.tryParse(json['max_return_without_approval'].toString())
+          : null),
       returnReasonRequired: json['return_reason_required'] as bool?,
       partialReturnAllowed: json['partial_return_allowed'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
@@ -98,13 +103,12 @@ class BusinessTypeReturnPolicy {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeReturnPolicy && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeReturnPolicy && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeReturnPolicy(id: $id, businessTypeId: $businessTypeId, returnWindowDays: $returnWindowDays, refundMethods: $refundMethods, requireReceipt: $requireReceipt, restockingFeePercentage: $restockingFeePercentage, ...)';
+  String toString() =>
+      'BusinessTypeReturnPolicy(id: $id, businessTypeId: $businessTypeId, returnWindowDays: $returnWindowDays, refundMethods: $refundMethods, requireReceipt: $requireReceipt, restockingFeePercentage: $restockingFeePercentage, ...)';
 }

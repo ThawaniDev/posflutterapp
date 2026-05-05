@@ -13,9 +13,7 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
     InterceptorsWrapper(
       onRequest: (opts, requestHandler) {
         try {
-          requestHandler.resolve(
-            Response(data: handler(opts), requestOptions: opts, statusCode: 200),
-          );
+          requestHandler.resolve(Response(data: handler(opts), requestOptions: opts, statusCode: 200));
         } catch (e) {
           requestHandler.reject(DioException(requestOptions: opts, error: e));
         }
@@ -26,13 +24,13 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
 }
 
 Map<String, dynamic> _roleJson({int id = 1, String name = 'cashier'}) => {
-      'id': id,
-      'store_id': 'store-001',
-      'name': name,
-      'display_name': name.replaceAll('_', ' '),
-      'description': null,
-      'permission_ids': <int>[],
-    };
+  'id': id,
+  'store_id': 'store-001',
+  'name': name,
+  'display_name': name.replaceAll('_', ' '),
+  'description': null,
+  'permission_ids': <int>[],
+};
 
 // ─── Tests ────────────────────────────────────────────────────────
 
@@ -71,11 +69,7 @@ void main() {
       });
 
       final svc = RoleApiService(dio);
-      final role = await svc.createRole(
-        storeId: 'store-001',
-        name: 'custom',
-        displayName: 'Custom Role',
-      );
+      final role = await svc.createRole(storeId: 'store-001', name: 'custom', displayName: 'Custom Role');
 
       expect(role.id, 10);
       expect(role.name, 'custom');
@@ -176,16 +170,18 @@ void main() {
     });
 
     test('getUserPermissionsWithScope: organization scope returns multiple store ids', () async {
-      final dio = _fakeDio((_) => {
-            'success': true,
-            'data': {
-              'permissions': ['staff.view'],
-              'branch_scope': 'organization',
-              'accessible_store_ids': ['store-001', 'store-002'],
-              'branch_roles': <String, dynamic>{},
-              'store_id': null,
-            },
-          });
+      final dio = _fakeDio(
+        (_) => {
+          'success': true,
+          'data': {
+            'permissions': ['staff.view'],
+            'branch_scope': 'organization',
+            'accessible_store_ids': ['store-001', 'store-002'],
+            'branch_roles': <String, dynamic>{},
+            'store_id': null,
+          },
+        },
+      );
 
       final svc = RoleApiService(dio);
       final result = await svc.getUserPermissionsWithScope(null);
@@ -218,13 +214,15 @@ void main() {
     // ─ listPermissions ───────────────────────────────────────
 
     test('listPermissions: parses permissions list', () async {
-      final dio = _fakeDio((_) => {
-            'success': true,
-            'data': [
-              {'id': 1, 'name': 'staff.view', 'display_name': 'View Staff', 'module': 'staff'},
-              {'id': 2, 'name': 'staff.create', 'display_name': 'Create Staff', 'module': 'staff'},
-            ],
-          });
+      final dio = _fakeDio(
+        (_) => {
+          'success': true,
+          'data': [
+            {'id': 1, 'name': 'staff.view', 'display_name': 'View Staff', 'module': 'staff'},
+            {'id': 2, 'name': 'staff.create', 'display_name': 'Create Staff', 'module': 'staff'},
+          ],
+        },
+      );
 
       final svc = RoleApiService(dio);
       final perms = await svc.listPermissions();

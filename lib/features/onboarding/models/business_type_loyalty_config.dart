@@ -1,7 +1,6 @@
 import 'package:wameedpos/features/customers/enums/loyalty_program_type.dart';
 
 class BusinessTypeLoyaltyConfig {
-
   const BusinessTypeLoyaltyConfig({
     required this.id,
     required this.businessTypeId,
@@ -32,9 +31,7 @@ class BusinessTypeLoyaltyConfig {
       pointsExpiryDays: (json['points_expiry_days'] as num?)?.toInt(),
       enableTiers: json['enable_tiers'] as bool?,
       tierDefinitions: json['tier_definitions'] != null
-          ? (json['tier_definitions'] as List<dynamic>)
-              .map((e) => Map<String, dynamic>.from(e as Map))
-              .toList()
+          ? (json['tier_definitions'] as List<dynamic>).map((e) => Map<String, dynamic>.from(e as Map)).toList()
           : null,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

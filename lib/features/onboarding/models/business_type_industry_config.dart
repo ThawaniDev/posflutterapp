@@ -1,5 +1,4 @@
 class BusinessTypeIndustryConfig {
-
   const BusinessTypeIndustryConfig({
     required this.id,
     required this.businessTypeId,
@@ -12,9 +11,13 @@ class BusinessTypeIndustryConfig {
     return BusinessTypeIndustryConfig(
       id: json['id'] as String,
       businessTypeId: json['business_type_id'] as String,
-      activeModules: json['active_modules'] != null ? (json['active_modules'] as List<dynamic>).map((e) => e as String).toList() : null,
+      activeModules: json['active_modules'] != null
+          ? (json['active_modules'] as List<dynamic>).map((e) => e as String).toList()
+          : null,
       defaultSettings: json['default_settings'] != null ? Map<String, dynamic>.from(json['default_settings'] as Map) : null,
-      requiredProductFields: json['required_product_fields'] != null ? Map<String, dynamic>.from(json['required_product_fields'] as Map) : null,
+      requiredProductFields: json['required_product_fields'] != null
+          ? Map<String, dynamic>.from(json['required_product_fields'] as Map)
+          : null,
     );
   }
   final String id;
@@ -50,13 +53,12 @@ class BusinessTypeIndustryConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeIndustryConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeIndustryConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeIndustryConfig(id: $id, businessTypeId: $businessTypeId, activeModules: $activeModules, defaultSettings: $defaultSettings, requiredProductFields: $requiredProductFields)';
+  String toString() =>
+      'BusinessTypeIndustryConfig(id: $id, businessTypeId: $businessTypeId, activeModules: $activeModules, defaultSettings: $defaultSettings, requiredProductFields: $requiredProductFields)';
 }

@@ -22,11 +22,7 @@ import 'package:wameedpos/features/inventory/repositories/inventory_repository.d
 // ═══════════════════════════════════════════════════════════════════
 
 class _FakeInventoryRepository extends InventoryRepository {
-  _FakeInventoryRepository()
-      : super(
-          apiService: InventoryApiService(Dio()),
-          localStorage: _NoOpAuth(),
-        );
+  _FakeInventoryRepository() : super(apiService: InventoryApiService(Dio()), localStorage: _NoOpAuth());
 
   // Stock levels
   PaginatedResult<StockLevel>? _stockLevelsResult;
@@ -110,13 +106,7 @@ class _FakeInventoryRepository extends InventoryRepository {
   Exception? _poError;
 
   void stubPurchaseOrders(List<PurchaseOrder> items, {int lastPage = 1, int page = 1}) {
-    _poResult = PaginatedResult(
-      items: items,
-      total: items.length,
-      currentPage: page,
-      lastPage: lastPage,
-      perPage: 25,
-    );
+    _poResult = PaginatedResult(items: items, total: items.length, currentPage: page, lastPage: lastPage, perPage: 25);
   }
 
   void stubPurchaseOrdersError(Exception e) => _poError = e;
@@ -168,45 +158,37 @@ class _FakeInventoryRepository extends InventoryRepository {
 }
 
 class _NoOpAuth extends AuthLocalStorage {
-  @override Future<String?> getStoreId() async => 'store-test';
-  @override Future<String?> getToken() async => null;
-  @override Future<void> saveToken(String token) async {}
-  @override Future<void> deleteToken() async {}
+  @override
+  Future<String?> getStoreId() async => 'store-test';
+  @override
+  Future<String?> getToken() async => null;
+  @override
+  Future<void> saveToken(String token) async {}
+  @override
+  Future<void> deleteToken() async {}
 }
 
 // ─── Minimal model builders ──────────────────────────────────────
 
-StockLevel _level({String id = 'sl-1', double qty = 10.0}) => StockLevel(
-  id: id, storeId: 'store-1', productId: 'prod-1', quantity: qty,
-);
+StockLevel _level({String id = 'sl-1', double qty = 10.0}) =>
+    StockLevel(id: id, storeId: 'store-1', productId: 'prod-1', quantity: qty);
 
-StockMovement _movement({String id = 'sm-1'}) => StockMovement(
-  id: id, storeId: 'store-1', productId: 'prod-1', type: StockMovementType.receipt, quantity: 5.0,
-);
+StockMovement _movement({String id = 'sm-1'}) =>
+    StockMovement(id: id, storeId: 'store-1', productId: 'prod-1', type: StockMovementType.receipt, quantity: 5.0);
 
-GoodsReceipt _receipt({String id = 'gr-1'}) => GoodsReceipt(
-  id: id, storeId: 'store-1', receivedBy: 'user-1',
-);
+GoodsReceipt _receipt({String id = 'gr-1'}) => GoodsReceipt(id: id, storeId: 'store-1', receivedBy: 'user-1');
 
-PurchaseOrder _po({String id = 'po-1'}) => PurchaseOrder(
-  id: id, organizationId: 'org-1', storeId: 'store-1',
-  supplierId: 'sup-1', createdBy: 'user-1',
-);
+PurchaseOrder _po({String id = 'po-1'}) =>
+    PurchaseOrder(id: id, organizationId: 'org-1', storeId: 'store-1', supplierId: 'sup-1', createdBy: 'user-1');
 
-Stocktake _stocktake({String id = 'skt-1'}) => Stocktake(
-  id: id, storeId: 'store-1',
-);
+Stocktake _stocktake({String id = 'skt-1'}) => Stocktake(id: id, storeId: 'store-1');
 
-WasteRecord _wasteRecord({String id = 'wr-1'}) => WasteRecord(
-  id: id, storeId: 'store-1', productId: 'prod-1', quantity: 2.0,
-);
+WasteRecord _wasteRecord({String id = 'wr-1'}) => WasteRecord(id: id, storeId: 'store-1', productId: 'prod-1', quantity: 2.0);
 
 // ─── Container factory ───────────────────────────────────────────
 
 ProviderContainer _container(_FakeInventoryRepository repo) {
-  return ProviderContainer(
-    overrides: [inventoryRepositoryProvider.overrideWithValue(repo)],
-  );
+  return ProviderContainer(overrides: [inventoryRepositoryProvider.overrideWithValue(repo)]);
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -297,9 +279,7 @@ void main() {
       final repo = _FakeInventoryRepository();
       repo.stubStockLevels([_level(), _level(id: 'sl-2')]);
       final updatedLevel = _level(id: 'sl-1');
-      repo.stubReorderPoint(StockLevel(
-        id: 'sl-1', storeId: 'store-1', productId: 'prod-1', quantity: 10.0, reorderPoint: 5.0,
-      ));
+      repo.stubReorderPoint(StockLevel(id: 'sl-1', storeId: 'store-1', productId: 'prod-1', quantity: 10.0, reorderPoint: 5.0));
       final container = _container(repo);
       addTearDown(container.dispose);
 
