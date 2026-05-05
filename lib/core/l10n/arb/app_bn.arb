@@ -5782,6 +5782,16 @@
     }
   },
   "adminSuspendStore": "দোকান স্থগিত করুন",
+  "adminSuspendReason": "স্থগিতের কারণ",
+  "adminSuspendReasonHint": "স্থগিতের কারণ লিখুন (বাঞ্ছনীয়)",
+  "adminSuspendedAt": "স্থগিতের তারিখ",
+  "adminOwnerName": "মালিকের নাম",
+  "adminOwnerEmail": "মালিকের ইমেল",
+  "adminOwnerPhone": "মালিকের ফোন",
+  "adminTempPassword": "অস্থায়ী পাসওয়ার্ড",
+  "adminTempPasswordCopy": "অস্থায়ী পাসওয়ার্ড কপি করুন এবং দোকানমালিকের সাথে শেয়ার করুন",
+  "adminCancellationReason": "বাতিলের কারণ",
+  "adminCancellationReasonHint": "বাতিলের কারণ নির্বাচন করুন",
   "adminSuspensionReasonHint": "স্থগিতের কারণ লিখুন",
   "adminAddLimitOverride": "লিমিট ওভাররাইড যোগ করুন",
   "adminLimitKey": "লিমিট কী",
@@ -7781,5 +7791,28 @@
   "posItemNote": "আইটেম নোট",
   "posCurrentDiscount": "বর্তমান: {amount}",
   "@posCurrentDiscount": { "placeholders": { "amount": { "type": "String" } } },
-  "posReturnRecentSales": "সাম্প্রতিক বিক্রয়"
+  "posReturnRecentSales": "সাম্প্রতিক বিক্রয়",
+
+  "pinOverrideTitle": "PIN ওভাররাইড প্রয়োজন",
+  "pinOverrideSubtitle": "এই ক্রিয়াটি অনুমোদন করতে ম্যানেজার বা মালিকের PIN লিখুন",
+  "pinOverrideLocked": "অনেক ব্যর্থ প্রচেষ্টা। {minutes} মিনিট পরে আবার চেষ্টা করুন।",
+  "@pinOverrideLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "pinOverrideSuccess": "ক্রিয়াটি সফলভাবে অনুমোদিত হয়েছে",
+  "pinOverrideFailed": "অবৈধ PIN। আবার চেষ্টা করুন।",
+  "pinOverrideCannotSelf": "আপনি নিজের সীমাবদ্ধ ক্রিয়াটি অনুমোদন করতে পারবেন না",
+  "pinOverrideRemainingAttempts": "{count, plural, =1{১টি প্রচেষ্টা বাকি} other{{count}টি প্রচেষ্টা বাকি}}",
+  "@pinOverrideRemainingAttempts": { "placeholders": { "count": { "type": "int" } } },
+
+  "roleScopeBranch": "শাখা",
+  "roleScopeOrganization": "সংস্থা",
+
+  "commissionTieredMin": "সর্বনিম্ন পরিমাণ",
+  "commissionTieredMax": "সর্বোচ্চ পরিমাণ",
+  "commissionTierAdd": "স্তর যোগ করুন",
+
+  "shiftBulkCreate": "বাল্ক শিফট তৈরি করুন",
+  "shiftBulkCreated": "{count, plural, =1{১টি শিফট তৈরি হয়েছে} other{{count}টি শিফট তৈরি হয়েছে}}",
+  "@shiftBulkCreated": { "placeholders": { "count": { "type": "int" } } },
+
+  "attendanceAutoClosedWarning": "শিফটের শেষে উপস্থিতির রেকর্ড স্বয়ংক্রিয়ভাবে বন্ধ হয়ে গেছে"
 }

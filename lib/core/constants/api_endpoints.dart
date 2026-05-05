@@ -526,6 +526,12 @@ class ApiEndpoints {
   static String adminSecurityIpAllowlistById(String id) => '/admin/security-center/ip-allowlist/$id';
   static const String adminSecurityIpBlocklist = '/admin/security-center/ip-blocklist';
   static String adminSecurityIpBlocklistById(String id) => '/admin/security-center/ip-blocklist/$id';
+  static const String adminSecuritySessionsRevokeAll = '/admin/security-center/sessions/revoke-all';
+  static String adminSecCenterAlertInvestigate(String id) => '/admin/security-center/alerts/$id/investigate';
+  static const String adminSecurityTrustedDevices = '/admin/security-center/trusted-devices';
+  static String adminSecurityTrustedDeviceById(String id) => '/admin/security-center/trusted-devices/$id';
+  static const String adminSecurityActivityLogs = '/admin/security-center/activity-logs';
+  static String adminSecurityActivityLogById(String id) => '/admin/security-center/activity-logs/$id';
 
   // ─── P15: Financial Operations ───────────────────────────
   static const String adminFinOpsOverview = '/admin/financial-operations/overview';

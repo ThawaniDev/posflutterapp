@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -161,6 +163,24 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
             _StatGrid(stats: ipMgmt),
             AppSpacing.gapH20,
           ],
+
+          // ── Quick Navigation ─────────────────────────────
+          _SectionHeader(title: 'Manage', icon: Icons.arrow_forward, color: AppColors.info),
+          AppSpacing.gapH8,
+          _QuickNavGrid(
+            items: [
+              _NavItem(label: 'Alerts', icon: Icons.warning_amber_rounded, color: AppColors.error, route: Routes.adminSecurityAlerts),
+              _NavItem(label: l10n.securitySessions, icon: Icons.computer, color: AppColors.info, route: Routes.adminSecuritySessions),
+              _NavItem(label: l10n.securityDevices, icon: Icons.phone_android, color: AppColors.success, route: Routes.adminSecurityDevices),
+              _NavItem(label: l10n.adminIpManagement, icon: Icons.shield_outlined, color: AppColors.purple, route: Routes.adminSecurityIp),
+              _NavItem(label: 'Policies', icon: Icons.policy, color: AppColors.warning, route: Routes.adminSecurityPolicies),
+              _NavItem(label: 'Trusted Devices', icon: Icons.verified_user, color: AppColors.success, route: Routes.adminSecurityTrustedDevices),
+              _NavItem(label: l10n.securityAuditLogs, icon: Icons.history, color: AppColors.info, route: Routes.adminSecurityAuditLog),
+              _NavItem(label: l10n.adminLoginAttempts, icon: Icons.login, color: AppColors.warning, route: Routes.adminSecurityLoginAttempts),
+              _NavItem(label: l10n.adminActivityLogs, icon: Icons.track_changes, color: AppColors.purple, route: Routes.adminSecurityOverview),
+            ],
+          ),
+          AppSpacing.gapH20,
         ],
       ),
     );
@@ -249,6 +269,63 @@ class _SeverityRow extends StatelessWidget {
           labelStyle: TextStyle(color: e.value, fontWeight: FontWeight.w600),
         );
       }).toList(),
+    );
+  }
+}
+
+/// Data holder for a quick-navigation card.
+class _NavItem {
+  const _NavItem({required this.label, required this.icon, required this.color, required this.route});
+  final String label;
+  final IconData icon;
+  final Color color;
+  final String route;
+}
+
+/// A responsive wrap grid of tappable navigation cards.
+class _QuickNavGrid extends StatelessWidget {
+  const _QuickNavGrid({required this.items});
+  final List<_NavItem> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: items.map((item) => _QuickNavCard(item: item)).toList(),
+    );
+  }
+}
+
+class _QuickNavCard extends StatelessWidget {
+  const _QuickNavCard({required this.item});
+  final _NavItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 140,
+      child: PosCard(
+        elevation: 1,
+        onTap: () => context.push(item.route),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.md),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(item.icon, color: item.color, size: 28),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                item.label,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

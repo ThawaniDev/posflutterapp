@@ -31,7 +31,11 @@ class BusinessTypeLoyaltyConfig {
       cashbackPercentage: (json['cashback_percentage'] != null ? double.tryParse(json['cashback_percentage'].toString()) : null),
       pointsExpiryDays: (json['points_expiry_days'] as num?)?.toInt(),
       enableTiers: json['enable_tiers'] as bool?,
-      tierDefinitions: json['tier_definitions'] != null ? Map<String, dynamic>.from(json['tier_definitions'] as Map) : null,
+      tierDefinitions: json['tier_definitions'] != null
+          ? (json['tier_definitions'] as List<dynamic>)
+              .map((e) => Map<String, dynamic>.from(e as Map))
+              .toList()
+          : null,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
@@ -47,7 +51,7 @@ class BusinessTypeLoyaltyConfig {
   final double? cashbackPercentage;
   final int? pointsExpiryDays;
   final bool? enableTiers;
-  final Map<String, dynamic>? tierDefinitions;
+  final List<Map<String, dynamic>>? tierDefinitions;
   final bool? isActive;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -82,7 +86,7 @@ class BusinessTypeLoyaltyConfig {
     double? cashbackPercentage,
     int? pointsExpiryDays,
     bool? enableTiers,
-    Map<String, dynamic>? tierDefinitions,
+    List<Map<String, dynamic>>? tierDefinitions,
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,

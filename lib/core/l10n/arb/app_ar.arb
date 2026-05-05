@@ -5737,6 +5737,16 @@
     }
   },
   "adminSuspendStore": "تعليق المتجر",
+  "adminSuspendReason": "سبب التعليق",
+  "adminSuspendReasonHint": "أدخل سبب التعليق (اختياري)",
+  "adminSuspendedAt": "تاريخ التعليق",
+  "adminOwnerName": "اسم المالك",
+  "adminOwnerEmail": "بريد المالك الإلكتروني",
+  "adminOwnerPhone": "هاتف المالك",
+  "adminTempPassword": "كلمة المرور المؤقتة",
+  "adminTempPasswordCopy": "انسخ كلمة المرور المؤقتة وشاركها مع صاحب المتجر",
+  "adminCancellationReason": "سبب الإلغاء",
+  "adminCancellationReasonHint": "حدد سبب الإلغاء",
   "adminSuspensionReasonHint": "أدخل سبب التعليق",
   "adminAddLimitOverride": "إضافة تجاوز الحد",
   "adminLimitKey": "مفتاح الحد",
@@ -8096,5 +8106,28 @@
   "posItemNote": "ملاحظة البند",
   "posCurrentDiscount": "الحالي: {amount}",
   "@posCurrentDiscount": { "placeholders": { "amount": { "type": "String" } } },
-  "posReturnRecentSales": "المبيعات الأخيرة"
+  "posReturnRecentSales": "المبيعات الأخيرة",
+
+  "pinOverrideTitle": "مطلوب تجاوز رمز PIN",
+  "pinOverrideSubtitle": "أدخل رمز PIN للمدير أو المالك للتفويض",
+  "pinOverrideLocked": "محاولات فاشلة كثيرة. أعد المحاولة خلال {minutes} دقائق.",
+  "@pinOverrideLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "pinOverrideSuccess": "تم تفويض الإجراء بنجاح",
+  "pinOverrideFailed": "رمز PIN غير صحيح. أعد المحاولة.",
+  "pinOverrideCannotSelf": "لا يمكنك تفويض إجراءك المقيد بنفسك",
+  "pinOverrideRemainingAttempts": "{count, plural, =1{محاولة واحدة متبقية} other{{count} محاولات متبقية}}",
+  "@pinOverrideRemainingAttempts": { "placeholders": { "count": { "type": "int" } } },
+
+  "roleScopeBranch": "الفرع",
+  "roleScopeOrganization": "المؤسسة",
+
+  "commissionTieredMin": "الحد الأدنى للمبلغ",
+  "commissionTieredMax": "الحد الأقصى للمبلغ",
+  "commissionTierAdd": "إضافة مستوى",
+
+  "shiftBulkCreate": "إنشاء مناوبات جماعي",
+  "shiftBulkCreated": "{count, plural, =1{تم إنشاء مناوبة واحدة} other{تم إنشاء {count} مناوبات}}",
+  "@shiftBulkCreated": { "placeholders": { "count": { "type": "int" } } },
+
+  "attendanceAutoClosedWarning": "تم إغلاق سجل الحضور تلقائيًا في نهاية المناوبة"
 }

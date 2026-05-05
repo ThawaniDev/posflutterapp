@@ -3,7 +3,7 @@ class BusinessTypeIndustryConfig {
   const BusinessTypeIndustryConfig({
     required this.id,
     required this.businessTypeId,
-    required this.activeModules,
+    this.activeModules,
     this.defaultSettings,
     this.requiredProductFields,
   });
@@ -12,14 +12,14 @@ class BusinessTypeIndustryConfig {
     return BusinessTypeIndustryConfig(
       id: json['id'] as String,
       businessTypeId: json['business_type_id'] as String,
-      activeModules: Map<String, dynamic>.from(json['active_modules'] as Map),
+      activeModules: json['active_modules'] != null ? (json['active_modules'] as List<dynamic>).map((e) => e as String).toList() : null,
       defaultSettings: json['default_settings'] != null ? Map<String, dynamic>.from(json['default_settings'] as Map) : null,
       requiredProductFields: json['required_product_fields'] != null ? Map<String, dynamic>.from(json['required_product_fields'] as Map) : null,
     );
   }
   final String id;
   final String businessTypeId;
-  final Map<String, dynamic> activeModules;
+  final List<String>? activeModules;
   final Map<String, dynamic>? defaultSettings;
   final Map<String, dynamic>? requiredProductFields;
 
@@ -36,7 +36,7 @@ class BusinessTypeIndustryConfig {
   BusinessTypeIndustryConfig copyWith({
     String? id,
     String? businessTypeId,
-    Map<String, dynamic>? activeModules,
+    List<String>? activeModules,
     Map<String, dynamic>? defaultSettings,
     Map<String, dynamic>? requiredProductFields,
   }) {

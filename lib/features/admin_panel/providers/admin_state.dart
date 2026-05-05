@@ -3186,3 +3186,168 @@ class AdminStatsError extends AdminStatsState {
   const AdminStatsError(this.message);
   final String message;
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Security Center — Action States
+// ═══════════════════════════════════════════════════════════════
+
+// --- Session Action ---
+sealed class SecuritySessionActionState {
+  const SecuritySessionActionState();
+}
+
+class SecuritySessionActionInitial extends SecuritySessionActionState {
+  const SecuritySessionActionInitial();
+}
+
+class SecuritySessionActionLoading extends SecuritySessionActionState {
+  const SecuritySessionActionLoading();
+}
+
+class SecuritySessionActionSuccess extends SecuritySessionActionState {
+  const SecuritySessionActionSuccess(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecuritySessionActionError extends SecuritySessionActionState {
+  const SecuritySessionActionError(this.message);
+  final String message;
+}
+
+// --- Device Action ---
+sealed class SecurityDeviceActionState {
+  const SecurityDeviceActionState();
+}
+
+class SecurityDeviceActionInitial extends SecurityDeviceActionState {
+  const SecurityDeviceActionInitial();
+}
+
+class SecurityDeviceActionLoading extends SecurityDeviceActionState {
+  const SecurityDeviceActionLoading();
+}
+
+class SecurityDeviceActionSuccess extends SecurityDeviceActionState {
+  const SecurityDeviceActionSuccess(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecurityDeviceActionError extends SecurityDeviceActionState {
+  const SecurityDeviceActionError(this.message);
+  final String message;
+}
+
+// --- IP Action (add/remove allowlist/blocklist entries) ---
+sealed class SecurityIpActionState {
+  const SecurityIpActionState();
+}
+
+class SecurityIpActionInitial extends SecurityIpActionState {
+  const SecurityIpActionInitial();
+}
+
+class SecurityIpActionLoading extends SecurityIpActionState {
+  const SecurityIpActionLoading();
+}
+
+class SecurityIpActionSuccess extends SecurityIpActionState {
+  const SecurityIpActionSuccess(this.data);
+  final Map<String, dynamic>? data;
+}
+
+class SecurityIpActionError extends SecurityIpActionState {
+  const SecurityIpActionError(this.message);
+  final String message;
+}
+
+// --- Trusted Device List ---
+sealed class SecurityTrustedDeviceListState {
+  const SecurityTrustedDeviceListState();
+}
+
+class SecurityTrustedDeviceListInitial extends SecurityTrustedDeviceListState {
+  const SecurityTrustedDeviceListInitial();
+}
+
+class SecurityTrustedDeviceListLoading extends SecurityTrustedDeviceListState {
+  const SecurityTrustedDeviceListLoading();
+}
+
+class SecurityTrustedDeviceListLoaded extends SecurityTrustedDeviceListState {
+  const SecurityTrustedDeviceListLoaded(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecurityTrustedDeviceListError extends SecurityTrustedDeviceListState {
+  const SecurityTrustedDeviceListError(this.message);
+  final String message;
+}
+
+// --- Login Attempts List ---
+sealed class SecurityLoginAttemptListState {
+  const SecurityLoginAttemptListState();
+}
+
+class SecurityLoginAttemptListInitial extends SecurityLoginAttemptListState {
+  const SecurityLoginAttemptListInitial();
+}
+
+class SecurityLoginAttemptListLoading extends SecurityLoginAttemptListState {
+  const SecurityLoginAttemptListLoading();
+}
+
+class SecurityLoginAttemptListLoaded extends SecurityLoginAttemptListState {
+  const SecurityLoginAttemptListLoaded(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecurityLoginAttemptListError extends SecurityLoginAttemptListState {
+  const SecurityLoginAttemptListError(this.message);
+  final String message;
+}
+
+// --- Audit Log List (security_audit_log) ---
+sealed class SecurityAuditLogListState {
+  const SecurityAuditLogListState();
+}
+
+class SecurityAuditLogListInitial extends SecurityAuditLogListState {
+  const SecurityAuditLogListInitial();
+}
+
+class SecurityAuditLogListLoading extends SecurityAuditLogListState {
+  const SecurityAuditLogListLoading();
+}
+
+class SecurityAuditLogListLoaded extends SecurityAuditLogListState {
+  const SecurityAuditLogListLoaded(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecurityAuditLogListError extends SecurityAuditLogListState {
+  const SecurityAuditLogListError(this.message);
+  final String message;
+}
+
+// --- Admin Activity Log List ---
+sealed class SecurityActivityLogListState {
+  const SecurityActivityLogListState();
+}
+
+class SecurityActivityLogListInitial extends SecurityActivityLogListState {
+  const SecurityActivityLogListInitial();
+}
+
+class SecurityActivityLogListLoading extends SecurityActivityLogListState {
+  const SecurityActivityLogListLoading();
+}
+
+class SecurityActivityLogListLoaded extends SecurityActivityLogListState {
+  const SecurityActivityLogListLoaded(this.data);
+  final Map<String, dynamic> data;
+}
+
+class SecurityActivityLogListError extends SecurityActivityLogListState {
+  const SecurityActivityLogListError(this.message);
+  final String message;
+}

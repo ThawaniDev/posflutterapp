@@ -22,9 +22,9 @@ class BusinessTypeReceiptTemplate {
       id: json['id'] as String,
       businessTypeId: json['business_type_id'] as String,
       paperWidth: (json['paper_width'] as num?)?.toInt(),
-      headerSections: Map<String, dynamic>.from(json['header_sections'] as Map),
-      bodySections: Map<String, dynamic>.from(json['body_sections'] as Map),
-      footerSections: Map<String, dynamic>.from(json['footer_sections'] as Map),
+      headerSections: (json['header_sections'] as List<dynamic>? ?? []).map((e) => e as String).toList(),
+      bodySections: (json['body_sections'] as List<dynamic>? ?? []).map((e) => e as String).toList(),
+      footerSections: (json['footer_sections'] as List<dynamic>? ?? []).map((e) => e as String).toList(),
       zatcaQrPosition: ZatcaQrPosition.tryFromValue(json['zatca_qr_position'] as String?),
       showBilingual: json['show_bilingual'] as bool?,
       fontSize: FontSize.tryFromValue(json['font_size'] as String?),
@@ -35,9 +35,9 @@ class BusinessTypeReceiptTemplate {
   final String id;
   final String businessTypeId;
   final int? paperWidth;
-  final Map<String, dynamic> headerSections;
-  final Map<String, dynamic> bodySections;
-  final Map<String, dynamic> footerSections;
+  final List<String> headerSections;
+  final List<String> bodySections;
+  final List<String> footerSections;
   final ZatcaQrPosition? zatcaQrPosition;
   final bool? showBilingual;
   final FontSize? fontSize;
@@ -64,9 +64,9 @@ class BusinessTypeReceiptTemplate {
     String? id,
     String? businessTypeId,
     int? paperWidth,
-    Map<String, dynamic>? headerSections,
-    Map<String, dynamic>? bodySections,
-    Map<String, dynamic>? footerSections,
+    List<String>? headerSections,
+    List<String>? bodySections,
+    List<String>? footerSections,
     ZatcaQrPosition? zatcaQrPosition,
     bool? showBilingual,
     FontSize? fontSize,

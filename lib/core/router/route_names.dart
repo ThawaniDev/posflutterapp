@@ -308,6 +308,13 @@ class Routes {
   static const String adminSecurityAlertList = '/admin/security/alert-list';
   static const String adminActivityLogList = '/admin/security/activity-log';
   static const String adminUserActivity = '/admin/security/user-activity'; // + /:userId
+  static const String adminSecuritySessions = '/admin/security/sessions';
+  static const String adminSecurityDevices = '/admin/security/devices';
+  static const String adminSecurityIp = '/admin/security/ip';
+  static const String adminSecurityPolicies = '/admin/security/policies';
+  static const String adminSecurityTrustedDevices = '/admin/security/trusted-devices';
+  static const String adminSecurityAuditLog = '/admin/security/audit-log';
+  static const String adminSecurityLoginAttempts = '/admin/security/login-attempts';
 
   // ─── Data Management ───────────────────────────────────────────
   static const String adminDataManagement = '/admin/data-management';

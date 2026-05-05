@@ -5781,6 +5781,16 @@
     }
   },
   "adminSuspendStore": "اسٹور معطل کریں",
+  "adminSuspendReason": "معطلی کی وجہ",
+  "adminSuspendReasonHint": "معطلی کی وجہ درج کریں (اختیاری)",
+  "adminSuspendedAt": "معطلی کی تاریخ",
+  "adminOwnerName": "مالک کا نام",
+  "adminOwnerEmail": "مالک کی ایمیل",
+  "adminOwnerPhone": "مالک کا فون",
+  "adminTempPassword": "عارضی پاس ورڈ",
+  "adminTempPasswordCopy": "عارضی پاس ورڈ کاپی کریں اور اسٹور مالک کے ساتھ شیئر کریں",
+  "adminCancellationReason": "منسوخی کی وجہ",
+  "adminCancellationReasonHint": "منسوخی کی وجہ منتخب کریں",
   "adminSuspensionReasonHint": "معطلی کی وجہ درج کریں",
   "adminAddLimitOverride": "حد اوور رائڈ شامل کریں",
   "adminLimitKey": "حد کی کلید",
@@ -7780,5 +7790,28 @@
   "posItemNote": "آئٹم نوٹ",
   "posCurrentDiscount": "موجودہ: {amount}",
   "@posCurrentDiscount": { "placeholders": { "amount": { "type": "String" } } },
-  "posReturnRecentSales": "حالیہ سیلز"
+  "posReturnRecentSales": "حالیہ سیلز",
+
+  "pinOverrideTitle": "PIN اوور رائیڈ ضروری ہے",
+  "pinOverrideSubtitle": "اس عمل کی اجازت کے لیے مینیجر یا مالک کا PIN درج کریں",
+  "pinOverrideLocked": "بہت زیادہ ناکام کوششیں۔ {minutes} منٹ بعد دوبارہ کوشش کریں۔",
+  "@pinOverrideLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "pinOverrideSuccess": "عمل کامیابی سے مجاز ہوا",
+  "pinOverrideFailed": "غلط PIN۔ دوبارہ کوشش کریں۔",
+  "pinOverrideCannotSelf": "آپ اپنے محدود عمل کو خود اجازت نہیں دے سکتے",
+  "pinOverrideRemainingAttempts": "{count, plural, =1{1 کوشش باقی} other{{count} کوششیں باقی}}",
+  "@pinOverrideRemainingAttempts": { "placeholders": { "count": { "type": "int" } } },
+
+  "roleScopeBranch": "شاخ",
+  "roleScopeOrganization": "تنظیم",
+
+  "commissionTieredMin": "کم از کم رقم",
+  "commissionTieredMax": "زیادہ سے زیادہ رقم",
+  "commissionTierAdd": "درجہ شامل کریں",
+
+  "shiftBulkCreate": "شفٹیں بلک بنائیں",
+  "shiftBulkCreated": "{count, plural, =1{1 شفٹ بنائی گئی} other{{count} شفٹیں بنائی گئیں}}",
+  "@shiftBulkCreated": { "placeholders": { "count": { "type": "int" } } },
+
+  "attendanceAutoClosedWarning": "حاضری کا ریکارڈ شفٹ کے اختتام پر خود بخود بند ہو گیا"
 }

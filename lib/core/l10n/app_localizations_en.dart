@@ -15327,6 +15327,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSuspendStore => 'Suspend Store';
 
   @override
+  String get adminSuspendReason => 'Suspension Reason';
+
+  @override
+  String get adminSuspendReasonHint => 'Enter reason for suspension (optional)';
+
+  @override
+  String get adminSuspendedAt => 'Suspended At';
+
+  @override
+  String get adminOwnerName => 'Owner Name';
+
+  @override
+  String get adminOwnerEmail => 'Owner Email';
+
+  @override
+  String get adminOwnerPhone => 'Owner Phone';
+
+  @override
+  String get adminTempPassword => 'Temporary Password';
+
+  @override
+  String get adminTempPasswordCopy =>
+      'Copy temp password and share with the store owner';
+
+  @override
+  String get adminCancellationReason => 'Cancellation Reason';
+
+  @override
+  String get adminCancellationReasonHint => 'Select a reason for cancellation';
+
+  @override
   String get adminSuspensionReasonHint => 'Enter suspension reason';
 
   @override
@@ -20103,4 +20134,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String zatcaVatAmountLabel(String value) {
     return 'VAT amount: $value';
   }
+
+  @override
+  String get pinOverrideTitle => 'PIN Override Required';
+
+  @override
+  String get pinOverrideSubtitle =>
+      'Enter a manager or owner PIN to authorize this action';
+
+  @override
+  String pinOverrideLocked(int minutes) {
+    return 'Too many failed attempts. Try again in $minutes minutes.';
+  }
+
+  @override
+  String get pinOverrideSuccess => 'Action authorized successfully';
+
+  @override
+  String get pinOverrideFailed => 'Invalid PIN. Please try again.';
+
+  @override
+  String get pinOverrideCannotSelf =>
+      'You cannot authorize your own restricted action';
+
+  @override
+  String pinOverrideRemainingAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attempts remaining',
+      one: '1 attempt remaining',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get roleScopeBranch => 'Branch';
+
+  @override
+  String get roleScopeOrganization => 'Organization';
+
+  @override
+  String get commissionTieredMin => 'Min amount';
+
+  @override
+  String get commissionTieredMax => 'Max amount';
+
+  @override
+  String get commissionTierAdd => 'Add tier';
+
+  @override
+  String get shiftBulkCreate => 'Bulk create shifts';
+
+  @override
+  String shiftBulkCreated(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count shifts created',
+      one: '1 shift created',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get attendanceAutoClosedWarning =>
+      'Attendance record was automatically closed at end of shift';
 }

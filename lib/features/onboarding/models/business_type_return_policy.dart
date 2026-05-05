@@ -21,7 +21,7 @@ class BusinessTypeReturnPolicy {
       id: json['id'] as String,
       businessTypeId: json['business_type_id'] as String,
       returnWindowDays: (json['return_window_days'] as num).toInt(),
-      refundMethods: json['refund_methods'] != null ? Map<String, dynamic>.from(json['refund_methods'] as Map) : null,
+      refundMethods: json['refund_methods'] != null ? (json['refund_methods'] as List<dynamic>).map((e) => e as String).toList() : null,
       requireReceipt: json['require_receipt'] as bool?,
       restockingFeePercentage: (json['restocking_fee_percentage'] != null ? double.tryParse(json['restocking_fee_percentage'].toString()) : null),
       voidGracePeriodMinutes: (json['void_grace_period_minutes'] as num?)?.toInt(),
@@ -36,7 +36,7 @@ class BusinessTypeReturnPolicy {
   final String id;
   final String businessTypeId;
   final int returnWindowDays;
-  final Map<String, dynamic>? refundMethods;
+  final List<String>? refundMethods;
   final bool? requireReceipt;
   final double? restockingFeePercentage;
   final int? voidGracePeriodMinutes;
@@ -69,7 +69,7 @@ class BusinessTypeReturnPolicy {
     String? id,
     String? businessTypeId,
     int? returnWindowDays,
-    Map<String, dynamic>? refundMethods,
+    List<String>? refundMethods,
     bool? requireReceipt,
     double? restockingFeePercentage,
     int? voidGracePeriodMinutes,

@@ -44,6 +44,9 @@ class AdminRepository {
     String? organizationCountry,
     String? storeBusinessType,
     String? storeCurrency,
+    String? ownerName,
+    String? ownerEmail,
+    String? ownerPhone,
   }) => _apiService.createStore(
     organizationName: organizationName,
     storeName: storeName,
@@ -51,6 +54,9 @@ class AdminRepository {
     organizationCountry: organizationCountry,
     storeBusinessType: storeBusinessType,
     storeCurrency: storeCurrency,
+    ownerName: ownerName,
+    ownerEmail: ownerEmail,
+    ownerPhone: ownerPhone,
   );
 
   Future<Map<String, dynamic>> exportStores({bool? isActive, String? businessType}) =>
@@ -653,6 +659,14 @@ class AdminRepository {
   Future<Map<String, dynamic>> createSecurityIpBlocklistEntry(Map<String, dynamic> data) =>
       _apiService.createSecurityIpBlocklistEntry(data);
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) => _apiService.deleteSecurityIpBlocklistEntry(id);
+  Future<Map<String, dynamic>> revokeAllSecuritySessions(Map<String, dynamic> data) => _apiService.revokeAllSecuritySessions(data);
+  Future<Map<String, dynamic>> investigateSecCenterAlert(String id) => _apiService.investigateSecCenterAlert(id);
+  Future<Map<String, dynamic>> getSecurityTrustedDevices({Map<String, dynamic>? params}) =>
+      _apiService.getSecurityTrustedDevices(params: params);
+  Future<Map<String, dynamic>> revokeSecurityTrustedDevice(String id) => _apiService.revokeSecurityTrustedDevice(id);
+  Future<Map<String, dynamic>> getSecurityAdminActivityLogs({Map<String, dynamic>? params}) =>
+      _apiService.getSecurityAdminActivityLogs(params: params);
+  Future<Map<String, dynamic>> getSecurityAdminActivityLog(String id) => _apiService.getSecurityAdminActivityLog(id);
 
   // ─── P15: Financial Operations ───────────────────────────
   Future<Map<String, dynamic>> getFinOpsOverview({String? storeId}) => _apiService.getFinOpsOverview(storeId: storeId);

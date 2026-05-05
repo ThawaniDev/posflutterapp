@@ -21,7 +21,7 @@ class BusinessTypeShiftTemplate {
       nameAr: json['name_ar'] as String,
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String,
-      daysOfWeek: json['days_of_week'] != null ? Map<String, dynamic>.from(json['days_of_week'] as Map) : null,
+      daysOfWeek: json['days_of_week'] != null ? (json['days_of_week'] as List<dynamic>).map((e) => (e as num).toInt()).toList() : null,
       breakDurationMinutes: (json['break_duration_minutes'] as num?)?.toInt(),
       isDefault: json['is_default'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
@@ -33,7 +33,7 @@ class BusinessTypeShiftTemplate {
   final String nameAr;
   final String startTime;
   final String endTime;
-  final Map<String, dynamic>? daysOfWeek;
+  final List<int>? daysOfWeek;
   final int? breakDurationMinutes;
   final bool? isDefault;
   final int? sortOrder;
@@ -60,7 +60,7 @@ class BusinessTypeShiftTemplate {
     String? nameAr,
     String? startTime,
     String? endTime,
-    Map<String, dynamic>? daysOfWeek,
+    List<int>? daysOfWeek,
     int? breakDurationMinutes,
     bool? isDefault,
     int? sortOrder,

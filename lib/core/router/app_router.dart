@@ -202,6 +202,13 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_alerts_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_alert_list_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_activity_log_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_sessions_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_devices_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_ip_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_policies_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_trusted_devices_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_audit_log_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_login_attempts_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_user_activity_page.dart';
 // Data Management & Health
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
@@ -1079,6 +1086,41 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '${Routes.adminUserActivity}/:userId',
             name: 'adminUserActivity',
             builder: (context, state) => AdminUserActivityPage(userId: state.pathParameters['userId']!),
+          ),
+          GoRoute(
+            path: Routes.adminSecuritySessions,
+            name: 'adminSecuritySessions',
+            builder: (context, state) => const AdminSecuritySessionsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityDevices,
+            name: 'adminSecurityDevices',
+            builder: (context, state) => const AdminSecurityDevicesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityIp,
+            name: 'adminSecurityIp',
+            builder: (context, state) => const AdminSecurityIpPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityPolicies,
+            name: 'adminSecurityPolicies',
+            builder: (context, state) => const AdminSecurityPoliciesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityTrustedDevices,
+            name: 'adminSecurityTrustedDevices',
+            builder: (context, state) => const AdminSecurityTrustedDevicesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityAuditLog,
+            name: 'adminSecurityAuditLog',
+            builder: (context, state) => const AdminSecurityAuditLogPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityLoginAttempts,
+            name: 'adminSecurityLoginAttempts',
+            builder: (context, state) => const AdminSecurityLoginAttemptsPage(),
           ),
 
           // ─── Admin Panel – Data Management & Health ───

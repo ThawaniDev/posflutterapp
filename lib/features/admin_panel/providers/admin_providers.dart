@@ -69,12 +69,25 @@ class AdminStoreDetailNotifier extends StateNotifier<AdminStoreDetailState> {
   }
 
   Future<void> loadMetrics(String storeId) async {
-    state = const AdminStoreDetailLoading();
+    // Snapshot current store data to merge metrics into it
+    final previousState = state;
     try {
       final response = await _repository.storeMetrics(storeId);
-      state = AdminStoreDetailLoaded(response['data'] as Map<String, dynamic>);
+      final metricsData = response['data'] as Map<String, dynamic>;
+      if (previousState is AdminStoreDetailLoaded) {
+        // Merge metrics into existing store data so Overview + Metrics tabs both work
+        state = AdminStoreDetailLoaded({
+          ...previousState.store,
+          ...metricsData,
+        });
+      } else {
+        state = AdminStoreDetailLoaded(metricsData);
+      }
     } catch (e) {
-      state = AdminStoreDetailError(e.toString());
+      // Don't overwrite already-loaded store data on metrics failure
+      if (previousState is! AdminStoreDetailLoaded) {
+        state = AdminStoreDetailError(e.toString());
+      }
     }
   }
 }
@@ -118,6 +131,9 @@ class AdminActionNotifier extends StateNotifier<AdminActionState> {
     String? organizationCountry,
     String? storeBusinessType,
     String? storeCurrency,
+    String? ownerName,
+    String? ownerEmail,
+    String? ownerPhone,
   }) async {
     state = const AdminActionLoading();
     try {
@@ -128,6 +144,9 @@ class AdminActionNotifier extends StateNotifier<AdminActionState> {
         organizationCountry: organizationCountry,
         storeBusinessType: storeBusinessType,
         storeCurrency: storeCurrency,
+        ownerName: ownerName,
+        ownerEmail: ownerEmail,
+        ownerPhone: ownerPhone,
       );
       state = AdminActionSuccess(
         response['message'] as String? ?? 'Store created',
@@ -142,7 +161,10 @@ class AdminActionNotifier extends StateNotifier<AdminActionState> {
     state = const AdminActionLoading();
     try {
       final response = await _repository.approveRegistration(id);
-      state = AdminActionSuccess(response['message'] as String? ?? 'Approved');
+      state = AdminActionSuccess(
+        response['message'] as String? ?? 'Approved',
+        data: response['data'] as Map<String, dynamic>?,
+      );
     } catch (e) {
       state = AdminActionError(e.toString());
     }
@@ -3661,6 +3683,15 @@ class SecCenterAlertActionNotifier extends StateNotifier<SecCenterAlertActionSta
       state = SecCenterAlertActionError(e.toString());
     }
   }
+
+  Future<void> investigate(String id) async {
+    state = const SecCenterAlertActionLoading();
+    try {
+      state = SecCenterAlertActionSuccess(await _repo.investigateSecCenterAlert(id));
+    } catch (e) {
+      state = SecCenterAlertActionError(e.toString());
+    }
+  }
 }
 
 final securitySessionListProvider = StateNotifierProvider<SecuritySessionListNotifier, SecuritySessionListState>(
@@ -3761,6 +3792,185 @@ class SecurityIpBlocklistNotifier extends StateNotifier<SecurityIpListState> {
       state = SecurityIpListLoaded(await _repo.getSecurityIpBlocklist(params: params));
     } catch (e) {
       state = SecurityIpListError(e.toString());
+    }
+  }
+}
+
+// ─── Security Center: Action Providers ─────────────────────────
+
+final securitySessionActionProvider = StateNotifierProvider.autoDispose<SecuritySessionActionNotifier, SecuritySessionActionState>(
+  (ref) => SecuritySessionActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecuritySessionActionNotifier extends StateNotifier<SecuritySessionActionState> {
+  SecuritySessionActionNotifier(this._repo) : super(const SecuritySessionActionInitial());
+  final AdminRepository _repo;
+
+  Future<void> revoke(String id) async {
+    state = const SecuritySessionActionLoading();
+    try {
+      state = SecuritySessionActionSuccess(await _repo.revokeSecuritySession(id));
+    } catch (e) {
+      state = SecuritySessionActionError(e.toString());
+    }
+  }
+
+  Future<void> revokeAll(Map<String, dynamic> data) async {
+    state = const SecuritySessionActionLoading();
+    try {
+      state = SecuritySessionActionSuccess(await _repo.revokeAllSecuritySessions(data));
+    } catch (e) {
+      state = SecuritySessionActionError(e.toString());
+    }
+  }
+}
+
+final securityTrustedDeviceListProvider = StateNotifierProvider<SecurityTrustedDeviceListNotifier, SecurityTrustedDeviceListState>(
+  (ref) => SecurityTrustedDeviceListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityTrustedDeviceListNotifier extends StateNotifier<SecurityTrustedDeviceListState> {
+  SecurityTrustedDeviceListNotifier(this._repo) : super(const SecurityTrustedDeviceListInitial());
+  final AdminRepository _repo;
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const SecurityTrustedDeviceListLoading();
+    try {
+      state = SecurityTrustedDeviceListLoaded(await _repo.getSecurityTrustedDevices(params: params));
+    } catch (e) {
+      state = SecurityTrustedDeviceListError(e.toString());
+    }
+  }
+}
+
+final securityTrustedDeviceActionProvider = StateNotifierProvider.autoDispose<SecurityTrustedDeviceActionNotifier, SecurityDeviceActionState>(
+  (ref) => SecurityTrustedDeviceActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityTrustedDeviceActionNotifier extends StateNotifier<SecurityDeviceActionState> {
+  SecurityTrustedDeviceActionNotifier(this._repo) : super(const SecurityDeviceActionInitial());
+  final AdminRepository _repo;
+  Future<void> revokeTrust(String id) async {
+    state = const SecurityDeviceActionLoading();
+    try {
+      state = SecurityDeviceActionSuccess(await _repo.revokeSecurityTrustedDevice(id));
+    } catch (e) {
+      state = SecurityDeviceActionError(e.toString());
+    }
+  }
+}
+
+final securityDeviceActionProvider = StateNotifierProvider.autoDispose<SecurityDeviceActionNotifier, SecurityDeviceActionState>(
+  (ref) => SecurityDeviceActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityDeviceActionNotifier extends StateNotifier<SecurityDeviceActionState> {
+  SecurityDeviceActionNotifier(this._repo) : super(const SecurityDeviceActionInitial());
+  final AdminRepository _repo;
+
+  Future<void> wipe(String id) async {
+    state = const SecurityDeviceActionLoading();
+    try {
+      state = SecurityDeviceActionSuccess(await _repo.wipeSecurityDevice(id));
+    } catch (e) {
+      state = SecurityDeviceActionError(e.toString());
+    }
+  }
+}
+
+final securityIpActionProvider = StateNotifierProvider.autoDispose<SecurityIpActionNotifier, SecurityIpActionState>(
+  (ref) => SecurityIpActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityIpActionNotifier extends StateNotifier<SecurityIpActionState> {
+  SecurityIpActionNotifier(this._repo) : super(const SecurityIpActionInitial());
+  final AdminRepository _repo;
+
+  Future<void> addToAllowlist(Map<String, dynamic> data) async {
+    state = const SecurityIpActionLoading();
+    try {
+      state = SecurityIpActionSuccess(await _repo.createSecurityIpAllowlistEntry(data));
+    } catch (e) {
+      state = SecurityIpActionError(e.toString());
+    }
+  }
+
+  Future<void> removeFromAllowlist(String id) async {
+    state = const SecurityIpActionLoading();
+    try {
+      await _repo.deleteSecurityIpAllowlistEntry(id);
+      state = const SecurityIpActionSuccess(null);
+    } catch (e) {
+      state = SecurityIpActionError(e.toString());
+    }
+  }
+
+  Future<void> addToBlocklist(Map<String, dynamic> data) async {
+    state = const SecurityIpActionLoading();
+    try {
+      state = SecurityIpActionSuccess(await _repo.createSecurityIpBlocklistEntry(data));
+    } catch (e) {
+      state = SecurityIpActionError(e.toString());
+    }
+  }
+
+  Future<void> removeFromBlocklist(String id) async {
+    state = const SecurityIpActionLoading();
+    try {
+      await _repo.deleteSecurityIpBlocklistEntry(id);
+      state = const SecurityIpActionSuccess(null);
+    } catch (e) {
+      state = SecurityIpActionError(e.toString());
+    }
+  }
+}
+
+final securityLoginAttemptListProvider = StateNotifierProvider<SecurityLoginAttemptListNotifier, SecurityLoginAttemptListState>(
+  (ref) => SecurityLoginAttemptListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityLoginAttemptListNotifier extends StateNotifier<SecurityLoginAttemptListState> {
+  SecurityLoginAttemptListNotifier(this._repo) : super(const SecurityLoginAttemptListInitial());
+  final AdminRepository _repo;
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const SecurityLoginAttemptListLoading();
+    try {
+      state = SecurityLoginAttemptListLoaded(await _repo.getSecurityLoginAttempts(params: params));
+    } catch (e) {
+      state = SecurityLoginAttemptListError(e.toString());
+    }
+  }
+}
+
+final securityAuditLogListProvider = StateNotifierProvider<SecurityAuditLogListNotifier, SecurityAuditLogListState>(
+  (ref) => SecurityAuditLogListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityAuditLogListNotifier extends StateNotifier<SecurityAuditLogListState> {
+  SecurityAuditLogListNotifier(this._repo) : super(const SecurityAuditLogListInitial());
+  final AdminRepository _repo;
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const SecurityAuditLogListLoading();
+    try {
+      state = SecurityAuditLogListLoaded(await _repo.getSecurityAuditLogs(params: params));
+    } catch (e) {
+      state = SecurityAuditLogListError(e.toString());
+    }
+  }
+}
+
+final securityActivityLogListProvider = StateNotifierProvider<SecurityActivityLogListNotifier, SecurityActivityLogListState>(
+  (ref) => SecurityActivityLogListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class SecurityActivityLogListNotifier extends StateNotifier<SecurityActivityLogListState> {
+  SecurityActivityLogListNotifier(this._repo) : super(const SecurityActivityLogListInitial());
+  final AdminRepository _repo;
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const SecurityActivityLogListLoading();
+    try {
+      state = SecurityActivityLogListLoaded(await _repo.getSecurityAdminActivityLogs(params: params));
+    } catch (e) {
+      state = SecurityActivityLogListError(e.toString());
     }
   }
 }

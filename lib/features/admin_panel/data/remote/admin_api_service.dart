@@ -60,6 +60,9 @@ class AdminApiService {
     String? organizationCountry,
     String? storeBusinessType,
     String? storeCurrency,
+    String? ownerName,
+    String? ownerEmail,
+    String? ownerPhone,
   }) async {
     final response = await _dio.post(
       ApiEndpoints.adminStoresCreate,
@@ -70,6 +73,9 @@ class AdminApiService {
         'organization_country': ?organizationCountry,
         'store_business_type': ?storeBusinessType,
         'store_currency': ?storeCurrency,
+        'owner_name': ?ownerName,
+        'owner_email': ?ownerEmail,
+        'owner_phone': ?ownerPhone,
       },
     );
     return response.data as Map<String, dynamic>;
@@ -1531,6 +1537,36 @@ class AdminApiService {
 
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) async {
     final response = await _dio.delete(ApiEndpoints.adminSecurityIpBlocklistById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> revokeAllSecuritySessions(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminSecuritySessionsRevokeAll, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> investigateSecCenterAlert(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminSecCenterAlertInvestigate(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getSecurityTrustedDevices({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminSecurityTrustedDevices, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> revokeSecurityTrustedDevice(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminSecurityTrustedDeviceById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getSecurityAdminActivityLogs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminSecurityActivityLogs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getSecurityAdminActivityLog(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminSecurityActivityLogById(id));
     return response.data as Map<String, dynamic>;
   }
 

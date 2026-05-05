@@ -15386,6 +15386,37 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adminSuspendStore => 'দোকান স্থগিত করুন';
 
   @override
+  String get adminSuspendReason => 'স্থগিতের কারণ';
+
+  @override
+  String get adminSuspendReasonHint => 'স্থগিতের কারণ লিখুন (বাঞ্ছনীয়)';
+
+  @override
+  String get adminSuspendedAt => 'স্থগিতের তারিখ';
+
+  @override
+  String get adminOwnerName => 'মালিকের নাম';
+
+  @override
+  String get adminOwnerEmail => 'মালিকের ইমেল';
+
+  @override
+  String get adminOwnerPhone => 'মালিকের ফোন';
+
+  @override
+  String get adminTempPassword => 'অস্থায়ী পাসওয়ার্ড';
+
+  @override
+  String get adminTempPasswordCopy =>
+      'অস্থায়ী পাসওয়ার্ড কপি করুন এবং দোকানমালিকের সাথে শেয়ার করুন';
+
+  @override
+  String get adminCancellationReason => 'বাতিলের কারণ';
+
+  @override
+  String get adminCancellationReasonHint => 'বাতিলের কারণ নির্বাচন করুন';
+
+  @override
   String get adminSuspensionReasonHint => 'স্থগিতের কারণ লিখুন';
 
   @override
@@ -20160,4 +20191,70 @@ class AppLocalizationsBn extends AppLocalizations {
   String zatcaVatAmountLabel(String value) {
     return 'VAT amount: $value';
   }
+
+  @override
+  String get pinOverrideTitle => 'PIN ওভাররাইড প্রয়োজন';
+
+  @override
+  String get pinOverrideSubtitle =>
+      'এই ক্রিয়াটি অনুমোদন করতে ম্যানেজার বা মালিকের PIN লিখুন';
+
+  @override
+  String pinOverrideLocked(int minutes) {
+    return 'অনেক ব্যর্থ প্রচেষ্টা। $minutes মিনিট পরে আবার চেষ্টা করুন।';
+  }
+
+  @override
+  String get pinOverrideSuccess => 'ক্রিয়াটি সফলভাবে অনুমোদিত হয়েছে';
+
+  @override
+  String get pinOverrideFailed => 'অবৈধ PIN। আবার চেষ্টা করুন।';
+
+  @override
+  String get pinOverrideCannotSelf =>
+      'আপনি নিজের সীমাবদ্ধ ক্রিয়াটি অনুমোদন করতে পারবেন না';
+
+  @override
+  String pinOverrideRemainingAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি প্রচেষ্টা বাকি',
+      one: '১টি প্রচেষ্টা বাকি',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get roleScopeBranch => 'শাখা';
+
+  @override
+  String get roleScopeOrganization => 'সংস্থা';
+
+  @override
+  String get commissionTieredMin => 'সর্বনিম্ন পরিমাণ';
+
+  @override
+  String get commissionTieredMax => 'সর্বোচ্চ পরিমাণ';
+
+  @override
+  String get commissionTierAdd => 'স্তর যোগ করুন';
+
+  @override
+  String get shiftBulkCreate => 'বাল্ক শিফট তৈরি করুন';
+
+  @override
+  String shiftBulkCreated(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি শিফট তৈরি হয়েছে',
+      one: '১টি শিফট তৈরি হয়েছে',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get attendanceAutoClosedWarning =>
+      'শিফটের শেষে উপস্থিতির রেকর্ড স্বয়ংক্রিয়ভাবে বন্ধ হয়ে গেছে';
 }

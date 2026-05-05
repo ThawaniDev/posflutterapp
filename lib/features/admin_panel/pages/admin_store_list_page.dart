@@ -283,19 +283,30 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
   void _showCreateStoreDialog(BuildContext context) {
     final orgNameCtrl = TextEditingController();
     final storeNameCtrl = TextEditingController();
+    final ownerNameCtrl = TextEditingController();
+    final ownerEmailCtrl = TextEditingController();
+    final ownerPhoneCtrl = TextEditingController();
 
     showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
           title: Text(l10n.adminCreateStore),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              PosTextField(controller: orgNameCtrl, label: l10n.adminOrganizationName, hint: l10n.adminOrgNameHint),
-              AppSpacing.gapH12,
-              PosTextField(controller: storeNameCtrl, label: l10n.sidebarStoreName, hint: l10n.adminStoreNameHint),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PosTextField(controller: orgNameCtrl, label: l10n.adminOrganizationName, hint: l10n.adminOrgNameHint),
+                AppSpacing.gapH12,
+                PosTextField(controller: storeNameCtrl, label: l10n.sidebarStoreName, hint: l10n.adminStoreNameHint),
+                AppSpacing.gapH12,
+                PosTextField(controller: ownerNameCtrl, label: l10n.adminOwnerName, hint: l10n.adminOwnerName),
+                AppSpacing.gapH12,
+                PosTextField(controller: ownerEmailCtrl, label: l10n.adminOwnerEmail, hint: l10n.adminOwnerEmail, keyboardType: TextInputType.emailAddress),
+                AppSpacing.gapH12,
+                PosTextField(controller: ownerPhoneCtrl, label: l10n.adminOwnerPhone, hint: l10n.adminOwnerPhone, keyboardType: TextInputType.phone),
+              ],
+            ),
           ),
           actions: [
             PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
@@ -304,7 +315,13 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
               onPressed: () {
                 ref
                     .read(adminActionProvider.notifier)
-                    .createStore(organizationName: orgNameCtrl.text, storeName: storeNameCtrl.text);
+                    .createStore(
+                      organizationName: orgNameCtrl.text,
+                      storeName: storeNameCtrl.text,
+                      ownerName: ownerNameCtrl.text.isEmpty ? null : ownerNameCtrl.text,
+                      ownerEmail: ownerEmailCtrl.text.isEmpty ? null : ownerEmailCtrl.text,
+                      ownerPhone: ownerPhoneCtrl.text.isEmpty ? null : ownerPhoneCtrl.text,
+                    );
                 Navigator.of(ctx).pop();
                 _loadStores();
               },

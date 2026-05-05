@@ -29068,6 +29068,66 @@ abstract class AppLocalizations {
   /// **'Suspend Store'**
   String get adminSuspendStore;
 
+  /// No description provided for @adminSuspendReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspension Reason'**
+  String get adminSuspendReason;
+
+  /// No description provided for @adminSuspendReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason for suspension (optional)'**
+  String get adminSuspendReasonHint;
+
+  /// No description provided for @adminSuspendedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspended At'**
+  String get adminSuspendedAt;
+
+  /// No description provided for @adminOwnerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner Name'**
+  String get adminOwnerName;
+
+  /// No description provided for @adminOwnerEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner Email'**
+  String get adminOwnerEmail;
+
+  /// No description provided for @adminOwnerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner Phone'**
+  String get adminOwnerPhone;
+
+  /// No description provided for @adminTempPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary Password'**
+  String get adminTempPassword;
+
+  /// No description provided for @adminTempPasswordCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy temp password and share with the store owner'**
+  String get adminTempPasswordCopy;
+
+  /// No description provided for @adminCancellationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation Reason'**
+  String get adminCancellationReason;
+
+  /// No description provided for @adminCancellationReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a reason for cancellation'**
+  String get adminCancellationReasonHint;
+
   /// No description provided for @adminSuspensionReasonHint.
   ///
   /// In en, this message translates to:
@@ -37771,6 +37831,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VAT amount: {value}'**
   String zatcaVatAmountLabel(String value);
+
+  /// No description provided for @pinOverrideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN Override Required'**
+  String get pinOverrideTitle;
+
+  /// No description provided for @pinOverrideSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a manager or owner PIN to authorize this action'**
+  String get pinOverrideSubtitle;
+
+  /// No description provided for @pinOverrideLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many failed attempts. Try again in {minutes} minutes.'**
+  String pinOverrideLocked(int minutes);
+
+  /// No description provided for @pinOverrideSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Action authorized successfully'**
+  String get pinOverrideSuccess;
+
+  /// No description provided for @pinOverrideFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid PIN. Please try again.'**
+  String get pinOverrideFailed;
+
+  /// No description provided for @pinOverrideCannotSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot authorize your own restricted action'**
+  String get pinOverrideCannotSelf;
+
+  /// No description provided for @pinOverrideRemainingAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 attempt remaining} other{{count} attempts remaining}}'**
+  String pinOverrideRemainingAttempts(int count);
+
+  /// No description provided for @roleScopeBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get roleScopeBranch;
+
+  /// No description provided for @roleScopeOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get roleScopeOrganization;
+
+  /// No description provided for @commissionTieredMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Min amount'**
+  String get commissionTieredMin;
+
+  /// No description provided for @commissionTieredMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Max amount'**
+  String get commissionTieredMax;
+
+  /// No description provided for @commissionTierAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tier'**
+  String get commissionTierAdd;
+
+  /// No description provided for @shiftBulkCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk create shifts'**
+  String get shiftBulkCreate;
+
+  /// No description provided for @shiftBulkCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 shift created} other{{count} shifts created}}'**
+  String shiftBulkCreated(int count);
+
+  /// No description provided for @attendanceAutoClosedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Attendance record was automatically closed at end of shift'**
+  String get attendanceAutoClosedWarning;
 }
 
 class _AppLocalizationsDelegate

@@ -15271,6 +15271,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminSuspendStore => 'تعليق المتجر';
 
   @override
+  String get adminSuspendReason => 'سبب التعليق';
+
+  @override
+  String get adminSuspendReasonHint => 'أدخل سبب التعليق (اختياري)';
+
+  @override
+  String get adminSuspendedAt => 'تاريخ التعليق';
+
+  @override
+  String get adminOwnerName => 'اسم المالك';
+
+  @override
+  String get adminOwnerEmail => 'بريد المالك الإلكتروني';
+
+  @override
+  String get adminOwnerPhone => 'هاتف المالك';
+
+  @override
+  String get adminTempPassword => 'كلمة المرور المؤقتة';
+
+  @override
+  String get adminTempPasswordCopy =>
+      'انسخ كلمة المرور المؤقتة وشاركها مع صاحب المتجر';
+
+  @override
+  String get adminCancellationReason => 'سبب الإلغاء';
+
+  @override
+  String get adminCancellationReasonHint => 'حدد سبب الإلغاء';
+
+  @override
   String get adminSuspensionReasonHint => 'أدخل سبب التعليق';
 
   @override
@@ -20028,4 +20059,68 @@ class AppLocalizationsAr extends AppLocalizations {
   String zatcaVatAmountLabel(String value) {
     return 'VAT amount: $value';
   }
+
+  @override
+  String get pinOverrideTitle => 'مطلوب تجاوز رمز PIN';
+
+  @override
+  String get pinOverrideSubtitle => 'أدخل رمز PIN للمدير أو المالك للتفويض';
+
+  @override
+  String pinOverrideLocked(int minutes) {
+    return 'محاولات فاشلة كثيرة. أعد المحاولة خلال $minutes دقائق.';
+  }
+
+  @override
+  String get pinOverrideSuccess => 'تم تفويض الإجراء بنجاح';
+
+  @override
+  String get pinOverrideFailed => 'رمز PIN غير صحيح. أعد المحاولة.';
+
+  @override
+  String get pinOverrideCannotSelf => 'لا يمكنك تفويض إجراءك المقيد بنفسك';
+
+  @override
+  String pinOverrideRemainingAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count محاولات متبقية',
+      one: 'محاولة واحدة متبقية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get roleScopeBranch => 'الفرع';
+
+  @override
+  String get roleScopeOrganization => 'المؤسسة';
+
+  @override
+  String get commissionTieredMin => 'الحد الأدنى للمبلغ';
+
+  @override
+  String get commissionTieredMax => 'الحد الأقصى للمبلغ';
+
+  @override
+  String get commissionTierAdd => 'إضافة مستوى';
+
+  @override
+  String get shiftBulkCreate => 'إنشاء مناوبات جماعي';
+
+  @override
+  String shiftBulkCreated(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم إنشاء $count مناوبات',
+      one: 'تم إنشاء مناوبة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get attendanceAutoClosedWarning =>
+      'تم إغلاق سجل الحضور تلقائيًا في نهاية المناوبة';
 }

@@ -5997,6 +5997,16 @@
     }
   },
   "adminSuspendStore": "Suspend Store",
+  "adminSuspendReason": "Suspension Reason",
+  "adminSuspendReasonHint": "Enter reason for suspension (optional)",
+  "adminSuspendedAt": "Suspended At",
+  "adminOwnerName": "Owner Name",
+  "adminOwnerEmail": "Owner Email",
+  "adminOwnerPhone": "Owner Phone",
+  "adminTempPassword": "Temporary Password",
+  "adminTempPasswordCopy": "Copy temp password and share with the store owner",
+  "adminCancellationReason": "Cancellation Reason",
+  "adminCancellationReasonHint": "Select a reason for cancellation",
   "adminSuspensionReasonHint": "Enter suspension reason",
   "adminAddLimitOverride": "Add Limit Override",
   "adminLimitKey": "Limit Key",
@@ -8547,5 +8557,28 @@
   "zatcaLastErrorMessage": "Last error: {message}",
   "@zatcaLastErrorMessage": { "placeholders": { "message": { "type": "String" } } },
   "zatcaVatAmountLabel": "VAT amount: {value}",
-  "@zatcaVatAmountLabel": { "placeholders": { "value": { "type": "String" } } }
+  "@zatcaVatAmountLabel": { "placeholders": { "value": { "type": "String" } } },
+
+  "pinOverrideTitle": "PIN Override Required",
+  "pinOverrideSubtitle": "Enter a manager or owner PIN to authorize this action",
+  "pinOverrideLocked": "Too many failed attempts. Try again in {minutes} minutes.",
+  "@pinOverrideLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "pinOverrideSuccess": "Action authorized successfully",
+  "pinOverrideFailed": "Invalid PIN. Please try again.",
+  "pinOverrideCannotSelf": "You cannot authorize your own restricted action",
+  "pinOverrideRemainingAttempts": "{count, plural, =1{1 attempt remaining} other{{count} attempts remaining}}",
+  "@pinOverrideRemainingAttempts": { "placeholders": { "count": { "type": "int" } } },
+
+  "roleScopeBranch": "Branch",
+  "roleScopeOrganization": "Organization",
+
+  "commissionTieredMin": "Min amount",
+  "commissionTieredMax": "Max amount",
+  "commissionTierAdd": "Add tier",
+
+  "shiftBulkCreate": "Bulk create shifts",
+  "shiftBulkCreated": "{count, plural, =1{1 shift created} other{{count} shifts created}}",
+  "@shiftBulkCreated": { "placeholders": { "count": { "type": "int" } } },
+
+  "attendanceAutoClosedWarning": "Attendance record was automatically closed at end of shift"
 }
