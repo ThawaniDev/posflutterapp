@@ -9,6 +9,9 @@ class LabelPrintHistory {
     required this.productCount,
     required this.totalLabels,
     this.printerName,
+    this.printerLanguage,
+    this.jobPages,
+    this.durationMs,
     this.printedAt,
   });
 
@@ -23,6 +26,9 @@ class LabelPrintHistory {
       productCount: (json['product_count'] as num).toInt(),
       totalLabels: (json['total_labels'] as num).toInt(),
       printerName: json['printer_name'] as String?,
+      printerLanguage: json['printer_language'] as String?,
+      jobPages: json['job_pages'] != null ? (json['job_pages'] as num).toInt() : null,
+      durationMs: json['duration_ms'] != null ? (json['duration_ms'] as num).toInt() : null,
       printedAt: json['printed_at'] != null ? DateTime.parse(json['printed_at'] as String) : null,
     );
   }
@@ -35,6 +41,9 @@ class LabelPrintHistory {
   final int productCount;
   final int totalLabels;
   final String? printerName;
+  final String? printerLanguage;
+  final int? jobPages;
+  final int? durationMs;
   final DateTime? printedAt;
 
   Map<String, dynamic> toJson() {
@@ -48,6 +57,9 @@ class LabelPrintHistory {
       'product_count': productCount,
       'total_labels': totalLabels,
       'printer_name': printerName,
+      'printer_language': printerLanguage,
+      'job_pages': jobPages,
+      'duration_ms': durationMs,
       'printed_at': printedAt?.toIso8601String(),
     };
   }
@@ -62,6 +74,9 @@ class LabelPrintHistory {
     int? productCount,
     int? totalLabels,
     String? printerName,
+    String? printerLanguage,
+    int? jobPages,
+    int? durationMs,
     DateTime? printedAt,
   }) {
     return LabelPrintHistory(
@@ -74,6 +89,9 @@ class LabelPrintHistory {
       productCount: productCount ?? this.productCount,
       totalLabels: totalLabels ?? this.totalLabels,
       printerName: printerName ?? this.printerName,
+      printerLanguage: printerLanguage ?? this.printerLanguage,
+      jobPages: jobPages ?? this.jobPages,
+      durationMs: durationMs ?? this.durationMs,
       printedAt: printedAt ?? this.printedAt,
     );
   }

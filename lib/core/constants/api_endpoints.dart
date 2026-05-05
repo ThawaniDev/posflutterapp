@@ -79,6 +79,7 @@ class ApiEndpoints {
   static const String labelTemplates = '/labels/templates';
   static const String labelPresets = '/labels/templates/presets';
   static const String labelPrintHistory = '/labels/print-history';
+  static const String labelPrintHistoryStats = '/labels/print-history/stats';
 
   // Owner Dashboard
   static const String ownerDashboardSummary = '/owner-dashboard/summary';

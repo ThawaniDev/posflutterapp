@@ -8062,5 +8062,35 @@
   "configMaxFailedAttempts": "الحد الأقصى لمحاولات تسجيل الدخول الفاشلة",
   "configLockoutDuration": "مدة القفل",
   "configBiometricDefault": "القياسات الحيوية مفعلة افتراضيا",
-  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ"
+  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ",
+
+  "labelPrinterLanguage": "لغة الطابعة",
+  "labelPrinterLanguageZpl": "ZPL (زيبرا)",
+  "labelPrinterLanguageTspl": "TSPL (TSC)",
+  "labelPrinterLanguageEscpos": "ESC/POS",
+  "labelPrinterLanguageImage": "صورة احتياطية",
+  "labelJobPages": "الصفحات",
+  "labelDurationMs": "المدة (مللي ثانية)",
+  "labelPrintStats": "إحصائيات الطباعة",
+  "labelJobsLast30Days": "المهام (30 يوم)",
+  "labelProductsLast30Days": "المنتجات (30 يوم)",
+  "labelLabelsLast30Days": "الملصقات المطبوعة (30 يوم)",
+  "labelFilterFrom": "من تاريخ",
+  "labelFilterTo": "إلى تاريخ",
+  "labelFilterByTemplate": "تصفية حسب القالب",
+  "labelApplyFilter": "تطبيق الفلتر",
+  "labelClearFilter": "مسح الفلتر",
+
+  "hardwareSkuLabel": "الرمز: {sku}",
+  "@hardwareSkuLabel": {
+    "placeholders": {
+      "sku": { "type": "String" }
+    }
+  },
+  "labelsExpiryDate": "انتهاء: {date}",
+  "@labelsExpiryDate": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  }
 }

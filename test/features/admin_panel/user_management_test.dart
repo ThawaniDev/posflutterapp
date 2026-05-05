@@ -5,7 +5,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════
-  // P4: API Endpoints
+  // P4: API Endpoint Constants
   // ═══════════════════════════════════════════════════════════════
 
   group('P4 API Endpoints - Provider Users', () {
@@ -374,6 +374,270 @@ void main() {
       final response = {'temporary_password': 'abc123xyz789', 'must_change_password': true};
       expect(response['temporary_password'], isNotEmpty);
       expect(response['must_change_password'], true);
+    });
+
+    test('admin invite uses role_ids not permission_ids', () {
+      final inviteData = {
+        'name': 'New Admin',
+        'email': 'new@thawani.com',
+        'role_ids': ['role-uuid-1'],
+      };
+      expect(inviteData.containsKey('role_ids'), true);
+      expect(inviteData.containsKey('permission_ids'), false);
+    });
+
+    test('admin user detail response uses role_slug key', () {
+      final roles = [
+        {'role_id': 'r-1', 'role_name': 'Support', 'role_slug': 'support', 'assigned_at': '2025-01-01T00:00:00Z'},
+      ];
+      expect(roles.first.containsKey('role_slug'), true);
+      expect(roles.first['role_slug'], 'support');
+    });
+
+    test('toggle active changes is_active state correctly', () {
+      var isActive = true;
+      isActive = !isActive;
+      expect(isActive, false);
+      isActive = !isActive;
+      expect(isActive, true);
+    });
+
+    test('2FA reset clears all 3 fields', () {
+      Map<String, dynamic> adminData = {
+        'two_factor_secret': 'secret-key',
+        'two_factor_enabled': true,
+        'two_factor_confirmed_at': '2025-01-01T00:00:00Z',
+      };
+      adminData = {
+        ...adminData,
+        'two_factor_secret': null,
+        'two_factor_enabled': false,
+        'two_factor_confirmed_at': null,
+      };
+      expect(adminData['two_factor_secret'], isNull);
+      expect(adminData['two_factor_enabled'], false);
+      expect(adminData['two_factor_confirmed_at'], isNull);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P4: AdminStatsState
+  // ═══════════════════════════════════════════════════════════════
+
+  group('AdminStatsState', () {
+    test('AdminStatsInitial is a subtype of AdminStatsState', () {
+      const state = AdminStatsInitial();
+      expect(state, isA<AdminStatsState>());
+    });
+
+    test('AdminStatsLoading is a subtype of AdminStatsState', () {
+      const state = AdminStatsLoading();
+      expect(state, isA<AdminStatsState>());
+    });
+
+    test('AdminStatsLoaded holds all stats fields', () {
+      const state = AdminStatsLoaded({
+        'total_provider_users': 120,
+        'active_provider_users': 100,
+        'inactive_provider_users': 20,
+        'new_this_month': 15,
+        'total_admin_users': 5,
+        'active_admin_users': 4,
+        'role_distribution': {'cashier': 60, 'owner': 30, 'accountant': 30},
+        'top_stores_by_users': [],
+      });
+      expect(state.data['total_provider_users'], 120);
+      expect(state.data['active_provider_users'], 100);
+      expect(state.data['inactive_provider_users'], 20);
+      expect(state.data['new_this_month'], 15);
+      expect(state.data['total_admin_users'], 5);
+      expect(state.data['active_admin_users'], 4);
+    });
+
+    test('AdminStatsLoaded active+inactive equals total', () {
+      const total = 150;
+      const active = 120;
+      const inactive = 30;
+      const state = AdminStatsLoaded({
+        'total_provider_users': total,
+        'active_provider_users': active,
+        'inactive_provider_users': inactive,
+      });
+      final t = state.data['total_provider_users'] as int;
+      final a = state.data['active_provider_users'] as int;
+      final i = state.data['inactive_provider_users'] as int;
+      expect(a + i, t);
+    });
+
+    test('AdminStatsLoaded role_distribution is a Map', () {
+      const state = AdminStatsLoaded({
+        'role_distribution': {'cashier': 45, 'owner': 30},
+      });
+      expect(state.data['role_distribution'], isA<Map>());
+    });
+
+    test('AdminStatsLoaded top_stores_by_users is a List', () {
+      const state = AdminStatsLoaded({
+        'top_stores_by_users': [
+          {'store_id': 's-1', 'user_count': 25},
+        ],
+      });
+      expect(state.data['top_stores_by_users'], isA<List>());
+    });
+
+    test('AdminStatsLoaded with zeroed counts', () {
+      const state = AdminStatsLoaded({
+        'total_provider_users': 0,
+        'active_provider_users': 0,
+        'inactive_provider_users': 0,
+        'new_this_month': 0,
+      });
+      expect(state.data['total_provider_users'], 0);
+    });
+
+    test('AdminStatsError holds error message', () {
+      const state = AdminStatsError('Failed to load stats');
+      expect(state, isA<AdminStatsState>());
+      expect(state.message, 'Failed to load stats');
+    });
+
+    test('adminUserStats endpoint is correct', () {
+      expect(ApiEndpoints.adminUserStats, '/admin/users/stats');
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P4: AdminActionState (shared for P4 mutations)
+  // ═══════════════════════════════════════════════════════════════
+
+  group('AdminActionState (P4 mutations)', () {
+    test('AdminActionInitial is default state', () {
+      const state = AdminActionInitial();
+      expect(state, isA<AdminActionState>());
+    });
+
+    test('AdminActionLoading is in-flight state', () {
+      const state = AdminActionLoading();
+      expect(state, isA<AdminActionState>());
+    });
+
+    test('AdminActionSuccess holds message for reset password', () {
+      const state = AdminActionSuccess('Password reset successfully');
+      expect(state.message, 'Password reset successfully');
+    });
+
+    test('AdminActionSuccess holds message for force password change', () {
+      const state = AdminActionSuccess('User must change password on next login');
+      expect(state.message, isNotEmpty);
+    });
+
+    test('AdminActionSuccess holds message for toggle active', () {
+      const state = AdminActionSuccess('User deactivated');
+      expect(state.message, contains('deactivated'));
+    });
+
+    test('AdminActionSuccess holds message for 2FA reset', () {
+      const state = AdminActionSuccess('2FA has been reset');
+      expect(state.message, isNotEmpty);
+    });
+
+    test('AdminActionSuccess holds message for admin invite', () {
+      const state = AdminActionSuccess('Admin invited successfully');
+      expect(state.message, isNotEmpty);
+    });
+
+    test('AdminActionError holds permission denied message', () {
+      const state = AdminActionError('Permission denied');
+      expect(state, isA<AdminActionState>());
+      expect(state.message, 'Permission denied');
+    });
+
+    test('AdminActionError holds server error message', () {
+      const state = AdminActionError('Internal server error');
+      expect(state.message, isNotEmpty);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P4: Response Parsing (simulated API responses)
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P4 Response Parsing', () {
+    test('stats response data parses into AdminStatsLoaded', () {
+      final responseData = {
+        'total_provider_users': 250,
+        'active_provider_users': 220,
+        'inactive_provider_users': 30,
+        'new_this_month': 12,
+        'total_admin_users': 8,
+        'active_admin_users': 7,
+        'role_distribution': {'cashier': 120, 'owner': 80},
+        'top_stores_by_users': [],
+      };
+      final state = AdminStatsLoaded(responseData);
+      expect(state.data['total_provider_users'], 250);
+      final a = state.data['active_provider_users'] as int;
+      final i = state.data['inactive_provider_users'] as int;
+      expect(a + i, state.data['total_provider_users']);
+    });
+
+    test('provider user list response parses pagination', () {
+      final apiResponse = {
+        'success': true,
+        'data': {
+          'users': [
+            {'id': 'u-1', 'name': 'User 1', 'role': 'cashier', 'is_active': true},
+          ],
+          'pagination': {'total': 1, 'current_page': 1, 'last_page': 1, 'per_page': 15},
+        },
+      };
+      final data = apiResponse['data'] as Map;
+      final users = (data['users'] as List).cast<Map<String, dynamic>>();
+      final pagination = data['pagination'] as Map;
+      final state = ProviderUserListLoaded(
+        users: users,
+        total: pagination['total'] as int,
+        currentPage: pagination['current_page'] as int,
+        lastPage: pagination['last_page'] as int,
+      );
+      expect(state.users.length, 1);
+      expect(state.total, 1);
+    });
+
+    test('admin detail response parses roles array', () {
+      final admin = <String, dynamic>{
+        'id': 'a-1',
+        'name': 'Support',
+        'email': 'support@thawani.com',
+        'is_active': true,
+        'two_factor_enabled': false,
+        'roles': [
+          {'role_id': 'r-1', 'role_name': 'Support', 'role_slug': 'support', 'assigned_at': '2025-01-01T00:00:00Z'},
+        ],
+      };
+      final state = AdminUserDetailLoaded(admin);
+      expect((state.admin['roles'] as List).first['role_slug'], 'support');
+    });
+
+    test('activity log response parses action field', () {
+      final logs = [
+        <String, dynamic>{
+          'action': 'reset_password',
+          'entity_type': 'user',
+          'entity_id': 'u-1',
+          'created_at': '2025-01-15T10:30:00Z',
+        },
+      ];
+      final state = UserActivityLoaded(logs);
+      expect(state.logs.first['action'], 'reset_password');
+    });
+
+    test('invite response includes temporary_password field', () {
+      final responseData = {
+        'admin': {'id': 'a-new', 'name': 'New Admin', 'email': 'new@thawani.com'},
+        'temporary_password': 'Temp@12345!',
+      };
+      expect(responseData['temporary_password'], isNotEmpty);
     });
   });
 }

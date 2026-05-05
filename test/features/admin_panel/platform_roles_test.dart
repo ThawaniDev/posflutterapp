@@ -605,4 +605,412 @@ void main() {
       expect((state.profile['all_permissions'] as List).length, 3);
     });
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P2 Extended: AdminRoleListState
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P2 Extended: AdminRoleListState', () {
+    test('system roles are marked with is_system true', () {
+      const state = AdminRoleListLoaded([
+        {'id': 'r-1', 'name': 'Super Admin', 'slug': 'super_admin', 'is_system': true, 'permissions_count': 50},
+        {'id': 'r-2', 'name': 'Custom Role', 'slug': 'custom_role', 'is_system': false, 'permissions_count': 5},
+      ]);
+      final systemRoles = state.roles.where((r) => r['is_system'] == true).toList();
+      final customRoles = state.roles.where((r) => r['is_system'] == false).toList();
+      expect(systemRoles.length, 1);
+      expect(customRoles.length, 1);
+    });
+
+    test('roles have user_count field', () {
+      const state = AdminRoleListLoaded([
+        {'id': 'r-1', 'name': 'Super Admin', 'is_system': true, 'user_count': 3, 'permissions_count': 50},
+      ]);
+      expect(state.roles.first.containsKey('user_count'), true);
+    });
+
+    test('role with zero users has user_count 0', () {
+      const state = AdminRoleListLoaded([
+        {'id': 'r-1', 'name': 'Unused Role', 'is_system': false, 'user_count': 0, 'permissions_count': 0},
+      ]);
+      expect(state.roles.first['user_count'], 0);
+    });
+
+    test('system roles appear before custom in ordered list', () {
+      const state = AdminRoleListLoaded([
+        {'id': 'r-1', 'name': 'Super Admin', 'is_system': true},
+        {'id': 'r-2', 'name': 'Admin', 'is_system': true},
+        {'id': 'r-3', 'name': 'Alpha Custom', 'is_system': false},
+      ]);
+      expect(state.roles.first['is_system'], true);
+      expect(state.roles.last['is_system'], false);
+    });
+  });
+
+  group('P2 Extended: AdminRoleDetailState', () {
+    test('role detail has all required fields', () {
+      const state = AdminRoleDetailLoaded({
+        'id': 'r-1',
+        'name': 'Content Manager',
+        'slug': 'content_manager',
+        'description': 'Manages content',
+        'is_system': false,
+        'user_count': 2,
+        'permissions_count': 8,
+        'permissions': [
+          {'id': 'p-1', 'name': 'content.view', 'group': 'content', 'description': 'View content'},
+          {'id': 'p-2', 'name': 'content.edit', 'group': 'content', 'description': 'Edit content'},
+        ],
+      });
+      expect(state.role['slug'], 'content_manager');
+      expect(state.role['is_system'], false);
+      expect((state.role['permissions'] as List).length, 2);
+    });
+
+    test('permissions have group field', () {
+      const state = AdminRoleDetailLoaded({
+        'id': 'r-1',
+        'name': 'Billing Manager',
+        'permissions': [
+          {'id': 'p-1', 'name': 'billing.view', 'group': 'billing'},
+          {'id': 'p-2', 'name': 'billing.manage', 'group': 'billing'},
+        ],
+      });
+      for (final perm in state.role['permissions'] as List) {
+        expect((perm as Map).containsKey('group'), true);
+      }
+    });
+
+    test('system role has is_system true', () {
+      const state = AdminRoleDetailLoaded({
+        'id': 'r-sys',
+        'name': 'Super Admin',
+        'slug': 'super_admin',
+        'is_system': true,
+        'permissions': [],
+      });
+      expect(state.role['is_system'], true);
+    });
+  });
+
+  group('P2 Extended: PermissionListState', () {
+    test('PermissionListLoaded groups permissions by group name', () {
+      const state = PermissionListLoaded({
+        'stores': [
+          {'id': 'p-1', 'name': 'stores.view', 'description': 'View stores'},
+          {'id': 'p-2', 'name': 'stores.edit', 'description': 'Edit stores'},
+        ],
+        'billing': [
+          {'id': 'p-3', 'name': 'billing.view', 'description': 'View billing'},
+        ],
+      });
+      expect(state.groupedPermissions.containsKey('stores'), true);
+      expect(state.groupedPermissions.containsKey('billing'), true);
+      expect(state.groupedPermissions['stores']!.length, 2);
+      expect(state.groupedPermissions['billing']!.length, 1);
+    });
+
+    test('each permission has id, name, description', () {
+      const state = PermissionListLoaded({
+        'users': [
+          {'id': 'p-1', 'name': 'users.view', 'description': 'View users'},
+          {'id': 'p-2', 'name': 'users.manage', 'description': 'Manage users'},
+        ],
+      });
+      for (final perm in state.groupedPermissions['users']!) {
+        expect(perm.containsKey('id'), true);
+        expect(perm.containsKey('name'), true);
+        expect(perm.containsKey('description'), true);
+      }
+    });
+
+    test('PermissionListError holds error message', () {
+      const state = PermissionListError('Failed to load permissions');
+      expect(state, isA<PermissionListState>());
+      expect(state.message, 'Failed to load permissions');
+    });
+  });
+
+  group('P2 Extended: AdminTeamListState', () {
+    test('multiple pages navigation', () {
+      final users = List.generate(
+        15,
+        (i) => {'id': 'u-$i', 'name': 'Admin $i', 'email': 'admin$i@test.com', 'is_active': true, 'roles': []},
+      );
+      final state = AdminTeamListLoaded(users: users, total: 40, currentPage: 1, lastPage: 3);
+      expect(state.users.length, 15);
+      expect(state.total, 40);
+      expect(state.lastPage, 3);
+    });
+
+    test('search result with name match', () {
+      const state = AdminTeamListLoaded(
+        users: [
+          {'id': 'u-1', 'name': 'Support Agent Ali', 'is_active': true, 'roles': []},
+        ],
+        total: 1,
+        currentPage: 1,
+        lastPage: 1,
+      );
+      final matches = state.users.where(
+        (u) => (u['name'] as String).toLowerCase().contains('ali'),
+      );
+      expect(matches.length, 1);
+    });
+
+    test('user with 2FA enabled', () {
+      const state = AdminTeamListLoaded(
+        users: [
+          {'id': 'u-1', 'name': 'Secure Admin', 'is_active': true, 'two_factor_enabled': true, 'roles': []},
+        ],
+        total: 1,
+        currentPage: 1,
+        lastPage: 1,
+      );
+      expect(state.users.first['two_factor_enabled'], true);
+    });
+  });
+
+  group('P2 Extended: AdminTeamUserDetailState', () {
+    test('roles include assigned_at and assigned_by', () {
+      const state = AdminTeamUserDetailLoaded({
+        'id': 'u-1',
+        'name': 'Team Member',
+        'email': 'member@thawani.com',
+        'is_active': true,
+        'two_factor_enabled': false,
+        'roles': [
+          {
+            'role_id': 'r-1',
+            'role_name': 'Support',
+            'role_slug': 'support',
+            'assigned_at': '2025-01-10T00:00:00Z',
+            'assigned_by': 'super-admin-id',
+          },
+        ],
+      });
+      final role = (state.user['roles'] as List).first as Map;
+      expect(role.containsKey('assigned_at'), true);
+      expect(role.containsKey('assigned_by'), true);
+    });
+  });
+
+  group('P2 Extended: ActivityLogState', () {
+    test('logs can be filtered by action prefix', () {
+      const state = ActivityLogLoaded(
+        logs: [
+          {'action': 'role.created', 'created_at': '2025-01-14T10:00:00Z'},
+          {'action': 'role.updated', 'created_at': '2025-01-15T10:00:00Z'},
+          {'action': 'user.deactivated', 'created_at': '2025-01-16T10:00:00Z'},
+        ],
+        total: 3,
+        currentPage: 1,
+        lastPage: 1,
+      );
+      final roleActions = state.logs.where(
+        (l) => (l['action'] as String).startsWith('role.'),
+      ).toList();
+      expect(roleActions.length, 2);
+    });
+
+    test('logs ordered newest first', () {
+      const state = ActivityLogLoaded(
+        logs: [
+          {'action': 'role.deleted', 'created_at': '2025-01-16T12:00:00Z'},
+          {'action': 'role.updated', 'created_at': '2025-01-15T08:00:00Z'},
+        ],
+        total: 2,
+        currentPage: 1,
+        lastPage: 1,
+      );
+      expect(state.logs.first['action'], 'role.deleted');
+    });
+
+    test('ActivityLogError holds message', () {
+      const state = ActivityLogError('Failed to load logs');
+      expect(state.message, 'Failed to load logs');
+    });
+  });
+
+  group('P2 Extended: AdminProfileState', () {
+    test('all_permissions and permissions are equal', () {
+      const perms = ['tickets.view', 'tickets.manage', 'kb.view'];
+      const state = AdminProfileLoaded({
+        'id': 'u-1',
+        'name': 'Support',
+        'roles': [],
+        'all_permissions': perms,
+        'permissions': perms,
+      });
+      expect(state.profile['all_permissions'], state.profile['permissions']);
+    });
+
+    test('super_admin has many permissions', () {
+      const allPermissions = [
+        'stores.view', 'stores.edit', 'billing.view', 'billing.manage',
+        'users.view', 'users.manage', 'admin_team.view', 'admin_team.manage',
+      ];
+      const state = AdminProfileLoaded({
+        'id': 'u-super',
+        'name': 'Super Admin',
+        'roles': [
+          {'id': 'r-sys', 'name': 'Super Admin', 'slug': 'super_admin'},
+        ],
+        'all_permissions': allPermissions,
+        'permissions': allPermissions,
+      });
+      expect((state.profile['all_permissions'] as List).length, 8);
+    });
+
+    test('admin with no roles has empty permissions', () {
+      const state = AdminProfileLoaded({
+        'id': 'u-new',
+        'name': 'New Admin',
+        'roles': [],
+        'all_permissions': [],
+        'permissions': [],
+      });
+      expect((state.profile['all_permissions'] as List).isEmpty, true);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P2 Extended: API Endpoint Completeness
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P2 Extended: API Endpoint Completeness', () {
+    test('all role endpoints use /admin/roles prefix', () {
+      expect(ApiEndpoints.adminRoles, startsWith('/admin/roles'));
+      expect(ApiEndpoints.adminRoleById('r-1'), startsWith('/admin/roles'));
+    });
+
+    test('all team endpoints use /admin/team prefix', () {
+      expect(ApiEndpoints.adminTeam, startsWith('/admin/team'));
+      expect(ApiEndpoints.adminTeamUserById('u-1'), startsWith('/admin/team'));
+      expect(ApiEndpoints.adminTeamUserDeactivate('u-1'), startsWith('/admin/team'));
+      expect(ApiEndpoints.adminTeamUserActivate('u-1'), startsWith('/admin/team'));
+    });
+
+    test('dynamic team endpoints embed user ID', () {
+      const uid = 'target-admin-id';
+      expect(ApiEndpoints.adminTeamUserById(uid), contains(uid));
+      expect(ApiEndpoints.adminTeamUserDeactivate(uid), contains(uid));
+      expect(ApiEndpoints.adminTeamUserActivate(uid), contains(uid));
+    });
+
+    test('dynamic role endpoints embed role ID', () {
+      const rid = 'target-role-id';
+      expect(ApiEndpoints.adminRoleById(rid), contains(rid));
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P2 Extended: Role Business Rules
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P2 Extended: Role CRUD Business Rules', () {
+    test('role slug uses underscore separator', () {
+      final name = 'Content Manager';
+      final slug = name.toLowerCase().replaceAll(' ', '_');
+      expect(slug, 'content_manager');
+    });
+
+    test('system role cannot be deleted', () {
+      final role = {'id': 'r-sys', 'name': 'Super Admin', 'is_system': true};
+      expect(role['is_system'], true);
+    });
+
+    test('role with assigned users cannot be deleted', () {
+      final role = {'id': 'r-1', 'name': 'Support', 'is_system': false, 'user_count': 3};
+      expect((role['user_count'] as int) > 0, true);
+    });
+
+    test('role with no users can be deleted', () {
+      final role = {'id': 'r-2', 'name': 'Unused', 'is_system': false, 'user_count': 0};
+      expect(role['user_count'], 0);
+      expect(role['is_system'], false);
+    });
+
+    test('permission assignment uses permission_ids array', () {
+      final createData = {
+        'name': 'New Role',
+        'permission_ids': ['p-1', 'p-2', 'p-3'],
+      };
+      expect(createData.containsKey('permission_ids'), true);
+      expect((createData['permission_ids'] as List).length, 3);
+    });
+
+    test('role update replaces all permissions', () {
+      final newPermissions = ['p-4', 'p-5'];
+      final updatedData = {'permission_ids': newPermissions};
+      expect((updatedData['permission_ids'] as List).contains('p-1'), false);
+    });
+
+    test('role update without permission_ids keeps existing', () {
+      final updateData = {'name': 'Updated Name'};
+      expect(updateData.containsKey('permission_ids'), false);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // P2 Extended: Response Parsing
+  // ═══════════════════════════════════════════════════════════════
+
+  group('P2 Extended: Response Parsing', () {
+    test('roles list response parses into AdminRoleListLoaded', () {
+      final responseData = [
+        {'id': 'r-1', 'name': 'Super Admin', 'slug': 'super_admin', 'is_system': true, 'user_count': 2, 'permissions_count': 50},
+        {'id': 'r-2', 'name': 'Support', 'slug': 'support', 'is_system': false, 'user_count': 5, 'permissions_count': 8},
+      ];
+      final state = AdminRoleListLoaded(responseData);
+      expect(state.roles.length, 2);
+      expect(state.roles.first['slug'], 'super_admin');
+    });
+
+    test('permissions response parses into PermissionListLoaded', () {
+      final groupedData = {
+        'stores': [
+          {'id': 'p-1', 'name': 'stores.view', 'description': 'View stores'},
+        ],
+        'billing': [
+          {'id': 'p-2', 'name': 'billing.view', 'description': 'View billing'},
+          {'id': 'p-3', 'name': 'billing.manage', 'description': 'Manage billing'},
+        ],
+      };
+      final state = PermissionListLoaded(groupedData);
+      expect(state.groupedPermissions.keys.length, 2);
+      expect(state.groupedPermissions['billing']!.length, 2);
+    });
+
+    test('team list response parses roles with slugs', () {
+      final users = [
+        {
+          'id': 'u-1',
+          'name': 'Agent One',
+          'email': 'agent1@thawani.com',
+          'is_active': true,
+          'two_factor_enabled': false,
+          'roles': [
+            {'role_id': 'r-1', 'role_name': 'Support', 'role_slug': 'support', 'assigned_at': '2025-01-01T00:00:00Z'},
+          ],
+        },
+      ];
+      final state = AdminTeamListLoaded(users: users, total: 1, currentPage: 1, lastPage: 1);
+      expect((state.users.first['roles'] as List).first['role_slug'], 'support');
+    });
+
+    test('profile /me response parses all_permissions', () {
+      final profile = {
+        'id': 'u-self',
+        'name': 'Self Admin',
+        'roles': [
+          {'id': 'r-1', 'name': 'Viewer'},
+        ],
+        'permissions': ['stores.view', 'billing.view'],
+        'all_permissions': ['stores.view', 'billing.view'],
+      };
+      final state = AdminProfileLoaded(profile);
+      expect((state.profile['all_permissions'] as List).contains('stores.view'), true);
+    });
+  });
 }

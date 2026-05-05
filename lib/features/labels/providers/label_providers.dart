@@ -16,7 +16,7 @@ class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
   Future<void> load({String? search, String? type}) async {
     state = const LabelTemplatesLoading();
     try {
-      final templates = await _repo.listTemplates();
+      final templates = await _repo.listTemplates(search: search, type: type);
       state = LabelTemplatesLoaded(templates: templates);
     } on DioException catch (e) {
       state = LabelTemplatesError(message: _extractError(e));
@@ -55,6 +55,9 @@ class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
       return true;
     } on DioException catch (e) {
       state = LabelTemplatesError(message: _extractError(e));
+      return false;
+    } catch (e) {
+      state = LabelTemplatesError(message: e.toString());
       return false;
     }
   }
@@ -125,3 +128,60 @@ String _extractError(DioException e) {
   }
   return e.message ?? 'Unknown error';
 }
+
+// ─── Label History Provider ──────────────────────────────────────
+
+final labelHistoryProvider = StateNotifierProvider<LabelHistoryNotifier, LabelHistoryState>((ref) {
+  return LabelHistoryNotifier(ref.watch(labelRepositoryProvider));
+});
+
+class LabelHistoryNotifier extends StateNotifier<LabelHistoryState> {
+  LabelHistoryNotifier(this._repo) : super(const LabelHistoryInitial());
+  final LabelRepository _repo;
+
+  Future<void> load({
+    DateTime? from,
+    DateTime? to,
+    String? templateId,
+    int? perPage,
+  }) async {
+    state = const LabelHistoryLoading();
+    try {
+      final history = await _repo.getPrintHistory(
+        from: from,
+        to: to,
+        templateId: templateId,
+        perPage: perPage,
+      );
+      state = LabelHistoryLoaded(history: history);
+    } on DioException catch (e) {
+      state = LabelHistoryError(message: _extractError(e));
+    } catch (e) {
+      state = LabelHistoryError(message: e.toString());
+    }
+  }
+}
+
+// ─── Label Print Stats Provider ──────────────────────────────────
+
+final labelPrintStatsProvider = StateNotifierProvider<LabelPrintStatsNotifier, LabelPrintStatsState>((ref) {
+  return LabelPrintStatsNotifier(ref.watch(labelRepositoryProvider));
+});
+
+class LabelPrintStatsNotifier extends StateNotifier<LabelPrintStatsState> {
+  LabelPrintStatsNotifier(this._repo) : super(const LabelPrintStatsInitial());
+  final LabelRepository _repo;
+
+  Future<void> load() async {
+    state = const LabelPrintStatsLoading();
+    try {
+      final stats = await _repo.getPrintHistoryStats();
+      state = LabelPrintStatsLoaded(stats: stats);
+    } on DioException catch (e) {
+      state = LabelPrintStatsError(message: _extractError(e));
+    } catch (e) {
+      state = LabelPrintStatsError(message: e.toString());
+    }
+  }
+}
+

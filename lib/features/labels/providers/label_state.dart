@@ -1,3 +1,5 @@
+import 'package:wameedpos/features/labels/models/label_print_history.dart';
+import 'package:wameedpos/features/labels/models/label_print_stats.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 
 // ─── Label Templates State ──────────────────────────────────────
@@ -59,5 +61,53 @@ class LabelDetailSaved extends LabelDetailState {
 
 class LabelDetailError extends LabelDetailState {
   const LabelDetailError({required this.message});
+  final String message;
+}
+
+// ─── Label History State ────────────────────────────────────────
+
+sealed class LabelHistoryState {
+  const LabelHistoryState();
+}
+
+class LabelHistoryInitial extends LabelHistoryState {
+  const LabelHistoryInitial();
+}
+
+class LabelHistoryLoading extends LabelHistoryState {
+  const LabelHistoryLoading();
+}
+
+class LabelHistoryLoaded extends LabelHistoryState {
+  const LabelHistoryLoaded({required this.history});
+  final List<LabelPrintHistory> history;
+}
+
+class LabelHistoryError extends LabelHistoryState {
+  const LabelHistoryError({required this.message});
+  final String message;
+}
+
+// ─── Label Print Stats State ────────────────────────────────────
+
+sealed class LabelPrintStatsState {
+  const LabelPrintStatsState();
+}
+
+class LabelPrintStatsInitial extends LabelPrintStatsState {
+  const LabelPrintStatsInitial();
+}
+
+class LabelPrintStatsLoading extends LabelPrintStatsState {
+  const LabelPrintStatsLoading();
+}
+
+class LabelPrintStatsLoaded extends LabelPrintStatsState {
+  const LabelPrintStatsLoaded({required this.stats});
+  final LabelPrintStats stats;
+}
+
+class LabelPrintStatsError extends LabelPrintStatsState {
+  const LabelPrintStatsError({required this.message});
   final String message;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wameedpos/features/labels/models/label_print_history.dart';
+import 'package:wameedpos/features/labels/models/label_print_stats.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 
 void main() {
@@ -126,6 +127,9 @@ void main() {
         'product_count': 5,
         'total_labels': 10,
         'printer_name': 'Zebra GK420d',
+        'printer_language': 'zpl',
+        'job_pages': 2,
+        'duration_ms': 1800,
         'printed_at': '2024-01-15T10:30:00+00:00',
       };
 
@@ -139,7 +143,28 @@ void main() {
       expect(history.productCount, 5);
       expect(history.totalLabels, 10);
       expect(history.printerName, 'Zebra GK420d');
+      expect(history.printerLanguage, 'zpl');
+      expect(history.jobPages, 2);
+      expect(history.durationMs, 1800);
       expect(history.printedAt, isNotNull);
+    });
+
+    test('fromJson handles null printer_language, job_pages, duration_ms', () {
+      final json = {
+        'id': 'hist-3',
+        'store_id': 'store-1',
+        'printed_by': 'user-1',
+        'product_count': 1,
+        'total_labels': 1,
+        'printer_language': null,
+        'job_pages': null,
+        'duration_ms': null,
+      };
+
+      final history = LabelPrintHistory.fromJson(json);
+      expect(history.printerLanguage, isNull);
+      expect(history.jobPages, isNull);
+      expect(history.durationMs, isNull);
     });
 
     test('fromJson handles null templateId and templateName', () {
@@ -171,19 +196,34 @@ void main() {
         printedByName: 'Alice Smith',
         productCount: 5,
         totalLabels: 10,
+        printerLanguage: 'tspl',
+        jobPages: 3,
+        durationMs: 2500,
       );
 
       final json = history.toJson();
       expect(json['template_name'], 'Standard Label');
       expect(json['printed_by_name'], 'Alice Smith');
+      expect(json['printer_language'], 'tspl');
+      expect(json['job_pages'], 3);
+      expect(json['duration_ms'], 2500);
     });
 
     test('copyWith preserves all new fields', () {
       const base = LabelPrintHistory(id: 'hist-1', storeId: 'store-1', printedBy: 'user-1', productCount: 1, totalLabels: 1);
 
-      final copy = base.copyWith(templateName: 'My Template', printedByName: 'Bob');
+      final copy = base.copyWith(
+        templateName: 'My Template',
+        printedByName: 'Bob',
+        printerLanguage: 'zpl',
+        jobPages: 2,
+        durationMs: 900,
+      );
       expect(copy.templateName, 'My Template');
       expect(copy.printedByName, 'Bob');
+      expect(copy.printerLanguage, 'zpl');
+      expect(copy.jobPages, 2);
+      expect(copy.durationMs, 900);
       expect(copy.id, 'hist-1');
     });
 
@@ -233,6 +273,59 @@ void main() {
       expect(withId.createdByName, 'Creator Name');
       expect(withId.id, t1.id);
       expect(t2.isPreset, true); // verify preset template
+    });
+  });
+
+  // ─── LabelPrintStats ─────────────────────────────────────
+
+  group('LabelPrintStats', () {
+    test('fromJson parses all fields', () {
+      final json = {
+        'jobs_last_30_days': 12,
+        'products_last_30_days': 45,
+        'labels_last_30_days': 90,
+      };
+
+      final stats = LabelPrintStats.fromJson(json);
+      expect(stats.jobsLast30Days, 12);
+      expect(stats.productsLast30Days, 45);
+      expect(stats.labelsLast30Days, 90);
+    });
+
+    test('fromJson handles numeric types (int and double)', () {
+      final json = {
+        'jobs_last_30_days': 5.0,
+        'products_last_30_days': 20.0,
+        'labels_last_30_days': 40.0,
+      };
+
+      final stats = LabelPrintStats.fromJson(json);
+      expect(stats.jobsLast30Days, 5);
+      expect(stats.productsLast30Days, 20);
+      expect(stats.labelsLast30Days, 40);
+    });
+
+    test('empty factory returns zeros', () {
+      final stats = LabelPrintStats.empty();
+      expect(stats.jobsLast30Days, 0);
+      expect(stats.productsLast30Days, 0);
+      expect(stats.labelsLast30Days, 0);
+    });
+
+    test('toJson round-trips correctly', () {
+      const stats = LabelPrintStats(
+        jobsLast30Days: 7,
+        productsLast30Days: 21,
+        labelsLast30Days: 63,
+      );
+
+      final json = stats.toJson();
+      expect(json['jobs_last_30_days'], 7);
+      expect(json['products_last_30_days'], 21);
+      expect(json['labels_last_30_days'], 63);
+
+      final roundTripped = LabelPrintStats.fromJson(json);
+      expect(roundTripped.jobsLast30Days, 7);
     });
   });
 }

@@ -7723,5 +7723,35 @@
   "configMaxFailedAttempts": "ناکام لاگ ان کی زیادہ سے زیادہ کوششیں",
   "configLockoutDuration": "لاک آؤٹ مدت",
   "configBiometricDefault": "بائیومیٹرک بطور ڈیفالٹ فعال",
-  "configRequireReauth": "جاگنے پر دوبارہ تصدیق ضروری ہے"
+  "configRequireReauth": "جاگنے پر دوبارہ تصدیق ضروری ہے",
+
+  "labelPrinterLanguage": "پرنٹر کی زبان",
+  "labelPrinterLanguageZpl": "ZPL (زیبرا)",
+  "labelPrinterLanguageTspl": "TSPL (TSC)",
+  "labelPrinterLanguageEscpos": "ESC/POS",
+  "labelPrinterLanguageImage": "امیج فال بیک",
+  "labelJobPages": "صفحات",
+  "labelDurationMs": "مدت (ملی سیکنڈ)",
+  "labelPrintStats": "پرنٹ اعداد و شمار",
+  "labelJobsLast30Days": "کام (30 دن)",
+  "labelProductsLast30Days": "مصنوعات (30 دن)",
+  "labelLabelsLast30Days": "لیبل پرنٹ (30 دن)",
+  "labelFilterFrom": "تاریخ سے",
+  "labelFilterTo": "تاریخ تک",
+  "labelFilterByTemplate": "ٹیمپلیٹ سے فلٹر",
+  "labelApplyFilter": "فلٹر لگائیں",
+  "labelClearFilter": "فلٹر صاف کریں",
+
+  "hardwareSkuLabel": "SKU: {sku}",
+  "@hardwareSkuLabel": {
+    "placeholders": {
+      "sku": { "type": "String" }
+    }
+  },
+  "labelsExpiryDate": "میعاد: {date}",
+  "@labelsExpiryDate": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  }
 }

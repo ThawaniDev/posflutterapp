@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wameedpos/features/labels/models/label_print_stats.dart';
 import 'package:wameedpos/features/labels/models/label_template.dart';
 import 'package:wameedpos/features/labels/providers/label_state.dart';
 
@@ -149,6 +150,58 @@ void main() {
         LabelDetailError(:final message) => 'error:$message',
       };
       expect(result, 'saving');
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // LabelPrintStatsState Tests
+  // ═══════════════════════════════════════════════════════════════
+
+  group('LabelPrintStatsState', () {
+    test('LabelPrintStatsInitial is default state', () {
+      const state = LabelPrintStatsInitial();
+      expect(state, isA<LabelPrintStatsState>());
+    });
+
+    test('LabelPrintStatsLoading indicates loading', () {
+      const state = LabelPrintStatsLoading();
+      expect(state, isA<LabelPrintStatsState>());
+    });
+
+    test('LabelPrintStatsLoaded holds stats', () {
+      const stats = LabelPrintStats(
+        jobsLast30Days: 5,
+        productsLast30Days: 15,
+        labelsLast30Days: 45,
+      );
+      const state = LabelPrintStatsLoaded(stats: stats);
+      expect(state, isA<LabelPrintStatsState>());
+      expect(state.stats.jobsLast30Days, 5);
+      expect(state.stats.productsLast30Days, 15);
+      expect(state.stats.labelsLast30Days, 45);
+    });
+
+    test('LabelPrintStatsError holds message', () {
+      const state = LabelPrintStatsError(message: 'Network error');
+      expect(state, isA<LabelPrintStatsState>());
+      expect(state.message, 'Network error');
+    });
+
+    test('sealed class switch exhaustive', () {
+      const LabelPrintStatsState state = LabelPrintStatsLoaded(
+        stats: LabelPrintStats(
+          jobsLast30Days: 3,
+          productsLast30Days: 10,
+          labelsLast30Days: 30,
+        ),
+      );
+      final result = switch (state) {
+        LabelPrintStatsInitial() => 'initial',
+        LabelPrintStatsLoading() => 'loading',
+        LabelPrintStatsLoaded(:final stats) => 'loaded:${stats.jobsLast30Days}',
+        LabelPrintStatsError(:final message) => 'error:$message',
+      };
+      expect(result, 'loaded:3');
     });
   });
 }

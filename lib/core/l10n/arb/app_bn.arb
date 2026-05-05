@@ -7724,5 +7724,35 @@
   "configMaxFailedAttempts": "সর্বোচ্চ ব্যর্থ লগইন",
   "configLockoutDuration": "লকআউটের সময়কাল",
   "configBiometricDefault": "বায়োমেট্রিক ডিফল্ট সক্রিয়",
-  "configRequireReauth": "পুনরায় প্রমাণীকরণ প্রয়োজন"
+  "configRequireReauth": "পুনরায় প্রমাণীকরণ প্রয়োজন",
+
+  "labelPrinterLanguage": "প্রিন্টার ভাষা",
+  "labelPrinterLanguageZpl": "ZPL (জেব্রা)",
+  "labelPrinterLanguageTspl": "TSPL (TSC)",
+  "labelPrinterLanguageEscpos": "ESC/POS",
+  "labelPrinterLanguageImage": "ইমেজ ফলব্যাক",
+  "labelJobPages": "পৃষ্ঠাসমূহ",
+  "labelDurationMs": "সময়কাল (মিলি সেকেন্ড)",
+  "labelPrintStats": "প্রিন্ট পরিসংখ্যান",
+  "labelJobsLast30Days": "কাজ (৩০ দিন)",
+  "labelProductsLast30Days": "পণ্য (৩০ দিন)",
+  "labelLabelsLast30Days": "লেবেল মুদ্রিত (৩০ দিন)",
+  "labelFilterFrom": "তারিখ থেকে",
+  "labelFilterTo": "তারিখ পর্যন্ত",
+  "labelFilterByTemplate": "টেমপ্লেট অনুযায়ী ফিল্টার",
+  "labelApplyFilter": "ফিল্টার প্রয়োগ করুন",
+  "labelClearFilter": "ফিল্টার পরিষ্কার করুন",
+
+  "hardwareSkuLabel": "SKU: {sku}",
+  "@hardwareSkuLabel": {
+    "placeholders": {
+      "sku": { "type": "String" }
+    }
+  },
+  "labelsExpiryDate": "মেয়াদ: {date}",
+  "@labelsExpiryDate": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  }
 }

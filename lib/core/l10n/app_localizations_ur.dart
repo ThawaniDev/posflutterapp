@@ -4953,19 +4953,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get softposActive => 'سافٹ پی او ایس فعال';
 
   @override
-  String get softposTapCard => 'ادائیگی کے لیے اپنا کارڈ ڈیوائس کے قریب کریں';
-
-  @override
-  String get softposInitializing => 'SoftPOS شروع ہو رہا ہے…';
-
-  @override
-  String get softposNotConfigured =>
-      'SoftPOS ترتیب نہیں دیا گیا۔ ٹرمینل سیٹنگز میں ٹوکن درج کریں۔';
-
-  @override
-  String get softposPaymentFailed => 'SoftPOS کارڈ ادائیگی ناکام۔';
-
-  @override
   String get acquirerHala => 'حلا';
 
   @override
@@ -7873,12 +7860,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get termFormNearpayMidHint => 'تاجر آئی ڈی سے نیئرپے';
 
   @override
-  String get termFormEdfapayTokenLabel => 'EdfaPay ٹرمینل ٹوکن';
-
-  @override
-  String get termFormEdfapayTokenHint => 'اپنا EdfaPay ٹرمینل ٹوکن درج کریں';
-
-  @override
   String get termFormAcquirerSection => 'حاصل کنندہ تفصیلات';
 
   @override
@@ -7925,32 +7906,6 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get termFormSettlementIbanHint => 'e.g. SA0380000000608010167519';
-
-  @override
-  String get termFormBillingSection => 'فیس شیڈول';
-
-  @override
-  String get termFormBillingSectionSub => 'فی ٹرمینل SoftPOS بلنگ ریٹ';
-
-  @override
-  String get termFormBillingMadaRate => 'مدیٰ ریٹ';
-
-  @override
-  String termFormBillingMadaRateValue(String rate) {
-    return '$rate% فی ٹرانزیکشن';
-  }
-
-  @override
-  String get termFormBillingCardFee => 'ویزا / ماسٹر / امریکن ایکسپریس فیس';
-
-  @override
-  String termFormBillingCardFeeValue(String fee) {
-    return '$fee ریال فی ٹرانزیکشن';
-  }
-
-  @override
-  String get termFormBillingReadOnly =>
-      'ریٹس پلیٹ فارم کی جانب سے مقرر ہیں۔ تبدیلی کے لیے سپورٹ سے رابطہ کریں۔';
 
   @override
   String get termFormNotesSection => 'نوٹس';
@@ -15360,37 +15315,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get adminSuspendStore => 'اسٹور معطل کریں';
 
   @override
-  String get adminSuspendReason => 'معطلی کی وجہ';
-
-  @override
-  String get adminSuspendReasonHint => 'معطلی کی وجہ درج کریں (اختیاری)';
-
-  @override
-  String get adminSuspendedAt => 'معطلی کی تاریخ';
-
-  @override
-  String get adminOwnerName => 'مالک کا نام';
-
-  @override
-  String get adminOwnerEmail => 'مالک کی ایمیل';
-
-  @override
-  String get adminOwnerPhone => 'مالک کا فون';
-
-  @override
-  String get adminTempPassword => 'عارضی پاس ورڈ';
-
-  @override
-  String get adminTempPasswordCopy =>
-      'عارضی پاس ورڈ کاپی کریں اور اسٹور مالک کے ساتھ شیئر کریں';
-
-  @override
-  String get adminCancellationReason => 'منسوخی کی وجہ';
-
-  @override
-  String get adminCancellationReasonHint => 'منسوخی کی وجہ منتخب کریں';
-
-  @override
   String get adminSuspensionReasonHint => 'معطلی کی وجہ درج کریں';
 
   @override
@@ -15959,6 +15883,37 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get subProceedToPayment => 'ادائیگی پر جائیں';
+
+  @override
+  String get subDiscountCode => 'ڈسکاؤنٹ کوڈ';
+
+  @override
+  String get subEnterDiscountCode => 'ڈسکاؤنٹ کوڈ درج کریں';
+
+  @override
+  String get subApplyDiscount => 'لاگو کریں';
+
+  @override
+  String get subValidatingDiscount => 'تصدیق ہو رہی ہے...';
+
+  @override
+  String get subDiscountApplied => 'ڈسکاؤنٹ لاگو ہوا';
+
+  @override
+  String get subDiscountInvalid => 'غلط یا میعاد ختم ڈسکاؤنٹ کوڈ۔';
+
+  @override
+  String get subRemoveDiscount => 'ہٹائیں';
+
+  @override
+  String subDiscountSavings(String amount) {
+    return 'آپ نے $amount بچائے';
+  }
+
+  @override
+  String subDiscountOff(String value) {
+    return '$value چھوٹ';
+  }
 
   @override
   String subPageOfLast(String current, String last) {
@@ -19681,238 +19636,52 @@ class AppLocalizationsUr extends AppLocalizations {
   String get configRequireReauth => 'جاگنے پر دوبارہ تصدیق ضروری ہے';
 
   @override
-  String get posTipNone => 'کوئی ٹپ نہیں';
+  String get labelPrinterLanguage => 'پرنٹر کی زبان';
 
   @override
-  String get posDiscountRequiresPin => 'اس رعایت کے لیے مینیجر PIN درکار ہے';
+  String get labelPrinterLanguageZpl => 'ZPL (زیبرا)';
 
   @override
-  String get posTaxExemptRequiresPin => 'ٹیکس ہٹانے کے لیے مینیجر PIN درکار ہے';
+  String get labelPrinterLanguageTspl => 'TSPL (TSC)';
 
   @override
-  String get posVoidRequiresPin =>
-      'لین دین منسوخ کرنے کے لیے مینیجر PIN درکار ہے';
+  String get labelPrinterLanguageEscpos => 'ESC/POS';
 
   @override
-  String get posInvalidPinToken =>
-      'مینیجر منظوری ختم ہو گئی۔ PIN دوبارہ درج کریں۔';
+  String get labelPrinterLanguageImage => 'امیج فال بیک';
 
   @override
-  String get cfdLaunch => 'کسٹمر ڈسپلے کھولیں';
+  String get labelJobPages => 'صفحات';
 
   @override
-  String get cfdWelcome => 'خوش آمدید';
+  String get labelDurationMs => 'مدت (ملی سیکنڈ)';
 
   @override
-  String get cfdShowingCart => 'آپ کا آرڈر';
+  String get labelPrintStats => 'پرنٹ اعداد و شمار';
 
   @override
-  String get cfdChangeDue => 'باقی رقم';
+  String get labelJobsLast30Days => 'کام (30 دن)';
 
   @override
-  String get modifierPickerTitle => 'آئٹم اپنی مرضی کے مطابق بنائیں';
+  String get labelProductsLast30Days => 'مصنوعات (30 دن)';
 
   @override
-  String get modifierPickerRequired => 'لازمی';
+  String get labelLabelsLast30Days => 'لیبل پرنٹ (30 دن)';
 
   @override
-  String get modifierPickerOptional => 'اختیاری';
+  String get labelFilterFrom => 'تاریخ سے';
 
   @override
-  String get modifierAddSelected => 'آرڈر میں شامل کریں';
+  String get labelFilterTo => 'تاریخ تک';
 
   @override
-  String get posShiftCashInLine => 'کیش ان';
+  String get labelFilterByTemplate => 'ٹیمپلیٹ سے فلٹر';
 
   @override
-  String get posShiftCashOutLine => 'کیش آؤٹ';
+  String get labelApplyFilter => 'فلٹر لگائیں';
 
   @override
-  String get posShiftXReport => 'X رپورٹ';
-
-  @override
-  String get posShiftZReport => 'Z رپورٹ';
-
-  @override
-  String get posShiftXReportFull => 'X رپورٹ (شفٹ کے دوران)';
-
-  @override
-  String get posShiftZReportFull => 'Z رپورٹ (شفٹ کے اختتام پر)';
-
-  @override
-  String get posShiftAlreadyOpen => 'شفٹ پہلے سے کھلی ہے';
-
-  @override
-  String get posShiftAlreadyOpenDesc =>
-      'بیچنا جاری رکھنے کے لیے موجودہ شفٹ کو دوبارہ شروع کریں۔';
-
-  @override
-  String get posShiftResume => 'شفٹ دوبارہ شروع کریں';
-
-  @override
-  String get posReprintReceipt => 'رسید دوبارہ پرنٹ کریں';
-
-  @override
-  String get posReprintReceiptNumber => 'رسید نمبر';
-
-  @override
-  String get posPrintSentToPrinter => 'پرنٹر کو بھیج دیا گیا';
-
-  @override
-  String get commonFind => 'تلاش کریں';
-
-  @override
-  String get commonPrint => 'پرنٹ کریں';
-
-  @override
-  String receiptVatNumber(String value) {
-    return 'VAT #: $value';
-  }
-
-  @override
-  String get posItemDiscount => 'آئٹم رعایت';
-
-  @override
-  String get posItemNote => 'آئٹم نوٹ';
-
-  @override
-  String posCurrentDiscount(String amount) {
-    return 'موجودہ: $amount';
-  }
-
-  @override
-  String get posReturnRecentSales => 'حالیہ سیلز';
-
-  @override
-  String get ok => 'OK';
-
-  @override
-  String get update => 'Update';
-
-  @override
-  String get refresh => 'Refresh';
-
-  @override
-  String get getStarted => 'Get started';
-
-  @override
-  String get notSet => 'Not set';
-
-  @override
-  String get copiedToClipboard => 'Copied to clipboard';
-
-  @override
-  String get currentPlan => 'Current plan';
-
-  @override
-  String get selectPlan => 'Select plan';
-
-  @override
-  String get commonLoadMore => 'Load more';
-
-  @override
-  String commonItemsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count items',
-      one: '1 item',
-      zero: 'No items',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String paginationPageOf(int current, int total) {
-    return 'Page $current of $total';
-  }
-
-  @override
-  String get accountingProviderAccountId => 'Provider account ID';
-
-  @override
-  String get accountingProviderAccountName => 'Provider account name';
-
-  @override
-  String accountingConnectProvider(String provider) {
-    return 'Connect $provider';
-  }
-
-  @override
-  String get accountingAccessToken => 'Access token';
-
-  @override
-  String get accountingRefreshToken => 'Refresh token';
-
-  @override
-  String get accountingTokenExpiry => 'Token expiry';
-
-  @override
-  String get accountingCompanyNameOptional => 'Company name (optional)';
-
-  @override
-  String accountingEntriesCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count entries',
-      one: '1 entry',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get accountingExportStartDate => 'Start date';
-
-  @override
-  String get accountingExportEndDate => 'End date';
-
-  @override
-  String get changelogNoNotes => 'No release notes';
-
-  @override
-  String get autoUpdateNowRequired => 'Update required';
-
-  @override
-  String get gamificationNameEn => 'Name (English)';
-
-  @override
-  String get gamificationNameAr => 'Name (Arabic)';
-
-  @override
-  String get gamificationTriggerType => 'Trigger type';
-
-  @override
-  String get gamificationThreshold => 'Threshold';
-
-  @override
-  String catalogImportRowError(int row, String message) {
-    return 'Row $row: $message';
-  }
-
-  @override
-  String get catalogEditProduct => 'Edit product';
-
-  @override
-  String get catalogSaving => 'Saving…';
-
-  @override
-  String get catalogUpdateProduct => 'Update product';
-
-  @override
-  String get catalogCreateProduct => 'Create product';
-
-  @override
-  String get catalogListView => 'List view';
-
-  @override
-  String get catalogGridView => 'Grid view';
-
-  @override
-  String get hardwareWeighable => 'Weighable';
-
-  @override
-  String get hardwareCombo => 'Combo';
+  String get labelClearFilter => 'فلٹر صاف کریں';
 
   @override
   String hardwareSkuLabel(String sku) {
@@ -19920,309 +19689,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get hardwareEditDevice => 'Edit device';
-
-  @override
-  String get productTaxRate => 'Tax rate';
-
-  @override
-  String get productMinQty => 'Minimum quantity';
-
-  @override
-  String get productMaxQty => 'Maximum quantity';
-
-  @override
-  String get productAgeRestricted => 'Age restricted';
-
-  @override
-  String posProductAddedWeighed(String name, String qty) {
-    return 'Added $name ($qty kg)';
-  }
-
-  @override
-  String get floristPaused => 'Paused';
-
-  @override
-  String get labelCoordX => 'X coordinate';
-
-  @override
-  String get labelCoordY => 'Y coordinate';
-
-  @override
   String labelsExpiryDate(String date) {
-    return 'EXP: $date';
+    return 'میعاد: $date';
   }
-
-  @override
-  String cashMgmtFloatLabel(String value) {
-    return 'Opening float: $value';
-  }
-
-  @override
-  String get paymentTabby => 'Tabby';
-
-  @override
-  String get paymentTamara => 'Tamara';
-
-  @override
-  String get paymentMispay => 'MisPay';
-
-  @override
-  String get paymentMadfu => 'Madfu';
-
-  @override
-  String get paymentOther => 'Other';
-
-  @override
-  String get pcAccentColor => 'Accent color';
-
-  @override
-  String pcButtonsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count buttons',
-      one: '1 button',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get pcCartMode => 'Cart mode';
-
-  @override
-  String get pcFontScale => 'Font scale';
-
-  @override
-  String get pcGridColumns => 'Grid columns';
-
-  @override
-  String get pcHandedness => 'Handedness';
-
-  @override
-  String get pcLayoutDirection => 'Layout direction';
-
-  @override
-  String get pcPrimaryColor => 'Primary color';
-
-  @override
-  String get pcSecondaryColor => 'Secondary color';
-
-  @override
-  String get pcShowPriceOnGrid => 'Show price on grid';
-
-  @override
-  String get pcShowProductImages => 'Show product images';
-
-  @override
-  String get pcTheme => 'Theme';
-
-  @override
-  String promotionsCouponType(String type) {
-    return 'Type: $type';
-  }
-
-  @override
-  String securityAuditIp(String ip) {
-    return 'IP: $ip';
-  }
-
-  @override
-  String securityAuditUser(String user) {
-    return 'User: $user';
-  }
-
-  @override
-  String settingsVersionPublishedAt(String date) {
-    return 'Published: $date';
-  }
-
-  @override
-  String staffPermissionsLoadError(String message) {
-    return 'Failed to load permissions: $message';
-  }
-
-  @override
-  String get staffTrainingAvgDuration => 'Average duration';
-
-  @override
-  String get staffTrainingDeleteConfirm =>
-      'Are you sure you want to delete this training session?';
-
-  @override
-  String get staffTrainingValidNumber => 'Please enter a valid number';
-
-  @override
-  String get subApplyDiscount => 'لاگو کریں';
-
-  @override
-  String get subDiscountApplied => 'ڈسکاؤنٹ لاگو ہوا';
-
-  @override
-  String get subDiscountCode => 'ڈسکاؤنٹ کوڈ';
-
-  @override
-  String get subDiscountInvalid => 'غلط یا میعاد ختم ڈسکاؤنٹ کوڈ۔';
-
-  @override
-  String subDiscountOff(String value) {
-    return '$value چھوٹ';
-  }
-
-  @override
-  String subDiscountSavings(String amount) {
-    return 'آپ نے $amount بچائے';
-  }
-
-  @override
-  String get subEnterDiscountCode => 'ڈسکاؤنٹ کوڈ درج کریں';
-
-  @override
-  String get subRemoveDiscount => 'ہٹائیں';
-
-  @override
-  String subscriptionUpgradePrompt(String feature) {
-    return 'Upgrade your plan to use $feature';
-  }
-
-  @override
-  String get subValidatingDiscount => 'تصدیق ہو رہی ہے...';
-
-  @override
-  String aiRunFeature(String feature) {
-    return 'Run $feature';
-  }
-
-  @override
-  String thawaniHttpStatus(String code) {
-    return 'HTTP $code';
-  }
-
-  @override
-  String get thawaniReferenceCol => 'Reference';
-
-  @override
-  String transactionSerialNumber(String serial) {
-    return 'Serial: $serial';
-  }
-
-  @override
-  String get zatcaActivationCodeBanner =>
-      'Enter your ZATCA activation code to enroll this device';
-
-  @override
-  String zatcaCertificateId(String value) {
-    return 'Certificate ID: $value';
-  }
-
-  @override
-  String zatcaDeviceSerialLabel(String value) {
-    return 'Device serial: $value';
-  }
-
-  @override
-  String zatcaDeviceStatusLabel(String value) {
-    return 'Device status: $value';
-  }
-
-  @override
-  String zatcaDeviceUuidLabel(String value) {
-    return 'Device UUID: $value';
-  }
-
-  @override
-  String get zatcaEnrolling => 'Enrolling…';
-
-  @override
-  String get zatcaEnrollNow => 'Enroll now';
-
-  @override
-  String get zatcaHardwareSerial => 'Hardware serial';
-
-  @override
-  String zatcaInvoicesCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count invoices',
-      one: '1 invoice',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String zatcaLastErrorMessage(String message) {
-    return 'Last error: $message';
-  }
-
-  @override
-  String zatcaVatAmountLabel(String value) {
-    return 'VAT amount: $value';
-  }
-
-  @override
-  String get pinOverrideTitle => 'PIN اوور رائیڈ ضروری ہے';
-
-  @override
-  String get pinOverrideSubtitle =>
-      'اس عمل کی اجازت کے لیے مینیجر یا مالک کا PIN درج کریں';
-
-  @override
-  String pinOverrideLocked(int minutes) {
-    return 'بہت زیادہ ناکام کوششیں۔ $minutes منٹ بعد دوبارہ کوشش کریں۔';
-  }
-
-  @override
-  String get pinOverrideSuccess => 'عمل کامیابی سے مجاز ہوا';
-
-  @override
-  String get pinOverrideFailed => 'غلط PIN۔ دوبارہ کوشش کریں۔';
-
-  @override
-  String get pinOverrideCannotSelf =>
-      'آپ اپنے محدود عمل کو خود اجازت نہیں دے سکتے';
-
-  @override
-  String pinOverrideRemainingAttempts(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count کوششیں باقی',
-      one: '1 کوشش باقی',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get roleScopeBranch => 'شاخ';
-
-  @override
-  String get roleScopeOrganization => 'تنظیم';
-
-  @override
-  String get commissionTieredMin => 'کم از کم رقم';
-
-  @override
-  String get commissionTieredMax => 'زیادہ سے زیادہ رقم';
-
-  @override
-  String get commissionTierAdd => 'درجہ شامل کریں';
-
-  @override
-  String get shiftBulkCreate => 'شفٹیں بلک بنائیں';
-
-  @override
-  String shiftBulkCreated(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count شفٹیں بنائی گئیں',
-      one: '1 شفٹ بنائی گئی',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get attendanceAutoClosedWarning =>
-      'حاضری کا ریکارڈ شفٹ کے اختتام پر خود بخود بند ہو گیا';
 }

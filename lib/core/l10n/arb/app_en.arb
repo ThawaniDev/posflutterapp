@@ -8387,5 +8387,35 @@
   "configMaxFailedAttempts": "Max Failed Login Attempts",
   "configLockoutDuration": "Lockout Duration",
   "configBiometricDefault": "Biometric Enabled by Default",
-  "configRequireReauth": "Require Re-auth on Wake"
+  "configRequireReauth": "Require Re-auth on Wake",
+
+  "labelPrinterLanguage": "Printer Language",
+  "labelPrinterLanguageZpl": "ZPL (Zebra)",
+  "labelPrinterLanguageTspl": "TSPL (TSC)",
+  "labelPrinterLanguageEscpos": "ESC/POS",
+  "labelPrinterLanguageImage": "Image Fallback",
+  "labelJobPages": "Pages",
+  "labelDurationMs": "Duration (ms)",
+  "labelPrintStats": "Print Statistics",
+  "labelJobsLast30Days": "Jobs (30d)",
+  "labelProductsLast30Days": "Products (30d)",
+  "labelLabelsLast30Days": "Labels Printed (30d)",
+  "labelFilterFrom": "From Date",
+  "labelFilterTo": "To Date",
+  "labelFilterByTemplate": "Filter by Template",
+  "labelApplyFilter": "Apply Filter",
+  "labelClearFilter": "Clear Filter",
+
+  "hardwareSkuLabel": "SKU: {sku}",
+  "@hardwareSkuLabel": {
+    "placeholders": {
+      "sku": { "type": "String" }
+    }
+  },
+  "labelsExpiryDate": "EXP: {date}",
+  "@labelsExpiryDate": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  }
 }

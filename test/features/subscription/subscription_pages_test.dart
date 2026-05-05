@@ -15,12 +15,13 @@ import 'package:wameedpos/features/subscription/pages/subscription_status_page.d
 import 'package:wameedpos/features/subscription/pages/billing_history_page.dart';
 
 /// Helper to wrap widget in MaterialApp + ProviderScope with overrides
-Widget _wrapWithProviders(Widget child, {List<Override> overrides = const []}) {
+Widget _wrapWithProviders(Widget child, {List<Override> overrides = const [], Locale? locale}) {
   return ProviderScope(
     overrides: overrides,
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: locale,
       home: child,
     ),
   );
@@ -113,6 +114,22 @@ final _testSubscription = StoreSubscription(
   billingCycle: BillingCycle.monthly,
   currentPeriodStart: DateTime(2024, 1, 1),
   currentPeriodEnd: DateTime(2024, 2, 1),
+  plan: SubscriptionPlan(
+    id: 'plan-pro',
+    name: 'Professional',
+    nameAr: 'احترافي',
+    slug: 'professional',
+    monthlyPrice: 29.99,
+    annualPrice: 299.99,
+    isActive: true,
+    features: [
+      {'feature_key': 'inventory', 'name': 'Inventory', 'name_ar': 'المخزون', 'is_enabled': true},
+    ],
+    limits: [
+      {'limit_key': 'products', 'limit_value': 100},
+      {'limit_key': 'staff_members', 'limit_value': 5},
+    ],
+  ),
 );
 
 final _testInvoices = [
@@ -231,6 +248,62 @@ void main() {
       await tester.pumpAndSettle();
       // Should display the subscription status
       expect(find.textContaining('Active'), findsWidgets);
+    });
+
+    testWidgets('shows localized plan and features in Arabic locale', (tester) async {
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          const SubscriptionStatusPage(),
+          locale: const Locale('ar'),
+          overrides: [
+            subscriptionProvider.overrideWith(
+              (_) => MockSubscriptionNotifier(SubscriptionLoaded(subscription: _testSubscription)),
+            ),
+            usageProvider.overrideWith(
+              (_) => MockUsageNotifier(
+                const UsageLoaded(
+                  usageItems: [
+                    {'limit_key': 'products', 'current': 12, 'limit': 100, 'percentage': 12},
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('احترافي'), findsWidgets);
+
+      await tester.drag(find.byType(ListView), const Offset(0, -800));
+      await tester.pumpAndSettle();
+
+      expect(find.text('المخزون'), findsOneWidget);
+    });
+
+    testWidgets('shows plan limits even when usage payload is empty', (tester) async {
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          const SubscriptionStatusPage(),
+          overrides: [
+            subscriptionProvider.overrideWith(
+              (_) => MockSubscriptionNotifier(SubscriptionLoaded(subscription: _testSubscription)),
+            ),
+            usageProvider.overrideWith((_) => MockUsageNotifier(const UsageLoaded(usageItems: []))),
+          ],
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      await tester.drag(find.byType(ListView), const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Products'), findsOneWidget);
+      expect(find.text('0 / 100'), findsOneWidget);
+      expect(find.text('Staff Members'), findsOneWidget);
+      expect(find.text('0 / 5'), findsOneWidget);
     });
 
     testWidgets('shows error state with message', (tester) async {

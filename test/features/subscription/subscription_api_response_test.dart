@@ -301,6 +301,33 @@ void main() {
       final result = await svc.getStoreAddOns();
       expect(result[0].containsKey('plan_add_on_id'), isTrue);
     });
+
+    test('supports nested add_on payload contract from backend', () async {
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'message': 'OK',
+          'data': [
+            {
+              'store_id': 'store-1',
+              'plan_add_on_id': 'addon-1',
+              'is_active': true,
+              'add_on': {
+                'id': 'addon-1',
+                'name': 'SoftPOS',
+                'name_ar': 'سوفت بوس',
+                'monthly_price': 49.99,
+              },
+            },
+          ],
+        }),
+      );
+
+      final result = await svc.getStoreAddOns();
+
+      expect(result.first['add_on'], isA<Map<String, dynamic>>());
+      expect(result.first['add_on']['name_ar'], 'سوفت بوس');
+    });
   });
 
   // ══════════════════════════════════════════════════════════
@@ -354,6 +381,23 @@ void main() {
       expect(snapshot.containsKey('resource_type'), isTrue);
       expect(snapshot.containsKey('current_count'), isTrue);
       expect(snapshot.containsKey('plan_limit'), isTrue);
+    });
+
+    test('supports limit_key/current/limit format used by subscription status UI', () async {
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'message': 'OK',
+          'data': [
+            {'limit_key': 'products', 'current': 25, 'limit': 100, 'percentage': 25.0},
+          ],
+        }),
+      );
+
+      final result = await svc.getUsageSummary();
+      expect(result.first['limit_key'], 'products');
+      expect(result.first['current'], 25);
+      expect(result.first['limit'], 100);
     });
   });
 
