@@ -20,11 +20,7 @@ import 'package:wameedpos/features/notifications/widgets/notification_bell.dart'
 
 // ─── Shared l10n delegates ───────────────────────────────
 
-const _kL10nDelegates = [
-  AppLocalizations.delegate,
-  GlobalMaterialLocalizations.delegate,
-  GlobalWidgetsLocalizations.delegate,
-];
+const _kL10nDelegates = [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate];
 
 // ─── Minimal fake repository ────────────────────────────
 
@@ -39,41 +35,43 @@ class _MinimalFakeRepo extends NotificationRepository {
     String? priority,
     String? dateFrom,
     String? dateTo,
-  }) async =>
-      {'success': true, 'data': <Map<String, dynamic>>[]};
+  }) async => {'success': true, 'data': <Map<String, dynamic>>[]};
 
   @override
-  Future<Map<String, dynamic>> getUnreadCount() async =>
-      {'success': true, 'data': <String, dynamic>{'unread_count': 0}};
+  Future<Map<String, dynamic>> getUnreadCount() async => {
+    'success': true,
+    'data': <String, dynamic>{'unread_count': 0},
+  };
 
   @override
-  Future<Map<String, dynamic>> listAnnouncements() async =>
-      {'success': true, 'data': <String, dynamic>{'announcements': []}};
+  Future<Map<String, dynamic>> listAnnouncements() async => {
+    'success': true,
+    'data': <String, dynamic>{'announcements': []},
+  };
 
   @override
-  Future<Map<String, dynamic>> listPaymentReminders({
-    String? type,
-    String? channel,
-    int? perPage,
-  }) async =>
-      {'success': true, 'data': <String, dynamic>{}};
+  Future<Map<String, dynamic>> listPaymentReminders({String? type, String? channel, int? perPage}) async => {
+    'success': true,
+    'data': <String, dynamic>{},
+  };
 
   @override
-  Future<Map<String, dynamic>> listAppReleases({
-    String? platform,
-    String? channel,
-  }) async =>
-      {'success': true, 'data': <String, dynamic>{'releases': []}};
+  Future<Map<String, dynamic>> listAppReleases({String? platform, String? channel}) async => {
+    'success': true,
+    'data': <String, dynamic>{'releases': []},
+  };
 
   @override
   Future<Map<String, dynamic>> getMaintenanceStatus() async => {
-        'success': true,
-        'data': <String, dynamic>{'is_enabled': false, 'is_ip_allowed': false},
-      };
+    'success': true,
+    'data': <String, dynamic>{'is_enabled': false, 'is_ip_allowed': false},
+  };
 
   @override
-  Future<Map<String, dynamic>> getStats() async =>
-      {'success': true, 'data': <String, dynamic>{'total': 0, 'read': 0, 'unread': 0}};
+  Future<Map<String, dynamic>> getStats() async => {
+    'success': true,
+    'data': <String, dynamic>{'total': 0, 'read': 0, 'unread': 0},
+  };
 }
 
 // ─── Fake StateNotifiers ─────────────────────────────────
@@ -91,27 +89,17 @@ class _FakeUnreadCountNotifier extends UnreadCountNotifier {
 }
 
 class _FakeNotificationListNotifier extends NotificationListNotifier {
-  _FakeNotificationListNotifier(
-      List<Map<String, dynamic>> notifications)
-      : super(_MinimalFakeRepo()) {
+  _FakeNotificationListNotifier(List<Map<String, dynamic>> notifications) : super(_MinimalFakeRepo()) {
     state = NotificationListLoaded(notifications);
   }
 
   @override
-  Future<void> load({
-    String? category,
-    bool? isRead,
-    int? limit,
-    String? priority,
-  }) async {}
+  Future<void> load({String? category, bool? isRead, int? limit, String? priority}) async {}
 }
 
 // ─── Helper to build a minimal app under test ────────────
 
-Widget buildWithProviders({
-  required Widget widget,
-  required List<Override> overrides,
-}) {
+Widget buildWithProviders({required Widget widget, required List<Override> overrides}) {
   return ProviderScope(
     overrides: overrides,
     child: MaterialApp(
@@ -129,18 +117,12 @@ void main() {
   // ════════════════════════════════════════════════════════
 
   group('MaintenanceBanner widget', () {
-    testWidgets('renders nothing (SizedBox) when shouldShow is false',
-        (tester) async {
+    testWidgets('renders nothing (SizedBox) when shouldShow is false', (tester) async {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const MaintenanceBanner(),
           overrides: [
-            maintenanceStatusProvider.overrideWith(
-              (_) async => <String, dynamic>{
-                'is_enabled': false,
-                'is_ip_allowed': false,
-              },
-            ),
+            maintenanceStatusProvider.overrideWith((_) async => <String, dynamic>{'is_enabled': false, 'is_ip_allowed': false}),
           ],
         ),
       );
@@ -149,18 +131,12 @@ void main() {
       expect(find.byIcon(Icons.build_rounded), findsNothing);
     });
 
-    testWidgets('renders nothing when IP is allowed (admin bypass)',
-        (tester) async {
+    testWidgets('renders nothing when IP is allowed (admin bypass)', (tester) async {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const MaintenanceBanner(),
           overrides: [
-            maintenanceStatusProvider.overrideWith(
-              (_) async => <String, dynamic>{
-                'is_enabled': true,
-                'is_ip_allowed': true,
-              },
-            ),
+            maintenanceStatusProvider.overrideWith((_) async => <String, dynamic>{'is_enabled': true, 'is_ip_allowed': true}),
           ],
         ),
       );
@@ -190,19 +166,12 @@ void main() {
       expect(find.text('We are performing maintenance.'), findsOneWidget);
     });
 
-    testWidgets(
-        'falls back to l10n default title "Scheduled maintenance" when banners are null',
-        (tester) async {
+    testWidgets('falls back to l10n default title "Scheduled maintenance" when banners are null', (tester) async {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const MaintenanceBanner(),
           overrides: [
-            maintenanceStatusProvider.overrideWith(
-              (_) async => <String, dynamic>{
-                'is_enabled': true,
-                'is_ip_allowed': false,
-              },
-            ),
+            maintenanceStatusProvider.overrideWith((_) async => <String, dynamic>{'is_enabled': true, 'is_ip_allowed': false}),
           ],
         ),
       );
@@ -221,11 +190,7 @@ void main() {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const MaintenanceBanner(),
-          overrides: [
-            maintenanceStatusProvider.overrideWith(
-              (_) => completer.future,
-            ),
-          ],
+          overrides: [maintenanceStatusProvider.overrideWith((_) => completer.future)],
         ),
       );
       // Single pump — async still pending
@@ -240,18 +205,10 @@ void main() {
   // ════════════════════════════════════════════════════════
 
   group('NotificationBell widget', () {
-    List<Override> _bellOverrides({
-      required int unread,
-      required List<Map<String, dynamic>> notifications,
-    }) =>
-        [
-          unreadCountProvider.overrideWith(
-            (ref) => _FakeUnreadCountNotifier(unread),
-          ),
-          notificationListProvider.overrideWith(
-            (ref) => _FakeNotificationListNotifier(notifications),
-          ),
-        ];
+    List<Override> _bellOverrides({required int unread, required List<Map<String, dynamic>> notifications}) => [
+      unreadCountProvider.overrideWith((ref) => _FakeUnreadCountNotifier(unread)),
+      notificationListProvider.overrideWith((ref) => _FakeNotificationListNotifier(notifications)),
+    ];
 
     testWidgets('renders bell icon', (tester) async {
       await tester.pumpWidget(
@@ -289,20 +246,14 @@ void main() {
       expect(find.text('0'), findsNothing);
     });
 
-    testWidgets('tapping bell opens dropdown with notification list',
-        (tester) async {
+    testWidgets('tapping bell opens dropdown with notification list', (tester) async {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const NotificationBell(),
           overrides: _bellOverrides(
             unread: 2,
             notifications: [
-              {
-                'id': 'n1',
-                'title': 'New Order',
-                'message': 'Order #42 received.',
-                'is_read': false,
-              },
+              {'id': 'n1', 'title': 'New Order', 'message': 'Order #42 received.', 'is_read': false},
             ],
           ),
         ),
@@ -356,8 +307,7 @@ void main() {
       expect(find.text('View all'), findsOneWidget);
     });
 
-    testWidgets('dropdown shows empty-state text when no notifications',
-        (tester) async {
+    testWidgets('dropdown shows empty-state text when no notifications', (tester) async {
       await tester.pumpWidget(
         buildWithProviders(
           widget: const NotificationBell(),
@@ -381,33 +331,20 @@ void main() {
     Widget _centreApp() {
       final router = GoRouter(
         initialLocation: Routes.notifications,
-        routes: [
-          GoRoute(
-            path: Routes.notifications,
-            builder: (_, __) => const NotificationCentrePage(),
-          ),
-        ],
+        routes: [GoRoute(path: Routes.notifications, builder: (_, __) => const NotificationCentrePage())],
       );
 
       return ProviderScope(
         overrides: [
           notificationRepositoryProvider.overrideWithValue(_MinimalFakeRepo()),
-          notificationListProvider.overrideWith(
-            (ref) => _FakeNotificationListNotifier([]),
-          ),
-          unreadCountProvider.overrideWith(
-            (ref) => _FakeUnreadCountNotifier(0),
-          ),
+          notificationListProvider.overrideWith((ref) => _FakeNotificationListNotifier([])),
+          unreadCountProvider.overrideWith((ref) => _FakeUnreadCountNotifier(0)),
           announcementsProvider.overrideWith((_) async => []),
-          paymentRemindersProvider
-              .overrideWith((_) async => <String, dynamic>{}),
+          paymentRemindersProvider.overrideWith((_) async => <String, dynamic>{}),
           appReleasesProvider.overrideWith((_) async => []),
-          maintenanceStatusProvider.overrideWith(
-            (_) async => <String, dynamic>{},
-          ),
+          maintenanceStatusProvider.overrideWith((_) async => <String, dynamic>{}),
           notificationStatsProvider.overrideWith(
-            (ref) => NotificationStatsNotifier(_MinimalFakeRepo())
-              ..state = const NotificationStatsLoaded(<String, dynamic>{}),
+            (ref) => NotificationStatsNotifier(_MinimalFakeRepo())..state = const NotificationStatsLoaded(<String, dynamic>{}),
           ),
         ],
         child: MaterialApp.router(
@@ -438,8 +375,7 @@ void main() {
       expect(find.text('App Updates'), findsOneWidget);
     });
 
-    testWidgets('tapping Announcements tab switches to that tab',
-        (tester) async {
+    testWidgets('tapping Announcements tab switches to that tab', (tester) async {
       await tester.pumpWidget(_centreApp());
       await tester.pump();
       await tester.pump();

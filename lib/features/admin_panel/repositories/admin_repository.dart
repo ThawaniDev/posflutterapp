@@ -659,7 +659,8 @@ class AdminRepository {
   Future<Map<String, dynamic>> createSecurityIpBlocklistEntry(Map<String, dynamic> data) =>
       _apiService.createSecurityIpBlocklistEntry(data);
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) => _apiService.deleteSecurityIpBlocklistEntry(id);
-  Future<Map<String, dynamic>> revokeAllSecuritySessions(Map<String, dynamic> data) => _apiService.revokeAllSecuritySessions(data);
+  Future<Map<String, dynamic>> revokeAllSecuritySessions(Map<String, dynamic> data) =>
+      _apiService.revokeAllSecuritySessions(data);
   Future<Map<String, dynamic>> investigateSecCenterAlert(String id) => _apiService.investigateSecCenterAlert(id);
   Future<Map<String, dynamic>> getSecurityTrustedDevices({Map<String, dynamic>? params}) =>
       _apiService.getSecurityTrustedDevices(params: params);

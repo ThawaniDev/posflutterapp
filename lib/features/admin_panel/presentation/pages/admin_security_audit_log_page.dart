@@ -21,7 +21,15 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
   String _searchQuery = '';
   int _currentPage = 1;
 
-  static const _actions = ['login', 'logout', 'pin_override', 'failed_login', 'settings_change', 'remote_wipe', 'terminal_credential_update'];
+  static const _actions = [
+    'login',
+    'logout',
+    'pin_override',
+    'failed_login',
+    'settings_change',
+    'remote_wipe',
+    'terminal_credential_update',
+  ];
   static const _userTypes = ['staff', 'owner', 'system'];
 
   @override
@@ -137,7 +145,10 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {
-            0 => PosBadge(label: _formatLabel(item['action']?.toString() ?? '–'), variant: _actionVariant(item['action']?.toString() ?? '')),
+            0 => PosBadge(
+              label: _formatLabel(item['action']?.toString() ?? '–'),
+              variant: _actionVariant(item['action']?.toString() ?? ''),
+            ),
             1 => _buildUserCell(item),
             2 => Text(_capitalize(item['user_type']?.toString() ?? '–'), style: const TextStyle(fontSize: 12)),
             3 => Text(item['ip_address']?.toString() ?? '–', style: const TextStyle(fontSize: 12)),

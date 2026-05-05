@@ -124,12 +124,15 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
             0 => _buildAdminCell(item),
             1 => Text(item['ip_address']?.toString() ?? '–', style: const TextStyle(fontSize: 12)),
             2 => Text(
-                _truncate(item['user_agent']?.toString() ?? '–', 40),
-                style: const TextStyle(fontSize: 12),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            3 => Text(_formatDate(item['last_active_at']?.toString() ?? item['updated_at']?.toString()), style: const TextStyle(fontSize: 12)),
+              _truncate(item['user_agent']?.toString() ?? '–', 40),
+              style: const TextStyle(fontSize: 12),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            3 => Text(
+              _formatDate(item['last_active_at']?.toString() ?? item['updated_at']?.toString()),
+              style: const TextStyle(fontSize: 12),
+            ),
             4 => _buildStatusBadge(item),
             5 => _SessionActions(sessionId: item['id']?.toString() ?? '', onRevoked: _loadData),
             _ => const SizedBox.shrink(),
@@ -182,9 +185,7 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
   }
 
   Future<void> _revokeAll({String? adminUserId}) async {
-    final data = <String, dynamic>{
-      if (adminUserId != null && adminUserId.isNotEmpty) 'admin_user_id': adminUserId,
-    };
+    final data = <String, dynamic>{if (adminUserId != null && adminUserId.isNotEmpty) 'admin_user_id': adminUserId};
     await ref.read(securitySessionActionProvider.notifier).revokeAll(data);
     if (!mounted) return;
     final state = ref.read(securitySessionActionProvider);
@@ -284,11 +285,7 @@ class _RevokeAllDialogState extends State<_RevokeAllDialog> {
         children: [
           const Text('This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.'),
           const SizedBox(height: AppSpacing.sm),
-          PosTextField(
-            controller: _controller,
-            label: 'Admin User ID (optional)',
-            hint: 'Leave blank to revoke all',
-          ),
+          PosTextField(controller: _controller, label: 'Admin User ID (optional)', hint: 'Leave blank to revoke all'),
         ],
       ),
       actions: [

@@ -109,28 +109,18 @@ class _MockRepository extends DeliveryRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> updateOrderStatus(
-    String id, {
-    required String status,
-    String? rejectionReason,
-  }) async {
+  Future<Map<String, dynamic>> updateOrderStatus(String id, {required String status, String? rejectionReason}) async {
     if (shouldThrow) throw Exception('update status error');
     return {'success': true};
   }
 
   @override
-  Future<Map<String, dynamic>> getSyncLogs({
-    String? platform,
-    int? perPage,
-    int? page,
-  }) async =>
-      {'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1}};
+  Future<Map<String, dynamic>> getSyncLogs({String? platform, int? perPage, int? page}) async => {
+    'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1},
+  };
 
   @override
-  Future<Map<String, dynamic>> triggerMenuSync({
-    String? platform,
-    List<Map<String, dynamic>>? products,
-  }) async {
+  Future<Map<String, dynamic>> triggerMenuSync({String? platform, List<Map<String, dynamic>>? products}) async {
     if (shouldThrow) throw Exception('sync error');
     return menuSyncResult ?? {'success': true, 'message': 'Sync queued'};
   }
@@ -142,35 +132,27 @@ class _MockRepository extends DeliveryRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getWebhookLogs({
-    String? platform,
-    int? perPage,
-    int? page,
-  }) async {
+  Future<Map<String, dynamic>> getWebhookLogs({String? platform, int? perPage, int? page}) async {
     if (shouldThrow) throw Exception('webhook logs error');
     return webhookLogsResult ??
-        {'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1}};
+        {
+          'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1},
+        };
   }
 
   @override
-  Future<Map<String, dynamic>> getStatusPushLogs({
-    String? platform,
-    int? perPage,
-    int? page,
-  }) async {
+  Future<Map<String, dynamic>> getStatusPushLogs({String? platform, int? perPage, int? page}) async {
     if (shouldThrow) throw Exception('push logs error');
     return statusPushLogsResult ??
-        {'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1}};
+        {
+          'data': {'data': [], 'total': 0, 'current_page': 1, 'last_page': 1},
+        };
   }
 }
 
 // ─── Helper to create a container with a mock repository ─────────────────────
 ProviderContainer _makeContainer(_MockRepository repo) {
-  return ProviderContainer(
-    overrides: [
-      deliveryRepositoryProvider.overrideWithValue(repo),
-    ],
-  );
+  return ProviderContainer(overrides: [deliveryRepositoryProvider.overrideWithValue(repo)]);
 }
 
 void main() {
@@ -185,20 +167,22 @@ void main() {
     });
 
     test('load sets state to DeliveryStatsLoaded on success', () async {
-      final repo = _MockRepository(statsResult: {
-        'data': {
-          'total_platforms': 3,
-          'active_platforms': 2,
-          'total_orders': 150,
-          'pending_orders': 5,
-          'completed_orders': 140,
-          'today_orders': 10,
-          'today_revenue': '1500.00',
-          'active_orders': 5,
-          'rejected_orders': 5,
-          'platforms': [],
+      final repo = _MockRepository(
+        statsResult: {
+          'data': {
+            'total_platforms': 3,
+            'active_platforms': 2,
+            'total_orders': 150,
+            'pending_orders': 5,
+            'completed_orders': 140,
+            'today_orders': 10,
+            'today_revenue': '1500.00',
+            'active_orders': 5,
+            'rejected_orders': 5,
+            'platforms': [],
+          },
         },
-      });
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -227,9 +211,11 @@ void main() {
 
     test('load does not overwrite existing loaded state on error', () async {
       // First successful load
-      final repo = _MockRepository(statsResult: {
-        'data': {'total_platforms': 1, 'platforms': []},
-      });
+      final repo = _MockRepository(
+        statsResult: {
+          'data': {'total_platforms': 1, 'platforms': []},
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
       await container.read(deliveryStatsProvider.notifier).load();
@@ -237,14 +223,16 @@ void main() {
 
       // Second load throws — state should remain loaded
       final throwingRepo = _MockRepository(shouldThrow: true);
-      final container2 = ProviderContainer(overrides: [
-        deliveryRepositoryProvider.overrideWithValue(throwingRepo),
-        deliveryStatsProvider.overrideWith((ref) {
-          final notifier = DeliveryStatsNotifier(throwingRepo);
-          // Pre-seed with loaded state
-          return notifier;
-        }),
-      ]);
+      final container2 = ProviderContainer(
+        overrides: [
+          deliveryRepositoryProvider.overrideWithValue(throwingRepo),
+          deliveryStatsProvider.overrideWith((ref) {
+            final notifier = DeliveryStatsNotifier(throwingRepo);
+            // Pre-seed with loaded state
+            return notifier;
+          }),
+        ],
+      );
       addTearDown(container2.dispose);
     });
   });
@@ -260,11 +248,13 @@ void main() {
     });
 
     test('load sets DeliveryConfigsLoaded with items', () async {
-      final repo = _MockRepository(configsResult: {
-        'data': [
-          {'id': 'cfg-1', 'platform': 'jahez', 'is_enabled': true},
-        ],
-      });
+      final repo = _MockRepository(
+        configsResult: {
+          'data': [
+            {'id': 'cfg-1', 'platform': 'jahez', 'is_enabled': true},
+          ],
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -346,17 +336,19 @@ void main() {
     });
 
     test('load sets DeliveryOrdersLoaded with paginated orders', () async {
-      final repo = _MockRepository(ordersResult: {
-        'data': {
-          'data': [
-            {'id': 'ord-1', 'platform': 'jahez'},
-            {'id': 'ord-2', 'platform': 'marsool'},
-          ],
-          'current_page': 1,
-          'last_page': 3,
-          'total': 25,
+      final repo = _MockRepository(
+        ordersResult: {
+          'data': {
+            'data': [
+              {'id': 'ord-1', 'platform': 'jahez'},
+              {'id': 'ord-2', 'platform': 'marsool'},
+            ],
+            'current_page': 1,
+            'last_page': 3,
+            'total': 25,
+          },
         },
-      });
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -380,11 +372,13 @@ void main() {
     });
 
     test('loadActive uses getActiveOrders', () async {
-      final repo = _MockRepository(activeOrdersResult: {
-        'data': [
-          {'id': 'ord-active-1'},
-        ],
-      });
+      final repo = _MockRepository(
+        activeOrdersResult: {
+          'data': [
+            {'id': 'ord-active-1'},
+          ],
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -395,7 +389,11 @@ void main() {
     });
 
     test('updateOrderStatus returns true on success', () async {
-      final repo = _MockRepository(ordersResult: {'data': {'data': [], 'current_page': 1, 'last_page': 1, 'total': 0}});
+      final repo = _MockRepository(
+        ordersResult: {
+          'data': {'data': [], 'current_page': 1, 'last_page': 1, 'total': 0},
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -434,9 +432,11 @@ void main() {
     });
 
     test('load sets DeliveryOrderDetailLoaded with data', () async {
-      final repo = _MockRepository(orderDetailResult: {
-        'data': {'id': 'ord-1', 'platform': 'jahez', 'delivery_status': 'pending'},
-      });
+      final repo = _MockRepository(
+        orderDetailResult: {
+          'data': {'id': 'ord-1', 'platform': 'jahez', 'delivery_status': 'pending'},
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -456,9 +456,11 @@ void main() {
     });
 
     test('updateStatus returns true on success and reloads', () async {
-      final repo = _MockRepository(orderDetailResult: {
-        'data': {'id': 'ord-1'},
-      });
+      final repo = _MockRepository(
+        orderDetailResult: {
+          'data': {'id': 'ord-1'},
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -488,20 +490,22 @@ void main() {
     });
 
     test('load parses DeliveryPlatform objects', () async {
-      final repo = _MockRepository(platformsResult: {
-        'data': [
-          {
-            'id': 'plt-1',
-            'name': 'Jahez',
-            'name_ar': 'جاهز',
-            'slug': 'jahez',
-            'auth_method': 'api_key',
-            'is_active': true,
-            'default_commission_percent': '18.5',
-            'fields': [],
-          },
-        ],
-      });
+      final repo = _MockRepository(
+        platformsResult: {
+          'data': [
+            {
+              'id': 'plt-1',
+              'name': 'Jahez',
+              'name_ar': 'جاهز',
+              'slug': 'jahez',
+              'auth_method': 'api_key',
+              'is_active': true,
+              'default_commission_percent': '18.5',
+              'fields': [],
+            },
+          ],
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -630,17 +634,19 @@ void main() {
     });
 
     test('load sets DeliveryWebhookLogsLoaded', () async {
-      final repo = _MockRepository(webhookLogsResult: {
-        'data': {
-          'data': [
-            {'id': 'wh-1', 'platform': 'jahez', 'signature_valid': true},
-          ],
-          'total': 1,
-          'current_page': 1,
-          'last_page': 1,
-          'per_page': 20,
+      final repo = _MockRepository(
+        webhookLogsResult: {
+          'data': {
+            'data': [
+              {'id': 'wh-1', 'platform': 'jahez', 'signature_valid': true},
+            ],
+            'total': 1,
+            'current_page': 1,
+            'last_page': 1,
+            'per_page': 20,
+          },
         },
-      });
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -672,17 +678,19 @@ void main() {
     });
 
     test('load sets DeliveryStatusPushLogsLoaded', () async {
-      final repo = _MockRepository(statusPushLogsResult: {
-        'data': {
-          'data': [
-            {'id': 'spl-1', 'platform': 'jahez', 'status_pushed': 'accepted', 'success': true},
-          ],
-          'total': 1,
-          'current_page': 1,
-          'last_page': 1,
-          'per_page': 20,
+      final repo = _MockRepository(
+        statusPushLogsResult: {
+          'data': {
+            'data': [
+              {'id': 'spl-1', 'platform': 'jahez', 'status_pushed': 'accepted', 'success': true},
+            ],
+            'total': 1,
+            'current_page': 1,
+            'last_page': 1,
+            'per_page': 20,
+          },
         },
-      });
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 
@@ -695,15 +703,11 @@ void main() {
     });
 
     test('load with pagination filter works', () async {
-      final repo = _MockRepository(statusPushLogsResult: {
-        'data': {
-          'data': [],
-          'total': 0,
-          'current_page': 2,
-          'last_page': 5,
-          'per_page': 20,
+      final repo = _MockRepository(
+        statusPushLogsResult: {
+          'data': {'data': [], 'total': 0, 'current_page': 2, 'last_page': 5, 'per_page': 20},
         },
-      });
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 

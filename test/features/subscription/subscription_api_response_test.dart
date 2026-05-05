@@ -18,23 +18,13 @@ class _MockAdapter implements HttpClientAdapter {
   void close({bool force = false}) {}
 
   @override
-  Future<ResponseBody> fetch(
-    RequestOptions options,
-    Stream<List<int>>? requestStream,
-    Future<void>? cancelFuture,
-  ) {
+  Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>>? requestStream, Future<void>? cancelFuture) {
     return handler(options);
   }
 }
 
 Dio _makeDio(Future<ResponseBody> Function(RequestOptions) handler) {
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: 'http://test',
-      responseType: ResponseType.json,
-      contentType: 'application/json',
-    ),
-  );
+  final dio = Dio(BaseOptions(baseUrl: 'http://test', responseType: ResponseType.json, contentType: 'application/json'));
   dio.httpClientAdapter = _MockAdapter(handler);
   return dio;
 }
@@ -72,24 +62,9 @@ void main() {
         'plan_id': 'plan-uuid-1',
         'plan_name': 'Growth',
         'tier': 'growth',
-        'features': {
-          'pos': true,
-          'inventory': true,
-          'analytics': false,
-          'multi_branch': false,
-        },
-        'limits': {
-          'products': 500,
-          'staff': 10,
-          'branches': 1,
-        },
-        'softpos': {
-          'enabled': true,
-          'is_free': false,
-          'percentage': 45.5,
-          'free_threshold': 5,
-          'threshold_period': 'monthly',
-        },
+        'features': {'pos': true, 'inventory': true, 'analytics': false, 'multi_branch': false},
+        'limits': {'products': 500, 'staff': 10, 'branches': 1},
+        'softpos': {'enabled': true, 'is_free': false, 'percentage': 45.5, 'free_threshold': 5, 'threshold_period': 'monthly'},
         'feature_route_mapping': {
           'pos': ['pos.sale', 'pos.checkout'],
           'inventory': ['inventory.list', 'inventory.edit'],
@@ -278,7 +253,12 @@ void main() {
           'success': true,
           'message': 'OK',
           'data': [
-            {'organization_id': 'org-1', 'plan_add_on_id': 'addon-1', 'is_active': true, 'activated_at': '2025-01-01T00:00:00.000Z'},
+            {
+              'organization_id': 'org-1',
+              'plan_add_on_id': 'addon-1',
+              'is_active': true,
+              'activated_at': '2025-01-01T00:00:00.000Z',
+            },
             {'organization_id': 'org-1', 'plan_add_on_id': 'addon-2', 'is_active': false, 'activated_at': null},
           ],
         }),
@@ -384,7 +364,11 @@ void main() {
   group('checkFeature response', () {
     test('returns true when feature is enabled', () async {
       final svc = _makeService(
-        (_) async => _json({'success': true, 'message': 'OK', 'data': {'feature_key': 'pos', 'is_enabled': true}}),
+        (_) async => _json({
+          'success': true,
+          'message': 'OK',
+          'data': {'feature_key': 'pos', 'is_enabled': true},
+        }),
       );
 
       final result = await svc.checkFeature('pos');
@@ -393,7 +377,11 @@ void main() {
 
     test('returns false when feature is disabled', () async {
       final svc = _makeService(
-        (_) async => _json({'success': true, 'message': 'OK', 'data': {'feature_key': 'analytics', 'is_enabled': false}}),
+        (_) async => _json({
+          'success': true,
+          'message': 'OK',
+          'data': {'feature_key': 'analytics', 'is_enabled': false},
+        }),
       );
 
       final result = await svc.checkFeature('analytics');
@@ -404,7 +392,11 @@ void main() {
       String? capturedPath;
       final svc = _makeService((_req) async {
         capturedPath = _req.path;
-        return _json({'success': true, 'message': 'OK', 'data': {'feature_key': 'inventory', 'is_enabled': true}});
+        return _json({
+          'success': true,
+          'message': 'OK',
+          'data': {'feature_key': 'inventory', 'is_enabled': true},
+        });
       });
 
       await svc.checkFeature('inventory');
@@ -506,8 +498,24 @@ void main() {
           'success': true,
           'message': 'OK',
           'data': [
-            {'id': 'plan-1', 'name': 'Starter', 'name_ar': 'مبتدئ', 'slug': 'starter', 'monthly_price': 0.0, 'annual_price': 0.0, 'is_active': true},
-            {'id': 'plan-2', 'name': 'Growth', 'name_ar': 'نمو', 'slug': 'growth', 'monthly_price': 29.99, 'annual_price': 299.99, 'is_active': true},
+            {
+              'id': 'plan-1',
+              'name': 'Starter',
+              'name_ar': 'مبتدئ',
+              'slug': 'starter',
+              'monthly_price': 0.0,
+              'annual_price': 0.0,
+              'is_active': true,
+            },
+            {
+              'id': 'plan-2',
+              'name': 'Growth',
+              'name_ar': 'نمو',
+              'slug': 'growth',
+              'monthly_price': 29.99,
+              'annual_price': 299.99,
+              'is_active': true,
+            },
           ],
         }),
       );
@@ -654,13 +662,7 @@ void main() {
                 'status': 'paid',
                 'paid_at': '2025-01-10T00:00:00.000Z',
               },
-              {
-                'id': 'inv-2',
-                'invoice_number': 'INV-2025-002',
-                'amount': 29.99,
-                'total': 34.49,
-                'status': 'pending',
-              },
+              {'id': 'inv-2', 'invoice_number': 'INV-2025-002', 'amount': 29.99, 'total': 34.49, 'status': 'pending'},
             ],
             'current_page': 1,
             'total': 2,
@@ -679,7 +681,11 @@ void main() {
 
     test('returns empty list when no invoices', () async {
       final svc = _makeService(
-        (_) async => _json({'success': true, 'message': 'OK', 'data': {'data': [], 'current_page': 1, 'total': 0}}),
+        (_) async => _json({
+          'success': true,
+          'message': 'OK',
+          'data': {'data': [], 'current_page': 1, 'total': 0},
+        }),
       );
 
       final invoices = await svc.getInvoices();
@@ -698,8 +704,22 @@ void main() {
           'success': true,
           'message': 'OK',
           'data': [
-            {'id': 'addon-1', 'name': 'SoftPOS', 'name_ar': 'سوفت بوس', 'slug': 'softpos', 'monthly_price': 49.99, 'is_active': true},
-            {'id': 'addon-2', 'name': 'Loyalty', 'name_ar': 'الولاء', 'slug': 'loyalty', 'monthly_price': 29.99, 'is_active': true},
+            {
+              'id': 'addon-1',
+              'name': 'SoftPOS',
+              'name_ar': 'سوفت بوس',
+              'slug': 'softpos',
+              'monthly_price': 49.99,
+              'is_active': true,
+            },
+            {
+              'id': 'addon-2',
+              'name': 'Loyalty',
+              'name_ar': 'الولاء',
+              'slug': 'loyalty',
+              'monthly_price': 29.99,
+              'is_active': true,
+            },
           ],
         }),
       );

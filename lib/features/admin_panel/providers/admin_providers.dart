@@ -76,10 +76,7 @@ class AdminStoreDetailNotifier extends StateNotifier<AdminStoreDetailState> {
       final metricsData = response['data'] as Map<String, dynamic>;
       if (previousState is AdminStoreDetailLoaded) {
         // Merge metrics into existing store data so Overview + Metrics tabs both work
-        state = AdminStoreDetailLoaded({
-          ...previousState.store,
-          ...metricsData,
-        });
+        state = AdminStoreDetailLoaded({...previousState.store, ...metricsData});
       } else {
         state = AdminStoreDetailLoaded(metricsData);
       }
@@ -161,10 +158,7 @@ class AdminActionNotifier extends StateNotifier<AdminActionState> {
     state = const AdminActionLoading();
     try {
       final response = await _repository.approveRegistration(id);
-      state = AdminActionSuccess(
-        response['message'] as String? ?? 'Approved',
-        data: response['data'] as Map<String, dynamic>?,
-      );
+      state = AdminActionSuccess(response['message'] as String? ?? 'Approved', data: response['data'] as Map<String, dynamic>?);
     } catch (e) {
       state = AdminActionError(e.toString());
     }
@@ -3798,9 +3792,10 @@ class SecurityIpBlocklistNotifier extends StateNotifier<SecurityIpListState> {
 
 // ─── Security Center: Action Providers ─────────────────────────
 
-final securitySessionActionProvider = StateNotifierProvider.autoDispose<SecuritySessionActionNotifier, SecuritySessionActionState>(
-  (ref) => SecuritySessionActionNotifier(ref.read(adminRepositoryProvider)),
-);
+final securitySessionActionProvider =
+    StateNotifierProvider.autoDispose<SecuritySessionActionNotifier, SecuritySessionActionState>(
+      (ref) => SecuritySessionActionNotifier(ref.read(adminRepositoryProvider)),
+    );
 
 class SecuritySessionActionNotifier extends StateNotifier<SecuritySessionActionState> {
   SecuritySessionActionNotifier(this._repo) : super(const SecuritySessionActionInitial());
@@ -3825,9 +3820,10 @@ class SecuritySessionActionNotifier extends StateNotifier<SecuritySessionActionS
   }
 }
 
-final securityTrustedDeviceListProvider = StateNotifierProvider<SecurityTrustedDeviceListNotifier, SecurityTrustedDeviceListState>(
-  (ref) => SecurityTrustedDeviceListNotifier(ref.read(adminRepositoryProvider)),
-);
+final securityTrustedDeviceListProvider =
+    StateNotifierProvider<SecurityTrustedDeviceListNotifier, SecurityTrustedDeviceListState>(
+      (ref) => SecurityTrustedDeviceListNotifier(ref.read(adminRepositoryProvider)),
+    );
 
 class SecurityTrustedDeviceListNotifier extends StateNotifier<SecurityTrustedDeviceListState> {
   SecurityTrustedDeviceListNotifier(this._repo) : super(const SecurityTrustedDeviceListInitial());
@@ -3842,9 +3838,10 @@ class SecurityTrustedDeviceListNotifier extends StateNotifier<SecurityTrustedDev
   }
 }
 
-final securityTrustedDeviceActionProvider = StateNotifierProvider.autoDispose<SecurityTrustedDeviceActionNotifier, SecurityDeviceActionState>(
-  (ref) => SecurityTrustedDeviceActionNotifier(ref.read(adminRepositoryProvider)),
-);
+final securityTrustedDeviceActionProvider =
+    StateNotifierProvider.autoDispose<SecurityTrustedDeviceActionNotifier, SecurityDeviceActionState>(
+      (ref) => SecurityTrustedDeviceActionNotifier(ref.read(adminRepositoryProvider)),
+    );
 
 class SecurityTrustedDeviceActionNotifier extends StateNotifier<SecurityDeviceActionState> {
   SecurityTrustedDeviceActionNotifier(this._repo) : super(const SecurityDeviceActionInitial());

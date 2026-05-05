@@ -217,11 +217,13 @@ class _DeviceActions extends ConsumerWidget {
       itemBuilder: (_) => [
         const PopupMenuItem(
           value: 'wipe',
-          child: Row(children: [
-            Icon(Icons.phonelink_erase, size: 16, color: AppColors.error),
-            SizedBox(width: 8),
-            Text('Remote Wipe', style: TextStyle(color: AppColors.error)),
-          ]),
+          child: Row(
+            children: [
+              Icon(Icons.phonelink_erase, size: 16, color: AppColors.error),
+              SizedBox(width: 8),
+              Text('Remote Wipe', style: TextStyle(color: AppColors.error)),
+            ],
+          ),
         ),
       ],
     );

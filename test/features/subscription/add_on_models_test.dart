@@ -91,13 +91,7 @@ void main() {
     });
 
     test('fromJson defaults to 0.0 when monthly_price is invalid', () {
-      final json = {
-        'id': 'addon-1',
-        'name': 'Test',
-        'name_ar': 'اختبار',
-        'slug': 'test',
-        'monthly_price': 'invalid_price',
-      };
+      final json = {'id': 'addon-1', 'name': 'Test', 'name_ar': 'اختبار', 'slug': 'test', 'monthly_price': 'invalid_price'};
 
       final addon = PlanAddOn.fromJson(json);
       expect(addon.monthlyPrice, 0.0);
@@ -127,13 +121,7 @@ void main() {
     });
 
     test('toJson serializes name_ar key correctly', () {
-      const addon = PlanAddOn(
-        id: 'addon-1',
-        name: 'Loyalty',
-        nameAr: 'برنامج الولاء',
-        slug: 'loyalty',
-        monthlyPrice: 15.0,
-      );
+      const addon = PlanAddOn(id: 'addon-1', name: 'Loyalty', nameAr: 'برنامج الولاء', slug: 'loyalty', monthlyPrice: 15.0);
 
       final json = addon.toJson();
       expect(json['name_ar'], 'برنامج الولاء');
@@ -221,11 +209,7 @@ void main() {
     });
 
     test('fromJson falls back to store_id key if organization_id is absent', () {
-      final json = {
-        'store_id': 'store-uuid-1',
-        'plan_add_on_id': 'addon-uuid-2',
-        'is_active': true,
-      };
+      final json = {'store_id': 'store-uuid-1', 'plan_add_on_id': 'addon-uuid-2', 'is_active': true};
 
       final storeAddon = StoreAddOn.fromJson(json);
 
@@ -262,22 +246,14 @@ void main() {
     });
 
     test('fromJson handles null activatedAt', () {
-      final json = {
-        'organization_id': 'org-1',
-        'plan_add_on_id': 'addon-1',
-        'activated_at': null,
-        'is_active': true,
-      };
+      final json = {'organization_id': 'org-1', 'plan_add_on_id': 'addon-1', 'activated_at': null, 'is_active': true};
 
       final storeAddon = StoreAddOn.fromJson(json);
       expect(storeAddon.activatedAt, isNull);
     });
 
     test('fromJson handles missing optional fields', () {
-      final json = {
-        'organization_id': 'org-1',
-        'plan_add_on_id': 'addon-1',
-      };
+      final json = {'organization_id': 'org-1', 'plan_add_on_id': 'addon-1'};
 
       final storeAddon = StoreAddOn.fromJson(json);
       expect(storeAddon.activatedAt, isNull);
@@ -285,11 +261,7 @@ void main() {
     });
 
     test('fromJson handles is_active false', () {
-      final json = {
-        'organization_id': 'org-1',
-        'plan_add_on_id': 'addon-1',
-        'is_active': false,
-      };
+      final json = {'organization_id': 'org-1', 'plan_add_on_id': 'addon-1', 'is_active': false};
 
       final storeAddon = StoreAddOn.fromJson(json);
       expect(storeAddon.isActive, false);
@@ -327,11 +299,7 @@ void main() {
     });
 
     test('copyWith with new planAddOnId', () {
-      final original = StoreAddOn(
-        organizationId: 'org-1',
-        planAddOnId: 'addon-1',
-        isActive: true,
-      );
+      final original = StoreAddOn(organizationId: 'org-1', planAddOnId: 'addon-1', isActive: true);
 
       final updated = original.copyWith(planAddOnId: 'addon-2');
 

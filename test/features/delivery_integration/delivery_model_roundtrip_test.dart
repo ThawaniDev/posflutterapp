@@ -47,7 +47,7 @@ void main() {
             'placeholder': 'Enter ID',
             'is_required': true,
             'sort_order': 1,
-          }
+          },
         ],
       };
 
@@ -74,13 +74,7 @@ void main() {
     });
 
     test('handles minimal platform with no optional fields', () {
-      final json = {
-        'id': 'plt-min',
-        'name': 'Marsool',
-        'slug': 'marsool',
-        'auth_method': 'bearer',
-        'fields': <dynamic>[],
-      };
+      final json = {'id': 'plt-min', 'name': 'Marsool', 'slug': 'marsool', 'auth_method': 'bearer', 'fields': <dynamic>[]};
 
       final platform = DeliveryPlatform.fromJson(json);
 
@@ -342,11 +336,7 @@ void main() {
     });
 
     test('handles null status gracefully', () {
-      final order = DeliveryOrderMapping.fromJson({
-        'id': 'ord-nostatus',
-        'platform': 'marsool',
-        'external_order_id': 'M-001',
-      });
+      final order = DeliveryOrderMapping.fromJson({'id': 'ord-nostatus', 'platform': 'marsool', 'external_order_id': 'M-001'});
       expect(order.deliveryStatus, isNull);
     });
 
@@ -472,9 +462,9 @@ void main() {
                 'helper_text': null,
                 'is_required': true,
                 'sort_order': 1,
-              }
+              },
             ],
-          }
+          },
         ],
       };
 
@@ -513,7 +503,7 @@ void main() {
             'last_order_received_at': null,
             'created_at': '2026-01-01T00:00:00Z',
             'updated_at': '2026-01-01T00:00:00Z',
-          }
+          },
         ],
       };
 
@@ -553,7 +543,7 @@ void main() {
               'rejected_at': null,
               'delivered_at': null,
               'created_at': '2026-01-01T09:00:00Z',
-            }
+            },
           ],
           'total': 1,
           'current_page': 1,
@@ -590,7 +580,7 @@ void main() {
               'duration_seconds': 5,
               'started_at': '2026-01-01T10:00:00Z',
               'completed_at': '2026-01-01T10:00:05Z',
-            }
+            },
           ],
           'total': 1,
           'current_page': 1,
@@ -655,7 +645,7 @@ void main() {
               'processing_result': 'success',
               'error_message': null,
               'created_at': '2026-01-01T10:00:00Z',
-            }
+            },
           ],
           'total': 1,
           'current_page': 1,
@@ -693,7 +683,7 @@ void main() {
               'response_body': null,
               'error_message': null,
               'pushed_at': '2026-01-01T10:00:00Z',
-            }
+            },
           ],
           'total': 1,
           'current_page': 1,

@@ -26,10 +26,7 @@ class _AdminSecurityTrustedDevicesPageState extends ConsumerState<AdminSecurityT
   }
 
   void _loadData() {
-    final params = <String, dynamic>{
-      'page': _currentPage,
-      if (_searchQuery.isNotEmpty) 'search': _searchQuery,
-    };
+    final params = <String, dynamic>{'page': _currentPage, if (_searchQuery.isNotEmpty) 'search': _searchQuery};
     ref.read(securityTrustedDeviceListProvider.notifier).load(params: params);
   }
 
@@ -84,11 +81,11 @@ class _AdminSecurityTrustedDevicesPageState extends ConsumerState<AdminSecurityT
             1 => Text(item['device_name']?.toString() ?? '–', style: const TextStyle(fontSize: 12)),
             2 => Text(item['ip_address']?.toString() ?? '–', style: const TextStyle(fontSize: 12)),
             3 => Text(
-                _truncate(item['user_agent']?.toString() ?? '–', 40),
-                style: const TextStyle(fontSize: 12),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+              _truncate(item['user_agent']?.toString() ?? '–', 40),
+              style: const TextStyle(fontSize: 12),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
             4 => Text(_formatDate(item['created_at']?.toString()), style: const TextStyle(fontSize: 12)),
             5 => Text(_formatDate(item['last_used_at']?.toString()), style: const TextStyle(fontSize: 12)),
             6 => _RevokeTrustButton(deviceId: item['id']?.toString() ?? '', onRevoked: _loadData),

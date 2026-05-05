@@ -73,71 +73,61 @@ class _FakeRepo extends AdminRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsRevenue(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsRevenue({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return revenueResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsSubscriptions(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsSubscriptions({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return subscriptionsResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsStores(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsStores({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return storesResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsFeatures(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsFeatures({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return featuresResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsSupport(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsSupport({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return supportResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsSystemHealth(
-      {String? storeId}) async {
+  Future<Map<String, dynamic>> getAnalyticsSystemHealth({String? storeId}) async {
     _maybeThrow();
     return systemHealthResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> getAnalyticsNotifications(
-      {Map<String, dynamic>? params}) async {
+  Future<Map<String, dynamic>> getAnalyticsNotifications({Map<String, dynamic>? params}) async {
     _maybeThrow();
     return notificationsResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> exportAnalyticsRevenue(
-      Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> exportAnalyticsRevenue(Map<String, dynamic> data) async {
     _maybeThrow();
     return exportResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> exportAnalyticsSubscriptions(
-      Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> exportAnalyticsSubscriptions(Map<String, dynamic> data) async {
     _maybeThrow();
     return exportResponse!;
   }
 
   @override
-  Future<Map<String, dynamic>> exportAnalyticsStores(
-      Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> exportAnalyticsStores(Map<String, dynamic> data) async {
     _maybeThrow();
     return exportResponse!;
   }
@@ -208,18 +198,8 @@ const _kStoresPayload = {
 const _kFeaturesPayload = {
   'data': {
     'features': [
-      {
-        'feature_key': 'loyalty_program',
-        'stores_using': 38,
-        'total_eligible': 500,
-        'adoption_percentage': 63.33,
-      },
-      {
-        'feature_key': 'delivery_integration',
-        'stores_using': 22,
-        'total_eligible': 300,
-        'adoption_percentage': 36.67,
-      },
+      {'feature_key': 'loyalty_program', 'stores_using': 38, 'total_eligible': 500, 'adoption_percentage': 63.33},
+      {'feature_key': 'delivery_integration', 'stores_using': 22, 'total_eligible': 300, 'adoption_percentage': 36.67},
     ],
     'trend': [
       {'date': '2026-05-01', 'total_stores': 36, 'total_eligible': 800},
@@ -292,14 +272,12 @@ void main() {
 
   group('AnalyticsDashboardNotifier', () {
     test('initial state is AnalyticsDashboardInitial', () {
-      final notifier = AnalyticsDashboardNotifier(
-          _FakeRepo(dashboardResponse: _kDashboardPayload));
+      final notifier = AnalyticsDashboardNotifier(_FakeRepo(dashboardResponse: _kDashboardPayload));
       expect(notifier.state, isA<AnalyticsDashboardInitial>());
     });
 
     test('load() transitions to Loaded with correct kpi and recentActivity', () async {
-      final notifier = AnalyticsDashboardNotifier(
-          _FakeRepo(dashboardResponse: _kDashboardPayload));
+      final notifier = AnalyticsDashboardNotifier(_FakeRepo(dashboardResponse: _kDashboardPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsDashboardLoaded;
@@ -313,8 +291,7 @@ void main() {
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsDashboardNotifier(
-          _FakeRepo(dashboardResponse: _kDashboardPayload, shouldThrow: true));
+      final notifier = AnalyticsDashboardNotifier(_FakeRepo(dashboardResponse: _kDashboardPayload, shouldThrow: true));
       await notifier.load();
 
       expect(notifier.state, isA<AnalyticsDashboardError>());
@@ -323,8 +300,7 @@ void main() {
     });
 
     test('load() accepts storeId parameter without error', () async {
-      final notifier = AnalyticsDashboardNotifier(
-          _FakeRepo(dashboardResponse: _kDashboardPayload));
+      final notifier = AnalyticsDashboardNotifier(_FakeRepo(dashboardResponse: _kDashboardPayload));
       await notifier.load(storeId: 'store-uuid-123');
       expect(notifier.state, isA<AnalyticsDashboardLoaded>());
     });
@@ -347,14 +323,12 @@ void main() {
 
   group('AnalyticsRevenueNotifier', () {
     test('initial state is AnalyticsRevenueInitial', () {
-      final notifier = AnalyticsRevenueNotifier(
-          _FakeRepo(revenueResponse: _kRevenuePayload));
+      final notifier = AnalyticsRevenueNotifier(_FakeRepo(revenueResponse: _kRevenuePayload));
       expect(notifier.state, isA<AnalyticsRevenueInitial>());
     });
 
     test('load() parses all revenue fields correctly', () async {
-      final notifier = AnalyticsRevenueNotifier(
-          _FakeRepo(revenueResponse: _kRevenuePayload));
+      final notifier = AnalyticsRevenueNotifier(_FakeRepo(revenueResponse: _kRevenuePayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsRevenueLoaded;
@@ -372,8 +346,8 @@ void main() {
     test('load() coerces integer mrr/arr to double', () async {
       final payload = {
         'data': {
-          'mrr': 5000,     // integer from API
-          'arr': 60000,    // integer from API
+          'mrr': 5000, // integer from API
+          'arr': 60000, // integer from API
           'revenue_trend': <dynamic>[],
           'revenue_by_plan': <dynamic>[],
           'failed_payments_count': 0,
@@ -391,15 +365,13 @@ void main() {
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsRevenueNotifier(
-          _FakeRepo(revenueResponse: _kRevenuePayload, shouldThrow: true));
+      final notifier = AnalyticsRevenueNotifier(_FakeRepo(revenueResponse: _kRevenuePayload, shouldThrow: true));
       await notifier.load();
       expect(notifier.state, isA<AnalyticsRevenueError>());
     });
 
     test('load() passes date range params to repo', () async {
-      final notifier = AnalyticsRevenueNotifier(
-          _FakeRepo(revenueResponse: _kRevenuePayload));
+      final notifier = AnalyticsRevenueNotifier(_FakeRepo(revenueResponse: _kRevenuePayload));
       await notifier.load(dateFrom: '2026-04-01', dateTo: '2026-04-30');
       expect(notifier.state, isA<AnalyticsRevenueLoaded>());
     });
@@ -411,14 +383,12 @@ void main() {
 
   group('AnalyticsSubscriptionsNotifier', () {
     test('initial state is AnalyticsSubscriptionsInitial', () {
-      final notifier = AnalyticsSubscriptionsNotifier(
-          _FakeRepo(subscriptionsResponse: _kSubscriptionsPayload));
+      final notifier = AnalyticsSubscriptionsNotifier(_FakeRepo(subscriptionsResponse: _kSubscriptionsPayload));
       expect(notifier.state, isA<AnalyticsSubscriptionsInitial>());
     });
 
     test('load() parses all subscription fields correctly', () async {
-      final notifier = AnalyticsSubscriptionsNotifier(
-          _FakeRepo(subscriptionsResponse: _kSubscriptionsPayload));
+      final notifier = AnalyticsSubscriptionsNotifier(_FakeRepo(subscriptionsResponse: _kSubscriptionsPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsSubscriptionsLoaded;
@@ -436,13 +406,12 @@ void main() {
         'data': {
           'status_counts': <String, dynamic>{},
           'lifecycle_trend': <dynamic>[],
-          'average_subscription_age_days': 90,   // integer from API
+          'average_subscription_age_days': 90, // integer from API
           'total_churn_in_period': 0,
-          'trial_to_paid_conversion_rate': 50,   // integer from API
+          'trial_to_paid_conversion_rate': 50, // integer from API
         },
       };
-      final notifier = AnalyticsSubscriptionsNotifier(
-          _FakeRepo(subscriptionsResponse: payload));
+      final notifier = AnalyticsSubscriptionsNotifier(_FakeRepo(subscriptionsResponse: payload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsSubscriptionsLoaded;
@@ -452,7 +421,8 @@ void main() {
 
     test('load() transitions to Error on exception', () async {
       final notifier = AnalyticsSubscriptionsNotifier(
-          _FakeRepo(subscriptionsResponse: _kSubscriptionsPayload, shouldThrow: true));
+        _FakeRepo(subscriptionsResponse: _kSubscriptionsPayload, shouldThrow: true),
+      );
       await notifier.load();
       expect(notifier.state, isA<AnalyticsSubscriptionsError>());
     });
@@ -464,14 +434,12 @@ void main() {
 
   group('AnalyticsStoresNotifier', () {
     test('initial state is AnalyticsStoresInitial', () {
-      final notifier = AnalyticsStoresNotifier(
-          _FakeRepo(storesResponse: _kStoresPayload));
+      final notifier = AnalyticsStoresNotifier(_FakeRepo(storesResponse: _kStoresPayload));
       expect(notifier.state, isA<AnalyticsStoresInitial>());
     });
 
     test('load() parses all stores fields correctly', () async {
-      final notifier = AnalyticsStoresNotifier(
-          _FakeRepo(storesResponse: _kStoresPayload));
+      final notifier = AnalyticsStoresNotifier(_FakeRepo(storesResponse: _kStoresPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsStoresLoaded;
@@ -485,22 +453,19 @@ void main() {
     });
 
     test('load() accepts custom limit parameter', () async {
-      final notifier = AnalyticsStoresNotifier(
-          _FakeRepo(storesResponse: _kStoresPayload));
+      final notifier = AnalyticsStoresNotifier(_FakeRepo(storesResponse: _kStoresPayload));
       await notifier.load(limit: 5);
       expect(notifier.state, isA<AnalyticsStoresLoaded>());
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsStoresNotifier(
-          _FakeRepo(storesResponse: _kStoresPayload, shouldThrow: true));
+      final notifier = AnalyticsStoresNotifier(_FakeRepo(storesResponse: _kStoresPayload, shouldThrow: true));
       await notifier.load();
       expect(notifier.state, isA<AnalyticsStoresError>());
     });
 
     test('active stores <= total stores invariant', () async {
-      final notifier = AnalyticsStoresNotifier(
-          _FakeRepo(storesResponse: _kStoresPayload));
+      final notifier = AnalyticsStoresNotifier(_FakeRepo(storesResponse: _kStoresPayload));
       await notifier.load();
       final state = notifier.state as AnalyticsStoresLoaded;
       expect(state.activeStores <= state.totalStores, isTrue);
@@ -513,14 +478,12 @@ void main() {
 
   group('AnalyticsFeaturesNotifier', () {
     test('initial state is AnalyticsFeaturesInitial', () {
-      final notifier = AnalyticsFeaturesNotifier(
-          _FakeRepo(featuresResponse: _kFeaturesPayload));
+      final notifier = AnalyticsFeaturesNotifier(_FakeRepo(featuresResponse: _kFeaturesPayload));
       expect(notifier.state, isA<AnalyticsFeaturesInitial>());
     });
 
     test('load() parses features list correctly', () async {
-      final notifier = AnalyticsFeaturesNotifier(
-          _FakeRepo(featuresResponse: _kFeaturesPayload));
+      final notifier = AnalyticsFeaturesNotifier(_FakeRepo(featuresResponse: _kFeaturesPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsFeaturesLoaded;
@@ -536,8 +499,7 @@ void main() {
       final payload = {
         'data': {'features': <dynamic>[], 'trend': <dynamic>[]},
       };
-      final notifier = AnalyticsFeaturesNotifier(
-          _FakeRepo(featuresResponse: payload));
+      final notifier = AnalyticsFeaturesNotifier(_FakeRepo(featuresResponse: payload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsFeaturesLoaded;
@@ -546,8 +508,7 @@ void main() {
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsFeaturesNotifier(
-          _FakeRepo(featuresResponse: _kFeaturesPayload, shouldThrow: true));
+      final notifier = AnalyticsFeaturesNotifier(_FakeRepo(featuresResponse: _kFeaturesPayload, shouldThrow: true));
       await notifier.load();
       expect(notifier.state, isA<AnalyticsFeaturesError>());
     });
@@ -559,14 +520,12 @@ void main() {
 
   group('AnalyticsSupportNotifier', () {
     test('initial state is AnalyticsSupportInitial', () {
-      final notifier = AnalyticsSupportNotifier(
-          _FakeRepo(supportResponse: _kSupportPayload));
+      final notifier = AnalyticsSupportNotifier(_FakeRepo(supportResponse: _kSupportPayload));
       expect(notifier.state, isA<AnalyticsSupportInitial>());
     });
 
     test('load() parses all support fields correctly', () async {
-      final notifier = AnalyticsSupportNotifier(
-          _FakeRepo(supportResponse: _kSupportPayload));
+      final notifier = AnalyticsSupportNotifier(_FakeRepo(supportResponse: _kSupportPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsSupportLoaded;
@@ -586,16 +545,11 @@ void main() {
     });
 
     test('load() sums open+inProgress+resolved+closed == total', () async {
-      final notifier = AnalyticsSupportNotifier(
-          _FakeRepo(supportResponse: _kSupportPayload));
+      final notifier = AnalyticsSupportNotifier(_FakeRepo(supportResponse: _kSupportPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsSupportLoaded;
-      expect(
-        state.openTickets + state.inProgressTickets +
-            state.resolvedTickets + state.closedTickets,
-        state.totalTickets,
-      );
+      expect(state.openTickets + state.inProgressTickets + state.resolvedTickets + state.closedTickets, state.totalTickets);
     });
 
     test('load() defaults nullable num fields to 0', () async {
@@ -624,15 +578,13 @@ void main() {
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsSupportNotifier(
-          _FakeRepo(supportResponse: _kSupportPayload, shouldThrow: true));
+      final notifier = AnalyticsSupportNotifier(_FakeRepo(supportResponse: _kSupportPayload, shouldThrow: true));
       await notifier.load();
       expect(notifier.state, isA<AnalyticsSupportError>());
     });
 
     test('SLA compliance rate is a double', () async {
-      final notifier = AnalyticsSupportNotifier(
-          _FakeRepo(supportResponse: _kSupportPayload));
+      final notifier = AnalyticsSupportNotifier(_FakeRepo(supportResponse: _kSupportPayload));
       await notifier.load();
       final state = notifier.state as AnalyticsSupportLoaded;
       expect(state.slaComplianceRate, isA<double>());
@@ -645,14 +597,12 @@ void main() {
 
   group('AnalyticsSystemHealthNotifier', () {
     test('initial state is AnalyticsSystemHealthInitial', () {
-      final notifier = AnalyticsSystemHealthNotifier(
-          _FakeRepo(systemHealthResponse: _kSystemHealthPayload));
+      final notifier = AnalyticsSystemHealthNotifier(_FakeRepo(systemHealthResponse: _kSystemHealthPayload));
       expect(notifier.state, isA<AnalyticsSystemHealthInitial>());
     });
 
     test('load() parses all system health fields correctly', () async {
-      final notifier = AnalyticsSystemHealthNotifier(
-          _FakeRepo(systemHealthResponse: _kSystemHealthPayload));
+      final notifier = AnalyticsSystemHealthNotifier(_FakeRepo(systemHealthResponse: _kSystemHealthPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsSystemHealthLoaded;
@@ -664,23 +614,20 @@ void main() {
     });
 
     test('storesWithErrors <= storesMonitored invariant', () async {
-      final notifier = AnalyticsSystemHealthNotifier(
-          _FakeRepo(systemHealthResponse: _kSystemHealthPayload));
+      final notifier = AnalyticsSystemHealthNotifier(_FakeRepo(systemHealthResponse: _kSystemHealthPayload));
       await notifier.load();
       final state = notifier.state as AnalyticsSystemHealthLoaded;
       expect(state.storesWithErrors <= state.storesMonitored, isTrue);
     });
 
     test('load() transitions to Error on exception', () async {
-      final notifier = AnalyticsSystemHealthNotifier(
-          _FakeRepo(systemHealthResponse: _kSystemHealthPayload, shouldThrow: true));
+      final notifier = AnalyticsSystemHealthNotifier(_FakeRepo(systemHealthResponse: _kSystemHealthPayload, shouldThrow: true));
       await notifier.load();
       expect(notifier.state, isA<AnalyticsSystemHealthError>());
     });
 
     test('load() accepts storeId parameter', () async {
-      final notifier = AnalyticsSystemHealthNotifier(
-          _FakeRepo(systemHealthResponse: _kSystemHealthPayload));
+      final notifier = AnalyticsSystemHealthNotifier(_FakeRepo(systemHealthResponse: _kSystemHealthPayload));
       await notifier.load(storeId: 'store-123');
       expect(notifier.state, isA<AnalyticsSystemHealthLoaded>());
     });
@@ -692,14 +639,12 @@ void main() {
 
   group('AnalyticsNotificationsNotifier', () {
     test('initial state is AnalyticsNotificationsInitial', () {
-      final notifier = AnalyticsNotificationsNotifier(
-          _FakeRepo(notificationsResponse: _kNotificationsPayload));
+      final notifier = AnalyticsNotificationsNotifier(_FakeRepo(notificationsResponse: _kNotificationsPayload));
       expect(notifier.state, isA<AnalyticsNotificationsInitial>());
     });
 
     test('load() parses all notification fields correctly', () async {
-      final notifier = AnalyticsNotificationsNotifier(
-          _FakeRepo(notificationsResponse: _kNotificationsPayload));
+      final notifier = AnalyticsNotificationsNotifier(_FakeRepo(notificationsResponse: _kNotificationsPayload));
       await notifier.load();
 
       final state = notifier.state as AnalyticsNotificationsLoaded;
@@ -718,8 +663,7 @@ void main() {
     });
 
     test('load() delivered + failed == sent (data consistency)', () async {
-      final notifier = AnalyticsNotificationsNotifier(
-          _FakeRepo(notificationsResponse: _kNotificationsPayload));
+      final notifier = AnalyticsNotificationsNotifier(_FakeRepo(notificationsResponse: _kNotificationsPayload));
       await notifier.load();
       final state = notifier.state as AnalyticsNotificationsLoaded;
       expect(state.totalDelivered + state.totalFailed, state.totalSent);
@@ -739,8 +683,7 @@ void main() {
           // batch_stats omitted
         },
       };
-      final notifier = AnalyticsNotificationsNotifier(
-          _FakeRepo(notificationsResponse: payload));
+      final notifier = AnalyticsNotificationsNotifier(_FakeRepo(notificationsResponse: payload));
       await notifier.load();
       final state = notifier.state as AnalyticsNotificationsLoaded;
       expect(state.avgLatencyMs, 0.0);
@@ -750,7 +693,8 @@ void main() {
 
     test('load() transitions to Error on exception', () async {
       final notifier = AnalyticsNotificationsNotifier(
-          _FakeRepo(notificationsResponse: _kNotificationsPayload, shouldThrow: true));
+        _FakeRepo(notificationsResponse: _kNotificationsPayload, shouldThrow: true),
+      );
       await notifier.load();
       expect(notifier.state, isA<AnalyticsNotificationsError>());
     });
@@ -780,30 +724,19 @@ void main() {
 
     test('exportRevenue() accepts date range and format parameters', () async {
       final notifier = AnalyticsExportNotifier(_FakeRepo(exportResponse: _kExportPayload));
-      await notifier.exportRevenue(
-        dateFrom: '2026-04-01',
-        dateTo: '2026-04-30',
-        format: 'csv',
-      );
+      await notifier.exportRevenue(dateFrom: '2026-04-01', dateTo: '2026-04-30', format: 'csv');
       expect(notifier.state, isA<AnalyticsExportSuccess>());
     });
 
     test('exportRevenue() transitions to Error on exception', () async {
-      final notifier = AnalyticsExportNotifier(
-          _FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
+      final notifier = AnalyticsExportNotifier(_FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
       await notifier.exportRevenue();
       expect(notifier.state, isA<AnalyticsExportError>());
     });
 
     test('exportRevenue() with null download_url stays Success', () async {
       final payload = {
-        'data': {
-          'export_type': 'revenue',
-          'format': 'xlsx',
-          'download_url': null,
-          'filename': null,
-          'expires_at': null,
-        },
+        'data': {'export_type': 'revenue', 'format': 'xlsx', 'download_url': null, 'filename': null, 'expires_at': null},
       };
       final notifier = AnalyticsExportNotifier(_FakeRepo(exportResponse: payload));
       await notifier.exportRevenue();
@@ -839,8 +772,7 @@ void main() {
     });
 
     test('exportSubscriptions() transitions to Error on exception', () async {
-      final notifier = AnalyticsExportNotifier(
-          _FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
+      final notifier = AnalyticsExportNotifier(_FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
       await notifier.exportSubscriptions();
       expect(notifier.state, isA<AnalyticsExportError>());
     });
@@ -870,8 +802,7 @@ void main() {
     });
 
     test('exportStores() transitions to Error on exception', () async {
-      final notifier = AnalyticsExportNotifier(
-          _FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
+      final notifier = AnalyticsExportNotifier(_FakeRepo(exportResponse: _kExportPayload, shouldThrow: true));
       await notifier.exportStores();
       expect(notifier.state, isA<AnalyticsExportError>());
     });
@@ -905,8 +836,7 @@ void main() {
     });
 
     test('revenue_trend items have date, mrr, gmv keys', () {
-      final trend = ((_kRevenuePayload['data'] as Map<String, dynamic>)['revenue_trend'] as List)
-          .cast<Map<String, dynamic>>();
+      final trend = ((_kRevenuePayload['data'] as Map<String, dynamic>)['revenue_trend'] as List).cast<Map<String, dynamic>>();
       for (final item in trend) {
         expect(item.containsKey('date'), isTrue);
         expect(item.containsKey('mrr'), isTrue);
@@ -915,8 +845,7 @@ void main() {
     });
 
     test('revenue_by_plan items have plan_name, active_count, mrr keys', () {
-      final byPlan = ((_kRevenuePayload['data'] as Map<String, dynamic>)['revenue_by_plan'] as List)
-          .cast<Map<String, dynamic>>();
+      final byPlan = ((_kRevenuePayload['data'] as Map<String, dynamic>)['revenue_by_plan'] as List).cast<Map<String, dynamic>>();
       for (final item in byPlan) {
         expect(item.containsKey('plan_name'), isTrue);
         expect(item.containsKey('active_count'), isTrue);
@@ -929,9 +858,17 @@ void main() {
     test('response has all required support keys', () {
       final data = _kSupportPayload['data'] as Map<String, dynamic>;
       for (final key in [
-        'total_tickets', 'open_tickets', 'in_progress_tickets', 'resolved_tickets',
-        'closed_tickets', 'sla_compliance_rate', 'sla_breached',
-        'avg_first_response_hours', 'avg_resolution_hours', 'by_category', 'by_priority',
+        'total_tickets',
+        'open_tickets',
+        'in_progress_tickets',
+        'resolved_tickets',
+        'closed_tickets',
+        'sla_compliance_rate',
+        'sla_breached',
+        'avg_first_response_hours',
+        'avg_resolution_hours',
+        'by_category',
+        'by_priority',
       ]) {
         expect(data.containsKey(key), isTrue, reason: 'support missing key: $key');
       }
@@ -947,8 +884,15 @@ void main() {
     test('response has all required notification keys', () {
       final data = _kNotificationsPayload['data'] as Map<String, dynamic>;
       for (final key in [
-        'total_sent', 'total_delivered', 'total_failed', 'total_opened',
-        'delivery_rate', 'open_rate', 'avg_latency_ms', 'by_channel', 'batch_stats',
+        'total_sent',
+        'total_delivered',
+        'total_failed',
+        'total_opened',
+        'delivery_rate',
+        'open_rate',
+        'avg_latency_ms',
+        'by_channel',
+        'batch_stats',
       ]) {
         expect(data.containsKey(key), isTrue, reason: 'notifications missing key: $key');
       }
@@ -976,8 +920,7 @@ void main() {
 
   group('JSON Contract - Features response structure', () {
     test('feature items have feature_key and adoption_percentage keys', () {
-      final features = ((_kFeaturesPayload['data'] as Map<String, dynamic>)['features'] as List)
-          .cast<Map<String, dynamic>>();
+      final features = ((_kFeaturesPayload['data'] as Map<String, dynamic>)['features'] as List).cast<Map<String, dynamic>>();
       for (final item in features) {
         expect(item.containsKey('feature_key'), isTrue);
         expect(item.containsKey('adoption_percentage'), isTrue);

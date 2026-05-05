@@ -32,9 +32,9 @@ class _AdminSecurityPoliciesPageState extends ConsumerState<AdminSecurityPolicie
       child: switch (state) {
         SecurityPolicyListLoading() => const PosLoading(),
         SecurityPolicyListError(message: final msg) => PosErrorState(
-            message: msg,
-            onRetry: () => ref.read(securityPolicyListProvider.notifier).load(),
-          ),
+          message: msg,
+          onRetry: () => ref.read(securityPolicyListProvider.notifier).load(),
+        ),
         SecurityPolicyListLoaded(data: final data) => _buildPolicies(data),
         _ => const SizedBox.shrink(),
       },
@@ -55,10 +55,7 @@ class _AdminSecurityPoliciesPageState extends ConsumerState<AdminSecurityPolicie
         separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
         itemBuilder: (context, index) {
           final policy = items[index] as Map<String, dynamic>;
-          return _PolicyCard(
-            policy: policy,
-            onUpdated: () => ref.read(securityPolicyListProvider.notifier).load(),
-          );
+          return _PolicyCard(policy: policy, onUpdated: () => ref.read(securityPolicyListProvider.notifier).load());
         },
       ),
     );
@@ -90,8 +87,7 @@ class _PolicyCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(name, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                      if (description != null)
-                        Text(description, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                      if (description != null) Text(description, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
                     ],
                   ),
                 ),
@@ -115,20 +111,13 @@ class _PolicyCard extends StatelessWidget {
     if (value is bool) {
       return Row(
         children: [
-          Icon(
-            value ? Icons.check_circle : Icons.cancel,
-            size: 18,
-            color: value ? AppColors.success : AppColors.error,
-          ),
+          Icon(value ? Icons.check_circle : Icons.cancel, size: 18, color: value ? AppColors.success : AppColors.error),
           const SizedBox(width: 6),
           Text(value ? 'Enabled' : 'Disabled', style: const TextStyle(fontSize: 13)),
         ],
       );
     }
-    return Text(
-      'Value: $value',
-      style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
-    );
+    return Text('Value: $value', style: const TextStyle(fontSize: 13, fontFamily: 'monospace'));
   }
 
   String _formatPolicyName(String key) {
@@ -193,11 +182,7 @@ class _EditPolicyDialogState extends ConsumerState<_EditPolicyDialog> {
         child: _isBool
             ? Row(
                 children: [
-                  Switch(
-                    value: _boolValue,
-                    activeColor: AppColors.primary,
-                    onChanged: (v) => setState(() => _boolValue = v),
-                  ),
+                  Switch(value: _boolValue, activeColor: AppColors.primary, onChanged: (v) => setState(() => _boolValue = v)),
                   const SizedBox(width: AppSpacing.xs),
                   Text(_boolValue ? 'Enabled' : 'Disabled'),
                 ],
@@ -211,10 +196,7 @@ class _EditPolicyDialogState extends ConsumerState<_EditPolicyDialog> {
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        PosButton(
-          label: _loading ? 'Saving…' : 'Save',
-          onPressed: _loading ? () {} : _save,
-        ),
+        PosButton(label: _loading ? 'Saving…' : 'Save', onPressed: _loading ? () {} : _save),
       ],
     );
   }

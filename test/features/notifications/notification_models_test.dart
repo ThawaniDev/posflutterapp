@@ -1,8 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wameedpos/features/notifications/models/notification.dart'
-    as app;
+import 'package:wameedpos/features/notifications/models/notification.dart' as app;
 import 'package:wameedpos/features/notifications/models/announcement_summary.dart';
 import 'package:wameedpos/features/notifications/models/app_release_info.dart';
 import 'package:wameedpos/features/notifications/models/maintenance_status.dart';
@@ -98,14 +97,13 @@ void main() {
       final updated = n.copyWith(isRead: true, title: 'Updated');
       expect(updated.isRead, isTrue);
       expect(updated.title, 'Updated');
-      expect(updated.id, n.id);       // unchanged
+      expect(updated.id, n.id); // unchanged
       expect(updated.message, n.message); // unchanged
     });
 
     test('equality is based on id', () {
       final a = app.Notification.fromJson(fullJson);
-      final b = app.Notification.fromJson(
-          Map<String, dynamic>.from(fullJson)..['title'] = 'Different');
+      final b = app.Notification.fromJson(Map<String, dynamic>.from(fullJson)..['title'] = 'Different');
       expect(a, equals(b));
     });
   });
@@ -160,8 +158,7 @@ void main() {
     });
 
     test('localizedTitle falls back to English when Arabic is empty', () {
-      final a = AnnouncementSummary.fromJson(
-          Map<String, dynamic>.from(json)..['title_ar'] = '');
+      final a = AnnouncementSummary.fromJson(Map<String, dynamic>.from(json)..['title_ar'] = '');
       expect(a.localizedTitle('ar'), 'System Update');
     });
 
@@ -195,13 +192,12 @@ void main() {
       'created_at': '2026-04-29T08:00:00.000Z',
     };
 
-    test('fromJson parses all fields including nullable platform and channel',
-        () {
+    test('fromJson parses all fields including nullable platform and channel', () {
       final r = AppReleaseInfo.fromJson(json);
       expect(r.id, 'rel-001');
       expect(r.versionNumber, '2.5.0');
-      expect(r.platform, 'android');       // nullable String?
-      expect(r.channel, 'stable');         // nullable String?
+      expect(r.platform, 'android'); // nullable String?
+      expect(r.channel, 'stable'); // nullable String?
       expect(r.isForceUpdate, isTrue);
       expect(r.rolloutPercentage, 100);
       expect(r.buildNumber, '205');
@@ -212,12 +208,7 @@ void main() {
     });
 
     test('fromJson accepts null platform and channel', () {
-      final r = AppReleaseInfo.fromJson({
-        'id': 'x',
-        'version_number': '1.0.0',
-        'platform': null,
-        'channel': null,
-      });
+      final r = AppReleaseInfo.fromJson({'id': 'x', 'version_number': '1.0.0', 'platform': null, 'channel': null});
       expect(r.platform, isNull);
       expect(r.channel, isNull);
       expect(r.isForceUpdate, isFalse);
@@ -225,10 +216,7 @@ void main() {
     });
 
     test('fromJson handles completely missing optional fields', () {
-      final r = AppReleaseInfo.fromJson({
-        'id': 'y',
-        'version_number': '1.1.0',
-      });
+      final r = AppReleaseInfo.fromJson({'id': 'y', 'version_number': '1.1.0'});
       expect(r.downloadUrl, isNull);
       expect(r.releaseNotes, isNull);
       expect(r.releasedAt, isNull);
@@ -254,18 +242,12 @@ void main() {
     });
 
     test('shouldShow is false when is_enabled is false', () {
-      final s = MaintenanceStatus.fromJson({
-        'is_enabled': false,
-        'is_ip_allowed': false,
-      });
+      final s = MaintenanceStatus.fromJson({'is_enabled': false, 'is_ip_allowed': false});
       expect(s.shouldShow, isFalse);
     });
 
     test('shouldShow is false when IP is allowed (admin bypass)', () {
-      final s = MaintenanceStatus.fromJson({
-        'is_enabled': true,
-        'is_ip_allowed': true,
-      });
+      final s = MaintenanceStatus.fromJson({'is_enabled': true, 'is_ip_allowed': true});
       expect(s.shouldShow, isFalse);
     });
 
@@ -305,8 +287,7 @@ void main() {
     });
 
     test('fromJson handles null sentAt', () {
-      final r = PaymentReminder.fromJson(
-          Map<String, dynamic>.from(json)..['sent_at'] = null);
+      final r = PaymentReminder.fromJson(Map<String, dynamic>.from(json)..['sent_at'] = null);
       expect(r.sentAt, isNull);
     });
 
@@ -319,8 +300,7 @@ void main() {
 
     test('equality is based on id', () {
       final a = PaymentReminder.fromJson(json);
-      final b = PaymentReminder.fromJson(
-          Map<String, dynamic>.from(json)..['sent_at'] = null);
+      final b = PaymentReminder.fromJson(Map<String, dynamic>.from(json)..['sent_at'] = null);
       expect(a, equals(b));
     });
 
@@ -374,8 +354,7 @@ void main() {
     });
 
     test('fromJson handles null per_category_channels', () {
-      final p = NotificationPreference.fromJson(
-          Map<String, dynamic>.from(json)..['per_category_channels'] = null);
+      final p = NotificationPreference.fromJson(Map<String, dynamic>.from(json)..['per_category_channels'] = null);
       expect(p.perCategoryChannels, isNull);
     });
 
@@ -416,12 +395,7 @@ void main() {
     });
 
     test('fromJson defaults isEnabled to true when absent', () {
-      final s = NotificationSoundConfig.fromJson({
-        'id': 'x',
-        'store_id': 's',
-        'event_key': 'x',
-        'sound_file': 'default.mp3',
-      });
+      final s = NotificationSoundConfig.fromJson({'id': 'x', 'store_id': 's', 'event_key': 'x', 'sound_file': 'default.mp3'});
       expect(s.isEnabled, isTrue);
     });
   });
@@ -455,11 +429,9 @@ void main() {
     });
 
     test('fromJson maps event_key to category when category is absent', () {
-      final s = NotificationSchedule.fromJson(
-          Map<String, dynamic>.from(json)..['category'] = null);
+      final s = NotificationSchedule.fromJson(Map<String, dynamic>.from(json)..['category'] = null);
       // category defaults to event_key value or empty string
-      expect(s.category.isNotEmpty || s.category == 'finance.daily_summary',
-          isTrue);
+      expect(s.category.isNotEmpty || s.category == 'finance.daily_summary', isTrue);
     });
   });
 
@@ -485,9 +457,7 @@ void main() {
       };
 
       final dataObj = envelope['data'] as Map<String, dynamic>;
-      final items = (dataObj['data'] as List)
-          .map((e) => app.Notification.fromJson(e as Map<String, dynamic>))
-          .toList();
+      final items = (dataObj['data'] as List).map((e) => app.Notification.fromJson(e as Map<String, dynamic>)).toList();
 
       expect(items.length, 2);
       expect(items[0].id, 'n1');
@@ -506,14 +476,9 @@ void main() {
     test('maintenance status parses from data object', () {
       const envelope = {
         'success': true,
-        'data': {
-          'is_enabled': true,
-          'is_ip_allowed': false,
-          'banner_en': 'Maintenance in progress',
-        },
+        'data': {'is_enabled': true, 'is_ip_allowed': false, 'banner_en': 'Maintenance in progress'},
       };
-      final s = MaintenanceStatus.fromJson(
-          envelope['data'] as Map<String, dynamic>);
+      final s = MaintenanceStatus.fromJson(envelope['data'] as Map<String, dynamic>);
       expect(s.shouldShow, isTrue);
       expect(s.bannerEn, 'Maintenance in progress');
     });
@@ -521,16 +486,9 @@ void main() {
     test('app releases latest parses nullable platform and channel', () {
       const envelope = {
         'success': true,
-        'data': {
-          'id': 'r1',
-          'version_number': '3.0.0',
-          'platform': null,
-          'channel': null,
-          'is_force_update': false,
-        },
+        'data': {'id': 'r1', 'version_number': '3.0.0', 'platform': null, 'channel': null, 'is_force_update': false},
       };
-      final r = AppReleaseInfo.fromJson(
-          envelope['data'] as Map<String, dynamic>);
+      final r = AppReleaseInfo.fromJson(envelope['data'] as Map<String, dynamic>);
       expect(r.versionNumber, '3.0.0');
       expect(r.platform, isNull);
       expect(r.channel, isNull);

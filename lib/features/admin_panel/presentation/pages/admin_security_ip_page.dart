@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+
 /// Tabbed page for IP Allowlist and IP Blocklist management.
 class AdminSecurityIpPage extends ConsumerStatefulWidget {
   const AdminSecurityIpPage({super.key});
@@ -13,8 +14,7 @@ class AdminSecurityIpPage extends ConsumerStatefulWidget {
   ConsumerState<AdminSecurityIpPage> createState() => _AdminSecurityIpPageState();
 }
 
-class _AdminSecurityIpPageState extends ConsumerState<AdminSecurityIpPage>
-    with SingleTickerProviderStateMixin {
+class _AdminSecurityIpPageState extends ConsumerState<AdminSecurityIpPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -46,13 +46,7 @@ class _AdminSecurityIpPageState extends ConsumerState<AdminSecurityIpPage>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          _AllowlistTab(),
-          _BlocklistTab(),
-        ],
-      ),
+      body: TabBarView(controller: _tabController, children: const [_AllowlistTab(), _BlocklistTab()]),
     );
   }
 }
@@ -79,11 +73,7 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              PosButton(
-                label: 'Add IP / CIDR',
-                icon: Icons.add,
-                onPressed: () => _showAddDialog(context, isAllowlist: true),
-              ),
+              PosButton(label: 'Add IP / CIDR', icon: Icons.add, onPressed: () => _showAddDialog(context, isAllowlist: true)),
             ],
           ),
         ),
@@ -121,16 +111,12 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
           0 => Text(item['ip_address']?.toString() ?? '–', style: const TextStyle(fontSize: 12, fontFamily: 'monospace')),
           1 => Text(item['label']?.toString() ?? item['description']?.toString() ?? '–', style: const TextStyle(fontSize: 12)),
           2 => PosBadge(
-              label: (item['is_cidr'] == true || item['is_cidr'] == 1) ? 'CIDR' : 'IP',
-              variant: (item['is_cidr'] == true || item['is_cidr'] == 1) ? PosBadgeVariant.info : PosBadgeVariant.neutral,
-            ),
+            label: (item['is_cidr'] == true || item['is_cidr'] == 1) ? 'CIDR' : 'IP',
+            variant: (item['is_cidr'] == true || item['is_cidr'] == 1) ? PosBadgeVariant.info : PosBadgeVariant.neutral,
+          ),
           3 => _buildAddedByCell(item),
           4 => Text(_formatExpiry(item['expires_at']?.toString()), style: const TextStyle(fontSize: 12)),
-          5 => _DeleteEntryButton(
-              entryId: item['id']?.toString() ?? '',
-              isAllowlist: true,
-              onDeleted: _reload,
-            ),
+          5 => _DeleteEntryButton(entryId: item['id']?.toString() ?? '', isAllowlist: true, onDeleted: _reload),
           _ => const SizedBox.shrink(),
         },
       ),
@@ -155,10 +141,7 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
   void _showAddDialog(BuildContext context, {required bool isAllowlist}) {
     showDialog<void>(
       context: context,
-      builder: (ctx) => _AddIpDialog(
-        isAllowlist: isAllowlist,
-        onAdded: _reload,
-      ),
+      builder: (ctx) => _AddIpDialog(isAllowlist: isAllowlist, onAdded: _reload),
     );
   }
 }
@@ -228,23 +211,19 @@ class _BlocklistTabState extends ConsumerState<_BlocklistTab> {
         cellBuilder: (item, colIndex, _) => switch (colIndex) {
           0 => Text(item['ip_address']?.toString() ?? '–', style: const TextStyle(fontSize: 12, fontFamily: 'monospace')),
           1 => Text(
-              item['reason']?.toString() ?? '–',
-              style: const TextStyle(fontSize: 12),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
+            item['reason']?.toString() ?? '–',
+            style: const TextStyle(fontSize: 12),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
           2 => PosBadge(
-              label: (item['is_cidr'] == true || item['is_cidr'] == 1) ? 'CIDR' : 'IP',
-              variant: (item['is_cidr'] == true || item['is_cidr'] == 1) ? PosBadgeVariant.info : PosBadgeVariant.neutral,
-            ),
+            label: (item['is_cidr'] == true || item['is_cidr'] == 1) ? 'CIDR' : 'IP',
+            variant: (item['is_cidr'] == true || item['is_cidr'] == 1) ? PosBadgeVariant.info : PosBadgeVariant.neutral,
+          ),
           3 => Text(item['hit_count']?.toString() ?? '0', style: const TextStyle(fontSize: 12)),
           4 => _buildBlockedByCell(item),
           5 => Text(_formatExpiry(item['expires_at']?.toString()), style: const TextStyle(fontSize: 12)),
-          6 => _DeleteEntryButton(
-              entryId: item['id']?.toString() ?? '',
-              isAllowlist: false,
-              onDeleted: _reload,
-            ),
+          6 => _DeleteEntryButton(entryId: item['id']?.toString() ?? '', isAllowlist: false, onDeleted: _reload),
           _ => const SizedBox.shrink(),
         },
       ),
@@ -361,11 +340,7 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PosTextField(
-              controller: _ipController,
-              label: 'IP Address or CIDR',
-              hint: 'e.g. 192.168.1.1 or 10.0.0.0/24',
-            ),
+            PosTextField(controller: _ipController, label: 'IP Address or CIDR', hint: 'e.g. 192.168.1.1 or 10.0.0.0/24'),
             const SizedBox(height: AppSpacing.sm),
             PosTextField(
               controller: _labelController,
@@ -373,11 +348,7 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
               hint: widget.isAllowlist ? 'Describe this IP' : 'Why is this IP blocked?',
             ),
             const SizedBox(height: AppSpacing.sm),
-            PosTextField(
-              controller: _expiryController,
-              label: 'Expiry Date (optional)',
-              hint: 'YYYY-MM-DD',
-            ),
+            PosTextField(controller: _expiryController, label: 'Expiry Date (optional)', hint: 'YYYY-MM-DD'),
           ],
         ),
       ),
@@ -403,8 +374,7 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
 
     final data = <String, dynamic>{
       'ip_address': ip,
-      if (_labelController.text.trim().isNotEmpty)
-        widget.isAllowlist ? 'label' : 'reason': _labelController.text.trim(),
+      if (_labelController.text.trim().isNotEmpty) widget.isAllowlist ? 'label' : 'reason': _labelController.text.trim(),
       if (_expiryController.text.trim().isNotEmpty) 'expires_at': _expiryController.text.trim(),
     };
 

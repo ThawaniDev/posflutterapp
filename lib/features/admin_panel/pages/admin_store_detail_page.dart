@@ -451,7 +451,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   border: Border.fromBorderSide(BorderSide(color: AppColors.borderFor(context))),
                   child: ListTile(
                     leading: const Icon(Icons.delivery_dining, color: AppColors.info),
-                    title: Text(dp['delivery_platform_id']?.toString() ?? dp['platform_slug']?.toString() ?? '—', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    title: Text(
+                      dp['delivery_platform_id']?.toString() ?? dp['platform_slug']?.toString() ?? '—',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
                     subtitle: dp['last_sync_at'] != null
                         ? Text('Last sync: ${dp['last_sync_at']}', style: const TextStyle(fontSize: 12))
                         : null,

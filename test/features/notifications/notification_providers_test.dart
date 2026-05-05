@@ -29,11 +29,9 @@ class FakeNotificationRepository extends NotificationRepository {
     String? quietHoursEnd,
     bool? soundEnabled,
     String? emailDigest,
-  })? onUpdatePreferences;
-  Future<Map<String, dynamic>> Function({
-    required String token,
-    required String deviceType,
-  })? onRegisterFcmToken;
+  })?
+  onUpdatePreferences;
+  Future<Map<String, dynamic>> Function({required String token, required String deviceType})? onRegisterFcmToken;
   Future<Map<String, dynamic>> Function(String token)? onRemoveFcmToken;
   Future<Map<String, dynamic>> Function()? onGetDeliveryLogs;
   Future<Map<String, dynamic>> Function()? onGetSoundConfigs;
@@ -48,39 +46,31 @@ class FakeNotificationRepository extends NotificationRepository {
     String? priority,
     String? dateFrom,
     String? dateTo,
-  }) =>
-      onListNotifications?.call() ??
-          (throw UnimplementedError('listNotifications not configured'));
+  }) => onListNotifications?.call() ?? (throw UnimplementedError('listNotifications not configured'));
 
   @override
   Future<Map<String, dynamic>> getUnreadCount() =>
-      onGetUnreadCount?.call() ??
-          (throw UnimplementedError('getUnreadCount not configured'));
+      onGetUnreadCount?.call() ?? (throw UnimplementedError('getUnreadCount not configured'));
 
   @override
   Future<Map<String, dynamic>> getUnreadCountByCategory() =>
-      onGetUnreadCountByCategory?.call() ??
-          (throw UnimplementedError('getUnreadCountByCategory not configured'));
+      onGetUnreadCountByCategory?.call() ?? (throw UnimplementedError('getUnreadCountByCategory not configured'));
 
   @override
   Future<Map<String, dynamic>> markAsRead(String id) =>
-      onMarkAsRead?.call(id) ??
-          (throw UnimplementedError('markAsRead not configured'));
+      onMarkAsRead?.call(id) ?? (throw UnimplementedError('markAsRead not configured'));
 
   @override
   Future<Map<String, dynamic>> markAllAsRead() =>
-      onMarkAllAsRead?.call() ??
-          (throw UnimplementedError('markAllAsRead not configured'));
+      onMarkAllAsRead?.call() ?? (throw UnimplementedError('markAllAsRead not configured'));
 
   @override
   Future<Map<String, dynamic>> deleteNotification(String id) =>
-      onDeleteNotification?.call(id) ??
-          (throw UnimplementedError('deleteNotification not configured'));
+      onDeleteNotification?.call(id) ?? (throw UnimplementedError('deleteNotification not configured'));
 
   @override
   Future<Map<String, dynamic>> getPreferences() =>
-      onGetPreferences?.call() ??
-          (throw UnimplementedError('getPreferences not configured'));
+      onGetPreferences?.call() ?? (throw UnimplementedError('getPreferences not configured'));
 
   @override
   Future<Map<String, dynamic>> updatePreferences({
@@ -97,44 +87,31 @@ class FakeNotificationRepository extends NotificationRepository {
         soundEnabled: soundEnabled,
         emailDigest: emailDigest,
       ) ??
-          (throw UnimplementedError('updatePreferences not configured'));
+      (throw UnimplementedError('updatePreferences not configured'));
 
   @override
-  Future<Map<String, dynamic>> registerFcmToken({
-    required String token,
-    required String deviceType,
-  }) =>
+  Future<Map<String, dynamic>> registerFcmToken({required String token, required String deviceType}) =>
       onRegisterFcmToken?.call(token: token, deviceType: deviceType) ??
-          (throw UnimplementedError('registerFcmToken not configured'));
+      (throw UnimplementedError('registerFcmToken not configured'));
 
   @override
   Future<Map<String, dynamic>> removeFcmToken(String token) =>
-      onRemoveFcmToken?.call(token) ??
-          (throw UnimplementedError('removeFcmToken not configured'));
+      onRemoveFcmToken?.call(token) ?? (throw UnimplementedError('removeFcmToken not configured'));
 
   @override
-  Future<Map<String, dynamic>> getDeliveryLogs({
-    String? channel,
-    String? status,
-    int? perPage,
-  }) =>
-      onGetDeliveryLogs?.call() ??
-          (throw UnimplementedError('getDeliveryLogs not configured'));
+  Future<Map<String, dynamic>> getDeliveryLogs({String? channel, String? status, int? perPage}) =>
+      onGetDeliveryLogs?.call() ?? (throw UnimplementedError('getDeliveryLogs not configured'));
 
   @override
   Future<Map<String, dynamic>> getSoundConfigs() =>
-      onGetSoundConfigs?.call() ??
-          (throw UnimplementedError('getSoundConfigs not configured'));
+      onGetSoundConfigs?.call() ?? (throw UnimplementedError('getSoundConfigs not configured'));
 
   @override
   Future<Map<String, dynamic>> getSchedules() =>
-      onGetSchedules?.call() ??
-          (throw UnimplementedError('getSchedules not configured'));
+      onGetSchedules?.call() ?? (throw UnimplementedError('getSchedules not configured'));
 
   @override
-  Future<Map<String, dynamic>> getStats() =>
-      onGetStats?.call() ??
-          (throw UnimplementedError('getStats not configured'));
+  Future<Map<String, dynamic>> getStats() => onGetStats?.call() ?? (throw UnimplementedError('getStats not configured'));
 
   // ProviderContainer requires a concrete NotificationRepository.
   // We pass a real (but never-invoked) NotificationApiService(Dio())
@@ -146,11 +123,7 @@ class FakeNotificationRepository extends NotificationRepository {
 
 // Helper: build an isolated ProviderContainer with the fake repo.
 ProviderContainer makeContainer(FakeNotificationRepository fakeRepo) {
-  return ProviderContainer(
-    overrides: [
-      notificationRepositoryProvider.overrideWithValue(fakeRepo),
-    ],
-  );
+  return ProviderContainer(overrides: [notificationRepositoryProvider.overrideWithValue(fakeRepo)]);
 }
 
 void main() {
@@ -164,21 +137,18 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      expect(
-        container.read(notificationListProvider),
-        isA<NotificationListInitial>(),
-      );
+      expect(container.read(notificationListProvider), isA<NotificationListInitial>());
     });
 
     test('load → NotificationListLoaded with data', () async {
       final fake = FakeNotificationRepository();
       fake.onListNotifications = () async => {
-            'success': true,
-            'data': [
-              {'id': 'n1', 'title': 'A'},
-              {'id': 'n2', 'title': 'B'},
-            ],
-          };
+        'success': true,
+        'data': [
+          {'id': 'n1', 'title': 'A'},
+          {'id': 'n2', 'title': 'B'},
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -193,8 +163,7 @@ void main() {
 
     test('load → NotificationListLoaded with empty list', () async {
       final fake = FakeNotificationRepository();
-      fake.onListNotifications = () async =>
-          {'success': true, 'data': <Map<String, dynamic>>[]};
+      fake.onListNotifications = () async => {'success': true, 'data': <Map<String, dynamic>>[]};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -207,8 +176,7 @@ void main() {
 
     test('load → NotificationListError on exception', () async {
       final fake = FakeNotificationRepository();
-      fake.onListNotifications =
-          () async => throw Exception('Network error');
+      fake.onListNotifications = () async => throw Exception('Network error');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -216,8 +184,7 @@ void main() {
 
       final state = container.read(notificationListProvider);
       expect(state, isA<NotificationListError>());
-      expect((state as NotificationListError).message,
-          contains('Network error'));
+      expect((state as NotificationListError).message, contains('Network error'));
     });
   });
 
@@ -235,8 +202,10 @@ void main() {
 
     test('load returns correct total count', () async {
       final fake = FakeNotificationRepository();
-      fake.onGetUnreadCount = () async =>
-          {'success': true, 'data': {'unread_count': 7}};
+      fake.onGetUnreadCount = () async => {
+        'success': true,
+        'data': {'unread_count': 7},
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -250,9 +219,9 @@ void main() {
     test('loadByCategory builds per-category map and sums total', () async {
       final fake = FakeNotificationRepository();
       fake.onGetUnreadCountByCategory = () async => {
-            'success': true,
-            'data': {'order': 3, 'inventory': 2},
-          };
+        'success': true,
+        'data': {'order': 3, 'inventory': 2},
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -267,8 +236,7 @@ void main() {
 
     test('load → UnreadCountError on exception', () async {
       final fake = FakeNotificationRepository();
-      fake.onGetUnreadCount =
-          () async => throw Exception('Timeout');
+      fake.onGetUnreadCount = () async => throw Exception('Timeout');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -288,27 +256,20 @@ void main() {
       final container = makeContainer(FakeNotificationRepository());
       addTearDown(container.dispose);
 
-      expect(container.read(notificationActionProvider),
-          isA<NotificationActionInitial>());
+      expect(container.read(notificationActionProvider), isA<NotificationActionInitial>());
     });
 
     test('markAsRead → NotificationActionSuccess', () async {
       final fake = FakeNotificationRepository();
-      fake.onMarkAsRead = (_) async =>
-          {'success': true, 'message': 'Marked as read'};
+      fake.onMarkAsRead = (_) async => {'success': true, 'message': 'Marked as read'};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(notificationActionProvider.notifier)
-          .markAsRead('notif-001');
+      await container.read(notificationActionProvider.notifier).markAsRead('notif-001');
 
       final state = container.read(notificationActionProvider);
       expect(state, isA<NotificationActionSuccess>());
-      expect(
-        (state as NotificationActionSuccess).message,
-        'marked_as_read',
-      );
+      expect((state as NotificationActionSuccess).message, 'marked_as_read');
     });
 
     test('markAllAsRead → NotificationActionSuccess', () async {
@@ -317,9 +278,7 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(notificationActionProvider.notifier)
-          .markAllAsRead();
+      await container.read(notificationActionProvider.notifier).markAllAsRead();
 
       final state = container.read(notificationActionProvider);
       expect(state, isA<NotificationActionSuccess>());
@@ -332,9 +291,7 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(notificationActionProvider.notifier)
-          .delete('notif-001');
+      await container.read(notificationActionProvider.notifier).delete('notif-001');
 
       final state = container.read(notificationActionProvider);
       expect(state, isA<NotificationActionSuccess>());
@@ -346,9 +303,7 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(notificationActionProvider.notifier)
-          .markAsRead('notif-001');
+      await container.read(notificationActionProvider.notifier).markAsRead('notif-001');
 
       final state = container.read(notificationActionProvider);
       expect(state, isA<NotificationActionError>());
@@ -360,13 +315,10 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(notificationActionProvider.notifier)
-          .markAsRead('notif-001');
+      await container.read(notificationActionProvider.notifier).markAsRead('notif-001');
       container.read(notificationActionProvider.notifier).reset();
 
-      expect(container.read(notificationActionProvider),
-          isA<NotificationActionInitial>());
+      expect(container.read(notificationActionProvider), isA<NotificationActionInitial>());
     });
   });
 
@@ -379,22 +331,21 @@ void main() {
       final container = makeContainer(FakeNotificationRepository());
       addTearDown(container.dispose);
 
-      expect(container.read(notificationPreferencesProvider),
-          isA<NotificationPreferencesInitial>());
+      expect(container.read(notificationPreferencesProvider), isA<NotificationPreferencesInitial>());
     });
 
     test('load → NotificationPreferencesLoaded with quiet hours', () async {
       final fake = FakeNotificationRepository();
       fake.onGetPreferences = () async => {
-            'success': true,
-            'data': {
-              'preferences': {'order': true},
-              'quiet_hours_start': '22:00',
-              'quiet_hours_end': '07:00',
-              'sound_enabled': true,
-              'email_digest': 'daily',
-            },
-          };
+        'success': true,
+        'data': {
+          'preferences': {'order': true},
+          'quiet_hours_start': '22:00',
+          'quiet_hours_end': '07:00',
+          'sound_enabled': true,
+          'email_digest': 'daily',
+        },
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -411,14 +362,14 @@ void main() {
 
     test('update → NotificationPreferencesLoaded with updated data', () async {
       final fake = FakeNotificationRepository();
-      fake.onUpdatePreferences = ({
-        Map<String, dynamic>? preferences,
-        String? quietHoursStart,
-        String? quietHoursEnd,
-        bool? soundEnabled,
-        String? emailDigest,
-      }) async =>
-          <String, dynamic>{
+      fake.onUpdatePreferences =
+          ({
+            Map<String, dynamic>? preferences,
+            String? quietHoursStart,
+            String? quietHoursEnd,
+            bool? soundEnabled,
+            String? emailDigest,
+          }) async => <String, dynamic>{
             'success': true,
             'data': <String, dynamic>{
               'preferences': <String, dynamic>{},
@@ -430,11 +381,9 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container.read(notificationPreferencesProvider.notifier).update(
-            quietHoursStart: '23:00',
-            quietHoursEnd: '06:00',
-            soundEnabled: false,
-          );
+      await container
+          .read(notificationPreferencesProvider.notifier)
+          .update(quietHoursStart: '23:00', quietHoursEnd: '06:00', soundEnabled: false);
 
       final state = container.read(notificationPreferencesProvider);
       expect(state, isA<NotificationPreferencesLoaded>());
@@ -445,8 +394,7 @@ void main() {
 
     test('load → NotificationPreferencesError on failure', () async {
       final fake = FakeNotificationRepository();
-      fake.onGetPreferences =
-          () async => throw Exception('Unauthorized');
+      fake.onGetPreferences = () async => throw Exception('Unauthorized');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -471,15 +419,11 @@ void main() {
 
     test('register → FcmTokenRegistered', () async {
       final fake = FakeNotificationRepository();
-      fake.onRegisterFcmToken = ({required token, required deviceType}) async =>
-          {'success': true};
+      fake.onRegisterFcmToken = ({required token, required deviceType}) async => {'success': true};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container.read(fcmTokenProvider.notifier).register(
-            token: 'fcm-token-abc',
-            deviceType: 'android',
-          );
+      await container.read(fcmTokenProvider.notifier).register(token: 'fcm-token-abc', deviceType: 'android');
 
       final state = container.read(fcmTokenProvider);
       expect(state, isA<FcmTokenRegistered>());
@@ -494,9 +438,7 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(fcmTokenProvider.notifier)
-          .remove('fcm-token-abc');
+      await container.read(fcmTokenProvider.notifier).remove('fcm-token-abc');
 
       final state = container.read(fcmTokenProvider);
       expect(state, isA<FcmTokenRemoved>());
@@ -504,16 +446,11 @@ void main() {
 
     test('register → FcmTokenError on failure', () async {
       final fake = FakeNotificationRepository();
-      fake.onRegisterFcmToken =
-          ({required token, required deviceType}) async =>
-              throw Exception('FCM error');
+      fake.onRegisterFcmToken = ({required token, required deviceType}) async => throw Exception('FCM error');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container.read(fcmTokenProvider.notifier).register(
-            token: 'bad-token',
-            deviceType: 'ios',
-          );
+      await container.read(fcmTokenProvider.notifier).register(token: 'bad-token', deviceType: 'ios');
 
       final state = container.read(fcmTokenProvider);
       expect(state, isA<FcmTokenError>());
@@ -535,18 +472,18 @@ void main() {
     test('load → SoundConfigsLoaded with parsed models', () async {
       final fake = FakeNotificationRepository();
       fake.onGetSoundConfigs = () async => {
-            'success': true,
-            'data': [
-              {
-                'id': 'sc-1',
-                'store_id': 's1',
-                'event_key': 'order.new',
-                'sound_file': 'chime.mp3',
-                'volume': 0.8,
-                'is_enabled': true,
-              },
-            ],
-          };
+        'success': true,
+        'data': [
+          {
+            'id': 'sc-1',
+            'store_id': 's1',
+            'event_key': 'order.new',
+            'sound_file': 'chime.mp3',
+            'volume': 0.8,
+            'is_enabled': true,
+          },
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -562,8 +499,7 @@ void main() {
 
     test('load → SoundConfigsError on failure', () async {
       final fake = FakeNotificationRepository();
-      fake.onGetSoundConfigs =
-          () async => throw Exception('Server error');
+      fake.onGetSoundConfigs = () async => throw Exception('Server error');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -589,20 +525,20 @@ void main() {
     test('load → SchedulesLoaded with parsed schedule models', () async {
       final fake = FakeNotificationRepository();
       fake.onGetSchedules = () async => {
-            'success': true,
-            'data': [
-              {
-                'id': 'sch-1',
-                'store_id': 'store-1',
-                'category': 'finance',
-                'title': 'Daily Report',
-                'message': 'Your daily summary.',
-                'channel': 'in_app',
-                'scheduled_at': '2026-06-01T08:00:00.000Z',
-                'is_active': true,
-              },
-            ],
-          };
+        'success': true,
+        'data': [
+          {
+            'id': 'sch-1',
+            'store_id': 'store-1',
+            'category': 'finance',
+            'title': 'Daily Report',
+            'message': 'Your daily summary.',
+            'channel': 'in_app',
+            'scheduled_at': '2026-06-01T08:00:00.000Z',
+            'is_active': true,
+          },
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -637,14 +573,14 @@ void main() {
     test('load → NotificationStatsLoaded with stats map', () async {
       final fake = FakeNotificationRepository();
       fake.onGetStats = () async => {
-            'success': true,
-            'data': {
-              'total': 50,
-              'read': 30,
-              'unread': 20,
-              'by_category': {'order': 10, 'inventory': 5},
-            },
-          };
+        'success': true,
+        'data': {
+          'total': 50,
+          'read': 30,
+          'unread': 20,
+          'by_category': {'order': 10, 'inventory': 5},
+        },
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 

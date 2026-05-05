@@ -79,7 +79,11 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
       emptySubtitle: l10n.adjustFilters,
       emptyIcon: Icons.store_outlined,
       actions: [
-        PosButton.icon(icon: Icons.add_business, tooltip: l10n.adminCreateStore, onPressed: () => _showCreateStoreDialog(context)),
+        PosButton.icon(
+          icon: Icons.add_business,
+          tooltip: l10n.adminCreateStore,
+          onPressed: () => _showCreateStoreDialog(context),
+        ),
         PosButton.icon(
           icon: Icons.file_download_outlined,
           tooltip: l10n.adminExportStores,
@@ -302,9 +306,19 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                 AppSpacing.gapH12,
                 PosTextField(controller: ownerNameCtrl, label: l10n.adminOwnerName, hint: l10n.adminOwnerName),
                 AppSpacing.gapH12,
-                PosTextField(controller: ownerEmailCtrl, label: l10n.adminOwnerEmail, hint: l10n.adminOwnerEmail, keyboardType: TextInputType.emailAddress),
+                PosTextField(
+                  controller: ownerEmailCtrl,
+                  label: l10n.adminOwnerEmail,
+                  hint: l10n.adminOwnerEmail,
+                  keyboardType: TextInputType.emailAddress,
+                ),
                 AppSpacing.gapH12,
-                PosTextField(controller: ownerPhoneCtrl, label: l10n.adminOwnerPhone, hint: l10n.adminOwnerPhone, keyboardType: TextInputType.phone),
+                PosTextField(
+                  controller: ownerPhoneCtrl,
+                  label: l10n.adminOwnerPhone,
+                  hint: l10n.adminOwnerPhone,
+                  keyboardType: TextInputType.phone,
+                ),
               ],
             ),
           ),

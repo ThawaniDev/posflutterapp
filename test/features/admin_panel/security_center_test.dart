@@ -54,127 +54,102 @@ class FakeAdminRepository extends AdminRepository {
 
   @override
   Future<Map<String, dynamic>> getSecurityOverview({String? storeId}) =>
-      onGetSecurityOverview?.call() ??
-          (throw UnimplementedError('getSecurityOverview not configured'));
+      onGetSecurityOverview?.call() ?? (throw UnimplementedError('getSecurityOverview not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecCenterAlerts({Map<String, dynamic>? params}) =>
-      onGetSecCenterAlerts?.call() ??
-          (throw UnimplementedError('getSecCenterAlerts not configured'));
+      onGetSecCenterAlerts?.call() ?? (throw UnimplementedError('getSecCenterAlerts not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecCenterAlert(String id) =>
-      onGetSecCenterAlert?.call(id) ??
-          (throw UnimplementedError('getSecCenterAlert not configured'));
+      onGetSecCenterAlert?.call(id) ?? (throw UnimplementedError('getSecCenterAlert not configured'));
 
   @override
   Future<Map<String, dynamic>> resolveSecCenterAlert(String id, Map<String, dynamic> data) =>
-      onResolveSecCenterAlert?.call(id, data) ??
-          (throw UnimplementedError('resolveSecCenterAlert not configured'));
+      onResolveSecCenterAlert?.call(id, data) ?? (throw UnimplementedError('resolveSecCenterAlert not configured'));
 
   @override
   Future<Map<String, dynamic>> investigateSecCenterAlert(String id) =>
-      onInvestigateSecCenterAlert?.call(id) ??
-          (throw UnimplementedError('investigateSecCenterAlert not configured'));
+      onInvestigateSecCenterAlert?.call(id) ?? (throw UnimplementedError('investigateSecCenterAlert not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecuritySessions({Map<String, dynamic>? params}) =>
-      onGetSecuritySessions?.call() ??
-          (throw UnimplementedError('getSecuritySessions not configured'));
+      onGetSecuritySessions?.call() ?? (throw UnimplementedError('getSecuritySessions not configured'));
 
   @override
   Future<Map<String, dynamic>> revokeSecuritySession(String id) =>
-      onRevokeSecuritySession?.call(id) ??
-          (throw UnimplementedError('revokeSecuritySession not configured'));
+      onRevokeSecuritySession?.call(id) ?? (throw UnimplementedError('revokeSecuritySession not configured'));
 
   @override
   Future<Map<String, dynamic>> revokeAllSecuritySessions(Map<String, dynamic> data) =>
-      onRevokeAllSecuritySessions?.call(data) ??
-          (throw UnimplementedError('revokeAllSecuritySessions not configured'));
+      onRevokeAllSecuritySessions?.call(data) ?? (throw UnimplementedError('revokeAllSecuritySessions not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityDevices({Map<String, dynamic>? params}) =>
-      onGetSecurityDevices?.call() ??
-          (throw UnimplementedError('getSecurityDevices not configured'));
+      onGetSecurityDevices?.call() ?? (throw UnimplementedError('getSecurityDevices not configured'));
 
   @override
   Future<Map<String, dynamic>> wipeSecurityDevice(String id) =>
-      onWipeSecurityDevice?.call(id) ??
-          (throw UnimplementedError('wipeSecurityDevice not configured'));
+      onWipeSecurityDevice?.call(id) ?? (throw UnimplementedError('wipeSecurityDevice not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityLoginAttempts({Map<String, dynamic>? params}) =>
-      onGetSecurityLoginAttempts?.call() ??
-          (throw UnimplementedError('getSecurityLoginAttempts not configured'));
+      onGetSecurityLoginAttempts?.call() ?? (throw UnimplementedError('getSecurityLoginAttempts not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityAuditLogs({Map<String, dynamic>? params}) =>
-      onGetSecurityAuditLogs?.call() ??
-          (throw UnimplementedError('getSecurityAuditLogs not configured'));
+      onGetSecurityAuditLogs?.call() ?? (throw UnimplementedError('getSecurityAuditLogs not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityPolicies({Map<String, dynamic>? params}) =>
-      onGetSecurityPolicies?.call() ??
-          (throw UnimplementedError('getSecurityPolicies not configured'));
+      onGetSecurityPolicies?.call() ?? (throw UnimplementedError('getSecurityPolicies not configured'));
 
   @override
   Future<Map<String, dynamic>> updateSecurityPolicy(String id, Map<String, dynamic> data) =>
-      onUpdateSecurityPolicy?.call(id, data) ??
-          (throw UnimplementedError('updateSecurityPolicy not configured'));
+      onUpdateSecurityPolicy?.call(id, data) ?? (throw UnimplementedError('updateSecurityPolicy not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityIpAllowlist({Map<String, dynamic>? params}) =>
-      onGetSecurityIpAllowlist?.call() ??
-          (throw UnimplementedError('getSecurityIpAllowlist not configured'));
+      onGetSecurityIpAllowlist?.call() ?? (throw UnimplementedError('getSecurityIpAllowlist not configured'));
 
   @override
   Future<Map<String, dynamic>> createSecurityIpAllowlistEntry(Map<String, dynamic> data) =>
-      onCreateSecurityIpAllowlistEntry?.call(data) ??
-          (throw UnimplementedError('createSecurityIpAllowlistEntry not configured'));
+      onCreateSecurityIpAllowlistEntry?.call(data) ?? (throw UnimplementedError('createSecurityIpAllowlistEntry not configured'));
 
   @override
   Future<Map<String, dynamic>> deleteSecurityIpAllowlistEntry(String id) =>
-      onDeleteSecurityIpAllowlistEntry?.call(id) ??
-          (throw UnimplementedError('deleteSecurityIpAllowlistEntry not configured'));
+      onDeleteSecurityIpAllowlistEntry?.call(id) ?? (throw UnimplementedError('deleteSecurityIpAllowlistEntry not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityIpBlocklist({Map<String, dynamic>? params}) =>
-      onGetSecurityIpBlocklist?.call() ??
-          (throw UnimplementedError('getSecurityIpBlocklist not configured'));
+      onGetSecurityIpBlocklist?.call() ?? (throw UnimplementedError('getSecurityIpBlocklist not configured'));
 
   @override
   Future<Map<String, dynamic>> createSecurityIpBlocklistEntry(Map<String, dynamic> data) =>
-      onCreateSecurityIpBlocklistEntry?.call(data) ??
-          (throw UnimplementedError('createSecurityIpBlocklistEntry not configured'));
+      onCreateSecurityIpBlocklistEntry?.call(data) ?? (throw UnimplementedError('createSecurityIpBlocklistEntry not configured'));
 
   @override
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) =>
-      onDeleteSecurityIpBlocklistEntry?.call(id) ??
-          (throw UnimplementedError('deleteSecurityIpBlocklistEntry not configured'));
+      onDeleteSecurityIpBlocklistEntry?.call(id) ?? (throw UnimplementedError('deleteSecurityIpBlocklistEntry not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityTrustedDevices({Map<String, dynamic>? params}) =>
-      onGetSecurityTrustedDevices?.call() ??
-          (throw UnimplementedError('getSecurityTrustedDevices not configured'));
+      onGetSecurityTrustedDevices?.call() ?? (throw UnimplementedError('getSecurityTrustedDevices not configured'));
 
   @override
   Future<Map<String, dynamic>> revokeSecurityTrustedDevice(String id) =>
-      onRevokeSecurityTrustedDevice?.call(id) ??
-          (throw UnimplementedError('revokeSecurityTrustedDevice not configured'));
+      onRevokeSecurityTrustedDevice?.call(id) ?? (throw UnimplementedError('revokeSecurityTrustedDevice not configured'));
 
   @override
   Future<Map<String, dynamic>> getSecurityAdminActivityLogs({Map<String, dynamic>? params}) =>
-      onGetSecurityAdminActivityLogs?.call() ??
-          (throw UnimplementedError('getSecurityAdminActivityLogs not configured'));
+      onGetSecurityAdminActivityLogs?.call() ?? (throw UnimplementedError('getSecurityAdminActivityLogs not configured'));
 
   static AdminApiService _noopApiService() => AdminApiService(Dio());
 }
 
 // Helper: build an isolated ProviderContainer with the fake repo.
 ProviderContainer makeContainer(FakeAdminRepository fakeRepo) {
-  return ProviderContainer(
-    overrides: [adminRepositoryProvider.overrideWithValue(fakeRepo)],
-  );
+  return ProviderContainer(overrides: [adminRepositoryProvider.overrideWithValue(fakeRepo)]);
 }
 
 void main() {
@@ -268,11 +243,7 @@ void main() {
   // ═══════════════════════════════════════════════════════════════
   group('P14 AdminApiService methods', () {
     test('has revokeAllSecuritySessions', () {
-      expect(
-        AdminApiService,
-        isNotNull,
-        reason: 'AdminApiService must define revokeAllSecuritySessions',
-      );
+      expect(AdminApiService, isNotNull, reason: 'AdminApiService must define revokeAllSecuritySessions');
     });
     test('has investigateSecCenterAlert', () {
       expect(AdminApiService, isNotNull);
@@ -530,16 +501,12 @@ void main() {
     test('initial state is SecuritySessionActionInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securitySessionActionProvider),
-        isA<SecuritySessionActionInitial>(),
-      );
+      expect(container.read(securitySessionActionProvider), isA<SecuritySessionActionInitial>());
     });
 
     test('revoke() → SecuritySessionActionSuccess with response', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeSecuritySession =
-          (id) async => {'success': true, 'message': 'Session $id revoked'};
+      fake.onRevokeSecuritySession = (id) async => {'success': true, 'message': 'Session $id revoked'};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -554,8 +521,7 @@ void main() {
 
     test('revoke() → SecuritySessionActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeSecuritySession =
-          (_) async => throw Exception('Session not found');
+      fake.onRevokeSecuritySession = (_) async => throw Exception('Session not found');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -568,14 +534,11 @@ void main() {
 
     test('revokeAll() → SecuritySessionActionSuccess', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeAllSecuritySessions =
-          (data) async => {'success': true, 'revoked_count': 5};
+      fake.onRevokeAllSecuritySessions = (data) async => {'success': true, 'revoked_count': 5};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securitySessionActionProvider.notifier)
-          .revokeAll({'admin_user_id': 'u-1'});
+      await container.read(securitySessionActionProvider.notifier).revokeAll({'admin_user_id': 'u-1'});
 
       final state = container.read(securitySessionActionProvider);
       expect(state, isA<SecuritySessionActionSuccess>());
@@ -584,19 +547,13 @@ void main() {
 
     test('revokeAll() → SecuritySessionActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeAllSecuritySessions =
-          (_) async => throw Exception('Unauthorized');
+      fake.onRevokeAllSecuritySessions = (_) async => throw Exception('Unauthorized');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securitySessionActionProvider.notifier)
-          .revokeAll({});
+      await container.read(securitySessionActionProvider.notifier).revokeAll({});
 
-      expect(
-        container.read(securitySessionActionProvider),
-        isA<SecuritySessionActionError>(),
-      );
+      expect(container.read(securitySessionActionProvider), isA<SecuritySessionActionError>());
     });
   });
 
@@ -607,16 +564,12 @@ void main() {
     test('initial state is SecurityDeviceActionInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityDeviceActionProvider),
-        isA<SecurityDeviceActionInitial>(),
-      );
+      expect(container.read(securityDeviceActionProvider), isA<SecurityDeviceActionInitial>());
     });
 
     test('wipe() → SecurityDeviceActionSuccess', () async {
       final fake = FakeAdminRepository();
-      fake.onWipeSecurityDevice =
-          (id) async => {'success': true, 'device_id': id, 'wiped': true};
+      fake.onWipeSecurityDevice = (id) async => {'success': true, 'device_id': id, 'wiped': true};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -629,8 +582,7 @@ void main() {
 
     test('wipe() → SecurityDeviceActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onWipeSecurityDevice =
-          (_) async => throw Exception('Device offline');
+      fake.onWipeSecurityDevice = (_) async => throw Exception('Device offline');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -649,22 +601,16 @@ void main() {
     test('initial state is SecurityDeviceActionInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityTrustedDeviceActionProvider),
-        isA<SecurityDeviceActionInitial>(),
-      );
+      expect(container.read(securityTrustedDeviceActionProvider), isA<SecurityDeviceActionInitial>());
     });
 
     test('revokeTrust() → SecurityDeviceActionSuccess', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeSecurityTrustedDevice =
-          (id) async => {'success': true, 'trust_revoked': true};
+      fake.onRevokeSecurityTrustedDevice = (id) async => {'success': true, 'trust_revoked': true};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityTrustedDeviceActionProvider.notifier)
-          .revokeTrust('trust-1');
+      await container.read(securityTrustedDeviceActionProvider.notifier).revokeTrust('trust-1');
 
       final state = container.read(securityTrustedDeviceActionProvider);
       expect(state, isA<SecurityDeviceActionSuccess>());
@@ -673,19 +619,13 @@ void main() {
 
     test('revokeTrust() → SecurityDeviceActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onRevokeSecurityTrustedDevice =
-          (_) async => throw Exception('Trust record not found');
+      fake.onRevokeSecurityTrustedDevice = (_) async => throw Exception('Trust record not found');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityTrustedDeviceActionProvider.notifier)
-          .revokeTrust('trust-99');
+      await container.read(securityTrustedDeviceActionProvider.notifier).revokeTrust('trust-99');
 
-      expect(
-        container.read(securityTrustedDeviceActionProvider),
-        isA<SecurityDeviceActionError>(),
-      );
+      expect(container.read(securityTrustedDeviceActionProvider), isA<SecurityDeviceActionError>());
     });
   });
 
@@ -696,22 +636,19 @@ void main() {
     test('initial state is SecurityIpActionInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityIpActionProvider),
-        isA<SecurityIpActionInitial>(),
-      );
+      expect(container.read(securityIpActionProvider), isA<SecurityIpActionInitial>());
     });
 
     test('addToAllowlist() → SecurityIpActionSuccess with entry data', () async {
       final fake = FakeAdminRepository();
-      fake.onCreateSecurityIpAllowlistEntry =
-          (data) async => {'success': true, 'data': {'id': 'ip-1', 'ip': data['ip']}};
+      fake.onCreateSecurityIpAllowlistEntry = (data) async => {
+        'success': true,
+        'data': {'id': 'ip-1', 'ip': data['ip']},
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .addToAllowlist({'ip': '10.0.0.5', 'label': 'Office'});
+      await container.read(securityIpActionProvider.notifier).addToAllowlist({'ip': '10.0.0.5', 'label': 'Office'});
 
       final state = container.read(securityIpActionProvider);
       expect(state, isA<SecurityIpActionSuccess>());
@@ -720,31 +657,22 @@ void main() {
 
     test('addToAllowlist() → SecurityIpActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onCreateSecurityIpAllowlistEntry =
-          (_) async => throw Exception('Invalid IP format');
+      fake.onCreateSecurityIpAllowlistEntry = (_) async => throw Exception('Invalid IP format');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .addToAllowlist({'ip': 'not-an-ip'});
+      await container.read(securityIpActionProvider.notifier).addToAllowlist({'ip': 'not-an-ip'});
 
-      expect(
-        container.read(securityIpActionProvider),
-        isA<SecurityIpActionError>(),
-      );
+      expect(container.read(securityIpActionProvider), isA<SecurityIpActionError>());
     });
 
     test('removeFromAllowlist() → SecurityIpActionSuccess(null)', () async {
       final fake = FakeAdminRepository();
-      fake.onDeleteSecurityIpAllowlistEntry =
-          (id) async => {'success': true};
+      fake.onDeleteSecurityIpAllowlistEntry = (id) async => {'success': true};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .removeFromAllowlist('ip-1');
+      await container.read(securityIpActionProvider.notifier).removeFromAllowlist('ip-1');
 
       final state = container.read(securityIpActionProvider);
       expect(state, isA<SecurityIpActionSuccess>());
@@ -753,31 +681,25 @@ void main() {
 
     test('removeFromAllowlist() → SecurityIpActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onDeleteSecurityIpAllowlistEntry =
-          (_) async => throw Exception('Not found');
+      fake.onDeleteSecurityIpAllowlistEntry = (_) async => throw Exception('Not found');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .removeFromAllowlist('ip-99');
+      await container.read(securityIpActionProvider.notifier).removeFromAllowlist('ip-99');
 
-      expect(
-        container.read(securityIpActionProvider),
-        isA<SecurityIpActionError>(),
-      );
+      expect(container.read(securityIpActionProvider), isA<SecurityIpActionError>());
     });
 
     test('addToBlocklist() → SecurityIpActionSuccess with entry data', () async {
       final fake = FakeAdminRepository();
-      fake.onCreateSecurityIpBlocklistEntry =
-          (data) async => {'success': true, 'data': {'id': 'blk-1'}};
+      fake.onCreateSecurityIpBlocklistEntry = (data) async => {
+        'success': true,
+        'data': {'id': 'blk-1'},
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .addToBlocklist({'ip': '192.168.1.100', 'reason': 'Brute force'});
+      await container.read(securityIpActionProvider.notifier).addToBlocklist({'ip': '192.168.1.100', 'reason': 'Brute force'});
 
       final state = container.read(securityIpActionProvider);
       expect(state, isA<SecurityIpActionSuccess>());
@@ -785,14 +707,11 @@ void main() {
 
     test('removeFromBlocklist() → SecurityIpActionSuccess(null)', () async {
       final fake = FakeAdminRepository();
-      fake.onDeleteSecurityIpBlocklistEntry =
-          (id) async => {'success': true};
+      fake.onDeleteSecurityIpBlocklistEntry = (id) async => {'success': true};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityIpActionProvider.notifier)
-          .removeFromBlocklist('blk-1');
+      await container.read(securityIpActionProvider.notifier).removeFromBlocklist('blk-1');
 
       final state = container.read(securityIpActionProvider);
       expect(state, isA<SecurityIpActionSuccess>());
@@ -806,14 +725,11 @@ void main() {
   group('SecCenterAlertActionNotifier investigate', () {
     test('investigate() → SecCenterAlertActionSuccess', () async {
       final fake = FakeAdminRepository();
-      fake.onInvestigateSecCenterAlert =
-          (id) async => {'success': true, 'status': 'investigating'};
+      fake.onInvestigateSecCenterAlert = (id) async => {'success': true, 'status': 'investigating'};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(secCenterAlertActionProvider.notifier)
-          .investigate('alert-1');
+      await container.read(secCenterAlertActionProvider.notifier).investigate('alert-1');
 
       final state = container.read(secCenterAlertActionProvider);
       expect(state, isA<SecCenterAlertActionSuccess>());
@@ -822,14 +738,11 @@ void main() {
 
     test('investigate() → SecCenterAlertActionError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onInvestigateSecCenterAlert =
-          (_) async => throw Exception('Alert not found');
+      fake.onInvestigateSecCenterAlert = (_) async => throw Exception('Alert not found');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(secCenterAlertActionProvider.notifier)
-          .investigate('alert-99');
+      await container.read(secCenterAlertActionProvider.notifier).investigate('alert-99');
 
       final state = container.read(secCenterAlertActionProvider);
       expect(state, isA<SecCenterAlertActionError>());
@@ -838,10 +751,7 @@ void main() {
     test('initial state is SecCenterAlertActionInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(secCenterAlertActionProvider),
-        isA<SecCenterAlertActionInitial>(),
-      );
+      expect(container.read(secCenterAlertActionProvider), isA<SecCenterAlertActionInitial>());
     });
   });
 
@@ -852,21 +762,18 @@ void main() {
     test('initial state is SecurityTrustedDeviceListInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityTrustedDeviceListProvider),
-        isA<SecurityTrustedDeviceListInitial>(),
-      );
+      expect(container.read(securityTrustedDeviceListProvider), isA<SecurityTrustedDeviceListInitial>());
     });
 
     test('load() → SecurityTrustedDeviceListLoaded with data', () async {
       final fake = FakeAdminRepository();
       fake.onGetSecurityTrustedDevices = () async => {
-            'success': true,
-            'data': [
-              {'id': 'td-1', 'admin_name': 'Alice', 'device_name': 'MacBook Pro'},
-              {'id': 'td-2', 'admin_name': 'Bob', 'device_name': 'iPhone 15'},
-            ],
-          };
+        'success': true,
+        'data': [
+          {'id': 'td-1', 'admin_name': 'Alice', 'device_name': 'MacBook Pro'},
+          {'id': 'td-2', 'admin_name': 'Bob', 'device_name': 'iPhone 15'},
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -880,8 +787,7 @@ void main() {
 
     test('load() → SecurityTrustedDeviceListLoaded with empty list', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityTrustedDevices =
-          () async => {'success': true, 'data': <dynamic>[]};
+      fake.onGetSecurityTrustedDevices = () async => {'success': true, 'data': <dynamic>[]};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -894,8 +800,7 @@ void main() {
 
     test('load() → SecurityTrustedDeviceListError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityTrustedDevices =
-          () async => throw Exception('Network error');
+      fake.onGetSecurityTrustedDevices = () async => throw Exception('Network error');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -914,26 +819,23 @@ void main() {
     test('initial state is SecurityLoginAttemptListInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityLoginAttemptListProvider),
-        isA<SecurityLoginAttemptListInitial>(),
-      );
+      expect(container.read(securityLoginAttemptListProvider), isA<SecurityLoginAttemptListInitial>());
     });
 
     test('load() → SecurityLoginAttemptListLoaded with data', () async {
       final fake = FakeAdminRepository();
       fake.onGetSecurityLoginAttempts = () async => {
-            'success': true,
-            'data': [
-              {
-                'id': 'la-1',
-                'ip_address': '1.2.3.4',
-                'status': 'failed',
-                'email': 'test@test.com',
-                'created_at': '2025-01-01T00:00:00Z',
-              }
-            ],
-          };
+        'success': true,
+        'data': [
+          {
+            'id': 'la-1',
+            'ip_address': '1.2.3.4',
+            'status': 'failed',
+            'email': 'test@test.com',
+            'created_at': '2025-01-01T00:00:00Z',
+          },
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -947,17 +849,13 @@ void main() {
 
     test('load() → SecurityLoginAttemptListError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityLoginAttempts =
-          () async => throw Exception('Timeout');
+      fake.onGetSecurityLoginAttempts = () async => throw Exception('Timeout');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
       await container.read(securityLoginAttemptListProvider.notifier).load();
 
-      expect(
-        container.read(securityLoginAttemptListProvider),
-        isA<SecurityLoginAttemptListError>(),
-      );
+      expect(container.read(securityLoginAttemptListProvider), isA<SecurityLoginAttemptListError>());
     });
 
     test('load() with failed_only filter passes params to repo', () async {
@@ -970,9 +868,7 @@ void main() {
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
-      await container
-          .read(securityLoginAttemptListProvider.notifier)
-          .load(params: {'failed_only': '1'});
+      await container.read(securityLoginAttemptListProvider.notifier).load(params: {'failed_only': '1'});
 
       expect(capturedParams, isNotNull);
     });
@@ -985,33 +881,24 @@ void main() {
     test('initial state is SecurityAuditLogListInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityAuditLogListProvider),
-        isA<SecurityAuditLogListInitial>(),
-      );
+      expect(container.read(securityAuditLogListProvider), isA<SecurityAuditLogListInitial>());
     });
 
     test('load() → SecurityAuditLogListLoaded with audit entries', () async {
       final fake = FakeAdminRepository();
       fake.onGetSecurityAuditLogs = () async => {
-            'success': true,
-            'data': [
-              {
-                'id': 'aud-1',
-                'action': 'login',
-                'user_type': 'owner',
-                'ip_address': '5.6.7.8',
-                'created_at': '2025-01-01T00:00:00Z',
-              },
-              {
-                'id': 'aud-2',
-                'action': 'failed_login',
-                'user_type': 'staff',
-                'ip_address': '9.10.11.12',
-                'created_at': '2025-01-01T01:00:00Z',
-              },
-            ],
-          };
+        'success': true,
+        'data': [
+          {'id': 'aud-1', 'action': 'login', 'user_type': 'owner', 'ip_address': '5.6.7.8', 'created_at': '2025-01-01T00:00:00Z'},
+          {
+            'id': 'aud-2',
+            'action': 'failed_login',
+            'user_type': 'staff',
+            'ip_address': '9.10.11.12',
+            'created_at': '2025-01-01T01:00:00Z',
+          },
+        ],
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -1028,17 +915,13 @@ void main() {
 
     test('load() → SecurityAuditLogListError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityAuditLogs =
-          () async => throw Exception('DB error');
+      fake.onGetSecurityAuditLogs = () async => throw Exception('DB error');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
       await container.read(securityAuditLogListProvider.notifier).load();
 
-      expect(
-        container.read(securityAuditLogListProvider),
-        isA<SecurityAuditLogListError>(),
-      );
+      expect(container.read(securityAuditLogListProvider), isA<SecurityAuditLogListError>());
     });
 
     test('all valid audit actions are accepted', () {
@@ -1073,29 +956,26 @@ void main() {
     test('initial state is SecurityActivityLogListInitial', () {
       final container = makeContainer(FakeAdminRepository());
       addTearDown(container.dispose);
-      expect(
-        container.read(securityActivityLogListProvider),
-        isA<SecurityActivityLogListInitial>(),
-      );
+      expect(container.read(securityActivityLogListProvider), isA<SecurityActivityLogListInitial>());
     });
 
     test('load() → SecurityActivityLogListLoaded with activity entries', () async {
       final fake = FakeAdminRepository();
       fake.onGetSecurityAdminActivityLogs = () async => {
-            'success': true,
-            'data': [
-              {
-                'id': 'act-1',
-                'admin_name': 'Admin User',
-                'action': 'updated_policy',
-                'entity_type': 'SecurityPolicy',
-                'entity_id': 'pol-1',
-                'ip_address': '192.168.0.1',
-                'created_at': '2025-01-01T00:00:00Z',
-              }
-            ],
-            'meta': {'total': 1, 'current_page': 1},
-          };
+        'success': true,
+        'data': [
+          {
+            'id': 'act-1',
+            'admin_name': 'Admin User',
+            'action': 'updated_policy',
+            'entity_type': 'SecurityPolicy',
+            'entity_id': 'pol-1',
+            'ip_address': '192.168.0.1',
+            'created_at': '2025-01-01T00:00:00Z',
+          },
+        ],
+        'meta': {'total': 1, 'current_page': 1},
+      };
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -1109,8 +989,7 @@ void main() {
 
     test('load() → SecurityActivityLogListError on exception', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityAdminActivityLogs =
-          () async => throw Exception('Not authorized');
+      fake.onGetSecurityAdminActivityLogs = () async => throw Exception('Not authorized');
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -1123,8 +1002,7 @@ void main() {
 
     test('load() with empty result → SecurityActivityLogListLoaded with empty data', () async {
       final fake = FakeAdminRepository();
-      fake.onGetSecurityAdminActivityLogs =
-          () async => {'success': true, 'data': <dynamic>[]};
+      fake.onGetSecurityAdminActivityLogs = () async => {'success': true, 'data': <dynamic>[]};
       final container = makeContainer(fake);
       addTearDown(container.dispose);
 
@@ -1152,7 +1030,7 @@ void main() {
             'user_agent': 'Flutter/3.10',
             'revoked_at': null,
             'last_active_at': '2025-01-01T00:00:00Z',
-          }
+          },
         ],
         'meta': {'total': 1, 'current_page': 1, 'last_page': 1},
       };
@@ -1171,11 +1049,7 @@ void main() {
     });
 
     test('session revoke-all response has revoked_count', () {
-      final response = {
-        'success': true,
-        'message': '5 sessions revoked',
-        'revoked_count': 5,
-      };
+      final response = {'success': true, 'message': '5 sessions revoked', 'revoked_count': 5};
       expect(response['revoked_count'], greaterThanOrEqualTo(0));
     });
 
@@ -1234,8 +1108,10 @@ void main() {
         'store_name': 'Branch A',
         'created_at': '2025-01-01T00:00:00Z',
       };
-      expect(log['action'], isIn(['login', 'logout', 'pin_override', 'failed_login',
-          'settings_change', 'remote_wipe', 'terminal_credential_update']));
+      expect(
+        log['action'],
+        isIn(['login', 'logout', 'pin_override', 'failed_login', 'settings_change', 'remote_wipe', 'terminal_credential_update']),
+      );
       expect(log['user_type'], isIn(['staff', 'owner', 'system']));
     });
 
@@ -1312,8 +1188,7 @@ void main() {
         ApiEndpoints.adminSecurityActivityLogById('x'),
       ];
       for (final ep in endpoints) {
-        expect(ep, startsWith('/admin/security-center/'),
-            reason: 'Endpoint $ep must start with /admin/security-center/');
+        expect(ep, startsWith('/admin/security-center/'), reason: 'Endpoint $ep must start with /admin/security-center/');
       }
     });
 
@@ -1361,8 +1236,7 @@ void main() {
     });
 
     test('SecurityTrustedDeviceListState pattern matching is exhaustive', () {
-      SecurityTrustedDeviceListState state =
-          const SecurityTrustedDeviceListError('test');
+      SecurityTrustedDeviceListState state = const SecurityTrustedDeviceListError('test');
       final result = switch (state) {
         SecurityTrustedDeviceListInitial() => 'initial',
         SecurityTrustedDeviceListLoading() => 'loading',
@@ -1373,8 +1247,7 @@ void main() {
     });
 
     test('SecurityLoginAttemptListState pattern matching is exhaustive', () {
-      SecurityLoginAttemptListState state =
-          const SecurityLoginAttemptListLoaded({'data': <dynamic>[]});
+      SecurityLoginAttemptListState state = const SecurityLoginAttemptListLoaded({'data': <dynamic>[]});
       final result = switch (state) {
         SecurityLoginAttemptListInitial() => 'initial',
         SecurityLoginAttemptListLoading() => 'loading',
@@ -1385,8 +1258,7 @@ void main() {
     });
 
     test('SecurityAuditLogListState pattern matching is exhaustive', () {
-      SecurityAuditLogListState state =
-          const SecurityAuditLogListLoading();
+      SecurityAuditLogListState state = const SecurityAuditLogListLoading();
       final result = switch (state) {
         SecurityAuditLogListInitial() => 'initial',
         SecurityAuditLogListLoading() => 'loading',
@@ -1397,8 +1269,7 @@ void main() {
     });
 
     test('SecurityActivityLogListState pattern matching is exhaustive', () {
-      SecurityActivityLogListState state =
-          const SecurityActivityLogListInitial();
+      SecurityActivityLogListState state = const SecurityActivityLogListInitial();
       final result = switch (state) {
         SecurityActivityLogListInitial() => 'initial',
         SecurityActivityLogListLoading() => 'loading',
