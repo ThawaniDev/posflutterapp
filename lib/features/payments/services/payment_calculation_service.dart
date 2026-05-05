@@ -165,6 +165,8 @@ class PaymentCalculationService {
         return l10n?.paymentMispay ?? 'MisPay';
       case PaymentMethodKey.madfu:
         return l10n?.paymentMadfu ?? 'Madfu';
+      case PaymentMethodKey.softPos:
+        return 'SoftPOS';
       case PaymentMethodKey.other:
         return l10n?.paymentOther ?? 'Other';
     }
@@ -206,6 +208,8 @@ class PaymentCalculationService {
         return 'ميس باي';
       case PaymentMethodKey.madfu:
         return 'مدفوع';
+      case PaymentMethodKey.softPos:
+        return 'نقطة بيع بلمسة';
       case PaymentMethodKey.other:
         return 'أخرى';
     }

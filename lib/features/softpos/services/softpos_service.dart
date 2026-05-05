@@ -10,6 +10,7 @@ import 'package:edfapay_softpos_sdk/enums/presentation.dart';
 import 'package:edfapay_softpos_sdk/enums/purchase_secondary_action.dart';
 import 'package:edfapay_softpos_sdk/helpers.dart';
 import 'package:edfapay_softpos_sdk/models/edfapay_credentials.dart';
+import 'package:edfapay_softpos_sdk/models/transaction.dart' as edfapay;
 import 'package:edfapay_softpos_sdk/models/txn_params.dart';
 
 /// Result returned after a SoftPOS payment attempt.
@@ -167,6 +168,9 @@ class SoftPosService {
 
     final completer = Completer<SoftPosPaymentResult>();
     final params = TxnParams(amount: amount, orderId: orderId);
+    if (rrn != null) {
+      params.setOriginalTransaction(edfapay.Transaction.withRRN(rrn, null));
+    }
 
     EdfaPayPlugin.refund(
       txnParams: params,

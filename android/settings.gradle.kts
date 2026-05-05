@@ -17,23 +17,11 @@ pluginManagement {
     }
 }
 
-// Load EdfaPay partner repo credentials from gradle.properties
-val partnerRepoUsername: String by settings
-val partnerRepoPassword: String by settings
-
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
-        // EdfaPay SoftPOS private maven repository
-        maven {
-            url = uri("https://maven.edfapay.com/repository/edfapay-sdk/")
-            credentials {
-                username = partnerRepoUsername
-                password = partnerRepoPassword
-            }
-        }
     }
 }
 

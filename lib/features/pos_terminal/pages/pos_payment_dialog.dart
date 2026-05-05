@@ -303,8 +303,10 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         }
       }
       // Execute NFC payment for each softPos leg
-      for (final leg in softPosLegs) {
-        final result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: '${widget.sessionId}-softpos');
+      for (int i = 0; i < softPosLegs.length; i++) {
+        final leg = softPosLegs[i];
+        final orderId = '${widget.sessionId}-softpos-$i';
+        final result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: orderId);
         if (!result.success) {
           setState(() => _error = result.errorMessage ?? AppLocalizations.of(context)!.softposPaymentFailed);
           return;

@@ -16,6 +16,7 @@ enum PaymentMethodKey {
   tamara('tamara'),
   mispay('mispay'),
   madfu('madfu'),
+  softPos('soft_pos'),
   other('other');
 
   const PaymentMethodKey(this.value);

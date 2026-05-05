@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 import 'package:wameedpos/features/pos_terminal/models/transaction_item.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
@@ -299,7 +300,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
         for (final leg in softPosLegs) {
           final legAmount = (leg['amount'] as num).toStringAsFixed(2);
           final originalRrn = _transaction?.payments
-              ?.firstWhere((p) => p.method.toString().contains('soft_pos'), orElse: () => _transaction!.payments!.first)
+              ?.firstWhere((p) => p.method == PaymentMethodKey.softPos, orElse: () => _transaction!.payments!.first)
               .cardReference;
           final refundResult = await softPosService.refund(amount: legAmount, orderId: _transaction!.id, rrn: originalRrn);
           if (!refundResult.success) {

@@ -28,7 +28,7 @@ android {
         applicationId = "com.wameedpos.provider"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 29 // EdfaPay SoftPOS SDK requires API 29+
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -41,6 +41,20 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    packaging {
+        resources {
+            // Apache Tika, HttpClient, and HttpCore all ship META-INF/DEPENDENCIES.
+            // Pick-first (or exclude) to avoid mergeJavaResource failure.
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt"
+            )
+        }
+    }
 }
 
 flutter {
@@ -49,4 +63,10 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+}
+
+// xpp3 and kxml2 both provide org.xmlpull.v1.XmlPullParser — exclude xpp3 to avoid
+// duplicate class failures. xpp3 is a transitive dep of the EdfaPay SDK.
+configurations.all {
+    exclude(group = "xpp3", module = "xpp3")
 }
