@@ -17,10 +17,7 @@ void main() {
 
     test('dateRange serialises to date_from and date_to in yyyy-MM-dd', () {
       final filters = ReportFilters(
-        dateRange: DateTimeRange(
-          start: DateTime(2024, 1, 7),
-          end: DateTime(2024, 1, 31),
-        ),
+        dateRange: DateTimeRange(start: DateTime(2024, 1, 7), end: DateTime(2024, 1, 31)),
       );
 
       final params = filters.toQueryParams();
@@ -31,10 +28,7 @@ void main() {
 
     test('single-digit month and day are zero-padded', () {
       final filters = ReportFilters(
-        dateRange: DateTimeRange(
-          start: DateTime(2024, 3, 5),
-          end: DateTime(2024, 9, 1),
-        ),
+        dateRange: DateTimeRange(start: DateTime(2024, 3, 5), end: DateTime(2024, 9, 1)),
       );
 
       final params = filters.toQueryParams();

@@ -280,11 +280,7 @@ void main() {
 
   group('LabelPrintStats', () {
     test('fromJson parses all fields', () {
-      final json = {
-        'jobs_last_30_days': 12,
-        'products_last_30_days': 45,
-        'labels_last_30_days': 90,
-      };
+      final json = {'jobs_last_30_days': 12, 'products_last_30_days': 45, 'labels_last_30_days': 90};
 
       final stats = LabelPrintStats.fromJson(json);
       expect(stats.jobsLast30Days, 12);
@@ -293,11 +289,7 @@ void main() {
     });
 
     test('fromJson handles numeric types (int and double)', () {
-      final json = {
-        'jobs_last_30_days': 5.0,
-        'products_last_30_days': 20.0,
-        'labels_last_30_days': 40.0,
-      };
+      final json = {'jobs_last_30_days': 5.0, 'products_last_30_days': 20.0, 'labels_last_30_days': 40.0};
 
       final stats = LabelPrintStats.fromJson(json);
       expect(stats.jobsLast30Days, 5);
@@ -313,11 +305,7 @@ void main() {
     });
 
     test('toJson round-trips correctly', () {
-      const stats = LabelPrintStats(
-        jobsLast30Days: 7,
-        productsLast30Days: 21,
-        labelsLast30Days: 63,
-      );
+      const stats = LabelPrintStats(jobsLast30Days: 7, productsLast30Days: 21, labelsLast30Days: 63);
 
       final json = stats.toJson();
       expect(json['jobs_last_30_days'], 7);

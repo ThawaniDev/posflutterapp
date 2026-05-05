@@ -222,52 +222,51 @@ class _FakePaymentRepository extends PaymentRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getReconciliation({String? startDate, String? endDate}) async =>
-      _reconciliationResult!;
+  Future<Map<String, dynamic>> getReconciliation({String? startDate, String? endDate}) async => _reconciliationResult!;
 }
 
 // ─── Minimal model builders ───────────────────────────────────────
 
 Payment _payment({String id = 'pay-1', String method = 'cash', double amount = 50.0}) => Payment(
-      id: id,
-      transactionId: 'tx-$id',
-      method: Payment.fromJson({'id': id, 'transaction_id': 'tx-$id', 'method': method, 'amount': amount.toString()}).method,
-      amount: amount,
-    );
+  id: id,
+  transactionId: 'tx-$id',
+  method: Payment.fromJson({'id': id, 'transaction_id': 'tx-$id', 'method': method, 'amount': amount.toString()}).method,
+  amount: amount,
+);
 
 Refund _refund({String id = 'ref-1', String method = 'cash', double amount = 25.0}) => Refund.fromJson({
-      'id': id,
-      'return_id': 'ret-$id',
-      'method': method,
-      'amount': amount.toString(),
-      'processed_by': 'user-001',
-    });
+  'id': id,
+  'return_id': 'ret-$id',
+  'method': method,
+  'amount': amount.toString(),
+  'processed_by': 'user-001',
+});
 
 CashSession _session({String id = 'cs-1', String status = 'open'}) => CashSession.fromJson({
-      'id': id,
-      'store_id': 'store-001',
-      'opened_by': 'user-001',
-      'opening_float': '300.00',
-      'status': status,
-    });
+  'id': id,
+  'store_id': 'store-001',
+  'opened_by': 'user-001',
+  'opening_float': '300.00',
+  'status': status,
+});
 
 CashEvent _cashEvent({String id = 'ce-1', String type = 'cash_in'}) => CashEvent.fromJson({
-      'id': id,
-      'cash_session_id': 'cs-001',
-      'type': type,
-      'amount': '100.00',
-      'reason': 'test',
-      'performed_by': 'user-001',
-    });
+  'id': id,
+  'cash_session_id': 'cs-001',
+  'type': type,
+  'amount': '100.00',
+  'reason': 'test',
+  'performed_by': 'user-001',
+});
 
 Expense _expense({String id = 'exp-1', String category = 'supplies', double amount = 45.0}) => Expense.fromJson({
-      'id': id,
-      'store_id': 'store-001',
-      'amount': amount.toString(),
-      'category': category,
-      'recorded_by': 'user-001',
-      'expense_date': '2026-05-01',
-    });
+  'id': id,
+  'store_id': 'store-001',
+  'amount': amount.toString(),
+  'category': category,
+  'recorded_by': 'user-001',
+  'expense_date': '2026-05-01',
+});
 
 GiftCard _card({String id = 'gc-1', String code = 'GC-TEST', String status = 'active', double balance = 150.0}) =>
     GiftCard.fromJson({
@@ -306,8 +305,7 @@ void main() {
     });
 
     test('load transitions Initial → Loading → Loaded', () async {
-      final repo = _FakePaymentRepository()
-        ..stubPayments([_payment(id: 'pay-1'), _payment(id: 'pay-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubPayments([_payment(id: 'pay-1'), _payment(id: 'pay-2')], total: 2);
       final notifier = PaymentsNotifier(repo);
 
       final states = await _collectStates(notifier, () => notifier.load());
@@ -322,8 +320,7 @@ void main() {
 
     test('load with filters stores them for subsequent calls', () async {
       int callCount = 0;
-      final repo = _FakePaymentRepository()
-        ..stubPayments([_payment()]);
+      final repo = _FakePaymentRepository()..stubPayments([_payment()]);
       final notifier = PaymentsNotifier(repo);
 
       // Intercept to verify filter storage
@@ -337,15 +334,17 @@ void main() {
 
     test('load error transitions to PaymentsError', () async {
       final repo = _FakePaymentRepository()
-        ..stubPaymentsError(DioException(
-          requestOptions: RequestOptions(path: '/payments'),
-          response: Response(
-            data: {'success': false, 'message': 'Unauthorized'},
+        ..stubPaymentsError(
+          DioException(
             requestOptions: RequestOptions(path: '/payments'),
-            statusCode: 401,
+            response: Response(
+              data: {'success': false, 'message': 'Unauthorized'},
+              requestOptions: RequestOptions(path: '/payments'),
+              statusCode: 401,
+            ),
+            type: DioExceptionType.badResponse,
           ),
-          type: DioExceptionType.badResponse,
-        ));
+        );
       final notifier = PaymentsNotifier(repo);
 
       await notifier.load();
@@ -355,14 +354,7 @@ void main() {
     });
 
     test('loadMore appends to loaded list', () async {
-      final repo = _FakePaymentRepository()
-        ..stubPayments(
-          [_payment(id: 'pay-1')],
-          total: 3,
-          page: 1,
-          lastPage: 2,
-          perPage: 1,
-        );
+      final repo = _FakePaymentRepository()..stubPayments([_payment(id: 'pay-1')], total: 3, page: 1, lastPage: 2, perPage: 1);
       final notifier = PaymentsNotifier(repo);
       await notifier.load();
 
@@ -377,8 +369,7 @@ void main() {
     });
 
     test('loadMore does nothing if no more pages', () async {
-      final repo = _FakePaymentRepository()
-        ..stubPayments([_payment()], total: 1, page: 1, lastPage: 1, perPage: 20);
+      final repo = _FakePaymentRepository()..stubPayments([_payment()], total: 1, page: 1, lastPage: 1, perPage: 20);
       final notifier = PaymentsNotifier(repo);
       await notifier.load();
 
@@ -405,7 +396,23 @@ void main() {
     test('createPayment error transitions to PaymentsError', () async {
       final repo = _FakePaymentRepository()
         ..stubPayments([_payment()])
-        ..stubPaymentsError(DioException(
+        ..stubPaymentsError(
+          DioException(
+            requestOptions: RequestOptions(path: '/payments'),
+            response: Response(
+              data: {'success': false, 'message': 'Validation failed'},
+              requestOptions: RequestOptions(path: '/payments'),
+              statusCode: 422,
+            ),
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      final notifier = PaymentsNotifier(repo);
+      await notifier.load(); // sets initial loaded state (clears error stub for list)
+
+      // Re-stub to error on second listPayments call (triggered by createPayment)
+      repo.stubPaymentsError(
+        DioException(
           requestOptions: RequestOptions(path: '/payments'),
           response: Response(
             data: {'success': false, 'message': 'Validation failed'},
@@ -413,20 +420,8 @@ void main() {
             statusCode: 422,
           ),
           type: DioExceptionType.badResponse,
-        ));
-      final notifier = PaymentsNotifier(repo);
-      await notifier.load(); // sets initial loaded state (clears error stub for list)
-
-      // Re-stub to error on second listPayments call (triggered by createPayment)
-      repo.stubPaymentsError(DioException(
-        requestOptions: RequestOptions(path: '/payments'),
-        response: Response(
-          data: {'success': false, 'message': 'Validation failed'},
-          requestOptions: RequestOptions(path: '/payments'),
-          statusCode: 422,
         ),
-        type: DioExceptionType.badResponse,
-      ));
+      );
       repo.stubCreatePayment(_payment());
       await notifier.createPayment({});
 
@@ -444,8 +439,7 @@ void main() {
     });
 
     test('load transitions to CashSessionsLoaded', () async {
-      final repo = _FakePaymentRepository()
-        ..stubSessions([_session(id: 'cs-1'), _session(id: 'cs-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubSessions([_session(id: 'cs-1'), _session(id: 'cs-2')], total: 2);
       final notifier = CashSessionsNotifier(repo);
 
       await notifier.load();
@@ -457,15 +451,17 @@ void main() {
 
     test('load error sets CashSessionsError', () async {
       final repo = _FakePaymentRepository()
-        ..stubSessionsError(DioException(
-          requestOptions: RequestOptions(path: '/cash-sessions'),
-          response: Response(
-            data: {'success': false, 'message': 'Forbidden'},
+        ..stubSessionsError(
+          DioException(
             requestOptions: RequestOptions(path: '/cash-sessions'),
-            statusCode: 403,
+            response: Response(
+              data: {'success': false, 'message': 'Forbidden'},
+              requestOptions: RequestOptions(path: '/cash-sessions'),
+              statusCode: 403,
+            ),
+            type: DioExceptionType.badResponse,
           ),
-          type: DioExceptionType.badResponse,
-        ));
+        );
       final notifier = CashSessionsNotifier(repo);
 
       await notifier.load();
@@ -475,8 +471,7 @@ void main() {
     });
 
     test('loadMore appends sessions', () async {
-      final repo = _FakePaymentRepository()
-        ..stubSessions([_session(id: 'cs-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
+      final repo = _FakePaymentRepository()..stubSessions([_session(id: 'cs-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
       final notifier = CashSessionsNotifier(repo);
       await notifier.load();
 
@@ -535,8 +530,7 @@ void main() {
     });
 
     test('load transitions to ExpensesLoaded', () async {
-      final repo = _FakePaymentRepository()
-        ..stubExpenses([_expense(id: 'exp-1'), _expense(id: 'exp-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubExpenses([_expense(id: 'exp-1'), _expense(id: 'exp-2')], total: 2);
       final notifier = ExpensesNotifier(repo);
 
       await notifier.load();
@@ -560,8 +554,7 @@ void main() {
     });
 
     test('loadMore appends expenses', () async {
-      final repo = _FakePaymentRepository()
-        ..stubExpenses([_expense(id: 'exp-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
+      final repo = _FakePaymentRepository()..stubExpenses([_expense(id: 'exp-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
       final notifier = ExpensesNotifier(repo);
       await notifier.load();
 
@@ -573,8 +566,7 @@ void main() {
     });
 
     test('deleteExpense removes item optimistically from state', () async {
-      final repo = _FakePaymentRepository()
-        ..stubExpenses([_expense(id: 'exp-1'), _expense(id: 'exp-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubExpenses([_expense(id: 'exp-1'), _expense(id: 'exp-2')], total: 2);
       final notifier = ExpensesNotifier(repo);
       await notifier.load();
 
@@ -689,8 +681,7 @@ void main() {
     });
 
     test('load transitions to GiftCardListLoaded', () async {
-      final repo = _FakePaymentRepository()
-        ..stubGiftCards([_card(id: 'gc-1'), _card(id: 'gc-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubGiftCards([_card(id: 'gc-1'), _card(id: 'gc-2')], total: 2);
       final notifier = GiftCardListNotifier(repo);
 
       await notifier.load();
@@ -710,8 +701,7 @@ void main() {
     });
 
     test('loadMore appends cards', () async {
-      final repo = _FakePaymentRepository()
-        ..stubGiftCards([_card(id: 'gc-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
+      final repo = _FakePaymentRepository()..stubGiftCards([_card(id: 'gc-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
       final notifier = GiftCardListNotifier(repo);
       await notifier.load();
 
@@ -747,23 +737,19 @@ void main() {
       final notifier = GiftCardListNotifier(repo);
       await notifier.load();
 
-      final throwingRepo = _ThrowingGiftCardRepo(DioException(
-        requestOptions: RequestOptions(path: '/gift-cards/GC-001/deactivate'),
-        response: Response(
-          data: {'success': false, 'message': 'Card already deactivated'},
+      final throwingRepo = _ThrowingGiftCardRepo(
+        DioException(
           requestOptions: RequestOptions(path: '/gift-cards/GC-001/deactivate'),
-          statusCode: 409,
+          response: Response(
+            data: {'success': false, 'message': 'Card already deactivated'},
+            requestOptions: RequestOptions(path: '/gift-cards/GC-001/deactivate'),
+            statusCode: 409,
+          ),
+          type: DioExceptionType.badResponse,
         ),
-        type: DioExceptionType.badResponse,
-      ));
-      final notifier2 = GiftCardListNotifier(throwingRepo);
-      notifier2.state = GiftCardListLoaded(
-        cards: [initial],
-        total: 1,
-        currentPage: 1,
-        lastPage: 1,
-        perPage: 20,
       );
+      final notifier2 = GiftCardListNotifier(throwingRepo);
+      notifier2.state = GiftCardListLoaded(cards: [initial], total: 1, currentPage: 1, lastPage: 1, perPage: 20);
 
       await notifier2.deactivate('GC-001');
 
@@ -782,8 +768,7 @@ void main() {
     });
 
     test('load transitions to RefundsLoaded', () async {
-      final repo = _FakePaymentRepository()
-        ..stubRefunds([_refund(id: 'ref-1'), _refund(id: 'ref-2')], total: 2);
+      final repo = _FakePaymentRepository()..stubRefunds([_refund(id: 'ref-1'), _refund(id: 'ref-2')], total: 2);
       final notifier = RefundsNotifier(repo);
 
       await notifier.load();
@@ -794,15 +779,17 @@ void main() {
 
     test('load error sets RefundsError', () async {
       final repo = _FakePaymentRepository()
-        ..stubRefundsError(DioException(
-          requestOptions: RequestOptions(path: '/payments/refunds'),
-          response: Response(
-            data: {'success': false, 'message': 'Server Error'},
+        ..stubRefundsError(
+          DioException(
             requestOptions: RequestOptions(path: '/payments/refunds'),
-            statusCode: 500,
+            response: Response(
+              data: {'success': false, 'message': 'Server Error'},
+              requestOptions: RequestOptions(path: '/payments/refunds'),
+              statusCode: 500,
+            ),
+            type: DioExceptionType.badResponse,
           ),
-          type: DioExceptionType.badResponse,
-        ));
+        );
       final notifier = RefundsNotifier(repo);
 
       await notifier.load();
@@ -811,8 +798,7 @@ void main() {
     });
 
     test('loadMore appends refunds and stops if no more', () async {
-      final repo = _FakePaymentRepository()
-        ..stubRefunds([_refund(id: 'ref-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
+      final repo = _FakePaymentRepository()..stubRefunds([_refund(id: 'ref-1')], total: 2, page: 1, lastPage: 2, perPage: 1);
       final notifier = RefundsNotifier(repo);
       await notifier.load();
 
@@ -853,17 +839,20 @@ void main() {
     });
 
     test('createRefund error returns null', () async {
-      final repo = _FakePaymentRepository()
-        ..stubCreateRefund(_refund()); // won't be reached since error thrown
-      final notifier = RefundsNotifier(_ThrowingRefundRepo(DioException(
-        requestOptions: RequestOptions(path: '/payments/pay-001/refund'),
-        response: Response(
-          data: {'success': false, 'message': 'Payment not found'},
-          requestOptions: RequestOptions(path: '/payments/pay-001/refund'),
-          statusCode: 404,
+      final repo = _FakePaymentRepository()..stubCreateRefund(_refund()); // won't be reached since error thrown
+      final notifier = RefundsNotifier(
+        _ThrowingRefundRepo(
+          DioException(
+            requestOptions: RequestOptions(path: '/payments/pay-001/refund'),
+            response: Response(
+              data: {'success': false, 'message': 'Payment not found'},
+              requestOptions: RequestOptions(path: '/payments/pay-001/refund'),
+              statusCode: 404,
+            ),
+            type: DioExceptionType.badResponse,
+          ),
         ),
-        type: DioExceptionType.badResponse,
-      )));
+      );
 
       final result = await notifier.createRefund('pay-001', {});
 
@@ -900,15 +889,17 @@ void main() {
 
     test('load error sets DailySummaryError', () async {
       final repo = _FakePaymentRepository()
-        ..stubDailySummaryError(DioException(
-          requestOptions: RequestOptions(path: '/finance/daily-summary'),
-          response: Response(
-            data: {'success': false, 'message': 'Not found'},
+        ..stubDailySummaryError(
+          DioException(
             requestOptions: RequestOptions(path: '/finance/daily-summary'),
-            statusCode: 404,
+            response: Response(
+              data: {'success': false, 'message': 'Not found'},
+              requestOptions: RequestOptions(path: '/finance/daily-summary'),
+              statusCode: 404,
+            ),
+            type: DioExceptionType.badResponse,
           ),
-          type: DioExceptionType.badResponse,
-        ));
+        );
       final notifier = DailySummaryNotifier(repo);
 
       await notifier.load();
@@ -934,10 +925,7 @@ void main() {
       final repo = _FakePaymentRepository()..stubReconciliation(data);
       final notifier = ReconciliationNotifier(repo);
 
-      final states = await _collectStates(
-        notifier,
-        () => notifier.load(startDate: '2026-05-01', endDate: '2026-05-31'),
-      );
+      final states = await _collectStates(notifier, () => notifier.load(startDate: '2026-05-01', endDate: '2026-05-31'));
 
       expect(states[0], isA<ReconciliationInitial>());
       expect(states[1], isA<ReconciliationLoading>());

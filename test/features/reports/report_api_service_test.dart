@@ -28,8 +28,7 @@ Dio _fakeDio(Map<String, dynamic> Function(RequestOptions opts) handler) {
 }
 
 /// Standard API envelope.
-Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) =>
-    {'success': true, 'message': message, 'data': data};
+Map<String, dynamic> _envelope(dynamic data, {String message = 'ok'}) => {'success': true, 'message': message, 'data': data};
 
 /// Returns a Dio that always rejects with a 500 DioException.
 Dio _errorDio() {
@@ -80,10 +79,7 @@ void main() {
 
     test('getSalesSummary: passes filter query params', () async {
       final filter = ReportFilters(
-        dateRange: DateTimeRange(
-          start: DateTime(2024, 6, 1),
-          end: DateTime(2024, 6, 30),
-        ),
+        dateRange: DateTimeRange(start: DateTime(2024, 6, 1), end: DateTime(2024, 6, 30)),
         granularity: 'monthly',
         compare: true,
         orderSource: 'pos',
@@ -304,12 +300,7 @@ void main() {
     test('getInventoryValuation: calls correct endpoint and returns Map', () async {
       final dio = _fakeDio((opts) {
         expect(opts.path, ApiEndpoints.inventoryValuation);
-        return _envelope({
-          'total_stock_value': 50000.0,
-          'total_cost_value': 35000.0,
-          'total_products': 120,
-          'products': [],
-        });
+        return _envelope({'total_stock_value': 50000.0, 'total_cost_value': 35000.0, 'total_products': 120, 'products': []});
       });
 
       final svc = ReportApiService(dio);

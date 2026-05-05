@@ -15,9 +15,7 @@ class MockAddOnsNotifier extends StateNotifier<AddOnsState> implements AddOnsNot
 
 Widget _wrap(Widget child, {required AddOnsState state, Locale? locale}) {
   return ProviderScope(
-    overrides: [
-      addOnsProvider.overrideWith((_) => MockAddOnsNotifier(state)),
-    ],
+    overrides: [addOnsProvider.overrideWith((_) => MockAddOnsNotifier(state))],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -32,13 +30,7 @@ void main() {
     testWidgets('shows Arabic add-on name on available tab', (tester) async {
       const state = AddOnsLoaded(
         availableAddOns: [
-          {
-            'id': 'addon-1',
-            'name': 'SoftPOS',
-            'name_ar': 'سوفت بوس',
-            'monthly_price': 49.99,
-            'description': 'NFC payments',
-          },
+          {'id': 'addon-1', 'name': 'SoftPOS', 'name_ar': 'سوفت بوس', 'monthly_price': 49.99, 'description': 'NFC payments'},
         ],
         storeAddOns: [],
       );

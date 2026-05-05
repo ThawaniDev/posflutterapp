@@ -21,7 +21,13 @@ class FakeDio extends Fake implements Dio {
   Map<String, dynamic>? lastQueryParameters;
   dynamic lastData;
 
-  Response _respond() => nextResponse ?? Response(data: {'success': true, 'data': {}}, statusCode: 200, requestOptions: RequestOptions(path: ''));
+  Response _respond() =>
+      nextResponse ??
+      Response(
+        data: {'success': true, 'data': {}},
+        statusCode: 200,
+        requestOptions: RequestOptions(path: ''),
+      );
 
   @override
   Future<Response<T>> get<T>(
@@ -95,63 +101,50 @@ Map<String, dynamic> _templateJson({
   String name = 'Test Template',
   bool isPreset = false,
   bool isDefault = false,
-}) =>
-    {
-      'id': id,
-      'organization_id': 'org-1',
-      'name': name,
-      'label_width_mm': 50.0,
-      'label_height_mm': 30.0,
-      'layout_json': <String, dynamic>{},
-      'is_preset': isPreset,
-      'is_default': isDefault,
-      'sync_version': 1,
-      'created_at': '2024-01-01T00:00:00.000000Z',
-      'updated_at': '2024-01-01T00:00:00.000000Z',
-    };
+}) => {
+  'id': id,
+  'organization_id': 'org-1',
+  'name': name,
+  'label_width_mm': 50.0,
+  'label_height_mm': 30.0,
+  'layout_json': <String, dynamic>{},
+  'is_preset': isPreset,
+  'is_default': isDefault,
+  'sync_version': 1,
+  'created_at': '2024-01-01T00:00:00.000000Z',
+  'updated_at': '2024-01-01T00:00:00.000000Z',
+};
 
 Map<String, dynamic> _historyJson({String id = 'h1'}) => {
-      'id': id,
-      'store_id': 's1',
-      'template_id': 't1',
-      'template_name': 'Standard',
-      'printed_by': 'u1',
-      'printed_by_name': 'Alice',
-      'product_count': 3,
-      'total_labels': 9,
-      'printer_name': 'Zebra',
-      'printer_language': 'zpl',
-      'job_pages': 1,
-      'duration_ms': 800,
-      'printed_at': '2024-06-01T10:00:00.000000Z',
-    };
+  'id': id,
+  'store_id': 's1',
+  'template_id': 't1',
+  'template_name': 'Standard',
+  'printed_by': 'u1',
+  'printed_by_name': 'Alice',
+  'product_count': 3,
+  'total_labels': 9,
+  'printer_name': 'Zebra',
+  'printer_language': 'zpl',
+  'job_pages': 1,
+  'duration_ms': 800,
+  'printed_at': '2024-06-01T10:00:00.000000Z',
+};
 
-Map<String, dynamic> _listResponse(List<Map<String, dynamic>> items) => {
-      'success': true,
-      'data': items,
-    };
+Map<String, dynamic> _listResponse(List<Map<String, dynamic>> items) => {'success': true, 'data': items};
 
 Map<String, dynamic> _paginatedResponse(List<Map<String, dynamic>> items) => {
-      'success': true,
-      'data': {
-        'data': items,
-        'current_page': 1,
-        'last_page': 1,
-        'total': items.length,
-        'per_page': 20,
-      },
-    };
+  'success': true,
+  'data': {'data': items, 'current_page': 1, 'last_page': 1, 'total': items.length, 'per_page': 20},
+};
 
-Map<String, dynamic> _singleResponse(Map<String, dynamic> item) => {
-      'success': true,
-      'data': item,
-    };
+Map<String, dynamic> _singleResponse(Map<String, dynamic> item) => {'success': true, 'data': item};
 
 Response _makeResponse(Map<String, dynamic> body) => Response(
-      data: body,
-      statusCode: 200,
-      requestOptions: RequestOptions(path: ''),
-    );
+  data: body,
+  statusCode: 200,
+  requestOptions: RequestOptions(path: ''),
+);
 
 // ─── Tests ──────────────────────────────────────────────────────
 
@@ -207,9 +200,7 @@ void main() {
     });
 
     test('parses returned templates correctly', () async {
-      fakeDio.nextResponse = _makeResponse(_listResponse([
-        _templateJson(id: 'id-1', name: 'Wide Label', isDefault: true),
-      ]));
+      fakeDio.nextResponse = _makeResponse(_listResponse([_templateJson(id: 'id-1', name: 'Wide Label', isDefault: true)]));
 
       final result = await repository.listTemplates();
 
@@ -444,11 +435,7 @@ void main() {
     test('calls GET labelPrintHistoryStats endpoint', () async {
       fakeDio.nextResponse = _makeResponse({
         'success': true,
-        'data': {
-          'jobs_last_30_days': 5,
-          'products_last_30_days': 15,
-          'labels_last_30_days': 45,
-        },
+        'data': {'jobs_last_30_days': 5, 'products_last_30_days': 15, 'labels_last_30_days': 45},
       });
 
       final stats = await repository.getPrintHistoryStats();
@@ -464,11 +451,7 @@ void main() {
     test('returns zeros when all counts are 0', () async {
       fakeDio.nextResponse = _makeResponse({
         'success': true,
-        'data': {
-          'jobs_last_30_days': 0,
-          'products_last_30_days': 0,
-          'labels_last_30_days': 0,
-        },
+        'data': {'jobs_last_30_days': 0, 'products_last_30_days': 0, 'labels_last_30_days': 0},
       });
 
       final stats = await repository.getPrintHistoryStats();

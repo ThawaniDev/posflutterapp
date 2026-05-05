@@ -17,7 +17,6 @@ class LabelTemplatesLoading extends LabelTemplatesState {
 }
 
 class LabelTemplatesLoaded extends LabelTemplatesState {
-
   const LabelTemplatesLoaded({required this.templates, this.presets = const []});
   final List<LabelTemplate> templates;
   final List<LabelTemplate> presets;

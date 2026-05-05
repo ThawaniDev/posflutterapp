@@ -121,8 +121,7 @@ class _FakeRepo extends ReportRepository {
       onGetCustomerRetention?.call(filters) ?? super.getCustomerRetention(filters: filters);
 
   @override
-  Future<List<Map<String, dynamic>>> getScheduledReports() =>
-      onGetScheduledReports?.call() ?? super.getScheduledReports();
+  Future<List<Map<String, dynamic>>> getScheduledReports() => onGetScheduledReports?.call() ?? super.getScheduledReports();
 }
 
 /// A no-op Dio used to satisfy [ReportApiService] constructor when the
@@ -139,9 +138,7 @@ ReportApiService _noopApiService() {
 /// Build a [ProviderContainer] that overrides [reportRepositoryProvider] with
 /// the given [fakeRepo].
 ProviderContainer _container(_FakeRepo fakeRepo) {
-  return ProviderContainer(
-    overrides: [reportRepositoryProvider.overrideWithValue(fakeRepo)],
-  );
+  return ProviderContainer(overrides: [reportRepositoryProvider.overrideWithValue(fakeRepo)]);
 }
 
 // ─── Tests ────────────────────────────────────────────────────────
@@ -193,8 +190,7 @@ void main() {
     });
 
     test('transitions to SalesSummaryError on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetSalesSummary = (_) async => throw Exception('network error');
+      final repo = _FakeRepo()..onGetSalesSummary = (_) async => throw Exception('network error');
       final notifier = SalesSummaryNotifier(repo);
       await notifier.load();
 
@@ -206,10 +202,10 @@ void main() {
       final opts = RequestOptions(path: '/test');
       final repo = _FakeRepo()
         ..onGetSalesSummary = (_) async => throw DioException(
-              requestOptions: opts,
-              response: Response(requestOptions: opts, statusCode: 402),
-              type: DioExceptionType.badResponse,
-            );
+          requestOptions: opts,
+          response: Response(requestOptions: opts, statusCode: 402),
+          type: DioExceptionType.badResponse,
+        );
 
       final notifier = SalesSummaryNotifier(repo);
       await notifier.load();
@@ -283,8 +279,7 @@ void main() {
     });
 
     test('transitions to Error on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetProductPerformance = (_) async => throw Exception('timeout');
+      final repo = _FakeRepo()..onGetProductPerformance = (_) async => throw Exception('timeout');
       final notifier = ProductPerformanceNotifier(repo);
       await notifier.load();
 
@@ -335,8 +330,7 @@ void main() {
     });
 
     test('transitions to Error on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetDashboard = (_) async => throw Exception('server down');
+      final repo = _FakeRepo()..onGetDashboard = (_) async => throw Exception('server down');
       final notifier = DashboardNotifier(repo);
       await notifier.load();
 
@@ -364,8 +358,7 @@ void main() {
     });
 
     test('transitions to Error on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetStaffPerformance = (_) async => throw Exception('permission denied');
+      final repo = _FakeRepo()..onGetStaffPerformance = (_) async => throw Exception('permission denied');
       final notifier = StaffPerformanceNotifier(repo);
       await notifier.load();
 
@@ -426,8 +419,7 @@ void main() {
     });
 
     test('transitions to Error on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetInventoryValuation = (_) async => throw Exception('no data');
+      final repo = _FakeRepo()..onGetInventoryValuation = (_) async => throw Exception('no data');
       final notifier = InventoryValuationNotifier(repo);
       await notifier.load();
 
@@ -566,8 +558,7 @@ void main() {
     });
 
     test('transitions to Error on exception', () async {
-      final repo = _FakeRepo()
-        ..onGetSlowMovers = (_) async => throw Exception('failed');
+      final repo = _FakeRepo()..onGetSlowMovers = (_) async => throw Exception('failed');
       final notifier = SlowMoversNotifier(repo);
       await notifier.load();
 
@@ -601,8 +592,8 @@ void main() {
     test('productPerformanceProvider works with overridden repository', () async {
       final repo = _FakeRepo()
         ..onGetProductPerformance = (_) async => [
-              {'product_name': 'Test Product', 'total_revenue': 1.0, 'quantity_sold': 1},
-            ];
+          {'product_name': 'Test Product', 'total_revenue': 1.0, 'quantity_sold': 1},
+        ];
       final container = _container(repo);
       addTearDown(container.dispose);
 
@@ -614,8 +605,7 @@ void main() {
     });
 
     test('dashboard provider error propagates to state', () async {
-      final repo = _FakeRepo()
-        ..onGetDashboard = (_) async => throw Exception('conn refused');
+      final repo = _FakeRepo()..onGetDashboard = (_) async => throw Exception('conn refused');
       final container = _container(repo);
       addTearDown(container.dispose);
 

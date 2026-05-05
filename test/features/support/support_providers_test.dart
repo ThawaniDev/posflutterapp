@@ -76,13 +76,7 @@ class _MockSupportRepository extends SupportRepository {
     if (shouldThrow) throw Exception(throwMessage);
     return statsResult ??
         {
-          'data': {
-            'total': 5,
-            'open': 2,
-            'in_progress': 1,
-            'resolved': 1,
-            'closed': 1,
-          }
+          'data': {'total': 5, 'open': 2, 'in_progress': 1, 'resolved': 1, 'closed': 1},
         };
   }
 
@@ -103,12 +97,7 @@ class _MockSupportRepository extends SupportRepository {
     if (shouldThrow) throw Exception(throwMessage);
     return listTicketsResult ??
         {
-          'data': {
-            'data': [],
-            'current_page': 1,
-            'last_page': 1,
-            'total': 0,
-          }
+          'data': {'data': [], 'current_page': 1, 'last_page': 1, 'total': 0},
         };
   }
 
@@ -127,7 +116,7 @@ class _MockSupportRepository extends SupportRepository {
             'priority': 'medium',
             'subject': 'Test ticket',
             'description': 'Test description',
-          }
+          },
         };
   }
 
@@ -153,7 +142,7 @@ class _MockSupportRepository extends SupportRepository {
             'priority': priority ?? 'medium',
             'subject': subject,
             'description': description,
-          }
+          },
         };
   }
 
@@ -171,7 +160,7 @@ class _MockSupportRepository extends SupportRepository {
             'sender_type': 'provider',
             'is_internal_note': false,
             'sent_at': '2026-01-01T10:00:00.000000Z',
-          }
+          },
         };
   }
 
@@ -183,11 +172,7 @@ class _MockSupportRepository extends SupportRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> rateTicket(
-    String id, {
-    required int rating,
-    String? comment,
-  }) async {
+  Future<Map<String, dynamic>> rateTicket(String id, {required int rating, String? comment}) async {
     lastRateTicketId = id;
     lastRateRating = rating;
     lastRateComment = comment;
@@ -218,7 +203,7 @@ class _MockSupportRepository extends SupportRepository {
             'body_ar': '<p>الخطوة 1</p>',
             'category': 'getting_started',
             'is_published': true,
-          }
+          },
         };
   }
 }
@@ -228,11 +213,7 @@ class _MockSupportRepository extends SupportRepository {
 // ═══════════════════════════════════════════════════════════════
 
 ProviderContainer _buildContainer(_MockSupportRepository repo) {
-  return ProviderContainer(
-    overrides: [
-      supportRepositoryProvider.overrideWithValue(repo),
-    ],
-  );
+  return ProviderContainer(overrides: [supportRepositoryProvider.overrideWithValue(repo)]);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -258,13 +239,7 @@ void main() {
     });
 
     test('listTickets passes all filter parameters', () async {
-      await repo.listTickets(
-        status: 'open',
-        category: 'billing',
-        priority: 'high',
-        search: 'invoice',
-        page: 2,
-      );
+      await repo.listTickets(status: 'open', category: 'billing', priority: 'high', search: 'invoice', page: 2);
 
       expect(repo.lastListTicketsStatus, 'open');
       expect(repo.lastListTicketsCategory, 'billing');
@@ -289,12 +264,7 @@ void main() {
     });
 
     test('createTicket passes all parameters', () async {
-      await repo.createTicket(
-        category: 'technical',
-        subject: 'Test subject',
-        description: 'Test description',
-        priority: 'high',
-      );
+      await repo.createTicket(category: 'technical', subject: 'Test subject', description: 'Test description', priority: 'high');
 
       expect(repo.lastCreateCategory, 'technical');
       expect(repo.lastCreateSubject, 'Test subject');
@@ -369,13 +339,7 @@ void main() {
     test('load with custom response maps all fields', () async {
       final repo = _MockSupportRepository(
         statsResult: {
-          'data': {
-            'total': 10,
-            'open': 3,
-            'in_progress': 2,
-            'resolved': 4,
-            'closed': 1,
-          }
+          'data': {'total': 10, 'open': 3, 'in_progress': 2, 'resolved': 4, 'closed': 1},
         },
       );
       final container = _buildContainer(repo);
@@ -428,26 +392,21 @@ void main() {
     });
 
     Map<String, dynamic> _ticketListResponse(List<Map<String, dynamic>> tickets) => {
-          'data': {
-            'data': tickets,
-            'current_page': 1,
-            'last_page': 1,
-            'total': tickets.length,
-          }
-        };
+      'data': {'data': tickets, 'current_page': 1, 'last_page': 1, 'total': tickets.length},
+    };
 
     Map<String, dynamic> _ticketJson(String id, {String status = 'open'}) => {
-          'id': id,
-          'ticket_number': 'TKT-$id',
-          'organization_id': 'org-001',
-          'status': status,
-          'category': 'technical',
-          'priority': 'medium',
-          'subject': 'Ticket $id',
-          'description': 'Description',
-          'sla_badge': 'on_track',
-          'messages_count': 0,
-        };
+      'id': id,
+      'ticket_number': 'TKT-$id',
+      'organization_id': 'org-001',
+      'status': status,
+      'category': 'technical',
+      'priority': 'medium',
+      'subject': 'Ticket $id',
+      'description': 'Description',
+      'sla_badge': 'on_track',
+      'messages_count': 0,
+    };
 
     test('load populates tickets list', () async {
       final tickets = [_ticketJson('001'), _ticketJson('002')];
@@ -478,10 +437,7 @@ void main() {
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketListProvider.notifier).load(
-            category: 'billing',
-            priority: 'high',
-          );
+      await container.read(ticketListProvider.notifier).load(category: 'billing', priority: 'high');
 
       expect(repo.lastListTicketsCategory, 'billing');
       expect(repo.lastListTicketsPriority, 'high');
@@ -505,7 +461,7 @@ void main() {
             'current_page': 1,
             'last_page': 3,
             'total': 30,
-          }
+          },
         },
       );
       final container = _buildContainer(repo);
@@ -542,7 +498,7 @@ void main() {
             'current_page': 2,
             'last_page': 3,
             'total': 30,
-          }
+          },
         },
       );
       final container = _buildContainer(repo);
@@ -565,9 +521,7 @@ void main() {
     });
 
     test('empty response results in empty tickets list', () async {
-      final repo = _MockSupportRepository(
-        listTicketsResult: _ticketListResponse([]),
-      );
+      final repo = _MockSupportRepository(listTicketsResult: _ticketListResponse([]));
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
@@ -579,22 +533,12 @@ void main() {
     });
 
     test('TicketListLoaded.hasMore is true when currentPage < lastPage', () {
-      const state = TicketListLoaded(
-        tickets: [],
-        currentPage: 1,
-        lastPage: 3,
-        total: 30,
-      );
+      const state = TicketListLoaded(tickets: [], currentPage: 1, lastPage: 3, total: 30);
       expect(state.hasMore, isTrue);
     });
 
     test('TicketListLoaded.hasMore is false when currentPage == lastPage', () {
-      const state = TicketListLoaded(
-        tickets: [],
-        currentPage: 3,
-        lastPage: 3,
-        total: 30,
-      );
+      const state = TicketListLoaded(tickets: [], currentPage: 3, lastPage: 3, total: 30);
       expect(state.hasMore, isFalse);
     });
   });
@@ -634,9 +578,9 @@ void main() {
                 'message_text': 'Please help',
                 'is_internal_note': false,
                 'sent_at': '2026-01-01T10:00:00.000000Z',
-              }
+              },
             ],
-          }
+          },
         },
       );
       final container = _buildContainer(repo);
@@ -662,10 +606,7 @@ void main() {
     });
 
     test('load on error transitions to TicketDetailError', () async {
-      final repo = _MockSupportRepository(
-        shouldThrow: true,
-        throwMessage: 'Ticket not found',
-      );
+      final repo = _MockSupportRepository(shouldThrow: true, throwMessage: 'Ticket not found');
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
@@ -691,7 +632,7 @@ void main() {
             'sla_badge': 'on_track',
             'messages_count': 0,
             // 'messages' is absent — should default to empty list
-          }
+          },
         },
       );
       final container = _buildContainer(repo);
@@ -720,11 +661,9 @@ void main() {
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketActionProvider.notifier).createTicket(
-            category: 'technical',
-            subject: 'New ticket',
-            description: 'Description',
-          );
+      await container
+          .read(ticketActionProvider.notifier)
+          .createTicket(category: 'technical', subject: 'New ticket', description: 'Description');
 
       final state = container.read(ticketActionProvider);
       expect(state, isA<TicketActionSuccess>());
@@ -736,12 +675,9 @@ void main() {
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketActionProvider.notifier).createTicket(
-            category: 'billing',
-            subject: 'Invoice issue',
-            description: 'Invoice not generated',
-            priority: 'high',
-          );
+      await container
+          .read(ticketActionProvider.notifier)
+          .createTicket(category: 'billing', subject: 'Invoice issue', description: 'Invoice not generated', priority: 'high');
 
       expect(repo.lastCreateCategory, 'billing');
       expect(repo.lastCreateSubject, 'Invoice issue');
@@ -749,18 +685,11 @@ void main() {
     });
 
     test('createTicket on error transitions to TicketActionError', () async {
-      final repo = _MockSupportRepository(
-        shouldThrow: true,
-        throwMessage: 'Server unavailable',
-      );
+      final repo = _MockSupportRepository(shouldThrow: true, throwMessage: 'Server unavailable');
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketActionProvider.notifier).createTicket(
-            category: 'general',
-            subject: 'Test',
-            description: 'Test',
-          );
+      await container.read(ticketActionProvider.notifier).createTicket(category: 'general', subject: 'Test', description: 'Test');
 
       final state = container.read(ticketActionProvider);
       expect(state, isA<TicketActionError>());
@@ -772,10 +701,7 @@ void main() {
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketActionProvider.notifier).addMessage(
-            'ticket-123',
-            message: 'Following up on this issue.',
-          );
+      await container.read(ticketActionProvider.notifier).addMessage('ticket-123', message: 'Following up on this issue.');
 
       final state = container.read(ticketActionProvider);
       expect(state, isA<TicketActionSuccess>());
@@ -801,11 +727,7 @@ void main() {
       final container = _buildContainer(repo);
       addTearDown(container.dispose);
 
-      await container.read(ticketActionProvider.notifier).rateTicket(
-            'ticket-xyz',
-            rating: 5,
-            comment: 'Very helpful!',
-          );
+      await container.read(ticketActionProvider.notifier).rateTicket('ticket-xyz', rating: 5, comment: 'Very helpful!');
 
       final state = container.read(ticketActionProvider);
       expect(state, isA<TicketActionSuccess>());
@@ -881,8 +803,8 @@ void main() {
               'body_ar': '<p>الطرق</p>',
               'category': 'billing',
               'is_published': true,
-            }
-          ]
+            },
+          ],
         },
       );
       final container = _buildContainer(repo);

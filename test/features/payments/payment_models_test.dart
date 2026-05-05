@@ -173,23 +173,13 @@ void main() {
     });
 
     test('amount parses numeric integer from server', () {
-      final json = {
-        'id': 'pay-002',
-        'transaction_id': 'tx-002',
-        'method': 'card',
-        'amount': 50,
-      };
+      final json = {'id': 'pay-002', 'transaction_id': 'tx-002', 'method': 'card', 'amount': 50};
       final payment = Payment.fromJson(json);
       expect(payment.amount, 50.0);
     });
 
     test('nullable fields are null when absent', () {
-      final json = {
-        'id': 'pay-003',
-        'transaction_id': 'tx-003',
-        'method': 'gift_card',
-        'amount': '25.00',
-      };
+      final json = {'id': 'pay-003', 'transaction_id': 'tx-003', 'method': 'gift_card', 'amount': '25.00'};
       final payment = Payment.fromJson(json);
       expect(payment.cashTendered, isNull);
       expect(payment.changeGiven, isNull);
@@ -202,24 +192,13 @@ void main() {
     });
 
     test('unknown method falls back to other', () {
-      final json = {
-        'id': 'pay-004',
-        'transaction_id': 'tx-004',
-        'method': 'future_crypto',
-        'amount': '10.00',
-      };
+      final json = {'id': 'pay-004', 'transaction_id': 'tx-004', 'method': 'future_crypto', 'amount': '10.00'};
       final payment = Payment.fromJson(json);
       expect(payment.method, PaymentMethodKey.other);
     });
 
     test('toJson round-trips the data', () {
-      final json = {
-        'id': 'pay-005',
-        'transaction_id': 'tx-005',
-        'method': 'stc_pay',
-        'amount': '99.99',
-        'status': 'completed',
-      };
+      final json = {'id': 'pay-005', 'transaction_id': 'tx-005', 'method': 'stc_pay', 'amount': '99.99', 'status': 'completed'};
       final payment = Payment.fromJson(json);
       final out = payment.toJson();
       expect(out['id'], 'pay-005');
@@ -561,13 +540,7 @@ void main() {
     });
 
     test('nullable fields null when absent', () {
-      final json = {
-        'id': 'ref-002',
-        'return_id': 'ret-002',
-        'method': 'card',
-        'amount': '10.00',
-        'processed_by': 'user-001',
-      };
+      final json = {'id': 'ref-002', 'return_id': 'ret-002', 'method': 'card', 'amount': '10.00', 'processed_by': 'user-001'};
       final refund = Refund.fromJson(json);
       expect(refund.paymentId, isNull);
       expect(refund.referenceNumber, isNull);
@@ -604,13 +577,7 @@ void main() {
     });
 
     test('amount parses numeric value', () {
-      final json = {
-        'id': 'ref-005',
-        'return_id': 'ret-005',
-        'method': 'cash',
-        'amount': 33,
-        'processed_by': 'user-001',
-      };
+      final json = {'id': 'ref-005', 'return_id': 'ret-005', 'method': 'cash', 'amount': 33, 'processed_by': 'user-001'};
       final refund = Refund.fromJson(json);
       expect(refund.amount, 33.0);
     });

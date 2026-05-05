@@ -169,11 +169,7 @@ void main() {
     });
 
     test('LabelPrintStatsLoaded holds stats', () {
-      const stats = LabelPrintStats(
-        jobsLast30Days: 5,
-        productsLast30Days: 15,
-        labelsLast30Days: 45,
-      );
+      const stats = LabelPrintStats(jobsLast30Days: 5, productsLast30Days: 15, labelsLast30Days: 45);
       const state = LabelPrintStatsLoaded(stats: stats);
       expect(state, isA<LabelPrintStatsState>());
       expect(state.stats.jobsLast30Days, 5);
@@ -189,11 +185,7 @@ void main() {
 
     test('sealed class switch exhaustive', () {
       const LabelPrintStatsState state = LabelPrintStatsLoaded(
-        stats: LabelPrintStats(
-          jobsLast30Days: 3,
-          productsLast30Days: 10,
-          labelsLast30Days: 30,
-        ),
+        stats: LabelPrintStats(jobsLast30Days: 3, productsLast30Days: 10, labelsLast30Days: 30),
       );
       final result = switch (state) {
         LabelPrintStatsInitial() => 'initial',

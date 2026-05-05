@@ -312,12 +312,7 @@ void main() {
               'store_id': 'store-1',
               'plan_add_on_id': 'addon-1',
               'is_active': true,
-              'add_on': {
-                'id': 'addon-1',
-                'name': 'SoftPOS',
-                'name_ar': 'سوفت بوس',
-                'monthly_price': 49.99,
-              },
+              'add_on': {'id': 'addon-1', 'name': 'SoftPOS', 'name_ar': 'سوفت بوس', 'monthly_price': 49.99},
             },
           ],
         }),

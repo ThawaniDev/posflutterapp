@@ -139,20 +139,10 @@ class LabelHistoryNotifier extends StateNotifier<LabelHistoryState> {
   LabelHistoryNotifier(this._repo) : super(const LabelHistoryInitial());
   final LabelRepository _repo;
 
-  Future<void> load({
-    DateTime? from,
-    DateTime? to,
-    String? templateId,
-    int? perPage,
-  }) async {
+  Future<void> load({DateTime? from, DateTime? to, String? templateId, int? perPage}) async {
     state = const LabelHistoryLoading();
     try {
-      final history = await _repo.getPrintHistory(
-        from: from,
-        to: to,
-        templateId: templateId,
-        perPage: perPage,
-      );
+      final history = await _repo.getPrintHistory(from: from, to: to, templateId: templateId, perPage: perPage);
       state = LabelHistoryLoaded(history: history);
     } on DioException catch (e) {
       state = LabelHistoryError(message: _extractError(e));
@@ -184,4 +174,3 @@ class LabelPrintStatsNotifier extends StateNotifier<LabelPrintStatsState> {
     }
   }
 }
-

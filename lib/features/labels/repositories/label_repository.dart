@@ -19,18 +19,8 @@ class LabelRepository {
   Future<LabelTemplate> createTemplate(Map<String, dynamic> data) => _apiService.createTemplate(data);
   Future<LabelTemplate> updateTemplate(String id, Map<String, dynamic> data) => _apiService.updateTemplate(id, data);
   Future<void> deleteTemplate(String id) => _apiService.deleteTemplate(id);
-  Future<List<LabelPrintHistory>> getPrintHistory({
-    DateTime? from,
-    DateTime? to,
-    String? templateId,
-    int? perPage,
-  }) =>
-      _apiService.getPrintHistory(
-        from: from,
-        to: to,
-        templateId: templateId,
-        perPage: perPage,
-      );
+  Future<List<LabelPrintHistory>> getPrintHistory({DateTime? from, DateTime? to, String? templateId, int? perPage}) =>
+      _apiService.getPrintHistory(from: from, to: to, templateId: templateId, perPage: perPage);
   Future<void> recordPrint(Map<String, dynamic> data) => _apiService.recordPrint(data);
   Future<LabelPrintStats> getPrintHistoryStats() => _apiService.getPrintHistoryStats();
   Future<LabelTemplate> duplicateTemplate(String id) => _apiService.duplicateTemplate(id);

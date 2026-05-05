@@ -752,9 +752,7 @@ void main() {
         currentPage: 1,
         lastPage: 1,
       );
-      final matches = state.users.where(
-        (u) => (u['name'] as String).toLowerCase().contains('ali'),
-      );
+      final matches = state.users.where((u) => (u['name'] as String).toLowerCase().contains('ali'));
       expect(matches.length, 1);
     });
 
@@ -807,9 +805,7 @@ void main() {
         currentPage: 1,
         lastPage: 1,
       );
-      final roleActions = state.logs.where(
-        (l) => (l['action'] as String).startsWith('role.'),
-      ).toList();
+      final roleActions = state.logs.where((l) => (l['action'] as String).startsWith('role.')).toList();
       expect(roleActions.length, 2);
     });
 
@@ -847,8 +843,14 @@ void main() {
 
     test('super_admin has many permissions', () {
       const allPermissions = [
-        'stores.view', 'stores.edit', 'billing.view', 'billing.manage',
-        'users.view', 'users.manage', 'admin_team.view', 'admin_team.manage',
+        'stores.view',
+        'stores.edit',
+        'billing.view',
+        'billing.manage',
+        'users.view',
+        'users.manage',
+        'admin_team.view',
+        'admin_team.manage',
       ];
       const state = AdminProfileLoaded({
         'id': 'u-super',
