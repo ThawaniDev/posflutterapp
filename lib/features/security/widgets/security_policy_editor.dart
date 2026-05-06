@@ -159,412 +159,412 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
       key: _formKey,
       child: SingleChildScrollView(
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ─── Header row ─────────────────────────────
-          if (canEdit)
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: _editing
-                  ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        PosButton(
-                          label: l10n.securityCancelEdit,
-                          variant: PosButtonVariant.outline,
-                          onPressed: widget.isSaving ? null : _cancelEditing,
-                          icon: Icons.close_rounded,
-                        ),
-                        AppSpacing.gapW8,
-                        PosButton(
-                          label: l10n.securitySavePolicy,
-                          onPressed: widget.isSaving ? null : _save,
-                          isLoading: widget.isSaving,
-                          icon: Icons.save_rounded,
-                        ),
-                      ],
-                    )
-                  : PosButton(
-                      label: l10n.securityEditPolicy,
-                      variant: PosButtonVariant.outline,
-                      onPressed: _startEditing,
-                      icon: Icons.edit_rounded,
-                    ),
-            ),
-
-          AppSpacing.gapH16,
-
-          // ─── PIN & Authentication ─────────────────────
-          _buildSectionHeader(context, l10n.securityPinAuth, Icons.pin),
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                children: [
-                  if (_editing) ...[
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PosTextField(
-                            controller: _pinMinLength,
-                            label: l10n.securityPinMinLength,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.pin,
-                            validator: _requiredIntValidator,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ─── Header row ─────────────────────────────
+            if (canEdit)
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: _editing
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          PosButton(
+                            label: l10n.securityCancelEdit,
+                            variant: PosButtonVariant.outline,
+                            onPressed: widget.isSaving ? null : _cancelEditing,
+                            icon: Icons.close_rounded,
                           ),
-                        ),
-                        AppSpacing.gapW12,
-                        Expanded(
-                          child: PosTextField(
-                            controller: _pinMaxLength,
-                            label: l10n.securityPinMaxLength,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.pin,
-                            validator: _requiredIntValidator,
+                          AppSpacing.gapW8,
+                          PosButton(
+                            label: l10n.securitySavePolicy,
+                            onPressed: widget.isSaving ? null : _save,
+                            isLoading: widget.isSaving,
+                            icon: Icons.save_rounded,
                           ),
-                        ),
-                      ],
-                    ),
-                    AppSpacing.gapH8,
-                    PosTextField(
-                      controller: _pinExpiryDays,
-                      label: l10n.securityPinExpiryDays,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      prefixIcon: Icons.schedule,
-                      helperText: l10n.securityZeroMeansNeverExpires,
-                      validator: _requiredIntValidator,
-                    ),
-                  ] else ...[
-                    _buildRow(
-                      context,
-                      l10n.securityPinLength,
-                      '${widget.policy.pinMinLength ?? 4} – ${widget.policy.pinMaxLength ?? 6} ${l10n.securityDigits}',
-                      Icons.pin,
-                    ),
-                    _buildRow(
-                      context,
-                      l10n.securityPinExpiryDays,
-                      '${widget.policy.pinExpiryDays ?? 0} ${l10n.securityDays}',
-                      Icons.schedule,
-                    ),
-                  ],
-                  AppSpacing.gapH4,
-                  _buildSwitch(
-                    context,
-                    l10n.securityRequireUniquePins,
-                    _requireUniquePins,
-                    (v) => setState(() => _requireUniquePins = v),
-                  ),
-                  _buildSwitch(
-                    context,
-                    l10n.securityBiometricEnabled,
-                    _biometricEnabled,
-                    (v) => setState(() => _biometricEnabled = v),
-                  ),
-                  _buildSwitch(context, l10n.securityRequire2fa, _require2faOwner, (v) => setState(() => _require2faOwner = v)),
-                ],
-              ),
-            ),
-          ),
-
-          AppSpacing.gapH16,
-
-          // ─── Lockout & Sessions ───────────────────────
-          _buildSectionHeader(context, l10n.securityLockoutSessions, Icons.lock_clock),
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                children: [
-                  if (_editing) ...[
-                    PosTextField(
-                      controller: _autoLockSeconds,
-                      label: l10n.securityAutoLock,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      prefixIcon: Icons.lock_clock,
-                      helperText: l10n.securityInSeconds,
-                      validator: _requiredIntValidator,
-                    ),
-                    AppSpacing.gapH8,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PosTextField(
-                            controller: _maxFailedAttempts,
-                            label: l10n.securityMaxFailedAttempts,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.error_outline,
-                            validator: _requiredIntValidator,
-                          ),
-                        ),
-                        AppSpacing.gapW12,
-                        Expanded(
-                          child: PosTextField(
-                            controller: _lockoutDurationMinutes,
-                            label: l10n.securityLockoutDuration,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.timer_off,
-                            helperText: l10n.securityInMinutes,
-                            validator: _requiredIntValidator,
-                          ),
-                        ),
-                      ],
-                    ),
-                    AppSpacing.gapH8,
-                    PosTextField(
-                      controller: _sessionMaxHours,
-                      label: l10n.securitySessionMaxHours,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      prefixIcon: Icons.schedule,
-                      helperText: l10n.securityInHours,
-                      validator: _requiredIntValidator,
-                    ),
-                  ] else ...[
-                    _buildRow(context, l10n.securityAutoLock, '${widget.policy.autoLockSeconds ?? 300}s', Icons.lock_clock),
-                    _buildRow(
-                      context,
-                      l10n.securityMaxFailedAttempts,
-                      '${widget.policy.maxFailedAttempts ?? 5}',
-                      Icons.error_outline,
-                    ),
-                    _buildRow(
-                      context,
-                      l10n.securityLockoutDuration,
-                      '${widget.policy.lockoutDurationMinutes ?? 15} ${l10n.securityMinutes}',
-                      Icons.timer_off,
-                    ),
-                    _buildRow(context, l10n.securitySessionMaxHours, '${widget.policy.sessionMaxHours ?? 12}h', Icons.schedule),
-                  ],
-                  AppSpacing.gapH4,
-                  _buildSwitch(
-                    context,
-                    l10n.securityForceLogoutOnRoleChange,
-                    _forceLogoutOnRoleChange,
-                    (v) => setState(() => _forceLogoutOnRoleChange = v),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          AppSpacing.gapH16,
-
-          // ─── PIN Override ─────────────────────────────
-          _buildSectionHeader(context, l10n.securityPinOverrides, Icons.admin_panel_settings),
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                children: [
-                  _buildSwitch(
-                    context,
-                    l10n.securityPinOverrideVoid,
-                    _requirePinOverrideVoid,
-                    (v) => setState(() => _requirePinOverrideVoid = v),
-                  ),
-                  _buildSwitch(
-                    context,
-                    l10n.securityPinOverrideReturn,
-                    _requirePinOverrideReturn,
-                    (v) => setState(() => _requirePinOverrideReturn = v),
-                  ),
-                  _buildSwitch(
-                    context,
-                    l10n.securityPinOverrideDiscount,
-                    _requirePinOverrideDiscount,
-                    (v) => setState(() => _requirePinOverrideDiscount = v),
-                  ),
-                  if (_editing)
-                    PosTextField(
-                      controller: _discountThreshold,
-                      label: l10n.securityDiscountThreshold,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      prefixIcon: Icons.percent,
-                      validator: _requiredDoubleValidator,
-                    )
-                  else
-                    _buildRow(
-                      context,
-                      l10n.securityDiscountThreshold,
-                      '${widget.policy.discountOverrideThreshold ?? 20.0}%',
-                      Icons.percent,
-                    ),
-                ],
-              ),
-            ),
-          ),
-
-          AppSpacing.gapH16,
-
-          // ─── Password & Device ───────────────────────
-          _buildSectionHeader(context, l10n.securityPasswordDevice, Icons.devices),
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                children: [
-                  if (_editing) ...[
-                    PosTextField(
-                      controller: _passwordExpiryDays,
-                      label: l10n.securityPasswordExpiryDays,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      prefixIcon: Icons.key,
-                      helperText: l10n.securityZeroMeansNeverExpires,
-                      validator: _requiredIntValidator,
-                    ),
-                    AppSpacing.gapH8,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PosTextField(
-                            controller: _maxDevices,
-                            label: l10n.securityMaxDevices,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.devices,
-                            validator: _requiredIntValidator,
-                          ),
-                        ),
-                        AppSpacing.gapW12,
-                        Expanded(
-                          child: PosTextField(
-                            controller: _auditRetentionDays,
-                            label: l10n.securityAuditRetentionDays,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            prefixIcon: Icons.history,
-                            helperText: l10n.securityInDays,
-                            validator: _requiredIntValidator,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ] else ...[
-                    _buildRow(
-                      context,
-                      l10n.securityPasswordExpiryDays,
-                      '${widget.policy.passwordExpiryDays ?? 0} ${l10n.securityDays}',
-                      Icons.key,
-                    ),
-                    _buildRow(context, l10n.securityMaxDevices, '${widget.policy.maxDevices ?? 5}', Icons.devices),
-                    _buildRow(
-                      context,
-                      l10n.securityAuditRetentionDays,
-                      '${widget.policy.auditRetentionDays ?? 90} ${l10n.securityDays}',
-                      Icons.history,
-                    ),
-                  ],
-                  AppSpacing.gapH4,
-                  _buildSwitch(
-                    context,
-                    l10n.securityRequireStrongPassword,
-                    _requireStrongPassword,
-                    (v) => setState(() => _requireStrongPassword = v),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          AppSpacing.gapH16,
-
-          // ─── IP Restrictions ─────────────────────────
-          _buildSectionHeader(context, l10n.securityIpRestrictions, Icons.language),
-          PosCard(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSwitch(
-                    context,
-                    l10n.securityIpRestrictionEnabled,
-                    _ipRestrictionEnabled,
-                    (v) => setState(() => _ipRestrictionEnabled = v),
-                  ),
-                  if (_ipRestrictionEnabled) ...[
-                    AppSpacing.gapH12,
-                    Text(
-                      l10n.securityAllowedIpRanges,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
-                    ),
-                    AppSpacing.gapH8,
-                    if (_allowedIpRanges.isNotEmpty)
-                      Wrap(
-                        spacing: 6,
-                        runSpacing: 4,
-                        children: _allowedIpRanges
-                            .map(
-                              (ip) => Chip(
-                                label: Text(ip, style: const TextStyle(fontSize: 12)),
-                                visualDensity: VisualDensity.compact,
-                                onDeleted: _editing ? () => setState(() => _allowedIpRanges.remove(ip)) : null,
-                                deleteIcon: _editing ? const Icon(Icons.close, size: 14) : null,
-                              ),
-                            )
-                            .toList(),
+                        ],
+                      )
+                    : PosButton(
+                        label: l10n.securityEditPolicy,
+                        variant: PosButtonVariant.outline,
+                        onPressed: _startEditing,
+                        icon: Icons.edit_rounded,
                       ),
+              ),
+
+            AppSpacing.gapH16,
+
+            // ─── PIN & Authentication ─────────────────────
+            _buildSectionHeader(context, l10n.securityPinAuth, Icons.pin),
+            PosCard(
+              child: Padding(
+                padding: AppSpacing.paddingAll16,
+                child: Column(
+                  children: [
                     if (_editing) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(
+                              controller: _pinMinLength,
+                              label: l10n.securityPinMinLength,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.pin,
+                              validator: _requiredIntValidator,
+                            ),
+                          ),
+                          AppSpacing.gapW12,
+                          Expanded(
+                            child: PosTextField(
+                              controller: _pinMaxLength,
+                              label: l10n.securityPinMaxLength,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.pin,
+                              validator: _requiredIntValidator,
+                            ),
+                          ),
+                        ],
+                      ),
+                      AppSpacing.gapH8,
+                      PosTextField(
+                        controller: _pinExpiryDays,
+                        label: l10n.securityPinExpiryDays,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        prefixIcon: Icons.schedule,
+                        helperText: l10n.securityZeroMeansNeverExpires,
+                        validator: _requiredIntValidator,
+                      ),
+                    ] else ...[
+                      _buildRow(
+                        context,
+                        l10n.securityPinLength,
+                        '${widget.policy.pinMinLength ?? 4} – ${widget.policy.pinMaxLength ?? 6} ${l10n.securityDigits}',
+                        Icons.pin,
+                      ),
+                      _buildRow(
+                        context,
+                        l10n.securityPinExpiryDays,
+                        '${widget.policy.pinExpiryDays ?? 0} ${l10n.securityDays}',
+                        Icons.schedule,
+                      ),
+                    ],
+                    AppSpacing.gapH4,
+                    _buildSwitch(
+                      context,
+                      l10n.securityRequireUniquePins,
+                      _requireUniquePins,
+                      (v) => setState(() => _requireUniquePins = v),
+                    ),
+                    _buildSwitch(
+                      context,
+                      l10n.securityBiometricEnabled,
+                      _biometricEnabled,
+                      (v) => setState(() => _biometricEnabled = v),
+                    ),
+                    _buildSwitch(context, l10n.securityRequire2fa, _require2faOwner, (v) => setState(() => _require2faOwner = v)),
+                  ],
+                ),
+              ),
+            ),
+
+            AppSpacing.gapH16,
+
+            // ─── Lockout & Sessions ───────────────────────
+            _buildSectionHeader(context, l10n.securityLockoutSessions, Icons.lock_clock),
+            PosCard(
+              child: Padding(
+                padding: AppSpacing.paddingAll16,
+                child: Column(
+                  children: [
+                    if (_editing) ...[
+                      PosTextField(
+                        controller: _autoLockSeconds,
+                        label: l10n.securityAutoLock,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        prefixIcon: Icons.lock_clock,
+                        helperText: l10n.securityInSeconds,
+                        validator: _requiredIntValidator,
+                      ),
                       AppSpacing.gapH8,
                       Row(
                         children: [
                           Expanded(
                             child: PosTextField(
-                              controller: _ipInput,
-                              label: l10n.securityAddIpRange,
-                              hint: '192.168.1.0/24',
-                              keyboardType: TextInputType.text,
-                              prefixIcon: Icons.add_circle_outline,
-                              onSubmitted: _addIpRange,
+                              controller: _maxFailedAttempts,
+                              label: l10n.securityMaxFailedAttempts,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.error_outline,
+                              validator: _requiredIntValidator,
                             ),
                           ),
-                          AppSpacing.gapW8,
-                          PosButton(
-                            label: l10n.securityAddButton,
-                            variant: PosButtonVariant.outline,
-                            size: PosButtonSize.sm,
-                            onPressed: () => _addIpRange(_ipInput.text),
+                          AppSpacing.gapW12,
+                          Expanded(
+                            child: PosTextField(
+                              controller: _lockoutDurationMinutes,
+                              label: l10n.securityLockoutDuration,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.timer_off,
+                              helperText: l10n.securityInMinutes,
+                              validator: _requiredIntValidator,
+                            ),
                           ),
                         ],
                       ),
+                      AppSpacing.gapH8,
+                      PosTextField(
+                        controller: _sessionMaxHours,
+                        label: l10n.securitySessionMaxHours,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        prefixIcon: Icons.schedule,
+                        helperText: l10n.securityInHours,
+                        validator: _requiredIntValidator,
+                      ),
+                    ] else ...[
+                      _buildRow(context, l10n.securityAutoLock, '${widget.policy.autoLockSeconds ?? 300}s', Icons.lock_clock),
+                      _buildRow(
+                        context,
+                        l10n.securityMaxFailedAttempts,
+                        '${widget.policy.maxFailedAttempts ?? 5}',
+                        Icons.error_outline,
+                      ),
+                      _buildRow(
+                        context,
+                        l10n.securityLockoutDuration,
+                        '${widget.policy.lockoutDurationMinutes ?? 15} ${l10n.securityMinutes}',
+                        Icons.timer_off,
+                      ),
+                      _buildRow(context, l10n.securitySessionMaxHours, '${widget.policy.sessionMaxHours ?? 12}h', Icons.schedule),
                     ],
+                    AppSpacing.gapH4,
+                    _buildSwitch(
+                      context,
+                      l10n.securityForceLogoutOnRoleChange,
+                      _forceLogoutOnRoleChange,
+                      (v) => setState(() => _forceLogoutOnRoleChange = v),
+                    ),
                   ],
-                ],
+                ),
               ),
             ),
-          ),
 
-          if (canEdit && _editing) ...[
-            AppSpacing.gapH24,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                PosButton(
-                  label: l10n.securityCancelEdit,
-                  variant: PosButtonVariant.outline,
-                  onPressed: widget.isSaving ? null : _cancelEditing,
-                  icon: Icons.close_rounded,
+            AppSpacing.gapH16,
+
+            // ─── PIN Override ─────────────────────────────
+            _buildSectionHeader(context, l10n.securityPinOverrides, Icons.admin_panel_settings),
+            PosCard(
+              child: Padding(
+                padding: AppSpacing.paddingAll16,
+                child: Column(
+                  children: [
+                    _buildSwitch(
+                      context,
+                      l10n.securityPinOverrideVoid,
+                      _requirePinOverrideVoid,
+                      (v) => setState(() => _requirePinOverrideVoid = v),
+                    ),
+                    _buildSwitch(
+                      context,
+                      l10n.securityPinOverrideReturn,
+                      _requirePinOverrideReturn,
+                      (v) => setState(() => _requirePinOverrideReturn = v),
+                    ),
+                    _buildSwitch(
+                      context,
+                      l10n.securityPinOverrideDiscount,
+                      _requirePinOverrideDiscount,
+                      (v) => setState(() => _requirePinOverrideDiscount = v),
+                    ),
+                    if (_editing)
+                      PosTextField(
+                        controller: _discountThreshold,
+                        label: l10n.securityDiscountThreshold,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        prefixIcon: Icons.percent,
+                        validator: _requiredDoubleValidator,
+                      )
+                    else
+                      _buildRow(
+                        context,
+                        l10n.securityDiscountThreshold,
+                        '${widget.policy.discountOverrideThreshold ?? 20.0}%',
+                        Icons.percent,
+                      ),
+                  ],
                 ),
-                AppSpacing.gapW12,
-                PosButton(
-                  label: l10n.securitySavePolicy,
-                  onPressed: widget.isSaving ? null : _save,
-                  isLoading: widget.isSaving,
-                  icon: Icons.save_rounded,
-                  size: PosButtonSize.lg,
-                ),
-              ],
+              ),
             ),
+
+            AppSpacing.gapH16,
+
+            // ─── Password & Device ───────────────────────
+            _buildSectionHeader(context, l10n.securityPasswordDevice, Icons.devices),
+            PosCard(
+              child: Padding(
+                padding: AppSpacing.paddingAll16,
+                child: Column(
+                  children: [
+                    if (_editing) ...[
+                      PosTextField(
+                        controller: _passwordExpiryDays,
+                        label: l10n.securityPasswordExpiryDays,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        prefixIcon: Icons.key,
+                        helperText: l10n.securityZeroMeansNeverExpires,
+                        validator: _requiredIntValidator,
+                      ),
+                      AppSpacing.gapH8,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(
+                              controller: _maxDevices,
+                              label: l10n.securityMaxDevices,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.devices,
+                              validator: _requiredIntValidator,
+                            ),
+                          ),
+                          AppSpacing.gapW12,
+                          Expanded(
+                            child: PosTextField(
+                              controller: _auditRetentionDays,
+                              label: l10n.securityAuditRetentionDays,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              prefixIcon: Icons.history,
+                              helperText: l10n.securityInDays,
+                              validator: _requiredIntValidator,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ] else ...[
+                      _buildRow(
+                        context,
+                        l10n.securityPasswordExpiryDays,
+                        '${widget.policy.passwordExpiryDays ?? 0} ${l10n.securityDays}',
+                        Icons.key,
+                      ),
+                      _buildRow(context, l10n.securityMaxDevices, '${widget.policy.maxDevices ?? 5}', Icons.devices),
+                      _buildRow(
+                        context,
+                        l10n.securityAuditRetentionDays,
+                        '${widget.policy.auditRetentionDays ?? 90} ${l10n.securityDays}',
+                        Icons.history,
+                      ),
+                    ],
+                    AppSpacing.gapH4,
+                    _buildSwitch(
+                      context,
+                      l10n.securityRequireStrongPassword,
+                      _requireStrongPassword,
+                      (v) => setState(() => _requireStrongPassword = v),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            AppSpacing.gapH16,
+
+            // ─── IP Restrictions ─────────────────────────
+            _buildSectionHeader(context, l10n.securityIpRestrictions, Icons.language),
+            PosCard(
+              child: Padding(
+                padding: AppSpacing.paddingAll16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildSwitch(
+                      context,
+                      l10n.securityIpRestrictionEnabled,
+                      _ipRestrictionEnabled,
+                      (v) => setState(() => _ipRestrictionEnabled = v),
+                    ),
+                    if (_ipRestrictionEnabled) ...[
+                      AppSpacing.gapH12,
+                      Text(
+                        l10n.securityAllowedIpRanges,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                      ),
+                      AppSpacing.gapH8,
+                      if (_allowedIpRanges.isNotEmpty)
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 4,
+                          children: _allowedIpRanges
+                              .map(
+                                (ip) => Chip(
+                                  label: Text(ip, style: const TextStyle(fontSize: 12)),
+                                  visualDensity: VisualDensity.compact,
+                                  onDeleted: _editing ? () => setState(() => _allowedIpRanges.remove(ip)) : null,
+                                  deleteIcon: _editing ? const Icon(Icons.close, size: 14) : null,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      if (_editing) ...[
+                        AppSpacing.gapH8,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: PosTextField(
+                                controller: _ipInput,
+                                label: l10n.securityAddIpRange,
+                                hint: '192.168.1.0/24',
+                                keyboardType: TextInputType.text,
+                                prefixIcon: Icons.add_circle_outline,
+                                onSubmitted: _addIpRange,
+                              ),
+                            ),
+                            AppSpacing.gapW8,
+                            PosButton(
+                              label: l10n.securityAddButton,
+                              variant: PosButtonVariant.outline,
+                              size: PosButtonSize.sm,
+                              onPressed: () => _addIpRange(_ipInput.text),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
+                  ],
+                ),
+              ),
+            ),
+
+            if (canEdit && _editing) ...[
+              AppSpacing.gapH24,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  PosButton(
+                    label: l10n.securityCancelEdit,
+                    variant: PosButtonVariant.outline,
+                    onPressed: widget.isSaving ? null : _cancelEditing,
+                    icon: Icons.close_rounded,
+                  ),
+                  AppSpacing.gapW12,
+                  PosButton(
+                    label: l10n.securitySavePolicy,
+                    onPressed: widget.isSaving ? null : _save,
+                    isLoading: widget.isSaving,
+                    icon: Icons.save_rounded,
+                    size: PosButtonSize.lg,
+                  ),
+                ],
+              ),
+            ],
           ],
-        ],
         ),
       ),
     );
