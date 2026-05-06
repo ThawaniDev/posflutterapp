@@ -10,19 +10,13 @@ final providerPaymentApiServiceProvider = Provider<ProviderPaymentApiService>((r
 });
 
 class ProviderPaymentApiService {
-
   ProviderPaymentApiService(this._dio);
   final Dio _dio;
 
   Future<List<ProviderPayment>> listPayments({int? page, int? perPage, String? status, String? purpose}) async {
     final response = await _dio.get(
       ApiEndpoints.providerPayments,
-      queryParameters: {
-        'page': ?page,
-        'per_page': ?perPage,
-        'status': ?status,
-        'purpose': ?purpose,
-      },
+      queryParameters: {'page': ?page, 'per_page': ?perPage, 'status': ?status, 'purpose': ?purpose},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.dataList;

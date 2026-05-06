@@ -72,11 +72,7 @@ void main() {
     });
 
     test('handles null optional fields', () {
-      final json = {
-        'id': 'pol-uuid-2',
-        'store_id': 'store-uuid-2',
-        'pin_min_length': 4,
-      };
+      final json = {'id': 'pol-uuid-2', 'store_id': 'store-uuid-2', 'pin_min_length': 4};
 
       final policy = SecurityPolicy.fromJson(json);
       expect(policy.id, 'pol-uuid-2');
@@ -381,23 +377,14 @@ void main() {
     });
 
     test('status defaults to active when missing', () {
-      final json = {
-        'id': 'sess-uuid-3',
-        'store_id': 'store-uuid-3',
-        'user_id': 'user-uuid-3',
-      };
+      final json = {'id': 'sess-uuid-3', 'store_id': 'store-uuid-3', 'user_id': 'user-uuid-3'};
 
       final session = SecuritySession.fromJson(json);
       expect(session.status, 'active');
     });
 
     test('null metadata handled correctly', () {
-      final json = {
-        'id': 'sess-uuid-4',
-        'store_id': 'store-uuid-4',
-        'user_id': 'user-uuid-4',
-        'metadata': null,
-      };
+      final json = {'id': 'sess-uuid-4', 'store_id': 'store-uuid-4', 'user_id': 'user-uuid-4', 'metadata': null};
 
       final session = SecuritySession.fromJson(json);
       expect(session.metadata, isNull);
@@ -571,8 +558,8 @@ void main() {
             'severity': 'high',
             'title': 'Test',
             'status': 'open',
-          }
-        ]
+          },
+        ],
       };
 
       final incidents = (paginatedWrapper['data'] as List)
@@ -609,14 +596,13 @@ void main() {
         'recent_activity': [
           {'id': 'log-1', 'store_id': 'store-1', 'user_type': 'staff', 'action': 'login', 'severity': 'info'},
         ],
-        'policy': {
-          'id': 'pol-1',
-          'store_id': 'store-1',
-          'pin_min_length': 4,
-          'max_failed_attempts': 5,
-        },
+        'policy': {'id': 'pol-1', 'store_id': 'store-1', 'pin_min_length': 4, 'max_failed_attempts': 5},
         'login_stats': {'total': 100, 'successful': 95, 'failed': 5},
-        'audit_stats': {'total': 1042, 'by_severity': {'info': 900}, 'by_action': {'login': 500}},
+        'audit_stats': {
+          'total': 1042,
+          'by_severity': {'info': 900},
+          'by_action': {'login': 500},
+        },
         'critical_audits_7d': 3,
       };
 
@@ -646,18 +632,8 @@ void main() {
     test('stats response has required keys', () {
       final stats = {
         'total': 500,
-        'by_severity': {
-          'info': 400,
-          'warning': 80,
-          'error': 15,
-          'critical': 5,
-        },
-        'by_action': {
-          'login': 200,
-          'logout': 150,
-          'policy_update': 30,
-          'remote_wipe': 2,
-        },
+        'by_severity': {'info': 400, 'warning': 80, 'error': 15, 'critical': 5},
+        'by_action': {'login': 200, 'logout': 150, 'policy_update': 30, 'remote_wipe': 2},
       };
 
       expect(stats['total'], isA<int>());
@@ -672,7 +648,8 @@ void main() {
 
   group('Export CSV response contract', () {
     test('CSV response is a plain string (not JSON)', () {
-      const csvResponse = 'timestamp,user_id,user_type,action,resource_type,resource_id,severity,ip_address,details\n'
+      const csvResponse =
+          'timestamp,user_id,user_type,action,resource_type,resource_id,severity,ip_address,details\n'
           '2024-06-01T10:00:00.000Z,user-1,staff,login,session,sess-1,info,10.0.0.1,"{}"\n';
 
       // The Flutter API service returns a String directly for export

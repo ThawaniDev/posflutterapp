@@ -35,7 +35,6 @@ const Map<String, ShortcutBinding> kDefaultShortcuts = {
 const Set<String> kReservedShortcuts = {'Ctrl+C', 'Ctrl+V', 'Ctrl+X', 'Ctrl+A', 'Ctrl+S', 'Alt+F4', 'Ctrl+Alt+Delete'};
 
 class ShortcutBinding {
-
   const ShortcutBinding(
     this.label,
     this.key,

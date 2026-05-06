@@ -120,48 +120,108 @@ class _FakeActionNotifier extends SecurityActionNotifier {
 // ─── Sample Data ──────────────────────────────────────────────────────────────
 
 SecurityPolicy _samplePolicy() => SecurityPolicy.fromJson({
-      'id': 'pol-w1',
-      'store_id': 'store-w1',
-      'pin_min_length': 4,
-      'pin_max_length': 6,
-      'max_failed_attempts': 5,
-      'lockout_duration_minutes': 15,
-      'require_2fa_owner': false,
-      'session_max_hours': 12,
-      'require_pin_override_void': true,
-      'require_pin_override_return': true,
-      'require_pin_override_discount': false,
-      'biometric_enabled': false,
-      'require_unique_pins': true,
-      'max_devices': 10,
-      'audit_retention_days': 90,
-      'force_logout_on_role_change': true,
-      'ip_restriction_enabled': false,
-    });
+  'id': 'pol-w1',
+  'store_id': 'store-w1',
+  'pin_min_length': 4,
+  'pin_max_length': 6,
+  'max_failed_attempts': 5,
+  'lockout_duration_minutes': 15,
+  'require_2fa_owner': false,
+  'session_max_hours': 12,
+  'require_pin_override_void': true,
+  'require_pin_override_return': true,
+  'require_pin_override_discount': false,
+  'biometric_enabled': false,
+  'require_unique_pins': true,
+  'max_devices': 10,
+  'audit_retention_days': 90,
+  'force_logout_on_role_change': true,
+  'ip_restriction_enabled': false,
+});
 
 List<SecurityAuditLog> _sampleLogs() => [
-      SecurityAuditLog.fromJson({'id': 'l1', 'store_id': 's1', 'user_type': 'staff', 'action': 'login', 'severity': 'info', 'created_at': '2024-06-01T09:00:00Z'}),
-      SecurityAuditLog.fromJson({'id': 'l2', 'store_id': 's1', 'user_type': 'staff', 'action': 'logout', 'severity': 'info', 'created_at': '2024-06-01T17:00:00Z'}),
-      SecurityAuditLog.fromJson({'id': 'l3', 'store_id': 's1', 'user_type': 'owner', 'action': 'remote_wipe', 'severity': 'critical', 'created_at': '2024-06-01T18:00:00Z'}),
-    ];
+  SecurityAuditLog.fromJson({
+    'id': 'l1',
+    'store_id': 's1',
+    'user_type': 'staff',
+    'action': 'login',
+    'severity': 'info',
+    'created_at': '2024-06-01T09:00:00Z',
+  }),
+  SecurityAuditLog.fromJson({
+    'id': 'l2',
+    'store_id': 's1',
+    'user_type': 'staff',
+    'action': 'logout',
+    'severity': 'info',
+    'created_at': '2024-06-01T17:00:00Z',
+  }),
+  SecurityAuditLog.fromJson({
+    'id': 'l3',
+    'store_id': 's1',
+    'user_type': 'owner',
+    'action': 'remote_wipe',
+    'severity': 'critical',
+    'created_at': '2024-06-01T18:00:00Z',
+  }),
+];
 
 List<DeviceRegistration> _sampleDevices() => [
-      DeviceRegistration.fromJson({'id': 'd1', 'store_id': 's1', 'device_name': 'Terminal 1', 'hardware_id': 'HW-001', 'is_active': true, 'remote_wipe_requested': false}),
-      DeviceRegistration.fromJson({'id': 'd2', 'store_id': 's1', 'device_name': 'Terminal 2', 'hardware_id': 'HW-002', 'is_active': false, 'remote_wipe_requested': false}),
-    ];
+  DeviceRegistration.fromJson({
+    'id': 'd1',
+    'store_id': 's1',
+    'device_name': 'Terminal 1',
+    'hardware_id': 'HW-001',
+    'is_active': true,
+    'remote_wipe_requested': false,
+  }),
+  DeviceRegistration.fromJson({
+    'id': 'd2',
+    'store_id': 's1',
+    'device_name': 'Terminal 2',
+    'hardware_id': 'HW-002',
+    'is_active': false,
+    'remote_wipe_requested': false,
+  }),
+];
 
 List<LoginAttempt> _sampleLoginAttempts() => [
-      LoginAttempt.fromJson({'id': 'la1', 'store_id': 's1', 'user_identifier': 'cashier@test.com', 'attempt_type': 'pin', 'is_successful': false}),
-      LoginAttempt.fromJson({'id': 'la2', 'store_id': 's1', 'user_identifier': 'owner@test.com', 'attempt_type': 'password', 'is_successful': true}),
-    ];
+  LoginAttempt.fromJson({
+    'id': 'la1',
+    'store_id': 's1',
+    'user_identifier': 'cashier@test.com',
+    'attempt_type': 'pin',
+    'is_successful': false,
+  }),
+  LoginAttempt.fromJson({
+    'id': 'la2',
+    'store_id': 's1',
+    'user_identifier': 'owner@test.com',
+    'attempt_type': 'password',
+    'is_successful': true,
+  }),
+];
 
 List<SecuritySession> _sampleSessions() => [
-      SecuritySession.fromJson({'id': 'sess1', 'store_id': 's1', 'user_id': 'u1', 'status': 'active', 'started_at': '2024-06-01T08:00:00Z'}),
-    ];
+  SecuritySession.fromJson({
+    'id': 'sess1',
+    'store_id': 's1',
+    'user_id': 'u1',
+    'status': 'active',
+    'started_at': '2024-06-01T08:00:00Z',
+  }),
+];
 
 List<SecurityIncident> _sampleIncidents() => [
-      SecurityIncident.fromJson({'id': 'inc1', 'store_id': 's1', 'incident_type': 'brute_force', 'severity': 'high', 'title': 'Multiple failed logins', 'status': 'open'}),
-    ];
+  SecurityIncident.fromJson({
+    'id': 'inc1',
+    'store_id': 's1',
+    'incident_type': 'brute_force',
+    'severity': 'high',
+    'title': 'Multiple failed logins',
+    'status': 'open',
+  }),
+];
 
 // ─── Widget Wrapper ───────────────────────────────────────────────────────────
 
@@ -169,10 +229,7 @@ final _fakeAuth = _FakeAuthLocalStorage();
 
 Widget _wrap(Widget child, {required List<Override> overrides}) {
   return ProviderScope(
-    overrides: [
-      authLocalStorageProvider.overrideWithValue(_fakeAuth),
-      ...overrides,
-    ],
+    overrides: [authLocalStorageProvider.overrideWithValue(_fakeAuth), ...overrides],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -214,11 +271,7 @@ void main() {
     testWidgets('shows title and manager authorization text', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'void_order',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'void_order'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -231,11 +284,7 @@ void main() {
     testWidgets('shows permission code label', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'apply_discount',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'apply_discount'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -247,11 +296,7 @@ void main() {
     testWidgets('shows 6 PIN indicator dots', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'void_order',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'void_order'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -268,11 +313,7 @@ void main() {
     testWidgets('shows cancel button', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'void_order',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'void_order'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -284,11 +325,7 @@ void main() {
     testWidgets('numpad digit taps do not throw', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'void_order',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'void_order'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -314,11 +351,7 @@ void main() {
     testWidgets('icon for manager authorization is visible', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          PinOverrideDialog(
-            storeId: 'store-1',
-            requestingUserId: 'user-1',
-            permissionCode: 'void_order',
-          ),
+          PinOverrideDialog(storeId: 'store-1', requestingUserId: 'user-1', permissionCode: 'void_order'),
           overrides: _allProviderOverrides(),
         ),
       );
@@ -333,15 +366,13 @@ void main() {
   group('SecurityPolicyEditor', () {
     testWidgets('shows loading skeleton while policy is loading', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SecurityPolicyEditor(),
-          overrides: _allProviderOverrides(policy: const SecurityPolicyLoading()),
-        ),
+        _wrap(const SecurityPolicyEditor(), overrides: _allProviderOverrides(policy: const SecurityPolicyLoading())),
       );
       await tester.pump();
 
       // Should render loading state (skeleton or progress indicator)
-      final hasSkeleton = find.byType(CircularProgressIndicator).evaluate().isNotEmpty ||
+      final hasSkeleton =
+          find.byType(CircularProgressIndicator).evaluate().isNotEmpty ||
           tester.widgetList(find.byType(Widget)).any((w) => w.runtimeType.toString().contains('Skeleton'));
       // At minimum, no error thrown
       expect(tester.takeException(), isNull);
@@ -350,10 +381,7 @@ void main() {
     testWidgets('shows policy editor when loaded', (tester) async {
       final policy = _samplePolicy();
       await tester.pumpWidget(
-        _wrap(
-          const SecurityPolicyEditor(),
-          overrides: _allProviderOverrides(policy: SecurityPolicyLoaded(policy)),
-        ),
+        _wrap(const SecurityPolicyEditor(), overrides: _allProviderOverrides(policy: SecurityPolicyLoaded(policy))),
       );
       await tester.pump();
 
@@ -364,17 +392,17 @@ void main() {
 
     testWidgets('shows error state when policy fails to load', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SecurityPolicyEditor(),
-          overrides: _allProviderOverrides(policy: const SecurityPolicyError('Network error')),
-        ),
+        _wrap(const SecurityPolicyEditor(), overrides: _allProviderOverrides(policy: const SecurityPolicyError('Network error'))),
       );
       await tester.pump();
 
       // Error text or retry should be visible
-      expect(find.textContaining('Network error').evaluate().isNotEmpty ||
-             find.byIcon(Icons.error_outline).evaluate().isNotEmpty ||
-             find.text('Retry').evaluate().isNotEmpty, isTrue);
+      expect(
+        find.textContaining('Network error').evaluate().isNotEmpty ||
+            find.byIcon(Icons.error_outline).evaluate().isNotEmpty ||
+            find.text('Retry').evaluate().isNotEmpty,
+        isTrue,
+      );
     });
   });
 
@@ -383,10 +411,7 @@ void main() {
   group('AuditLogListWidget', () {
     testWidgets('shows loading state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const AuditLogListWidget(),
-          overrides: _allProviderOverrides(auditLogs: const AuditLogListLoading()),
-        ),
+        _wrap(const AuditLogListWidget(), overrides: _allProviderOverrides(auditLogs: const AuditLogListLoading())),
       );
       await tester.pump();
 
@@ -396,10 +421,7 @@ void main() {
     testWidgets('shows audit log entries when loaded', (tester) async {
       final logs = _sampleLogs();
       await tester.pumpWidget(
-        _wrap(
-          const AuditLogListWidget(),
-          overrides: _allProviderOverrides(auditLogs: AuditLogListLoaded(logs)),
-        ),
+        _wrap(const AuditLogListWidget(), overrides: _allProviderOverrides(auditLogs: AuditLogListLoaded(logs))),
       );
       await tester.pump();
 
@@ -410,10 +432,7 @@ void main() {
 
     testWidgets('shows empty state when no logs', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const AuditLogListWidget(),
-          overrides: _allProviderOverrides(auditLogs: const AuditLogListLoaded([])),
-        ),
+        _wrap(const AuditLogListWidget(), overrides: _allProviderOverrides(auditLogs: const AuditLogListLoaded([]))),
       );
       await tester.pump();
 
@@ -422,10 +441,7 @@ void main() {
 
     testWidgets('shows error state when load fails', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const AuditLogListWidget(),
-          overrides: _allProviderOverrides(auditLogs: const AuditLogListError('Failed to load')),
-        ),
+        _wrap(const AuditLogListWidget(), overrides: _allProviderOverrides(auditLogs: const AuditLogListError('Failed to load'))),
       );
       await tester.pump();
 
@@ -438,10 +454,7 @@ void main() {
   group('DeviceListWidget', () {
     testWidgets('shows loading state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const DeviceListWidget(),
-          overrides: _allProviderOverrides(devices: const DeviceListLoading()),
-        ),
+        _wrap(const DeviceListWidget(), overrides: _allProviderOverrides(devices: const DeviceListLoading())),
       );
       await tester.pump();
 
@@ -451,27 +464,18 @@ void main() {
     testWidgets('shows device names when loaded', (tester) async {
       final devices = _sampleDevices();
       await tester.pumpWidget(
-        _wrap(
-          const DeviceListWidget(),
-          overrides: _allProviderOverrides(devices: DeviceListLoaded(devices)),
-        ),
+        _wrap(const DeviceListWidget(), overrides: _allProviderOverrides(devices: DeviceListLoaded(devices))),
       );
       await tester.pump();
 
       expect(tester.takeException(), isNull);
       // Device names should appear
-      expect(
-        find.text('Terminal 1').evaluate().isNotEmpty || find.textContaining('Terminal').evaluate().isNotEmpty,
-        isTrue,
-      );
+      expect(find.text('Terminal 1').evaluate().isNotEmpty || find.textContaining('Terminal').evaluate().isNotEmpty, isTrue);
     });
 
     testWidgets('shows empty state when no devices', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const DeviceListWidget(),
-          overrides: _allProviderOverrides(devices: const DeviceListLoaded([])),
-        ),
+        _wrap(const DeviceListWidget(), overrides: _allProviderOverrides(devices: const DeviceListLoaded([]))),
       );
       await tester.pump();
 
@@ -480,10 +484,7 @@ void main() {
 
     testWidgets('shows error state on failure', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const DeviceListWidget(),
-          overrides: _allProviderOverrides(devices: const DeviceListError('Device load error')),
-        ),
+        _wrap(const DeviceListWidget(), overrides: _allProviderOverrides(devices: const DeviceListError('Device load error'))),
       );
       await tester.pump();
 
@@ -496,10 +497,7 @@ void main() {
   group('SessionListWidget', () {
     testWidgets('shows loading state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SessionListWidget(),
-          overrides: _allProviderOverrides(sessions: const SessionListLoading()),
-        ),
+        _wrap(const SessionListWidget(), overrides: _allProviderOverrides(sessions: const SessionListLoading())),
       );
       await tester.pump();
 
@@ -509,10 +507,7 @@ void main() {
     testWidgets('shows sessions when loaded', (tester) async {
       final sessions = _sampleSessions();
       await tester.pumpWidget(
-        _wrap(
-          const SessionListWidget(),
-          overrides: _allProviderOverrides(sessions: SessionListLoaded(sessions)),
-        ),
+        _wrap(const SessionListWidget(), overrides: _allProviderOverrides(sessions: SessionListLoaded(sessions))),
       );
       await tester.pump();
 
@@ -521,10 +516,7 @@ void main() {
 
     testWidgets('shows empty state when no sessions', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SessionListWidget(),
-          overrides: _allProviderOverrides(sessions: const SessionListLoaded([])),
-        ),
+        _wrap(const SessionListWidget(), overrides: _allProviderOverrides(sessions: const SessionListLoaded([]))),
       );
       await tester.pump();
 
@@ -533,10 +525,7 @@ void main() {
 
     testWidgets('shows error state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SessionListWidget(),
-          overrides: _allProviderOverrides(sessions: const SessionListError('Sessions error')),
-        ),
+        _wrap(const SessionListWidget(), overrides: _allProviderOverrides(sessions: const SessionListError('Sessions error'))),
       );
       await tester.pump();
 
@@ -549,10 +538,7 @@ void main() {
   group('IncidentListWidget', () {
     testWidgets('shows loading state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const IncidentListWidget(),
-          overrides: _allProviderOverrides(incidents: const IncidentListLoading()),
-        ),
+        _wrap(const IncidentListWidget(), overrides: _allProviderOverrides(incidents: const IncidentListLoading())),
       );
       await tester.pump();
 
@@ -562,27 +548,20 @@ void main() {
     testWidgets('shows incidents when loaded', (tester) async {
       final incidents = _sampleIncidents();
       await tester.pumpWidget(
-        _wrap(
-          const IncidentListWidget(),
-          overrides: _allProviderOverrides(incidents: IncidentListLoaded(incidents)),
-        ),
+        _wrap(const IncidentListWidget(), overrides: _allProviderOverrides(incidents: IncidentListLoaded(incidents))),
       );
       await tester.pump();
 
       expect(tester.takeException(), isNull);
       expect(
-        find.text('Multiple failed logins').evaluate().isNotEmpty ||
-        find.textContaining('brute_force').evaluate().isNotEmpty,
+        find.text('Multiple failed logins').evaluate().isNotEmpty || find.textContaining('brute_force').evaluate().isNotEmpty,
         isTrue,
       );
     });
 
     testWidgets('shows empty state when no incidents', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const IncidentListWidget(),
-          overrides: _allProviderOverrides(incidents: const IncidentListLoaded([])),
-        ),
+        _wrap(const IncidentListWidget(), overrides: _allProviderOverrides(incidents: const IncidentListLoaded([]))),
       );
       await tester.pump();
 
@@ -607,10 +586,7 @@ void main() {
   group('SecurityOverviewWidget', () {
     testWidgets('renders without crash in loading state', (tester) async {
       await tester.pumpWidget(
-        _wrap(
-          const SecurityOverviewWidget(),
-          overrides: _allProviderOverrides(overview: const SecurityOverviewLoading()),
-        ),
+        _wrap(const SecurityOverviewWidget(), overrides: _allProviderOverrides(overview: const SecurityOverviewLoading())),
       );
       await tester.pump();
 
@@ -633,10 +609,7 @@ void main() {
       };
 
       await tester.pumpWidget(
-        _wrap(
-          const SecurityOverviewWidget(),
-          overrides: _allProviderOverrides(overview: const SecurityOverviewLoaded(overview)),
-        ),
+        _wrap(const SecurityOverviewWidget(), overrides: _allProviderOverrides(overview: const SecurityOverviewLoaded(overview))),
       );
       await tester.pump();
 

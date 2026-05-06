@@ -84,7 +84,10 @@ class SubscriptionApiService {
   }
 
   Future<StoreSubscription> cancelSubscription({String? reason, String? reasonCategory}) async {
-    final response = await _dio.post(ApiEndpoints.subscriptionCancel, data: {'reason': reason, 'reason_category': reasonCategory}..removeWhere((_, v) => v == null));
+    final response = await _dio.post(
+      ApiEndpoints.subscriptionCancel,
+      data: {'reason': reason, 'reason_category': reasonCategory}..removeWhere((_, v) => v == null),
+    );
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return StoreSubscription.fromJson(apiResponse.data as Map<String, dynamic>);

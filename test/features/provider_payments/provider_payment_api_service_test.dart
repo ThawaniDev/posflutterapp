@@ -16,18 +16,13 @@ class _MockAdapter implements HttpClientAdapter {
   void close({bool force = false}) {}
 
   @override
-  Future<ResponseBody> fetch(
-      RequestOptions options, Stream<List<int>>? requestStream, Future<void>? cancelFuture) {
+  Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>>? requestStream, Future<void>? cancelFuture) {
     return handler(options);
   }
 }
 
 Dio _makeDio(Future<ResponseBody> Function(RequestOptions) handler) {
-  final dio = Dio(BaseOptions(
-    baseUrl: 'http://test',
-    responseType: ResponseType.json,
-    contentType: 'application/json',
-  ));
+  final dio = Dio(BaseOptions(baseUrl: 'http://test', responseType: ResponseType.json, contentType: 'application/json'));
   dio.httpClientAdapter = _MockAdapter(handler);
   return dio;
 }
@@ -36,7 +31,9 @@ ResponseBody _json(Object body, [int status = 200]) {
   return ResponseBody.fromString(
     jsonEncode(body),
     status,
-    headers: {Headers.contentTypeHeader: ['application/json']},
+    headers: {
+      Headers.contentTypeHeader: ['application/json'],
+    },
   );
 }
 
@@ -51,51 +48,50 @@ Map<String, dynamic> _paymentPayload({
   String purpose = 'other',
   String status = 'pending',
   String? redirectUrl,
-}) =>
-    {
-      'id': id,
-      'organization_id': 'org-uuid-1',
-      'invoice_id': null,
-      'purpose': purpose,
-      'purpose_label': 'Test Payment',
-      'purpose_reference_id': null,
-      'amount': '100.00',
-      'tax_amount': '15.00',
-      'total_amount': '115.00',
-      'currency': 'SAR',
-      'original_currency': null,
-      'original_amount': null,
-      'exchange_rate_used': null,
-      'status': status,
-      'gateway': 'paytabs',
-      'tran_ref': 'TRAN-001',
-      'tran_type': 'sale',
-      'cart_id': 'WP-TEST-001',
-      'response_status': null,
-      'response_code': null,
-      'response_message': null,
-      'card_type': null,
-      'card_scheme': null,
-      'payment_description': null,
-      'payment_method': null,
-      'confirmation_email_sent': false,
-      'confirmation_email_sent_at': null,
-      'confirmation_email_error': null,
-      'invoice_generated': false,
-      'invoice_generated_at': null,
-      'ipn_received': false,
-      'ipn_received_at': null,
-      'refund_amount': null,
-      'refund_tran_ref': null,
-      'refund_reason': null,
-      'refunded_at': null,
-      'payment_context': null,
-      'notes': null,
-      'redirect_url': redirectUrl,
-      'email_logs': [],
-      'created_at': '2025-01-01T00:00:00.000Z',
-      'updated_at': '2025-01-01T00:00:00.000Z',
-    };
+}) => {
+  'id': id,
+  'organization_id': 'org-uuid-1',
+  'invoice_id': null,
+  'purpose': purpose,
+  'purpose_label': 'Test Payment',
+  'purpose_reference_id': null,
+  'amount': '100.00',
+  'tax_amount': '15.00',
+  'total_amount': '115.00',
+  'currency': 'SAR',
+  'original_currency': null,
+  'original_amount': null,
+  'exchange_rate_used': null,
+  'status': status,
+  'gateway': 'paytabs',
+  'tran_ref': 'TRAN-001',
+  'tran_type': 'sale',
+  'cart_id': 'WP-TEST-001',
+  'response_status': null,
+  'response_code': null,
+  'response_message': null,
+  'card_type': null,
+  'card_scheme': null,
+  'payment_description': null,
+  'payment_method': null,
+  'confirmation_email_sent': false,
+  'confirmation_email_sent_at': null,
+  'confirmation_email_error': null,
+  'invoice_generated': false,
+  'invoice_generated_at': null,
+  'ipn_received': false,
+  'ipn_received_at': null,
+  'refund_amount': null,
+  'refund_tran_ref': null,
+  'refund_reason': null,
+  'refunded_at': null,
+  'payment_context': null,
+  'notes': null,
+  'redirect_url': redirectUrl,
+  'email_logs': [],
+  'created_at': '2025-01-01T00:00:00.000Z',
+  'updated_at': '2025-01-01T00:00:00.000Z',
+};
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
@@ -104,16 +100,18 @@ void main() {
 
   group('listPayments', () {
     test('returns list of provider payments', () async {
-      final service = _makeService((_) async => _json({
-            'success': true,
-            'data': {
-              'data': [_paymentPayload(), _paymentPayload(id: 'pay-uuid-2')],
-              'total': 2,
-              'current_page': 1,
-              'per_page': 20,
-              'last_page': 1,
-            },
-          }));
+      final service = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {
+            'data': [_paymentPayload(), _paymentPayload(id: 'pay-uuid-2')],
+            'total': 2,
+            'current_page': 1,
+            'per_page': 20,
+            'last_page': 1,
+          },
+        }),
+      );
 
       final payments = await service.listPayments();
 
@@ -142,31 +140,33 @@ void main() {
     });
 
     test('parses email_logs list', () async {
-      final service = _makeService((_) async => _json({
-            'success': true,
-            'data': {
-              'data': [
-                {
-                  ..._paymentPayload(),
-                  'email_logs': [
-                    {
-                      'id': 'log-1',
-                      'provider_payment_id': 'pay-uuid-1',
-                      'email_type': 'confirmation',
-                      'recipient_email': 'owner@test.com',
-                      'subject': 'Payment Confirmed',
-                      'status': 'sent',
-                      'created_at': '2025-01-01T00:00:00.000Z',
-                    }
-                  ],
-                }
-              ],
-              'total': 1,
-              'current_page': 1,
-              'per_page': 20,
-              'last_page': 1,
-            },
-          }));
+      final service = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {
+            'data': [
+              {
+                ..._paymentPayload(),
+                'email_logs': [
+                  {
+                    'id': 'log-1',
+                    'provider_payment_id': 'pay-uuid-1',
+                    'email_type': 'confirmation',
+                    'recipient_email': 'owner@test.com',
+                    'subject': 'Payment Confirmed',
+                    'status': 'sent',
+                    'created_at': '2025-01-01T00:00:00.000Z',
+                  },
+                ],
+              },
+            ],
+            'total': 1,
+            'current_page': 1,
+            'per_page': 20,
+            'last_page': 1,
+          },
+        }),
+      );
 
       final payments = await service.listPayments();
 
@@ -180,10 +180,9 @@ void main() {
 
   group('getPayment', () {
     test('returns a single provider payment by id', () async {
-      final service = _makeService((_) async => _json({
-            'success': true,
-            'data': _paymentPayload(id: 'pay-uuid-99', status: 'completed'),
-          }));
+      final service = _makeService(
+        (_) async => _json({'success': true, 'data': _paymentPayload(id: 'pay-uuid-99', status: 'completed')}),
+      );
 
       final payment = await service.getPayment('pay-uuid-99');
 
@@ -308,11 +307,7 @@ void main() {
         return _json({'success': true, 'data': _paymentPayload()});
       });
 
-      await service.initiatePayment(
-        purpose: 'other',
-        purposeLabel: 'Other',
-        amount: 50.0,
-      );
+      await service.initiatePayment(purpose: 'other', purposeLabel: 'Other', amount: 50.0);
 
       // Null fields should not be present (Dart null-aware `?value` syntax omits them)
       expect(sentBody!.containsKey('currency'), isFalse);
@@ -322,16 +317,11 @@ void main() {
     });
 
     test('returns redirect_url from response', () async {
-      final service = _makeService((_) async => _json({
-            'success': true,
-            'data': _paymentPayload(redirectUrl: 'https://pay.paytabs.com/checkout/abc123'),
-          }));
-
-      final payment = await service.initiatePayment(
-        purpose: 'other',
-        purposeLabel: 'Test',
-        amount: 50.0,
+      final service = _makeService(
+        (_) async => _json({'success': true, 'data': _paymentPayload(redirectUrl: 'https://pay.paytabs.com/checkout/abc123')}),
       );
+
+      final payment = await service.initiatePayment(purpose: 'other', purposeLabel: 'Test', amount: 50.0);
 
       expect(payment.redirectUrl, 'https://pay.paytabs.com/checkout/abc123');
     });
@@ -354,16 +344,12 @@ void main() {
 
   group('getStatistics', () {
     test('returns stats map from API', () async {
-      final service = _makeService((_) async => _json({
-            'success': true,
-            'data': {
-              'total_payments': 42,
-              'total_paid': '1234.56',
-              'total_pending': 3,
-              'total_failed': 2,
-              'emails_sent': 38,
-            },
-          }));
+      final service = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'total_payments': 42, 'total_paid': '1234.56', 'total_pending': 3, 'total_failed': 2, 'emails_sent': 38},
+        }),
+      );
 
       final stats = await service.getStatistics();
 
@@ -410,11 +396,7 @@ void main() {
 
   group('ProviderPayment.fromJson', () {
     test('parses all core fields', () {
-      final payment = ProviderPayment.fromJson(_paymentPayload(
-        id: 'pay-parse-1',
-        purpose: 'subscription',
-        status: 'completed',
-      ));
+      final payment = ProviderPayment.fromJson(_paymentPayload(id: 'pay-parse-1', purpose: 'subscription', status: 'completed'));
 
       expect(payment.id, 'pay-parse-1');
       expect(payment.purpose, PaymentPurpose.subscription);
@@ -428,19 +410,13 @@ void main() {
     });
 
     test('parses unknown purpose as null', () {
-      final payment = ProviderPayment.fromJson({
-        ..._paymentPayload(),
-        'purpose': 'unknown_future_value',
-      });
+      final payment = ProviderPayment.fromJson({..._paymentPayload(), 'purpose': 'unknown_future_value'});
 
       expect(payment.purpose, isNull);
     });
 
     test('parses unknown status as pending', () {
-      final payment = ProviderPayment.fromJson({
-        ..._paymentPayload(),
-        'status': 'unknown_status',
-      });
+      final payment = ProviderPayment.fromJson({..._paymentPayload(), 'status': 'unknown_status'});
 
       expect(payment.status, ProviderPaymentStatus.pending);
     });

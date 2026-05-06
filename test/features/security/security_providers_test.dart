@@ -73,7 +73,7 @@ class _MockRepository extends SecurityRepository {
             'login_stats': {},
             'audit_stats': {},
             'critical_audits_7d': 0,
-          }
+          },
         };
   }
 
@@ -89,7 +89,7 @@ class _MockRepository extends SecurityRepository {
             'pin_max_length': 6,
             'max_failed_attempts': 5,
             'lockout_duration_minutes': 15,
-          }
+          },
         };
   }
 
@@ -117,8 +117,8 @@ class _MockRepository extends SecurityRepository {
             'data': [
               {'id': 'log-1', 'store_id': storeId, 'action': 'login', 'user_type': 'staff', 'severity': 'info'},
               {'id': 'log-2', 'store_id': storeId, 'action': 'logout', 'user_type': 'staff', 'severity': 'info'},
-            ]
-          }
+            ],
+          },
         };
   }
 
@@ -136,20 +136,28 @@ class _MockRepository extends SecurityRepository {
           'data': [
             {'id': 'dev-1', 'store_id': storeId, 'device_name': 'Terminal 1', 'hardware_id': 'HW-001', 'is_active': true},
             {'id': 'dev-2', 'store_id': storeId, 'device_name': 'Terminal 2', 'hardware_id': 'HW-002', 'is_active': false},
-          ]
+          ],
         };
   }
 
   @override
   Future<Map<String, dynamic>> deactivateDevice({required String deviceId}) async {
     _maybeThrow('deactivateDevice');
-    return actionResult ?? {'success': true, 'data': {'id': deviceId, 'is_active': false}};
+    return actionResult ??
+        {
+          'success': true,
+          'data': {'id': deviceId, 'is_active': false},
+        };
   }
 
   @override
   Future<Map<String, dynamic>> requestRemoteWipe({required String deviceId}) async {
     _maybeThrow('requestRemoteWipe');
-    return actionResult ?? {'success': true, 'data': {'id': deviceId, 'remote_wipe_requested': true}};
+    return actionResult ??
+        {
+          'success': true,
+          'data': {'id': deviceId, 'remote_wipe_requested': true},
+        };
   }
 
   @override
@@ -164,10 +172,22 @@ class _MockRepository extends SecurityRepository {
         {
           'data': {
             'data': [
-              {'id': 'la-1', 'store_id': storeId, 'user_identifier': 'user@test.com', 'attempt_type': 'pin', 'is_successful': true},
-              {'id': 'la-2', 'store_id': storeId, 'user_identifier': 'user@test.com', 'attempt_type': 'pin', 'is_successful': false},
-            ]
-          }
+              {
+                'id': 'la-1',
+                'store_id': storeId,
+                'user_identifier': 'user@test.com',
+                'attempt_type': 'pin',
+                'is_successful': true,
+              },
+              {
+                'id': 'la-2',
+                'store_id': storeId,
+                'user_identifier': 'user@test.com',
+                'attempt_type': 'pin',
+                'is_successful': false,
+              },
+            ],
+          },
         };
   }
 
@@ -185,20 +205,26 @@ class _MockRepository extends SecurityRepository {
               'status': 'active',
               'started_at': '2024-01-01T08:00:00.000Z',
             },
-          ]
+          ],
         };
   }
 
   @override
   Future<Map<String, dynamic>> endSession({required String sessionId}) async {
     _maybeThrow('endSession');
-    return {'success': true, 'data': {'id': sessionId, 'status': 'ended'}};
+    return {
+      'success': true,
+      'data': {'id': sessionId, 'status': 'ended'},
+    };
   }
 
   @override
   Future<Map<String, dynamic>> endAllSessions({required String storeId, String? userId}) async {
     _maybeThrow('endAllSessions');
-    return {'success': true, 'data': {'ended_count': 3}};
+    return {
+      'success': true,
+      'data': {'ended_count': 3},
+    };
   }
 
   @override
@@ -216,15 +242,18 @@ class _MockRepository extends SecurityRepository {
                 'title': 'Multiple failed logins',
                 'status': 'open',
               },
-            ]
-          }
+            ],
+          },
         };
   }
 
   @override
   Future<Map<String, dynamic>> resolveIncident({required String incidentId, String? resolutionNotes}) async {
     _maybeThrow('resolveIncident');
-    return {'success': true, 'data': {'id': incidentId, 'status': 'resolved'}};
+    return {
+      'success': true,
+      'data': {'id': incidentId, 'status': 'resolved'},
+    };
   }
 }
 
@@ -299,8 +328,16 @@ void main() {
       await container.read(securityOverviewProvider.notifier).load('store-1');
       final state = container.read(securityOverviewProvider) as SecurityOverviewLoaded;
 
-      final keys = ['active_devices', 'active_sessions', 'unresolved_incidents', 'failed_logins_today',
-                    'total_audit_logs', 'locked_out_users', 'recent_activity', 'policy'];
+      final keys = [
+        'active_devices',
+        'active_sessions',
+        'unresolved_incidents',
+        'failed_logins_today',
+        'total_audit_logs',
+        'locked_out_users',
+        'recent_activity',
+        'policy',
+      ];
       for (final key in keys) {
         expect(state.overview.containsKey(key), isTrue, reason: 'Missing overview key: $key');
       }
@@ -549,7 +586,11 @@ void main() {
     });
 
     test('loadIncidents handles empty data.data array', () async {
-      final repo = _MockRepository(incidentsResult: {'data': {'data': []}});
+      final repo = _MockRepository(
+        incidentsResult: {
+          'data': {'data': []},
+        },
+      );
       final container = _makeContainer(repo);
       addTearDown(container.dispose);
 

@@ -100,10 +100,7 @@ void main() {
     });
 
     test('fromValue throws on invalid category', () {
-      expect(
-        () => CancellationReasonCategory.fromValue('invalid_category'),
-        throwsArgumentError,
-      );
+      expect(() => CancellationReasonCategory.fromValue('invalid_category'), throwsArgumentError);
     });
 
     test('tryFromValue returns null for null input', () {
@@ -127,9 +124,7 @@ void main() {
         return _json({'success': true, 'data': _cancelledSubscriptionPayload});
       });
 
-      await svc.cancelSubscription(
-        reasonCategory: CancellationReasonCategory.price.value,
-      );
+      await svc.cancelSubscription(reasonCategory: CancellationReasonCategory.price.value);
 
       final body = captured!.data as Map<String, dynamic>;
       // Must be the string 'price', not 'CancellationReasonCategory.price'
@@ -160,9 +155,7 @@ void main() {
         return _json({'success': true, 'data': _cancelledSubscriptionPayload});
       });
 
-      await svc.cancelSubscription(
-        reasonCategory: CancellationReasonCategory.features.value,
-      );
+      await svc.cancelSubscription(reasonCategory: CancellationReasonCategory.features.value);
 
       final body = captured!.data as Map<String, dynamic>;
       expect(body.containsKey('reason'), isFalse);
@@ -176,9 +169,7 @@ void main() {
         return _json({'success': true, 'data': _cancelledSubscriptionPayload});
       });
 
-      await svc.cancelSubscription(
-        reason: 'Switching to a competitor solution.',
-      );
+      await svc.cancelSubscription(reason: 'Switching to a competitor solution.');
 
       final body = captured!.data as Map<String, dynamic>;
       expect(body['reason'], equals('Switching to a competitor solution.'));
@@ -220,10 +211,7 @@ void main() {
 
   group('cancelSubscription response parsing', () {
     test('returns StoreSubscription with cancelled status', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': _cancelledSubscriptionPayload,
-      }));
+      final svc = _makeService((_) async => _json({'success': true, 'data': _cancelledSubscriptionPayload}));
 
       final result = await svc.cancelSubscription(reasonCategory: 'price');
 
@@ -232,10 +220,7 @@ void main() {
     });
 
     test('cancelled_at is populated in response', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': _cancelledSubscriptionPayload,
-      }));
+      final svc = _makeService((_) async => _json({'success': true, 'data': _cancelledSubscriptionPayload}));
 
       final result = await svc.cancelSubscription(reasonCategory: 'other');
 
@@ -243,10 +228,7 @@ void main() {
     });
 
     test('subscription still has billing info after cancellation', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': _cancelledSubscriptionPayload,
-      }));
+      final svc = _makeService((_) async => _json({'success': true, 'data': _cancelledSubscriptionPayload}));
 
       final result = await svc.cancelSubscription(reasonCategory: 'price');
 
@@ -285,10 +267,7 @@ void main() {
         ..['status'] = 'active'
         ..['cancelled_at'] = null;
 
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': resumedPayload,
-      }));
+      final svc = _makeService((_) async => _json({'success': true, 'data': resumedPayload}));
 
       final result = await svc.resumeSubscription();
 
@@ -300,7 +279,10 @@ void main() {
       RequestOptions? captured;
       final svc = _makeService((opts) async {
         captured = opts;
-        return _json({'success': true, 'data': Map<String, dynamic>.from(_cancelledSubscriptionPayload)..addAll({'status': 'active'})});
+        return _json({
+          'success': true,
+          'data': Map<String, dynamic>.from(_cancelledSubscriptionPayload)..addAll({'status': 'active'}),
+        });
       });
 
       await svc.resumeSubscription();

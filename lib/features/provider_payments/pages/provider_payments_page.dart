@@ -94,7 +94,6 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
 }
 
 class _PaymentListTile extends StatelessWidget {
-
   const _PaymentListTile({required this.payment, required this.onTap});
   final ProviderPayment payment;
   final VoidCallback onTap;
@@ -170,7 +169,6 @@ class _PaymentListTile extends StatelessWidget {
 }
 
 class _StatusBadge extends StatelessWidget {
-
   const _StatusBadge({required this.status});
   final ProviderPaymentStatus status;
 

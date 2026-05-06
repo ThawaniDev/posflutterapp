@@ -213,6 +213,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
       }
     }
   }
+
   void _confirmRemoveAddOn(Map<String, dynamic> addOn) async {
     final addOnData = addOn['add_on'] ?? addOn['plan_add_on'];
     final nameSource = addOnData is Map<String, dynamic> ? addOnData : addOn;

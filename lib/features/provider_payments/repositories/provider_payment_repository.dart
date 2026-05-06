@@ -9,7 +9,6 @@ final providerPaymentRepositoryProvider = Provider<ProviderPaymentRepository>((r
 });
 
 class ProviderPaymentRepository {
-
   ProviderPaymentRepository(this._apiService);
   final ProviderPaymentApiService _apiService;
 
@@ -93,7 +92,6 @@ class ProviderPaymentRepository {
 }
 
 class ProviderPaymentException extends AppException {
-
   const ProviderPaymentException({required super.message, this.statusCode, super.originalError});
   final int? statusCode;
 

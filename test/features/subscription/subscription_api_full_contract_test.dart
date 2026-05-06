@@ -185,8 +185,7 @@ void main() {
         await svc.cancelSubscription(reasonCategory: category);
 
         final body = captured!.data as Map<String, dynamic>;
-        expect(body['reason_category'], equals(category),
-            reason: 'Expected $category to be sent as reason_category');
+        expect(body['reason_category'], equals(category), reason: 'Expected $category to be sent as reason_category');
       }
     });
   });
@@ -270,8 +269,7 @@ void main() {
     });
 
     test('subscription plan is parsed when present', () async {
-      final withPlan = Map<String, dynamic>.from(_subscriptionPayload)
-        ..['plan'] = _planPayload;
+      final withPlan = Map<String, dynamic>.from(_subscriptionPayload)..['plan'] = _planPayload;
 
       final svc = _makeService((_) async => _json({'success': true, 'data': withPlan}));
 
@@ -304,7 +302,12 @@ void main() {
     final invoiceListResponse = {
       'success': true,
       'data': {
-        'data': [_invoicePayload, Map<String, dynamic>.from(_invoicePayload)..['id'] = 'inv-uuid-2'..['invoice_number'] = 'INV-2025-0002'],
+        'data': [
+          _invoicePayload,
+          Map<String, dynamic>.from(_invoicePayload)
+            ..['id'] = 'inv-uuid-2'
+            ..['invoice_number'] = 'INV-2025-0002',
+        ],
         'meta': {'current_page': 1, 'last_page': 1, 'per_page': 20, 'total': 2},
       },
     };
@@ -352,7 +355,13 @@ void main() {
       RequestOptions? captured;
       final svc = _makeService((opts) async {
         captured = opts;
-        return _json({'success': true, 'data': {'data': [], 'meta': {'current_page': 2, 'last_page': 2, 'per_page': 10, 'total': 15}}});
+        return _json({
+          'success': true,
+          'data': {
+            'data': [],
+            'meta': {'current_page': 2, 'last_page': 2, 'per_page': 10, 'total': 15},
+          },
+        });
       });
 
       await svc.getInvoices(page: 2, perPage: 10);
@@ -388,13 +397,12 @@ void main() {
 
   group('getInvoicePdfUrl', () {
     test('returns pdf_url string when invoice has stored URL', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {
-          'pdf_url': 'https://storage.example.com/invoices/INV-2025-0001.pdf',
-          'invoice_number': 'INV-2025-0001',
-        },
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'pdf_url': 'https://storage.example.com/invoices/INV-2025-0001.pdf', 'invoice_number': 'INV-2025-0001'},
+        }),
+      );
 
       final result = await svc.getInvoicePdfUrl('inv-uuid-1');
 
@@ -402,13 +410,12 @@ void main() {
     });
 
     test('returns null when no pdf_url in response', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {
-          'pdf_url': null,
-          'invoice_number': 'INV-2025-0001',
-        },
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'pdf_url': null, 'invoice_number': 'INV-2025-0001'},
+        }),
+      );
 
       final result = await svc.getInvoicePdfUrl('inv-uuid-1');
 
@@ -448,18 +455,20 @@ void main() {
     });
 
     test('response includes discounted_price and savings', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {
-          'valid': true,
-          'discount_type': 'percentage',
-          'discount_value': 50.0,
-          'discount_percentage': 50.0,
-          'original_price': 29.99,
-          'discounted_price': 14.995,
-          'savings': 14.995,
-        },
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {
+            'valid': true,
+            'discount_type': 'percentage',
+            'discount_value': 50.0,
+            'discount_percentage': 50.0,
+            'original_price': 29.99,
+            'discounted_price': 14.995,
+            'savings': 14.995,
+          },
+        }),
+      );
 
       final result = await svc.validateDiscount(code: 'HALF', planId: 'plan-uuid-1', billingCycle: 'monthly');
 
@@ -494,10 +503,17 @@ void main() {
 
   group('listPlans', () {
     test('parses list of plans from array response', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': [_planPayload, Map<String, dynamic>.from(_planPayload)..['id'] = 'plan-uuid-2'..['name'] = 'Enterprise'],
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': [
+            _planPayload,
+            Map<String, dynamic>.from(_planPayload)
+              ..['id'] = 'plan-uuid-2'
+              ..['name'] = 'Enterprise',
+          ],
+        }),
+      );
 
       final result = await svc.listPlans();
 
@@ -508,10 +524,12 @@ void main() {
     });
 
     test('plan monthly_price is parsed as double', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': [_planPayload],
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': [_planPayload],
+        }),
+      );
 
       final result = await svc.listPlans();
 
@@ -522,7 +540,12 @@ void main() {
     test('plan annual_price is nullable', () async {
       final noAnnual = Map<String, dynamic>.from(_planPayload)..['annual_price'] = null;
 
-      final svc = _makeService((_) async => _json({'success': true, 'data': [noAnnual]}));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': [noAnnual],
+        }),
+      );
 
       final result = await svc.listPlans();
 
@@ -536,10 +559,12 @@ void main() {
 
   group('checkFeature', () {
     test('returns true when feature is enabled', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {'feature_key': 'multi_branch', 'is_enabled': true},
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'feature_key': 'multi_branch', 'is_enabled': true},
+        }),
+      );
 
       final result = await svc.checkFeature('multi_branch');
 
@@ -547,10 +572,12 @@ void main() {
     });
 
     test('returns false when feature is disabled', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {'feature_key': 'reports_advanced', 'is_enabled': false},
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'feature_key': 'reports_advanced', 'is_enabled': false},
+        }),
+      );
 
       final result = await svc.checkFeature('reports_advanced');
 
@@ -564,17 +591,12 @@ void main() {
 
   group('checkLimit', () {
     test('returns map with limit, current, within_limit keys', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {
-          'limit_key': 'branches',
-          'limit': 3,
-          'current': 1,
-          'remaining': 2,
-          'within_limit': true,
-          'unlimited': false,
-        },
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {'limit_key': 'branches', 'limit': 3, 'current': 1, 'remaining': 2, 'within_limit': true, 'unlimited': false},
+        }),
+      );
 
       final result = await svc.checkLimit('branches');
 
@@ -585,17 +607,19 @@ void main() {
     });
 
     test('unlimited flag is true when no limit configured', () async {
-      final svc = _makeService((_) async => _json({
-        'success': true,
-        'data': {
-          'limit_key': 'products',
-          'limit': null,
-          'current': 150,
-          'remaining': null,
-          'within_limit': true,
-          'unlimited': true,
-        },
-      }));
+      final svc = _makeService(
+        (_) async => _json({
+          'success': true,
+          'data': {
+            'limit_key': 'products',
+            'limit': null,
+            'current': 150,
+            'remaining': null,
+            'within_limit': true,
+            'unlimited': true,
+          },
+        }),
+      );
 
       final result = await svc.checkLimit('products');
 
@@ -660,7 +684,7 @@ void main() {
             'description': 'Customer loyalty',
             'is_active': true,
           },
-        }
+        },
       ];
 
       final svc = _makeService((_) async => _json({'success': true, 'data': payload}));

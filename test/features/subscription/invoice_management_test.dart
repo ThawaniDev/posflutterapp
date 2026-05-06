@@ -16,23 +16,13 @@ class _MockAdapter implements HttpClientAdapter {
   void close({bool force = false}) {}
 
   @override
-  Future<ResponseBody> fetch(
-    RequestOptions options,
-    Stream<List<int>>? requestStream,
-    Future<void>? cancelFuture,
-  ) {
+  Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>>? requestStream, Future<void>? cancelFuture) {
     return handler(options);
   }
 }
 
 Dio _makeDio(Future<ResponseBody> Function(RequestOptions) handler) {
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: 'http://test',
-      responseType: ResponseType.json,
-      contentType: 'application/json',
-    ),
-  );
+  final dio = Dio(BaseOptions(baseUrl: 'http://test', responseType: ResponseType.json, contentType: 'application/json'));
   dio.httpClientAdapter = _MockAdapter(handler);
   return dio;
 }
@@ -47,9 +37,7 @@ ResponseBody _json(Object body, [int status = 200]) {
   );
 }
 
-SubscriptionApiService _makeService(
-  Future<ResponseBody> Function(RequestOptions) handler,
-) {
+SubscriptionApiService _makeService(Future<ResponseBody> Function(RequestOptions) handler) {
   return SubscriptionApiService(_makeDio(handler));
 }
 
@@ -108,12 +96,7 @@ Map<String, dynamic> _paginatedListResponse(
     'success': true,
     'data': {
       'data': invoices,
-      'meta': {
-        'current_page': page,
-        'last_page': lastPage,
-        'per_page': perPage,
-        'total': total ?? invoices.length,
-      },
+      'meta': {'current_page': page, 'last_page': lastPage, 'per_page': perPage, 'total': total ?? invoices.length},
     },
   };
 }
@@ -168,8 +151,7 @@ void main() {
     });
 
     test('empty line_items list is parsed as empty list', () {
-      final payload = Map<String, dynamic>.from(_invoicePayload)
-        ..['line_items'] = <dynamic>[];
+      final payload = Map<String, dynamic>.from(_invoicePayload)..['line_items'] = <dynamic>[];
       final invoice = Invoice.fromJson(payload);
 
       expect(invoice.lineItems, isNotNull);
@@ -177,11 +159,7 @@ void main() {
     });
 
     test('amount and total parse numeric strings correctly', () {
-      final payload = {
-        'id': 'inv-num',
-        'amount': '100.00',
-        'total': '115.00',
-      };
+      final payload = {'id': 'inv-num', 'amount': '100.00', 'total': '115.00'};
       final invoice = Invoice.fromJson(payload);
 
       expect(invoice.amount, closeTo(100.0, 0.001));
@@ -312,16 +290,7 @@ void main() {
 
     test('all InvoiceStatus values appearing in a list are parsed', () async {
       final statuses = ['draft', 'pending', 'paid', 'failed', 'refunded'];
-      final payloads = statuses
-          .map(
-            (s) => {
-              'id': 'inv-$s',
-              'amount': '10',
-              'total': '10',
-              'status': s,
-            },
-          )
-          .toList();
+      final payloads = statuses.map((s) => {'id': 'inv-$s', 'amount': '10', 'total': '10', 'status': s}).toList();
 
       final service = _makeService((opts) async {
         return _json(_paginatedListResponse(payloads));
@@ -330,10 +299,7 @@ void main() {
       final invoices = await service.getInvoices();
 
       expect(invoices.length, equals(5));
-      expect(
-        invoices.map((i) => i.status?.value).toList(),
-        equals(statuses),
-      );
+      expect(invoices.map((i) => i.status?.value).toList(), equals(statuses));
     });
   });
 
@@ -395,7 +361,10 @@ void main() {
       RequestOptions? captured;
       final service = _makeService((opts) async {
         captured = opts;
-        return _json({'success': true, 'data': {'pdf_url': 'https://example.com/inv.pdf'}});
+        return _json({
+          'success': true,
+          'data': {'pdf_url': 'https://example.com/inv.pdf'},
+        });
       });
 
       await service.getInvoicePdfUrl(_invoiceId);

@@ -14,13 +14,7 @@ import 'package:wameedpos/features/provider_payments/repositories/provider_payme
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 ProviderPayment _stubPayment({String id = 'pay-1', String status = 'pending', String? redirectUrl}) {
-  return ProviderPayment(
-    id: id,
-    amount: 100,
-    totalAmount: 115,
-    status: _statusFromString(status),
-    redirectUrl: redirectUrl,
-  );
+  return ProviderPayment(id: id, amount: 100, totalAmount: 115, status: _statusFromString(status), redirectUrl: redirectUrl);
 }
 
 ProviderPaymentStatus _statusFromString(String s) {
@@ -53,7 +47,8 @@ class _FakeRepository extends ProviderPaymentRepository {
     String? currency,
     String? notes,
     double? taxAmount,
-  })? onInitiatePayment;
+  })?
+  onInitiatePayment;
   Future<void> Function(String paymentId)? onResendEmail;
 
   @override
@@ -90,19 +85,16 @@ class _FakeRepository extends ProviderPaymentRepository {
         notes: notes,
         taxAmount: taxAmount,
       ) ??
-          super.initiatePayment(purpose: purpose, purposeLabel: purposeLabel, amount: amount);
+      super.initiatePayment(purpose: purpose, purposeLabel: purposeLabel, amount: amount);
 
   @override
   Future<void> resendEmail(String paymentId) => onResendEmail?.call(paymentId) ?? super.resendEmail(paymentId);
 }
 
-ProviderPaymentApiService _noopApiService() => ProviderPaymentApiService(
-      Dio(BaseOptions(baseUrl: 'http://noop')),
-    );
+ProviderPaymentApiService _noopApiService() => ProviderPaymentApiService(Dio(BaseOptions(baseUrl: 'http://noop')));
 
-ProviderContainer _container(_FakeRepository repo) => ProviderContainer(
-      overrides: [providerPaymentRepositoryProvider.overrideWithValue(repo)],
-    );
+ProviderContainer _container(_FakeRepository repo) =>
+    ProviderContainer(overrides: [providerPaymentRepositoryProvider.overrideWithValue(repo)]);
 
 // ─── Fake AppLocalizations ────────────────────────────────────────────────────
 
@@ -129,15 +121,11 @@ void main() {
       final container = _container(_FakeRepository());
       addTearDown(container.dispose);
 
-      expect(
-        container.read(providerPaymentsListProvider),
-        isA<ProviderPaymentsListInitial>(),
-      );
+      expect(container.read(providerPaymentsListProvider), isA<ProviderPaymentsListInitial>());
     });
 
     test('loadPayments transitions to loaded on success', () async {
-      final repo = _FakeRepository()
-        ..onListPayments = ({status, purpose}) async => [_stubPayment(), _stubPayment(id: 'pay-2')];
+      final repo = _FakeRepository()..onListPayments = ({status, purpose}) async => [_stubPayment(), _stubPayment(id: 'pay-2')];
       final container = _container(repo);
       addTearDown(container.dispose);
 
@@ -183,10 +171,7 @@ void main() {
       final container = _container(_FakeRepository());
       addTearDown(container.dispose);
 
-      expect(
-        container.read(providerPaymentDetailProvider),
-        isA<ProviderPaymentDetailInitial>(),
-      );
+      expect(container.read(providerPaymentDetailProvider), isA<ProviderPaymentDetailInitial>());
     });
 
     test('loadPayment transitions to loaded on success', () async {
@@ -223,33 +208,32 @@ void main() {
       final container = _container(_FakeRepository());
       addTearDown(container.dispose);
 
-      expect(
-        container.read(providerPaymentActionProvider),
-        isA<ProviderPaymentActionIdle>(),
-      );
+      expect(container.read(providerPaymentActionProvider), isA<ProviderPaymentActionIdle>());
     });
 
     test('initiatePayment transitions to success with payment', () async {
       final stubPayment = _stubPayment(redirectUrl: 'https://pay.example.com/checkout');
       final repo = _FakeRepository()
-        ..onInitiatePayment = ({
-          required purpose,
-          required purposeLabel,
-          required amount,
-          billingCycle,
-          discountCode,
-          subscriptionPlanId,
-          addOnId,
-          purposeReferenceId,
-          currency,
-          notes,
-          taxAmount,
-        }) async =>
-            stubPayment;
+        ..onInitiatePayment =
+            ({
+              required purpose,
+              required purposeLabel,
+              required amount,
+              billingCycle,
+              discountCode,
+              subscriptionPlanId,
+              addOnId,
+              purposeReferenceId,
+              currency,
+              notes,
+              taxAmount,
+            }) async => stubPayment;
       final container = _container(repo);
       addTearDown(container.dispose);
 
-      await container.read(providerPaymentActionProvider.notifier).initiatePayment(
+      await container
+          .read(providerPaymentActionProvider.notifier)
+          .initiatePayment(
             _l10n,
             purpose: 'subscription',
             purposeLabel: 'Growth (monthly)',
@@ -270,27 +254,30 @@ void main() {
       String? capturedDiscountCode;
 
       final repo = _FakeRepository()
-        ..onInitiatePayment = ({
-          required purpose,
-          required purposeLabel,
-          required amount,
-          billingCycle,
-          discountCode,
-          subscriptionPlanId,
-          addOnId,
-          purposeReferenceId,
-          currency,
-          notes,
-          taxAmount,
-        }) async {
-          capturedBillingCycle = billingCycle;
-          capturedDiscountCode = discountCode;
-          return _stubPayment();
-        };
+        ..onInitiatePayment =
+            ({
+              required purpose,
+              required purposeLabel,
+              required amount,
+              billingCycle,
+              discountCode,
+              subscriptionPlanId,
+              addOnId,
+              purposeReferenceId,
+              currency,
+              notes,
+              taxAmount,
+            }) async {
+              capturedBillingCycle = billingCycle;
+              capturedDiscountCode = discountCode;
+              return _stubPayment();
+            };
       final container = _container(repo);
       addTearDown(container.dispose);
 
-      await container.read(providerPaymentActionProvider.notifier).initiatePayment(
+      await container
+          .read(providerPaymentActionProvider.notifier)
+          .initiatePayment(
             _l10n,
             purpose: 'subscription',
             purposeLabel: 'Growth (yearly)',
@@ -306,29 +293,26 @@ void main() {
 
     test('initiatePayment transitions to error on failure', () async {
       final repo = _FakeRepository()
-        ..onInitiatePayment = ({
-          required purpose,
-          required purposeLabel,
-          required amount,
-          billingCycle,
-          discountCode,
-          subscriptionPlanId,
-          addOnId,
-          purposeReferenceId,
-          currency,
-          notes,
-          taxAmount,
-        }) async =>
-            throw ProviderPaymentException(message: 'Plan is inactive', statusCode: 422);
+        ..onInitiatePayment =
+            ({
+              required purpose,
+              required purposeLabel,
+              required amount,
+              billingCycle,
+              discountCode,
+              subscriptionPlanId,
+              addOnId,
+              purposeReferenceId,
+              currency,
+              notes,
+              taxAmount,
+            }) async => throw ProviderPaymentException(message: 'Plan is inactive', statusCode: 422);
       final container = _container(repo);
       addTearDown(container.dispose);
 
-      await container.read(providerPaymentActionProvider.notifier).initiatePayment(
-            _l10n,
-            purpose: 'subscription',
-            purposeLabel: 'Old Plan',
-            amount: 9.99,
-          );
+      await container
+          .read(providerPaymentActionProvider.notifier)
+          .initiatePayment(_l10n, purpose: 'subscription', purposeLabel: 'Old Plan', amount: 9.99);
 
       final state = container.read(providerPaymentActionProvider);
       expect(state, isA<ProviderPaymentActionError>());
@@ -366,8 +350,7 @@ void main() {
     });
 
     test('reset returns notifier to idle state', () async {
-      final repo = _FakeRepository()
-        ..onResendEmail = (_) async => throw ProviderPaymentException(message: 'err');
+      final repo = _FakeRepository()..onResendEmail = (_) async => throw ProviderPaymentException(message: 'err');
       final container = _container(repo);
       addTearDown(container.dispose);
 

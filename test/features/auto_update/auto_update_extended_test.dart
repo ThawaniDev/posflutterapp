@@ -86,12 +86,7 @@ void main() {
     });
 
     test('build_number sent as int is cast to String', () {
-      final release = AppRelease.fromJson({
-        'id': 'r',
-        'version_number': '1.0.0',
-        'platform': 'windows',
-        'build_number': 250,
-      });
+      final release = AppRelease.fromJson({'id': 'r', 'version_number': '1.0.0', 'platform': 'windows', 'build_number': 250});
       expect(release.buildNumber, '250');
     });
 
@@ -147,9 +142,7 @@ void main() {
 
     test('all channels parse without error', () {
       for (final channel in ['stable', 'beta', 'testflight', 'internal_test']) {
-        final release = AppRelease.fromJson({
-          'id': 'r', 'version_number': '1.0.0', 'platform': 'ios', 'channel': channel,
-        });
+        final release = AppRelease.fromJson({'id': 'r', 'version_number': '1.0.0', 'platform': 'ios', 'channel': channel});
         expect(release.channel, channel);
       }
     });
@@ -227,27 +220,31 @@ void main() {
 
   group('ChangelogLoaded — release notes fields', () {
     test('items include release_notes and release_notes_ar', () {
-      const state = ChangelogLoaded(releases: [
-        {
-          'id': 'r-001',
-          'version_number': '3.0.0',
-          'build_number': '300',
-          'release_notes': 'Improved performance.',
-          'release_notes_ar': 'تحسين الأداء.',
-          'is_force_update': false,
-          'released_at': '2025-01-01T00:00:00.000Z',
-        },
-      ]);
+      const state = ChangelogLoaded(
+        releases: [
+          {
+            'id': 'r-001',
+            'version_number': '3.0.0',
+            'build_number': '300',
+            'release_notes': 'Improved performance.',
+            'release_notes_ar': 'تحسين الأداء.',
+            'is_force_update': false,
+            'released_at': '2025-01-01T00:00:00.000Z',
+          },
+        ],
+      );
       expect(state.releases.first['release_notes'], 'Improved performance.');
       expect(state.releases.first['release_notes_ar'], 'تحسين الأداء.');
     });
 
     test('newest-first ordering preserved from API', () {
-      const state = ChangelogLoaded(releases: [
-        {'version_number': '3.0.0'},
-        {'version_number': '2.0.0'},
-        {'version_number': '1.0.0'},
-      ]);
+      const state = ChangelogLoaded(
+        releases: [
+          {'version_number': '3.0.0'},
+          {'version_number': '2.0.0'},
+          {'version_number': '1.0.0'},
+        ],
+      );
       expect(state.releases.first['version_number'], '3.0.0');
     });
 
@@ -263,27 +260,25 @@ void main() {
 
   group('HistoryLoaded — entry structure', () {
     test('entries include app_release object with version', () {
-      const state = HistoryLoaded(entries: [
-        {
-          'status': 'installed',
-          'error_message': null,
-          'app_release': {
-            'id': 'r-001',
-            'version_number': '3.0.0',
-            'platform': 'ios',
-            'released_at': '2025-01-01T00:00:00.000Z',
+      const state = HistoryLoaded(
+        entries: [
+          {
+            'status': 'installed',
+            'error_message': null,
+            'app_release': {
+              'id': 'r-001',
+              'version_number': '3.0.0',
+              'platform': 'ios',
+              'released_at': '2025-01-01T00:00:00.000Z',
+            },
           },
-        },
-        {
-          'status': 'failed',
-          'error_message': 'Download corrupted.',
-          'app_release': {
-            'id': 'r-002',
-            'version_number': '2.5.0',
-            'platform': 'ios',
+          {
+            'status': 'failed',
+            'error_message': 'Download corrupted.',
+            'app_release': {'id': 'r-002', 'version_number': '2.5.0', 'platform': 'ios'},
           },
-        },
-      ]);
+        ],
+      );
 
       expect(state.entries, hasLength(2));
       expect(state.entries.first['status'], 'installed');
@@ -311,10 +306,7 @@ void main() {
     });
 
     test('carries error_message on failed status', () {
-      const state = UpdateOperationSuccess(
-        'Failure recorded.',
-        data: {'status': 'failed', 'error_message': 'Disk full.'},
-      );
+      const state = UpdateOperationSuccess('Failure recorded.', data: {'status': 'failed', 'error_message': 'Disk full.'});
       expect(state.data!['error_message'], 'Disk full.');
     });
 
@@ -335,35 +327,23 @@ void main() {
     });
 
     test('parses message field (not banner_message_en)', () {
-      final status = MaintenanceStatus.fromJson({
-        'is_active': true,
-        'message': 'Scheduled downtime.',
-      });
+      final status = MaintenanceStatus.fromJson({'is_active': true, 'message': 'Scheduled downtime.'});
       expect(status.message, 'Scheduled downtime.');
     });
 
     test('parses message_ar field (not banner_message_ar)', () {
-      final status = MaintenanceStatus.fromJson({
-        'is_active': true,
-        'message_ar': 'صيانة مجدولة.',
-      });
+      final status = MaintenanceStatus.fromJson({'is_active': true, 'message_ar': 'صيانة مجدولة.'});
       expect(status.messageAr, 'صيانة مجدولة.');
     });
 
     test('parses ends_at field (not expected_end_time)', () {
-      final status = MaintenanceStatus.fromJson({
-        'is_active': true,
-        'ends_at': '2030-12-31T23:59:00.000Z',
-      });
+      final status = MaintenanceStatus.fromJson({'is_active': true, 'ends_at': '2030-12-31T23:59:00.000Z'});
       expect(status.endsAt, isNotNull);
       expect(status.endsAt!.year, 2030);
     });
 
     test('parses starts_at field', () {
-      final status = MaintenanceStatus.fromJson({
-        'is_active': true,
-        'starts_at': '2030-12-31T20:00:00.000Z',
-      });
+      final status = MaintenanceStatus.fromJson({'is_active': true, 'starts_at': '2030-12-31T20:00:00.000Z'});
       expect(status.startsAt, isNotNull);
       expect(status.startsAt!.hour, 20);
     });
@@ -413,11 +393,7 @@ void main() {
 
   group('TaxConfig — updated field contract (matches Laravel response)', () {
     test('reads vat_number key (not vat_registration_number)', () {
-      final tax = TaxConfig.fromJson({
-        'vat_enabled': true,
-        'vat_rate': 15.0,
-        'vat_number': '300000000000003',
-      });
+      final tax = TaxConfig.fromJson({'vat_enabled': true, 'vat_rate': 15.0, 'vat_number': '300000000000003'});
       expect(tax.vatNumber, '300000000000003');
     });
 
@@ -502,10 +478,7 @@ void main() {
     });
 
     test('toJson produces all 13 field keys', () {
-      final policy = SecurityPolicy.fromJson({
-        'session_timeout_minutes': 60,
-        'pin_min_length': 4,
-      });
+      final policy = SecurityPolicy.fromJson({'session_timeout_minutes': 60, 'pin_min_length': 4});
       final json = policy.toJson();
 
       expect(json.containsKey('session_timeout_minutes'), isTrue);
