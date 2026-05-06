@@ -112,11 +112,15 @@ void main() {
 
     expect(find.text('احترافي'), findsWidgets);
 
-    await tester.drag(find.byType(ListView), const Offset(0, -500));
+    // Usage section: in Arabic locale subUsageCounted renders '{max} / {current}'
+    await tester.scrollUntilVisible(find.text('100 / 55'), 200.0);
     await tester.pumpAndSettle();
+    expect(find.text('100 / 55'), findsOneWidget);
 
+    // Features section is further down in the scroll
+    await tester.scrollUntilVisible(find.text('المخزون'), 200.0);
+    await tester.pumpAndSettle();
     expect(find.text('المخزون'), findsOneWidget);
-    expect(find.text('55 / 100'), findsOneWidget);
 
     await tester.pumpWidget(
       _app(

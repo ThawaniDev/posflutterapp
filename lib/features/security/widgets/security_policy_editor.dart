@@ -157,7 +157,8 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
 
     return Form(
       key: _formKey,
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ─── Header row ─────────────────────────────
@@ -564,6 +565,7 @@ class _SecurityPolicyEditorState extends ConsumerState<SecurityPolicyEditor> {
             ),
           ],
         ],
+        ),
       ),
     );
   }

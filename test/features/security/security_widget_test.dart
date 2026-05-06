@@ -434,7 +434,7 @@ void main() {
       await tester.pump();
 
       expect(tester.takeException(), isNull);
-      expect(find.textContaining('login').evaluate().isNotEmpty, isTrue);
+      expect(find.textContaining('LOGIN').evaluate().isNotEmpty, isTrue);
     });
 
     testWidgets('shows empty state when no logs', (tester) async {
