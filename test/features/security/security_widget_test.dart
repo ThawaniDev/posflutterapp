@@ -287,8 +287,7 @@ void main() {
     final originalOnError = FlutterError.onError;
     FlutterError.onError = (details) {
       final msg = details.exceptionAsString();
-      if (msg.contains('RenderFlex overflowed') ||
-          msg.contains('non-zero flex but incoming height constraints are unbounded')) {
+      if (msg.contains('RenderFlex overflowed') || msg.contains('non-zero flex but incoming height constraints are unbounded')) {
         return;
       }
       originalOnError?.call(details);
@@ -396,9 +395,7 @@ void main() {
   group('SecurityPolicyEditor', () {
     testWidgets('shows policy editor when given a policy', (tester) async {
       final policy = _samplePolicy();
-      await tester.pumpWidget(
-        _wrap(SecurityPolicyEditor(policy: policy), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(SecurityPolicyEditor(policy: policy), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -407,9 +404,7 @@ void main() {
 
     testWidgets('shows saving indicator when isSaving is true', (tester) async {
       final policy = _samplePolicy();
-      await tester.pumpWidget(
-        _wrap(SecurityPolicyEditor(policy: policy, isSaving: true), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(SecurityPolicyEditor(policy: policy, isSaving: true), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -419,7 +414,10 @@ void main() {
       final policy = _samplePolicy();
       Map<String, dynamic>? saved;
       await tester.pumpWidget(
-        _wrap(SecurityPolicyEditor(policy: policy, onSave: (data) => saved = data), overrides: _allProviderOverrides()),
+        _wrap(
+          SecurityPolicyEditor(policy: policy, onSave: (data) => saved = data),
+          overrides: _allProviderOverrides(),
+        ),
       );
       await tester.pump();
 
@@ -432,9 +430,7 @@ void main() {
   group('AuditLogListWidget', () {
     testWidgets('shows audit log entries when given logs', (tester) async {
       final logs = _sampleLogs();
-      await tester.pumpWidget(
-        _wrap(AuditLogListWidget(logs: logs), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(AuditLogListWidget(logs: logs), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -442,9 +438,7 @@ void main() {
     });
 
     testWidgets('shows empty state when no logs', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const AuditLogListWidget(logs: []), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const AuditLogListWidget(logs: []), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -456,9 +450,7 @@ void main() {
   group('DeviceListWidget', () {
     testWidgets('shows device names when given devices', (tester) async {
       final devices = _sampleDevices();
-      await tester.pumpWidget(
-        _wrap(DeviceListWidget(devices: devices), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(DeviceListWidget(devices: devices), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -466,9 +458,7 @@ void main() {
     });
 
     testWidgets('shows empty state when no devices', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const DeviceListWidget(devices: []), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const DeviceListWidget(devices: []), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -480,18 +470,14 @@ void main() {
   group('SessionListWidget', () {
     testWidgets('shows sessions when given sessions', (tester) async {
       final sessions = _sampleSessions();
-      await tester.pumpWidget(
-        _wrap(SessionListWidget(sessions: sessions), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(SessionListWidget(sessions: sessions), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('shows empty state when no sessions', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const SessionListWidget(sessions: []), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const SessionListWidget(sessions: []), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -503,9 +489,7 @@ void main() {
   group('IncidentListWidget', () {
     testWidgets('shows incidents when given incidents', (tester) async {
       final incidents = _sampleIncidents();
-      await tester.pumpWidget(
-        _wrap(IncidentListWidget(incidents: incidents), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(IncidentListWidget(incidents: incidents), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -516,9 +500,7 @@ void main() {
     });
 
     testWidgets('shows empty state when no incidents', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const IncidentListWidget(incidents: []), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const IncidentListWidget(incidents: []), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
@@ -543,18 +525,14 @@ void main() {
         'critical_audits_7d': 0,
       };
 
-      await tester.pumpWidget(
-        _wrap(const SecurityOverviewWidget(data: overviewData), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const SecurityOverviewWidget(data: overviewData), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('renders with empty data map', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const SecurityOverviewWidget(data: {}), overrides: _allProviderOverrides()),
-      );
+      await tester.pumpWidget(_wrap(const SecurityOverviewWidget(data: {}), overrides: _allProviderOverrides()));
       await tester.pump();
 
       expect(tester.takeException(), isNull);

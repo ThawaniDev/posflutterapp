@@ -146,109 +146,110 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
           padding: const EdgeInsets.all(24),
           child: SingleChildScrollView(
             child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // ─── Header ──────────────────────────────────────
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.1), shape: BoxShape.circle),
-                child: const Icon(Icons.admin_panel_settings_rounded, color: AppColors.warning, size: 32),
-              ),
-              AppSpacing.gapH12,
-              Text(
-                l10n.securityPinOverrideTitle,
-                style: AppTypography.titleLarge.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              AppSpacing.gapH8,
-              Text(
-                l10n.securityManagerAuthorization,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
-                textAlign: TextAlign.center,
-              ),
-              AppSpacing.gapH4,
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(8),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // ─── Header ──────────────────────────────────────
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.1), shape: BoxShape.circle),
+                  child: const Icon(Icons.admin_panel_settings_rounded, color: AppColors.warning, size: 32),
                 ),
-                child: Text(
-                  widget.permissionCode,
-                  style: const TextStyle(
-                    fontFamily: 'monospace',
-                    fontSize: 12,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+                AppSpacing.gapH12,
+                Text(
+                  l10n.securityPinOverrideTitle,
+                  style: AppTypography.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                AppSpacing.gapH8,
+                Text(
+                  l10n.securityManagerAuthorization,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
+                  textAlign: TextAlign.center,
+                ),
+                AppSpacing.gapH4,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    widget.permissionCode,
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
 
-              AppSpacing.gapH20,
+                AppSpacing.gapH20,
 
-              // ─── PIN Dots ─────────────────────────────────────
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(_pinLength, (i) {
-                  final filled = i < _digits.length;
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    margin: const EdgeInsets.symmetric(horizontal: 6),
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: filled ? AppColors.primary : Colors.transparent,
-                      border: Border.all(
-                        color: _errorMessage != null
-                            ? AppColors.error
-                            : filled
-                            ? AppColors.primary
-                            : AppColors.mutedFor(context),
-                        width: 2,
-                      ),
-                    ),
-                  );
-                }),
-              ),
-
-              // ─── Error ────────────────────────────────────────
-              if (_errorMessage != null) ...[
-                AppSpacing.gapH8,
+                // ─── PIN Dots ─────────────────────────────────────
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.error_outline, color: AppColors.error, size: 14),
-                    AppSpacing.gapW4,
-                    Flexible(
-                      child: Text(
-                        _errorMessage!,
-                        style: const TextStyle(color: AppColors.error, fontSize: 12),
-                        textAlign: TextAlign.center,
+                  children: List.generate(_pinLength, (i) {
+                    final filled = i < _digits.length;
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 150),
+                      margin: const EdgeInsets.symmetric(horizontal: 6),
+                      width: 16,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: filled ? AppColors.primary : Colors.transparent,
+                        border: Border.all(
+                          color: _errorMessage != null
+                              ? AppColors.error
+                              : filled
+                              ? AppColors.primary
+                              : AppColors.mutedFor(context),
+                          width: 2,
+                        ),
                       ),
-                    ),
-                  ],
+                    );
+                  }),
+                ),
+
+                // ─── Error ────────────────────────────────────────
+                if (_errorMessage != null) ...[
+                  AppSpacing.gapH8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline, color: AppColors.error, size: 14),
+                      AppSpacing.gapW4,
+                      Flexible(
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(color: AppColors.error, fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+
+                AppSpacing.gapH20,
+
+                // ─── Numpad ────────────────────────────────────────
+                if (_isLoading)
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator())
+                else
+                  _buildNumpad(context),
+
+                AppSpacing.gapH16,
+
+                // ─── Cancel ────────────────────────────────────────
+                PosButton(
+                  label: l10n.cancel,
+                  variant: PosButtonVariant.ghost,
+                  onPressed: () => Navigator.of(context).pop(null),
+                  isFullWidth: true,
                 ),
               ],
-
-              AppSpacing.gapH20,
-
-              // ─── Numpad ────────────────────────────────────────
-              if (_isLoading)
-                const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator())
-              else
-                _buildNumpad(context),
-
-              AppSpacing.gapH16,
-
-              // ─── Cancel ────────────────────────────────────────
-              PosButton(
-                label: l10n.cancel,
-                variant: PosButtonVariant.ghost,
-                onPressed: () => Navigator.of(context).pop(null),
-                isFullWidth: true,
-              ),
-            ],
+            ),
           ),
         ),
       ),
