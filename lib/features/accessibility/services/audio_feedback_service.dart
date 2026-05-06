@@ -5,9 +5,9 @@ import 'package:wameedpos/features/accessibility/services/accessibility_service.
 
 /// Plays audio feedback sounds for POS actions when audio feedback is enabled.
 class AudioFeedbackService {
-  AudioFeedbackService();
+  AudioFeedbackService({AudioPlayer? player}) : _player = player ?? AudioPlayer();
 
-  final AudioPlayer _player = AudioPlayer();
+  final AudioPlayer _player;
 
   bool _enabled = true;
   double _volume = 0.7;

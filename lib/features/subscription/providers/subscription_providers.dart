@@ -69,10 +69,10 @@ class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
     }
   }
 
-  Future<void> cancel(AppLocalizations l10n, {String? reason}) async {
+  Future<void> cancel(AppLocalizations l10n, {String? reason, String? reasonCategory}) async {
     state = const SubscriptionLoading();
     try {
-      final subscription = await _repository.cancelSubscription(reason: reason);
+      final subscription = await _repository.cancelSubscription(reason: reason, reasonCategory: reasonCategory);
       state = SubscriptionActionSuccess(subscription: subscription, message: l10n.subscriptionCancelled);
     } catch (e) {
       state = SubscriptionError(message: _extractMessage(e));

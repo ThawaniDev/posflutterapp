@@ -184,6 +184,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
             'purpose_label': name,
             'amount': price,
             'add_on_id': addOnId,
+            'billing_cycle': addOn['billing_cycle']?.toString() ?? 'monthly',
             'notes': 'Add-on: $name',
           },
         );

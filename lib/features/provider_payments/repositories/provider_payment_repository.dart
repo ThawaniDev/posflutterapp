@@ -38,6 +38,8 @@ class ProviderPaymentRepository {
     String? addOnId,
     String? purposeReferenceId,
     String? currency,
+    String? billingCycle,
+    String? discountCode,
     String? notes,
   }) async {
     try {
@@ -50,6 +52,8 @@ class ProviderPaymentRepository {
         addOnId: addOnId,
         purposeReferenceId: purposeReferenceId,
         currency: currency,
+        billingCycle: billingCycle,
+        discountCode: discountCode,
         notes: notes,
       );
     } catch (e) {

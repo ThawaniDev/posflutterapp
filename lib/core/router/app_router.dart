@@ -697,6 +697,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 addOnId: extra['add_on_id'] as String?,
                 purposeReferenceId: extra['purpose_reference_id'] as String?,
                 currency: extra['currency'] as String?,
+                billingCycle: extra['billing_cycle'] as String?,
+                discountCode: extra['discount_code'] as String?,
                 notes: extra['notes'] as String?,
                 onSuccessRoute: extra['on_success_route'] as String?,
               );

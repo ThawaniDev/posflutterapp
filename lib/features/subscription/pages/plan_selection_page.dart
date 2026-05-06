@@ -445,6 +445,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
               'purpose_label': '${plan.name} ($billingCycle)',
               'amount': finalPrice,
               'subscription_plan_id': plan.id,
+              'billing_cycle': billingCycle,
               if (discountCode != null) 'discount_code': discountCode,
               'notes': 'Subscription: ${plan.name} - $billingCycle',
             },
@@ -457,7 +458,11 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
 
 // ─── Subscription Checkout Bottom Sheet ─────────────────────────────────────
 
-typedef _ConfirmCallback = void Function({required String billingCycle, required double finalPrice, String? discountCode});
+typedef _ConfirmCallback = void Function({
+  required String billingCycle,
+  required double finalPrice,
+  String? discountCode,
+});
 
 /// A rich bottom sheet for confirming a plan subscription.
 /// Shows billing cycle selector, discount code field, and pricing summary.
@@ -499,7 +504,9 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
     super.dispose();
   }
 
-  double get _basePrice => _isAnnual ? (widget.plan.annualPrice ?? widget.plan.monthlyPrice * 12) : widget.plan.monthlyPrice;
+  double get _basePrice => _isAnnual
+      ? (widget.plan.annualPrice ?? widget.plan.monthlyPrice * 12)
+      : widget.plan.monthlyPrice;
 
   double get _finalPrice {
     if (_discountResult != null) {
@@ -530,7 +537,11 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
     });
 
     try {
-      final result = await widget.apiService.validateDiscount(code: code, planId: widget.plan.id, billingCycle: _billingCycle);
+      final result = await widget.apiService.validateDiscount(
+        code: code,
+        planId: widget.plan.id,
+        billingCycle: _billingCycle,
+      );
       setState(() {
         _discountResult = result;
         _discountError = null;
@@ -575,7 +586,10 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PosBottomSheetHeader(title: l10n.subSubscribeToPlan(planName), subtitle: l10n.subscriptionChooseYourPlan),
+          PosBottomSheetHeader(
+            title: l10n.subSubscribeToPlan(planName),
+            subtitle: l10n.subscriptionChooseYourPlan,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Column(
@@ -591,7 +605,10 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
                   child: Row(
                     children: [
                       _buildCycleOption(l10n.subscriptionMonthly, false),
-                      _buildCycleOption('${l10n.subscriptionAnnual} (${l10n.subscriptionSavePercent})', true),
+                      _buildCycleOption(
+                        '${l10n.subscriptionAnnual} (${l10n.subscriptionSavePercent})',
+                        true,
+                      ),
                     ],
                   ),
                 ),
@@ -662,7 +679,11 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
                               AppSpacing.gapW4,
                               Text(
                                 l10n.subDiscountSavings(_discountAmount.toStringAsFixed(2)),
-                                style: const TextStyle(color: AppColors.successDark, fontWeight: FontWeight.bold, fontSize: 12),
+                                style: const TextStyle(
+                                  color: AppColors.successDark,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ],
                           ),
@@ -675,7 +696,10 @@ class _SubscriptionCheckoutSheetState extends State<_SubscriptionCheckoutSheet> 
                 AppSpacing.gapH16,
 
                 // ── Discount Code Section ──
-                Text(l10n.subDiscountCode, style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  l10n.subDiscountCode,
+                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
                 AppSpacing.gapH8,
 
                 if (_discountResult != null) ...[

@@ -48,6 +48,8 @@ class ProviderPaymentApiService {
     String? subscriptionPlanId,
     String? addOnId,
     String? purposeReferenceId,
+    String? billingCycle,
+    String? discountCode,
     String? notes,
   }) async {
     // Map subscription/addon IDs to purpose_reference_id
@@ -61,6 +63,8 @@ class ProviderPaymentApiService {
         'amount': amount,
         'currency': ?currency,
         'purpose_reference_id': ?refId,
+        'billing_cycle': ?billingCycle,
+        'discount_code': ?discountCode,
         'notes': ?notes,
       },
     );

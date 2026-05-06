@@ -104,11 +104,11 @@ class _PaymentDetailContent extends ConsumerWidget {
           _SectionCard(
             title: l10n.providerPaymentDetail,
             children: [
-              _DetailRow('Purpose', payment.purpose?.label ?? '-'),
-              _DetailRow('Cart ID', payment.cartId ?? '-', copyable: true),
-              _DetailRow('Gateway', payment.gateway ?? '-'),
-              _DetailRow('Transaction Ref', payment.tranRef ?? '-', copyable: true),
-              _DetailRow('Date', payment.createdAt != null ? dateFormat.format(payment.createdAt!) : '-'),
+              _DetailRow(l10n.providerPaymentPurpose, payment.purpose?.label ?? '-'),
+              _DetailRow(l10n.providerPaymentCartId, payment.cartId ?? '-', copyable: true),
+              _DetailRow(l10n.providerPaymentGateway, payment.gateway ?? '-'),
+              _DetailRow(l10n.providerPaymentTranRef, payment.tranRef ?? '-', copyable: true),
+              _DetailRow(l10n.providerPaymentDate, payment.createdAt != null ? dateFormat.format(payment.createdAt!) : '-'),
             ],
           ),
           AppSpacing.verticalMd,
@@ -117,9 +117,9 @@ class _PaymentDetailContent extends ConsumerWidget {
           _SectionCard(
             title: l10n.providerPaymentAmountBreakdown,
             children: [
-              _DetailRow('Amount', '${payment.amount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
-              _DetailRow('Tax', '${payment.taxAmount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
-              _DetailRow('Total', '${payment.totalAmount.toStringAsFixed(2)} ${payment.currency ?? ""}', bold: true),
+              _DetailRow(l10n.providerPaymentAmount, '${payment.amount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
+              _DetailRow(l10n.providerPaymentTax, '${payment.taxAmount.toStringAsFixed(2)} ${payment.currency ?? ""}'),
+              _DetailRow(l10n.providerPaymentTotal, '${payment.totalAmount.toStringAsFixed(2)} ${payment.currency ?? ""}', bold: true),
             ],
           ),
           AppSpacing.verticalMd,
@@ -129,11 +129,11 @@ class _PaymentDetailContent extends ConsumerWidget {
             _SectionCard(
               title: l10n.providerPaymentGatewayResponse,
               children: [
-                _DetailRow('Response Status', payment.responseStatus ?? '-'),
-                _DetailRow('Response Code', payment.responseCode ?? '-'),
-                _DetailRow('Response Message', payment.responseMessage ?? '-'),
-                if (payment.cardType != null) _DetailRow('Card Type', payment.cardType!),
-                if (payment.cardScheme != null) _DetailRow('Card Scheme', payment.cardScheme!),
+                _DetailRow(l10n.providerPaymentResponseStatus, payment.responseStatus ?? '-'),
+                _DetailRow(l10n.providerPaymentResponseCode, payment.responseCode ?? '-'),
+                _DetailRow(l10n.providerPaymentResponseMessage, payment.responseMessage ?? '-'),
+                if (payment.cardType != null) _DetailRow(l10n.providerPaymentCardType, payment.cardType!),
+                if (payment.cardScheme != null) _DetailRow(l10n.providerPaymentCardScheme, payment.cardScheme!),
               ],
             ),
             AppSpacing.verticalMd,
@@ -162,7 +162,7 @@ class _PaymentDetailContent extends ConsumerWidget {
                 ),
               ),
               if (payment.confirmationEmailError != null)
-                _DetailRow('Email Error', payment.confirmationEmailError!, valueColor: AppColors.error),
+                _DetailRow(l10n.providerPaymentEmailError, payment.confirmationEmailError!, valueColor: AppColors.error),
             ],
           ),
           AppSpacing.verticalMd,
@@ -172,10 +172,10 @@ class _PaymentDetailContent extends ConsumerWidget {
             _SectionCard(
               title: l10n.providerPaymentRefundInfo,
               children: [
-                _DetailRow('Refund Amount', '${payment.refundAmount!.toStringAsFixed(2)} ${payment.currency ?? ""}'),
-                if (payment.refundTranRef != null) _DetailRow('Refund Txn Ref', payment.refundTranRef!, copyable: true),
-                if (payment.refundReason != null) _DetailRow('Reason', payment.refundReason!),
-                if (payment.refundedAt != null) _DetailRow('Refunded At', dateFormat.format(payment.refundedAt!)),
+                _DetailRow(l10n.providerPaymentRefundAmount, '${payment.refundAmount!.toStringAsFixed(2)} ${payment.currency ?? ""}'),
+                if (payment.refundTranRef != null) _DetailRow(l10n.providerPaymentRefundTranRef, payment.refundTranRef!, copyable: true),
+                if (payment.refundReason != null) _DetailRow(l10n.providerPaymentRefundReason, payment.refundReason!),
+                if (payment.refundedAt != null) _DetailRow(l10n.providerPaymentRefundedAt, dateFormat.format(payment.refundedAt!)),
               ],
             ),
             AppSpacing.verticalMd,
@@ -294,7 +294,7 @@ class _DetailRow extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
-                      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.copiedToClipboard);
+                      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.providerPaymentCopied);
                     },
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(start: 4),

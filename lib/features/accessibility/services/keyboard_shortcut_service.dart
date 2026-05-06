@@ -213,6 +213,5 @@ class KeyboardShortcutService {
   }
 }
 
-final keyboardShortcutServiceProvider = Provider<KeyboardShortcutService>((ref) {
-  return KeyboardShortcutService();
-});
+// NOTE: keyboardShortcutServiceProvider is defined in accessibility_providers.dart
+// so it auto-syncs with the shortcuts notifier state. Do not re-define it here.

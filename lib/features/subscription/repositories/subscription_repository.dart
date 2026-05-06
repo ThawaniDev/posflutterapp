@@ -76,9 +76,9 @@ class SubscriptionRepository {
     }
   }
 
-  Future<StoreSubscription> cancelSubscription({String? reason}) async {
+  Future<StoreSubscription> cancelSubscription({String? reason, String? reasonCategory}) async {
     try {
-      return await _apiService.cancelSubscription(reason: reason);
+      return await _apiService.cancelSubscription(reason: reason, reasonCategory: reasonCategory);
     } catch (e) {
       throw _mapError(e);
     }

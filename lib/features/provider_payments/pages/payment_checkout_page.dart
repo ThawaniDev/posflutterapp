@@ -22,6 +22,8 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
     this.addOnId,
     this.purposeReferenceId,
     this.currency,
+    this.billingCycle,
+    this.discountCode,
     this.notes,
     this.onSuccessRoute,
   });
@@ -33,6 +35,8 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
   final String? addOnId;
   final String? purposeReferenceId;
   final String? currency;
+  final String? billingCycle;
+  final String? discountCode;
   final String? notes;
   final String? onSuccessRoute;
 
@@ -71,6 +75,8 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
           addOnId: widget.addOnId,
           purposeReferenceId: widget.purposeReferenceId,
           currency: widget.currency,
+          billingCycle: widget.billingCycle,
+          discountCode: widget.discountCode,
           notes: widget.notes,
         );
   }
@@ -122,7 +128,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
     return PosListPage(
       title: l10n.posCompletePayment,
       showSearch: false,
-      onBack: () => _showCancelConfirmation(context),
+      onBack: _showCancelConfirmation,
       child: _buildBody(actionState),
     );
   }
@@ -168,7 +174,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
     return const PosLoading();
   }
 
-  void _showCancelConfirmation(BuildContext context) async {
+  void _showCancelConfirmation() async {
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.providerPaymentCancelTitle,
@@ -176,6 +182,9 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
       confirmLabel: l10n.cancel,
       cancelLabel: l10n.providerPaymentContinue,
     );
+    if (!mounted) {
+      return;
+    }
     if (confirmed == true) {
       context.go(Routes.providerPayments);
     }

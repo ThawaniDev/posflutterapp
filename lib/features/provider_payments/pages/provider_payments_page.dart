@@ -39,7 +39,7 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
     final isEmpty = paymentsState is ProviderPaymentsListLoaded && paymentsState.payments.isEmpty;
 
     return PosListPage(
-      title: l10n.sidebarPayments,
+      title: l10n.providerPaymentsTitle,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
@@ -49,11 +49,11 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
       emptyTitle: l10n.providerPaymentNoPayments,
       emptyIcon: Icons.payment_outlined,
       filters: [
-        _buildFilterChip('All', null),
-        _buildFilterChip('Pending', 'pending'),
-        _buildFilterChip('Completed', 'completed'),
-        _buildFilterChip('Failed', 'failed'),
-        _buildFilterChip('Refunded', 'refunded'),
+        _buildFilterChip(l10n.providerPaymentFilterAll, null),
+        _buildFilterChip(l10n.providerPaymentFilterPending, 'pending'),
+        _buildFilterChip(l10n.providerPaymentFilterCompleted, 'completed'),
+        _buildFilterChip(l10n.providerPaymentFilterFailed, 'failed'),
+        _buildFilterChip(l10n.providerPaymentFilterRefunded, 'refunded'),
       ],
       child: paymentsState is ProviderPaymentsListLoaded ? _buildList(paymentsState.payments) : const SizedBox.shrink(),
     );
@@ -81,7 +81,7 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
       child: ListView.separated(
         padding: AppSpacing.paddingAllMd,
         itemCount: payments.length,
-        separatorBuilder: (_, __) => AppSpacing.verticalSm,
+        separatorBuilder: (_, _) => AppSpacing.verticalSm,
         itemBuilder: (context, index) {
           return _PaymentListTile(
             payment: payments[index],

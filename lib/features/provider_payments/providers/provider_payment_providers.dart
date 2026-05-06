@@ -81,6 +81,8 @@ class ProviderPaymentActionNotifier extends StateNotifier<ProviderPaymentActionS
     String? addOnId,
     String? purposeReferenceId,
     String? currency,
+    String? billingCycle,
+    String? discountCode,
     String? notes,
   }) async {
     state = const ProviderPaymentActionLoading();
@@ -94,6 +96,8 @@ class ProviderPaymentActionNotifier extends StateNotifier<ProviderPaymentActionS
         addOnId: addOnId,
         purposeReferenceId: purposeReferenceId,
         currency: currency,
+        billingCycle: billingCycle,
+        discountCode: discountCode,
         notes: notes,
       );
       state = ProviderPaymentActionSuccess(message: l10n.providerPaymentInitiated, payment: payment);

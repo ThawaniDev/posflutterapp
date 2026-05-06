@@ -134,6 +134,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
           'purpose_label': '${plan.name} ($billingCycle)',
           'amount': price,
           'subscription_plan_id': plan.id,
+          'billing_cycle': billingCycle,
           'notes': 'Subscription: ${plan.name} - $billingCycle',
         },
       );
