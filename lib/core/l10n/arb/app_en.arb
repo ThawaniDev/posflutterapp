@@ -8417,5 +8417,278 @@
     "placeholders": {
       "date": { "type": "String" }
     }
-  }
+  },
+  "accountingAccessToken": "Access Token",
+  "accountingCompanyNameOptional": "Company Name (Optional)",
+  "accountingExportEndDate": "Export End Date",
+  "accountingExportStartDate": "Export Start Date",
+  "accountingProviderAccountId": "Account ID",
+  "accountingProviderAccountName": "Account Name",
+  "accountingRefreshToken": "Refresh Token",
+  "accountingTokenExpiry": "Token Expiry",
+  "adminOwnerEmail": "Owner Email",
+  "adminOwnerName": "Owner Name",
+  "adminOwnerPhone": "Owner Phone",
+  "autoUpdateNowRequired": "Update Required",
+  "cfdChangeDue": "Change Due",
+  "cfdLaunch": "Launch Display",
+  "cfdShowingCart": "Showing Cart",
+  "cfdWelcome": "Welcome!",
+  "changelogNoNotes": "No release notes available",
+  "commonFind": "Find",
+  "commonLoadMore": "Load More",
+  "commonPrint": "Print",
+  "currentPlan": "Current Plan",
+  "floristPaused": "Paused",
+  "gamificationNameAr": "Name (Arabic)",
+  "gamificationNameEn": "Name (English)",
+  "gamificationThreshold": "Threshold",
+  "gamificationTriggerType": "Trigger Type",
+  "getStarted": "Get Started",
+  "hardwareCombo": "Combo",
+  "hardwareEditDevice": "Edit Device",
+  "hardwareWeighable": "Weighable",
+  "labelCoordX": "X Coordinate",
+  "labelCoordY": "Y Coordinate",
+  "modifierAddSelected": "Add Selected",
+  "modifierPickerOptional": "Optional",
+  "modifierPickerRequired": "Required",
+  "modifierPickerTitle": "Select Modifiers",
+  "notSet": "Not Set",
+  "ok": "OK",
+  "paymentMadfu": "Madfu",
+  "paymentMispay": "Mispay",
+  "paymentOther": "Other",
+  "paymentTabby": "Tabby",
+  "paymentTamara": "Tamara",
+  "pcAccentColor": "Accent Color",
+  "pcCartMode": "Cart Mode",
+  "pcFontScale": "Font Scale",
+  "pcGridColumns": "Grid Columns",
+  "pcHandedness": "Handedness",
+  "pcLayoutDirection": "Layout Direction",
+  "pcPrimaryColor": "Primary Color",
+  "pcSecondaryColor": "Secondary Color",
+  "pcShowPriceOnGrid": "Show Price on Grid",
+  "pcShowProductImages": "Show Product Images",
+  "pcTheme": "Theme",
+  "posItemDiscount": "Item Discount",
+  "posItemNote": "Item Note",
+  "posPrintSentToPrinter": "Sent to Printer",
+  "posReprintReceipt": "Reprint Receipt",
+  "posReturnRecentSales": "Return Recent Sales",
+  "posShiftAlreadyOpen": "Shift Already Open",
+  "posShiftAlreadyOpenDesc": "A shift is already open. Please resume or close it first.",
+  "posShiftCashInLine": "Cash In",
+  "posShiftCashOutLine": "Cash Out",
+  "posShiftResume": "Resume Shift",
+  "posShiftXReport": "X Report",
+  "posShiftXReportFull": "Full X Report",
+  "posShiftZReport": "Z Report",
+  "posShiftZReportFull": "Full Z Report",
+  "posTipNone": "No Tip",
+  "productAgeRestricted": "Age Restricted",
+  "productMaxQty": "Max Qty",
+  "productMinQty": "Min Qty",
+  "productTaxRate": "Tax Rate",
+  "refresh": "Refresh",
+  "selectPlan": "Select Plan",
+  "softposInitializing": "Initializing...",
+  "softposNotConfigured": "SoftPOS not configured",
+  "softposPaymentFailed": "Payment Failed",
+  "softposTapCard": "Tap Card",
+  "staffTrainingAvgDuration": "Avg. Duration",
+  "staffTrainingDeleteConfirm": "Delete this training record?",
+  "staffTrainingValidNumber": "Please enter a valid number",
+  "termFormBillingCardFee": "Card Fee",
+  "termFormBillingMadaRate": "Mada Rate",
+  "termFormBillingReadOnly": "Read Only",
+  "termFormBillingSection": "Billing",
+  "termFormBillingSectionSub": "Payment processing fees",
+  "termFormEdfapayTokenHint": "Enter EdfaPay token",
+  "termFormEdfapayTokenLabel": "EdfaPay Token",
+  "thawaniReferenceCol": "Reference",
+  "update": "Update",
+  "zatcaActivationCodeBanner": "Enter activation code",
+  "zatcaEnrolling": "Enrolling...",
+  "zatcaEnrollNow": "Enroll Now",
+  "zatcaHardwareSerial": "Hardware Serial",
+  "accountingConnectProvider": "Connect {provider}",
+  "@accountingConnectProvider": {
+    "placeholders": {
+      "provider": {"type": "String"}
+    }
+  },
+  "accountingEntriesCount": "{count} entries",
+  "@accountingEntriesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "aiRunFeature": "Run {featureName}",
+  "@aiRunFeature": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "cashMgmtFloatLabel": "Opening Float: {amount}",
+  "@cashMgmtFloatLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogImportRowError": "Row {row}: {message}",
+  "@catalogImportRowError": {
+    "placeholders": {
+      "row": {"type": "int"},
+      "message": {"type": "String"}
+    }
+  },
+  "commonItemsCount": "{count} items",
+  "@commonItemsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "paginationPageOf": "Page {page} of {total}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pcButtonsCount": "{count} buttons",
+  "@pcButtonsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "posCurrentDiscount": "Discount: {amount}",
+  "@posCurrentDiscount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "posProductAddedWeighed": "{name} added ({qty} kg)",
+  "@posProductAddedWeighed": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "qty": {"type": "String"}
+    }
+  },
+  "posReprintReceiptNumber": "Receipt Number",
+  "promotionsCouponType": "Type: {type}",
+  "@promotionsCouponType": {
+    "placeholders": {
+      "type": {"type": "String"}
+    }
+  },
+  "receiptVatNumber": "VAT No: {number}",
+  "@receiptVatNumber": {
+    "placeholders": {
+      "number": {"type": "String"}
+    }
+  },
+  "securityAuditIp": "IP: {ip}",
+  "@securityAuditIp": {
+    "placeholders": {
+      "ip": {"type": "String"}
+    }
+  },
+  "securityAuditUser": "User: {userType}",
+  "@securityAuditUser": {
+    "placeholders": {
+      "userType": {"type": "String"}
+    }
+  },
+  "settingsVersionPublishedAt": "Published: {date}",
+  "@settingsVersionPublishedAt": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "staffPermissionsLoadError": "Error loading permissions: {message}",
+  "@staffPermissionsLoadError": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "subscriptionUpgradePrompt": "Upgrade your plan to access {featureName}",
+  "@subscriptionUpgradePrompt": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "termFormBillingCardFeeValue": "{value}%",
+  "@termFormBillingCardFeeValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "termFormBillingMadaRateValue": "{value}%",
+  "@termFormBillingMadaRateValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "thawaniHttpStatus": "HTTP {status}",
+  "@thawaniHttpStatus": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "transactionSerialNumber": "S/N: {serial}",
+  "@transactionSerialNumber": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaCertificateId": "Certificate: {id}",
+  "@zatcaCertificateId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "zatcaDeviceSerialLabel": "Serial: {serial}",
+  "@zatcaDeviceSerialLabel": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaDeviceStatusLabel": "Status: {status}",
+  "@zatcaDeviceStatusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "zatcaDeviceUuidLabel": "UUID: {uuid}",
+  "@zatcaDeviceUuidLabel": {
+    "placeholders": {
+      "uuid": {"type": "String"}
+    }
+  },
+  "zatcaInvoicesCount": "{count} invoices",
+  "@zatcaInvoicesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "zatcaLastErrorMessage": "Error: {message}",
+  "@zatcaLastErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "zatcaVatAmountLabel": "VAT: {amount}",
+  "@zatcaVatAmountLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogEditProduct": "Edit Product",
+  "catalogSaving": "Saving...",
+  "catalogUpdateProduct": "Update Product",
+  "catalogCreateProduct": "Create Product",
+  "catalogListView": "List View",
+  "catalogGridView": "Grid View"
 }

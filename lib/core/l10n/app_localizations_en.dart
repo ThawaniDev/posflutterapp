@@ -19668,4 +19668,451 @@ class AppLocalizationsEn extends AppLocalizations {
   String labelsExpiryDate(String date) {
     return 'EXP: $date';
   }
+
+  @override
+  String get accountingAccessToken => 'Access Token';
+
+  @override
+  String get accountingCompanyNameOptional => 'Company Name (Optional)';
+
+  @override
+  String get accountingExportEndDate => 'Export End Date';
+
+  @override
+  String get accountingExportStartDate => 'Export Start Date';
+
+  @override
+  String get accountingProviderAccountId => 'Account ID';
+
+  @override
+  String get accountingProviderAccountName => 'Account Name';
+
+  @override
+  String get accountingRefreshToken => 'Refresh Token';
+
+  @override
+  String get accountingTokenExpiry => 'Token Expiry';
+
+  @override
+  String get adminOwnerEmail => 'Owner Email';
+
+  @override
+  String get adminOwnerName => 'Owner Name';
+
+  @override
+  String get adminOwnerPhone => 'Owner Phone';
+
+  @override
+  String get autoUpdateNowRequired => 'Update Required';
+
+  @override
+  String get cfdChangeDue => 'Change Due';
+
+  @override
+  String get cfdLaunch => 'Launch Display';
+
+  @override
+  String get cfdShowingCart => 'Showing Cart';
+
+  @override
+  String get cfdWelcome => 'Welcome!';
+
+  @override
+  String get changelogNoNotes => 'No release notes available';
+
+  @override
+  String get commonFind => 'Find';
+
+  @override
+  String get commonLoadMore => 'Load More';
+
+  @override
+  String get commonPrint => 'Print';
+
+  @override
+  String get currentPlan => 'Current Plan';
+
+  @override
+  String get floristPaused => 'Paused';
+
+  @override
+  String get gamificationNameAr => 'Name (Arabic)';
+
+  @override
+  String get gamificationNameEn => 'Name (English)';
+
+  @override
+  String get gamificationThreshold => 'Threshold';
+
+  @override
+  String get gamificationTriggerType => 'Trigger Type';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get hardwareCombo => 'Combo';
+
+  @override
+  String get hardwareEditDevice => 'Edit Device';
+
+  @override
+  String get hardwareWeighable => 'Weighable';
+
+  @override
+  String get labelCoordX => 'X Coordinate';
+
+  @override
+  String get labelCoordY => 'Y Coordinate';
+
+  @override
+  String get modifierAddSelected => 'Add Selected';
+
+  @override
+  String get modifierPickerOptional => 'Optional';
+
+  @override
+  String get modifierPickerRequired => 'Required';
+
+  @override
+  String get modifierPickerTitle => 'Select Modifiers';
+
+  @override
+  String get notSet => 'Not Set';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get paymentMadfu => 'Madfu';
+
+  @override
+  String get paymentMispay => 'Mispay';
+
+  @override
+  String get paymentOther => 'Other';
+
+  @override
+  String get paymentTabby => 'Tabby';
+
+  @override
+  String get paymentTamara => 'Tamara';
+
+  @override
+  String get pcAccentColor => 'Accent Color';
+
+  @override
+  String get pcCartMode => 'Cart Mode';
+
+  @override
+  String get pcFontScale => 'Font Scale';
+
+  @override
+  String get pcGridColumns => 'Grid Columns';
+
+  @override
+  String get pcHandedness => 'Handedness';
+
+  @override
+  String get pcLayoutDirection => 'Layout Direction';
+
+  @override
+  String get pcPrimaryColor => 'Primary Color';
+
+  @override
+  String get pcSecondaryColor => 'Secondary Color';
+
+  @override
+  String get pcShowPriceOnGrid => 'Show Price on Grid';
+
+  @override
+  String get pcShowProductImages => 'Show Product Images';
+
+  @override
+  String get pcTheme => 'Theme';
+
+  @override
+  String get posItemDiscount => 'Item Discount';
+
+  @override
+  String get posItemNote => 'Item Note';
+
+  @override
+  String get posPrintSentToPrinter => 'Sent to Printer';
+
+  @override
+  String get posReprintReceipt => 'Reprint Receipt';
+
+  @override
+  String get posReturnRecentSales => 'Return Recent Sales';
+
+  @override
+  String get posShiftAlreadyOpen => 'Shift Already Open';
+
+  @override
+  String get posShiftAlreadyOpenDesc =>
+      'A shift is already open. Please resume or close it first.';
+
+  @override
+  String get posShiftCashInLine => 'Cash In';
+
+  @override
+  String get posShiftCashOutLine => 'Cash Out';
+
+  @override
+  String get posShiftResume => 'Resume Shift';
+
+  @override
+  String get posShiftXReport => 'X Report';
+
+  @override
+  String get posShiftXReportFull => 'Full X Report';
+
+  @override
+  String get posShiftZReport => 'Z Report';
+
+  @override
+  String get posShiftZReportFull => 'Full Z Report';
+
+  @override
+  String get posTipNone => 'No Tip';
+
+  @override
+  String get productAgeRestricted => 'Age Restricted';
+
+  @override
+  String get productMaxQty => 'Max Qty';
+
+  @override
+  String get productMinQty => 'Min Qty';
+
+  @override
+  String get productTaxRate => 'Tax Rate';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get selectPlan => 'Select Plan';
+
+  @override
+  String get softposInitializing => 'Initializing...';
+
+  @override
+  String get softposNotConfigured => 'SoftPOS not configured';
+
+  @override
+  String get softposPaymentFailed => 'Payment Failed';
+
+  @override
+  String get softposTapCard => 'Tap Card';
+
+  @override
+  String get staffTrainingAvgDuration => 'Avg. Duration';
+
+  @override
+  String get staffTrainingDeleteConfirm => 'Delete this training record?';
+
+  @override
+  String get staffTrainingValidNumber => 'Please enter a valid number';
+
+  @override
+  String get termFormBillingCardFee => 'Card Fee';
+
+  @override
+  String get termFormBillingMadaRate => 'Mada Rate';
+
+  @override
+  String get termFormBillingReadOnly => 'Read Only';
+
+  @override
+  String get termFormBillingSection => 'Billing';
+
+  @override
+  String get termFormBillingSectionSub => 'Payment processing fees';
+
+  @override
+  String get termFormEdfapayTokenHint => 'Enter EdfaPay token';
+
+  @override
+  String get termFormEdfapayTokenLabel => 'EdfaPay Token';
+
+  @override
+  String get thawaniReferenceCol => 'Reference';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get zatcaActivationCodeBanner => 'Enter activation code';
+
+  @override
+  String get zatcaEnrolling => 'Enrolling...';
+
+  @override
+  String get zatcaEnrollNow => 'Enroll Now';
+
+  @override
+  String get zatcaHardwareSerial => 'Hardware Serial';
+
+  @override
+  String accountingConnectProvider(String provider) {
+    return 'Connect $provider';
+  }
+
+  @override
+  String accountingEntriesCount(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String aiRunFeature(String featureName) {
+    return 'Run $featureName';
+  }
+
+  @override
+  String cashMgmtFloatLabel(String amount) {
+    return 'Opening Float: $amount';
+  }
+
+  @override
+  String catalogImportRowError(int row, String message) {
+    return 'Row $row: $message';
+  }
+
+  @override
+  String commonItemsCount(int count) {
+    return '$count items';
+  }
+
+  @override
+  String paginationPageOf(int page, int total) {
+    return 'Page $page of $total';
+  }
+
+  @override
+  String pcButtonsCount(int count) {
+    return '$count buttons';
+  }
+
+  @override
+  String posCurrentDiscount(String amount) {
+    return 'Discount: $amount';
+  }
+
+  @override
+  String posProductAddedWeighed(String name, String qty) {
+    return '$name added ($qty kg)';
+  }
+
+  @override
+  String get posReprintReceiptNumber => 'Receipt Number';
+
+  @override
+  String promotionsCouponType(String type) {
+    return 'Type: $type';
+  }
+
+  @override
+  String receiptVatNumber(String number) {
+    return 'VAT No: $number';
+  }
+
+  @override
+  String securityAuditIp(String ip) {
+    return 'IP: $ip';
+  }
+
+  @override
+  String securityAuditUser(String userType) {
+    return 'User: $userType';
+  }
+
+  @override
+  String settingsVersionPublishedAt(String date) {
+    return 'Published: $date';
+  }
+
+  @override
+  String staffPermissionsLoadError(String message) {
+    return 'Error loading permissions: $message';
+  }
+
+  @override
+  String subscriptionUpgradePrompt(String featureName) {
+    return 'Upgrade your plan to access $featureName';
+  }
+
+  @override
+  String termFormBillingCardFeeValue(String value) {
+    return '$value%';
+  }
+
+  @override
+  String termFormBillingMadaRateValue(String value) {
+    return '$value%';
+  }
+
+  @override
+  String thawaniHttpStatus(String status) {
+    return 'HTTP $status';
+  }
+
+  @override
+  String transactionSerialNumber(String serial) {
+    return 'S/N: $serial';
+  }
+
+  @override
+  String zatcaCertificateId(String id) {
+    return 'Certificate: $id';
+  }
+
+  @override
+  String zatcaDeviceSerialLabel(String serial) {
+    return 'Serial: $serial';
+  }
+
+  @override
+  String zatcaDeviceStatusLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String zatcaDeviceUuidLabel(String uuid) {
+    return 'UUID: $uuid';
+  }
+
+  @override
+  String zatcaInvoicesCount(int count) {
+    return '$count invoices';
+  }
+
+  @override
+  String zatcaLastErrorMessage(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String zatcaVatAmountLabel(String amount) {
+    return 'VAT: $amount';
+  }
+
+  @override
+  String get catalogEditProduct => 'Edit Product';
+
+  @override
+  String get catalogSaving => 'Saving...';
+
+  @override
+  String get catalogUpdateProduct => 'Update Product';
+
+  @override
+  String get catalogCreateProduct => 'Create Product';
+
+  @override
+  String get catalogListView => 'List View';
+
+  @override
+  String get catalogGridView => 'Grid View';
 }

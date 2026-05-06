@@ -7754,5 +7754,278 @@
     "placeholders": {
       "date": { "type": "String" }
     }
-  }
+  },
+  "accountingAccessToken": "অ্যাক্সেস টোকেন",
+  "accountingCompanyNameOptional": "কোম্পানির নাম (ঐচ্ছিক)",
+  "accountingExportEndDate": "রপ্তানি শেষ তারিখ",
+  "accountingExportStartDate": "রপ্তানি শুরুর তারিখ",
+  "accountingProviderAccountId": "অ্যাকাউন্ট আইডি",
+  "accountingProviderAccountName": "অ্যাকাউন্টের নাম",
+  "accountingRefreshToken": "রিফ্রেশ টোকেন",
+  "accountingTokenExpiry": "টোকেনের মেয়াদ শেষ",
+  "adminOwnerEmail": "মালিকের ইমেইল",
+  "adminOwnerName": "মালিকের নাম",
+  "adminOwnerPhone": "মালিকের ফোন",
+  "autoUpdateNowRequired": "আপডেট প্রয়োজন",
+  "cfdChangeDue": "ফেরত টাকা",
+  "cfdLaunch": "ডিসপ্লে চালু করুন",
+  "cfdShowingCart": "কার্ট দেখাচ্ছে",
+  "cfdWelcome": "স্বাগতম!",
+  "changelogNoNotes": "কোনো রিলিজ নোট পাওয়া যায়নি",
+  "commonFind": "খুঁজুন",
+  "commonLoadMore": "আরো লোড করুন",
+  "commonPrint": "প্রিন্ট",
+  "currentPlan": "বর্তমান প্ল্যান",
+  "floristPaused": "বিরতি",
+  "gamificationNameAr": "নাম (আরবি)",
+  "gamificationNameEn": "নাম (ইংরেজি)",
+  "gamificationThreshold": "থ্রেশহোল্ড",
+  "gamificationTriggerType": "ট্রিগার ধরন",
+  "getStarted": "শুরু করুন",
+  "hardwareCombo": "কম্বো",
+  "hardwareEditDevice": "ডিভাইস সম্পাদনা করুন",
+  "hardwareWeighable": "ওজনযোগ্য",
+  "labelCoordX": "X স্থানাঙ্ক",
+  "labelCoordY": "Y স্থানাঙ্ক",
+  "modifierAddSelected": "নির্বাচিত যোগ করুন",
+  "modifierPickerOptional": "ঐচ্ছিক",
+  "modifierPickerRequired": "প্রয়োজনীয়",
+  "modifierPickerTitle": "মডিফায়ার নির্বাচন করুন",
+  "notSet": "সেট নয়",
+  "ok": "ঠিক আছে",
+  "paymentMadfu": "মাদফু",
+  "paymentMispay": "মিসপে",
+  "paymentOther": "অন্যান্য",
+  "paymentTabby": "ট্যাবি",
+  "paymentTamara": "তামারা",
+  "pcAccentColor": "অ্যাকসেন্ট রঙ",
+  "pcCartMode": "কার্ট মোড",
+  "pcFontScale": "ফন্ট স্কেল",
+  "pcGridColumns": "গ্রিড কলাম",
+  "pcHandedness": "হ্যান্ডেডনেস",
+  "pcLayoutDirection": "লেআউট দিক",
+  "pcPrimaryColor": "প্রাথমিক রঙ",
+  "pcSecondaryColor": "মাধ্যমিক রঙ",
+  "pcShowPriceOnGrid": "গ্রিডে মূল্য দেখান",
+  "pcShowProductImages": "পণ্যের ছবি দেখান",
+  "pcTheme": "থিম",
+  "posItemDiscount": "আইটেম ছাড়",
+  "posItemNote": "আইটেম নোট",
+  "posPrintSentToPrinter": "প্রিন্টারে পাঠানো হয়েছে",
+  "posReprintReceipt": "রসিদ পুনরায় প্রিন্ট করুন",
+  "posReturnRecentSales": "সাম্প্রতিক বিক্রয় ফেরত",
+  "posShiftAlreadyOpen": "শিফট ইতিমধ্যে খোলা আছে",
+  "posShiftAlreadyOpenDesc": "একটি শিফট ইতিমধ্যে খোলা আছে। প্রথমে পুনরায় শুরু করুন বা বন্ধ করুন।",
+  "posShiftCashInLine": "নগদ ইন",
+  "posShiftCashOutLine": "নগদ আউট",
+  "posShiftResume": "শিফট পুনরায় শুরু করুন",
+  "posShiftXReport": "X রিপোর্ট",
+  "posShiftXReportFull": "সম্পূর্ণ X রিপোর্ট",
+  "posShiftZReport": "Z রিপোর্ট",
+  "posShiftZReportFull": "সম্পূর্ণ Z রিপোর্ট",
+  "posTipNone": "কোনো টিপ নেই",
+  "productAgeRestricted": "বয়স সীমিত",
+  "productMaxQty": "সর্বোচ্চ পরিমাণ",
+  "productMinQty": "সর্বনিম্ন পরিমাণ",
+  "productTaxRate": "ট্যাক্সের হার",
+  "refresh": "রিফ্রেশ",
+  "selectPlan": "প্ল্যান নির্বাচন করুন",
+  "softposInitializing": "শুরু হচ্ছে...",
+  "softposNotConfigured": "SoftPOS কনফিগার করা হয়নি",
+  "softposPaymentFailed": "পেমেন্ট ব্যর্থ হয়েছে",
+  "softposTapCard": "কার্ড ট্যাপ করুন",
+  "staffTrainingAvgDuration": "গড় সময়কাল",
+  "staffTrainingDeleteConfirm": "এই প্রশিক্ষণ রেকর্ড মুছে দিন?",
+  "staffTrainingValidNumber": "একটি বৈধ সংখ্যা প্রবেশ করুন",
+  "termFormBillingCardFee": "কার্ড ফি",
+  "termFormBillingMadaRate": "মাদা রেট",
+  "termFormBillingReadOnly": "শুধুমাত্র পড়ার যোগ্য",
+  "termFormBillingSection": "বিলিং",
+  "termFormBillingSectionSub": "পেমেন্ট প্রক্রিয়াকরণ ফি",
+  "termFormEdfapayTokenHint": "EdfaPay টোকেন প্রবেশ করুন",
+  "termFormEdfapayTokenLabel": "EdfaPay টোকেন",
+  "thawaniReferenceCol": "রেফারেন্স",
+  "update": "আপডেট",
+  "zatcaActivationCodeBanner": "অ্যাক্টিভেশন কোড প্রবেশ করুন",
+  "zatcaEnrolling": "নথিভুক্ত হচ্ছে...",
+  "zatcaEnrollNow": "এখনই নথিভুক্ত করুন",
+  "zatcaHardwareSerial": "হার্ডওয়্যার সিরিয়াল",
+  "accountingConnectProvider": "{provider} সংযুক্ত করুন",
+  "@accountingConnectProvider": {
+    "placeholders": {
+      "provider": {"type": "String"}
+    }
+  },
+  "accountingEntriesCount": "{count} এন্ট্রি",
+  "@accountingEntriesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "aiRunFeature": "{featureName} চালান",
+  "@aiRunFeature": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "cashMgmtFloatLabel": "প্রারম্ভিক ফ্লোট: {amount}",
+  "@cashMgmtFloatLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogImportRowError": "সারি {row}: {message}",
+  "@catalogImportRowError": {
+    "placeholders": {
+      "row": {"type": "int"},
+      "message": {"type": "String"}
+    }
+  },
+  "commonItemsCount": "{count} আইটেম",
+  "@commonItemsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "paginationPageOf": "পৃষ্ঠা {page} / {total}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pcButtonsCount": "{count} বোতাম",
+  "@pcButtonsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "posCurrentDiscount": "ছাড়: {amount}",
+  "@posCurrentDiscount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "posProductAddedWeighed": "{name} যোগ করা হয়েছে ({qty} কেজি)",
+  "@posProductAddedWeighed": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "qty": {"type": "String"}
+    }
+  },
+  "posReprintReceiptNumber": "রসিদ নম্বর",
+  "promotionsCouponType": "ধরন: {type}",
+  "@promotionsCouponType": {
+    "placeholders": {
+      "type": {"type": "String"}
+    }
+  },
+  "receiptVatNumber": "ভ্যাট নং: {number}",
+  "@receiptVatNumber": {
+    "placeholders": {
+      "number": {"type": "String"}
+    }
+  },
+  "securityAuditIp": "আইপি: {ip}",
+  "@securityAuditIp": {
+    "placeholders": {
+      "ip": {"type": "String"}
+    }
+  },
+  "securityAuditUser": "ব্যবহারকারী: {userType}",
+  "@securityAuditUser": {
+    "placeholders": {
+      "userType": {"type": "String"}
+    }
+  },
+  "settingsVersionPublishedAt": "প্রকাশিত: {date}",
+  "@settingsVersionPublishedAt": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "staffPermissionsLoadError": "অনুমতি লোড করতে ত্রুটি: {message}",
+  "@staffPermissionsLoadError": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "subscriptionUpgradePrompt": "{featureName} অ্যাক্সেস করতে আপনার প্ল্যান আপগ্রেড করুন",
+  "@subscriptionUpgradePrompt": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "termFormBillingCardFeeValue": "{value}%",
+  "@termFormBillingCardFeeValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "termFormBillingMadaRateValue": "{value}%",
+  "@termFormBillingMadaRateValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "thawaniHttpStatus": "HTTP {status}",
+  "@thawaniHttpStatus": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "transactionSerialNumber": "সিরিয়াল নং: {serial}",
+  "@transactionSerialNumber": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaCertificateId": "সার্টিফিকেট: {id}",
+  "@zatcaCertificateId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "zatcaDeviceSerialLabel": "সিরিয়াল: {serial}",
+  "@zatcaDeviceSerialLabel": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaDeviceStatusLabel": "অবস্থা: {status}",
+  "@zatcaDeviceStatusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "zatcaDeviceUuidLabel": "UUID: {uuid}",
+  "@zatcaDeviceUuidLabel": {
+    "placeholders": {
+      "uuid": {"type": "String"}
+    }
+  },
+  "zatcaInvoicesCount": "{count} চালান",
+  "@zatcaInvoicesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "zatcaLastErrorMessage": "ত্রুটি: {message}",
+  "@zatcaLastErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "zatcaVatAmountLabel": "ভ্যাট: {amount}",
+  "@zatcaVatAmountLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogEditProduct": "পণ্য সম্পাদনা করুন",
+  "catalogSaving": "সংরক্ষণ করা হচ্ছে...",
+  "catalogUpdateProduct": "পণ্য আপডেট করুন",
+  "catalogCreateProduct": "পণ্য তৈরি করুন",
+  "catalogListView": "তালিকা দৃশ্য",
+  "catalogGridView": "গ্রিড দৃশ্য"
 }

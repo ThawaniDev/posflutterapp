@@ -19692,4 +19692,452 @@ class AppLocalizationsUr extends AppLocalizations {
   String labelsExpiryDate(String date) {
     return 'میعاد: $date';
   }
+
+  @override
+  String get accountingAccessToken => 'رسائی ٹوکن';
+
+  @override
+  String get accountingCompanyNameOptional => 'کمپنی کا نام (اختیاری)';
+
+  @override
+  String get accountingExportEndDate => 'برآمد کی اختتامی تاریخ';
+
+  @override
+  String get accountingExportStartDate => 'برآمد کی شروعاتی تاریخ';
+
+  @override
+  String get accountingProviderAccountId => 'اکاؤنٹ آئی ڈی';
+
+  @override
+  String get accountingProviderAccountName => 'اکاؤنٹ کا نام';
+
+  @override
+  String get accountingRefreshToken => 'ریفریش ٹوکن';
+
+  @override
+  String get accountingTokenExpiry => 'ٹوکن کی میعاد ختم';
+
+  @override
+  String get adminOwnerEmail => 'مالک کی ای میل';
+
+  @override
+  String get adminOwnerName => 'مالک کا نام';
+
+  @override
+  String get adminOwnerPhone => 'مالک کا فون';
+
+  @override
+  String get autoUpdateNowRequired => 'اپ ڈیٹ ضروری ہے';
+
+  @override
+  String get cfdChangeDue => 'واپسی رقم';
+
+  @override
+  String get cfdLaunch => 'ڈسپلے شروع کریں';
+
+  @override
+  String get cfdShowingCart => 'کارٹ دکھا رہا ہے';
+
+  @override
+  String get cfdWelcome => 'خوش آمدید!';
+
+  @override
+  String get changelogNoNotes => 'کوئی ریلیز نوٹس دستیاب نہیں';
+
+  @override
+  String get commonFind => 'تلاش کریں';
+
+  @override
+  String get commonLoadMore => 'مزید لوڈ کریں';
+
+  @override
+  String get commonPrint => 'پرنٹ کریں';
+
+  @override
+  String get currentPlan => 'موجودہ پلان';
+
+  @override
+  String get floristPaused => 'رکا ہوا';
+
+  @override
+  String get gamificationNameAr => 'نام (عربی)';
+
+  @override
+  String get gamificationNameEn => 'نام (انگریزی)';
+
+  @override
+  String get gamificationThreshold => 'حد';
+
+  @override
+  String get gamificationTriggerType => 'ٹرگر کی قسم';
+
+  @override
+  String get getStarted => 'شروع کریں';
+
+  @override
+  String get hardwareCombo => 'کومبو';
+
+  @override
+  String get hardwareEditDevice => 'ڈیوائس تدوین کریں';
+
+  @override
+  String get hardwareWeighable => 'وزن کے قابل';
+
+  @override
+  String get labelCoordX => 'X좌 좌표';
+
+  @override
+  String get labelCoordY => 'Y좌 좌표';
+
+  @override
+  String get modifierAddSelected => 'منتخب شدہ شامل کریں';
+
+  @override
+  String get modifierPickerOptional => 'اختیاری';
+
+  @override
+  String get modifierPickerRequired => 'ضروری';
+
+  @override
+  String get modifierPickerTitle => 'موڈیفائرز منتخب کریں';
+
+  @override
+  String get notSet => 'سیٹ نہیں';
+
+  @override
+  String get ok => 'ٹھیک ہے';
+
+  @override
+  String get paymentMadfu => 'مدفو';
+
+  @override
+  String get paymentMispay => 'میسپے';
+
+  @override
+  String get paymentOther => 'دیگر';
+
+  @override
+  String get paymentTabby => 'ٹیبی';
+
+  @override
+  String get paymentTamara => 'تمارہ';
+
+  @override
+  String get pcAccentColor => 'ایکسنٹ رنگ';
+
+  @override
+  String get pcCartMode => 'کارٹ موڈ';
+
+  @override
+  String get pcFontScale => 'فونٹ اسکیل';
+
+  @override
+  String get pcGridColumns => 'گرڈ کالم';
+
+  @override
+  String get pcHandedness => 'ہاتھ کا انتخاب';
+
+  @override
+  String get pcLayoutDirection => 'لے آؤٹ سمت';
+
+  @override
+  String get pcPrimaryColor => 'بنیادی رنگ';
+
+  @override
+  String get pcSecondaryColor => 'ثانوی رنگ';
+
+  @override
+  String get pcShowPriceOnGrid => 'گرڈ پر قیمت دکھائیں';
+
+  @override
+  String get pcShowProductImages => 'پروڈکٹ کی تصاویر دکھائیں';
+
+  @override
+  String get pcTheme => 'تھیم';
+
+  @override
+  String get posItemDiscount => 'آئٹم ڈسکاؤنٹ';
+
+  @override
+  String get posItemNote => 'آئٹم نوٹ';
+
+  @override
+  String get posPrintSentToPrinter => 'پرنٹر کو بھیج دیا گیا';
+
+  @override
+  String get posReprintReceipt => 'رسید دوبارہ پرنٹ کریں';
+
+  @override
+  String get posReturnRecentSales => 'حالیہ فروخت واپس کریں';
+
+  @override
+  String get posShiftAlreadyOpen => 'شفٹ پہلے سے کھلی ہے';
+
+  @override
+  String get posShiftAlreadyOpenDesc =>
+      'ایک شفٹ پہلے سے کھلی ہے۔ پہلے اسے دوبارہ شروع کریں یا بند کریں۔';
+
+  @override
+  String get posShiftCashInLine => 'نقد اندر';
+
+  @override
+  String get posShiftCashOutLine => 'نقد باہر';
+
+  @override
+  String get posShiftResume => 'شفٹ دوبارہ شروع کریں';
+
+  @override
+  String get posShiftXReport => 'X رپورٹ';
+
+  @override
+  String get posShiftXReportFull => 'مکمل X رپورٹ';
+
+  @override
+  String get posShiftZReport => 'Z رپورٹ';
+
+  @override
+  String get posShiftZReportFull => 'مکمل Z رپورٹ';
+
+  @override
+  String get posTipNone => 'کوئی ٹپ نہیں';
+
+  @override
+  String get productAgeRestricted => 'عمر محدود';
+
+  @override
+  String get productMaxQty => 'زیادہ سے زیادہ مقدار';
+
+  @override
+  String get productMinQty => 'کم از کم مقدار';
+
+  @override
+  String get productTaxRate => 'ٹیکس کی شرح';
+
+  @override
+  String get refresh => 'تازہ کریں';
+
+  @override
+  String get selectPlan => 'پلان منتخب کریں';
+
+  @override
+  String get softposInitializing => 'ابتدائی ہو رہا ہے...';
+
+  @override
+  String get softposNotConfigured => 'SoftPOS کنفیگر نہیں ہے';
+
+  @override
+  String get softposPaymentFailed => 'ادائیگی ناکام ہوئی';
+
+  @override
+  String get softposTapCard => 'کارڈ ٹیپ کریں';
+
+  @override
+  String get staffTrainingAvgDuration => 'اوسط مدت';
+
+  @override
+  String get staffTrainingDeleteConfirm =>
+      'کیا آپ یہ تربیتی ریکارڈ حذف کرنا چاہتے ہیں؟';
+
+  @override
+  String get staffTrainingValidNumber => 'براہ کرم ایک درست نمبر درج کریں';
+
+  @override
+  String get termFormBillingCardFee => 'کارڈ فیس';
+
+  @override
+  String get termFormBillingMadaRate => 'مادا ریٹ';
+
+  @override
+  String get termFormBillingReadOnly => 'صرف پڑھنے کے لیے';
+
+  @override
+  String get termFormBillingSection => 'بلنگ';
+
+  @override
+  String get termFormBillingSectionSub => 'ادائیگی پروسیسنگ فیس';
+
+  @override
+  String get termFormEdfapayTokenHint => 'EdfaPay ٹوکن درج کریں';
+
+  @override
+  String get termFormEdfapayTokenLabel => 'EdfaPay ٹوکن';
+
+  @override
+  String get thawaniReferenceCol => 'حوالہ';
+
+  @override
+  String get update => 'اپ ڈیٹ';
+
+  @override
+  String get zatcaActivationCodeBanner => 'ایکٹیویشن کوڈ درج کریں';
+
+  @override
+  String get zatcaEnrolling => 'اندراج ہو رہا ہے...';
+
+  @override
+  String get zatcaEnrollNow => 'ابھی اندراج کریں';
+
+  @override
+  String get zatcaHardwareSerial => 'ہارڈ ویئر سیریل';
+
+  @override
+  String accountingConnectProvider(String provider) {
+    return '$provider سے جڑیں';
+  }
+
+  @override
+  String accountingEntriesCount(int count) {
+    return '$count اندراجات';
+  }
+
+  @override
+  String aiRunFeature(String featureName) {
+    return '$featureName چلائیں';
+  }
+
+  @override
+  String cashMgmtFloatLabel(String amount) {
+    return 'افتتاحی فلوٹ: $amount';
+  }
+
+  @override
+  String catalogImportRowError(int row, String message) {
+    return 'قطار $row: $message';
+  }
+
+  @override
+  String commonItemsCount(int count) {
+    return '$count اشیاء';
+  }
+
+  @override
+  String paginationPageOf(int page, int total) {
+    return 'صفحہ $page از $total';
+  }
+
+  @override
+  String pcButtonsCount(int count) {
+    return '$count بٹن';
+  }
+
+  @override
+  String posCurrentDiscount(String amount) {
+    return 'چھوٹ: $amount';
+  }
+
+  @override
+  String posProductAddedWeighed(String name, String qty) {
+    return '$name شامل کیا گیا ($qty کلو)';
+  }
+
+  @override
+  String get posReprintReceiptNumber => 'رسید نمبر';
+
+  @override
+  String promotionsCouponType(String type) {
+    return 'قسم: $type';
+  }
+
+  @override
+  String receiptVatNumber(String number) {
+    return 'VAT نمبر: $number';
+  }
+
+  @override
+  String securityAuditIp(String ip) {
+    return 'آئی پی: $ip';
+  }
+
+  @override
+  String securityAuditUser(String userType) {
+    return 'صارف: $userType';
+  }
+
+  @override
+  String settingsVersionPublishedAt(String date) {
+    return 'شائع: $date';
+  }
+
+  @override
+  String staffPermissionsLoadError(String message) {
+    return 'اجازتیں لوڈ کرنے میں خرابی: $message';
+  }
+
+  @override
+  String subscriptionUpgradePrompt(String featureName) {
+    return '$featureName تک رسائی کے لیے اپنا پلان اپ گریڈ کریں';
+  }
+
+  @override
+  String termFormBillingCardFeeValue(String value) {
+    return '$value٪';
+  }
+
+  @override
+  String termFormBillingMadaRateValue(String value) {
+    return '$value٪';
+  }
+
+  @override
+  String thawaniHttpStatus(String status) {
+    return 'HTTP $status';
+  }
+
+  @override
+  String transactionSerialNumber(String serial) {
+    return 'سیریل نمبر: $serial';
+  }
+
+  @override
+  String zatcaCertificateId(String id) {
+    return 'سرٹیفکیٹ: $id';
+  }
+
+  @override
+  String zatcaDeviceSerialLabel(String serial) {
+    return 'سیریل: $serial';
+  }
+
+  @override
+  String zatcaDeviceStatusLabel(String status) {
+    return 'حالت: $status';
+  }
+
+  @override
+  String zatcaDeviceUuidLabel(String uuid) {
+    return 'UUID: $uuid';
+  }
+
+  @override
+  String zatcaInvoicesCount(int count) {
+    return '$count انوائسز';
+  }
+
+  @override
+  String zatcaLastErrorMessage(String message) {
+    return 'خرابی: $message';
+  }
+
+  @override
+  String zatcaVatAmountLabel(String amount) {
+    return 'VAT: $amount';
+  }
+
+  @override
+  String get catalogEditProduct => 'پروڈکٹ تدوین کریں';
+
+  @override
+  String get catalogSaving => 'محفوظ ہو رہا ہے...';
+
+  @override
+  String get catalogUpdateProduct => 'پروڈکٹ اپ ڈیٹ کریں';
+
+  @override
+  String get catalogCreateProduct => 'پروڈکٹ بنائیں';
+
+  @override
+  String get catalogListView => 'فہرست منظر';
+
+  @override
+  String get catalogGridView => 'گرڈ منظر';
 }

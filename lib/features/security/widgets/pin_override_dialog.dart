@@ -144,7 +144,8 @@ class _PinOverrideDialogState extends ConsumerState<PinOverrideDialog> {
         constraints: const BoxConstraints(maxWidth: 400),
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               // ─── Header ──────────────────────────────────────

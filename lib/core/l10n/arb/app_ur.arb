@@ -7753,5 +7753,278 @@
     "placeholders": {
       "date": { "type": "String" }
     }
-  }
+  },
+  "accountingAccessToken": "رسائی ٹوکن",
+  "accountingCompanyNameOptional": "کمپنی کا نام (اختیاری)",
+  "accountingExportEndDate": "برآمد کی اختتامی تاریخ",
+  "accountingExportStartDate": "برآمد کی شروعاتی تاریخ",
+  "accountingProviderAccountId": "اکاؤنٹ آئی ڈی",
+  "accountingProviderAccountName": "اکاؤنٹ کا نام",
+  "accountingRefreshToken": "ریفریش ٹوکن",
+  "accountingTokenExpiry": "ٹوکن کی میعاد ختم",
+  "adminOwnerEmail": "مالک کی ای میل",
+  "adminOwnerName": "مالک کا نام",
+  "adminOwnerPhone": "مالک کا فون",
+  "autoUpdateNowRequired": "اپ ڈیٹ ضروری ہے",
+  "cfdChangeDue": "واپسی رقم",
+  "cfdLaunch": "ڈسپلے شروع کریں",
+  "cfdShowingCart": "کارٹ دکھا رہا ہے",
+  "cfdWelcome": "خوش آمدید!",
+  "changelogNoNotes": "کوئی ریلیز نوٹس دستیاب نہیں",
+  "commonFind": "تلاش کریں",
+  "commonLoadMore": "مزید لوڈ کریں",
+  "commonPrint": "پرنٹ کریں",
+  "currentPlan": "موجودہ پلان",
+  "floristPaused": "رکا ہوا",
+  "gamificationNameAr": "نام (عربی)",
+  "gamificationNameEn": "نام (انگریزی)",
+  "gamificationThreshold": "حد",
+  "gamificationTriggerType": "ٹرگر کی قسم",
+  "getStarted": "شروع کریں",
+  "hardwareCombo": "کومبو",
+  "hardwareEditDevice": "ڈیوائس تدوین کریں",
+  "hardwareWeighable": "وزن کے قابل",
+  "labelCoordX": "X좌 좌표",
+  "labelCoordY": "Y좌 좌표",
+  "modifierAddSelected": "منتخب شدہ شامل کریں",
+  "modifierPickerOptional": "اختیاری",
+  "modifierPickerRequired": "ضروری",
+  "modifierPickerTitle": "موڈیفائرز منتخب کریں",
+  "notSet": "سیٹ نہیں",
+  "ok": "ٹھیک ہے",
+  "paymentMadfu": "مدفو",
+  "paymentMispay": "میسپے",
+  "paymentOther": "دیگر",
+  "paymentTabby": "ٹیبی",
+  "paymentTamara": "تمارہ",
+  "pcAccentColor": "ایکسنٹ رنگ",
+  "pcCartMode": "کارٹ موڈ",
+  "pcFontScale": "فونٹ اسکیل",
+  "pcGridColumns": "گرڈ کالم",
+  "pcHandedness": "ہاتھ کا انتخاب",
+  "pcLayoutDirection": "لے آؤٹ سمت",
+  "pcPrimaryColor": "بنیادی رنگ",
+  "pcSecondaryColor": "ثانوی رنگ",
+  "pcShowPriceOnGrid": "گرڈ پر قیمت دکھائیں",
+  "pcShowProductImages": "پروڈکٹ کی تصاویر دکھائیں",
+  "pcTheme": "تھیم",
+  "posItemDiscount": "آئٹم ڈسکاؤنٹ",
+  "posItemNote": "آئٹم نوٹ",
+  "posPrintSentToPrinter": "پرنٹر کو بھیج دیا گیا",
+  "posReprintReceipt": "رسید دوبارہ پرنٹ کریں",
+  "posReturnRecentSales": "حالیہ فروخت واپس کریں",
+  "posShiftAlreadyOpen": "شفٹ پہلے سے کھلی ہے",
+  "posShiftAlreadyOpenDesc": "ایک شفٹ پہلے سے کھلی ہے۔ پہلے اسے دوبارہ شروع کریں یا بند کریں۔",
+  "posShiftCashInLine": "نقد اندر",
+  "posShiftCashOutLine": "نقد باہر",
+  "posShiftResume": "شفٹ دوبارہ شروع کریں",
+  "posShiftXReport": "X رپورٹ",
+  "posShiftXReportFull": "مکمل X رپورٹ",
+  "posShiftZReport": "Z رپورٹ",
+  "posShiftZReportFull": "مکمل Z رپورٹ",
+  "posTipNone": "کوئی ٹپ نہیں",
+  "productAgeRestricted": "عمر محدود",
+  "productMaxQty": "زیادہ سے زیادہ مقدار",
+  "productMinQty": "کم از کم مقدار",
+  "productTaxRate": "ٹیکس کی شرح",
+  "refresh": "تازہ کریں",
+  "selectPlan": "پلان منتخب کریں",
+  "softposInitializing": "ابتدائی ہو رہا ہے...",
+  "softposNotConfigured": "SoftPOS کنفیگر نہیں ہے",
+  "softposPaymentFailed": "ادائیگی ناکام ہوئی",
+  "softposTapCard": "کارڈ ٹیپ کریں",
+  "staffTrainingAvgDuration": "اوسط مدت",
+  "staffTrainingDeleteConfirm": "کیا آپ یہ تربیتی ریکارڈ حذف کرنا چاہتے ہیں؟",
+  "staffTrainingValidNumber": "براہ کرم ایک درست نمبر درج کریں",
+  "termFormBillingCardFee": "کارڈ فیس",
+  "termFormBillingMadaRate": "مادا ریٹ",
+  "termFormBillingReadOnly": "صرف پڑھنے کے لیے",
+  "termFormBillingSection": "بلنگ",
+  "termFormBillingSectionSub": "ادائیگی پروسیسنگ فیس",
+  "termFormEdfapayTokenHint": "EdfaPay ٹوکن درج کریں",
+  "termFormEdfapayTokenLabel": "EdfaPay ٹوکن",
+  "thawaniReferenceCol": "حوالہ",
+  "update": "اپ ڈیٹ",
+  "zatcaActivationCodeBanner": "ایکٹیویشن کوڈ درج کریں",
+  "zatcaEnrolling": "اندراج ہو رہا ہے...",
+  "zatcaEnrollNow": "ابھی اندراج کریں",
+  "zatcaHardwareSerial": "ہارڈ ویئر سیریل",
+  "accountingConnectProvider": "{provider} سے جڑیں",
+  "@accountingConnectProvider": {
+    "placeholders": {
+      "provider": {"type": "String"}
+    }
+  },
+  "accountingEntriesCount": "{count} اندراجات",
+  "@accountingEntriesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "aiRunFeature": "{featureName} چلائیں",
+  "@aiRunFeature": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "cashMgmtFloatLabel": "افتتاحی فلوٹ: {amount}",
+  "@cashMgmtFloatLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogImportRowError": "قطار {row}: {message}",
+  "@catalogImportRowError": {
+    "placeholders": {
+      "row": {"type": "int"},
+      "message": {"type": "String"}
+    }
+  },
+  "commonItemsCount": "{count} اشیاء",
+  "@commonItemsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "paginationPageOf": "صفحہ {page} از {total}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pcButtonsCount": "{count} بٹن",
+  "@pcButtonsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "posCurrentDiscount": "چھوٹ: {amount}",
+  "@posCurrentDiscount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "posProductAddedWeighed": "{name} شامل کیا گیا ({qty} کلو)",
+  "@posProductAddedWeighed": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "qty": {"type": "String"}
+    }
+  },
+  "posReprintReceiptNumber": "رسید نمبر",
+  "promotionsCouponType": "قسم: {type}",
+  "@promotionsCouponType": {
+    "placeholders": {
+      "type": {"type": "String"}
+    }
+  },
+  "receiptVatNumber": "VAT نمبر: {number}",
+  "@receiptVatNumber": {
+    "placeholders": {
+      "number": {"type": "String"}
+    }
+  },
+  "securityAuditIp": "آئی پی: {ip}",
+  "@securityAuditIp": {
+    "placeholders": {
+      "ip": {"type": "String"}
+    }
+  },
+  "securityAuditUser": "صارف: {userType}",
+  "@securityAuditUser": {
+    "placeholders": {
+      "userType": {"type": "String"}
+    }
+  },
+  "settingsVersionPublishedAt": "شائع: {date}",
+  "@settingsVersionPublishedAt": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "staffPermissionsLoadError": "اجازتیں لوڈ کرنے میں خرابی: {message}",
+  "@staffPermissionsLoadError": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "subscriptionUpgradePrompt": "{featureName} تک رسائی کے لیے اپنا پلان اپ گریڈ کریں",
+  "@subscriptionUpgradePrompt": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "termFormBillingCardFeeValue": "{value}٪",
+  "@termFormBillingCardFeeValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "termFormBillingMadaRateValue": "{value}٪",
+  "@termFormBillingMadaRateValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "thawaniHttpStatus": "HTTP {status}",
+  "@thawaniHttpStatus": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "transactionSerialNumber": "سیریل نمبر: {serial}",
+  "@transactionSerialNumber": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaCertificateId": "سرٹیفکیٹ: {id}",
+  "@zatcaCertificateId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "zatcaDeviceSerialLabel": "سیریل: {serial}",
+  "@zatcaDeviceSerialLabel": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaDeviceStatusLabel": "حالت: {status}",
+  "@zatcaDeviceStatusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "zatcaDeviceUuidLabel": "UUID: {uuid}",
+  "@zatcaDeviceUuidLabel": {
+    "placeholders": {
+      "uuid": {"type": "String"}
+    }
+  },
+  "zatcaInvoicesCount": "{count} انوائسز",
+  "@zatcaInvoicesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "zatcaLastErrorMessage": "خرابی: {message}",
+  "@zatcaLastErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "zatcaVatAmountLabel": "VAT: {amount}",
+  "@zatcaVatAmountLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogEditProduct": "پروڈکٹ تدوین کریں",
+  "catalogSaving": "محفوظ ہو رہا ہے...",
+  "catalogUpdateProduct": "پروڈکٹ اپ ڈیٹ کریں",
+  "catalogCreateProduct": "پروڈکٹ بنائیں",
+  "catalogListView": "فہرست منظر",
+  "catalogGridView": "گرڈ منظر"
 }

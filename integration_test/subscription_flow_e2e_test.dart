@@ -30,7 +30,7 @@ class _SubscriptionNotifier extends StateNotifier<SubscriptionState> implements 
   Future<void> changePlan(AppLocalizations l10n, {required String planId, String billingCycle = 'monthly'}) async {}
 
   @override
-  Future<void> cancel(AppLocalizations l10n, {String? reason}) async {}
+  Future<void> cancel(AppLocalizations l10n, {String? reason, String? reasonCategory}) async {}
 
   @override
   Future<void> resume(AppLocalizations l10n) async {}
@@ -111,6 +111,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('احترافي'), findsWidgets);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -500));
+    await tester.pumpAndSettle();
+
     expect(find.text('المخزون'), findsOneWidget);
     expect(find.text('55 / 100'), findsOneWidget);
 

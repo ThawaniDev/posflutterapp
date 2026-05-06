@@ -19594,4 +19594,451 @@ class AppLocalizationsAr extends AppLocalizations {
   String labelsExpiryDate(String date) {
     return 'انتهاء: $date';
   }
+
+  @override
+  String get accountingAccessToken => 'رمز الوصول';
+
+  @override
+  String get accountingCompanyNameOptional => 'اسم الشركة (اختياري)';
+
+  @override
+  String get accountingExportEndDate => 'تاريخ انتهاء التصدير';
+
+  @override
+  String get accountingExportStartDate => 'تاريخ بدء التصدير';
+
+  @override
+  String get accountingProviderAccountId => 'معرف الحساب';
+
+  @override
+  String get accountingProviderAccountName => 'اسم الحساب';
+
+  @override
+  String get accountingRefreshToken => 'رمز التحديث';
+
+  @override
+  String get accountingTokenExpiry => 'انتهاء صلاحية الرمز';
+
+  @override
+  String get adminOwnerEmail => 'البريد الإلكتروني للمالك';
+
+  @override
+  String get adminOwnerName => 'اسم المالك';
+
+  @override
+  String get adminOwnerPhone => 'هاتف المالك';
+
+  @override
+  String get autoUpdateNowRequired => 'التحديث مطلوب';
+
+  @override
+  String get cfdChangeDue => 'المبلغ المسترد';
+
+  @override
+  String get cfdLaunch => 'تشغيل الشاشة';
+
+  @override
+  String get cfdShowingCart => 'عرض السلة';
+
+  @override
+  String get cfdWelcome => 'أهلاً وسهلاً!';
+
+  @override
+  String get changelogNoNotes => 'لا تتوفر ملاحظات الإصدار';
+
+  @override
+  String get commonFind => 'بحث';
+
+  @override
+  String get commonLoadMore => 'تحميل المزيد';
+
+  @override
+  String get commonPrint => 'طباعة';
+
+  @override
+  String get currentPlan => 'الخطة الحالية';
+
+  @override
+  String get floristPaused => 'متوقف';
+
+  @override
+  String get gamificationNameAr => 'الاسم (عربي)';
+
+  @override
+  String get gamificationNameEn => 'الاسم (إنجليزي)';
+
+  @override
+  String get gamificationThreshold => 'الحد الأدنى';
+
+  @override
+  String get gamificationTriggerType => 'نوع المشغل';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get hardwareCombo => 'كومبو';
+
+  @override
+  String get hardwareEditDevice => 'تعديل الجهاز';
+
+  @override
+  String get hardwareWeighable => 'قابل للوزن';
+
+  @override
+  String get labelCoordX => 'الإحداثي X';
+
+  @override
+  String get labelCoordY => 'الإحداثي Y';
+
+  @override
+  String get modifierAddSelected => 'إضافة المحدد';
+
+  @override
+  String get modifierPickerOptional => 'اختياري';
+
+  @override
+  String get modifierPickerRequired => 'مطلوب';
+
+  @override
+  String get modifierPickerTitle => 'تحديد المعدِّلات';
+
+  @override
+  String get notSet => 'غير محدد';
+
+  @override
+  String get ok => 'موافق';
+
+  @override
+  String get paymentMadfu => 'مدفو';
+
+  @override
+  String get paymentMispay => 'ميسباي';
+
+  @override
+  String get paymentOther => 'أخرى';
+
+  @override
+  String get paymentTabby => 'تابي';
+
+  @override
+  String get paymentTamara => 'تمارا';
+
+  @override
+  String get pcAccentColor => 'لون التمييز';
+
+  @override
+  String get pcCartMode => 'وضع السلة';
+
+  @override
+  String get pcFontScale => 'حجم الخط';
+
+  @override
+  String get pcGridColumns => 'أعمدة الشبكة';
+
+  @override
+  String get pcHandedness => 'إعداد اليد';
+
+  @override
+  String get pcLayoutDirection => 'اتجاه التخطيط';
+
+  @override
+  String get pcPrimaryColor => 'اللون الأساسي';
+
+  @override
+  String get pcSecondaryColor => 'اللون الثانوي';
+
+  @override
+  String get pcShowPriceOnGrid => 'عرض السعر في الشبكة';
+
+  @override
+  String get pcShowProductImages => 'عرض صور المنتجات';
+
+  @override
+  String get pcTheme => 'المظهر';
+
+  @override
+  String get posItemDiscount => 'خصم العنصر';
+
+  @override
+  String get posItemNote => 'ملاحظة العنصر';
+
+  @override
+  String get posPrintSentToPrinter => 'تم الإرسال إلى الطابعة';
+
+  @override
+  String get posReprintReceipt => 'إعادة طباعة الإيصال';
+
+  @override
+  String get posReturnRecentSales => 'مبيعات حديثة للإرجاع';
+
+  @override
+  String get posShiftAlreadyOpen => 'الوردية مفتوحة بالفعل';
+
+  @override
+  String get posShiftAlreadyOpenDesc =>
+      'هناك وردية مفتوحة بالفعل. يرجى استئنافها أو إغلاقها أولاً.';
+
+  @override
+  String get posShiftCashInLine => 'نقد وارد';
+
+  @override
+  String get posShiftCashOutLine => 'نقد صادر';
+
+  @override
+  String get posShiftResume => 'استئناف الوردية';
+
+  @override
+  String get posShiftXReport => 'تقرير X';
+
+  @override
+  String get posShiftXReportFull => 'تقرير X الكامل';
+
+  @override
+  String get posShiftZReport => 'تقرير Z';
+
+  @override
+  String get posShiftZReportFull => 'تقرير Z الكامل';
+
+  @override
+  String get posTipNone => 'بدون إكرامية';
+
+  @override
+  String get productAgeRestricted => 'مقيد بالعمر';
+
+  @override
+  String get productMaxQty => 'الحد الأقصى للكمية';
+
+  @override
+  String get productMinQty => 'الحد الأدنى للكمية';
+
+  @override
+  String get productTaxRate => 'معدل الضريبة';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get selectPlan => 'اختر الخطة';
+
+  @override
+  String get softposInitializing => 'جارٍ التهيئة...';
+
+  @override
+  String get softposNotConfigured => 'لم يتم تهيئة SoftPOS';
+
+  @override
+  String get softposPaymentFailed => 'فشل الدفع';
+
+  @override
+  String get softposTapCard => 'الضغط على البطاقة';
+
+  @override
+  String get staffTrainingAvgDuration => 'متوسط المدة';
+
+  @override
+  String get staffTrainingDeleteConfirm => 'هل تريد حذف سجل التدريب هذا؟';
+
+  @override
+  String get staffTrainingValidNumber => 'يرجى إدخال رقم صحيح';
+
+  @override
+  String get termFormBillingCardFee => 'رسوم البطاقة';
+
+  @override
+  String get termFormBillingMadaRate => 'معدل مدى';
+
+  @override
+  String get termFormBillingReadOnly => 'للقراءة فقط';
+
+  @override
+  String get termFormBillingSection => 'الفوترة';
+
+  @override
+  String get termFormBillingSectionSub => 'رسوم معالجة الدفع';
+
+  @override
+  String get termFormEdfapayTokenHint => 'أدخل رمز EdfaPay';
+
+  @override
+  String get termFormEdfapayTokenLabel => 'رمز EdfaPay';
+
+  @override
+  String get thawaniReferenceCol => 'المرجع';
+
+  @override
+  String get update => 'تحديث';
+
+  @override
+  String get zatcaActivationCodeBanner => 'أدخل رمز التفعيل';
+
+  @override
+  String get zatcaEnrolling => 'جارٍ التسجيل...';
+
+  @override
+  String get zatcaEnrollNow => 'سجّل الآن';
+
+  @override
+  String get zatcaHardwareSerial => 'الرقم التسلسلي للجهاز';
+
+  @override
+  String accountingConnectProvider(String provider) {
+    return 'ربط $provider';
+  }
+
+  @override
+  String accountingEntriesCount(int count) {
+    return '$count سجلات';
+  }
+
+  @override
+  String aiRunFeature(String featureName) {
+    return 'تشغيل $featureName';
+  }
+
+  @override
+  String cashMgmtFloatLabel(String amount) {
+    return 'رصيد الافتتاح: $amount';
+  }
+
+  @override
+  String catalogImportRowError(int row, String message) {
+    return 'الصف $row: $message';
+  }
+
+  @override
+  String commonItemsCount(int count) {
+    return '$count عناصر';
+  }
+
+  @override
+  String paginationPageOf(int page, int total) {
+    return 'الصفحة $page من $total';
+  }
+
+  @override
+  String pcButtonsCount(int count) {
+    return '$count أزرار';
+  }
+
+  @override
+  String posCurrentDiscount(String amount) {
+    return 'الخصم: $amount';
+  }
+
+  @override
+  String posProductAddedWeighed(String name, String qty) {
+    return 'تمت إضافة $name ($qty كجم)';
+  }
+
+  @override
+  String get posReprintReceiptNumber => 'رقم الإيصال';
+
+  @override
+  String promotionsCouponType(String type) {
+    return 'النوع: $type';
+  }
+
+  @override
+  String receiptVatNumber(String number) {
+    return 'رقم ضريبة القيمة المضافة: $number';
+  }
+
+  @override
+  String securityAuditIp(String ip) {
+    return 'عنوان IP: $ip';
+  }
+
+  @override
+  String securityAuditUser(String userType) {
+    return 'المستخدم: $userType';
+  }
+
+  @override
+  String settingsVersionPublishedAt(String date) {
+    return 'تاريخ النشر: $date';
+  }
+
+  @override
+  String staffPermissionsLoadError(String message) {
+    return 'خطأ في تحميل الأذونات: $message';
+  }
+
+  @override
+  String subscriptionUpgradePrompt(String featureName) {
+    return 'قم بترقية خطتك للوصول إلى $featureName';
+  }
+
+  @override
+  String termFormBillingCardFeeValue(String value) {
+    return '$value٪';
+  }
+
+  @override
+  String termFormBillingMadaRateValue(String value) {
+    return '$value٪';
+  }
+
+  @override
+  String thawaniHttpStatus(String status) {
+    return 'HTTP $status';
+  }
+
+  @override
+  String transactionSerialNumber(String serial) {
+    return 'رقم التسلسل: $serial';
+  }
+
+  @override
+  String zatcaCertificateId(String id) {
+    return 'الشهادة: $id';
+  }
+
+  @override
+  String zatcaDeviceSerialLabel(String serial) {
+    return 'الرقم التسلسلي: $serial';
+  }
+
+  @override
+  String zatcaDeviceStatusLabel(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String zatcaDeviceUuidLabel(String uuid) {
+    return 'UUID: $uuid';
+  }
+
+  @override
+  String zatcaInvoicesCount(int count) {
+    return '$count فواتير';
+  }
+
+  @override
+  String zatcaLastErrorMessage(String message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String zatcaVatAmountLabel(String amount) {
+    return 'ضريبة القيمة المضافة: $amount';
+  }
+
+  @override
+  String get catalogEditProduct => 'تعديل المنتج';
+
+  @override
+  String get catalogSaving => 'جارٍ الحفظ...';
+
+  @override
+  String get catalogUpdateProduct => 'تحديث المنتج';
+
+  @override
+  String get catalogCreateProduct => 'إنشاء منتج';
+
+  @override
+  String get catalogListView => 'عرض القائمة';
+
+  @override
+  String get catalogGridView => 'عرض الشبكة';
 }

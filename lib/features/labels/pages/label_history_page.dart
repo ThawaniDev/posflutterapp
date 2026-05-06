@@ -105,24 +105,24 @@ class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, 0),
                 child: PosKpiGrid(
-                  items: [
-                    PosKpiItem(
+                  cards: [
+                    PosKpiCard(
                       label: l10n.labelJobsLast30Days,
                       value: '${statsState.stats.jobsLast30Days}',
                       icon: Icons.print_rounded,
-                      color: AppColors.primary,
+                      iconBgColor: AppColors.primary,
                     ),
-                    PosKpiItem(
+                    PosKpiCard(
                       label: l10n.labelProductsLast30Days,
                       value: '${statsState.stats.productsLast30Days}',
                       icon: Icons.inventory_2_rounded,
-                      color: AppColors.success,
+                      iconBgColor: AppColors.success,
                     ),
-                    PosKpiItem(
+                    PosKpiCard(
                       label: l10n.labelLabelsLast30Days,
                       value: '${statsState.stats.labelsLast30Days}',
                       icon: Icons.label_rounded,
-                      color: AppColors.info,
+                      iconBgColor: AppColors.info,
                     ),
                   ],
                 ),
@@ -258,9 +258,9 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.primary.withValues(alpha: 0.12) : AppColors.neutral100,
+          color: isActive ? AppColors.primary.withValues(alpha: 0.12) : AppColors.borderSubtleLight,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isActive ? AppColors.primary : AppColors.neutral300),
+          border: Border.all(color: isActive ? AppColors.primary : AppColors.borderLight),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -291,15 +291,15 @@ class _LanguageBadge extends StatelessWidget {
     'zpl': AppColors.primary,
     'tspl': AppColors.info,
     'escpos': AppColors.warning,
-    'image': AppColors.neutral500,
+    'image': AppColors.textMutedLight,
   };
 
   static const _labels = {'zpl': 'ZPL', 'tspl': 'TSPL', 'escpos': 'ESC/POS', 'image': 'IMG'};
 
   @override
   Widget build(BuildContext context) {
-    final color = _colors[language] ?? AppColors.neutral400;
+    final color = _colors[language] ?? AppColors.textSecondaryLight;
     final label = _labels[language] ?? language.toUpperCase();
-    return PosBadge(label: label, variant: PosBadgeVariant.custom, customColor: color, isSmall: true);
+    return PosBadge(label: label, variant: PosBadgeVariant.neutral, customColor: color, isSmall: true);
   }
 }

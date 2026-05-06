@@ -8092,5 +8092,278 @@
     "placeholders": {
       "date": { "type": "String" }
     }
-  }
+  },
+  "accountingAccessToken": "رمز الوصول",
+  "accountingCompanyNameOptional": "اسم الشركة (اختياري)",
+  "accountingExportEndDate": "تاريخ انتهاء التصدير",
+  "accountingExportStartDate": "تاريخ بدء التصدير",
+  "accountingProviderAccountId": "معرف الحساب",
+  "accountingProviderAccountName": "اسم الحساب",
+  "accountingRefreshToken": "رمز التحديث",
+  "accountingTokenExpiry": "انتهاء صلاحية الرمز",
+  "adminOwnerEmail": "البريد الإلكتروني للمالك",
+  "adminOwnerName": "اسم المالك",
+  "adminOwnerPhone": "هاتف المالك",
+  "autoUpdateNowRequired": "التحديث مطلوب",
+  "cfdChangeDue": "المبلغ المسترد",
+  "cfdLaunch": "تشغيل الشاشة",
+  "cfdShowingCart": "عرض السلة",
+  "cfdWelcome": "أهلاً وسهلاً!",
+  "changelogNoNotes": "لا تتوفر ملاحظات الإصدار",
+  "commonFind": "بحث",
+  "commonLoadMore": "تحميل المزيد",
+  "commonPrint": "طباعة",
+  "currentPlan": "الخطة الحالية",
+  "floristPaused": "متوقف",
+  "gamificationNameAr": "الاسم (عربي)",
+  "gamificationNameEn": "الاسم (إنجليزي)",
+  "gamificationThreshold": "الحد الأدنى",
+  "gamificationTriggerType": "نوع المشغل",
+  "getStarted": "ابدأ الآن",
+  "hardwareCombo": "كومبو",
+  "hardwareEditDevice": "تعديل الجهاز",
+  "hardwareWeighable": "قابل للوزن",
+  "labelCoordX": "الإحداثي X",
+  "labelCoordY": "الإحداثي Y",
+  "modifierAddSelected": "إضافة المحدد",
+  "modifierPickerOptional": "اختياري",
+  "modifierPickerRequired": "مطلوب",
+  "modifierPickerTitle": "تحديد المعدِّلات",
+  "notSet": "غير محدد",
+  "ok": "موافق",
+  "paymentMadfu": "مدفو",
+  "paymentMispay": "ميسباي",
+  "paymentOther": "أخرى",
+  "paymentTabby": "تابي",
+  "paymentTamara": "تمارا",
+  "pcAccentColor": "لون التمييز",
+  "pcCartMode": "وضع السلة",
+  "pcFontScale": "حجم الخط",
+  "pcGridColumns": "أعمدة الشبكة",
+  "pcHandedness": "إعداد اليد",
+  "pcLayoutDirection": "اتجاه التخطيط",
+  "pcPrimaryColor": "اللون الأساسي",
+  "pcSecondaryColor": "اللون الثانوي",
+  "pcShowPriceOnGrid": "عرض السعر في الشبكة",
+  "pcShowProductImages": "عرض صور المنتجات",
+  "pcTheme": "المظهر",
+  "posItemDiscount": "خصم العنصر",
+  "posItemNote": "ملاحظة العنصر",
+  "posPrintSentToPrinter": "تم الإرسال إلى الطابعة",
+  "posReprintReceipt": "إعادة طباعة الإيصال",
+  "posReturnRecentSales": "مبيعات حديثة للإرجاع",
+  "posShiftAlreadyOpen": "الوردية مفتوحة بالفعل",
+  "posShiftAlreadyOpenDesc": "هناك وردية مفتوحة بالفعل. يرجى استئنافها أو إغلاقها أولاً.",
+  "posShiftCashInLine": "نقد وارد",
+  "posShiftCashOutLine": "نقد صادر",
+  "posShiftResume": "استئناف الوردية",
+  "posShiftXReport": "تقرير X",
+  "posShiftXReportFull": "تقرير X الكامل",
+  "posShiftZReport": "تقرير Z",
+  "posShiftZReportFull": "تقرير Z الكامل",
+  "posTipNone": "بدون إكرامية",
+  "productAgeRestricted": "مقيد بالعمر",
+  "productMaxQty": "الحد الأقصى للكمية",
+  "productMinQty": "الحد الأدنى للكمية",
+  "productTaxRate": "معدل الضريبة",
+  "refresh": "تحديث",
+  "selectPlan": "اختر الخطة",
+  "softposInitializing": "جارٍ التهيئة...",
+  "softposNotConfigured": "لم يتم تهيئة SoftPOS",
+  "softposPaymentFailed": "فشل الدفع",
+  "softposTapCard": "الضغط على البطاقة",
+  "staffTrainingAvgDuration": "متوسط المدة",
+  "staffTrainingDeleteConfirm": "هل تريد حذف سجل التدريب هذا؟",
+  "staffTrainingValidNumber": "يرجى إدخال رقم صحيح",
+  "termFormBillingCardFee": "رسوم البطاقة",
+  "termFormBillingMadaRate": "معدل مدى",
+  "termFormBillingReadOnly": "للقراءة فقط",
+  "termFormBillingSection": "الفوترة",
+  "termFormBillingSectionSub": "رسوم معالجة الدفع",
+  "termFormEdfapayTokenHint": "أدخل رمز EdfaPay",
+  "termFormEdfapayTokenLabel": "رمز EdfaPay",
+  "thawaniReferenceCol": "المرجع",
+  "update": "تحديث",
+  "zatcaActivationCodeBanner": "أدخل رمز التفعيل",
+  "zatcaEnrolling": "جارٍ التسجيل...",
+  "zatcaEnrollNow": "سجّل الآن",
+  "zatcaHardwareSerial": "الرقم التسلسلي للجهاز",
+  "accountingConnectProvider": "ربط {provider}",
+  "@accountingConnectProvider": {
+    "placeholders": {
+      "provider": {"type": "String"}
+    }
+  },
+  "accountingEntriesCount": "{count} سجلات",
+  "@accountingEntriesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "aiRunFeature": "تشغيل {featureName}",
+  "@aiRunFeature": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "cashMgmtFloatLabel": "رصيد الافتتاح: {amount}",
+  "@cashMgmtFloatLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogImportRowError": "الصف {row}: {message}",
+  "@catalogImportRowError": {
+    "placeholders": {
+      "row": {"type": "int"},
+      "message": {"type": "String"}
+    }
+  },
+  "commonItemsCount": "{count} عناصر",
+  "@commonItemsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "paginationPageOf": "الصفحة {page} من {total}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pcButtonsCount": "{count} أزرار",
+  "@pcButtonsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "posCurrentDiscount": "الخصم: {amount}",
+  "@posCurrentDiscount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "posProductAddedWeighed": "تمت إضافة {name} ({qty} كجم)",
+  "@posProductAddedWeighed": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "qty": {"type": "String"}
+    }
+  },
+  "posReprintReceiptNumber": "رقم الإيصال",
+  "promotionsCouponType": "النوع: {type}",
+  "@promotionsCouponType": {
+    "placeholders": {
+      "type": {"type": "String"}
+    }
+  },
+  "receiptVatNumber": "رقم ضريبة القيمة المضافة: {number}",
+  "@receiptVatNumber": {
+    "placeholders": {
+      "number": {"type": "String"}
+    }
+  },
+  "securityAuditIp": "عنوان IP: {ip}",
+  "@securityAuditIp": {
+    "placeholders": {
+      "ip": {"type": "String"}
+    }
+  },
+  "securityAuditUser": "المستخدم: {userType}",
+  "@securityAuditUser": {
+    "placeholders": {
+      "userType": {"type": "String"}
+    }
+  },
+  "settingsVersionPublishedAt": "تاريخ النشر: {date}",
+  "@settingsVersionPublishedAt": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "staffPermissionsLoadError": "خطأ في تحميل الأذونات: {message}",
+  "@staffPermissionsLoadError": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "subscriptionUpgradePrompt": "قم بترقية خطتك للوصول إلى {featureName}",
+  "@subscriptionUpgradePrompt": {
+    "placeholders": {
+      "featureName": {"type": "String"}
+    }
+  },
+  "termFormBillingCardFeeValue": "{value}٪",
+  "@termFormBillingCardFeeValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "termFormBillingMadaRateValue": "{value}٪",
+  "@termFormBillingMadaRateValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "thawaniHttpStatus": "HTTP {status}",
+  "@thawaniHttpStatus": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "transactionSerialNumber": "رقم التسلسل: {serial}",
+  "@transactionSerialNumber": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaCertificateId": "الشهادة: {id}",
+  "@zatcaCertificateId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "zatcaDeviceSerialLabel": "الرقم التسلسلي: {serial}",
+  "@zatcaDeviceSerialLabel": {
+    "placeholders": {
+      "serial": {"type": "String"}
+    }
+  },
+  "zatcaDeviceStatusLabel": "الحالة: {status}",
+  "@zatcaDeviceStatusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "zatcaDeviceUuidLabel": "UUID: {uuid}",
+  "@zatcaDeviceUuidLabel": {
+    "placeholders": {
+      "uuid": {"type": "String"}
+    }
+  },
+  "zatcaInvoicesCount": "{count} فواتير",
+  "@zatcaInvoicesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "zatcaLastErrorMessage": "خطأ: {message}",
+  "@zatcaLastErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "zatcaVatAmountLabel": "ضريبة القيمة المضافة: {amount}",
+  "@zatcaVatAmountLabel": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "catalogEditProduct": "تعديل المنتج",
+  "catalogSaving": "جارٍ الحفظ...",
+  "catalogUpdateProduct": "تحديث المنتج",
+  "catalogCreateProduct": "إنشاء منتج",
+  "catalogListView": "عرض القائمة",
+  "catalogGridView": "عرض الشبكة"
 }
