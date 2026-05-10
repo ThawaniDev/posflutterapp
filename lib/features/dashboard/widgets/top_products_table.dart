@@ -6,7 +6,6 @@ import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class TopProductsTable extends StatelessWidget {
-
   const TopProductsTable({super.key, required this.products});
   final List<Map<String, dynamic>> products;
 
@@ -44,38 +43,27 @@ class TopProductsTable extends StatelessWidget {
                         children: [
                           SizedBox(
                             width: 32,
-                            child: Text(
-                              '#',
-                              style: AppTypography.labelSmall.copyWith(
-                                color: AppColors.mutedFor(context),
-                              ),
-                            ),
+                            child: Text('#', style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context))),
                           ),
                           Expanded(
                             flex: 3,
                             child: Text(
                               l10n.dashboardProduct,
-                              style: AppTypography.labelSmall.copyWith(
-                                color: AppColors.mutedFor(context),
-                              ),
+                              style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
                             ),
                           ),
                           if (!isPhone)
                             Expanded(
                               child: Text(
                                 l10n.dashboardQty,
-                                style: AppTypography.labelSmall.copyWith(
-                                  color: AppColors.mutedFor(context),
-                                ),
+                                style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
                                 textAlign: TextAlign.right,
                               ),
                             ),
                           Expanded(
                             child: Text(
                               l10n.dashboardRevenue,
-                              style: AppTypography.labelSmall.copyWith(
-                                color: AppColors.mutedFor(context),
-                              ),
+                              style: AppTypography.labelSmall.copyWith(color: AppColors.mutedFor(context)),
                               textAlign: TextAlign.right,
                             ),
                           ),
@@ -119,7 +107,7 @@ class TopProductsTable extends StatelessWidget {
                         if (!isPhone)
                           Expanded(
                             child: Text(
-                              '${(p['total_quantity'] as num?)?.toInt() ?? 0}',
+                              '${(p['total_qty'] as num?)?.toInt() ?? (p['total_quantity'] as num?)?.toInt() ?? 0}',
                               style: AppTypography.bodyMedium,
                               textAlign: TextAlign.right,
                             ),

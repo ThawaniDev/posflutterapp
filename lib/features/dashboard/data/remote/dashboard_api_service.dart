@@ -55,17 +55,52 @@ class DashboardApiService {
       'daily': finRaw['daily'],
     };
 
+    // Normalize top_products: widget expects total_quantity (legacy) but API returns total_qty
+    final topProducts = (raw['top_products'] as List).cast<Map<String, dynamic>>().map((p) {
+      return <String, dynamic>{...p, 'total_quantity': p['total_qty'] ?? p['total_quantity'] ?? 0};
+    }).toList();
+
+    // Normalize active_cashiers: widget expects cashier_name (legacy) but API returns user_name
+    final activeCashiers = (raw['active_cashiers'] as List).cast<Map<String, dynamic>>().map((c) {
+      return <String, dynamic>{
+        ...c,
+        'cashier_name': c['user_name'] ?? c['cashier_name'] ?? '',
+        'session_total': c['total_sales'] ?? c['session_total'] ?? 0,
+      };
+    }).toList();
+
+    // Normalize branches: widget expects branch_name/total_sales/staff_count
+    final branches = (raw['branches'] as List).cast<Map<String, dynamic>>().map((b) {
+      return <String, dynamic>{
+        ...b,
+        'branch_name': b['store_name'] ?? b['branch_name'] ?? '',
+        'total_sales': b['total_revenue'] ?? b['total_sales'] ?? 0,
+        // staff_count not provided by API yet — leave as 0 if absent
+        'staff_count': b['staff_count'] ?? 0,
+      };
+    }).toList();
+
+    // Normalize staff_performance: widget expects total_sales/total_transactions/avg_basket
+    final staffPerf = (raw['staff_performance'] as List).cast<Map<String, dynamic>>().map((s) {
+      return <String, dynamic>{
+        ...s,
+        'total_sales': s['total_revenue'] ?? s['total_sales'] ?? 0,
+        'total_transactions': s['transaction_count'] ?? s['total_transactions'] ?? 0,
+        'avg_basket': s['avg_transaction'] ?? s['avg_basket'] ?? 0,
+      };
+    }).toList();
+
     return {
       'stats': stats,
       'sales_trend': raw['sales_trend'] as Map<String, dynamic>,
-      'top_products': (raw['top_products'] as List).cast<Map<String, dynamic>>(),
+      'top_products': topProducts,
       'low_stock': (raw['low_stock'] as List).cast<Map<String, dynamic>>(),
-      'active_cashiers': (raw['active_cashiers'] as List).cast<Map<String, dynamic>>(),
+      'active_cashiers': activeCashiers,
       'recent_orders': (raw['recent_orders'] as List).cast<Map<String, dynamic>>(),
       'financial_summary': financialSummary,
       'hourly_sales': (raw['hourly_sales'] as List).cast<Map<String, dynamic>>(),
-      'branches': (raw['branches'] as List).cast<Map<String, dynamic>>(),
-      'staff_performance': (raw['staff_performance'] as List).cast<Map<String, dynamic>>(),
+      'branches': branches,
+      'staff_performance': staffPerf,
     };
   }
 

@@ -17,7 +17,7 @@ class TransactionStatsCards extends StatelessWidget {
 
     return PosKpiGrid(
       desktopCols: 5,
-      tabletCols: 3,
+      tabletCols: 4,
       mobileCols: 2,
       desktopAspectRatio: 1.35,
       cards: [

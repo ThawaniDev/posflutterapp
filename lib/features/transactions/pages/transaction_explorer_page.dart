@@ -137,7 +137,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
           await ref.read(transactionStatsProvider.notifier).load();
         },
         child: ListView(
-          padding: context.responsivePagePadding,
+          padding: EdgeInsets.zero,
           children: [
             // ─── Stats Cards ─────────────────────────────
             if (_showAnalytics) ...[

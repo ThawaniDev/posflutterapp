@@ -8,7 +8,6 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FinancialSummaryCard extends StatelessWidget {
-
   const FinancialSummaryCard({super.key, required this.data});
   final Map<String, dynamic> data;
 
@@ -78,7 +77,6 @@ class FinancialSummaryCard extends StatelessWidget {
 }
 
 class _SummaryRow extends StatelessWidget {
-
   const _SummaryRow({
     required this.label,
     required this.value,
@@ -123,7 +121,6 @@ const _pieColors = [
 ];
 
 class _PaymentPieChart extends StatelessWidget {
-
   const _PaymentPieChart({required this.methods, required this.isDark});
   final Map<String, dynamic> methods;
   final bool isDark;

@@ -7,7 +7,6 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ActiveCashiersList extends StatelessWidget {
-
   const ActiveCashiersList({super.key, required this.cashiers});
   final List<Map<String, dynamic>> cashiers;
 
@@ -57,7 +56,7 @@ class ActiveCashiersList extends StatelessWidget {
                       radius: 16,
                       backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       child: Text(
-                        _initials(c['cashier_name'] as String? ?? '?'),
+                        _initials((c['user_name'] ?? c['cashier_name']) as String? ?? '?'),
                         style: AppTypography.labelSmall.copyWith(color: AppColors.primary),
                       ),
                     ),
@@ -67,16 +66,14 @@ class ActiveCashiersList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            c['cashier_name'] as String? ?? 'Unknown',
+                            (c['user_name'] ?? c['cashier_name']) as String? ?? 'Unknown',
                             style: AppTypography.titleSmall,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             '${l10n.dashboardSince} ${c['opened_at'] as String? ?? '-'}',
-                            style: AppTypography.micro.copyWith(
-                              color: AppColors.mutedFor(context),
-                            ),
+                            style: AppTypography.micro.copyWith(color: AppColors.mutedFor(context)),
                           ),
                         ],
                       ),

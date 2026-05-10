@@ -389,7 +389,7 @@ class PosDataTable<T> extends StatelessWidget {
     final effectiveMargin = headerPadding ?? const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl);
 
     return Container(
-      margin: effectiveMargin,
+      // margin: effectiveMargin,
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: AppRadius.borderLg,

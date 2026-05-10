@@ -100,27 +100,30 @@ class AppShell extends ConsumerWidget {
             children: [
               sidebar,
               Expanded(
-                child: MediaQuery(
-                  data: mqData,
-                  child: Column(
-                    children: [
-                      Material(
-                        elevation: 1,
-                        child: Container(
-                          height: 56,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
-                            children: [
-                              const Expanded(child: BranchSelector()),
-                              ...actions,
-                            ],
+                child: SafeArea(
+                  bottom: false,
+                  child: MediaQuery(
+                    data: mqData,
+                    child: Column(
+                      children: [
+                        Material(
+                          elevation: 1,
+                          child: Container(
+                            height: 56,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              children: [
+                                const Expanded(child: BranchSelector()),
+                                ...actions,
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const MaintenanceBanner(),
-                      const GlobalSubscriptionBanner(),
-                      Expanded(child: wrappedChild),
-                    ],
+                        const MaintenanceBanner(),
+                        const GlobalSubscriptionBanner(),
+                        Expanded(child: wrappedChild),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -320,14 +323,14 @@ class _ResponsiveContentArea extends StatelessWidget {
     // Tablet: modest horizontal gutters, no width cap.
     if (width < AppSizes.breakpointDesktop) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
         child: child,
       );
     }
 
     // Desktop / wide: centered content with max-width and generous gutters.
     final maxContentWidth = width >= AppSizes.breakpointWide ? 1440.0 : 1200.0;
-    final horizontalGutter = width >= AppSizes.breakpointWide ? AppSpacing.xxxl : AppSpacing.xxl;
+    final horizontalGutter = width >= AppSizes.breakpointWide ? AppSpacing.xxl : AppSpacing.xl;
 
     return Center(
       child: ConstrainedBox(

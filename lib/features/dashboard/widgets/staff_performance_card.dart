@@ -8,7 +8,6 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class StaffPerformanceCard extends StatelessWidget {
-
   const StaffPerformanceCard({super.key, required this.staff});
   final List<Map<String, dynamic>> staff;
 
@@ -33,10 +32,7 @@ class StaffPerformanceCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Center(
-                child: Text(
-                  l10n.noData,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
-                ),
+                child: Text(l10n.noData, style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context))),
               ),
             )
           else ...[
@@ -56,7 +52,6 @@ class StaffPerformanceCard extends StatelessWidget {
 }
 
 class _StaffBarChart extends StatelessWidget {
-
   const _StaffBarChart({required this.staff, required this.isDark});
   final List<Map<String, dynamic>> staff;
   final bool isDark;
@@ -65,7 +60,7 @@ class _StaffBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final groups = <BarChartGroupData>[];
     for (int i = 0; i < staff.length; i++) {
-      final val = _toDouble(staff[i]['total_sales']);
+      final val = _toDouble(staff[i]['total_revenue'] ?? staff[i]['total_sales']);
       groups.add(
         BarChartGroupData(
           x: i,
@@ -87,8 +82,10 @@ class _StaffBarChart extends StatelessWidget {
         gridData: FlGridData(
           show: true,
           drawVerticalLine: false,
-          getDrawingHorizontalLine: (_) =>
-              FlLine(color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context), strokeWidth: 0.8),
+          getDrawingHorizontalLine: (_) => FlLine(
+            color: isDark ? AppColors.borderDark.withValues(alpha: 0.3) : AppColors.borderFor(context),
+            strokeWidth: 0.8,
+          ),
         ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
@@ -118,10 +115,7 @@ class _StaffBarChart extends StatelessWidget {
               reservedSize: 44,
               getTitlesWidget: (value, meta) => SideTitleWidget(
                 meta: meta,
-                child: Text(
-                  _formatCompact(value),
-                  style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context)),
-                ),
+                child: Text(_formatCompact(value), style: TextStyle(fontSize: 10, color: AppColors.mutedFor(context))),
               ),
             ),
           ),
@@ -141,7 +135,6 @@ class _StaffBarChart extends StatelessWidget {
 }
 
 class _StaffRow extends StatelessWidget {
-
   const _StaffRow({required this.staff, required this.isDark, required this.l10n});
   final Map<String, dynamic> staff;
   final bool isDark;
@@ -150,9 +143,9 @@ class _StaffRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = staff['staff_name'] as String? ?? 'Unknown';
-    final transactions = (staff['total_transactions'] as num?)?.toInt() ?? 0;
-    final sales = _toDouble(staff['total_sales']);
-    final avgBasket = _toDouble(staff['avg_basket']);
+    final transactions = (staff['transaction_count'] as num?)?.toInt() ?? (staff['total_transactions'] as num?)?.toInt() ?? 0;
+    final sales = _toDouble(staff['total_revenue'] ?? staff['total_sales']);
+    final avgBasket = _toDouble(staff['avg_transaction'] ?? staff['avg_basket']);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

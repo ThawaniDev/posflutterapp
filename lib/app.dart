@@ -77,6 +77,21 @@ class WameedPosApp extends ConsumerWidget {
         themeMode: themeMode,
         locale: locale,
         routerConfig: router,
+        // Globally dismiss the soft keyboard whenever the user taps outside any
+        // focused TextField. `HitTestBehavior.translucent` lets gestures still
+        // reach widgets below this detector (buttons, list items, etc.).
+        builder: (context, child) {
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              final focus = FocusManager.instance.primaryFocus;
+              if (focus != null && focus.hasFocus) {
+                focus.unfocus();
+              }
+            },
+            child: child,
+          );
+        },
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

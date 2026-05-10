@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/dashboard/providers/dashboard_providers.dart';
@@ -67,7 +68,7 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
               final isWide = constraints.maxWidth > 900;
               final isMobile = context.isPhone;
               final gap = context.responsiveCardPaddingValue;
-              final padding = isMobile ? const EdgeInsets.all(12.0) : AppSpacing.paddingAll16;
+              final padding = isMobile ? const EdgeInsets.all(12.0) : AppSpacing.paddingV16;
 
               return ListView(
                 padding: padding,
@@ -99,13 +100,17 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
 
                   // ─── Financial Summary + Top Products ────────
                   if (isWide)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: FinancialSummaryCard(data: financialSummary)),
-                        SizedBox(width: gap),
-                        Expanded(child: TopProductsTable(products: topProducts)),
-                      ],
+                    PosCard(
+                      padding: const EdgeInsets.all(10),
+                      // height: 500,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: FinancialSummaryCard(data: financialSummary)),
+                          SizedBox(width: gap),
+                          Expanded(child: TopProductsTable(products: topProducts)),
+                        ],
+                      ),
                     )
                   else ...[
                     FinancialSummaryCard(data: financialSummary),
@@ -116,13 +121,16 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
 
                   // ─── Staff Performance + Active Cashiers ─────
                   if (isWide)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(flex: 3, child: StaffPerformanceCard(staff: staffPerformance)),
-                        SizedBox(width: gap),
-                        Expanded(flex: 2, child: ActiveCashiersList(cashiers: activeCashiers)),
-                      ],
+                    PosCard(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(flex: 3, child: StaffPerformanceCard(staff: staffPerformance)),
+                          SizedBox(width: gap),
+                          Expanded(flex: 2, child: ActiveCashiersList(cashiers: activeCashiers)),
+                        ],
+                      ),
                     )
                   else ...[
                     StaffPerformanceCard(staff: staffPerformance),

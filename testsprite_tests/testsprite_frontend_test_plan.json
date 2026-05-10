@@ -1,0 +1,2260 @@
+[
+  {
+    "id": "TC001",
+    "title": "Complete the first-run onboarding and reach the dashboard",
+    "description": "This verifies that a new store owner can complete onboarding, sign in, configure key store settings, and land on the dashboard successfully.",
+    "category": "Onboarding and session gating",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /register"
+      },
+      {
+        "type": "action",
+        "description": "Complete the onboarding wizard with valid business setup details"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /settings/localization"
+      },
+      {
+        "type": "action",
+        "description": "Set the locale and receipt configuration to valid values"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected localization and receipt settings are reflected in the interface"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Complete a cash sale from product search to receipt",
+    "description": "This verifies that a cashier can search for products, build a cart, take cash payment, and complete the sale with a receipt confirmation.",
+    "category": "POS Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid cashier PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/checkout"
+      },
+      {
+        "type": "action",
+        "description": "Open a new cash shift with valid opening cash"
+      },
+      {
+        "type": "action",
+        "description": "Search for a product by name or SKU"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Select cash as the payment method"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid cash tendered amount"
+      },
+      {
+        "type": "action",
+        "description": "Complete the sale"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a receipt confirmation is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the completed transaction is reflected in the checkout session"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Complete onboarding and reach the dashboard",
+    "description": "A new store owner can finish onboarding, log in, set locale and VAT preferences, and arrive at the dashboard with the updated configuration applied.",
+    "category": "Settings and Localization",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /register"
+      },
+      {
+        "type": "action",
+        "description": "Complete the store registration wizard"
+      },
+      {
+        "type": "action",
+        "description": "Submit the onboarding flow"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open localization settings"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the interface language"
+      },
+      {
+        "type": "action",
+        "description": "Change the VAT or receipt settings"
+      },
+      {
+        "type": "action",
+        "description": "Save the settings"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated store settings are applied"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Log in with email and password",
+    "description": "An authenticated user can sign in with valid credentials and reach the dashboard.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user session is active"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Open a cashier shift before entering checkout",
+    "description": "This verifies that a cashier can open a cash shift and access the POS checkout experience only after the shift is opened.",
+    "category": "Onboarding and session gating",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid cashier PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/checkout"
+      },
+      {
+        "type": "action",
+        "description": "Open a new cash shift with valid opening cash"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the active checkout screen is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cart and payment area are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Open a cash shift from the shift opening screen",
+    "description": "A cashier can enter opening cash details and begin a shift so POS checkout becomes available.",
+    "category": "Cash Shift Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/shift/open"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the opening cash amount"
+      },
+      {
+        "type": "action",
+        "description": "Select the opening denominations"
+      },
+      {
+        "type": "action",
+        "description": "Open the shift"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the shift is opened"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify POS checkout becomes available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Log in with cashier PIN",
+    "description": "A cashier can use the PIN login flow to access the app and reach the dashboard.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cashier session is active"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Close a shift and review reconciliation details",
+    "description": "This verifies that a cashier can close an open shift and see Z-report reconciliation details, including any discrepancy summary when present.",
+    "category": "Cash shift management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid cashier PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/shift/open"
+      },
+      {
+        "type": "action",
+        "description": "Open a new cash shift with valid opening cash"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the cash sessions page"
+      },
+      {
+        "type": "action",
+        "description": "Close the active shift"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the shift close summary is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Z-report reconciliation details are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Close a cash shift and review reconciliation totals",
+    "description": "A cashier or manager can close an active shift and see the Z-report totals and discrepancy summary.",
+    "category": "Cash Shift Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /cash-sessions"
+      },
+      {
+        "type": "action",
+        "description": "Select an active shift"
+      },
+      {
+        "type": "action",
+        "description": "Enter the closing cash count"
+      },
+      {
+        "type": "action",
+        "description": "Close the shift"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Z-report totals are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the discrepancy summary is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Limit access to a branch-scoped area for unauthorized users",
+    "description": "This verifies that a user without the needed branch or role access cannot view a restricted operational area and sees a permission-denied state.",
+    "category": "Role and branch access control",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/stores"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an access denied message is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify restricted administration content is not visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Apply a manager-approved discount during checkout",
+    "description": "This verifies that a cashier can apply a discount to a sale and complete it after manager authorization is accepted.",
+    "category": "POS Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid cashier PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/checkout"
+      },
+      {
+        "type": "action",
+        "description": "Open a new cash shift with valid opening cash"
+      },
+      {
+        "type": "action",
+        "description": "Search for a product by name or SKU"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Apply a discount to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid manager PIN when prompted"
+      },
+      {
+        "type": "action",
+        "description": "Complete the sale"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a discount is applied to the cart total"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a receipt confirmation is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Adjust inventory and review stock levels",
+    "description": "This verifies that a manager can create a stock adjustment and then review the updated stock levels from inventory screens.",
+    "category": "Inventory Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-adjustments"
+      },
+      {
+        "type": "action",
+        "description": "Create a valid stock adjustment with a reason code"
+      },
+      {
+        "type": "action",
+        "description": "Save the stock adjustment"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-levels"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated stock level is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the stock movement is reflected in inventory history"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Review branch stock levels and low-stock alerts",
+    "description": "This test verifies that a manager can open inventory stock levels, review stock by branch, and see low-stock alerts in the stock overview.",
+    "category": "Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory"
+      },
+      {
+        "type": "action",
+        "description": "Open the stock levels view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify stock by branch is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify low-stock alerts are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Switch the interface language",
+    "description": "A signed-in user can switch between Arabic and English and see the interface update accordingly.",
+    "category": "Settings and Localization",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open localization settings"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the interface language"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the interface updates to the selected language"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the layout remains usable after the language change"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Accept an incoming order and advance it through preparation",
+    "description": "This verifies that an operator can accept an incoming order and progress it through the workflow until it is ready or completed.",
+    "category": "Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Accept an incoming order"
+      },
+      {
+        "type": "action",
+        "description": "Advance the order status through preparation steps"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order appears in an in-progress or ready state"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the accepted order remains visible in the workflow"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Create a new product in the catalogue",
+    "description": "This verifies that a manager can add a product with required details and see it appear in the product list.",
+    "category": "Product Catalogue Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products/add"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid product details including name, SKU, barcode, price, and category"
+      },
+      {
+        "type": "action",
+        "description": "Save the product"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new product appears in the catalogue"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product list remains accessible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "View a sales summary for a chosen period",
+    "description": "This verifies that a user can open the sales summary report, choose a period, and see summary totals and trends.",
+    "category": "Reports and Analytics",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports/sales-summary"
+      },
+      {
+        "type": "action",
+        "description": "Choose a reporting period"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sales trends are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sales summary totals are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Review daily financial summary and reconciliation",
+    "description": "A manager or owner can open the daily summary and reconciliation pages to review totals and payment breakdowns for end-of-day review.",
+    "category": "Financial Reconciliation and Daily Summary",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /finance/daily-summary"
+      },
+      {
+        "type": "action",
+        "description": "Review the daily accounting summary"
+      },
+      {
+        "type": "action",
+        "description": "Open the payment method breakdown"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /finance/reconciliation"
+      },
+      {
+        "type": "action",
+        "description": "Review the end-of-day totals"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the daily revenue and expense summary is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the reconciliation totals are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Create a stock transfer between branches",
+    "description": "This verifies that a manager can move inventory between branches and see the transfer recorded in inventory history.",
+    "category": "Inventory Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-transfers"
+      },
+      {
+        "type": "action",
+        "description": "Create a valid transfer from one branch to another"
+      },
+      {
+        "type": "action",
+        "description": "Submit the transfer"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-movements"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the transfer appears in the movement history"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the transfer details are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Save store details during onboarding",
+    "description": "A new store owner can enter core store details and keep progressing through setup without losing the information.",
+    "category": "Business Onboarding",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /onboarding"
+      },
+      {
+        "type": "action",
+        "description": "Select a business type"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the store name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the store address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the VAT registration number"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the store details step is accepted"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Create a stock adjustment",
+    "description": "This test verifies that a manager can create a stock adjustment with a quantity and reason code and see the resulting stock movement recorded.",
+    "category": "Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-adjustments"
+      },
+      {
+        "type": "action",
+        "description": "Start a new stock adjustment"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a quantity value into the adjustment quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a reason code for the adjustment"
+      },
+      {
+        "type": "action",
+        "description": "Save the stock adjustment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the adjustment is recorded"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a stock movement entry is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Create a purchase order and receive goods",
+    "description": "This verifies that a manager can create a purchase order and then receive goods into inventory from that order.",
+    "category": "Inventory Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/purchase-orders"
+      },
+      {
+        "type": "action",
+        "description": "Create a purchase order with valid supplier and items"
+      },
+      {
+        "type": "action",
+        "description": "Submit the purchase order"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/goods-receipts"
+      },
+      {
+        "type": "action",
+        "description": "Receive goods for the created order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goods receipt is recorded"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify received stock is reflected in inventory"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Update layout direction and calendar preferences",
+    "description": "A signed-in user can change RTL/LTR and calendar preferences, save them, and see the layout and date display update.",
+    "category": "Settings and Localization",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open localization settings"
+      },
+      {
+        "type": "action",
+        "description": "Switch the layout direction"
+      },
+      {
+        "type": "action",
+        "description": "Change the calendar format"
+      },
+      {
+        "type": "action",
+        "description": "Save the preferences"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the layout direction is updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the date format uses the selected calendar"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Hold and recall a cart before completing the sale",
+    "description": "This verifies that a cashier can temporarily hold a cart, reopen it later in the same session, and complete the transaction successfully.",
+    "category": "POS Checkout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login/pin"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PIN field with a valid cashier PIN"
+      },
+      {
+        "type": "action",
+        "description": "Submit the PIN login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pos/checkout"
+      },
+      {
+        "type": "action",
+        "description": "Open a new cash shift with valid opening cash"
+      },
+      {
+        "type": "action",
+        "description": "Search for a product by name or SKU"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Hold the current cart"
+      },
+      {
+        "type": "action",
+        "description": "Reopen the held cart"
+      },
+      {
+        "type": "action",
+        "description": "Complete the sale"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the recalled cart contents are restored"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a receipt confirmation is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Receive goods against an order",
+    "description": "This test verifies that a manager can open a goods receipt, confirm received quantities, save it, and see stock updated in the inventory flow.",
+    "category": "Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/goods-receipts"
+      },
+      {
+        "type": "action",
+        "description": "Open a goods receipt"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the received quantities"
+      },
+      {
+        "type": "action",
+        "description": "Save the goods receipt"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the receipt is saved"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify updated stock is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Save delivery platform credentials",
+    "description": "This verifies that a user can enter platform credentials and keep the integration ready for sync.",
+    "category": "Delivery Platform Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /delivery/config"
+      },
+      {
+        "type": "action",
+        "description": "Enter API credentials for a platform"
+      },
+      {
+        "type": "action",
+        "description": "Save the credentials"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the platform is ready for sync"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC027",
+    "title": "Fulfill an incoming Thawani order",
+    "description": "A user can review Thawani orders in the unified order screen, accept an order, and advance it through fulfillment statuses.",
+    "category": "Thawani Marketplace Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open an incoming Thawani order"
+      },
+      {
+        "type": "action",
+        "description": "Accept the order"
+      },
+      {
+        "type": "action",
+        "description": "Advance the order status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Thawani order is visible in the order list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order reaches a fulfillment status"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC028",
+    "title": "Choose a business type during onboarding",
+    "description": "A new store owner can select a business type and continue the onboarding flow successfully.",
+    "category": "Business Onboarding",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /onboarding"
+      },
+      {
+        "type": "action",
+        "description": "Select a business type"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the onboarding wizard advances to the next step"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC029",
+    "title": "Review sales summary and daily accounting results",
+    "description": "This verifies that an owner can review report summaries and daily accounting totals from the reporting and finance pages.",
+    "category": "Reports and daily summary",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports/sales-summary"
+      },
+      {
+        "type": "action",
+        "description": "Review the sales summary"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /finance/daily-summary"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sales summary data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the daily accounting summary is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC030",
+    "title": "Review report options from the reports hub",
+    "description": "This verifies that an authenticated user can open the reports hub and see available report types to continue into analytics.",
+    "category": "Reports and Analytics",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify report options are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analytics data sections are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC031",
+    "title": "Update receipt text and tax settings",
+    "description": "A signed-in user can edit receipt header or footer content and VAT settings, save them, and see the new configuration reflected in settings.",
+    "category": "Settings and Localization",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the settings page"
+      },
+      {
+        "type": "action",
+        "description": "Edit the receipt header text"
+      },
+      {
+        "type": "action",
+        "description": "Edit the receipt footer text"
+      },
+      {
+        "type": "action",
+        "description": "Update the VAT configuration"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated receipt configuration is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the tax settings are saved"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC032",
+    "title": "Search and open an existing product from the catalogue",
+    "description": "This verifies that a manager can search or filter the product list and open a product for review or editing.",
+    "category": "Product Catalogue Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Search or filter the product list"
+      },
+      {
+        "type": "action",
+        "description": "Open a product from the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product details view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected product information is available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC033",
+    "title": "Configure currency and timezone during onboarding",
+    "description": "A new store owner can set locale-related store defaults as part of first-run setup.",
+    "category": "Business Onboarding",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /onboarding"
+      },
+      {
+        "type": "action",
+        "description": "Select a business type"
+      },
+      {
+        "type": "action",
+        "description": "Configure the initial currency"
+      },
+      {
+        "type": "action",
+        "description": "Configure the timezone"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the localization settings are accepted"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "Create and send a purchase order",
+    "description": "This test verifies that a manager can create a purchase order with a supplier and items, send it, and see it listed in purchase orders.",
+    "category": "Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/purchase-orders"
+      },
+      {
+        "type": "action",
+        "description": "Start a new purchase order"
+      },
+      {
+        "type": "action",
+        "description": "Select a supplier"
+      },
+      {
+        "type": "action",
+        "description": "Add at least one item to the order"
+      },
+      {
+        "type": "action",
+        "description": "Send the purchase order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the purchase order is listed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order status is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Enable a delivery platform integration",
+    "description": "This verifies that a user can enable one delivery platform and save the integration state.",
+    "category": "Delivery Platform Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /delivery"
+      },
+      {
+        "type": "action",
+        "description": "Enable a delivery platform integration"
+      },
+      {
+        "type": "action",
+        "description": "Save the integration state"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the platform is shown as enabled"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC036",
+    "title": "Sync products to Thawani and review the timestamp",
+    "description": "A manager can open the Thawani integration page, trigger a product and price sync, and see the last sync information update.",
+    "category": "Thawani Marketplace Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /thawani-integration"
+      },
+      {
+        "type": "action",
+        "description": "Trigger the product and price sync"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the integration status is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the last sync information is updated"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC037",
+    "title": "Import products from a CSV preview and confirm",
+    "description": "This verifies that a manager can preview a product import and confirm that new items are added to the catalogue.",
+    "category": "Product Catalogue Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products/import"
+      },
+      {
+        "type": "action",
+        "description": "Choose a valid CSV file for import"
+      },
+      {
+        "type": "action",
+        "description": "Review the import preview"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the import"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify imported products appear in the catalogue"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the import preview flow completes successfully"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC038",
+    "title": "Complete a stocktake and generate adjustments",
+    "description": "This test verifies that a manager can start a stocktake, enter physical counts, submit them, and see adjustments generated from the count differences.",
+    "category": "Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stocktakes"
+      },
+      {
+        "type": "action",
+        "description": "Start a new stocktake"
+      },
+      {
+        "type": "action",
+        "description": "Enter physical counts for at least one item"
+      },
+      {
+        "type": "action",
+        "description": "Submit the stocktake counts"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the stocktake is completed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify stock adjustments are generated"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC039",
+    "title": "Print labels for selected products",
+    "description": "This verifies that a user can select products, choose a template, set quantity, and start a label print batch.",
+    "category": "Barcode Label Printing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /labels"
+      },
+      {
+        "type": "action",
+        "description": "Select one or more products for labels"
+      },
+      {
+        "type": "action",
+        "description": "Choose a label template"
+      },
+      {
+        "type": "action",
+        "description": "Set the label quantity"
+      },
+      {
+        "type": "action",
+        "description": "Start the batch print"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify label print progress is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC040",
+    "title": "View customer loyalty history",
+    "description": "This verifies that an owner can open a customer profile and review loyalty activity and purchase history.",
+    "category": "Customer profiles and loyalty",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /customers"
+      },
+      {
+        "type": "action",
+        "description": "Open a customer profile"
+      },
+      {
+        "type": "action",
+        "description": "Review the customer loyalty history"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the customer profile is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify loyalty activity is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC041",
+    "title": "Invite a new staff member",
+    "description": "This verifies a manager can create a staff invitation with a role and branch and see the new staff member appear in the list.",
+    "category": "Staff and User Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /staff/members"
+      },
+      {
+        "type": "action",
+        "description": "Invite a new staff member"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the contact field with a valid phone number or email"
+      },
+      {
+        "type": "action",
+        "description": "Select a role for the new staff member"
+      },
+      {
+        "type": "action",
+        "description": "Select a branch for the new staff member"
+      },
+      {
+        "type": "action",
+        "description": "Send the invitation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new staff member appears in the staff list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC042",
+    "title": "View order sources in the unified order screen",
+    "description": "A signed-in operator can open the unified order screen and see orders from POS, delivery, and Thawani in one place.",
+    "category": "Thawani Marketplace Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify orders from multiple sources are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the unified order list is usable"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC043",
+    "title": "Review low-stock and expiry alerts",
+    "description": "This verifies that a manager can review stock levels and alert screens for items that need replenishment or are nearing expiry.",
+    "category": "Inventory Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/stock-levels"
+      },
+      {
+        "type": "action",
+        "description": "Review the low-stock indicators"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /inventory/expiry-dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify low-stock items are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify expiry alerts are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC044",
+    "title": "Export a report from the reports hub",
+    "description": "This verifies that a user can configure a report and start an export for offline review.",
+    "category": "Reports and Analytics",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "action",
+        "description": "Select a report type"
+      },
+      {
+        "type": "action",
+        "description": "Set a date range"
+      },
+      {
+        "type": "action",
+        "description": "Export the report"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the exported report confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC045",
+    "title": "Review subscription status and billing history",
+    "description": "This verifies that an owner can review current subscription details and access billing history from the subscription area.",
+    "category": "Subscription status and billing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /subscription/status"
+      },
+      {
+        "type": "action",
+        "description": "Review the current subscription status"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /subscription/billing"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the subscription status is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the billing history is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC046",
+    "title": "Force a delivery menu sync",
+    "description": "This verifies that a user can trigger a full sync and see the sync log update for the platform.",
+    "category": "Delivery Platform Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /delivery"
+      },
+      {
+        "type": "action",
+        "description": "Trigger a force sync for a platform"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sync log is updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the platform sync entry is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC047",
+    "title": "Update a staff member role",
+    "description": "This verifies a manager can change a staff member's role and see the updated access configuration reflected in the UI.",
+    "category": "Staff and User Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /staff/roles"
+      },
+      {
+        "type": "action",
+        "description": "Review the role definitions"
+      },
+      {
+        "type": "action",
+        "description": "Update a role assignment for a staff member"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated access configuration is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC048",
+    "title": "Reject an incoming order from the queue",
+    "description": "This verifies that an operator can reject an incoming order and that it is removed from the active queue.",
+    "category": "Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open an incoming order"
+      },
+      {
+        "type": "action",
+        "description": "Reject the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is removed from the active queue"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the queue remains accessible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC049",
+    "title": "Design and save a custom label",
+    "description": "This verifies that a user can open the label designer, add label content, and save a reusable design.",
+    "category": "Barcode Label Printing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /labels/designer"
+      },
+      {
+        "type": "action",
+        "description": "Add branding elements to the label"
+      },
+      {
+        "type": "action",
+        "description": "Add product details to the label"
+      },
+      {
+        "type": "action",
+        "description": "Add a barcode element to the label"
+      },
+      {
+        "type": "action",
+        "description": "Save the label design"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved design is available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC050",
+    "title": "Open the settings hub",
+    "description": "A signed-in user can reach the settings area from the app and view the available localization and store configuration options.",
+    "category": "Settings and Localization",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /settings"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the settings hub is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify localization and store configuration options are available"
+      }
+    ],
+    "priority": "Medium"
+  }
+]

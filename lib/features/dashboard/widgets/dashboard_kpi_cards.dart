@@ -5,7 +5,6 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DashboardKpiCards extends StatelessWidget {
-
   const DashboardKpiCards({super.key, required this.stats});
   final Map<String, dynamic> stats;
 
@@ -15,7 +14,7 @@ class DashboardKpiCards extends StatelessWidget {
 
     return PosKpiGrid(
       desktopCols: 4,
-      tabletCols: 2,
+      tabletCols: 4,
       mobileCols: 2,
       cards: [
         PosKpiCard(

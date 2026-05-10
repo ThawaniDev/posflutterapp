@@ -1,0 +1,693 @@
+version: "2"
+type: backend
+tech_stack:
+  - language: Dart
+  - framework: Flutter
+  - state_management: Riverpod (flutter_riverpod ^2.6.1)
+  - routing: GoRouter (go_router ^14.8.1)
+  - local_db: Drift + SQLite (offline-first)
+  - networking: Dio
+  - auth: flutter_secure_storage, PIN/biometric login
+  - printing: pdf, printing, ESC/POS thermal
+  - barcode: barcode, flutter_datawedge
+  - crypto: pointycastle (ZATCA ECDSA signing)
+  - charts: fl_chart
+  - localization: flutter_localizations, intl (AR/EN, RTL/LTR)
+
+routes:
+  - path: /login
+    file: lib/features/auth/pages/login_page.dart
+    auth_required: false
+    description: Email/password login
+  - path: /login/pin
+    file: lib/features/auth/pages/pin_login_page.dart
+    auth_required: false
+    description: Fast PIN login for cashiers
+  - path: /register
+    file: lib/features/auth/pages/register_page.dart
+    auth_required: false
+    description: New store registration / onboarding
+  - path: /dashboard
+    file: lib/features/dashboard/pages/owner_dashboard_page.dart
+    auth_required: true
+    description: Owner analytics dashboard
+  - path: /pos
+    file: lib/features/pos_terminal/pages/pos_terminals_page.dart
+    auth_required: true
+    description: POS terminal selector
+  - path: /pos/checkout
+    file: lib/features/pos_terminal/pages/pos_checkout_page.dart
+    auth_required: true
+    description: Active POS checkout screen
+  - path: /pos/shift/open
+    file: lib/features/pos_terminal/pages/pos_shift_open_page.dart
+    auth_required: true
+    description: Open a new cash shift
+  - path: /pos/sessions
+    file: lib/features/pos_terminal/pages/pos_sessions_page.dart
+    auth_required: true
+    description: View past POS sessions
+  - path: /pos/terminals
+    file: lib/features/pos_terminal/pages/pos_terminals_page.dart
+    auth_required: true
+    description: Manage POS terminals
+  - path: /pos/cfd/:sessionId
+    file: lib/features/pos_terminal/pages/pos_cfd_page.dart
+    auth_required: false
+    description: Customer-facing display (second screen)
+  - path: /products
+    file: lib/features/catalog/pages/product_list_page.dart
+    auth_required: true
+    description: Product catalogue list
+  - path: /products/add
+    file: lib/features/catalog/pages/product_form_page.dart
+    auth_required: true
+    description: Add new product
+  - path: /products/import
+    file: lib/features/catalog/pages/product_import_page.dart
+    auth_required: true
+    description: Bulk product import CSV/Excel
+  - path: /categories
+    file: lib/features/catalog/pages/category_list_page.dart
+    auth_required: true
+    description: Product category management
+  - path: /suppliers
+    file: lib/features/catalog/pages/supplier_list_page.dart
+    auth_required: true
+    description: Supplier database
+  - path: /inventory
+    file: lib/features/inventory/pages/inventory_page.dart
+    auth_required: true
+    description: Inventory overview
+  - path: /inventory/stock-levels
+    file: lib/features/inventory/pages/stock_levels_page.dart
+    auth_required: true
+    description: Real-time stock levels per branch
+  - path: /inventory/stock-movements
+    file: lib/features/inventory/pages/stock_movements_page.dart
+    auth_required: true
+    description: Stock movement history log
+  - path: /inventory/goods-receipts
+    file: lib/features/inventory/pages/goods_receipts_page.dart
+    auth_required: true
+    description: Receive goods from purchase orders
+  - path: /inventory/stock-adjustments
+    file: lib/features/inventory/pages/stock_adjustments_page.dart
+    auth_required: true
+    description: Manual stock adjustments with reason codes
+  - path: /inventory/stock-transfers
+    file: lib/features/inventory/pages/stock_transfers_page.dart
+    auth_required: true
+    description: Stock transfers between branches
+  - path: /inventory/purchase-orders
+    file: lib/features/inventory/pages/purchase_orders_page.dart
+    auth_required: true
+    description: Create and manage purchase orders
+  - path: /inventory/stocktakes
+    file: lib/features/inventory/pages/stocktakes_page.dart
+    auth_required: true
+    description: Full and cyclical stock counts
+  - path: /inventory/waste-records
+    file: lib/features/inventory/pages/waste_records_page.dart
+    auth_required: true
+    description: Waste and spoilage tracking
+  - path: /inventory/expiry-dashboard
+    file: lib/features/inventory/pages/expiry_dashboard_page.dart
+    auth_required: true
+    description: Expiry date tracking and alerts
+  - path: /orders
+    file: lib/features/orders/pages/order_list_page.dart
+    auth_required: true
+    description: Unified order screen (POS + delivery + Thawani)
+  - path: /transactions
+    file: lib/features/pos_terminal/pages/transaction_explorer_page.dart
+    auth_required: true
+    description: Transaction explorer with filters
+  - path: /cash-sessions
+    file: lib/features/payments/pages/cash_sessions_page.dart
+    auth_required: true
+    description: Cash shift sessions and Z-reports
+  - path: /cash-management
+    file: lib/features/payments/pages/cash_management_page.dart
+    auth_required: true
+    description: Cash drawer management
+  - path: /expenses
+    file: lib/features/payments/pages/expenses_page.dart
+    auth_required: true
+    description: Petty cash and store expenses
+  - path: /gift-cards
+    file: lib/features/payments/pages/gift_cards_page.dart
+    auth_required: true
+    description: Gift card issue and redemption
+  - path: /finance/reconciliation
+    file: lib/features/payments/pages/financial_reconciliation_page.dart
+    auth_required: true
+    description: End-of-day financial reconciliation
+  - path: /finance/daily-summary
+    file: lib/features/payments/pages/daily_summary_page.dart
+    auth_required: true
+    description: Daily accounting summary
+  - path: /customers
+    file: lib/features/customers/pages/customer_list_page.dart
+    auth_required: true
+    description: Customer profile management
+  - path: /customers/groups
+    file: lib/features/customers/pages/customer_groups_page.dart
+    auth_required: true
+    description: Customer groups for targeted promotions
+  - path: /labels
+    file: lib/features/labels/pages/labels_page.dart
+    auth_required: true
+    description: Barcode label printing
+  - path: /labels/designer
+    file: lib/features/labels/pages/label_designer_page.dart
+    auth_required: true
+    description: Custom label designer
+  - path: /reports
+    file: lib/features/reports/pages/reports_page.dart
+    auth_required: true
+    description: Reports hub
+  - path: /reports/sales-summary
+    file: lib/features/reports/pages/sales_summary_page.dart
+    auth_required: true
+    description: Daily/weekly/monthly sales summary
+  - path: /reports/staff-performance
+    file: lib/features/reports/pages/staff_performance_page.dart
+    auth_required: true
+    description: Employee performance and commissions
+  - path: /settings
+    file: lib/features/settings/pages/settings_page.dart
+    auth_required: true
+    description: App settings hub
+  - path: /settings/localization
+    file: lib/features/settings/pages/localization_page.dart
+    auth_required: true
+    description: Language, RTL/LTR, calendar, numerals
+  - path: /promotions
+    file: lib/features/promotions/pages/promotions_page.dart
+    auth_required: true
+    description: Promotions and coupons management
+  - path: /staff/members
+    file: lib/features/staff/pages/staff_members_page.dart
+    auth_required: true
+    description: Staff member management
+  - path: /staff/roles
+    file: lib/features/staff/pages/staff_roles_page.dart
+    auth_required: true
+    description: Role and permission management
+  - path: /staff/attendance
+    file: lib/features/staff/pages/staff_attendance_page.dart
+    auth_required: true
+    description: Employee time clock and attendance
+  - path: /staff/shifts
+    file: lib/features/staff/pages/staff_shifts_page.dart
+    auth_required: true
+    description: Shift scheduling and management
+  - path: /subscription/plans
+    file: lib/features/subscription/pages/plan_selection_page.dart
+    auth_required: true
+    description: Subscription plan selection
+  - path: /subscription/status
+    file: lib/features/subscription/pages/subscription_status_page.dart
+    auth_required: true
+    description: Current plan, usage meters, renewal date
+  - path: /subscription/billing
+    file: lib/features/subscription/pages/billing_history_page.dart
+    auth_required: true
+    description: Invoice history and PDF download
+  - path: /delivery
+    file: lib/features/delivery_integration/pages/delivery_page.dart
+    auth_required: true
+    description: Third-party delivery platform integrations
+  - path: /delivery/config
+    file: lib/features/delivery_integration/pages/delivery_config_page.dart
+    auth_required: true
+    description: Configure delivery platform credentials and toggles
+  - path: /notifications
+    file: lib/features/notifications/pages/notification_centre_page.dart
+    auth_required: true
+    description: Notification inbox
+  - path: /notifications/preferences
+    file: lib/features/notifications/pages/notification_preferences_page.dart
+    auth_required: true
+    description: Per-user channel and event preferences
+  - path: /thawani-integration
+    file: lib/features/thawani_integration/pages/thawani_integration_page.dart
+    auth_required: true
+    description: Thawani marketplace integration
+  - path: /branches
+    file: lib/features/branches/pages/branches_page.dart
+    auth_required: true
+    description: Multi-branch management
+  - path: /accounting
+    file: lib/features/accounting/pages/accounting_page.dart
+    auth_required: true
+    description: Export to QuickBooks, Xero, Qoyod, CSV
+  - path: /onboarding
+    file: lib/features/onboarding/pages/onboarding_page.dart
+    auth_required: false
+    description: Business type selection and store setup wizard
+  - path: /support
+    file: lib/features/support/pages/support_dashboard_page.dart
+    auth_required: true
+    description: Support tickets and knowledge base
+  - path: /admin/stores
+    file: lib/features/admin_panel/pages/admin_stores_page.dart
+    auth_required: true
+    description: Platform admin - store/provider management
+  - path: /admin/subscriptions
+    file: lib/features/admin_panel/pages/admin_subscriptions_page.dart
+    auth_required: true
+    description: Platform admin - subscription management
+  - path: /admin/revenue-dashboard
+    file: lib/features/admin_panel/pages/admin_revenue_dashboard_page.dart
+    auth_required: true
+    description: Platform admin - revenue analytics
+
+features:
+  - name: User Authentication
+    description: Email/password login, PIN login for cashiers, biometric login, session management
+    files:
+      - lib/features/auth/pages/login_page.dart
+      - lib/features/auth/pages/pin_login_page.dart
+      - lib/features/auth/pages/register_page.dart
+    entry_route: /login
+    user_interactions:
+      - Enter email and password then tap Login button
+      - Enter 4-6 digit PIN on PIN login screen
+      - Tap Forgot Password to request reset
+      - See validation error on empty or invalid credentials
+      - Get redirected to dashboard on successful login
+    api_calls:
+      - method: POST
+        endpoint: /api/auth/login
+      - method: POST
+        endpoint: /api/auth/login/pin
+    auth_required: false
+
+  - name: POS Checkout
+    description: Full sales processing - scan/search products, manage cart, apply discounts, collect payment, print receipt
+    files:
+      - lib/features/pos_terminal/pages/pos_checkout_page.dart
+    entry_route: /pos/checkout
+    user_interactions:
+      - Scan barcode or search product by name/SKU
+      - Add product to cart, change quantity, remove item
+      - Apply discount (amount or %) with optional manager PIN
+      - Select payment method (cash, card, split)
+      - Enter cash tendered and see change calculation
+      - Complete sale and print/send receipt
+      - Hold cart and recall held cart
+      - Process void or return
+    api_calls:
+      - method: POST
+        endpoint: /api/transactions
+      - method: POST
+        endpoint: /api/transactions/:id/void
+      - method: GET
+        endpoint: /api/products/search
+    auth_required: true
+
+  - name: Cash Shift Management
+    description: Open shift with opening cash, close shift with Z-report and cash count
+    files:
+      - lib/features/pos_terminal/pages/pos_shift_open_page.dart
+      - lib/features/payments/pages/cash_sessions_page.dart
+    entry_route: /pos/shift/open
+    user_interactions:
+      - Enter opening cash amount
+      - Select denominations for opening count
+      - Open shift and proceed to POS
+      - Close shift and enter closing cash count
+      - View Z-report with cash/card totals and discrepancy
+    api_calls:
+      - method: POST
+        endpoint: /api/cash-sessions
+      - method: PATCH
+        endpoint: /api/cash-sessions/:id/close
+    auth_required: true
+
+  - name: Product Catalogue Management
+    description: Create, edit, import products with categories, variants, modifiers, pricing, barcodes
+    files:
+      - lib/features/catalog/pages/product_list_page.dart
+      - lib/features/catalog/pages/product_form_page.dart
+      - lib/features/catalog/pages/product_import_page.dart
+    entry_route: /products
+    user_interactions:
+      - Browse product list with search and filter by category
+      - Tap Add Product and fill name (AR/EN), SKU, barcode, price, category
+      - Add product variants (size, colour) and modifier groups
+      - Toggle product availability per branch
+      - Import products via CSV file upload
+    api_calls:
+      - method: GET
+        endpoint: /api/products
+      - method: POST
+        endpoint: /api/products
+      - method: PUT
+        endpoint: /api/products/:id
+      - method: DELETE
+        endpoint: /api/products/:id
+      - method: POST
+        endpoint: /api/products/import
+    auth_required: true
+
+  - name: Inventory Management
+    description: Stock levels, adjustments, transfers, purchase orders, stocktakes, expiry tracking, waste records
+    files:
+      - lib/features/inventory/pages/inventory_page.dart
+      - lib/features/inventory/pages/stock_levels_page.dart
+      - lib/features/inventory/pages/stock_adjustments_page.dart
+      - lib/features/inventory/pages/stock_transfers_page.dart
+      - lib/features/inventory/pages/purchase_orders_page.dart
+      - lib/features/inventory/pages/stocktakes_page.dart
+    entry_route: /inventory
+    user_interactions:
+      - View current stock levels per branch with low-stock alerts
+      - Create stock adjustment with reason code and quantity
+      - Initiate stock transfer between branches
+      - Create and send purchase order to supplier
+      - Receive goods and confirm quantities
+      - Start a stocktake and enter physical counts
+      - Log waste/spoilage with reason and cost
+    api_calls:
+      - method: GET
+        endpoint: /api/inventory/stock-levels
+      - method: POST
+        endpoint: /api/inventory/adjustments
+      - method: POST
+        endpoint: /api/inventory/transfers
+      - method: POST
+        endpoint: /api/purchase-orders
+      - method: POST
+        endpoint: /api/stocktakes
+    auth_required: true
+
+  - name: Order Management
+    description: Unified order screen combining POS orders, delivery platform orders, and Thawani orders with KDS
+    files:
+      - lib/features/orders/pages/order_list_page.dart
+    entry_route: /orders
+    user_interactions:
+      - View all incoming orders with status columns (new, preparing, ready, completed)
+      - Accept or reject incoming external delivery order
+      - Update order status through workflow steps
+      - Print kitchen ticket for an order
+    api_calls:
+      - method: GET
+        endpoint: /api/orders
+      - method: PATCH
+        endpoint: /api/orders/:id/status
+      - method: POST
+        endpoint: /api/orders/:id/accept
+      - method: POST
+        endpoint: /api/orders/:id/reject
+    auth_required: true
+
+  - name: Customer Management
+    description: Customer profiles, loyalty points, store credit, purchase history, customer groups
+    files:
+      - lib/features/customers/pages/customer_list_page.dart
+      - lib/features/customers/pages/customer_form_page.dart
+      - lib/features/customers/pages/customer_groups_page.dart
+    entry_route: /customers
+    user_interactions:
+      - Search and view customer list
+      - Create new customer with name, phone, email
+      - View customer purchase history and loyalty balance
+      - Adjust store credit balance
+      - Create and manage customer groups
+    api_calls:
+      - method: GET
+        endpoint: /api/customers
+      - method: POST
+        endpoint: /api/customers
+      - method: GET
+        endpoint: /api/customers/:id
+      - method: PUT
+        endpoint: /api/customers/:id
+    auth_required: true
+
+  - name: Promotions and Coupons
+    description: Create and manage discounts, buy-X-get-Y, time-limited promos, coupon codes, bundle pricing
+    files:
+      - lib/features/promotions/pages/promotions_page.dart
+    entry_route: /promotions
+    user_interactions:
+      - View active and scheduled promotions list
+      - Create promotion with type (%, fixed, buy-X-get-Y, bundle)
+      - Set date range, applicable products/categories
+      - Generate single-use or multi-use coupon codes
+      - Toggle flash sale on/off
+    api_calls:
+      - method: GET
+        endpoint: /api/promotions
+      - method: POST
+        endpoint: /api/promotions
+      - method: POST
+        endpoint: /api/promotions/coupons
+    auth_required: true
+
+  - name: Reports and Analytics
+    description: Sales, inventory, staff performance, payment methods, ZATCA reports with export to PDF/Excel
+    files:
+      - lib/features/reports/pages/reports_page.dart
+      - lib/features/reports/pages/sales_summary_page.dart
+    entry_route: /reports
+    user_interactions:
+      - Select report type from reports hub
+      - Set date range (daily/weekly/monthly/custom)
+      - View charts and data table
+      - Export report to PDF or Excel
+    api_calls:
+      - method: GET
+        endpoint: /api/reports/sales-summary
+      - method: GET
+        endpoint: /api/reports/staff-performance
+      - method: GET
+        endpoint: /api/reports/inventory
+    auth_required: true
+
+  - name: Barcode Label Printing
+    description: Print price tags, shelf labels, and product barcodes including weighable-item and price-embedded formats
+    files:
+      - lib/features/labels/pages/labels_page.dart
+      - lib/features/labels/pages/label_designer_page.dart
+    entry_route: /labels
+    user_interactions:
+      - Select products to print labels for
+      - Choose label template (price tag, shelf label, barcode)
+      - Set quantity per label and start batch print
+      - Design custom label with logo, AR/EN name, price, barcode
+      - Export labels as PDF for standard printer
+    api_calls:
+      - method: GET
+        endpoint: /api/labels/templates
+      - method: POST
+        endpoint: /api/labels/print
+    auth_required: true
+
+  - name: Delivery Platform Integrations
+    description: Connect to HungerStation, Keeta, Jahez, Noon Food and others - manage credentials, sync menus, receive orders
+    files:
+      - lib/features/delivery_integration/pages/delivery_page.dart
+      - lib/features/delivery_integration/pages/delivery_config_page.dart
+    entry_route: /delivery
+    user_interactions:
+      - View list of supported delivery platforms
+      - Enable or disable a platform integration toggle
+      - Enter and save API credentials for a platform
+      - View sync log with OK/Error status per sync event
+      - Tap force-sync to push full menu to platform
+    api_calls:
+      - method: GET
+        endpoint: /api/delivery/platforms
+      - method: POST
+        endpoint: /api/delivery/platforms/:id/credentials
+      - method: POST
+        endpoint: /api/delivery/platforms/:id/sync
+    auth_required: true
+
+  - name: Staff and User Management
+    description: Invite staff, assign roles and branches, time clock, shift scheduling, commissions, tips
+    files:
+      - lib/features/staff/pages/staff_members_page.dart
+      - lib/features/staff/pages/staff_roles_page.dart
+      - lib/features/staff/pages/staff_attendance_page.dart
+    entry_route: /staff/members
+    user_interactions:
+      - View staff member list with active/suspended status
+      - Invite new staff member by phone or email
+      - Assign role (Owner, Manager, Cashier, etc.) and branch
+      - View staff attendance and shift history
+      - Configure commission rules per role
+    api_calls:
+      - method: GET
+        endpoint: /api/staff
+      - method: POST
+        endpoint: /api/staff/invite
+      - method: PATCH
+        endpoint: /api/staff/:id/role
+    auth_required: true
+
+  - name: Subscription and Billing
+    description: View current plan, usage meters, upgrade/downgrade, invoice history, add-ons
+    files:
+      - lib/features/subscription/pages/subscription_status_page.dart
+      - lib/features/subscription/pages/plan_selection_page.dart
+      - lib/features/subscription/pages/billing_history_page.dart
+    entry_route: /subscription/status
+    user_interactions:
+      - View current plan name, renewal date, monthly price
+      - View usage meters (cashiers, terminals, products, branches)
+      - Tap Upgrade Plan and compare plans on plan comparison page
+      - View invoice history and download PDF invoice
+      - Purchase add-on (e.g. Thawani integration +100 SAR/mo)
+    api_calls:
+      - method: GET
+        endpoint: /api/subscription/status
+      - method: GET
+        endpoint: /api/subscription/plans
+      - method: POST
+        endpoint: /api/subscription/upgrade
+      - method: GET
+        endpoint: /api/subscription/invoices
+    auth_required: true
+
+  - name: Notifications
+    description: In-app notification inbox, push/SMS/email preferences, quiet hours, notification bell with badge
+    files:
+      - lib/features/notifications/pages/notification_centre_page.dart
+      - lib/features/notifications/pages/notification_preferences_page.dart
+      - lib/features/notifications/widgets/notification_bell.dart
+    entry_route: /notifications
+    user_interactions:
+      - Tap notification bell to open dropdown with recent notifications
+      - View full notification inbox with read/unread state
+      - Mark notification as read or mark all as read
+      - Go to notification preferences and toggle channels per event type
+      - Set quiet hours window
+    api_calls:
+      - method: GET
+        endpoint: /api/notifications
+      - method: POST
+        endpoint: /api/notifications/:id/read
+      - method: GET
+        endpoint: /api/notifications/preferences
+      - method: PUT
+        endpoint: /api/notifications/preferences
+    auth_required: true
+
+  - name: ZATCA e-Invoicing
+    description: Device onboarding (CSR to Production CSID), automatic invoice signing, QR code, compliance log
+    files:
+      - lib/features/zatca/pages/zatca_page.dart
+    entry_route: /settings
+    user_interactions:
+      - Run ZATCA device onboarding wizard (CSR generation, OTP, CSID activation)
+      - View ZATCA invoice log with submission status per invoice
+      - Toggle sandbox/production environment
+      - View QR code on printed receipt
+    api_calls:
+      - method: POST
+        endpoint: /api/zatca/onboard
+      - method: GET
+        endpoint: /api/zatca/invoices
+    auth_required: true
+
+  - name: Settings and Localization
+    description: Language toggle (AR/EN), RTL/LTR, Hijri/Gregorian, Arabic-Indic numerals, tax, receipt, store profile
+    files:
+      - lib/features/settings/pages/settings_page.dart
+      - lib/features/settings/pages/localization_page.dart
+    entry_route: /settings
+    user_interactions:
+      - Toggle language between Arabic and English (one tap)
+      - Switch between RTL and LTR layout
+      - Toggle Hijri/Gregorian calendar
+      - Configure VAT rate and tax categories
+      - Edit receipt header and footer text
+    api_calls:
+      - method: GET
+        endpoint: /api/settings
+      - method: PUT
+        endpoint: /api/settings
+    auth_required: true
+
+  - name: Business Onboarding
+    description: First-time store setup with business type selection, store details, and initial configuration
+    files:
+      - lib/features/onboarding/pages/onboarding_page.dart
+    entry_route: /onboarding
+    user_interactions:
+      - Select business type (Supermarket, Restaurant, Pharmacy, etc.)
+      - Enter store name, address, VAT registration number
+      - Configure initial currency and timezone
+      - Complete onboarding and land on dashboard
+    api_calls:
+      - method: POST
+        endpoint: /api/onboarding/store
+    auth_required: false
+
+  - name: Thawani Marketplace Integration
+    description: Two-way product/price/stock sync with Thawani marketplace, receive and fulfil Thawani orders
+    files:
+      - lib/features/thawani_integration/pages/thawani_integration_page.dart
+    entry_route: /thawani-integration
+    user_interactions:
+      - View Thawani integration status and last sync time
+      - Manually trigger product/price sync to Thawani
+      - View incoming Thawani orders in unified order screen
+      - Map product categories to Thawani categories
+    api_calls:
+      - method: POST
+        endpoint: /api/thawani/sync
+      - method: GET
+        endpoint: /api/thawani/orders
+    auth_required: true
+
+  - name: Admin Panel
+    description: Platform-admin multi-tenant management - stores, subscriptions, users, billing, revenue dashboard
+    files:
+      - lib/features/admin_panel/pages/admin_stores_page.dart
+      - lib/features/admin_panel/pages/admin_subscriptions_page.dart
+      - lib/features/admin_panel/pages/admin_revenue_dashboard_page.dart
+    entry_route: /admin/stores
+    user_interactions:
+      - View list of all registered providers/stores
+      - Open store detail and view subscription status
+      - Approve or reject new provider registration
+      - Manage platform-level subscription plans and pricing
+      - View revenue dashboard with MRR, churn, and ARR
+    api_calls:
+      - method: GET
+        endpoint: /api/admin/stores
+      - method: GET
+        endpoint: /api/admin/revenue-dashboard
+      - method: POST
+        endpoint: /api/admin/registrations/:id/approve
+    auth_required: true
+
+known_limitations:
+  - issue: This is a Flutter desktop/tablet app, not a browser-based web app. UI tests require a running Flutter app on a device or emulator rather than a web server port.
+    location: All pages
+    impact: Standard browser-based frontend testing via localhost port does not apply. Tests must use Flutter integration test runner or be pure Dart unit tests.
+  - issue: POS checkout page requires an active cash session (shift must be opened first) before the cart UI is accessible.
+    location: lib/features/pos_terminal/pages/pos_checkout_page.dart
+    impact: Test flows must open a shift before testing checkout functionality.
+  - issue: ZATCA signing requires a provisioned CSID certificate stored in secure device storage; sandbox mode must be enabled for testing.
+    location: lib/features/zatca/
+    impact: ZATCA invoice generation cannot be tested without a valid test CSID or sandbox credentials.
+  - issue: Delivery platform integrations require valid third-party API credentials (HungerStation, Keeta, etc.) for full end-to-end sync tests.
+    location: lib/features/delivery_integration/
+    impact: Integration sync tests should use mock credentials and stub webhook responses.
+  - issue: Offline sync tests require SQLite drift database to be initialized; direct API mocking via Dio interceptors is needed for unit/integration tests.
+    location: lib/features/sync/
+    impact: Tests must set up mock Drift DB or use in-memory SQLite.
+
+# ─── Explicit REST API Endpoints (base: http://localhost:8080) ────────────────
+# Auth header: Authorization: Bearer <token>
+# All endpoints except auth/login, auth/login/pin, config/maintenance,
+# onboarding/business-types require Bearer token.
+

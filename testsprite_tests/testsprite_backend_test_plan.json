@@ -1,0 +1,677 @@
+[
+  {
+    "id": "TC001",
+    "title": "test_email_password_login_api",
+    "description": "Verify that the POST /api/auth/login endpoint correctly authenticates users with valid email and password credentials and returns appropriate error messages for invalid credentials."
+  },
+  {
+    "id": "TC002",
+    "title": "test_pin_login_api",
+    "description": "Verify that the POST /api/auth/login/pin endpoint allows cashiers to login using a valid PIN and rejects invalid PINs with proper error responses."
+  },
+  {
+    "id": "TC003",
+    "title": "test_pos_checkout_api",
+    "description": "Verify that the POST /api/transactions endpoint processes sales transactions correctly including adding items, applying discounts, selecting payment methods, and completing the sale."
+  },
+  {
+    "id": "TC004",
+    "title": "test_void_transaction_api",
+    "description": "Verify that the POST /api/transactions/:id/void endpoint correctly voids a specified transaction and updates the transaction status accordingly."
+  },
+  {
+    "id": "TC005",
+    "title": "test_product_search_api",
+    "description": "Verify that the GET /api/products/search endpoint returns accurate product search results based on barcode, name, or SKU queries."
+  },
+  {
+    "id": "TC006",
+    "title": "test_open_cash_shift_api",
+    "description": "Verify that the POST /api/cash-sessions endpoint successfully opens a new cash shift with the specified opening cash amount and denominations."
+  },
+  {
+    "id": "TC007",
+    "title": "test_close_cash_shift_api",
+    "description": "Verify that the PATCH /api/cash-sessions/:id/close endpoint correctly closes an active cash shift, records closing cash count, and generates the Z-report with totals and discrepancies."
+  },
+  {
+    "id": "TC008",
+    "title": "test_create_product_api",
+    "description": "Verify that the POST /api/products endpoint allows creation of new products with all required details including name, SKU, barcode, price, category, variants, and modifier groups."
+  },
+  {
+    "id": "TC009",
+    "title": "test_import_products_api",
+    "description": "Verify that the POST /api/products/import endpoint correctly imports products from a CSV or Excel file and adds them to the product catalogue."
+  },
+  {
+    "id": "TC010",
+    "title": "test_update_product_api",
+    "description": "Verify that the PUT /api/products/:id endpoint updates existing product details correctly and reflects changes in the product catalogue."
+  },
+  {
+    "id": "TC011",
+    "title": "test_auth_me_endpoint",
+    "description": "Verify GET /api/auth/me returns the authenticated user's profile with valid token, and 401 with no/invalid token."
+  },
+  {
+    "id": "TC012",
+    "title": "test_auth_logout_endpoint",
+    "description": "Verify POST /api/auth/logout invalidates the session token and returns 200. Subsequent requests with the same token should return 401."
+  },
+  {
+    "id": "TC013",
+    "title": "test_auth_token_refresh",
+    "description": "Verify POST /api/auth/refresh returns a new valid token when given a valid token."
+  },
+  {
+    "id": "TC014",
+    "title": "test_auth_security_no_token",
+    "description": "Verify that accessing any protected endpoint (e.g., GET /api/catalog/products) without Authorization header returns 401."
+  },
+  {
+    "id": "TC015",
+    "title": "test_auth_security_invalid_token",
+    "description": "Verify that using Bearer invalidtoken123 on protected endpoints returns 401, not 500."
+  },
+  {
+    "id": "TC016",
+    "title": "test_products_list_api",
+    "description": "Verify GET /api/catalog/products returns paginated product list. Test filtering by category_id, search query, and is_active."
+  },
+  {
+    "id": "TC017",
+    "title": "test_products_get_single_api",
+    "description": "Verify GET /api/catalog/products/{id} returns product details for valid ID and 404 for unknown ID."
+  },
+  {
+    "id": "TC018",
+    "title": "test_products_update_api",
+    "description": "Verify PUT /api/catalog/products/{id} updates product name and price. Test 404 for unknown ID and 422 for invalid price."
+  },
+  {
+    "id": "TC019",
+    "title": "test_products_delete_api",
+    "description": "Verify DELETE /api/catalog/products/{id} removes a product. Verify 404 when deleting already-deleted product."
+  },
+  {
+    "id": "TC020",
+    "title": "test_products_search_by_barcode",
+    "description": "Verify GET /api/pos/products?barcode=<code> returns correct product for a known barcode and empty array for unknown barcode."
+  },
+  {
+    "id": "TC021",
+    "title": "test_categories_crud_api",
+    "description": "Verify full CRUD for /api/catalog/categories: list (200), create (201), get (200), update (200), delete (200). Test 422 for missing name."
+  },
+  {
+    "id": "TC022",
+    "title": "test_suppliers_crud_api",
+    "description": "Verify full CRUD for /api/catalog/suppliers: list (200), create (201), get (200), update (200). Test 422 for missing name."
+  },
+  {
+    "id": "TC023",
+    "title": "test_stock_levels_api",
+    "description": "Verify GET /api/inventory/stock-levels returns stock for all products. Test filtering by store_id and low_stock_only=true."
+  },
+  {
+    "id": "TC024",
+    "title": "test_stock_adjustments_api",
+    "description": "Verify POST /api/inventory/stock-adjustments creates adjustment with valid product_id and reason. Test 422 for zero quantity and missing product_id."
+  },
+  {
+    "id": "TC025",
+    "title": "test_stock_movements_api",
+    "description": "Verify GET /api/inventory/stock-movements returns movement history. Test filtering by product_id and date range."
+  },
+  {
+    "id": "TC026",
+    "title": "test_stock_transfers_api",
+    "description": "Verify POST /api/inventory/stock-transfers creates transfer between branches. Test 422 for same source/dest and empty items."
+  },
+  {
+    "id": "TC027",
+    "title": "test_purchase_orders_api",
+    "description": "Verify full flow: create PO (POST), list (GET), get single (GET), test 422 for missing supplier_id."
+  },
+  {
+    "id": "TC028",
+    "title": "test_goods_receipts_api",
+    "description": "Verify GET /api/inventory/goods-receipts lists all receipts. Test creating receipt against existing PO."
+  },
+  {
+    "id": "TC029",
+    "title": "test_stocktakes_api",
+    "description": "Verify GET /api/inventory/stocktakes returns list. Test POST creates new stocktake with valid store_id."
+  },
+  {
+    "id": "TC030",
+    "title": "test_waste_records_api",
+    "description": "Verify POST /api/inventory/waste-records creates record with valid product_id, quantity, and reason. Test 422 for zero quantity."
+  },
+  {
+    "id": "TC031",
+    "title": "test_low_stock_alerts_api",
+    "description": "Verify GET /api/inventory/low-stock returns products below threshold. Response includes product_id and current_stock."
+  },
+  {
+    "id": "TC032",
+    "title": "test_expiry_alerts_api",
+    "description": "Verify GET /api/inventory/expiry-alerts returns products with expiry dates. Response includes days_until_expiry."
+  },
+  {
+    "id": "TC033",
+    "title": "test_pos_sessions_list_api",
+    "description": "Verify GET /api/pos/sessions returns list of POS sessions with status, opening_cash, and terminal info."
+  },
+  {
+    "id": "TC034",
+    "title": "test_pos_session_create_api",
+    "description": "Verify POST /api/pos/sessions creates session with opening_cash and terminal_id. Test 422 for negative opening_cash."
+  },
+  {
+    "id": "TC035",
+    "title": "test_pos_session_close_api",
+    "description": "Verify POST /api/pos/sessions/{id}/close closes open session with closing_cash and returns z_report. Test 422 for already-closed session."
+  },
+  {
+    "id": "TC036",
+    "title": "test_pos_transactions_list_api",
+    "description": "Verify GET /api/pos/transactions with date range filter returns paginated results with payment_method and total."
+  },
+  {
+    "id": "TC037",
+    "title": "test_pos_held_carts_api",
+    "description": "Verify POST /api/pos/held-carts saves cart. GET /api/pos/held-carts returns saved carts. DELETE removes held cart."
+  },
+  {
+    "id": "TC038",
+    "title": "test_pos_terminals_api",
+    "description": "Verify GET /api/pos/terminals returns list of configured POS terminals with name and status."
+  },
+  {
+    "id": "TC039",
+    "title": "test_orders_list_api",
+    "description": "Verify GET /api/orders with status=pending filter returns pending orders. Test source=delivery filter returns delivery orders."
+  },
+  {
+    "id": "TC040",
+    "title": "test_orders_get_api",
+    "description": "Verify GET /api/orders/{id} returns order details with items and status. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC041",
+    "title": "test_orders_status_update_api",
+    "description": "Verify PATCH /api/orders/{id} accepts status=accepted, preparing, ready, completed. Test 422 for invalid status value."
+  },
+  {
+    "id": "TC042",
+    "title": "test_orders_cancel_api",
+    "description": "Verify PATCH /api/orders/{id} with status=cancelled marks order as cancelled. Test that cancelling an already-completed order returns 422."
+  },
+  {
+    "id": "TC043",
+    "title": "test_returns_create_api",
+    "description": "Verify POST /api/orders/returns creates return with order_id, items, and reason. Returns 201 with refund_amount. Test 422 for missing order_id."
+  },
+  {
+    "id": "TC044",
+    "title": "test_returns_list_api",
+    "description": "Verify GET /api/orders/returns returns list of returns with refund amounts and reasons."
+  },
+  {
+    "id": "TC045",
+    "title": "test_payments_list_api",
+    "description": "Verify GET /api/payments returns paginated payment history with amount, method, and transaction ID."
+  },
+  {
+    "id": "TC046",
+    "title": "test_cash_sessions_api",
+    "description": "Verify GET /api/cash-sessions returns list. POST /api/cash-sessions/{id}/close closes session. Test 422 for already-closed."
+  },
+  {
+    "id": "TC047",
+    "title": "test_expenses_crud_api",
+    "description": "Verify full CRUD for /api/expenses: list (200), create (201), update (200), delete (200). Test 422 for negative amount."
+  },
+  {
+    "id": "TC048",
+    "title": "test_gift_cards_api",
+    "description": "Verify GET /api/gift-cards lists cards. GET /api/gift-cards/{code}/balance returns balance. Test 404 for unknown code."
+  },
+  {
+    "id": "TC049",
+    "title": "test_gift_card_redeem_api",
+    "description": "Verify POST /api/gift-cards/{code}/redeem deducts amount from balance. Test 422 when redeem amount exceeds balance."
+  },
+  {
+    "id": "TC050",
+    "title": "test_finance_daily_summary_api",
+    "description": "Verify GET /api/finance/daily-summary returns total_sales, total_expenses, and net_profit for today's date."
+  },
+  {
+    "id": "TC051",
+    "title": "test_finance_reconciliation_api",
+    "description": "Verify GET /api/finance/reconciliation returns reconciliation records with expected_cash and actual_cash fields."
+  },
+  {
+    "id": "TC052",
+    "title": "test_payment_refund_api",
+    "description": "Verify POST /api/payments/{id}/refunds creates refund for valid payment. Test 422 for refund exceeding original payment amount."
+  },
+  {
+    "id": "TC053",
+    "title": "test_customers_list_api",
+    "description": "Verify GET /api/customers returns paginated list. Test search by name and phone. Verify 401 without auth."
+  },
+  {
+    "id": "TC054",
+    "title": "test_customers_create_api",
+    "description": "Verify POST /api/customers creates customer. Test 422 for duplicate phone, missing name, and invalid email format."
+  },
+  {
+    "id": "TC055",
+    "title": "test_customers_get_api",
+    "description": "Verify GET /api/customers/{id} returns customer with loyalty_balance and purchase_count. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC056",
+    "title": "test_customers_update_api",
+    "description": "Verify PUT /api/customers/{id} updates name, phone, and email. Test 404 for unknown ID and 422 for duplicate phone."
+  },
+  {
+    "id": "TC057",
+    "title": "test_customers_delete_api",
+    "description": "Verify DELETE /api/customers/{id} removes customer. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC058",
+    "title": "test_customers_search_api",
+    "description": "Verify GET /api/customers/search?q=<term> returns matching customers. Empty results return 200 with empty array."
+  },
+  {
+    "id": "TC059",
+    "title": "test_customer_orders_api",
+    "description": "Verify GET /api/customers/{id}/orders returns order history for the customer."
+  },
+  {
+    "id": "TC060",
+    "title": "test_customer_loyalty_adjust_api",
+    "description": "Verify POST /api/customers/{id}/loyalty/adjust adds or deducts points. Test 422 when deducting more than current balance."
+  },
+  {
+    "id": "TC061",
+    "title": "test_customer_loyalty_redeem_api",
+    "description": "Verify POST /api/customers/{id}/loyalty/redeem converts points to discount. Test 422 for insufficient points."
+  },
+  {
+    "id": "TC062",
+    "title": "test_customer_store_credit_api",
+    "description": "Verify POST /api/customers/{id}/store-credit/top-up adds credit. Verify 422 for zero or negative amount."
+  },
+  {
+    "id": "TC063",
+    "title": "test_customer_groups_api",
+    "description": "Verify GET /api/customers/groups/list returns groups. POST /api/customers/groups creates group with name and discount config."
+  },
+  {
+    "id": "TC064",
+    "title": "test_dashboard_summary_api",
+    "description": "Verify GET /api/owner-dashboard/summary returns total_sales, order_count, and revenue for today. Verify 401 without auth."
+  },
+  {
+    "id": "TC065",
+    "title": "test_dashboard_sales_trend_api",
+    "description": "Verify GET /api/owner-dashboard/sales-trend?period=weekly returns 7-point data array. Test period=monthly returns 30-point array."
+  },
+  {
+    "id": "TC066",
+    "title": "test_dashboard_top_products_api",
+    "description": "Verify GET /api/owner-dashboard/top-products returns ranked list with product_name, quantity_sold, and revenue."
+  },
+  {
+    "id": "TC067",
+    "title": "test_dashboard_recent_orders_api",
+    "description": "Verify GET /api/owner-dashboard/recent-orders returns the 10 most recent orders with status and total."
+  },
+  {
+    "id": "TC068",
+    "title": "test_dashboard_financial_summary_api",
+    "description": "Verify GET /api/owner-dashboard/financial-summary returns revenue, expenses, and net_profit fields."
+  },
+  {
+    "id": "TC069",
+    "title": "test_dashboard_active_cashiers_api",
+    "description": "Verify GET /api/owner-dashboard/active-cashiers returns list of currently active cashier sessions."
+  },
+  {
+    "id": "TC070",
+    "title": "test_dashboard_hourly_sales_api",
+    "description": "Verify GET /api/owner-dashboard/hourly-sales returns 24-element array of hourly sales totals."
+  },
+  {
+    "id": "TC071",
+    "title": "test_dashboard_branches_api",
+    "description": "Verify GET /api/owner-dashboard/branches returns list of branches with today's sales and order counts."
+  },
+  {
+    "id": "TC072",
+    "title": "test_reports_sales_summary_api",
+    "description": "Verify GET /api/reports/sales-summary with from_date and to_date returns total_sales, order_count, and avg_order_value."
+  },
+  {
+    "id": "TC073",
+    "title": "test_reports_daily_sales_api",
+    "description": "Verify GET /api/reports/daily-sales?date=<YYYY-MM-DD> returns hourly breakdown for the specified date."
+  },
+  {
+    "id": "TC074",
+    "title": "test_reports_product_sales_api",
+    "description": "Verify GET /api/reports/product-sales with date range returns ranked products with quantity and revenue."
+  },
+  {
+    "id": "TC075",
+    "title": "test_reports_product_performance_api",
+    "description": "Verify GET /api/reports/product-performance returns products with margin, sell-through rate, and velocity."
+  },
+  {
+    "id": "TC076",
+    "title": "test_reports_category_breakdown_api",
+    "description": "Verify GET /api/reports/category-breakdown returns sales by category with percentage of total."
+  },
+  {
+    "id": "TC077",
+    "title": "test_reports_staff_performance_api",
+    "description": "Verify GET /api/reports/staff-performance returns per-staff sales count, revenue, and avg transaction value."
+  },
+  {
+    "id": "TC078",
+    "title": "test_reports_payment_methods_api",
+    "description": "Verify GET /api/reports/payment-methods returns breakdown of cash, card, and other payment methods with totals."
+  },
+  {
+    "id": "TC079",
+    "title": "test_reports_inventory_valuation_api",
+    "description": "Verify GET /api/reports/inventory/valuation returns total_value, total_units, and per-product breakdown."
+  },
+  {
+    "id": "TC080",
+    "title": "test_reports_inventory_turnover_api",
+    "description": "Verify GET /api/reports/inventory/turnover returns turnover rate per product."
+  },
+  {
+    "id": "TC081",
+    "title": "test_reports_inventory_shrinkage_api",
+    "description": "Verify GET /api/reports/inventory/shrinkage returns waste and unexplained loss records."
+  },
+  {
+    "id": "TC082",
+    "title": "test_reports_financial_daily_pl_api",
+    "description": "Verify GET /api/reports/financial/daily-pl returns revenue, cost_of_goods, gross_profit, and expenses."
+  },
+  {
+    "id": "TC083",
+    "title": "test_reports_financial_cash_variance_api",
+    "description": "Verify GET /api/reports/financial/cash-variance returns sessions with expected vs actual cash and variance."
+  },
+  {
+    "id": "TC084",
+    "title": "test_reports_top_customers_api",
+    "description": "Verify GET /api/reports/customers/top returns ranked customers by spend with visit_count and total_spent."
+  },
+  {
+    "id": "TC085",
+    "title": "test_reports_export_pdf_api",
+    "description": "Verify POST /api/reports/export with format=pdf returns download_url. Test 422 for unsupported format."
+  },
+  {
+    "id": "TC086",
+    "title": "test_staff_members_list_api",
+    "description": "Verify GET /api/staff/members returns list with name, role, and status. Test 401 without auth."
+  },
+  {
+    "id": "TC087",
+    "title": "test_staff_members_create_api",
+    "description": "Verify POST /api/staff/members creates member with name, role_id, pin, and email. Test 422 for duplicate PIN and missing name."
+  },
+  {
+    "id": "TC088",
+    "title": "test_staff_members_get_api",
+    "description": "Verify GET /api/staff/members/{id} returns member details with role and permissions. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC089",
+    "title": "test_staff_members_update_api",
+    "description": "Verify PUT /api/staff/members/{id} updates name and role. Test 422 for invalid role_id."
+  },
+  {
+    "id": "TC090",
+    "title": "test_staff_members_delete_api",
+    "description": "Verify DELETE /api/staff/members/{id} deactivates or removes member. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC091",
+    "title": "test_staff_pin_update_api",
+    "description": "Verify PUT /api/staff/members/{id}/pin updates PIN. Test 422 for duplicate PIN collision with another member."
+  },
+  {
+    "id": "TC092",
+    "title": "test_staff_roles_crud_api",
+    "description": "Verify GET /api/staff/roles lists roles. POST creates role with name and permissions. GET/{id} returns single role. Test 404 for unknown ID."
+  },
+  {
+    "id": "TC093",
+    "title": "test_staff_permissions_api",
+    "description": "Verify GET /api/staff/permissions returns flat permission list. GET /api/staff/permissions/grouped returns module-grouped permissions."
+  },
+  {
+    "id": "TC094",
+    "title": "test_staff_attendance_clock_api",
+    "description": "Verify POST /api/staff/attendance/clock with action=clock_in returns timestamp. Test clock_out works. Test 422 for invalid action."
+  },
+  {
+    "id": "TC095",
+    "title": "test_staff_attendance_list_api",
+    "description": "Verify GET /api/staff/attendance returns attendance records with clock_in, clock_out, and hours_worked."
+  },
+  {
+    "id": "TC096",
+    "title": "test_staff_shifts_api",
+    "description": "Verify GET /api/staff/shifts returns shift schedule. POST creates shift with staff_id, start_time, end_time. Test 422 for end before start."
+  },
+  {
+    "id": "TC097",
+    "title": "test_pin_override_check_api",
+    "description": "Verify POST /api/staff/pin-override/check returns authorized=true for valid manager PIN. Returns authorized=false for wrong PIN without raising error."
+  },
+  {
+    "id": "TC098",
+    "title": "test_staff_member_activity_log_api",
+    "description": "Verify GET /api/staff/members/{id}/activity-log returns timestamped actions performed by the staff member."
+  },
+  {
+    "id": "TC099",
+    "title": "test_notifications_list_api",
+    "description": "Verify GET /api/notifications returns list with unread_count. Test 401 without auth."
+  },
+  {
+    "id": "TC100",
+    "title": "test_notifications_unread_count_api",
+    "description": "Verify GET /api/notifications/unread-count returns count integer. After read-all, count should be 0."
+  },
+  {
+    "id": "TC101",
+    "title": "test_notifications_read_all_api",
+    "description": "Verify POST /api/notifications/read-all marks all notifications read. Subsequent unread-count returns 0."
+  },
+  {
+    "id": "TC102",
+    "title": "test_notification_preferences_api",
+    "description": "Verify GET /api/notifications/preferences returns push_enabled and email_enabled. PUT updates preferences."
+  },
+  {
+    "id": "TC103",
+    "title": "test_promotions_list_api",
+    "description": "Verify GET /api/promotions returns list. Test filter by status=active returns only active promotions."
+  },
+  {
+    "id": "TC104",
+    "title": "test_promotions_create_api",
+    "description": "Verify POST /api/promotions creates promotion with name, type=percentage, value, starts_at, ends_at. Test 422 for end before start."
+  },
+  {
+    "id": "TC105",
+    "title": "test_promotions_toggle_api",
+    "description": "Verify POST /api/promotions/{id}/toggle toggles is_active. Call twice to restore original state."
+  },
+  {
+    "id": "TC106",
+    "title": "test_promotions_duplicate_api",
+    "description": "Verify POST /api/promotions/{id}/duplicate creates a copy of the promotion. Returns 201 with new ID."
+  },
+  {
+    "id": "TC107",
+    "title": "test_coupon_validate_api",
+    "description": "Verify POST /api/coupons/validate with valid code returns valid=true and discount amount. Test expired code returns valid=false. Test unknown code returns valid=false."
+  },
+  {
+    "id": "TC108",
+    "title": "test_coupon_redeem_api",
+    "description": "Verify POST /api/coupons/redeem marks coupon used. Reusing same single-use coupon returns 422."
+  },
+  {
+    "id": "TC109",
+    "title": "test_promotions_evaluate_api",
+    "description": "Verify POST /api/promotions/evaluate with cart_items and customer_id returns applicable_promotions and total_discount. Empty cart returns zero discount."
+  },
+  {
+    "id": "TC110",
+    "title": "test_config_feature_flags_api",
+    "description": "Verify GET /api/config/feature-flags returns flag map object. Test that unauthorized access returns 401."
+  },
+  {
+    "id": "TC111",
+    "title": "test_config_maintenance_api",
+    "description": "Verify GET /api/config/maintenance returns is_maintenance boolean without auth token. This is a public endpoint."
+  },
+  {
+    "id": "TC112",
+    "title": "test_config_tax_api",
+    "description": "Verify GET /api/config/tax returns tax rate and name. For Saudi stores expect rate=15 and name=VAT."
+  },
+  {
+    "id": "TC113",
+    "title": "test_config_payment_methods_api",
+    "description": "Verify GET /api/config/payment-methods returns list of enabled payment methods (cash, card, etc.)."
+  },
+  {
+    "id": "TC114",
+    "title": "test_config_security_policies_api",
+    "description": "Verify GET /api/config/security-policies returns pin_required_actions, session_timeout, and max_failed_attempts."
+  },
+  {
+    "id": "TC115",
+    "title": "test_subscription_plans_api",
+    "description": "Verify GET /api/subscription/plans returns available plans with name, price, and feature limits."
+  },
+  {
+    "id": "TC116",
+    "title": "test_subscription_current_api",
+    "description": "Verify GET /api/subscription/current returns plan name, status, and renewal_date for the authenticated store."
+  },
+  {
+    "id": "TC117",
+    "title": "test_subscription_usage_api",
+    "description": "Verify GET /api/subscription/usage returns current usage vs limits for products, staff, branches, and transactions."
+  },
+  {
+    "id": "TC118",
+    "title": "test_subscription_invoices_api",
+    "description": "Verify GET /api/subscription/invoices returns payment history with invoice_date, amount, and status."
+  },
+  {
+    "id": "TC119",
+    "title": "test_subscription_check_feature_api",
+    "description": "Verify GET /api/subscription/check-feature?feature=<name> returns allowed=true/false based on current plan."
+  },
+  {
+    "id": "TC120",
+    "title": "test_stores_mine_api",
+    "description": "Verify GET /api/core/stores/mine returns list of stores owned by authenticated user with id, name, and currency."
+  },
+  {
+    "id": "TC121",
+    "title": "test_business_types_public_api",
+    "description": "Verify GET /api/onboarding/business-types returns list of business types without authentication. Each type has slug and name."
+  },
+  {
+    "id": "TC122",
+    "title": "test_onboarding_steps_api",
+    "description": "Verify GET /api/core/onboarding/steps returns steps list with is_completed flags."
+  },
+  {
+    "id": "TC123",
+    "title": "test_onboarding_complete_step_api",
+    "description": "Verify POST /api/core/onboarding/complete-step with valid step name marks it complete. Idempotent: calling again returns same 200 response."
+  },
+  {
+    "id": "TC124",
+    "title": "test_onboarding_checklist_api",
+    "description": "Verify GET /api/core/onboarding/checklist returns checklist items with completion percentage."
+  },
+  {
+    "id": "TC125",
+    "title": "test_label_templates_api",
+    "description": "Verify GET /api/labels/templates lists templates. POST creates new template with name and layout. Test 422 for missing name."
+  },
+  {
+    "id": "TC126",
+    "title": "test_label_presets_api",
+    "description": "Verify GET /api/labels/templates/presets returns system-provided label presets with dimensions and layout."
+  },
+  {
+    "id": "TC127",
+    "title": "test_label_print_history_api",
+    "description": "Verify GET /api/labels/print-history returns print jobs with product_ids, template_id, and quantity."
+  },
+  {
+    "id": "TC128",
+    "title": "test_label_print_history_stats_api",
+    "description": "Verify GET /api/labels/print-history/stats returns total labels printed, most-used template, and daily average."
+  },
+  {
+    "id": "TC129",
+    "title": "test_role_based_access_cashier",
+    "description": "Authenticate as cashier (low-privilege role) and verify that accessing admin endpoints like GET /api/admin/stores returns 403 Forbidden."
+  },
+  {
+    "id": "TC130",
+    "title": "test_role_based_access_owner",
+    "description": "Authenticate as owner and verify access to owner-only endpoints like GET /api/owner-dashboard/summary returns 200. Verify cashier cannot access these."
+  },
+  {
+    "id": "TC131",
+    "title": "test_input_validation_xss_prevention",
+    "description": "Verify that submitting HTML/script tags in product name (POST /api/catalog/products with name='<script>alert(1)</script>') either sanitizes or rejects the input."
+  },
+  {
+    "id": "TC132",
+    "title": "test_input_validation_sql_injection_prevention",
+    "description": "Verify search endpoints (GET /api/customers?search='; DROP TABLE customers;--) return safe response, not 500 error."
+  },
+  {
+    "id": "TC133",
+    "title": "test_pagination_api",
+    "description": "Verify GET /api/catalog/products?page=1&per_page=5 returns 5 items. page=2 returns next 5. Last page returns remaining items."
+  },
+  {
+    "id": "TC134",
+    "title": "test_concurrent_pos_sessions",
+    "description": "Verify that opening a second POS session on the same terminal while one is already open returns 422 with appropriate error."
+  },
+  {
+    "id": "TC135",
+    "title": "test_inventory_insufficient_stock_checkout",
+    "description": "Verify that POST /api/pos/transactions with items exceeding available stock returns 422 with out_of_stock error."
+  }
+]

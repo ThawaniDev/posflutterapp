@@ -1,0 +1,20 @@
+{
+  "status": "init",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:8080",
+  "loginUser": "owner@ostora.sa",
+  "loginPassword": "owner@ostora.sa",
+  "executionArgs": {
+    "projectName": "posflutterapp",
+    "projectPath": "/Users/dogorshom/Desktop/Thawani/thawani/POS/posflutterapp",
+    "testIds": [],
+    "additionalInstruction": "This is a Flutter/Dart POS backend API test. Base URL is http://localhost:8080. All tests should use the REST API directly via HTTP requests. Login credentials: email=owner@ostora.sa, password=owner@ostora.sa. Store uses /api prefix for all endpoints. For authentication tests: POST /api/auth/login with JSON body {email, password}. Extract Bearer token from response. For all other tests: include Authorization: Bearer <token> header. Test IDs TC001-TC135 cover auth, catalog, inventory, POS, orders, payments, customers, dashboard, reports, staff, notifications, promotions, config, subscription, onboarding, and label printing APIs.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-V5y0EFjAIsuIc9fndbvq3XzzQbYWy8tMhsigVFWI1fy-q3xtfbhGn-SPm-LwXCelweel_PU1pFPMEfnxmWDvfGxA02amAVxu1ch33GYyQr59p5s0RTyJeFm_W7uI40_-dso"
+    }
+  },
+  "serverPort": 50168,
+  "proxy": "http://c533b16e-4a45-4814-992b-40f6e7f00a46:nm2qLtNBaeQl1eHHqhJ8MOA1yUBbbgbq@tun.testsprite.com:8080"
+}
