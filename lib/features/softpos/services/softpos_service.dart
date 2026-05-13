@@ -233,7 +233,9 @@ class SoftPosService {
         .setSecondaryColor('#FFBF0D'); // Wameed secondary yellow
 
     if (logo != null) {
-      theme.setHeaderImage(logo).setPoweredByImage(logo);
+      // Note: setPoweredByImage is not permitted by EdfaPay for merchant apps —
+      // only the header image can be customized.
+      theme.setHeaderImage(logo);
     }
 
     theme.setPresentation(presentation);

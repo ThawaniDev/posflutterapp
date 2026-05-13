@@ -242,15 +242,9 @@ class PosButton extends StatelessWidget {
 // ─── Icon-Only Button ────────────────────────────────────────
 
 class _PosIconButton extends PosButton {
-  const _PosIconButton({
-    super.key,
-    required IconData icon,
-    super.onPressed,
-    super.variant,
-    this.iconSize = 24,
-    this.tooltip,
-  }) : _iconData = icon,
-       super(label: '');
+  const _PosIconButton({super.key, required IconData icon, super.onPressed, super.variant, this.iconSize = 24, this.tooltip})
+    : _iconData = icon,
+      super(label: '');
 
   final IconData _iconData;
   final double iconSize;

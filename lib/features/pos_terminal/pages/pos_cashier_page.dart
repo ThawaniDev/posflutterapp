@@ -1,9 +1,8 @@
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -12,6 +11,11 @@ import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/repositories/catalog_repository.dart';
+import 'package:wameedpos/features/customer_facing_display/providers/secondary_display_providers.dart';
+import 'package:wameedpos/features/customer_facing_display/secondary_screen/secondary_display_app.dart'
+    show SecondaryDisplayPreview;
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart' show myStoreProvider;
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart' show StoreLoaded;
 import 'package:wameedpos/features/security/repositories/security_repository.dart';
 import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.dart';
 import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
@@ -19,6 +23,7 @@ import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart' show HeldCartsError;
 import 'package:wameedpos/features/pos_terminal/pages/pos_open_shift_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_close_shift_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_payment_dialog.dart';
@@ -54,13 +59,94 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       // Background-sync customer directory so the lookup overlay can serve
       // matches even when offline (spec §6.4 — Drift cache).
       ref.read(customerSyncProvider.notifier).sync();
+      // Flip the customer-facing display to the live cart view.
+      if (isSecondaryDisplaySupported) _pushCartToSecondary();
     });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    // Reset the customer-facing secondary display back to the idle (logo)
+    // view when the cashier leaves the page.
+    if (isSecondaryDisplaySupported) {
+      _pushIdleToSecondary();
+    }
     super.dispose();
+  }
+
+  /// Build the current cart payload Map (matches the JSON shape consumed by
+  /// the secondary-display engine). Used both to push to the live secondary
+  /// display and to render the in-app debug preview.
+  Map<String, dynamic> _buildCartPayload() {
+    final cart = ref.read(cartProvider);
+    final settings = ref.read(currentStoreSettingsProvider);
+    final storeState = ref.read(myStoreProvider);
+    String? logoUrl;
+    String? storeName;
+    if (storeState is StoreLoaded) {
+      logoUrl = storeState.store.logoUrl;
+      storeName = storeState.store.name;
+    }
+    final items = cart.items.map((item) {
+      return {'name': item.product.name, 'quantity': item.quantity, 'unit_price': item.unitPrice, 'line_total': item.subtotal};
+    }).toList();
+    final discount = (cart.manualDiscount ?? 0) + cart.items.fold<double>(0, (s, i) => s + (i.discountAmount ?? 0));
+    return <String, dynamic>{
+      'type': 'cart',
+      'items': items,
+      'subtotal': cart.subtotal,
+      'discount': discount,
+      'tax': cart.taxAmount,
+      'total': cart.totalAmount,
+      'currency': settings?.currencySymbol ?? '',
+      if (logoUrl != null) 'logo_url': logoUrl,
+      if (storeName != null) 'store_name': storeName,
+    };
+  }
+
+  /// Push the current cart snapshot to the customer-facing secondary display.
+  void _pushCartToSecondary() {
+    if (!isSecondaryDisplaySupported) return;
+    final payload = _buildCartPayload();
+    ref
+        .read(secondaryDisplayControllerProvider)
+        .pushCart(
+          items: (payload['items'] as List).cast<Map<String, dynamic>>(),
+          subtotal: payload['subtotal'] as double,
+          discount: payload['discount'] as double,
+          tax: payload['tax'] as double,
+          total: payload['total'] as double,
+          currency: payload['currency'] as String,
+          logoUrl: payload['logo_url'] as String?,
+          storeName: payload['store_name'] as String?,
+        );
+  }
+
+  void _pushIdleToSecondary() {
+    final storeState = ref.read(myStoreProvider);
+    String? logoUrl;
+    String? storeName;
+    if (storeState is StoreLoaded) {
+      logoUrl = storeState.store.logoUrl;
+      storeName = storeState.store.name;
+    }
+    ref.read(secondaryDisplayControllerProvider).pushIdle(logoUrl: logoUrl, storeName: storeName);
+  }
+
+  /// Debug-only: open a fullscreen preview of the customer-facing display
+  /// using the most recently pushed payload. Lets us verify the second-screen
+  /// content on a single-screen test device.
+  void _showSecondaryDisplayPreview() {
+    final payload = _buildCartPayload();
+    if (isSecondaryDisplaySupported) _pushCartToSecondary();
+
+    // Log so we can verify payload in logcat / console
+    debugPrint('[CFD Preview] payload=$payload');
+
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(fullscreenDialog: true, builder: (_) => _SecondaryDisplayPreviewPage(payload: payload)));
   }
 
   // ─── Keyboard shortcuts ───────────────────────────────────────
@@ -124,9 +210,23 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     if (label == null) return;
 
     final cartData = cart.toHoldCartJson();
-    await ref.read(heldCartsProvider.notifier).holdCart({...cartData, 'label': label});
-    ref.read(cartProvider.notifier).clear();
-    if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posCartHeld);
+    final ok = await ref.read(heldCartsProvider.notifier).holdCart({
+      ...cartData,
+      'label': label,
+      'register_id': session.session.registerId,
+    });
+
+    if (!mounted) return;
+
+    if (ok) {
+      ref.read(cartProvider.notifier).clear();
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posCartHeld);
+      return;
+    }
+
+    final heldState = ref.read(heldCartsProvider);
+    final message = heldState is HeldCartsError ? heldState.message : 'Failed to hold cart';
+    showPosErrorSnackbar(context, message);
   }
 
   Future<String?> _showLabelDialog() async {
@@ -670,12 +770,26 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   Widget build(BuildContext context) {
     final sessionState = ref.watch(activeSessionProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final screenSize = MediaQuery.sizeOf(context);
+    final shortestSide = screenSize.shortestSide;
+
+    // Mirror cart changes to the customer-facing secondary display.
+    if (isSecondaryDisplaySupported) {
+      ref.listen(cartProvider, (_, __) => _pushCartToSecondary());
+    }
 
     if (sessionState is! ActiveSessionLoaded) {
       return _buildNoSessionView(isDark, sessionState);
     }
 
-    final isMobile = context.isPhone;
+    // Choose the compact cashier only for real handset-class devices.
+    // Do not use the page/content width here: inside shells or split layouts
+    // a desktop/laptop page can become narrower than 600dp and get
+    // misclassified as a phone. `shortestSide < 600` is the standard tablet
+    // cutoff, and web/desktop platforms should never use the phone layout.
+    final isMobilePlatform =
+        !kIsWeb && (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS);
+    final isMobile = isMobilePlatform && shortestSide < 600;
 
     return Focus(
       autofocus: true,
@@ -806,11 +920,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 case 'reprint':
                   showDialog(context: context, builder: (_) => const PosReprintReceiptDialog());
                 case 'cfd':
-                  // Pop the customer-facing display in a new window/route.
-                  // The cashier device keeps the cashier UI; the second
-                  // screen (mirrored monitor or paired tablet) navigates to
-                  // /pos/cfd/:sessionId.
-                  context.push(Routes.posCfdFor(session.id));
+                  // On physical dual-screen devices (Landi C20 PRO) the
+                  // secondary display is already active.  Push the current
+                  // cart state and, in debug mode, open the in-app preview
+                  // so the display content can be verified on a single-screen
+                  // test device.
+                  _showSecondaryDisplayPreview();
                 case 'end_shift':
                   showDialog(
                     context: context,
@@ -1149,116 +1264,129 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),
       ),
-      child: Row(
-        children: [
-          // Cashier name + session info
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleMedium),
-              Text(
-                AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
-                style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            // Cashier name + session info
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleMedium),
+                Text(
+                  AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                ),
+              ],
+            ),
+            // const Spacer(),
+            // Debug-only: preview what the customer-facing secondary display
+            // is currently showing. Hidden in release builds.
+            if (kDebugMode) ...[
+              IconButton(
+                tooltip: 'Preview customer display (debug)',
+                icon: const Icon(Icons.tv_outlined, color: Color(0xFFFD8209)),
+                onPressed: _showSecondaryDisplayPreview,
+              ),
+              AppSpacing.gapW8,
+            ],
+            // Action buttons — touch-friendly md size
+            PosButton(
+              label: AppLocalizations.of(context)!.posDiscount,
+              icon: Icons.discount_outlined,
+              variant: cart.isNotEmpty ? PosButtonVariant.soft : PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: cart.isNotEmpty ? _handleDiscount : null,
+            ),
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posNotes,
+              icon: Icons.note_alt_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: cart.isNotEmpty ? _handleNotes : null,
+            ),
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posVoidLast,
+              icon: Icons.backspace_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: cart.isNotEmpty ? _handleVoidLastItem : null,
+            ),
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posTaxExempt,
+              icon: Icons.receipt_long_outlined,
+              variant: cart.taxExempt ? PosButtonVariant.primary : PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: cart.isNotEmpty ? _handleTaxExempt : null,
+            ),
+            if (showOpenPrice) ...[
+              AppSpacing.gapW8,
+              PosButton(
+                label: AppLocalizations.of(context)!.posOpenPriceItem,
+                icon: Icons.price_change_outlined,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.md,
+                onPressed: _handleOpenPriceItem,
               ),
             ],
-          ),
-          const Spacer(),
-          // Action buttons — touch-friendly md size
-          PosButton(
-            label: AppLocalizations.of(context)!.posDiscount,
-            icon: Icons.discount_outlined,
-            variant: cart.isNotEmpty ? PosButtonVariant.soft : PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: cart.isNotEmpty ? _handleDiscount : null,
-          ),
-          AppSpacing.gapW8,
-          PosButton(
-            label: AppLocalizations.of(context)!.posNotes,
-            icon: Icons.note_alt_outlined,
-            variant: PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: cart.isNotEmpty ? _handleNotes : null,
-          ),
-          AppSpacing.gapW8,
-          PosButton(
-            label: AppLocalizations.of(context)!.posVoidLast,
-            icon: Icons.backspace_outlined,
-            variant: PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: cart.isNotEmpty ? _handleVoidLastItem : null,
-          ),
-          AppSpacing.gapW8,
-          PosButton(
-            label: AppLocalizations.of(context)!.posTaxExempt,
-            icon: Icons.receipt_long_outlined,
-            variant: cart.taxExempt ? PosButtonVariant.primary : PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: cart.isNotEmpty ? _handleTaxExempt : null,
-          ),
-          if (showOpenPrice) ...[
+            if (showQuickAdd) ...[
+              AppSpacing.gapW8,
+              PosButton(
+                label: AppLocalizations.of(context)!.posQuickAddProduct,
+                icon: Icons.add_box_outlined,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.md,
+                onPressed: _handleQuickAddProduct,
+              ),
+            ],
+            AppSpacing.gapW12,
+            Container(width: 1, height: 32, color: AppColors.borderFor(context)),
+            AppSpacing.gapW12,
+            if (showRefunds) ...[
+              PosButton(
+                label: AppLocalizations.of(context)!.posReturn,
+                icon: Icons.assignment_return_outlined,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.md,
+                onPressed: _handleReturn,
+              ),
+              AppSpacing.gapW8,
+            ],
+            if (showHold) ...[
+              PosButton(
+                label: AppLocalizations.of(context)!.posHeldF9,
+                icon: Icons.pause_circle_outline,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.md,
+                onPressed: _handleRecallCart,
+              ),
+              AppSpacing.gapW8,
+            ],
+            PosButton(
+              label: AppLocalizations.of(context)!.posEndShift,
+              icon: Icons.logout_rounded,
+              variant: PosButtonVariant.danger,
+              size: PosButtonSize.md,
+              onPressed: () => showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => PosCloseShiftDialog(session: session),
+              ),
+            ),
             AppSpacing.gapW8,
             PosButton(
-              label: AppLocalizations.of(context)!.posOpenPriceItem,
-              icon: Icons.price_change_outlined,
+              label: AppLocalizations.of(context)!.logout,
+              icon: Icons.power_settings_new_rounded,
               variant: PosButtonVariant.outline,
               size: PosButtonSize.md,
-              onPressed: _handleOpenPriceItem,
+              onPressed: _handleLogout,
             ),
           ],
-          if (showQuickAdd) ...[
-            AppSpacing.gapW8,
-            PosButton(
-              label: AppLocalizations.of(context)!.posQuickAddProduct,
-              icon: Icons.add_box_outlined,
-              variant: PosButtonVariant.outline,
-              size: PosButtonSize.md,
-              onPressed: _handleQuickAddProduct,
-            ),
-          ],
-          AppSpacing.gapW12,
-          Container(width: 1, height: 32, color: AppColors.borderFor(context)),
-          AppSpacing.gapW12,
-          if (showRefunds) ...[
-            PosButton(
-              label: AppLocalizations.of(context)!.posReturn,
-              icon: Icons.assignment_return_outlined,
-              variant: PosButtonVariant.outline,
-              size: PosButtonSize.md,
-              onPressed: _handleReturn,
-            ),
-            AppSpacing.gapW8,
-          ],
-          if (showHold) ...[
-            PosButton(
-              label: AppLocalizations.of(context)!.posHeldF9,
-              icon: Icons.pause_circle_outline,
-              variant: PosButtonVariant.outline,
-              size: PosButtonSize.md,
-              onPressed: _handleRecallCart,
-            ),
-            AppSpacing.gapW8,
-          ],
-          PosButton(
-            label: AppLocalizations.of(context)!.posEndShift,
-            icon: Icons.logout_rounded,
-            variant: PosButtonVariant.danger,
-            size: PosButtonSize.md,
-            onPressed: () => showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => PosCloseShiftDialog(session: session),
-            ),
-          ),
-          AppSpacing.gapW8,
-          PosButton(
-            label: AppLocalizations.of(context)!.logout,
-            icon: Icons.power_settings_new_rounded,
-            variant: PosButtonVariant.outline,
-            size: PosButtonSize.md,
-            onPressed: _handleLogout,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -1835,6 +1963,28 @@ class _QtyButton extends StatelessWidget {
           border: Border.all(color: AppColors.borderFor(context)),
         ),
         child: Icon(icon, size: 22),
+      ),
+    );
+  }
+}
+
+class _SecondaryDisplayPreviewPage extends StatelessWidget {
+  const _SecondaryDisplayPreviewPage({required this.payload});
+
+  final Map<String, dynamic> payload;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(backgroundColor: Colors.black, foregroundColor: Colors.white, title: const Text('Customer Display Preview')),
+      body: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.all(16),
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: SecondaryDisplayPreview(payload: payload),
+        ),
       ),
     );
   }

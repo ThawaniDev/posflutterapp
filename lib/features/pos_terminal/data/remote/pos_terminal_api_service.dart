@@ -232,6 +232,8 @@ class PosTerminalApiService {
     final response = await _dio.get(ApiEndpoints.posRegisters);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
+    // ignore: avoid_print
+    print('[SoftPOS][API] /pos/registers raw first item: ${list.isNotEmpty ? list.first : "EMPTY"}');
     return list.map((j) => Register.fromJson(j as Map<String, dynamic>)).toList();
   }
 

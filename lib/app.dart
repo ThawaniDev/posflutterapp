@@ -9,6 +9,9 @@ import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/core/theme/app_theme.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/customer_facing_display/providers/secondary_display_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_sync_service.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/services/subscription_sync_service.dart';
@@ -46,6 +49,7 @@ class WameedPosApp extends ConsumerWidget {
               .catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null)),
         );
         _checkForUpdate(ref);
+        _bootstrapSecondaryDisplay(ref);
       }
     });
 
@@ -64,6 +68,7 @@ class WameedPosApp extends ConsumerWidget {
             .syncFromServer()
             .catchError((_) => const PromotionSyncResult(syncedCount: 0, serverTime: null));
         _checkForUpdate(ref);
+        _bootstrapSecondaryDisplay(ref);
       });
     }
 
@@ -113,6 +118,33 @@ class WameedPosApp extends ConsumerWidget {
         // ignore: use_build_context_synchronously
         ref.read(appUpdateServiceProvider).checkOnLogin(ctx);
       }
+    });
+  }
+
+  /// Brings up the customer-facing secondary display (Landi C20 PRO etc.) and
+  /// pushes the idle (store-logo) view. The cashier page will switch it to a
+  /// live cart view while sales are in progress; on exit it returns here.
+  void _bootstrapSecondaryDisplay(WidgetRef ref) {
+    if (!isSecondaryDisplaySupported) return;
+    Future.microtask(() async {
+      final controller = ref.read(secondaryDisplayControllerProvider);
+      await controller.init();
+
+      // Try to populate idle screen with the store logo / name. Lazy-load
+      // store profile if it hasn't been fetched yet.
+      var storeState = ref.read<StoreState>(myStoreProvider);
+      if (storeState is StoreInitial) {
+        // Fire-and-forget; if it fails we still show the generic idle view.
+        await ref.read(myStoreProvider.notifier).load().catchError((_) {});
+        storeState = ref.read<StoreState>(myStoreProvider);
+      }
+      String? logoUrl;
+      String? storeName;
+      if (storeState is StoreLoaded) {
+        logoUrl = storeState.store.logoUrl;
+        storeName = storeState.store.name;
+      }
+      await controller.pushIdle(logoUrl: logoUrl, storeName: storeName);
     });
   }
 }

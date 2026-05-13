@@ -10,6 +10,7 @@ import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
+import 'package:wameedpos/features/softpos/providers/softpos_providers.dart';
 
 class PosOpenShiftDialog extends ConsumerStatefulWidget {
   const PosOpenShiftDialog({super.key});
@@ -60,6 +61,18 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
 
     try {
       await ref.read(activeSessionProvider.notifier).openSession(openingCash: openingCash, registerId: _selectedRegisterId!);
+
+      // Auto-sync the EdfaPay token from the register to device secure storage so
+      // the payment dialog can offer the SoftPOS option without the cashier having
+      // to manually re-enter the token in Hardware Settings.
+      final registers = ref.read(activeRegistersProvider).asData?.value ?? [];
+      final selectedRegister = registers.where((r) => r.id == _selectedRegisterId).firstOrNull;
+      if (selectedRegister != null && selectedRegister.softposEnabled && (selectedRegister.edfapayToken?.isNotEmpty ?? false)) {
+        await ref.read(softPosProvider.notifier).saveConfig(token: selectedRegister.edfapayToken!, environment: 'production');
+        // Invalidate so softPosTokenProvider re-reads the newly saved value.
+        ref.invalidate(softPosTokenProvider);
+      }
+
       if (mounted) Navigator.pop(context);
     } catch (e) {
       setState(() => _error = e.toString());
@@ -285,9 +298,19 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                 PosButton(
                   label: AppLocalizations.of(context)!.posShiftResume,
                   icon: Icons.login_rounded,
-                  onPressed: () {
-                    ref.read(activeSessionProvider.notifier).setSession(s);
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    // Sync EdfaPay token from the resumed register to secure
+                    // storage so the cashier can use SoftPOS immediately.
+                    final registers = ref.read(activeRegistersProvider).asData?.value ?? [];
+                    final reg = registers.where((r) => r.id == s.registerId).firstOrNull;
+                    if (reg != null && reg.softposEnabled && (reg.edfapayToken?.isNotEmpty ?? false)) {
+                      await ref.read(softPosProvider.notifier).saveConfig(token: reg.edfapayToken!, environment: 'production');
+                      ref.invalidate(softPosTokenProvider);
+                    }
+                    if (context.mounted) {
+                      ref.read(activeSessionProvider.notifier).setSession(s);
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ],

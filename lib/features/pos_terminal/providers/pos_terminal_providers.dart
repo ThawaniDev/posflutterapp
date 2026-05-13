@@ -136,14 +136,17 @@ class HeldCartsNotifier extends StateNotifier<HeldCartsState> {
     }
   }
 
-  Future<void> holdCart(Map<String, dynamic> data) async {
+  Future<bool> holdCart(Map<String, dynamic> data) async {
     try {
       await _repo.holdCart(data);
       await load();
+      return true;
     } on DioException catch (e) {
       state = HeldCartsError(message: _extractError(e));
+      return false;
     } catch (e) {
       state = HeldCartsError(message: e.toString());
+      return false;
     }
   }
 

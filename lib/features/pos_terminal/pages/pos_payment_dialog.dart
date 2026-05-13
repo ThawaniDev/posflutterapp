@@ -14,6 +14,7 @@ import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_ser
 import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/card_scheme_badge.dart';
 import 'package:wameedpos/features/promotions/services/promotion_evaluator.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
@@ -126,19 +127,50 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
   /// Guards SoftPOS method selection: checks that an EdfaPay token is stored
   /// before allowing the leg to switch.  Shows an inline error if not.
+  /// Falls back to fetching the token from the active session's register if
+  /// secure storage is empty (e.g. first launch after admin assigns the token).
   Future<void> _selectSoftPosMethod(int index) async {
     final service = ref.read(softPosServiceProvider);
+    debugPrint('[SoftPOS] tap → isAvailable=${service.isAvailable}');
     if (!service.isAvailable) {
       setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
       return;
     }
-    final token = await ref.read(softPosTokenProvider.future);
+
+    // Primary check: token in secure storage.
+    String? token = await ref.read(softPosTokenProvider.future);
+    debugPrint('[SoftPOS] storage token=${token == null ? "NULL" : "len=${token.length}"}');
+
+    // Fallback: fetch token on-demand from the active session's register.
     if (token == null || token.isEmpty) {
+      final sessionState = ref.read(activeSessionProvider);
+      debugPrint('[SoftPOS] sessionState=${sessionState.runtimeType}');
+      if (sessionState is ActiveSessionLoaded) {
+        final registerId = sessionState.session.registerId;
+        final registers = ref.read(activeRegistersProvider).asData?.value ?? await ref.read(activeRegistersProvider.future);
+        debugPrint('[SoftPOS] registers fetched=${registers?.length}, looking for id=$registerId');
+        final reg = registers?.where((r) => r.id == registerId).firstOrNull;
+        debugPrint(
+          '[SoftPOS] register found=${reg != null}, softposEnabled=${reg?.softposEnabled}, '
+          'tokenLen=${reg?.edfapayToken?.length}',
+        );
+        if (reg != null && reg.softposEnabled && (reg.edfapayToken?.isNotEmpty ?? false)) {
+          await ref.read(softPosProvider.notifier).saveConfig(token: reg.edfapayToken!, environment: 'production');
+          ref.invalidate(softPosTokenProvider);
+          token = reg.edfapayToken;
+          debugPrint('[SoftPOS] token synced from register, len=${token?.length}');
+        }
+      }
+    }
+
+    if (token == null || token.isEmpty) {
+      debugPrint('[SoftPOS] FAILED — no token available, showing error');
       if (mounted) {
         setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
       }
       return;
     }
+    debugPrint('[SoftPOS] SUCCESS — switching leg to softPos');
     setState(() => _legs[index].method = PaymentMethod.softPos);
   }
 

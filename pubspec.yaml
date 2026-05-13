@@ -71,6 +71,10 @@ dependencies:
   # EdfaPay SoftPOS (NFC tap-to-pay on Android)
   edfapay_softpos_sdk: ^1.0.6+6
 
+  # Dual-screen support (Landi C20 PRO secondary customer display).
+  # Maintained fork of `presentation_displays` with AGP 8 / Java 11 support.
+  flutter_presentation_display: ^2.0.8
+
   # Image Picker
   image_picker: ^1.1.2
   flutter_html: ^3.0.0-beta.2

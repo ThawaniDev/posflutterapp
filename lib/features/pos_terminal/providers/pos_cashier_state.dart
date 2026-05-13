@@ -57,28 +57,36 @@ class CartState {
   }
 
   Map<String, dynamic> toHoldCartJson() {
+    final itemsPayload = items
+        .map(
+          (i) => {
+            'product_id': i.product.id,
+            'product_name': i.product.name,
+            'product_name_ar': i.product.nameAr,
+            'barcode': i.product.barcode,
+            'quantity': i.quantity,
+            'unit_price': i.unitPrice,
+            'discount_amount': i.discountAmount ?? 0,
+            'discount_type': i.discountType?.value,
+            'discount_value': i.discountValue,
+            'notes': i.notes,
+          },
+        )
+        .toList();
+
     return {
-      'cart_data': items
-          .map(
-            (i) => {
-              'product_id': i.product.id,
-              'product_name': i.product.name,
-              'product_name_ar': i.product.nameAr,
-              'barcode': i.product.barcode,
-              'quantity': i.quantity,
-              'unit_price': i.unitPrice,
-              'discount_amount': i.discountAmount ?? 0,
-              'discount_type': i.discountType?.value,
-              'discount_value': i.discountValue,
-              'notes': i.notes,
-            },
-          )
-          .toList(),
+      'cart_data': {
+        'items': itemsPayload,
+        'subtotal': subtotal,
+        'discount_total': discountTotal,
+        'tax_total': taxAmount,
+        'total': totalAmount,
+        if (notes != null) 'notes': notes,
+        if (manualDiscount != null) 'manual_discount': manualDiscount,
+        if (taxExempt) 'is_tax_exempt': true,
+        if (taxExemption != null) 'tax_exemption': taxExemption!.toJson(),
+      },
       if (customer != null) 'customer_id': customer!.id,
-      if (notes != null) 'notes': notes,
-      if (manualDiscount != null) 'manual_discount': manualDiscount,
-      if (taxExempt) 'is_tax_exempt': true,
-      if (taxExemption != null) 'tax_exemption': taxExemption!.toJson(),
     };
   }
 }
