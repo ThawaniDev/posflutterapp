@@ -488,10 +488,9 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
         children: [
           Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.mutedFor(context),
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.mutedFor(context)),
           ),
           const SizedBox(height: AppSpacing.xs),
           TextFormField(
@@ -534,10 +533,9 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
         children: [
           Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.mutedFor(context),
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.mutedFor(context)),
           ),
           const SizedBox(height: AppSpacing.xs),
           TextFormField(

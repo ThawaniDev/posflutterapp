@@ -225,7 +225,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     }
 
     final heldState = ref.read(heldCartsProvider);
-    final message = heldState is HeldCartsError ? heldState.message: AppLocalizations.of(context)!.failedToHoldCart;
+    final message = heldState is HeldCartsError ? heldState.message : AppLocalizations.of(context)!.failedToHoldCart;
     showPosErrorSnackbar(context, message);
   }
 
@@ -2006,7 +2006,6 @@ class _SecondaryDisplayPreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.black,
