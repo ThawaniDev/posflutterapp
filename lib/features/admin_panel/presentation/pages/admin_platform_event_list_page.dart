@@ -87,7 +87,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                 final searchField = TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search events...',
+                    hintText: l10n.searchEvents,
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),

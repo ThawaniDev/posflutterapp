@@ -526,6 +526,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
 
   Widget _dateField(String label, TextEditingController controller) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Column(
@@ -544,7 +545,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
             readOnly: true,
             onTap: () => _pickDate(controller),
             decoration: InputDecoration(
-              hintText: 'YYYY-MM-DD',
+              hintText: l10n.yyyymmdd,
               filled: true,
               fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
               suffixIcon: const Icon(Icons.calendar_today, size: 18),

@@ -74,8 +74,8 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search pages...',
+                    decoration: InputDecoration(
+                      hintText: l10n.searchPages,
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),

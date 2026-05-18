@@ -6,8 +6,13 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/customer_facing_display/providers/secondary_display_providers.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart' show myStoreProvider;
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart' show StoreLoaded;
 import 'package:wameedpos/features/payments/models/installment_payment.dart';
 import 'package:wameedpos/features/payments/pages/installment_payment_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
@@ -19,8 +24,6 @@ import 'package:wameedpos/features/pos_terminal/widgets/card_scheme_badge.dart';
 import 'package:wameedpos/features/promotions/services/promotion_evaluator.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
-import 'package:wameedpos/features/customers/models/customer.dart';
-import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
 import 'package:wameedpos/features/softpos/providers/softpos_providers.dart';
 import 'package:wameedpos/features/softpos/providers/softpos_state.dart';
 import 'package:wameedpos/features/softpos/services/softpos_service.dart';
@@ -34,6 +37,15 @@ class _PaymentLeg {
   final TextEditingController controller;
 
   void dispose() => controller.dispose();
+}
+
+class _SoftPosTokenSync {
+  const _SoftPosTokenSync({this.token, this.changed = false});
+
+  final String? token;
+  final bool changed;
+
+  bool get hasToken => token != null && token!.isNotEmpty;
 }
 
 class PosPaymentDialog extends ConsumerStatefulWidget {
@@ -98,6 +110,67 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     super.dispose();
   }
 
+  // ─── Secondary display (customer-facing) ─────────────────────────
+  //
+  // While SoftPOS is waiting for the customer to tap their card, swap the
+  // secondary screen to an animated "tap your card" prompt that points to
+  // the device's NFC reader. Restored to the live cart view on completion
+  // or failure.
+
+  ({String? logoUrl, String? storeName}) _storeBranding() {
+    final storeState = ref.read(myStoreProvider);
+    if (storeState is StoreLoaded) {
+      return (logoUrl: storeState.store.logoUrl, storeName: storeState.store.name);
+    }
+    return (logoUrl: null, storeName: null);
+  }
+
+  void _pushAwaitingPaymentToSecondary(double amount) {
+    if (!isSecondaryDisplaySupported) return;
+    final settings = ref.read(currentStoreSettingsProvider);
+    final branding = _storeBranding();
+    final l10n = AppLocalizations.of(context);
+    ref
+        .read(secondaryDisplayControllerProvider)
+        .pushAwaitingPayment(
+          total: amount,
+          currency: settings?.currencySymbol ?? '',
+          message: l10n?.softposTapCard,
+          logoUrl: branding.logoUrl,
+          storeName: branding.storeName,
+        );
+  }
+
+  void _restoreCartOnSecondary() {
+    if (!isSecondaryDisplaySupported) return;
+    final cart = ref.read(cartProvider);
+    final settings = ref.read(currentStoreSettingsProvider);
+    final branding = _storeBranding();
+    final items = cart.items
+        .map(
+          (item) => <String, dynamic>{
+            'name': item.product.name,
+            'quantity': item.quantity,
+            'unit_price': item.unitPrice,
+            'line_total': item.subtotal,
+          },
+        )
+        .toList();
+    final discount = (cart.manualDiscount ?? 0) + cart.items.fold<double>(0, (s, i) => s + (i.discountAmount ?? 0));
+    ref
+        .read(secondaryDisplayControllerProvider)
+        .pushCart(
+          items: items,
+          subtotal: cart.subtotal,
+          discount: discount,
+          tax: cart.taxAmount,
+          total: cart.totalAmount,
+          currency: settings?.currencySymbol ?? '',
+          logoUrl: branding.logoUrl,
+          storeName: branding.storeName,
+        );
+  }
+
   void _addSplitMethod() {
     setState(() {
       _legs.add(_PaymentLeg(method: PaymentMethod.card, amount: _remaining > 0 ? _remaining : 0));
@@ -125,53 +198,56 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     setState(() => _legs[index].method = method);
   }
 
-  /// Guards SoftPOS method selection: checks that an EdfaPay token is stored
-  /// before allowing the leg to switch.  Shows an inline error if not.
-  /// Falls back to fetching the token from the active session's register if
-  /// secure storage is empty (e.g. first launch after admin assigns the token).
+  /// Guards SoftPOS method selection by syncing the active register's EdfaPay
+  /// token into secure storage before allowing the leg to switch.
   Future<void> _selectSoftPosMethod(int index) async {
     final service = ref.read(softPosServiceProvider);
-    debugPrint('[SoftPOS] tap → isAvailable=${service.isAvailable}');
     if (!service.isAvailable) {
       setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
       return;
     }
 
-    // Primary check: token in secure storage.
-    String? token = await ref.read(softPosTokenProvider.future);
-    debugPrint('[SoftPOS] storage token=${token == null ? "NULL" : "len=${token.length}"}');
-
-    // Fallback: fetch token on-demand from the active session's register.
-    if (token == null || token.isEmpty) {
-      final sessionState = ref.read(activeSessionProvider);
-      debugPrint('[SoftPOS] sessionState=${sessionState.runtimeType}');
-      if (sessionState is ActiveSessionLoaded) {
-        final registerId = sessionState.session.registerId;
-        final registers = ref.read(activeRegistersProvider).asData?.value ?? await ref.read(activeRegistersProvider.future);
-        debugPrint('[SoftPOS] registers fetched=${registers?.length}, looking for id=$registerId');
-        final reg = registers?.where((r) => r.id == registerId).firstOrNull;
-        debugPrint(
-          '[SoftPOS] register found=${reg != null}, softposEnabled=${reg?.softposEnabled}, '
-          'tokenLen=${reg?.edfapayToken?.length}',
-        );
-        if (reg != null && reg.softposEnabled && (reg.edfapayToken?.isNotEmpty ?? false)) {
-          await ref.read(softPosProvider.notifier).saveConfig(token: reg.edfapayToken!, environment: 'production');
-          ref.invalidate(softPosTokenProvider);
-          token = reg.edfapayToken;
-          debugPrint('[SoftPOS] token synced from register, len=${token?.length}');
-        }
-      }
-    }
-
-    if (token == null || token.isEmpty) {
-      debugPrint('[SoftPOS] FAILED — no token available, showing error');
+    final sync = await _syncSoftPosTokenFromActiveRegister(refreshRegisters: true);
+    if (!sync.hasToken) {
       if (mounted) {
         setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
       }
       return;
     }
-    debugPrint('[SoftPOS] SUCCESS — switching leg to softPos');
     setState(() => _legs[index].method = PaymentMethod.softPos);
+  }
+
+  Future<_SoftPosTokenSync> _syncSoftPosTokenFromActiveRegister({required bool refreshRegisters}) async {
+    String? token = (await ref.read(softPosTokenProvider.future))?.trim();
+
+    final sessionState = ref.read(activeSessionProvider);
+    if (sessionState is! ActiveSessionLoaded) {
+      return _SoftPosTokenSync(token: token);
+    }
+
+    try {
+      final registers = refreshRegisters
+          ? await ref.refresh(activeRegistersProvider.future)
+          : (ref.read(activeRegistersProvider).asData?.value ?? await ref.read(activeRegistersProvider.future));
+      if (registers == null) {
+        return _SoftPosTokenSync(token: token);
+      }
+      final register = registers.where((r) => r.id == sessionState.session.registerId).firstOrNull;
+      final registerToken = register?.edfapayToken?.trim();
+
+      if (register != null && register.softposEnabled && registerToken != null && registerToken.isNotEmpty) {
+        if (registerToken != token) {
+          await ref.read(softPosProvider.notifier).saveConfig(token: registerToken, environment: 'production');
+          ref.invalidate(softPosTokenProvider);
+          return _SoftPosTokenSync(token: registerToken, changed: true);
+        }
+        return _SoftPosTokenSync(token: registerToken);
+      }
+    } catch (_) {
+      // Keep the locally stored token usable if the register refresh fails.
+    }
+
+    return _SoftPosTokenSync(token: token);
   }
 
   void _onQuickCash(double amount) {
@@ -313,126 +389,151 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
     setState(() => _error = null);
 
-    // ── SoftPOS pre-payment via EdfaPay SDK ─────────────────────────────
-    final softPosLegs = _legs.where((l) => l.method == PaymentMethod.softPos).toList();
-    if (softPosLegs.isNotEmpty) {
-      final service = ref.read(softPosServiceProvider);
-      if (!service.isAvailable) {
-        setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
-        return;
-      }
-      // Initialise from secure storage if not already done
-      if (!service.isInitiated) {
-        await ref.read(softPosProvider.notifier).initFromStorage();
-        final initState = ref.read(softPosProvider);
-        if (initState is SoftPosError) {
-          setState(() => _error = initState.message);
+    try {
+      // ── SoftPOS pre-payment via EdfaPay SDK ─────────────────────────────
+      final softPosLegs = _legs.where((l) => l.method == PaymentMethod.softPos).toList();
+      if (softPosLegs.isNotEmpty) {
+        final service = ref.read(softPosServiceProvider);
+        if (!service.isAvailable) {
+          setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
           return;
         }
-        if (initState is! SoftPosReady) {
-          setState(() => _error = AppLocalizations.of(context)!.softposInitializing);
+        final tokenSync = await _syncSoftPosTokenFromActiveRegister(refreshRegisters: true);
+        if (!tokenSync.hasToken) {
+          setState(() => _error = AppLocalizations.of(context)!.softposNotConfigured);
           return;
         }
-      }
-      // Execute NFC payment for each softPos leg
-      for (int i = 0; i < softPosLegs.length; i++) {
-        final leg = softPosLegs[i];
-        final orderId = '${widget.sessionId}-softpos-$i';
-        final result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: orderId);
-        if (!result.success) {
-          setState(() => _error = result.errorMessage ?? AppLocalizations.of(context)!.softposPaymentFailed);
-          return;
-        }
-        _softPosResult = result;
-      }
-    }
-
-    final cart = ref.read(cartProvider);
-    final payments = _legs.map((l) {
-      final map = <String, dynamic>{'method': l.method.value, 'amount': l.amount};
-      if (l.method == PaymentMethod.cash) {
-        map['cash_tendered'] = _cashTendered;
-        map['change_given'] = _changeGiven;
-      }
-      if (_tipAmount > 0 && l == _legs.first) {
-        map['tip_amount'] = _tipAmount;
-      }
-      if (l.method == PaymentMethod.giftCard && _giftCardCode != null) {
-        map['gift_card_code'] = _giftCardCode;
-      }
-      if (l.method == PaymentMethod.loyaltyPoints) {
-        final pts = cart.customer?.loyaltyPoints ?? 0;
-        map['loyalty_points_used'] = pts;
-      }
-      if (l.method == PaymentMethod.softPos && _softPosResult != null) {
-        if (_softPosResult!.approvalCode != null) map['approval_code'] = _softPosResult!.approvalCode;
-        if (_softPosResult!.rrn != null) map['rrn'] = _softPosResult!.rrn;
-        if (_softPosResult!.transactionId != null) map['card_transaction_id'] = _softPosResult!.transactionId;
-        if (_softPosResult!.cardScheme != null) map['card_scheme'] = _softPosResult!.cardScheme;
-        if (_softPosResult!.maskedCard != null) map['masked_card'] = _softPosResult!.maskedCard;
-      }
-      return map;
-    }).toList();
-
-    // Attach coupon code ID to the first payment leg so the backend logs it
-    if (_appliedCouponCodeId != null && payments.isNotEmpty) {
-      payments.first['coupon_code'] = _appliedCouponCode;
-      payments.first['coupon_code_id'] = _appliedCouponCodeId;
-    }
-
-    await ref
-        .read(saleProvider.notifier)
-        .completeSale(
-          sessionId: widget.sessionId,
-          cart: cart,
-          payments: payments,
-          tipAmount: _tipAmount,
-          saleType: ref.read(currentStoreSettingsProvider)?.defaultSaleType,
-        );
-
-    final saleState = ref.read(saleProvider);
-    if (saleState is SaleCompleted) {
-      // Capture customer BEFORE clearing the cart so the receipt prompt can use it.
-      final customerForReceipt = ref.read(cartProvider).customer;
-      ref.read(cartProvider.notifier).clear();
-
-      final settings = ref.read(currentStoreSettingsProvider);
-
-      // Auto-open cash drawer when a cash payment leg was used
-      if (_legs.any((l) => l.method == PaymentMethod.cash)) {
-        try {
-          await ref.read(hardwareManagerProvider).cashDrawer.open();
-        } catch (_) {}
-      }
-
-      // Auto-print receipt when enabled in settings.
-      if (settings?.autoPrintReceipt ?? false) {
-        try {
-          final printer = ref.read(hardwareManagerProvider).receiptPrinter;
-          await printer.printReceipt(_buildSaleReceiptLines(saleState, cart, settings));
-        } catch (_) {
-          // Silent failure; user can re-print from receipt dialog.
-        }
-      }
-
-      // Send to kitchen display when enabled and the sale type matches a
-      // dine-in/takeaway/delivery flow that the KDS handles.
-      if ((settings?.enableKitchenDisplay ?? false)) {
-        try {
-          // Best-effort: emit a snackbar; backend ticket is created on the
-          // server when sale_type is provided. No client-side push needed.
-          if (mounted) {
-            showPosInfoSnackbar(context, AppLocalizations.of(context)!.posKdsTicketSent);
+        // Initialise with the freshly synced register token instead of
+        // re-reading secure storage, which can lag behind the provider cache.
+        if (!service.isInitiated || tokenSync.changed) {
+          await ref.read(softPosProvider.notifier).initWithToken(token: tokenSync.token!, environment: 'production');
+          final initState = ref.read(softPosProvider);
+          if (initState is SoftPosError) {
+            setState(() => _error = initState.message);
+            return;
           }
-        } catch (_) {}
+          if (initState is! SoftPosReady) {
+            setState(() => _error = AppLocalizations.of(context)!.softposInitializing);
+            return;
+          }
+        }
+        // Execute NFC payment for each softPos leg
+        for (int i = 0; i < softPosLegs.length; i++) {
+          final leg = softPosLegs[i];
+          final orderId = '${widget.sessionId}-softpos-$i';
+          _pushAwaitingPaymentToSecondary(leg.amount);
+          SoftPosPaymentResult result;
+          try {
+            result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: orderId);
+          } catch (_) {
+            _restoreCartOnSecondary();
+            rethrow;
+          }
+          if (!result.success) {
+            _restoreCartOnSecondary();
+            setState(() => _error = result.errorMessage ?? AppLocalizations.of(context)!.softposPaymentFailed);
+            return;
+          }
+          _softPosResult = result;
+        }
+        _restoreCartOnSecondary();
       }
 
-      if (mounted) {
-        Navigator.pop(context);
-        _showReceiptDialog(saleState, customerForReceipt);
+      final cart = ref.read(cartProvider);
+      final payments = _legs.map((l) {
+        final map = <String, dynamic>{'method': l.method.value, 'amount': l.amount};
+        if (l.method == PaymentMethod.cash) {
+          map['cash_tendered'] = _cashTendered;
+          map['change_given'] = _changeGiven;
+        }
+        if (_tipAmount > 0 && l == _legs.first) {
+          map['tip_amount'] = _tipAmount;
+        }
+        if (l.method == PaymentMethod.giftCard && _giftCardCode != null) {
+          map['gift_card_code'] = _giftCardCode;
+        }
+        if (l.method == PaymentMethod.loyaltyPoints) {
+          final pts = cart.customer?.loyaltyPoints ?? 0;
+          map['loyalty_points_used'] = pts;
+        }
+        if (l.method == PaymentMethod.softPos && _softPosResult != null) {
+          if (_softPosResult!.approvalCode != null) map['approval_code'] = _softPosResult!.approvalCode;
+          if (_softPosResult!.rrn != null) map['rrn'] = _softPosResult!.rrn;
+          if (_softPosResult!.transactionId != null) map['card_transaction_id'] = _softPosResult!.transactionId;
+          if (_softPosResult!.cardScheme != null) map['card_scheme'] = _softPosResult!.cardScheme;
+          if (_softPosResult!.maskedCard != null) map['masked_card'] = _softPosResult!.maskedCard;
+          if (_softPosResult!.cardHolderName != null) map['cardholder_name'] = _softPosResult!.cardHolderName;
+          if (_softPosResult!.cardExpiry != null) map['card_expiry'] = _softPosResult!.cardExpiry;
+          if (_softPosResult!.stan != null) map['stan'] = _softPosResult!.stan;
+          if (_softPosResult!.acquirerBank != null) map['acquirer_bank'] = _softPosResult!.acquirerBank;
+          if (_softPosResult!.applicationId != null) map['application_id'] = _softPosResult!.applicationId;
+          if (_softPosResult!.sdkRawResponse != null) map['sdk_raw_response'] = _softPosResult!.sdkRawResponse;
+        }
+        return map;
+      }).toList();
+
+      // Attach coupon code ID to the first payment leg so the backend logs it
+      if (_appliedCouponCodeId != null && payments.isNotEmpty) {
+        payments.first['coupon_code'] = _appliedCouponCode;
+        payments.first['coupon_code_id'] = _appliedCouponCodeId;
       }
-    } else if (saleState is SaleError) {
-      setState(() => _error = saleState.message);
+
+      await ref
+          .read(saleProvider.notifier)
+          .completeSale(
+            sessionId: widget.sessionId,
+            cart: cart,
+            payments: payments,
+            tipAmount: _tipAmount,
+            saleType: ref.read(currentStoreSettingsProvider)?.defaultSaleType,
+          );
+
+      final saleState = ref.read(saleProvider);
+      if (saleState is SaleCompleted) {
+        // Capture customer BEFORE clearing the cart so the receipt prompt can use it.
+        final customerForReceipt = ref.read(cartProvider).customer;
+        ref.read(cartProvider.notifier).clear();
+
+        final settings = ref.read(currentStoreSettingsProvider);
+
+        // Auto-open cash drawer when a cash payment leg was used
+        if (_legs.any((l) => l.method == PaymentMethod.cash)) {
+          try {
+            await ref.read(hardwareManagerProvider).cashDrawer.open();
+          } catch (_) {}
+        }
+
+        // Auto-print receipt when enabled in settings.
+        if (settings?.autoPrintReceipt ?? false) {
+          try {
+            final printer = ref.read(hardwareManagerProvider).receiptPrinter;
+            await printer.printReceipt(_buildSaleReceiptLines(saleState, cart, settings));
+          } catch (_) {
+            // Silent failure; user can re-print from receipt dialog.
+          }
+        }
+
+        // Send to kitchen display when enabled and the sale type matches a
+        // dine-in/takeaway/delivery flow that the KDS handles.
+        if ((settings?.enableKitchenDisplay ?? false)) {
+          try {
+            // Best-effort: emit a snackbar; backend ticket is created on the
+            // server when sale_type is provided. No client-side push needed.
+            if (mounted) {
+              showPosInfoSnackbar(context, AppLocalizations.of(context)!.posKdsTicketSent);
+            }
+          } catch (_) {}
+        }
+
+        if (mounted) {
+          Navigator.pop(context);
+          _showReceiptDialog(saleState, customerForReceipt);
+        }
+      } else if (saleState is SaleError) {
+        setState(() => _error = saleState.message);
+      }
+    } catch (e) {
+      if (mounted) setState(() => _error = e.toString());
     }
   }
 
@@ -623,16 +724,15 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   ),
 
                 // Installment payment button
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: TextButton.icon(
-                    onPressed: isProcessing ? null : _openInstallmentPayment,
-                    icon: const Icon(Icons.credit_score_rounded, size: 18),
-                    label: Text(AppLocalizations.of(context)!.payWithInstallments),
-                    style: TextButton.styleFrom(foregroundColor: AppColors.info),
-                  ),
-                ),
-
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 4),
+                //   child: TextButton.icon(
+                //     onPressed: isProcessing ? null : _openInstallmentPayment,
+                //     icon: const Icon(Icons.credit_score_rounded, size: 18),
+                //     label: Text(AppLocalizations.of(context)!.payWithInstallments),
+                //     style: TextButton.styleFrom(foregroundColor: AppColors.info),
+                //   ),
+                // ),
                 AppSpacing.gapH16,
 
                 // Tip entry — only when store settings enable tips
@@ -749,140 +849,139 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
                 AppSpacing.gapH16,
 
-                // ── Coupon / Voucher ──────────────────────────────────────
-                if (_appliedCouponCode == null) ...[
-                  Text(
-                    AppLocalizations.of(context)!.posCouponCode,
-                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  AppSpacing.gapH4,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: PosTextField(
-                          controller: _couponController,
-                          hint: AppLocalizations.of(context)!.posCouponHint,
-                          prefixIcon: Icons.discount_outlined,
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-_]'))],
-                          onSubmitted: (_) => _applyCoupon(),
-                        ),
-                      ),
-                      AppSpacing.gapW8,
-                      PosButton(
-                        label: AppLocalizations.of(context)!.posApply,
-                        isLoading: _couponLoading,
-                        onPressed: _couponLoading ? null : _applyCoupon,
-                      ),
-                    ],
-                  ),
-                  if (_couponError != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(_couponError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
-                    ),
-                ] else ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
-                        AppSpacing.gapW8,
-                        Expanded(
-                          child: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.posCouponApplied(_appliedCouponCode!, _couponDiscount.toStringAsFixed(2)),
-                            style: AppTypography.bodySmall.copyWith(color: AppColors.success),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => setState(() {
-                            _appliedCouponCode = null;
-                            _appliedCouponCodeId = null;
-                            _couponDiscount = 0;
-                            _couponController.clear();
-                          }),
-                          icon: const Icon(Icons.close_rounded, size: 18),
-                          color: AppColors.mutedFor(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                AppSpacing.gapH12,
+                // // ── Coupon / Voucher ──────────────────────────────────────
+                // if (_appliedCouponCode == null) ...[
+                //   Text(
+                //     AppLocalizations.of(context)!.posCouponCode,
+                //     style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                //   ),
+                //   AppSpacing.gapH4,
+                //   Row(
+                //     children: [
+                //       Expanded(
+                //         child: PosTextField(
+                //           controller: _couponController,
+                //           hint: AppLocalizations.of(context)!.posCouponHint,
+                //           prefixIcon: Icons.discount_outlined,
+                //           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-_]'))],
+                //           onSubmitted: (_) => _applyCoupon(),
+                //         ),
+                //       ),
+                //       AppSpacing.gapW8,
+                //       PosButton(
+                //         label: AppLocalizations.of(context)!.posApply,
+                //         isLoading: _couponLoading,
+                //         onPressed: _couponLoading ? null : _applyCoupon,
+                //       ),
+                //     ],
+                //   ),
+                //   if (_couponError != null)
+                //     Padding(
+                //       padding: const EdgeInsets.only(top: 4),
+                //       child: Text(_couponError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
+                //     ),
+                // ] else ...[
+                //   Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                //     decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                //     child: Row(
+                //       children: [
+                //         const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
+                //         AppSpacing.gapW8,
+                //         Expanded(
+                //           child: Text(
+                //             AppLocalizations.of(
+                //               context,
+                //             )!.posCouponApplied(_appliedCouponCode!, _couponDiscount.toStringAsFixed(2)),
+                //             style: AppTypography.bodySmall.copyWith(color: AppColors.success),
+                //           ),
+                //         ),
+                //         IconButton(
+                //           onPressed: () => setState(() {
+                //             _appliedCouponCode = null;
+                //             _appliedCouponCodeId = null;
+                //             _couponDiscount = 0;
+                //             _couponController.clear();
+                //           }),
+                //           icon: const Icon(Icons.close_rounded, size: 18),
+                //           color: AppColors.mutedFor(context),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ],
+                // AppSpacing.gapH12,
 
-                // ── Gift Card ──────────────────────────────────────────────
-                if (_giftCardCode == null) ...[
-                  Text(
-                    AppLocalizations.of(context)!.posGiftCard,
-                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  AppSpacing.gapH4,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: PosTextField(
-                          controller: _giftCardController,
-                          hint: AppLocalizations.of(context)!.posGiftCardHint,
-                          prefixIcon: Icons.card_giftcard_rounded,
-                          onSubmitted: (_) => _checkGiftCard(),
-                        ),
-                      ),
-                      AppSpacing.gapW8,
-                      PosButton(
-                        label: AppLocalizations.of(context)!.posCheck,
-                        isLoading: _giftCardLoading,
-                        onPressed: _giftCardLoading ? null : _checkGiftCard,
-                      ),
-                    ],
-                  ),
-                  if (_giftCardError != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(_giftCardError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
-                    ),
-                ] else ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.card_giftcard_rounded, color: AppColors.info, size: 18),
-                        AppSpacing.gapW8,
-                        Expanded(
-                          child: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.posGiftCardApplied(_giftCardCode!, (_giftCardBalance ?? 0).toStringAsFixed(2)),
-                            style: AppTypography.bodySmall.copyWith(color: AppColors.info),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => setState(() {
-                            _giftCardCode = null;
-                            _giftCardBalance = null;
-                            _giftCardController.clear();
-                            _legs.removeWhere((l) => l.method == PaymentMethod.giftCard);
-                          }),
-                          icon: const Icon(Icons.close_rounded, size: 18),
-                          color: AppColors.mutedFor(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                // // ── Gift Card ──────────────────────────────────────────────
+                // if (_giftCardCode == null) ...[
+                //   Text(
+                //     AppLocalizations.of(context)!.posGiftCard,
+                //     style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                //   ),
+                //   AppSpacing.gapH4,
+                //   Row(
+                //     children: [
+                //       Expanded(
+                //         child: PosTextField(
+                //           controller: _giftCardController,
+                //           hint: AppLocalizations.of(context)!.posGiftCardHint,
+                //           prefixIcon: Icons.card_giftcard_rounded,
+                //           onSubmitted: (_) => _checkGiftCard(),
+                //         ),
+                //       ),
+                //       AppSpacing.gapW8,
+                //       PosButton(
+                //         label: AppLocalizations.of(context)!.posCheck,
+                //         isLoading: _giftCardLoading,
+                //         onPressed: _giftCardLoading ? null : _checkGiftCard,
+                //       ),
+                //     ],
+                //   ),
+                //   if (_giftCardError != null)
+                //     Padding(
+                //       padding: const EdgeInsets.only(top: 4),
+                //       child: Text(_giftCardError!, style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
+                //     ),
+                // ] else ...[
+                //   Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                //     decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                //     child: Row(
+                //       children: [
+                //         const Icon(Icons.card_giftcard_rounded, color: AppColors.info, size: 18),
+                //         AppSpacing.gapW8,
+                //         Expanded(
+                //           child: Text(
+                //             AppLocalizations.of(
+                //               context,
+                //             )!.posGiftCardApplied(_giftCardCode!, (_giftCardBalance ?? 0).toStringAsFixed(2)),
+                //             style: AppTypography.bodySmall.copyWith(color: AppColors.info),
+                //           ),
+                //         ),
+                //         IconButton(
+                //           onPressed: () => setState(() {
+                //             _giftCardCode = null;
+                //             _giftCardBalance = null;
+                //             _giftCardController.clear();
+                //             _legs.removeWhere((l) => l.method == PaymentMethod.giftCard);
+                //           }),
+                //           icon: const Icon(Icons.close_rounded, size: 18),
+                //           color: AppColors.mutedFor(context),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ],
 
-                // ── Loyalty / Store Credit (customer-attached) ─────────────
-                if (() {
-                  final cart = ref.read(cartProvider);
-                  return cart.customer != null &&
-                      ((cart.customer!.loyaltyPoints ?? 0) > 0 || (cart.customer!.storeCreditBalance ?? 0) > 0);
-                }()) ...[
-                  AppSpacing.gapH12,
-                  _buildCustomerBalance(),
-                ],
-
+                // // ── Loyalty / Store Credit (customer-attached) ─────────────
+                // if (() {
+                //   final cart = ref.read(cartProvider);
+                //   return cart.customer != null &&
+                //       ((cart.customer!.loyaltyPoints ?? 0) > 0 || (cart.customer!.storeCreditBalance ?? 0) > 0);
+                // }()) ...[
+                //   AppSpacing.gapH12,
+                //   _buildCustomerBalance(),
+                // ],
                 AppSpacing.gapH16,
 
                 // Cash tendered (only if any leg is cash)

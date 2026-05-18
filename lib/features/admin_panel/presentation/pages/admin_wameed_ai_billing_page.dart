@@ -311,7 +311,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> {
                   title: Row(
                     children: [
                       Expanded(child: Text(name.toString(), style: AppTypography.titleSmall)),
-                      if (isOrgLevel) const PosBadge(label: 'ORG', customColor: AppColors.info),
+                      if (isOrgLevel) PosBadge(label: l10n.org, customColor: AppColors.info),
                     ],
                   ),
                   subtitle: Text(subtitleText, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight)),

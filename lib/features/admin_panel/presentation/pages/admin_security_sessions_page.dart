@@ -41,7 +41,7 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
     final state = ref.watch(securitySessionListProvider);
 
     return PosListPage(
-      title: 'Admin Sessions',
+      title: l10n.adminSessions,
       showSearch: true,
       onSearchChanged: (q) {
         _searchQuery = q;
@@ -81,12 +81,12 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
                 },
               ),
               const SizedBox(width: AppSpacing.xs),
-              const Text('Active only', style: TextStyle(fontSize: 13)),
+              Text(l10n.activeOnly, style: TextStyle(fontSize: 13)),
             ],
           ),
           const Spacer(),
           PosButton(
-            label: 'Revoke All Sessions',
+            label: l10n.revokeAllSessions,
             variant: PosButtonVariant.danger,
             onPressed: _showRevokeAllDialog,
             icon: Icons.logout,
@@ -101,7 +101,7 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No sessions found');
+      return PosEmptyState(title: l10n.noSessionsFound);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -111,13 +111,13 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'Admin', flex: 2),
-            PosTableColumn(title: 'IP Address', width: 130),
-            PosTableColumn(title: 'User Agent', flex: 2),
-            PosTableColumn(title: 'Last Active', width: 140),
-            PosTableColumn(title: 'Status', width: 100),
-            PosTableColumn(title: 'Actions', width: 80),
+          columns: [
+            PosTableColumn(title: l10n.admin, flex: 2),
+            PosTableColumn(title: l10n.ipAddress, width: 130),
+            PosTableColumn(title: l10n.userAgent, flex: 2),
+            PosTableColumn(title: l10n.lastActive, width: 140),
+            PosTableColumn(title: l10n.status, width: 100),
+            PosTableColumn(title: l10n.actions, width: 80),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {
@@ -172,9 +172,9 @@ class _AdminSecuritySessionsPageState extends ConsumerState<AdminSecuritySession
   Widget _buildStatusBadge(Map<String, dynamic> item) {
     final revokedAt = item['revoked_at'];
     if (revokedAt != null) {
-      return PosBadge(label: 'Revoked', variant: PosBadgeVariant.error);
+      return PosBadge(label: l10n.revoked, variant: PosBadgeVariant.error);
     }
-    return PosBadge(label: 'Active', variant: PosBadgeVariant.success);
+    return PosBadge(label: l10n.active, variant: PosBadgeVariant.success);
   }
 
   void _showRevokeAllDialog() {
@@ -219,25 +219,28 @@ class _SessionActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final l10n = AppLocalizations.of(context)!;
     return IconButton(
       icon: const Icon(Icons.logout, size: 18, color: AppColors.error),
-      tooltip: 'Revoke session',
+      tooltip: l10n.revokeSession,
       onPressed: () => _revoke(context, ref),
     );
   }
 
   Future<void> _revoke(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Revoke Session'),
-        content: const Text('Are you sure you want to revoke this session? The user will be logged out immediately.'),
+        title: Text(l10n.revokeSession2),
+        content: Text(l10n.areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Revoke'),
+            child: Text(l10n.revoke),
           ),
         ],
       ),
@@ -277,19 +280,21 @@ class _RevokeAllDialogState extends State<_RevokeAllDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Revoke All Sessions'),
+      title: Text(l10n.revokeAllSessions),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.'),
+          Text(l10n.thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI),
           const SizedBox(height: AppSpacing.sm),
-          PosTextField(controller: _controller, label: 'Admin User ID (optional)', hint: 'Leave blank to revoke all'),
+          PosTextField(controller: _controller, label: l10n.adminUserIdOptional, hint: l10n.leaveBlankToRevokeAll),
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         PosButton(
           label: _loading ? 'Revoking…' : 'Revoke All',
           variant: PosButtonVariant.danger,

@@ -75,7 +75,7 @@ class WameedPosApp extends ConsumerWidget {
     return MediaQuery(
       data: MediaQueryData(textScaler: TextScaler.linear(fontScale)),
       child: MaterialApp.router(
-        title: 'Wameed POS',
+        onGenerateTitle: (context) => AppLocalizations.of(context)?.wameedPos ?? 'Wameed POS',
         debugShowCheckedModeBanner: false,
         theme: highContrastTheme ?? AppTheme.light(),
         darkTheme: highContrastTheme ?? AppTheme.dark(),

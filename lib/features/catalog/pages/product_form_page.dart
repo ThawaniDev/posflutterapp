@@ -433,7 +433,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             PosTextField(
               controller: _tareWeightController,
               label: l10n.catalogTareWeight,
-              hint: 'e.g. 0.05',
+              hint: l10n.eg005,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
             ),
@@ -484,7 +484,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                 child: PosTextField(
                   controller: _sellPriceController,
                   label: l10n.catalogSellPriceRequired,
-                  hint: 'e.g. 5.50',
+                  hint: l10n.eg550,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
                 ),
@@ -494,7 +494,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                 child: PosTextField(
                   controller: _costPriceController,
                   label: l10n.catalogCostPrice,
-                  hint: 'e.g. 3.20',
+                  hint: l10n.eg320,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
                 ),
@@ -505,7 +505,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
           PosTextField(
             controller: _taxRateController,
             label: l10n.settingsTaxRate,
-            hint: 'e.g. 15',
+            hint: l10n.eg15,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
           ),
@@ -709,7 +709,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
               PosTextField(
                 controller: priceAdjController,
                 label: l10n.catalogPriceAdjustment,
-                hint: 'e.g. +2.00 or -1.50',
+                hint: l10n.eg200Or150,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.\-]'))],
               ),
@@ -1165,7 +1165,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                       child: PosTextField(
                         controller: leadTimeController,
                         label: l10n.catalogLeadTimeDays,
-                        hint: 'e.g. 7',
+                        hint: l10n.eg7,
                         keyboardType: TextInputType.number,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       ),

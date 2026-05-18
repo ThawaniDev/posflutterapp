@@ -62,7 +62,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No activity logs');
+      return PosEmptyState(title: l10n.noActivityLogs);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -72,13 +72,13 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'Admin', flex: 2),
-            PosTableColumn(title: 'Action', width: 160),
-            PosTableColumn(title: 'Entity', flex: 1),
-            PosTableColumn(title: 'Description', flex: 3),
-            PosTableColumn(title: 'IP Address', width: 130),
-            PosTableColumn(title: 'Timestamp', width: 140),
+          columns: [
+            PosTableColumn(title: l10n.admin, flex: 2),
+            PosTableColumn(title: l10n.action, width: 160),
+            PosTableColumn(title: l10n.entity, flex: 1),
+            PosTableColumn(title: l10n.description, flex: 3),
+            PosTableColumn(title: l10n.ipAddress, width: 130),
+            PosTableColumn(title: l10n.timestamp, width: 140),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {

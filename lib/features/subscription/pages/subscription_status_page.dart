@@ -265,7 +265,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                       Row(
                         children: [
                           Text(
-                            '${price.toStringAsFixed(3)} ',
+                            '${price.toStringAsFixed(2)} ',
                             style: Theme.of(
                               context,
                             ).textTheme.titleLarge?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
@@ -514,7 +514,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
   }
 
   Widget _buildSoftPosProgress() {
-    final featureGate = ref.read(featureGateServiceProvider);
+    final featureGate = ref.watch(featureGateServiceProvider);
     final softPosInfo = featureGate.softPosInfo;
 
     if (softPosInfo == null || softPosInfo['is_eligible'] != true) {
@@ -524,9 +524,12 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     final isFree = softPosInfo['is_free'] as bool? ?? false;
     final currentCount = (softPosInfo['current_count'] as num?)?.toInt() ?? 0;
     final threshold = (softPosInfo['threshold'] as num?)?.toInt() ?? 0;
-    final remaining = (softPosInfo['remaining'] as num?)?.toInt() ?? 0;
+    final thresholdAmount = (softPosInfo['threshold_amount'] as num?)?.toDouble();
+    final currentSalesTotal = (softPosInfo['current_sales_total'] as num?)?.toDouble() ?? 0.0;
+    final remainingNum = (softPosInfo['remaining'] as num?)?.toDouble() ?? 0.0;
     final percentage = (softPosInfo['percentage'] as num?)?.toDouble() ?? 0.0;
     final savingsAmount = (softPosInfo['savings_amount'] as num?)?.toDouble() ?? 0.0;
+    final hasAmountThreshold = thresholdAmount != null && thresholdAmount > 0;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -559,7 +562,11 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                 if (savingsAmount > 0)
                   Text(l10n.softPosSaving(savingsAmount.toStringAsFixed(0)), style: const TextStyle(color: AppColors.success)),
               ] else ...[
-                Text(l10n.softPosReachThreshold(threshold)),
+                Text(
+                  hasAmountThreshold
+                      ? l10n.softPosReachAmountThreshold(thresholdAmount.toStringAsFixed(2))
+                      : l10n.softPosReachThreshold(threshold),
+                ),
                 AppSpacing.gapH8,
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
@@ -572,7 +579,14 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                 ),
                 AppSpacing.gapH4,
                 Text(
-                  '$currentCount / $threshold ${l10n.softPosTransactions} ($remaining ${l10n.softPosRemaining})',
+                  hasAmountThreshold
+                      ? l10n.softPosAmountProgress(
+                          currentSalesTotal.toStringAsFixed(2),
+                          thresholdAmount.toStringAsFixed(2),
+                          remainingNum.toStringAsFixed(2),
+                          l10n.softPosRemaining,
+                        )
+                      : '$currentCount / $threshold ${l10n.softPosTransactions} (${remainingNum.toInt()} ${l10n.softPosRemaining})',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                 ),
               ],

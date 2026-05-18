@@ -70,14 +70,19 @@ class _NotificationStatsWidgetState extends ConsumerState<NotificationStatsWidge
           // By Category
           Text(l10n.notifStatsByCategory, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           AppSpacing.gapH8,
-          ...byCategory.entries.map((e) => _buildStatRow(e.key, e.value.toString(), _categoryIcon(e.key), _categoryColor(e.key))),
+          ...byCategory.entries.map(
+            (e) =>
+                _buildStatRow(_localizedCategory(l10n, e.key), e.value.toString(), _categoryIcon(e.key), _categoryColor(e.key)),
+          ),
 
           AppSpacing.gapH16,
 
           // By Channel
           Text(l10n.notifStatsByChannel, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           AppSpacing.gapH8,
-          ...byChannel.entries.map((e) => _buildStatRow(e.key, e.value.toString(), _channelIcon(e.key), AppColors.info)),
+          ...byChannel.entries.map(
+            (e) => _buildStatRow(_localizedChannel(l10n, e.key), e.value.toString(), _channelIcon(e.key), AppColors.info),
+          ),
         ],
       ),
     );
@@ -90,11 +95,33 @@ class _NotificationStatsWidgetState extends ConsumerState<NotificationStatsWidge
         children: [
           Icon(icon, size: 18, color: color),
           AppSpacing.gapW8,
-          Expanded(child: Text(label[0].toUpperCase() + label.substring(1).replaceAll('_', ' '))),
+          Expanded(child: Text(label)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
         ],
       ),
     );
+  }
+
+  String _localizedCategory(AppLocalizations l10n, String cat) {
+    return switch (cat) {
+      'order' => l10n.notifCategoryOrder,
+      'inventory' => l10n.notifCategoryInventory,
+      'promotion' => l10n.notifCategoryPromotion,
+      'system' => l10n.notifCategorySystem,
+      'payment' => l10n.notifCategoryPayment,
+      'staff' => l10n.notifCategoryStaff,
+      _ => cat,
+    };
+  }
+
+  String _localizedChannel(AppLocalizations l10n, String ch) {
+    return switch (ch) {
+      'in_app' => l10n.notificationsInApp,
+      'push' => l10n.notificationsPush,
+      'email' => l10n.notifPrefEmail,
+      'sms' => l10n.notifPrefSms,
+      _ => ch,
+    };
   }
 
   IconData _categoryIcon(String category) {

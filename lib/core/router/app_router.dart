@@ -89,7 +89,6 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_installm
 import 'package:wameedpos/features/settings/pages/store_installment_config_page.dart';
 import 'package:wameedpos/features/payments/pages/daily_summary_page.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_sessions_page.dart';
-import 'package:wameedpos/features/pos_terminal/pages/pos_terminal_form_page.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_terminals_page.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_cashier_page.dart';
 import 'package:wameedpos/features/staff/pages/attendance_page.dart';
@@ -504,15 +503,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           // ─── POS Terminal ─────────────────────────────
           GoRoute(path: Routes.posSessions, name: 'posSessions', builder: (context, state) => const PosSessionsPage()),
           GoRoute(path: Routes.posTerminals, name: 'posTerminals', builder: (context, state) => const PosTerminalsPage()),
-          GoRoute(path: Routes.posTerminalAdd, name: 'posTerminalAdd', builder: (context, state) => const PosTerminalFormPage()),
-          GoRoute(
-            path: Routes.posTerminalEdit,
-            name: 'posTerminalEdit',
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              return PosTerminalFormPage(terminalId: id);
-            },
-          ),
 
           // ─── Orders ───────────────────────────────────
           GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),

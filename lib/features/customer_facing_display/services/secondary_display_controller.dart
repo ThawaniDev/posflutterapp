@@ -140,6 +140,28 @@ class SecondaryDisplayController {
     await _send(payload);
   }
 
+  /// Show a customer-facing "tap your card" prompt while the cashier waits
+  /// for the SoftPOS / NFC reader to capture the payment.
+  Future<void> pushAwaitingPayment({
+    required double total,
+    String currency = '',
+    String? message,
+    String? subtitle,
+    String? logoUrl,
+    String? storeName,
+  }) async {
+    final payload = <String, dynamic>{
+      'type': 'awaiting_payment',
+      'total': total,
+      'currency': currency,
+      if (message != null) 'message': message,
+      if (subtitle != null) 'subtitle': subtitle,
+      if (logoUrl != null) 'logo_url': logoUrl,
+      if (storeName != null) 'store_name': storeName,
+    };
+    await _send(payload);
+  }
+
   Future<void> _send(Map<String, dynamic> payload) async {
     // Always remember the latest payload so the in-app preview can render it
     // even when no physical secondary display is attached.

@@ -15,7 +15,6 @@ String? permissionForRoute(String path) {
   if (path == '/pos/checkout') return Permissions.posSell;
   if (path.startsWith('/pos/shift')) return Permissions.posShiftOpen;
   if (path.startsWith('/pos/sessions')) return Permissions.posViewSessions;
-  if (path.startsWith('/pos/terminals/add')) return Permissions.posManageTerminals;
   if (path.startsWith('/pos/terminals')) return Permissions.posManageTerminals;
   if (path == '/pos') return Permissions.posSell;
 

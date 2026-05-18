@@ -232,8 +232,6 @@ class PosTerminalApiService {
     final response = await _dio.get(ApiEndpoints.posRegisters);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
-    // ignore: avoid_print
-    print('[SoftPOS][API] /pos/registers raw first item: ${list.isNotEmpty ? list.first : "EMPTY"}');
     return list.map((j) => Register.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -256,30 +254,8 @@ class PosTerminalApiService {
     );
   }
 
-  Future<Register> createTerminal(Map<String, dynamic> data) async {
-    final response = await _dio.post(ApiEndpoints.posTerminals, data: data);
-    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
-  }
-
-  Future<Register> getTerminal(String terminalId) async {
-    final response = await _dio.get('${ApiEndpoints.posTerminals}/$terminalId');
-    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
-  }
-
-  Future<Register> updateTerminal(String terminalId, Map<String, dynamic> data) async {
-    final response = await _dio.put('${ApiEndpoints.posTerminals}/$terminalId', data: data);
-    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
-  }
-
-  Future<void> deleteTerminal(String terminalId) async {
-    await _dio.delete('${ApiEndpoints.posTerminals}/$terminalId');
-  }
-
-  Future<Register> toggleTerminalStatus(String terminalId) async {
-    final response = await _dio.post('${ApiEndpoints.posTerminals}/$terminalId/toggle-status');
+  Future<Register> renameTerminal(String terminalId, String name) async {
+    final response = await _dio.put('${ApiEndpoints.posTerminals}/$terminalId', data: {'name': name});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Register.fromJson(apiResponse.data as Map<String, dynamic>);
   }

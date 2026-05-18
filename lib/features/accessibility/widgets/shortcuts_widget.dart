@@ -284,6 +284,8 @@ class _ShortcutTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return ListTile(
       leading: Icon(
@@ -308,7 +310,7 @@ class _ShortcutTile extends StatelessWidget {
           AppSpacing.gapW4,
           IconButton(
             icon: const Icon(Icons.edit_outlined, size: 16),
-            tooltip: 'Reassign',
+            tooltip: l10n.reassign,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
             onPressed: () => onEdit(context),
@@ -383,7 +385,7 @@ class _NavigationShortcutsGroup extends StatelessWidget {
                 AppSpacing.gapW8,
                 Text(l10n.accessibilityShortcutsNavigation, style: AppTypography.headlineSmall),
                 AppSpacing.gapW8,
-                const PosBadge(label: 'System', variant: PosBadgeVariant.info),
+                PosBadge(label: l10n.system, variant: PosBadgeVariant.info),
               ],
             ),
           ),

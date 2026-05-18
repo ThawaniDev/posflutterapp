@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
@@ -34,61 +32,25 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   }
 
   // ──────────────────────────────────────────────────────────
-  // Delete
+  // Rename
   // ──────────────────────────────────────────────────────────
 
-  Future<void> _handleDelete(Register terminal) async {
-    final confirmed = await showPosConfirmDialog(
-      context,
-      title: AppLocalizations.of(context)!.terminalsDeleteTitle,
-      message: AppLocalizations.of(context)!.terminalsDeleteMessage(terminal.name),
-      confirmLabel: AppLocalizations.of(context)!.posDelete,
-      isDanger: true,
+  Future<void> _handleRename(Register terminal) async {
+    final updatedName = await showDialog<String>(
+      context: context,
+      builder: (context) => _RenameTerminalDialog(initialName: terminal.name),
     );
-    if (confirmed == true && mounted) {
-      final ok = await ref.read(terminalsProvider.notifier).deleteTerminal(terminal.id);
-      if (mounted) {
-        if (ok) {
-          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.terminalsDeleted(terminal.name));
-        } else {
-          showPosErrorSnackbar(context, AppLocalizations.of(context)!.terminalsDeleteFailed);
-        }
-      }
-    }
-  }
 
-  // ──────────────────────────────────────────────────────────
-  // Toggle active
-  // ──────────────────────────────────────────────────────────
+    final name = updatedName?.trim();
+    if (name == null || name.isEmpty || name == terminal.name) return;
 
-  Future<void> _handleToggleStatus(Register terminal) async {
-    final action = terminal.isActive
-        ? AppLocalizations.of(context)!.terminalsDeactivate
-        : AppLocalizations.of(context)!.terminalsActivate;
-    final confirmed = await showPosConfirmDialog(
-      context,
-      title: AppLocalizations.of(context)!.terminalsToggleTitle(action),
-      message: AppLocalizations.of(context)!.terminalsToggleMessage(action, terminal.name),
-      confirmLabel: action,
-      isDanger: terminal.isActive,
-    );
-    if (confirmed == true && mounted) {
-      final ok = await ref.read(terminalsProvider.notifier).toggleTerminalStatus(terminal.id);
-      if (mounted) {
-        if (ok) {
-          showPosSuccessSnackbar(
-            context,
-            AppLocalizations.of(context)!.terminalsToggled(
-              terminal.name,
-              terminal.isActive
-                  ? AppLocalizations.of(context)!.terminalsDeactivatedLower
-                  : AppLocalizations.of(context)!.terminalsActivatedLower,
-            ),
-          );
-        } else {
-          showPosErrorSnackbar(context, AppLocalizations.of(context)!.terminalsToggleFailed);
-        }
-      }
+    final ok = await ref.read(terminalsProvider.notifier).renameTerminal(terminal.id, name);
+    if (!mounted) return;
+
+    if (ok) {
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.termFormUpdated);
+    } else {
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.termFormUpdateFailed);
     }
   }
 
@@ -111,9 +73,6 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         _searchController.clear();
         ref.read(terminalsProvider.notifier).search('');
       },
-      actions: [
-        PosButton(label: l10n.terminalsAdd, icon: Icons.add_rounded, onPressed: () => context.push(Routes.posTerminalAdd)),
-      ],
       child: _buildTable(state),
     );
   }
@@ -150,19 +109,8 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
       actions: [
         PosTableRowAction<Register>(
           label: AppLocalizations.of(context)!.terminalsEdit,
-          icon: Icons.edit_outlined,
-          onTap: (terminal) => context.push(Routes.posTerminalEdit.replaceFirst(':id', terminal.id)),
-        ),
-        PosTableRowAction<Register>(
-          label: AppLocalizations.of(context)!.terminalsToggleStatus,
-          icon: Icons.toggle_on_outlined,
-          onTap: _handleToggleStatus,
-        ),
-        PosTableRowAction<Register>(
-          label: AppLocalizations.of(context)!.posDelete,
-          icon: Icons.delete_outline,
-          isDestructive: true,
-          onTap: _handleDelete,
+          icon: Icons.drive_file_rename_outline_rounded,
+          onTap: _handleRename,
         ),
       ],
       // Pagination
@@ -182,8 +130,6 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         icon: Icons.point_of_sale_outlined,
         title: AppLocalizations.of(context)!.terminalsNoTerminals,
         subtitle: AppLocalizations.of(context)!.terminalsNoTerminalsSubtitle,
-        actionLabel: AppLocalizations.of(context)!.terminalsAdd,
-        action: () => context.push(Routes.posTerminalAdd),
       ),
     );
   }
@@ -294,6 +240,92 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   }
 
   String _pad(int n) => n.toString().padLeft(2, '0');
+}
+
+class _RenameTerminalDialog extends StatefulWidget {
+  const _RenameTerminalDialog({required this.initialName});
+
+  final String initialName;
+
+  @override
+  State<_RenameTerminalDialog> createState() => _RenameTerminalDialogState();
+}
+
+class _RenameTerminalDialogState extends State<_RenameTerminalDialog> {
+  late final TextEditingController _controller;
+  String? _errorText;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialName);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final name = _controller.text.trim();
+    if (name.isEmpty) {
+      setState(() => _errorText = AppLocalizations.of(context)!.termFormNameRequired);
+      return;
+    }
+
+    Navigator.of(context).pop(name);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Dialog(
+      insetPadding: const EdgeInsets.all(24),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: AppSizes.maxWidthDialog),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l10n.terminalsEdit, style: AppTypography.headlineSmall),
+              AppSpacing.gapH20,
+              PosTextField(
+                controller: _controller,
+                label: l10n.posTerminalName,
+                hint: l10n.posTerminalNameHint,
+                errorText: _errorText,
+                autofocus: true,
+                textInputAction: TextInputAction.done,
+                onChanged: (_) {
+                  if (_errorText != null) setState(() => _errorText = null);
+                },
+                onSubmitted: (_) => _submit(),
+              ),
+              AppSpacing.gapH24,
+              Row(
+                children: [
+                  Expanded(
+                    child: PosButton(
+                      label: l10n.cancel,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: PosButton(label: l10n.save, icon: Icons.save_outlined, onPressed: _submit),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // ──────────────────────────────────────────────────────────────────────────────

@@ -273,7 +273,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
                       final savings = monthlyCost - plan.annualPrice!;
                       if (savings > 0) {
                         return Text(
-                          'Save ${savings.toStringAsFixed(3)} /year',
+                          'Save ${savings.toStringAsFixed(2)} /year',
                           style: const TextStyle(color: AppColors.success, fontSize: 12, fontWeight: FontWeight.w600),
                         );
                       }
@@ -298,49 +298,65 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
                 ],
 
                 // SoftPOS Free Tier
-                if (plan.softposFreeEligible && plan.softposFreeThreshold != null) ...[
-                  AppSpacing.gapH12,
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.success.withValues(alpha: 0.08), AppColors.primary.withValues(alpha: 0.06)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: AppRadius.borderMd,
-                      border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.contactless, size: 18, color: AppColors.success),
-                            AppSpacing.gapW8,
-                            Expanded(
-                              child: Text(
-                                l10n.subSoftPosFreeAfter(plan.softposFreeThreshold!),
-                                style: const TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 13),
-                              ),
+                if (plan.softposFreeEligible &&
+                    (plan.softposFreeThresholdAmount != null || plan.softposFreeThreshold != null)) ...[
+                  Builder(
+                    builder: (context) {
+                      final hasAmount = plan.softposFreeThresholdAmount != null && plan.softposFreeThresholdAmount! > 0;
+                      final period = plan.softposFreeThresholdPeriod ?? 'monthly';
+                      final headline = hasAmount
+                          ? l10n.subSoftPosFreeAfterAmount(plan.softposFreeThresholdAmount!.toStringAsFixed(2))
+                          : l10n.subSoftPosFreeAfter(plan.softposFreeThreshold!);
+                      final explainer = hasAmount
+                          ? l10n.subSoftPosFreeExplainerAmount(plan.softposFreeThresholdAmount!.toStringAsFixed(2), period)
+                          : l10n.subSoftPosFreeExplainer(plan.softposFreeThreshold!, period);
+
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [AppColors.success.withValues(alpha: 0.08), AppColors.primary.withValues(alpha: 0.06)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                          ],
+                            borderRadius: AppRadius.borderMd,
+                            border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.contactless, size: 18, color: AppColors.success),
+                                  AppSpacing.gapW8,
+                                  Expanded(
+                                    child: Text(
+                                      headline,
+                                      style: const TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              AppSpacing.gapH4,
+                              Text(
+                                explainer,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
+                              ),
+                              AppSpacing.gapH4,
+                              Text(
+                                l10n.subSoftPosOrPay(price.toStringAsFixed(2), ' $period'),
+                                style: TextStyle(color: AppColors.mutedFor(context), fontSize: 11, fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          ),
                         ),
-                        AppSpacing.gapH4,
-                        Text(
-                          l10n.subSoftPosFreeExplainer(plan.softposFreeThreshold!, plan.softposFreeThresholdPeriod ?? 'monthly'),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontSize: 11),
-                        ),
-                        AppSpacing.gapH4,
-                        Text(
-                          l10n.subSoftPosOrPay(price.toStringAsFixed(2), ' $period'),
-                          style: TextStyle(color: AppColors.mutedFor(context), fontSize: 11, fontStyle: FontStyle.italic),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
 

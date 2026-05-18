@@ -272,7 +272,10 @@ class _RetentionTab extends ConsumerWidget {
             ReportDataCard(
               child: Column(
                 children: [
-                  ReportStatRow(label: l10n.reportsAvgVisits, value: (data['avg_visits'] as num?)?.toStringAsFixed(1) ?? '0'),
+                  ReportStatRow(
+                    label: l10n.reportsAvgVisits,
+                    value: (data['avg_visit_count'] as num?)?.toStringAsFixed(1) ?? '0',
+                  ),
                   ReportStatRow(label: l10n.reportsAvgSpend, value: formatCurrency((data['avg_spend'] as num?) ?? 0)),
                   ReportStatRow(
                     label: l10n.reportsAvgLoyaltyPoints,

@@ -162,7 +162,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                       ),
                       const Spacer(),
                       PosButton(
-                        label: 'Impersonate',
+                        label: l10n.impersonate,
                         variant: PosButtonVariant.outline,
                         size: PosButtonSize.sm,
                         icon: Icons.manage_accounts_outlined,
@@ -334,7 +334,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ─── Usage Stats ──────────────────────────────
-          Text('Usage Statistics', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+          Text(l10n.usageStatistics, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           LayoutBuilder(
             builder: (ctx, constraints) {
@@ -353,7 +353,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   ),
                   _metricCard(
                     theme,
-                    label: 'Orders (30d)',
+                    label: l10n.orders30d,
                     value: '${usage['recent_orders_30d'] ?? 0}',
                     icon: Icons.receipt_outlined,
                     color: AppColors.success,
@@ -369,7 +369,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   ),
                   _metricCard(
                     theme,
-                    label: 'Registers',
+                    label: l10n.registers,
                     value: '${usage['registers_count'] ?? 0}',
                     icon: Icons.point_of_sale_outlined,
                     color: AppColors.primary,
@@ -377,7 +377,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   ),
                   _metricCard(
                     theme,
-                    label: 'Branches',
+                    label: l10n.branches,
                     value: '${usage['branches_count'] ?? 0}',
                     icon: Icons.store_outlined,
                     color: AppColors.info,
@@ -385,7 +385,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
                   ),
                   _metricCard(
                     theme,
-                    label: 'Delivery Platforms',
+                    label: l10n.deliveryPlatforms,
                     value: '${usage['delivery_platforms_count'] ?? 0}',
                     icon: Icons.delivery_dining_outlined,
                     color: AppColors.warning,
@@ -399,7 +399,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
 
           // ─── Branches ────────────────────────────────
           if (branches.isNotEmpty) ...[
-            Text('Branches', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            Text(l10n.branches, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
             AppSpacing.gapH12,
             ...branches.map(
               (b) => Padding(
@@ -440,7 +440,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
 
           // ─── Delivery Platforms ───────────────────────
           if (deliveryPlatforms.isNotEmpty) ...[
-            Text('Delivery Platforms', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            Text(l10n.deliveryPlatforms, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
             AppSpacing.gapH12,
             ...deliveryPlatforms.map(
               (dp) => Padding(
@@ -625,7 +625,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
           children: [
             Icon(Icons.point_of_sale_outlined, size: 48, color: AppColors.mutedFor(context)),
             AppSpacing.gapH12,
-            Text('No POS terminals registered', style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context))),
+            Text(l10n.noPosTerminalsRegistered, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context))),
           ],
         ),
       );
@@ -702,7 +702,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
 
   Widget _buildNotesTab(Map<String, dynamic> store, ThemeData theme) {
     final orgId = store['organization']?['id']?.toString() ?? store['organization_id']?.toString();
-    if (orgId == null) return const Center(child: Text('Organization not found'));
+    if (orgId == null) return Center(child: Text(l10n.organizationNotFound));
     return _NotesTabContent(storeId: widget.storeId, organizationId: orgId);
   }
 
@@ -780,18 +780,18 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
             Icon(Icons.manage_accounts, color: AppColors.warning),
             AppSpacing.gapW8,
-            Text('Impersonation Active'),
+            Text(l10n.impersonationActive),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('You are now impersonating:'),
+            Text(l10n.youAreNowImpersonating),
             AppSpacing.gapH8,
             Container(
               padding: AppSpacing.paddingAll12,
@@ -817,7 +817,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
         ),
         actions: [
           PosButton(
-            label: 'Extend (30 min)',
+            label: l10n.extend30Min,
             variant: PosButtonVariant.outline,
             size: PosButtonSize.sm,
             onPressed: () {
@@ -826,7 +826,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
             },
           ),
           PosButton(
-            label: 'End Session',
+            label: l10n.endSession,
             variant: PosButtonVariant.danger,
             size: PosButtonSize.sm,
             onPressed: () {
@@ -870,6 +870,8 @@ class _NotesTabContentState extends ConsumerState<_NotesTabContent> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerNotesProvider);
     final theme = Theme.of(context);
 
@@ -889,14 +891,14 @@ class _NotesTabContentState extends ConsumerState<_NotesTabContent> {
               Expanded(
                 child: PosTextField(
                   controller: _noteController,
-                  label: 'Internal Note',
-                  hint: 'Add a note visible only to admins...',
+                  label: l10n.internalNote,
+                  hint: l10n.addANoteVisibleOnlyToAdmins,
                   maxLines: 2,
                 ),
               ),
               AppSpacing.gapW8,
               PosButton(
-                label: 'Add',
+                label: l10n.add,
                 size: PosButtonSize.sm,
                 icon: Icons.add,
                 onPressed: () {
@@ -919,7 +921,7 @@ class _NotesTabContentState extends ConsumerState<_NotesTabContent> {
                 children: [
                   Icon(Icons.sticky_note_2_outlined, size: 48, color: AppColors.mutedFor(context)),
                   AppSpacing.gapH8,
-                  const Text('No internal notes yet'),
+                  Text(l10n.noInternalNotesYet),
                 ],
               ),
             ),

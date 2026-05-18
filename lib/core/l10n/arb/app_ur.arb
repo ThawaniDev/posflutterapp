@@ -3048,15 +3048,15 @@
       }
     }
   },
-  "terminalsEdit": "ترمیم",
+  "terminalsEdit": "نام تبدیل کریں",
   "terminalsInactive": "Inactive",
   "terminalsNever": "کبھی نہیں",
   "terminalsNoTerminals": "کوئی ٹرمینل نہیں ملا",
-  "terminalsNoTerminalsSubtitle": "شروع کرنے کے لیے اپنا پہلا پی او ایس ٹرمینل شامل کریں۔",
+  "terminalsNoTerminalsSubtitle": "ٹرمینلز بیک اینڈ سے منظم کیے جاتے ہیں۔",
   "terminalsOff": "بند",
   "terminalsOn": "آن",
   "terminalsSearch": "ٹرمینلز تلاش کریں...",
-  "terminalsSubtitle": "پی او ایس ٹرمینل رجسٹرز کا انتظام",
+  "terminalsSubtitle": "پی او ایس ٹرمینل رجسٹرز دیکھیں",
   "terminalsTitle": "ٹرمینلز",
   "terminalsToggleFailed": "ناکام تک update terminal status.",
   "terminalsToggleMessage": "{action} terminal \"{name}\"?",
@@ -6664,6 +6664,31 @@
   "softPosRemaining": "باقی",
   "softPosTransactions": "لین دین",
   "softPosReachThreshold": "مفت SoftPOS فعال کرنے کے لیے {threshold} لین دین مکمل کریں",
+  "softPosReachAmountThreshold": "مفت سبسکرپشن کے لیے SoftPOS پر {amount} SAR فروخت مکمل کریں",
+  "@softPosReachAmountThreshold": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosAmountProgress": "{current} / {total} SAR ({remaining} SAR {remainingLabel})",
+  "@softPosAmountProgress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      },
+      "remainingLabel": {
+        "type": "String"
+      }
+    }
+  },
   "softPosSaving": "آپ ماہانہ {amount} بچا رہے ہیں!",
   "subBillingCycleMonthly": "ماہانہ",
   "subBillingCycleYearly": "سالانہ",
@@ -7049,11 +7074,30 @@
       }
     }
   },
+  "subSoftPosFreeAfterAmount": "{amount} SAR SoftPOS فروخت کے بعد مفت",
+  "@subSoftPosFreeAfterAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "subSoftPosFreeExplainer": "{period} کے اندر {threshold} کارڈ ادائیگیاں قبول کرنے کے لیے SoftPOS استعمال کریں اور آپ کی سبسکرپشن مفت ہو جائے گی!",
   "@subSoftPosFreeExplainer": {
     "placeholders": {
       "threshold": {
         "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeExplainerAmount": "{period} کے اندر {amount} SAR کارڈ ادائیگیاں قبول کرنے کے لیے SoftPOS استعمال کریں اور آپ کی سبسکرپشن مفت ہو جائے گی!",
+  "@subSoftPosFreeExplainerAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       },
       "period": {
         "type": "String"

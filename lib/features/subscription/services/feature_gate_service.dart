@@ -7,7 +7,7 @@ import 'package:wameedpos/core/constants/storage_keys.dart';
 import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
 
 /// Provider for FeatureGateService.
-final featureGateServiceProvider = Provider<FeatureGateService>((ref) {
+final featureGateServiceProvider = ChangeNotifierProvider<FeatureGateService>((ref) {
   return FeatureGateService(ref.watch(subscriptionApiServiceProvider));
 });
 
@@ -17,8 +17,7 @@ final featureGateServiceProvider = Provider<FeatureGateService>((ref) {
 /// - Checks if a resource is within quota (plan limits).
 /// - Caches softPOS threshold info and feature-route mapping.
 /// - Falls back to local cache when offline.
-class FeatureGateService {
-
+class FeatureGateService extends ChangeNotifier {
   FeatureGateService(this._apiService);
   final SubscriptionApiService _apiService;
 
@@ -140,7 +139,7 @@ class FeatureGateService {
 
       // Cache plan details
       if (data.containsKey('plan')) {
-        _planDetails = Map<String, dynamic>.from(data['plan'] as Map? ?? {});
+        _planDetails = _extractPlanDetails(data);
       }
 
       // Cache subscription status
@@ -155,6 +154,7 @@ class FeatureGateService {
 
       await _saveToLocalStorage(data);
 
+      notifyListeners();
       debugPrint('[FeatureGateService] Entitlements synced: ${_featureCache.length} features, ${_limitsCache.length} limits');
     } catch (e) {
       debugPrint('[FeatureGateService] Sync failed, using cached data: $e');
@@ -166,6 +166,7 @@ class FeatureGateService {
     _featureCache = features;
     _limitsCache = limits;
     _lastSyncedAt = DateTime.now();
+    notifyListeners();
   }
 
   /// Load cached entitlements from SharedPreferences.
@@ -192,7 +193,7 @@ class FeatureGateService {
         _featureRouteMapping = mapping.map((k, v) => MapEntry(k, (v as List).cast<String>()));
       }
       if (data.containsKey('plan')) {
-        _planDetails = Map<String, dynamic>.from(data['plan'] as Map? ?? {});
+        _planDetails = _extractPlanDetails(data);
       }
       if (data.containsKey('subscription')) {
         _subscriptionStatus = Map<String, dynamic>.from(data['subscription'] as Map? ?? {});
@@ -203,9 +204,17 @@ class FeatureGateService {
       }
 
       debugPrint('[FeatureGateService] Loaded cached entitlements: ${_featureCache.length} features');
+      notifyListeners();
     } catch (e) {
       debugPrint('[FeatureGateService] Failed to load cached entitlements: $e');
     }
+  }
+
+  Map<String, dynamic> _extractPlanDetails(Map<String, dynamic> data) {
+    final plan = Map<String, dynamic>.from(data['plan'] as Map? ?? {});
+    plan['hide_from_public'] = plan['hide_from_public'] ?? data['hide_from_public'] ?? false;
+    plan['hide_unselected_features'] = plan['hide_unselected_features'] ?? data['hide_unselected_features'] ?? false;
+    return plan;
   }
 
   /// Save entitlements to SharedPreferences.
@@ -227,6 +236,7 @@ class FeatureGateService {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(StorageKeys.subscriptionEntitlements);
     } catch (_) {}
+    notifyListeners();
   }
 
   /// All cached features.
@@ -243,6 +253,24 @@ class FeatureGateService {
 
   /// Cached plan details.
   Map<String, dynamic>? get planDetails => _planDetails;
+
+  /// When true, sidebar items whose feature_key is disabled for the current
+  /// plan should be hidden entirely rather than shown as locked/greyed out.
+  bool get hideUnselectedFeatures {
+    final value = _planDetails?['hide_unselected_features'];
+    if (value is bool) return value;
+    if (value is num) return value != 0;
+    if (value is String) {
+      final normalized = value.trim().toLowerCase();
+      if (normalized == 'true' || normalized == '1') return true;
+      if (normalized == 'false' || normalized == '0') return false;
+    }
+
+    // Compatibility for cached entitlement payloads from before the visibility
+    // flag was added to the nested plan object.
+    final slug = _planDetails?['slug']?.toString() ?? _planDetails?['code']?.toString();
+    return slug == 'small-supermarket';
+  }
 
   /// Cached subscription status.
   Map<String, dynamic>? get subscriptionStatus => _subscriptionStatus;

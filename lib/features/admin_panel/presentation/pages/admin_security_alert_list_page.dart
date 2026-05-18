@@ -100,7 +100,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                 final searchField = TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search alerts...',
+                    hintText: l10n.searchAlerts,
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),

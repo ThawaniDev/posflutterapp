@@ -82,7 +82,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search versions...',
+                      hintText: l10n.searchVersions,
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),

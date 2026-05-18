@@ -58,7 +58,7 @@ class _ThawaniMenuPageState extends ConsumerState<ThawaniMenuPage> {
       _load();
     } else {
       final s = ref.read(thawaniMenuActionProvider);
-      _showSnack(s is ThawaniMenuActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniMenuActionError ? s.message: l10n.error, isError: true);
     }
   }
 
@@ -71,7 +71,7 @@ class _ThawaniMenuPageState extends ConsumerState<ThawaniMenuPage> {
       _load();
     } else {
       final s = ref.read(thawaniMenuActionProvider);
-      _showSnack(s is ThawaniMenuActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniMenuActionError ? s.message: l10n.error, isError: true);
     }
   }
 
@@ -82,7 +82,7 @@ class _ThawaniMenuPageState extends ConsumerState<ThawaniMenuPage> {
       _showSnack(l10n.thawaniInventorySync, isError: false);
     } else {
       final s = ref.read(thawaniMenuActionProvider);
-      _showSnack(s is ThawaniMenuActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniMenuActionError ? s.message: l10n.error, isError: true);
     }
   }
 

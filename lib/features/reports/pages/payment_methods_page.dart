@@ -53,7 +53,7 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
             icon: Icons.download_rounded,
             tooltip: l10n.reportsExportFormatTitle,
             variant: PosButtonVariant.ghost,
-            onPressed: () => showReportExportSheet(context: context, reportType: 'sales_summary', filters: _filters),
+            onPressed: () => showReportExportSheet(context: context, reportType: 'payment_methods', filters: _filters),
           ),
         ],
         filterPanel: ReportFilterPanel(

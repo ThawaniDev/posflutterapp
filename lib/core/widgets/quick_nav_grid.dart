@@ -24,9 +24,6 @@ class _QuickNavGridDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final isDesktop = screenWidth >= 1024;
-    final crossAxisCount = isDesktop ? 5 : (screenWidth >= 600 ? 4 : 3);
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -64,7 +61,6 @@ class _QuickNavGridDialog extends StatelessWidget {
                       if (i > 0) const SizedBox(height: 16),
                       _GroupSection(
                         group: groups[i],
-                        crossAxisCount: crossAxisCount,
                         onItemTap: (route) {
                           Navigator.of(context).pop();
                           context.go(route);
@@ -83,10 +79,9 @@ class _QuickNavGridDialog extends StatelessWidget {
 }
 
 class _GroupSection extends StatelessWidget {
-  const _GroupSection({required this.group, required this.crossAxisCount, required this.onItemTap});
+  const _GroupSection({required this.group, required this.onItemTap});
 
   final PosSidebarGroup group;
-  final int crossAxisCount;
   final ValueChanged<String> onItemTap;
 
   @override
@@ -103,8 +98,10 @@ class _GroupSection extends StatelessWidget {
       }
     }
 
-    // Only items with routes
-    final navigableItems = allItems.where((item) => item.route != null).toList();
+    // Only items that can actually navigate. Locked items remain in the main
+    // sidebar when a plan wants them visible, but Quick Nav should not bypass
+    // the locked-item flow.
+    final navigableItems = allItems.where((item) => item.route != null && !item.isLocked).toList();
     if (navigableItems.isEmpty) return const SizedBox.shrink();
 
     return Column(
@@ -124,27 +121,43 @@ class _GroupSection extends StatelessWidget {
         const SizedBox(height: 8),
 
         // Grid
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: navigableItems
-              .map(
-                (item) => SizedBox(
-                  width: _tileWidth(context),
-                  child: _QuickNavTile(item: item, onTap: () => onItemTap(item.route!)),
-                ),
-              )
-              .toList(),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final availableWidth = constraints.maxWidth.isFinite ? constraints.maxWidth.clamp(0.0, double.infinity) : 0.0;
+            final crossAxisCount = _crossAxisCountForWidth(availableWidth);
+            final tileWidth = _tileWidth(availableWidth, crossAxisCount);
+
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: navigableItems
+                  .map(
+                    (item) => SizedBox(
+                      width: tileWidth,
+                      child: _QuickNavTile(item: item, onTap: () => onItemTap(item.route!)),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
         ),
       ],
     );
   }
 
-  double _tileWidth(BuildContext context) {
-    // Available width: min(screenWidth - insetPadding(32), maxWidth(780)) - scrollPadding(32)
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final dialogContentWidth = (screenWidth - 32).clamp(0.0, 780.0) - 32;
-    return (dialogContentWidth - (crossAxisCount - 1) * 8) / crossAxisCount;
+  int _crossAxisCountForWidth(double width) {
+    if (width >= 720) return 5;
+    if (width >= 560) return 4;
+    if (width >= 360) return 3;
+    if (width >= 220) return 2;
+    return 1;
+  }
+
+  double _tileWidth(double availableWidth, int crossAxisCount) {
+    const spacing = 8.0;
+    final normalizedWidth = availableWidth.isFinite ? availableWidth.clamp(0.0, double.infinity) : 0.0;
+    final totalSpacing = (crossAxisCount - 1) * spacing;
+    return ((normalizedWidth - totalSpacing) / crossAxisCount).clamp(0.0, normalizedWidth);
   }
 }
 

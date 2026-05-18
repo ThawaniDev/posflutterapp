@@ -118,7 +118,7 @@ class _BackupDashboardPageState extends ConsumerState<BackupDashboardPage> {
                   PosTextField(
                     controller: terminalController,
                     label: l10n.backupTerminalId,
-                    hint: 'e.g. terminal-001',
+                    hint: l10n.egTerminal001,
                     prefixIcon: Icons.devices_rounded,
                   ),
                   const SizedBox(height: AppSpacing.lg),

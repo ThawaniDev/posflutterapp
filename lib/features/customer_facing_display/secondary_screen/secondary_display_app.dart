@@ -9,7 +9,7 @@
 //
 // Payload shape (JSON):
 // {
-//   "type": "idle" | "cart" | "receipt",
+//   "type": "idle" | "cart" | "receipt" | "awaiting_payment",
 //   "logo_url": "https://...",
 //   "store_name": "Store Name",
 //   "welcome": "Welcome",
@@ -19,13 +19,18 @@
 //   "discount": 0.0,
 //   "tax": 0.0,
 //   "total": 0.0,
-//   "change": 0.0
+//   "change": 0.0,
+//   "message": "Tap your card to pay",
+//   "subtitle": "Waiting for payment"
 // }
 
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_presentation_display/flutter_presentation_display.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 Route<dynamic> secondaryDisplayRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -40,13 +45,16 @@ class SecondaryDisplayApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Customer Display',
+      title: l10n.customerDisplay,
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFD8209)),
+        fontFamily: AppTypography.fontFamily,
         useMaterial3: true,
       ),
       onGenerateRoute: secondaryDisplayRoute,
@@ -68,13 +76,18 @@ class SecondaryDisplayPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final type = payload['type']?.toString() ?? 'idle';
-    return Container(
-      color: Colors.white,
-      child: type == 'cart'
-          ? _PreviewCartBody(payload: payload)
-          : type == 'receipt'
-          ? _PreviewReceiptBody(payload: payload)
-          : _PreviewIdleBody(payload: payload),
+    return DefaultTextStyle.merge(
+      style: const TextStyle(fontFamily: AppTypography.fontFamily),
+      child: Container(
+        color: Colors.white,
+        child: type == 'cart'
+            ? _PreviewCartBody(payload: payload)
+            : type == 'receipt'
+            ? _PreviewReceiptBody(payload: payload)
+            : type == 'awaiting_payment'
+            ? _AwaitingPaymentView(data: payload)
+            : _PreviewIdleBody(payload: payload),
+      ),
     );
   }
 }
@@ -123,6 +136,8 @@ class _PreviewCartBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final logoUrl = payload['logo_url']?.toString();
     final storeName = payload['store_name']?.toString();
     final items = (payload['items'] as List?) ?? const [];
@@ -163,8 +178,8 @@ class _PreviewCartBody extends StatelessWidget {
         // ── Items ──
         Expanded(
           child: items.isEmpty
-              ? const Center(
-                  child: Text('Cart is empty', style: TextStyle(fontSize: 20, color: Colors.black38)),
+              ? Center(
+                  child: Text(l10n.cartIsEmpty, style: TextStyle(fontSize: 20, color: Colors.black38)),
                 )
               : ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -245,6 +260,8 @@ class _PreviewReceiptBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final total = _num(payload['total']);
     final change = _num(payload['change']);
     final currency = _displayCurrency(payload['currency']);
@@ -254,7 +271,7 @@ class _PreviewReceiptBody extends StatelessWidget {
         children: [
           const Icon(Icons.check_circle_rounded, size: 160, color: Colors.green),
           const SizedBox(height: 16),
-          const Text('Payment Successful', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
+          Text(l10n.paymentSuccessful, style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
           const SizedBox(height: 16),
           Text('Total: ${total.toStringAsFixed(3)} $currency', style: const TextStyle(fontSize: 24)),
           if (change > 0) ...[
@@ -302,9 +319,12 @@ class _SecondaryDisplayScreenState extends State<_SecondaryDisplayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AnimatedSwitcher(duration: const Duration(milliseconds: 250), child: _buildView(_payload)),
+    return DefaultTextStyle.merge(
+      style: const TextStyle(fontFamily: AppTypography.fontFamily),
+      child: Scaffold(
+        body: SafeArea(
+          child: AnimatedSwitcher(duration: const Duration(milliseconds: 250), child: _buildView(_payload)),
+        ),
       ),
     );
   }
@@ -316,6 +336,8 @@ class _SecondaryDisplayScreenState extends State<_SecondaryDisplayScreen> {
         return _CartView(key: const ValueKey('cart'), data: data);
       case 'receipt':
         return _ReceiptView(key: const ValueKey('receipt'), data: data);
+      case 'awaiting_payment':
+        return _AwaitingPaymentView(key: const ValueKey('awaiting'), data: data);
       case 'idle':
       default:
         return _IdleView(key: const ValueKey('idle'), data: data);
@@ -375,6 +397,8 @@ class _CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final logoUrl = data['logo_url']?.toString();
     final storeName = data['store_name']?.toString();
     final items = (data['items'] as List?) ?? const [];
@@ -413,8 +437,8 @@ class _CartView extends StatelessWidget {
           // Items list
           Expanded(
             child: items.isEmpty
-                ? const Center(
-                    child: Text('Your cart is empty', style: TextStyle(fontSize: 24, color: Colors.black38)),
+                ? Center(
+                    child: Text(l10n.yourCartIsEmpty, style: TextStyle(fontSize: 24, color: Colors.black38)),
                   )
                 : ListView.separated(
                     itemCount: items.length,
@@ -540,4 +564,256 @@ Widget _wameedFallbackLogo() {
     fit: BoxFit.contain,
     errorBuilder: (_, __, ___) => const Icon(Icons.store_rounded, size: 240, color: Color(0xFFFD8209)),
   );
+}
+
+// ─── Awaiting payment (NFC tap-to-pay prompt) ─────────────────────────
+//
+// Shown while the cashier-side is waiting for the customer to tap their
+// card/phone on the device's NFC reader (top-right of the Landi C20 PRO).
+// Pulsing concentric rings anchored near the top-right reader badge act as the
+// "tap zone" indicator, while diagonal chevron arrows animate from the
+// centre toward that inset target so the customer can see exactly where to tap.
+
+const double _nfcReaderEdgeInset = 50;
+const double _nfcReaderIconDiameter = 84;
+const double _nfcReaderCenterInset = _nfcReaderEdgeInset + _nfcReaderIconDiameter / 2;
+const double _nfcPulseDiameter = 520;
+
+class _AwaitingPaymentView extends StatefulWidget {
+  const _AwaitingPaymentView({super.key, required this.data});
+  final Map<String, dynamic> data;
+
+  @override
+  State<_AwaitingPaymentView> createState() => _AwaitingPaymentViewState();
+}
+
+class _AwaitingPaymentViewState extends State<_AwaitingPaymentView> with TickerProviderStateMixin {
+  late final AnimationController _pulseCtrl;
+  late final AnimationController _arrowCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..repeat();
+    _arrowCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat();
+  }
+
+  @override
+  void dispose() {
+    _pulseCtrl.dispose();
+    _arrowCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final total = _num(widget.data['total']);
+    final currency = _displayCurrency(widget.data['currency']);
+    final message = (widget.data['message']?.toString().trim().isNotEmpty ?? false)
+        ? widget.data['message'].toString()
+        : 'Tap your card here';
+    final subtitle = (widget.data['subtitle']?.toString().trim().isNotEmpty ?? false)
+        ? widget.data['subtitle'].toString()
+        : 'Waiting for payment';
+
+    return Container(
+      color: const Color(0xFFFFF6EC),
+      child: Stack(
+        children: [
+          // Pulsing rings anchored at the physical NFC reader badge, inset
+          // from the top-right corner on the Landi C20 PRO.
+          Positioned(
+            top: _nfcReaderCenterInset - _nfcPulseDiameter / 2,
+            right: _nfcReaderCenterInset - _nfcPulseDiameter / 2,
+            width: _nfcPulseDiameter,
+            height: _nfcPulseDiameter,
+            child: AnimatedBuilder(
+              animation: _pulseCtrl,
+              builder: (_, __) => CustomPaint(painter: _NfcPulsePainter(progress: _pulseCtrl.value)),
+            ),
+          ),
+
+          // Diagonal chevron arrows flowing from the centre toward the
+          // inset top-right NFC reader.
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: _arrowCtrl,
+              builder: (_, __) => CustomPaint(painter: _ArrowToCornerPainter(progress: _arrowCtrl.value)),
+            ),
+          ),
+
+          // "Tap here" callout aligned with the inset NFC reader badge.
+          Positioned(
+            top: _nfcReaderEdgeInset,
+            right: _nfcReaderEdgeInset,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ScaleTransition(
+                  scale: Tween<double>(
+                    begin: 0.92,
+                    end: 1.08,
+                  ).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut)),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: const BoxDecoration(color: Color(0xFFFD8209), shape: BoxShape.circle),
+                    child: const Icon(Icons.contactless_rounded, size: 56, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  message,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFFFD8209)),
+                ),
+              ],
+            ),
+          ),
+
+          // Centre content: amount + instruction + animated card.
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    '${total.toStringAsFixed(3)} $currency',
+                    style: const TextStyle(
+                      fontSize: 64,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF1F2933),
+                      letterSpacing: -1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  AnimatedBuilder(
+                    animation: _pulseCtrl,
+                    builder: (_, child) {
+                      final t = _pulseCtrl.value;
+                      // Gentle bobbing toward the corner.
+                      final dx = math.sin(t * 2 * math.pi) * 6;
+                      final dy = -math.sin(t * 2 * math.pi).abs() * 8;
+                      return Transform.translate(offset: Offset(dx, dy), child: child);
+                    },
+                    child: Container(
+                      width: 180,
+                      height: 116,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFFD8209), Color(0xFFFFB561)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFFD8209).withValues(alpha: 0.35),
+                            blurRadius: 24,
+                            offset: const Offset(0, 12),
+                          ),
+                        ],
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.contactless_rounded, color: Colors.white, size: 32),
+                            Text(
+                              '•••• •••• •••• 1234',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NfcPulsePainter extends CustomPainter {
+  _NfcPulsePainter({required this.progress});
+  final double progress; // 0..1
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    const ringCount = 4;
+    for (int i = 0; i < ringCount; i++) {
+      final t = ((progress + i / ringCount) % 1.0);
+      final radius = size.width * (0.35 + 0.55 * t);
+      final opacity = (1.0 - t).clamp(0.0, 1.0);
+      final paint = Paint()
+        ..color = const Color(0xFFFD8209).withValues(alpha: opacity * 0.35)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 6;
+      canvas.drawCircle(center, radius, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _NfcPulsePainter old) => old.progress != progress;
+}
+
+class _ArrowToCornerPainter extends CustomPainter {
+  _ArrowToCornerPainter({required this.progress});
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final start = Offset(size.width * 0.45, size.height * 0.55);
+    final end = Offset(size.width - _nfcReaderCenterInset, _nfcReaderCenterInset);
+    final dir = end - start;
+    final length = dir.distance;
+    if (length == 0) return;
+    final unit = dir / length;
+    final perp = Offset(-unit.dy, unit.dx);
+    const chevronLen = 26.0;
+    const chevronCount = 4;
+
+    for (int i = 0; i < chevronCount; i++) {
+      final t = ((progress + i / chevronCount) % 1.0);
+      final pos = Offset.lerp(start, end, t)!;
+      // Fade in/out around the middle of the trajectory.
+      final fade = (1 - (t - 0.5).abs() * 2).clamp(0.0, 1.0);
+      final paint = Paint()
+        ..color = const Color(0xFFFD8209).withValues(alpha: fade * 0.85)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 9
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round;
+      final tip = pos;
+      final tail1 = tip - unit * chevronLen + perp * chevronLen * 0.65;
+      final tail2 = tip - unit * chevronLen - perp * chevronLen * 0.65;
+      final path = Path()
+        ..moveTo(tail1.dx, tail1.dy)
+        ..lineTo(tip.dx, tip.dy)
+        ..lineTo(tail2.dx, tail2.dy);
+      canvas.drawPath(path, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _ArrowToCornerPainter old) => old.progress != progress;
 }

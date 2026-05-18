@@ -97,9 +97,9 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                             // Max retries
                             TextField(
                               controller: _maxRetriesCtrl,
-                              decoration: const InputDecoration(
-                                labelText: 'Maximum Retries',
-                                helperText: 'Number of retry attempts (1-10)',
+                              decoration: InputDecoration(
+                                labelText: l10n.maximumRetries,
+                                helperText: l10n.numberOfRetryAttempts110,
                                 prefixIcon: Icon(Icons.replay),
                                 border: OutlineInputBorder(),
                               ),
@@ -110,9 +110,9 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                             // Retry interval
                             TextField(
                               controller: _intervalCtrl,
-                              decoration: const InputDecoration(
-                                labelText: 'Retry Interval (hours)',
-                                helperText: 'Time between retry attempts (1-168 hours)',
+                              decoration: InputDecoration(
+                                labelText: l10n.retryIntervalHours,
+                                helperText: l10n.timeBetweenRetryAttempts1168Hours,
                                 prefixIcon: Icon(Icons.timer),
                                 border: OutlineInputBorder(),
                               ),
@@ -123,9 +123,9 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                             // Grace period
                             TextField(
                               controller: _graceCtrl,
-                              decoration: const InputDecoration(
-                                labelText: 'Grace Period (days)',
-                                helperText: 'Days after failure before suspension (1-30)',
+                              decoration: InputDecoration(
+                                labelText: l10n.gracePeriodDays,
+                                helperText: l10n.daysAfterFailureBeforeSuspension130,
                                 prefixIcon: Icon(Icons.hourglass_empty),
                                 border: OutlineInputBorder(),
                               ),

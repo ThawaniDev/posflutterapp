@@ -69,7 +69,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
             child: TextField(
               controller: _searchCtrl,
               decoration: InputDecoration(
-                hintText: 'Search by description or serial...',
+                hintText: l10n.searchByDescriptionOrSerial,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),

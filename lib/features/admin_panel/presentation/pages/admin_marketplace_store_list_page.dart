@@ -71,7 +71,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search stores...',
+                      hintText: l10n.searchStores,
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear),

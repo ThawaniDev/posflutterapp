@@ -386,7 +386,7 @@ class _CreateScheduleSheetState extends ConsumerState<_CreateScheduleSheet> {
                 PosTextField(
                   controller: _recipientsCtrl,
                   label: l10n.reportsScheduledRecipients,
-                  hint: 'email1@example.com, email2@example.com',
+                  hint: l10n.email1examplecomEmail2examplecom,
                   keyboardType: TextInputType.emailAddress,
                   validator: (v) {
                     if (v?.trim().isEmpty ?? true) return l10n.fieldRequired;

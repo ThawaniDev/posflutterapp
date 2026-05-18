@@ -15451,7 +15451,7 @@ abstract class AppLocalizations {
   /// No description provided for @terminalsEdit.
   ///
   /// In en, this message translates to:
-  /// **'Edit'**
+  /// **'Change Name'**
   String get terminalsEdit;
 
   /// No description provided for @terminalsInactive.
@@ -15475,7 +15475,7 @@ abstract class AppLocalizations {
   /// No description provided for @terminalsNoTerminalsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Add your first POS terminal to get started.'**
+  /// **'Terminals are managed from the backend.'**
   String get terminalsNoTerminalsSubtitle;
 
   /// No description provided for @terminalsOff.
@@ -15499,7 +15499,7 @@ abstract class AppLocalizations {
   /// No description provided for @terminalsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Manage POS terminal registers'**
+  /// **'View POS terminal registers'**
   String get terminalsSubtitle;
 
   /// No description provided for @terminalsTitle.
@@ -33182,6 +33182,23 @@ abstract class AppLocalizations {
   /// **'Reach {threshold} transactions to unlock paid features'**
   String softPosReachThreshold(int threshold);
 
+  /// No description provided for @softPosReachAmountThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach {amount} SAR in SoftPOS sales to unlock free subscription'**
+  String softPosReachAmountThreshold(String amount);
+
+  /// No description provided for @softPosAmountProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {total} SAR ({remaining} SAR {remainingLabel})'**
+  String softPosAmountProgress(
+    String current,
+    String total,
+    String remaining,
+    String remainingLabel,
+  );
+
   /// No description provided for @subDaysRemaining.
   ///
   /// In en, this message translates to:
@@ -33290,11 +33307,23 @@ abstract class AppLocalizations {
   /// **'FREE after {threshold} SoftPOS transactions'**
   String subSoftPosFreeAfter(int threshold);
 
+  /// No description provided for @subSoftPosFreeAfterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'FREE after {amount} SAR in SoftPOS sales'**
+  String subSoftPosFreeAfterAmount(String amount);
+
   /// No description provided for @subSoftPosFreeExplainer.
   ///
   /// In en, this message translates to:
   /// **'Use SoftPOS to accept {threshold} card payments within {period} and your subscription becomes free!'**
   String subSoftPosFreeExplainer(int threshold, String period);
+
+  /// No description provided for @subSoftPosFreeExplainerAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Use SoftPOS to accept {amount} SAR in card sales within {period} and your subscription becomes free!'**
+  String subSoftPosFreeExplainerAmount(String amount, String period);
 
   /// No description provided for @subSoftPosFreeEligible.
   ///
@@ -37855,6 +37884,1182 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Grid View'**
   String get catalogGridView;
+
+  /// No description provided for @wameedPos.
+  ///
+  /// In en, this message translates to:
+  /// **'Wameed POS'**
+  String get wameedPos;
+
+  /// No description provided for @customerDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Display'**
+  String get customerDisplay;
+
+  /// No description provided for @cartIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart is empty'**
+  String get cartIsEmpty;
+
+  /// No description provided for @paymentSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Successful'**
+  String get paymentSuccessful;
+
+  /// No description provided for @yourCartIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cart is empty'**
+  String get yourCartIsEmpty;
+
+  /// No description provided for @misc50halalas.
+  ///
+  /// In en, this message translates to:
+  /// **'50 Halalas'**
+  String get misc50halalas;
+
+  /// No description provided for @misc25halalas.
+  ///
+  /// In en, this message translates to:
+  /// **'25 Halalas'**
+  String get misc25halalas;
+
+  /// No description provided for @misc10halalas.
+  ///
+  /// In en, this message translates to:
+  /// **'10 Halalas'**
+  String get misc10halalas;
+
+  /// No description provided for @misc5halalas.
+  ///
+  /// In en, this message translates to:
+  /// **'5 Halalas'**
+  String get misc5halalas;
+
+  /// No description provided for @misc968xxxxxxxx.
+  ///
+  /// In en, this message translates to:
+  /// **'+968 XXXX XXXX'**
+  String get misc968xxxxxxxx;
+
+  /// No description provided for @impersonate.
+  ///
+  /// In en, this message translates to:
+  /// **'Impersonate'**
+  String get impersonate;
+
+  /// No description provided for @usageStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Statistics'**
+  String get usageStatistics;
+
+  /// No description provided for @orders30d.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders (30d)'**
+  String get orders30d;
+
+  /// No description provided for @registers.
+  ///
+  /// In en, this message translates to:
+  /// **'Registers'**
+  String get registers;
+
+  /// No description provided for @noPosTerminalsRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'No POS terminals registered'**
+  String get noPosTerminalsRegistered;
+
+  /// No description provided for @organizationNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization not found'**
+  String get organizationNotFound;
+
+  /// No description provided for @impersonationActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Impersonation Active'**
+  String get impersonationActive;
+
+  /// No description provided for @youAreNowImpersonating.
+  ///
+  /// In en, this message translates to:
+  /// **'You are now impersonating:'**
+  String get youAreNowImpersonating;
+
+  /// No description provided for @extend30Min.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend (30 min)'**
+  String get extend30Min;
+
+  /// No description provided for @endSession.
+  ///
+  /// In en, this message translates to:
+  /// **'End Session'**
+  String get endSession;
+
+  /// No description provided for @internalNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Note'**
+  String get internalNote;
+
+  /// No description provided for @addANoteVisibleOnlyToAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note visible only to admins...'**
+  String get addANoteVisibleOnlyToAdmins;
+
+  /// No description provided for @noInternalNotesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internal notes yet'**
+  String get noInternalNotesYet;
+
+  /// No description provided for @registrationApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Approved'**
+  String get registrationApproved;
+
+  /// No description provided for @temporaryPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary Password'**
+  String get temporaryPassword;
+
+  /// No description provided for @searchAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search alerts...'**
+  String get searchAlerts;
+
+  /// No description provided for @searchPages.
+  ///
+  /// In en, this message translates to:
+  /// **'Search pages...'**
+  String get searchPages;
+
+  /// No description provided for @searchVersions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search versions...'**
+  String get searchVersions;
+
+  /// No description provided for @trustedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted Devices'**
+  String get trustedDevices;
+
+  /// No description provided for @noTrustedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No trusted devices'**
+  String get noTrustedDevices;
+
+  /// No description provided for @admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get admin;
+
+  /// No description provided for @deviceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Name'**
+  String get deviceName;
+
+  /// No description provided for @ipAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Address'**
+  String get ipAddress;
+
+  /// No description provided for @userAgent.
+  ///
+  /// In en, this message translates to:
+  /// **'User Agent'**
+  String get userAgent;
+
+  /// No description provided for @trustedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted At'**
+  String get trustedAt;
+
+  /// No description provided for @lastUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Used'**
+  String get lastUsed;
+
+  /// No description provided for @revokeTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke trust'**
+  String get revokeTrust;
+
+  /// No description provided for @revokeDeviceTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke Device Trust'**
+  String get revokeDeviceTrust;
+
+  /// No description provided for @removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove trust for this device? The admin will need to re-verify on next login from this device.'**
+  String get removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi;
+
+  /// No description provided for @revoke.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get revoke;
+
+  /// No description provided for @searchStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Search stores...'**
+  String get searchStores;
+
+  /// No description provided for @manage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get manage;
+
+  /// No description provided for @alerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts'**
+  String get alerts;
+
+  /// No description provided for @policies.
+  ///
+  /// In en, this message translates to:
+  /// **'Policies'**
+  String get policies;
+
+  /// No description provided for @searchEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Search events...'**
+  String get searchEvents;
+
+  /// No description provided for @searchResponses.
+  ///
+  /// In en, this message translates to:
+  /// **'Search responses...'**
+  String get searchResponses;
+
+  /// No description provided for @securityPolicies.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Policies'**
+  String get securityPolicies;
+
+  /// No description provided for @noSecurityPoliciesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No security policies found'**
+  String get noSecurityPoliciesFound;
+
+  /// No description provided for @editPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit policy'**
+  String get editPolicy;
+
+  /// No description provided for @enterNewValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new value'**
+  String get enterNewValue;
+
+  /// No description provided for @noActivityLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'No activity logs'**
+  String get noActivityLogs;
+
+  /// No description provided for @entity.
+  ///
+  /// In en, this message translates to:
+  /// **'Entity'**
+  String get entity;
+
+  /// No description provided for @timestamp.
+  ///
+  /// In en, this message translates to:
+  /// **'Timestamp'**
+  String get timestamp;
+
+  /// No description provided for @searchAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Search admins...'**
+  String get searchAdmins;
+
+  /// No description provided for @securityAuditLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Audit Log'**
+  String get securityAuditLog;
+
+  /// No description provided for @noAuditLogEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'No audit log entries'**
+  String get noAuditLogEntries;
+
+  /// No description provided for @adminSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Sessions'**
+  String get adminSessions;
+
+  /// No description provided for @activeOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Active only'**
+  String get activeOnly;
+
+  /// No description provided for @revokeAllSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke All Sessions'**
+  String get revokeAllSessions;
+
+  /// No description provided for @noSessionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions found'**
+  String get noSessionsFound;
+
+  /// No description provided for @lastActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Active'**
+  String get lastActive;
+
+  /// No description provided for @revoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get revoked;
+
+  /// No description provided for @revokeSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke session'**
+  String get revokeSession;
+
+  /// No description provided for @revokeSession2.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke Session'**
+  String get revokeSession2;
+
+  /// No description provided for @areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to revoke this session? The user will be logged out immediately.'**
+  String get areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm;
+
+  /// No description provided for @thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI.
+  ///
+  /// In en, this message translates to:
+  /// **'This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.'**
+  String get thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI;
+
+  /// No description provided for @adminUserIdOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin User ID (optional)'**
+  String get adminUserIdOptional;
+
+  /// No description provided for @leaveBlankToRevokeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank to revoke all'**
+  String get leaveBlankToRevokeAll;
+
+  /// No description provided for @providerDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Devices'**
+  String get providerDevices;
+
+  /// No description provided for @noDevicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No devices found'**
+  String get noDevicesFound;
+
+  /// No description provided for @serialImei.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial / IMEI'**
+  String get serialImei;
+
+  /// No description provided for @platform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get platform;
+
+  /// No description provided for @lastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get lastSeen;
+
+  /// No description provided for @remoteWipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote Wipe'**
+  String get remoteWipe;
+
+  /// No description provided for @remoteWipeDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote Wipe Device'**
+  String get remoteWipeDevice;
+
+  /// No description provided for @wipeDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Wipe Device'**
+  String get wipeDevice;
+
+  /// No description provided for @searchNotificationLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Search notification logs...'**
+  String get searchNotificationLogs;
+
+  /// No description provided for @maximumRetries.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum Retries'**
+  String get maximumRetries;
+
+  /// No description provided for @numberOfRetryAttempts110.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of retry attempts (1-10)'**
+  String get numberOfRetryAttempts110;
+
+  /// No description provided for @retryIntervalHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry Interval (hours)'**
+  String get retryIntervalHours;
+
+  /// No description provided for @timeBetweenRetryAttempts1168Hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Time between retry attempts (1-168 hours)'**
+  String get timeBetweenRetryAttempts1168Hours;
+
+  /// No description provided for @gracePeriodDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Grace Period (days)'**
+  String get gracePeriodDays;
+
+  /// No description provided for @daysAfterFailureBeforeSuspension130.
+  ///
+  /// In en, this message translates to:
+  /// **'Days after failure before suspension (1-30)'**
+  String get daysAfterFailureBeforeSuspension130;
+
+  /// No description provided for @org.
+  ///
+  /// In en, this message translates to:
+  /// **'ORG'**
+  String get org;
+
+  /// No description provided for @ipManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Management'**
+  String get ipManagement;
+
+  /// No description provided for @allowlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowlist'**
+  String get allowlist;
+
+  /// No description provided for @blocklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocklist'**
+  String get blocklist;
+
+  /// No description provided for @addIpCidr.
+  ///
+  /// In en, this message translates to:
+  /// **'Add IP / CIDR'**
+  String get addIpCidr;
+
+  /// No description provided for @noEntriesInAllowlist.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries in allowlist'**
+  String get noEntriesInAllowlist;
+
+  /// No description provided for @ipCidr.
+  ///
+  /// In en, this message translates to:
+  /// **'IP / CIDR'**
+  String get ipCidr;
+
+  /// No description provided for @addedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Added By'**
+  String get addedBy;
+
+  /// No description provided for @expires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get expires;
+
+  /// No description provided for @blockIpCidr.
+  ///
+  /// In en, this message translates to:
+  /// **'Block IP / CIDR'**
+  String get blockIpCidr;
+
+  /// No description provided for @noEntriesInBlocklist.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries in blocklist'**
+  String get noEntriesInBlocklist;
+
+  /// No description provided for @hitCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Hit Count'**
+  String get hitCount;
+
+  /// No description provided for @blockedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked By'**
+  String get blockedBy;
+
+  /// No description provided for @removeEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Entry'**
+  String get removeEntry;
+
+  /// No description provided for @ipAddressOrCidr.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Address or CIDR'**
+  String get ipAddressOrCidr;
+
+  /// No description provided for @eg19216811Or1000024.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 192.168.1.1 or 10.0.0.0/24'**
+  String get eg19216811Or1000024;
+
+  /// No description provided for @expiryDateOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date (optional)'**
+  String get expiryDateOptional;
+
+  /// No description provided for @yyyymmdd.
+  ///
+  /// In en, this message translates to:
+  /// **'YYYY-MM-DD'**
+  String get yyyymmdd;
+
+  /// No description provided for @severity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get severity;
+
+  /// No description provided for @createdAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created At'**
+  String get createdAt;
+
+  /// No description provided for @searchByInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by invoice number...'**
+  String get searchByInvoiceNumber;
+
+  /// No description provided for @searchByDescriptionOrSerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by description or serial...'**
+  String get searchByDescriptionOrSerial;
+
+  /// No description provided for @failedOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed only'**
+  String get failedOnly;
+
+  /// No description provided for @noLoginAttemptsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No login attempts found'**
+  String get noLoginAttemptsFound;
+
+  /// No description provided for @emailIdentifier.
+  ///
+  /// In en, this message translates to:
+  /// **'Email / Identifier'**
+  String get emailIdentifier;
+
+  /// No description provided for @failureReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Failure Reason'**
+  String get failureReason;
+
+  /// No description provided for @attemptedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempted At'**
+  String get attemptedAt;
+
+  /// No description provided for @searchAnnouncements.
+  ///
+  /// In en, this message translates to:
+  /// **'Search announcements...'**
+  String get searchAnnouncements;
+
+  /// No description provided for @gatewayName.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway Name'**
+  String get gatewayName;
+
+  /// No description provided for @webhookUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL'**
+  String get webhookUrl;
+
+  /// No description provided for @searchByNameEmailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, email, or phone...'**
+  String get searchByNameEmailOrPhone;
+
+  /// No description provided for @eg1550.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 15.50'**
+  String get eg1550;
+
+  /// No description provided for @eg1420.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 14.20'**
+  String get eg1420;
+
+  /// No description provided for @eg15000.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 150.00'**
+  String get eg15000;
+
+  /// No description provided for @eg150.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 1.50'**
+  String get eg150;
+
+  /// No description provided for @eg4.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 4'**
+  String get eg4;
+
+  /// No description provided for @eg005.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 0.05'**
+  String get eg005;
+
+  /// No description provided for @eg550.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 5.50'**
+  String get eg550;
+
+  /// No description provided for @eg320.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 3.20'**
+  String get eg320;
+
+  /// No description provided for @eg15.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 15'**
+  String get eg15;
+
+  /// No description provided for @eg200Or150.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. +2.00 or -1.50'**
+  String get eg200Or150;
+
+  /// No description provided for @eg7.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 7'**
+  String get eg7;
+
+  /// No description provided for @daysAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Days Ahead'**
+  String get daysAhead;
+
+  /// No description provided for @default30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Default: 30 days'**
+  String get default30Days;
+
+  /// No description provided for @selectTheDateToSummarize.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the date to summarize'**
+  String get selectTheDateToSummarize;
+
+  /// No description provided for @forecastPeriodDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast Period (days)'**
+  String get forecastPeriodDays;
+
+  /// No description provided for @default7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Default: 7 days'**
+  String get default7Days;
+
+  /// No description provided for @analysisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis Period'**
+  String get analysisPeriod;
+
+  /// No description provided for @invoiceImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Image'**
+  String get invoiceImage;
+
+  /// No description provided for @takeAPhotoOrUploadAnInvoiceImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo or upload an invoice image'**
+  String get takeAPhotoOrUploadAnInvoiceImage;
+
+  /// No description provided for @selectAProductToGenerateDescriptionFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a product to generate description for'**
+  String get selectAProductToGenerateDescriptionFor;
+
+  /// No description provided for @enterOrScanABarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or scan a barcode'**
+  String get enterOrScanABarcode;
+
+  /// No description provided for @customerSegment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Segment'**
+  String get customerSegment;
+
+  /// No description provided for @optionalTargetASpecificSegment.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: target a specific segment'**
+  String get optionalTargetASpecificSegment;
+
+  /// No description provided for @vipCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'VIP Customers'**
+  String get vipCustomers;
+
+  /// No description provided for @newCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'New Customers'**
+  String get newCustomers;
+
+  /// No description provided for @atriskChurning.
+  ///
+  /// In en, this message translates to:
+  /// **'At-Risk (Churning)'**
+  String get atriskChurning;
+
+  /// No description provided for @frequentBuyers.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent Buyers'**
+  String get frequentBuyers;
+
+  /// No description provided for @allCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'All Customers'**
+  String get allCustomers;
+
+  /// No description provided for @searchQuery.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Query'**
+  String get searchQuery;
+
+  /// No description provided for @whatWouldYouLikeToFind.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to find?'**
+  String get whatWouldYouLikeToFind;
+
+  /// No description provided for @messageType.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Type'**
+  String get messageType;
+
+  /// No description provided for @sms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get sms;
+
+  /// No description provided for @whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get whatsapp;
+
+  /// No description provided for @whatIsTheMessageAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'What is the message about?'**
+  String get whatIsTheMessageAbout;
+
+  /// No description provided for @egRamadanSaleNewProductLaunchLoyaltyReward.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Ramadan sale, new product launch, loyalty reward...'**
+  String get egRamadanSaleNewProductLaunchLoyaltyReward;
+
+  /// No description provided for @socialPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Platform'**
+  String get socialPlatform;
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
+
+  /// No description provided for @tiktok.
+  ///
+  /// In en, this message translates to:
+  /// **'TikTok'**
+  String get tiktok;
+
+  /// No description provided for @facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get facebook;
+
+  /// No description provided for @xTwitter.
+  ///
+  /// In en, this message translates to:
+  /// **'X (Twitter)'**
+  String get xTwitter;
+
+  /// No description provided for @snapchat.
+  ///
+  /// In en, this message translates to:
+  /// **'Snapchat'**
+  String get snapchat;
+
+  /// No description provided for @contentTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Content Topic'**
+  String get contentTopic;
+
+  /// No description provided for @egSummerCollectionStoreOpeningFlashSale.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Summer collection, Store opening, Flash sale'**
+  String get egSummerCollectionStoreOpeningFlashSale;
+
+  /// No description provided for @featuredProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Product'**
+  String get featuredProduct;
+
+  /// No description provided for @optionalHighlightASpecificProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: highlight a specific product'**
+  String get optionalHighlightASpecificProduct;
+
+  /// No description provided for @fromLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'From Language'**
+  String get fromLanguage;
+
+  /// No description provided for @autodetect.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-detect'**
+  String get autodetect;
+
+  /// No description provided for @arabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabic;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @toLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'To Language'**
+  String get toLanguage;
+
+  /// No description provided for @textToTranslate.
+  ///
+  /// In en, this message translates to:
+  /// **'Text to Translate'**
+  String get textToTranslate;
+
+  /// No description provided for @enterTheTextYouWantToTranslate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the text you want to translate'**
+  String get enterTheTextYouWantToTranslate;
+
+  /// No description provided for @postupdateHealthCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Post-update health check failed'**
+  String get postupdateHealthCheckFailed;
+
+  /// No description provided for @failedToHoldCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to hold cart'**
+  String get failedToHoldCart;
+
+  /// No description provided for @previewCustomerDisplayDebug.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview customer display (debug)'**
+  String get previewCustomerDisplayDebug;
+
+  /// No description provided for @customerDisplayPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Display Preview'**
+  String get customerDisplayPreview;
+
+  /// No description provided for @txn202604210001.
+  ///
+  /// In en, this message translates to:
+  /// **'TXN-20260421-0001'**
+  String get txn202604210001;
+
+  /// No description provided for @egTerminal001.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. terminal-001'**
+  String get egTerminal001;
+
+  /// No description provided for @reassign.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassign'**
+  String get reassign;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @vat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vat;
+
+  /// No description provided for @receiptPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Printer'**
+  String get receiptPrinter;
+
+  /// No description provided for @thermalOrLaserPrinterForReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Thermal or laser printer for receipts'**
+  String get thermalOrLaserPrinterForReceipts;
+
+  /// No description provided for @barcodeQrScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode / QR Scanner'**
+  String get barcodeQrScanner;
+
+  /// No description provided for @usbOrBluetoothScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'USB or Bluetooth scanner'**
+  String get usbOrBluetoothScanner;
+
+  /// No description provided for @cashDrawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Drawer'**
+  String get cashDrawer;
+
+  /// No description provided for @connectedViaPrinterOrUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected via printer or USB'**
+  String get connectedViaPrinterOrUsb;
+
+  /// No description provided for @customerDisplayCfd.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Display (CFD)'**
+  String get customerDisplayCfd;
+
+  /// No description provided for @secondScreenShowingItemsToCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Second screen showing items to customer'**
+  String get secondScreenShowingItemsToCustomer;
+
+  /// No description provided for @setUpLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Up Later'**
+  String get setUpLater;
+
+  /// No description provided for @skipForNowYouCanAddProductsFromTheCatalogAnytime.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now — you can add products from the catalog anytime'**
+  String get skipForNowYouCanAddProductsFromTheCatalogAnytime;
+
+  /// No description provided for @useBusinessTypeDefaults.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Business Type Defaults'**
+  String get useBusinessTypeDefaults;
+
+  /// No description provided for @uploadCsvFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload CSV File'**
+  String get uploadCsvFile;
+
+  /// No description provided for @importProductsFromYourOwnSpreadsheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Import products from your own spreadsheet'**
+  String get importProductsFromYourOwnSpreadsheet;
+
+  /// No description provided for @chooseCsvFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose CSV File'**
+  String get chooseCsvFile;
+
+  /// No description provided for @csvImportIsAvailableInCatalogAfterSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV import is available in Catalog after setup.'**
+  String get csvImportIsAvailableInCatalogAfterSetup;
+
+  /// No description provided for @email1examplecomEmail2examplecom.
+  ///
+  /// In en, this message translates to:
+  /// **'email1@example.com, email2@example.com'**
+  String get email1examplecomEmail2examplecom;
+
+  /// No description provided for @action.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get action;
+
+  /// No description provided for @userType.
+  ///
+  /// In en, this message translates to:
+  /// **'User Type'**
+  String get userType;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @label.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get label;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
 }
 
 class _AppLocalizationsDelegate

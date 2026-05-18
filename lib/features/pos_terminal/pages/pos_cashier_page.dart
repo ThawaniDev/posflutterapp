@@ -225,7 +225,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     }
 
     final heldState = ref.read(heldCartsProvider);
-    final message = heldState is HeldCartsError ? heldState.message : 'Failed to hold cart';
+    final message = heldState is HeldCartsError ? heldState.message: AppLocalizations.of(context)!.failedToHoldCart;
     showPosErrorSnackbar(context, message);
   }
 
@@ -768,10 +768,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final sessionState = ref.watch(activeSessionProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final screenSize = MediaQuery.sizeOf(context);
-    final shortestSide = screenSize.shortestSide;
 
     // Mirror cart changes to the customer-facing secondary display.
     if (isSecondaryDisplaySupported) {
@@ -783,38 +782,69 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     }
 
     // Choose the compact cashier only for real handset-class devices.
-    // Do not use the page/content width here: inside shells or split layouts
-    // a desktop/laptop page can become narrower than 600dp and get
-    // misclassified as a phone. `shortestSide < 600` is the standard tablet
-    // cutoff, and web/desktop platforms should never use the phone layout.
+    // We pick the layout based on the *available width*, not `shortestSide`,
+    // because some Android tablets (especially 13–14" industrial POS units)
+    // report a logical shortestSide under 600 dp due to their density
+    // profile — they would otherwise be misclassified as phones even though
+    // they have plenty of room for the side cart panel.
+    //
+    // 840 dp matches Material 3's "medium window" cutoff and mirrors the
+    // Chrome resize behaviour: above 840 dp wide we have room for the
+    // products grid + cart side panel; below that we collapse to the
+    // mobile single-column flow. Web/desktop platforms always use the
+    // tablet layout regardless of window width.
     final isMobilePlatform =
         !kIsWeb && (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS);
-    final isMobile = isMobilePlatform && shortestSide < 600;
 
-    return Focus(
-      autofocus: true,
-      onKeyEvent: _handleKeyEvent,
-      child: Scaffold(
-        backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-        body: isMobile
-            ? _buildMobileBody(isDark, sessionState.session)
-            : Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        _buildTopBar(isDark, sessionState.session),
-                        _buildSearchBar(isDark),
-                        Expanded(child: _buildProductGrid(isDark)),
-                      ],
-                    ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final layoutWidth = _cashierLayoutWidth(context, constraints);
+        final isMobile = isMobilePlatform && layoutWidth > 0 && layoutWidth < 840;
+
+        return Focus(
+          autofocus: true,
+          onKeyEvent: _handleKeyEvent,
+          child: Scaffold(
+            backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+            body: isMobile
+                ? _buildMobileBody(isDark, sessionState.session)
+                : Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            _buildTopBar(isDark, sessionState.session),
+                            _buildSearchBar(isDark),
+                            Expanded(child: _buildProductGrid(isDark)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 480, child: _buildCartPanel(isDark)),
+                    ],
                   ),
-                  SizedBox(width: 480, child: _buildCartPanel(isDark)),
-                ],
-              ),
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  double _cashierLayoutWidth(BuildContext context, BoxConstraints constraints) {
+    if (constraints.hasBoundedWidth && constraints.maxWidth > 0) {
+      return constraints.maxWidth;
+    }
+
+    final mediaWidth = MediaQuery.sizeOf(context).width;
+    if (mediaWidth > 0) return mediaWidth;
+
+    final view = View.of(context);
+    final devicePixelRatio = view.devicePixelRatio;
+    if (devicePixelRatio > 0) {
+      final viewWidth = view.physicalSize.width / devicePixelRatio;
+      if (viewWidth > 0) return viewWidth;
+    }
+
+    return 0;
   }
 
   // ─── Mobile Body ──────────────────────────────────────────────
@@ -1251,6 +1281,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   // ─── Top Action Bar ───────────────────────────────────────────
 
   Widget _buildTopBar(bool isDark, PosSession session) {
+    final l10n = AppLocalizations.of(context)!;
     final user = ref.watch(currentUserProvider);
     final cart = ref.watch(cartProvider);
     final settings = ref.watch(currentStoreSettingsProvider);
@@ -1285,7 +1316,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             // is currently showing. Hidden in release builds.
             if (kDebugMode) ...[
               IconButton(
-                tooltip: 'Preview customer display (debug)',
+                tooltip: l10n.previewCustomerDisplayDebug,
                 icon: const Icon(Icons.tv_outlined, color: Color(0xFFFD8209)),
                 onPressed: _showSecondaryDisplayPreview,
               ),
@@ -1975,9 +2006,11 @@ class _SecondaryDisplayPreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(backgroundColor: Colors.black, foregroundColor: Colors.white, title: const Text('Customer Display Preview')),
+      appBar: AppBar(backgroundColor: Colors.black, foregroundColor: Colors.white, title: Text(l10n.customerDisplayPreview)),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(16),

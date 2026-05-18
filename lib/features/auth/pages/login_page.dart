@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -74,7 +75,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     // Logo posflutterapp/assets/images/wameedlogo.png
                     // Icon(Icons.point_of_sale_rounded, size: 64, color: AppColors.primary),
                     // const SizedBox(height: AppSpacing.md),
-                    Image.asset('assets/images/wameedlogo.png', height: 64),
+                    InkWell(
+                      onDoubleTap: () {
+                        _emailController.text = 'owner@ostora.sa';
+                        _passwordController.text = 'Owner@2026';
+                      },
+                      onLongPress: () {
+                        _emailController.text = 'cashier@ostora.sa';
+                        _passwordController.text = 'Cashier@123';
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      child: Image.asset('assets/images/wameedlogo.png', height: 64),
+                    ),
                     const SizedBox(height: AppSpacing.md),
 
                     // Title
@@ -150,7 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     // Quick-fill dev buttons — only visible in debug mode
-                    if (true)
+                    if (kDebugMode)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

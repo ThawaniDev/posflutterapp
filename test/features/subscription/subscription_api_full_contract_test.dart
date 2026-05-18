@@ -61,6 +61,7 @@ const _planPayload = {
   'business_type': null,
   'softpos_free_eligible': false,
   'softpos_free_threshold': null,
+  'softpos_free_threshold_amount': null,
   'softpos_free_threshold_period': null,
   'created_at': '2025-01-01T00:00:00.000Z',
   'updated_at': '2025-01-01T00:00:00.000Z',

@@ -210,12 +210,12 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
             children: [
               TextField(
                 controller: nameCtrl,
-                decoration: const InputDecoration(labelText: 'Gateway Name'),
+                decoration: InputDecoration(labelText: l10n.gatewayName),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: webhookCtrl,
-                decoration: const InputDecoration(labelText: 'Webhook URL'),
+                decoration: InputDecoration(labelText: l10n.webhookUrl),
               ),
               const SizedBox(height: 8),
               StatefulBuilder(
@@ -270,12 +270,12 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
             children: [
               TextField(
                 controller: nameCtrl,
-                decoration: const InputDecoration(labelText: 'Gateway Name'),
+                decoration: InputDecoration(labelText: l10n.gatewayName),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: webhookCtrl,
-                decoration: const InputDecoration(labelText: 'Webhook URL'),
+                decoration: InputDecoration(labelText: l10n.webhookUrl),
               ),
             ],
           ),

@@ -77,7 +77,7 @@ class _AdminSecurityLoginAttemptsPageState extends ConsumerState<AdminSecurityLo
             },
           ),
           const SizedBox(width: AppSpacing.xs),
-          const Text('Failed only', style: TextStyle(fontSize: 13)),
+          Text(l10n.failedOnly, style: TextStyle(fontSize: 13)),
         ],
       ),
     );
@@ -88,7 +88,7 @@ class _AdminSecurityLoginAttemptsPageState extends ConsumerState<AdminSecurityLo
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No login attempts found');
+      return PosEmptyState(title: l10n.noLoginAttemptsFound);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -98,13 +98,13 @@ class _AdminSecurityLoginAttemptsPageState extends ConsumerState<AdminSecurityLo
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'IP Address', width: 130),
-            PosTableColumn(title: 'Email / Identifier', flex: 2),
-            PosTableColumn(title: 'User Agent', flex: 2),
-            PosTableColumn(title: 'Status', width: 100),
-            PosTableColumn(title: 'Failure Reason', flex: 1),
-            PosTableColumn(title: 'Attempted At', width: 140),
+          columns: [
+            PosTableColumn(title: l10n.ipAddress, width: 130),
+            PosTableColumn(title: l10n.emailIdentifier, flex: 2),
+            PosTableColumn(title: l10n.userAgent, flex: 2),
+            PosTableColumn(title: l10n.status, width: 100),
+            PosTableColumn(title: l10n.failureReason, flex: 1),
+            PosTableColumn(title: l10n.attemptedAt, width: 140),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {

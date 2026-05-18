@@ -92,7 +92,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                 final searchField = TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search notification logs...',
+                    hintText: l10n.searchNotificationLogs,
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),

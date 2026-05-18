@@ -152,22 +152,30 @@ class AppShell extends ConsumerWidget {
     return result;
   }
 
-  /// Recursively filters sidebar items (and their children) by permission.
-  /// Items with null permission are always visible.
-  /// Items with a featureKey that is disabled stay visible but marked locked.
+  /// Recursively filters sidebar items (and their children) by permission and
+  /// feature gate. Behaviour depends on the plan's [hideUnselectedFeatures]:
+  ///
+  /// - false (default): disabled features stay visible but show a lock icon.
+  /// - true (e.g. Small Supermarket plan): disabled features are removed
+  ///   entirely so the user only sees what their plan includes.
   static List<PosSidebarItem> _filterItems(
     List<PosSidebarItem> items,
     UserPermissionsState permsState,
     FeatureGateService featureGate,
   ) {
+    final hideDisabled = featureGate.hideUnselectedFeatures;
     final result = <PosSidebarItem>[];
     for (final item in items) {
       // Permission check — remove entirely if user lacks role permission
       if (item.permission != null && !permsState.hasPermission(item.permission!)) {
         continue;
       }
-      // Feature gate check — keep but mark as locked
-      final isLocked = item.featureKey != null && !featureGate.isFeatureEnabled(item.featureKey!);
+      // Feature gate check
+      final featureKey = item.featureKey ?? _featureKeyForRoute(item.route, featureGate.featureRouteMapping);
+      final isLocked = featureKey != null && !featureGate.isFeatureEnabled(featureKey);
+      // When hideUnselectedFeatures is on, simply skip disabled items.
+      if (isLocked && hideDisabled) continue;
+
       final filteredChildren = item.children != null
           ? (isLocked ? item.children : _filterItems(item.children!, permsState, featureGate))
           : null;
@@ -177,13 +185,21 @@ class AppShell extends ConsumerWidget {
           icon: item.icon,
           route: item.route,
           permission: item.permission,
-          featureKey: item.featureKey,
+          featureKey: featureKey,
           isLocked: isLocked,
           children: isLocked ? null : filteredChildren,
         ),
       );
     }
     return result;
+  }
+
+  static String? _featureKeyForRoute(String? route, Map<String, List<String>>? mapping) {
+    if (route == null || mapping == null) return null;
+    for (final entry in mapping.entries) {
+      if (entry.value.contains(route)) return entry.key;
+    }
+    return null;
   }
 
   List<Widget> _buildActions(BuildContext context, WidgetRef ref, AppLocalizations l10n, List<PosSidebarGroup> filteredGroups) {

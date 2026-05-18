@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Handles the actual installation of updates including pre-update backup
 /// and post-update health checks.

@@ -53,7 +53,7 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
     final state = ref.watch(securityAuditLogListProvider);
 
     return PosListPage(
-      title: 'Security Audit Log',
+      title: l10n.securityAuditLog,
       showSearch: true,
       onSearchChanged: (q) {
         _searchQuery = q;
@@ -87,7 +87,7 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
             width: 180,
             child: PosDropdown<String?>(
               value: _actionFilter,
-              label: 'Action',
+              label: l10n.action,
               items: [
                 DropdownMenuItem(value: null, child: Text(l10n.all)),
                 ..._actions.map((a) => DropdownMenuItem(value: a, child: Text(_formatLabel(a)))),
@@ -103,7 +103,7 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
             width: 140,
             child: PosDropdown<String?>(
               value: _userTypeFilter,
-              label: 'User Type',
+              label: l10n.userType,
               items: [
                 DropdownMenuItem(value: null, child: Text(l10n.all)),
                 ..._userTypes.map((u) => DropdownMenuItem(value: u, child: Text(_capitalize(u)))),
@@ -125,7 +125,7 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No audit log entries');
+      return PosEmptyState(title: l10n.noAuditLogEntries);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -135,13 +135,13 @@ class _AdminSecurityAuditLogPageState extends ConsumerState<AdminSecurityAuditLo
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'Action', width: 160),
-            PosTableColumn(title: 'User', flex: 2),
-            PosTableColumn(title: 'User Type', width: 100),
-            PosTableColumn(title: 'IP Address', width: 130),
-            PosTableColumn(title: 'Store', flex: 1),
-            PosTableColumn(title: 'Timestamp', width: 140),
+          columns: [
+            PosTableColumn(title: l10n.action, width: 160),
+            PosTableColumn(title: l10n.user, flex: 2),
+            PosTableColumn(title: l10n.userType, width: 100),
+            PosTableColumn(title: l10n.ipAddress, width: 130),
+            PosTableColumn(title: l10n.store, flex: 1),
+            PosTableColumn(title: l10n.timestamp, width: 140),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {

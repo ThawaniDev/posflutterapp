@@ -78,11 +78,7 @@ class PosTerminalRepository {
   Future<List<Register>> listActiveRegisters() => _apiService.listActiveRegisters();
   Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) =>
       _apiService.listTerminals(page: page, perPage: perPage, search: search);
-  Future<Register> createTerminal(Map<String, dynamic> data) => _apiService.createTerminal(data);
-  Future<Register> getTerminal(String id) => _apiService.getTerminal(id);
-  Future<Register> updateTerminal(String id, Map<String, dynamic> data) => _apiService.updateTerminal(id, data);
-  Future<void> deleteTerminal(String id) => _apiService.deleteTerminal(id);
-  Future<Register> toggleTerminalStatus(String id) => _apiService.toggleTerminalStatus(id);
+  Future<Register> renameTerminal(String id, String name) => _apiService.renameTerminal(id, name);
 
   // Cash events / Reports / Exchange / Receipt
   Future<List<Map<String, dynamic>>> listCashEvents(String sessionId) => _apiService.listCashEvents(sessionId);

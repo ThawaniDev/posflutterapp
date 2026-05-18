@@ -929,18 +929,42 @@
   "pharmacyPrescriptions": "الوصفات الطبية",
   "pharmacyExpiryAlerts": "تنبيهات انتهاء الصلاحية",
   "pharmacyExpiryAlertsTitle": "تنبيهات انتهاء الصلاحية ({days} يوم)",
-  "@pharmacyExpiryAlertsTitle": {"placeholders": {"days": {"type": "int"}}},
+  "@pharmacyExpiryAlertsTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyDaysFilter": "الأيام",
   "pharmacyNoExpiryAlerts": "لا توجد منتجات تنتهي صلاحيتها",
   "pharmacySeverityExpired": "منتهي",
   "pharmacySeverityCritical": "حرج",
   "pharmacySeverityWarning": "تحذير",
   "pharmacyDaysUntilExpiry": "{days} يوم",
-  "@pharmacyDaysUntilExpiry": {"placeholders": {"days": {"type": "int"}}},
+  "@pharmacyDaysUntilExpiry": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyExpiryDate": "ينتهي: {date}",
-  "@pharmacyExpiryDate": {"placeholders": {"date": {"type": "String"}}},
+  "@pharmacyExpiryDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "pharmacyQtyAvailable": "الكمية: {qty}",
-  "@pharmacyQtyAvailable": {"placeholders": {"qty": {"type": "int"}}},
+  "@pharmacyQtyAvailable": {
+    "placeholders": {
+      "qty": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyNewPrescription": "وصفة طبية جديدة",
   "pharmacyPatientName": "اسم المريض",
   "pharmacyDoctorName": "اسم الطبيب",
@@ -1084,7 +1108,13 @@
   "staffDocumentExpired": "منتهي الصلاحية",
   "staffDocumentExpiringSoon": "ينتهي قريباً",
   "staffDocumentDaysLeft": "{days} يوم متبقي",
-  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "@staffDocumentDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "staffDeleteDocumentConfirm": "حذف هذه الوثيقة؟",
   "staffTrainingSessions": "التدريب",
   "staffNoTrainingSessions": "لا توجد جلسات تدريب",
@@ -1094,9 +1124,21 @@
   "staffTrainingActive": "نشطة",
   "staffTrainingCompleted": "مكتملة",
   "staffTrainingDuration": "{minutes} دقيقة",
-  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "@staffTrainingDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "staffTrainingTransactions": "{count} معاملة",
-  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "@staffTrainingTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "staffTrainingNotes": "ملاحظات التدريب (اختياري)",
   "staffTrainingEndNotes": "ملاحظات الإنهاء (اختياري)",
   "staffTrainingTransactionsCount": "المعاملات المتدربة",
@@ -2388,7 +2430,6 @@
   "inventoryWastePercent": "نسبة الهدر %",
   "inventoryYield": "العائد",
   "inventoryYieldQuantity": "كمية العائد",
-
   "inventoryStocktakes": "الجردات",
   "inventoryStocktakesSubtitle": "إجراء عمليات جرد المخزون",
   "inventoryNewStocktake": "جردة جديدة",
@@ -2422,7 +2463,6 @@
   "inventoryStartedAt": "بدأت في",
   "inventoryAllStatuses": "كل الحالات",
   "inventoryAllCategories": "كل الفئات",
-
   "inventoryWasteRecords": "سجلات الهدر",
   "inventoryWasteRecordsSubtitle": "تتبع وتحليل هدر المنتجات",
   "inventoryRecordWaste": "تسجيل هدر",
@@ -2439,7 +2479,6 @@
   "inventoryNoWasteRecordsHint": "سجّل هدر المنتجات لتتبع الخسائر",
   "inventoryTotalRecords": "إجمالي السجلات",
   "inventoryTotalWasteCost": "إجمالي تكلفة الهدر",
-
   "inventoryExpiryDashboard": "لوحة الصلاحيات",
   "inventoryExpiryDashboardSubtitle": "مراقبة الدفعات المنتهية أو القريبة من الانتهاء",
   "inventoryExpired": "منتهي الصلاحية",
@@ -2454,7 +2493,9 @@
   "inventoryAllBatchesSafe": "لا توجد دفعات تنتهي خلال {days} أيام القادمة",
   "@inventoryAllBatchesSafe": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "inventoryExpiredBatches": "الدفعات المنتهية",
@@ -2464,12 +2505,15 @@
   "inventoryMarkAsWastedConfirm": "هل تريد تسجيل {quantity} وحدة من {product} كهدر؟",
   "@inventoryMarkAsWastedConfirm": {
     "placeholders": {
-      "quantity": { "type": "double" },
-      "product": { "type": "String" }
+      "quantity": {
+        "type": "double"
+      },
+      "product": {
+        "type": "String"
+      }
     }
   },
   "inventoryNoBatches": "لا توجد دفعات",
-
   "inventoryBatchNumber": "رقم الدفعة",
   "inventoryBatchNumberHint": "مثال: BATCH-001",
   "inventoryOptional": "اختياري",
@@ -2962,15 +3006,15 @@
       }
     }
   },
-  "terminalsEdit": "تعديل",
+  "terminalsEdit": "تغيير الاسم",
   "terminalsInactive": "غير نشط",
   "terminalsNever": "أبداً",
   "terminalsNoTerminals": "لم يتم العثور على أجهزة",
-  "terminalsNoTerminalsSubtitle": "أضف أول جهاز نقاط بيع للبدء.",
+  "terminalsNoTerminalsSubtitle": "تتم إدارة الأجهزة من لوحة التحكم الخلفية.",
   "terminalsOff": "مطفأ",
   "terminalsOn": "مفعّل",
   "terminalsSearch": "بحث عن أجهزة...",
-  "terminalsSubtitle": "إدارة أجهزة نقاط البيع",
+  "terminalsSubtitle": "عرض أجهزة نقاط البيع",
   "terminalsTitle": "الأجهزة",
   "terminalsToggleFailed": "فشل تحديث حالة الجهاز.",
   "terminalsToggleMessage": "{action} الجهاز \"{name}\"؟",
@@ -5421,7 +5465,6 @@
   "electronicsCheckImeiServer": "تحقق من التكرار",
   "electronicsImeiDuplicate": "رقم IMEI مسجل مسبقاً",
   "electronicsImeiUnique": "رقم IMEI فريد",
-
   "electronicsImeiHint": "رقم IMEI من 15 رقمًا",
   "electronicsImei2Optional": "IMEI 2 (اختياري)",
   "electronicsDualSimImei": "IMEI الشريحة المزدوجة",
@@ -6729,7 +6772,6 @@
   "backupEnableAutoBackup": "تفعيل النسخ الاحتياطي التلقائي",
   "backupEnableAutoBackupHint": "إنشاء نسخ احتياطية تلقائياً وفق جدول زمني محدد.",
   "backupNoLoaded": "لم يتم تحميل نسخ احتياطية",
-  "noBackupsYet": "لا توجد نسخ احتياطية بعد",
   "backupNow": "نسخ احتياطي الآن",
   "backupNowTitle": "إنشاء نسخة احتياطية يدوية",
   "backupNowHint": "سيتم إنشاء نسخة احتياطية كاملة من بيانات متجرك.",
@@ -6798,7 +6840,9 @@
   "backupEstimatedDurationSeconds": "{seconds} ثانية",
   "@backupEstimatedDurationSeconds": {
     "placeholders": {
-      "seconds": {"type": "String"}
+      "seconds": {
+        "type": "String"
+      }
     }
   },
   "backupRestoreProgress": "جارٍ الاستعادة...",
@@ -6835,7 +6879,9 @@
   "backupRecordsCount": "{count} سجل",
   "@backupRecordsCount": {
     "placeholders": {
-      "count": {"type": "String"}
+      "count": {
+        "type": "String"
+      }
     }
   },
   "backupDbVersion": "إصدار قاعدة البيانات",
@@ -7119,6 +7165,31 @@
       }
     }
   },
+  "softPosReachAmountThreshold": "أكمل {amount} ر.س من مبيعات SoftPOS لفتح الاشتراك المجاني",
+  "@softPosReachAmountThreshold": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosAmountProgress": "{current} / {total} ر.س ({remaining} ر.س {remainingLabel})",
+  "@softPosAmountProgress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      },
+      "remainingLabel": {
+        "type": "String"
+      }
+    }
+  },
   "subDaysRemaining": "الأيام المتبقية",
   "subNextPayment": "الدفعة القادمة",
   "subPaymentMethod": "طريقة الدفع",
@@ -7165,11 +7236,30 @@
       }
     }
   },
+  "subSoftPosFreeAfterAmount": "مجاني بعد {amount} ر.س من مبيعات SoftPOS",
+  "@subSoftPosFreeAfterAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "subSoftPosFreeExplainer": "استخدم SoftPOS لقبول {threshold} دفعة بطاقة خلال {period} وسيصبح اشتراكك مجانياً!",
   "@subSoftPosFreeExplainer": {
     "placeholders": {
       "threshold": {
         "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeExplainerAmount": "استخدم SoftPOS لقبول {amount} ر.س من مدفوعات البطاقات خلال {period} وسيصبح اشتراكك مجانياً!",
+  "@subSoftPosFreeExplainerAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       },
       "period": {
         "type": "String"
@@ -7494,7 +7584,13 @@
   "zatcaLastSuccess": "آخر إرسال ناجح",
   "zatcaLastError": "آخر خطأ",
   "zatcaCertificateExpiresIn": "تنتهي خلال {days} يوم",
-  "@zatcaCertificateExpiresIn": {"placeholders": {"days": {"type": "int"}}},
+  "@zatcaCertificateExpiresIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "zatcaInvoiceDetail": "تفاصيل الفاتورة",
   "zatcaRetrySubmission": "إعادة الإرسال",
   "zatcaResponseCode": "رمز الاستجابة",
@@ -7502,20 +7598,30 @@
   "zatcaErrors": "الأخطاء",
   "zatcaSubmissionAttempts": "المحاولات",
   "zatcaClearedXml": "XML المعتمد",
-  "zatcaQrCode": "رمز QR",
   "zatcaAlreadyAccepted": "الفاتورة مقبولة بالفعل",
   "zatcaViewDetail": "عرض التفاصيل",
   "zatcaNoCertificate": "لا توجد شهادة نشطة",
   "zatcaTamperedDevices": "{count} جهاز معبث",
-  "@zatcaTamperedDevices": {"placeholders": {"count": {"type": "int"}}},
-
+  "@zatcaTamperedDevices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reportsScheduledTitle": "التقارير المجدولة",
   "reportsSlowMoversTab": "بطيء الحركة",
   "reportsMarginAnalysis": "تحليل الهامش",
   "reportsCategoryContribution": "مساهمة الفئة",
   "reportsNoSlowMovers": "لا توجد منتجات بطيئة الحركة",
   "reportsSlowMoversCount": "{count} منتج بطيء",
-  "@reportsSlowMoversCount": {"placeholders": {"count": {"type": "int"}}},
+  "@reportsSlowMoversCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reportsAvgMargin": "متوسط الهامش",
   "reportsNoMarginData": "لا توجد بيانات هامش",
   "reportsNoCategoryContribution": "لا توجد بيانات فئة",
@@ -7533,12 +7639,30 @@
   "reportsScheduledWeekly": "أسبوعي",
   "reportsScheduledMonthly": "شهري",
   "reportsScheduledNext": "التالي: {date}",
-  "@reportsScheduledNext": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsScheduledNext": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledLast": "الأخير: {date}",
-  "@reportsScheduledLast": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsScheduledLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledDelete": "حذف الجدول",
   "reportsScheduledDeleteConfirm": "حذف الجدول \"{name}\"؟",
-  "@reportsScheduledDeleteConfirm": {"placeholders": {"name": {"type": "String"}}},
+  "@reportsScheduledDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledEmpty": "لا توجد تقارير مجدولة بعد",
   "reportsScheduledFormat": "الصيغة",
   "reportsComparePeriod": "مقارنة الفترة",
@@ -7546,9 +7670,21 @@
   "reportsCompareTo": "إلى",
   "reportsExpiryTab": "انتهاء الصلاحية",
   "reportsExpiryDate": "تنتهي: {date}",
-  "@reportsExpiryDate": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsExpiryDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsExpiryDaysLeft": "{days} يوم متبقي",
-  "@reportsExpiryDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "@reportsExpiryDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "reportsExpiryExpired": "منتهي الصلاحية",
   "reportsExpiryCritical": "حرج (≤7 أيام)",
   "reportsExpiryWarning": "تحذير (≤30 يوم)",
@@ -7562,17 +7698,34 @@
   "reportsNoDeliveryData": "لا توجد بيانات عمولة توصيل",
   "reportsAutoRefreshing": "يتجدد تلقائيًا كل 60 ثانية",
   "reportsLastRefreshed": "آخر تحديث: {time}",
-  "@reportsLastRefreshed": {"placeholders": {"time": {"type": "String"}}},
+  "@reportsLastRefreshed": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "reportsSubscriptionRequired": "مطلوب ترقية للوصول إلى هذا التقرير",
   "reportsUpgradeRequired": "هذه الميزة متاحة في الخطط الأعلى",
   "reportsNoSchedulesYet": "لا توجد تقارير مجدولة بعد",
   "reportNDays": "{days} أيام",
-  "@reportNDays": {"placeholders": {"days": {"type": "int"}}},
+  "@reportNDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "reportNInStock": "{n} في المخزون",
-  "@reportNInStock": {"placeholders": {"n": {"type": "int"}}},
+  "@reportNInStock": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "reportsBestSellers": "الأكثر مبيعاً",
   "reportsType": "نوع التقرير",
-
   "bakeryEditCakeOrder": "تعديل طلب الكيك",
   "bakeryNewCakeOrder": "طلب كيك جديد",
   "bakeryUpdateOrder": "تحديث الطلب",
@@ -7580,7 +7733,6 @@
   "bakeryEditRecipe": "تعديل الوصفة",
   "bakeryUpdateRecipe": "تحديث الوصفة",
   "bakeryCreateRecipe": "إنشاء الوصفة",
-
   "electronicsEditImeiRecord": "تعديل سجل IMEI",
   "electronicsNewImeiRecord": "سجل IMEI جديد",
   "electronicsUpdateRecord": "تحديث السجل",
@@ -7588,7 +7740,6 @@
   "electronicsEditRepairJob": "تعديل طلب الإصلاح",
   "electronicsUpdateJob": "تحديث الطلب",
   "electronicsCreateJob": "إنشاء الطلب",
-
   "floristEditArrangement": "تعديل التنسيق",
   "floristNewArrangementTitle": "تنسيق جديد",
   "floristUpdateArrangement": "تحديث التنسيق",
@@ -7597,7 +7748,6 @@
   "floristEditSubscription": "تعديل الاشتراك",
   "floristUpdateSubscription": "تحديث الاشتراك",
   "floristCreateSubscription": "إنشاء الاشتراك",
-
   "jewelryEditProductDetail": "تعديل تفاصيل المنتج",
   "jewelryPriceCalculator": "حاسبة الأسعار",
   "jewelrySelectRate": "اختر سعر المعدن",
@@ -7606,11 +7756,9 @@
   "jewelryFlat": "مبلغ ثابت",
   "jewelryPerGram": "لكل غرام",
   "jewelryCalculatedPrice": "السعر المحسوب",
-
   "jewelryNewProductDetail": "تفاصيل مجوهرات جديدة",
   "jewelryUpdateDetail": "تحديث التفاصيل",
   "jewelryCreateDetail": "إنشاء التفاصيل",
-
   "pharmacyEditPrescription": "تعديل الوصفة الطبية",
   "pharmacyUpdatePrescription": "تحديث الوصفة",
   "pharmacyCreatePrescription": "إنشاء الوصفة",
@@ -7618,14 +7766,11 @@
   "pharmacyNewDrugSchedule": "جدول دواء جديد",
   "pharmacyUpdateSchedule": "تحديث الجدول",
   "pharmacyCreateSchedule": "إنشاء الجدول",
-
   "restaurantUpdateReservation": "تحديث الحجز",
   "restaurantCreateReservation": "إنشاء الحجز",
   "restaurantEditTable": "تعديل الطاولة",
-  "restaurantNewTable": "طاولة جديدة",
   "restaurantUpdateTable": "تحديث الطاولة",
   "restaurantCreateTable": "إنشاء الطاولة",
-
   "paymentListTitle": "سجل المدفوعات",
   "paymentListFilters": "فلاتر",
   "paymentListEmpty": "لا توجد مدفوعات",
@@ -7658,7 +7803,6 @@
   "refundReference": "رقم المرجع",
   "refundSubmit": "معالجة الاسترداد",
   "refundCreatedSuccess": "تمت معالجة الاسترداد بنجاح",
-
   "giftCardManage": "إدارة",
   "giftCardManageEmpty": "لا توجد بطاقات هدايا",
   "giftCardManageFilterStatus": "فلتر حسب الحالة",
@@ -7666,7 +7810,9 @@
   "giftCardDeactivateConfirm": "هل أنت متأكد من إلغاء تفعيل بطاقة الهدية {code}؟",
   "@giftCardDeactivateConfirm": {
     "placeholders": {
-      "code": { "type": "String" }
+      "code": {
+        "type": "String"
+      }
     }
   },
   "giftCardDeactivateAction": "إلغاء التفعيل",
@@ -7675,14 +7821,12 @@
   "giftCardStatusRedeemed": "مستخدمة",
   "giftCardStatusExpired": "منتهية الصلاحية",
   "giftCardStatusDeactivated": "مُلغاة",
-
   "expenseEditTitle": "تعديل المصروف",
   "expenseDeleteTitle": "حذف المصروف",
   "expenseDeleteConfirm": "هل أنت متأكد من حذف هذا المصروف؟",
   "expenseDeletedSuccess": "تم حذف المصروف",
   "expenseUpdatedSuccess": "تم تحديث المصروف",
   "expensesInfoMessage": "تتبع وإدارة جميع مصروفات المتجر. اسحب لليسار للحذف، اضغط أيقونة التعديل للتحديث.",
-
   "cashSessionDetailTitle": "تفاصيل الجلسة",
   "cashSessionEventsTab": "أحداث النقد",
   "cashSessionExpensesTab": "المصروفات",
@@ -7694,15 +7838,11 @@
   "cashSessionOpenedAt": "فُتحت",
   "cashSessionClosedAt": "أُغلقت",
   "cashSessionsInfoMessage": "عرض جميع جلسات النقد وتفاصيلها. اضغط على جلسة لرؤية أحداث النقد والمصروفات.",
-
   "dailySummaryExpensesBreakdown": "المصروفات حسب الفئة",
   "dailySummaryNoExpenses": "لا توجد مصروفات مسجلة",
   "dailySummaryInfoMessage": "عرض ملخص مبيعات اليوم بما يشمل الإيرادات والمصروفات وبيانات الجلسات.",
   "finReconInfoMessage": "مراجعة وتأكيد التسوية المالية لفترة زمنية. تصدير PDF للسجلات.",
-
   "allCategories": "جميع الفئات",
-  "newExpense": "مصروف جديد",
-
   "syncConnecting": "جارٍ الاتصال بالخادم...",
   "syncCheckingConnectivity": "جارٍ التحقق من الاتصال...",
   "syncNoInternet": "لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مجددًا.",
@@ -7715,26 +7855,36 @@
   "syncPendingCount": "{count} معلّق",
   "@syncPendingCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncLastSyncInfo": "آخر مزامنة: {direction} · {records} سجل",
   "@syncLastSyncInfo": {
     "placeholders": {
-      "direction": {"type": "String"},
-      "records": {"type": "int"}
+      "direction": {
+        "type": "String"
+      },
+      "records": {
+        "type": "int"
+      }
     }
   },
   "syncPendingConflictsCount": "{count} تعارضات",
   "@syncPendingConflictsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncFailedCount": "{count} فاشل",
   "@syncFailedCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncLogsTitle": "سجلات المزامنة",
@@ -7745,24 +7895,24 @@
   "syncLogsDuration": "{ms} مللي ثانية",
   "@syncLogsDuration": {
     "placeholders": {
-      "ms": {"type": "int"}
+      "ms": {
+        "type": "int"
+      }
     }
   },
   "syncLogsRecordsCount": "{count} سجل",
   "@syncLogsRecordsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-  "syncLogs": "سجلات المزامنة",
   "syncLogHistory": "سجل تاريخ المزامنة",
   "viewAllLogs": "عرض كل السجلات",
-
   "validityPeriod": "الصلاحية",
-  "usage": "الاستخدام",
   "noExpiry": "بدون انتهاء",
   "guest": "زائر",
-
   "dailyUsageLast30Days": "الاستخدام اليومي (آخر 30 يوماً)",
   "noUsageData": "لا توجد بيانات استخدام بعد",
   "usageHistory": "سجل الاستخدام",
@@ -7772,32 +7922,36 @@
   "autoUses": "الاستخدامات التلقائية",
   "usageLimitProgress": "حد الاستخدام",
   "notApplicable": "غير متاح",
-
   "orderId": "الطلب",
   "customer": "العميل",
   "date": "التاريخ",
-
   "copyCode": "نسخ الرمز",
   "codeCopied": "تم نسخ الرمز إلى الحافظة",
   "used": "مستخدم",
   "promoNoFoundSubtitle": "أنشئ عرضك الترويجي الأول لزيادة المبيعات",
   "promoCouponsEmptySubtitle": "أنشئ رموز الكوبون لهذا العرض الترويجي",
-
   "showingOf": "{count} من {total}",
   "@showingOf": {
     "placeholders": {
-      "count": {"type": "String"},
-      "total": {"type": "String"}
+      "count": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
   "pageOf": "صفحة {page} من {total}",
   "@pageOf": {
     "placeholders": {
-      "page": {"type": "String"},
-      "total": {"type": "String"}
+      "page": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
-
   "analyticsSelectDateRange": "اختر نطاق التاريخ",
   "analyticsActiveStores": "المتاجر النشطة",
   "analyticsNewSignups": "التسجيلات الجديدة",
@@ -7826,7 +7980,9 @@
   "analyticsMonitoringStores": "مراقبة {count} متجر",
   "@analyticsMonitoringStores": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "analyticsStoresMonitored": "المتاجر المراقبة",
@@ -7866,12 +8022,10 @@
   "adminInProgressTickets": "قيد التنفيذ",
   "adminResolvedTickets": "محلولة",
   "adminClosedTickets": "مغلقة",
-
   "onboardingSelectBusinessType": "اختر نوع النشاط التجاري",
   "onboardingBusinessTypeDefaultsTitle": "الافتراضيات المضمنة",
   "onboardingBusinessTypeDefaultsLoading": "جارٍ تحميل الافتراضيات…",
   "onboardingBusinessTypeNoDefaults": "لا توجد افتراضيات لهذا النوع",
-
   "onboardingHardwareStepTitle": "إعداد الأجهزة",
   "onboardingHardwareStepSubtitle": "أخبرنا بالأجهزة المتصلة لديك",
   "onboardingHardwarePrinterLabel": "طابعة الإيصالات",
@@ -7883,7 +8037,6 @@
   "onboardingHardwareCustomerDisplayLabel": "شاشة العميل (CFD)",
   "onboardingHardwareCustomerDisplayDesc": "شاشة ثانية في مواجهة العميل",
   "onboardingHardwareInfoNote": "يمكنك إضافة الأجهزة أو تغييرها في أي وقت من صفحة إعدادات الأجهزة.",
-
   "onboardingProductsStepTitle": "إعداد المنتجات",
   "onboardingProductsStepSubtitle": "اختر طريقة إضافة المنتجات",
   "onboardingProductsOptionLaterLabel": "الإعداد لاحقاً",
@@ -7893,7 +8046,6 @@
   "onboardingProductsOptionCsvLabel": "رفع قائمة المنتجات (CSV)",
   "onboardingProductsOptionCsvSubtitle": "استيراد كتالوج منتجاتك الحالي",
   "onboardingProductsUploadCsv": "اختر ملف CSV",
-
   "onboardingStaffStepTitle": "دعوة موظف",
   "onboardingStaffStepSubtitle": "أضف أول عضو في فريقك (اختياري)",
   "onboardingStaffNameLabel": "الاسم الكامل",
@@ -7904,119 +8056,15 @@
   "onboardingStaffRoleSupervisor": "مشرف",
   "onboardingStaffRoleAdmin": "مسؤول",
   "onboardingStaffSkipNote": "يمكنك تخطي هذه الخطوة ودعوة الموظفين لاحقاً من صفحة إعدادات الفريق.",
-
   "onboardingReviewHardware": "الأجهزة",
   "onboardingReviewNoneSelected": "لم يتم الاختيار",
   "onboardingReviewProducts": "المنتجات",
   "onboardingReviewStaff": "عضو الفريق",
   "onboardingReviewStaffNone": "لا أحد (الدعوة لاحقاً)",
-
   "helpArticlesTitle": "مركز المساعدة",
   "helpArticlesSearchHint": "ابحث في المقالات…",
   "helpArticlesCategoryAll": "الكل",
-  "helpArticleNotFound": "المقالة غير موجودة"
-,
-
-  "auDashboard": "لوحة التحديثات",
-  "auDashboardTitle": "إدارة تحديثات التطبيق",
-  "auTotalReleases": "إجمالي الإصدارات",
-  "auActiveReleases": "الإصدارات النشطة",
-  "auInstallationRate": "معدل التثبيت",
-  "auInstalledCount": "مثبَّت",
-  "auFailedCount": "فشل",
-  "auLast30Days": "آخر 30 يومًا",
-  "auLatestByPlatform": "أحدث إصدار لكل منصة",
-  "auAdoptionFunnel": "قمع التبني",
-  "auFunnelNote": "تثبيتات الإصدارات النشطة في آخر 30 يومًا",
-  "auRollbackCandidates": "مرشحون للتراجع التلقائي",
-  "auFailureRate": "معدل الفشل",
-  "auReview": "مراجعة",
-  "auRecentFailures": "أحدث الإخفاقات",
-  "auNoActiveRelease": "لا يوجد إصدار نشط",
-  "auNoReleasesYet": "لا توجد إصدارات بعد",
-  "auUnknownError": "خطأ غير معروف",
-  "auFileIntegrity": "سلامة الملف",
-  "auFileIntegrityHelper": "مجموع التحقق SHA-256 وحجم الملف للتحقق من سلامة التحديث",
-  "auFileChecksum": "مجموع تحقق الملف (SHA-256)",
-  "auFileChecksumHelper": "ملخص سداسي عشري مؤلف من 64 رمزًا للملف التنفيذي",
-  "auFileSizeBytes": "حجم الملف (بايت)",
-  "auFileSizeHelper": "عدد البايت الدقيق للملف التنفيذي",
-  "auStatRecordDetails": "تفاصيل السجل",
-  "auErrorDetails": "تفاصيل الخطأ",
-  "auErrorMessage": "رسالة الخطأ",
-  "auAddRelease": "إضافة إصدار",
-  "auViewAllStats": "عرض كل الإحصائيات",
-  "commonTimestamps": "التوقيتات",
-  "commonCreatedAt": "تاريخ الإنشاء",
-  "commonUpdatedAt": "تاريخ التعديل",
-  "commonTime": "الوقت",
-  "configFeatureFlags": "إشارات الميزات",
-  "configMaintenanceMode": "وضع الصيانة",
-  "configMaintenanceActive": "النظام تحت الصيانة",
-  "configMaintenanceExpected": "متوقع الانتهاء: {time}",
-  "@configMaintenanceExpected": {"placeholders": {"time": {"type": "String"}}},
-  "configTax": "إعداد الضريبة",
-  "configVatRate": "نسبة ضريبة القيمة المضافة",
-  "configVatEnabled": "ضريبة القيمة المضافة مفعّلة",
-  "configSecurityPolicies": "سياسات الأمان",
-  "configSessionTimeout": "مهلة الجلسة",
-  "configSessionTimeoutMinutes": "{count} دقيقة",
-  "@configSessionTimeoutMinutes": {"placeholders": {"count": {"type": "int"}}},
-  "configPinMinLength": "الحد الأدنى لطول رمز PIN",
-  "configMaxFailedAttempts": "الحد الأقصى لمحاولات تسجيل الدخول الفاشلة",
-  "configLockoutDuration": "مدة القفل",
-  "configBiometricDefault": "القياسات الحيوية مفعّلة افتراضيًا",
-  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ"
-,
-
-  "auDashboard": "لوحة التحديثات",
-  "auDashboardTitle": "إدارة تحديثات التطبيق",
-  "auTotalReleases": "إجمالي الإصدارات",
-  "auActiveReleases": "الإصدارات النشطة",
-  "auInstallationRate": "معدل التثبيت",
-  "auInstalledCount": "مثبت",
-  "auFailedCount": "فشل",
-  "auLast30Days": "آخر 30 يوما",
-  "auLatestByPlatform": "أحدث إصدار لكل منصة",
-  "auAdoptionFunnel": "قمع التبني",
-  "auFunnelNote": "تثبيتات الإصدارات النشطة في آخر 30 يوما",
-  "auRollbackCandidates": "مرشحون للتراجع التلقائي",
-  "auFailureRate": "معدل الفشل",
-  "auReview": "مراجعة",
-  "auRecentFailures": "أحدث الإخفاقات",
-  "auNoActiveRelease": "لا يوجد إصدار نشط",
-  "auNoReleasesYet": "لا توجد إصدارات بعد",
-  "auUnknownError": "خطأ غير معروف",
-  "auFileIntegrity": "سلامة الملف",
-  "auFileIntegrityHelper": "مجموع التحقق SHA-256 وحجم الملف للتحقق من سلامة التحديث",
-  "auFileChecksum": "مجموع تحقق الملف SHA-256",
-  "auFileChecksumHelper": "ملخص سداسي عشري مؤلف من 64 رمزا للملف التنفيذي",
-  "auFileSizeBytes": "حجم الملف بالبايت",
-  "auFileSizeHelper": "عدد البايت الدقيق للملف التنفيذي",
-  "auStatRecordDetails": "تفاصيل السجل",
-  "auErrorDetails": "تفاصيل الخطأ",
-  "auErrorMessage": "رسالة الخطأ",
-  "auAddRelease": "إضافة إصدار",
-  "auViewAllStats": "عرض كل الإحصائيات",
-  "commonTimestamps": "التوقيتات",
-  "commonCreatedAt": "تاريخ الإنشاء",
-  "commonUpdatedAt": "تاريخ التعديل",
-  "commonTime": "الوقت",
-  "configFeatureFlags": "إشارات الميزات",
-  "configMaintenanceMode": "وضع الصيانة",
-  "configMaintenanceActive": "النظام تحت الصيانة",
-  "configTax": "إعداد الضريبة",
-  "configVatRate": "نسبة ضريبة القيمة المضافة",
-  "configVatEnabled": "ضريبة القيمة المضافة مفعلة",
-  "configSecurityPolicies": "سياسات الأمان",
-  "configSessionTimeout": "مهلة الجلسة",
-  "configPinMinLength": "الحد الأدنى لطول رمز PIN",
-  "configMaxFailedAttempts": "الحد الأقصى لمحاولات تسجيل الدخول الفاشلة",
-  "configLockoutDuration": "مدة القفل",
-  "configBiometricDefault": "القياسات الحيوية مفعلة افتراضيا",
-  "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ"
-,
-
+  "helpArticleNotFound": "المقالة غير موجودة",
   "auDashboard": "لوحة التحديثات",
   "auDashboardTitle": "إدارة تحديثات التطبيق",
   "auTotalReleases": "إجمالي الإصدارات",
@@ -8053,17 +8101,32 @@
   "configFeatureFlags": "إشارات الميزات",
   "configMaintenanceMode": "وضع الصيانة",
   "configMaintenanceActive": "النظام تحت الصيانة",
+  "configMaintenanceExpected": "متوقع الانتهاء: {time}",
+  "@configMaintenanceExpected": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "configTax": "إعداد الضريبة",
   "configVatRate": "نسبة ضريبة القيمة المضافة",
   "configVatEnabled": "ضريبة القيمة المضافة مفعلة",
   "configSecurityPolicies": "سياسات الأمان",
   "configSessionTimeout": "مهلة الجلسة",
+  "configSessionTimeoutMinutes": "{count} دقيقة",
+  "@configSessionTimeoutMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "configPinMinLength": "الحد الأدنى لطول رمز PIN",
   "configMaxFailedAttempts": "الحد الأقصى لمحاولات تسجيل الدخول الفاشلة",
   "configLockoutDuration": "مدة القفل",
   "configBiometricDefault": "القياسات الحيوية مفعلة افتراضيا",
   "configRequireReauth": "طلب إعادة المصادقة عند الاستيقاظ",
-
   "labelPrinterLanguage": "لغة الطابعة",
   "labelPrinterLanguageZpl": "ZPL (زيبرا)",
   "labelPrinterLanguageTspl": "TSPL (TSC)",
@@ -8080,17 +8143,20 @@
   "labelFilterByTemplate": "تصفية حسب القالب",
   "labelApplyFilter": "تطبيق الفلتر",
   "labelClearFilter": "مسح الفلتر",
-
   "hardwareSkuLabel": "الرمز: {sku}",
   "@hardwareSkuLabel": {
     "placeholders": {
-      "sku": { "type": "String" }
+      "sku": {
+        "type": "String"
+      }
     }
   },
   "labelsExpiryDate": "انتهاء: {date}",
   "@labelsExpiryDate": {
     "placeholders": {
-      "date": { "type": "String" }
+      "date": {
+        "type": "String"
+      }
     }
   },
   "accountingAccessToken": "رمز الوصول",
@@ -8191,173 +8257,235 @@
   "accountingConnectProvider": "ربط {provider}",
   "@accountingConnectProvider": {
     "placeholders": {
-      "provider": {"type": "String"}
+      "provider": {
+        "type": "String"
+      }
     }
   },
   "accountingEntriesCount": "{count} سجلات",
   "@accountingEntriesCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aiRunFeature": "تشغيل {featureName}",
   "@aiRunFeature": {
     "placeholders": {
-      "featureName": {"type": "String"}
+      "featureName": {
+        "type": "String"
+      }
     }
   },
   "cashMgmtFloatLabel": "رصيد الافتتاح: {amount}",
   "@cashMgmtFloatLabel": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "catalogImportRowError": "الصف {row}: {message}",
   "@catalogImportRowError": {
     "placeholders": {
-      "row": {"type": "int"},
-      "message": {"type": "String"}
+      "row": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
     }
   },
   "commonItemsCount": "{count} عناصر",
   "@commonItemsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "paginationPageOf": "الصفحة {page} من {total}",
   "@paginationPageOf": {
     "placeholders": {
-      "page": {"type": "int"},
-      "total": {"type": "int"}
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "pcButtonsCount": "{count} أزرار",
   "@pcButtonsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "posCurrentDiscount": "الخصم: {amount}",
   "@posCurrentDiscount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "posProductAddedWeighed": "تمت إضافة {name} ({qty} كجم)",
   "@posProductAddedWeighed": {
     "placeholders": {
-      "name": {"type": "String"},
-      "qty": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
     }
   },
   "posReprintReceiptNumber": "رقم الإيصال",
   "promotionsCouponType": "النوع: {type}",
   "@promotionsCouponType": {
     "placeholders": {
-      "type": {"type": "String"}
+      "type": {
+        "type": "String"
+      }
     }
   },
   "receiptVatNumber": "رقم ضريبة القيمة المضافة: {number}",
   "@receiptVatNumber": {
     "placeholders": {
-      "number": {"type": "String"}
+      "number": {
+        "type": "String"
+      }
     }
   },
   "securityAuditIp": "عنوان IP: {ip}",
   "@securityAuditIp": {
     "placeholders": {
-      "ip": {"type": "String"}
+      "ip": {
+        "type": "String"
+      }
     }
   },
   "securityAuditUser": "المستخدم: {userType}",
   "@securityAuditUser": {
     "placeholders": {
-      "userType": {"type": "String"}
+      "userType": {
+        "type": "String"
+      }
     }
   },
   "settingsVersionPublishedAt": "تاريخ النشر: {date}",
   "@settingsVersionPublishedAt": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "staffPermissionsLoadError": "خطأ في تحميل الأذونات: {message}",
   "@staffPermissionsLoadError": {
     "placeholders": {
-      "message": {"type": "String"}
+      "message": {
+        "type": "String"
+      }
     }
   },
   "subscriptionUpgradePrompt": "قم بترقية خطتك للوصول إلى {featureName}",
   "@subscriptionUpgradePrompt": {
     "placeholders": {
-      "featureName": {"type": "String"}
+      "featureName": {
+        "type": "String"
+      }
     }
   },
   "termFormBillingCardFeeValue": "{value}٪",
   "@termFormBillingCardFeeValue": {
     "placeholders": {
-      "value": {"type": "String"}
+      "value": {
+        "type": "String"
+      }
     }
   },
   "termFormBillingMadaRateValue": "{value}٪",
   "@termFormBillingMadaRateValue": {
     "placeholders": {
-      "value": {"type": "String"}
+      "value": {
+        "type": "String"
+      }
     }
   },
   "thawaniHttpStatus": "HTTP {status}",
   "@thawaniHttpStatus": {
     "placeholders": {
-      "status": {"type": "String"}
+      "status": {
+        "type": "String"
+      }
     }
   },
   "transactionSerialNumber": "رقم التسلسل: {serial}",
   "@transactionSerialNumber": {
     "placeholders": {
-      "serial": {"type": "String"}
+      "serial": {
+        "type": "String"
+      }
     }
   },
   "zatcaCertificateId": "الشهادة: {id}",
   "@zatcaCertificateId": {
     "placeholders": {
-      "id": {"type": "String"}
+      "id": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceSerialLabel": "الرقم التسلسلي: {serial}",
   "@zatcaDeviceSerialLabel": {
     "placeholders": {
-      "serial": {"type": "String"}
+      "serial": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceStatusLabel": "الحالة: {status}",
   "@zatcaDeviceStatusLabel": {
     "placeholders": {
-      "status": {"type": "String"}
+      "status": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceUuidLabel": "UUID: {uuid}",
   "@zatcaDeviceUuidLabel": {
     "placeholders": {
-      "uuid": {"type": "String"}
+      "uuid": {
+        "type": "String"
+      }
     }
   },
   "zatcaInvoicesCount": "{count} فواتير",
   "@zatcaInvoicesCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "zatcaLastErrorMessage": "خطأ: {message}",
   "@zatcaLastErrorMessage": {
     "placeholders": {
-      "message": {"type": "String"}
+      "message": {
+        "type": "String"
+      }
     }
   },
   "zatcaVatAmountLabel": "ضريبة القيمة المضافة: {amount}",
   "@zatcaVatAmountLabel": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "catalogEditProduct": "تعديل المنتج",
@@ -8365,5 +8493,202 @@
   "catalogUpdateProduct": "تحديث المنتج",
   "catalogCreateProduct": "إنشاء منتج",
   "catalogListView": "عرض القائمة",
-  "catalogGridView": "عرض الشبكة"
+  "catalogGridView": "عرض الشبكة",
+  "wameedPos": "Wameed POS",
+  "customerDisplay": "Customer Display",
+  "cartIsEmpty": "السلة فارغة",
+  "paymentSuccessful": "تمت عملية الدفع بنجاح",
+  "yourCartIsEmpty": "سلتك فارغة",
+  "misc50halalas": "50 Halalas",
+  "misc25halalas": "25 Halalas",
+  "misc10halalas": "10 Halalas",
+  "misc5halalas": "5 Halalas",
+  "misc968xxxxxxxx": "+968 XXXX XXXX",
+  "impersonate": "Impersonate",
+  "usageStatistics": "إحصائيات الاستخدام",
+  "orders30d": "Orders (30d)",
+  "registers": "Registers",
+  "noPosTerminalsRegistered": "لم يتم تسجيل أجهزة نقاط البيع",
+  "organizationNotFound": "المنظمة غير موجودة",
+  "impersonationActive": "انتحال الهوية نشط",
+  "youAreNowImpersonating": "أنت الآن تنتحل هوية:",
+  "extend30Min": "Extend (30 min)",
+  "endSession": "End Session",
+  "internalNote": "Internal Note",
+  "addANoteVisibleOnlyToAdmins": "Add a note visible only to admins...",
+  "noInternalNotesYet": "لا توجد ملاحظات داخلية بعد",
+  "registrationApproved": "تمت الموافقة على التسجيل",
+  "temporaryPassword": "كلمة مرور مؤقتة",
+  "searchAlerts": "Search alerts...",
+  "searchPages": "Search pages...",
+  "searchVersions": "Search versions...",
+  "trustedDevices": "الأجهزة الموثوقة",
+  "noTrustedDevices": "No trusted devices",
+  "admin": "المشرف",
+  "deviceName": "Device Name",
+  "ipAddress": "عنوان IP",
+  "userAgent": "عميل المستخدم",
+  "trustedAt": "Trusted At",
+  "lastUsed": "Last Used",
+  "revokeTrust": "Revoke trust",
+  "revokeDeviceTrust": "Revoke Device Trust",
+  "removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi": "Remove trust for this device? The admin will need to re-verify on next login from this device.",
+  "revoke": "Revoke",
+  "searchStores": "Search stores...",
+  "manage": "Manage",
+  "alerts": "Alerts",
+  "policies": "Policies",
+  "searchEvents": "Search events...",
+  "searchResponses": "Search responses...",
+  "securityPolicies": "سياسات الأمان",
+  "noSecurityPoliciesFound": "No security policies found",
+  "editPolicy": "Edit policy",
+  "enterNewValue": "Enter new value",
+  "noActivityLogs": "No activity logs",
+  "entity": "Entity",
+  "timestamp": "Timestamp",
+  "searchAdmins": "Search admins...",
+  "securityAuditLog": "Security Audit Log",
+  "noAuditLogEntries": "No audit log entries",
+  "adminSessions": "Admin Sessions",
+  "activeOnly": "Active only",
+  "revokeAllSessions": "Revoke All Sessions",
+  "noSessionsFound": "No sessions found",
+  "lastActive": "Last Active",
+  "revoked": "Revoked",
+  "revokeSession": "Revoke session",
+  "revokeSession2": "Revoke Session",
+  "areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm": "Are you sure you want to revoke this session? The user will be logged out immediately.",
+  "thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI": "This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.",
+  "adminUserIdOptional": "Admin User ID (optional)",
+  "leaveBlankToRevokeAll": "Leave blank to revoke all",
+  "providerDevices": "Provider Devices",
+  "noDevicesFound": "No devices found",
+  "serialImei": "Serial / IMEI",
+  "platform": "المنصة",
+  "lastSeen": "آخر ظهور",
+  "remoteWipe": "Remote Wipe",
+  "remoteWipeDevice": "Remote Wipe Device",
+  "wipeDevice": "Wipe Device",
+  "searchNotificationLogs": "Search notification logs...",
+  "maximumRetries": "Maximum Retries",
+  "numberOfRetryAttempts110": "Number of retry attempts (1-10)",
+  "retryIntervalHours": "Retry Interval (hours)",
+  "timeBetweenRetryAttempts1168Hours": "Time between retry attempts (1-168 hours)",
+  "gracePeriodDays": "Grace Period (days)",
+  "daysAfterFailureBeforeSuspension130": "Days after failure before suspension (1-30)",
+  "org": "ORG",
+  "ipManagement": "IP Management",
+  "allowlist": "Allowlist",
+  "blocklist": "Blocklist",
+  "addIpCidr": "Add IP / CIDR",
+  "noEntriesInAllowlist": "No entries in allowlist",
+  "ipCidr": "IP / CIDR",
+  "addedBy": "Added By",
+  "expires": "Expires",
+  "blockIpCidr": "Block IP / CIDR",
+  "noEntriesInBlocklist": "No entries in blocklist",
+  "hitCount": "Hit Count",
+  "blockedBy": "Blocked By",
+  "removeEntry": "Remove Entry",
+  "ipAddressOrCidr": "IP Address or CIDR",
+  "eg19216811Or1000024": "e.g. 192.168.1.1 or 10.0.0.0/24",
+  "expiryDateOptional": "Expiry Date (optional)",
+  "yyyymmdd": "YYYY-MM-DD",
+  "severity": "الخطورة",
+  "createdAt": "Created At",
+  "searchByInvoiceNumber": "Search by invoice number...",
+  "searchByDescriptionOrSerial": "Search by description or serial...",
+  "failedOnly": "Failed only",
+  "noLoginAttemptsFound": "No login attempts found",
+  "emailIdentifier": "Email / Identifier",
+  "failureReason": "Failure Reason",
+  "attemptedAt": "Attempted At",
+  "searchAnnouncements": "Search announcements...",
+  "gatewayName": "اسم البوابة",
+  "webhookUrl": "Webhook URL",
+  "searchByNameEmailOrPhone": "Search by name, email, or phone...",
+  "eg1550": "e.g. 15.50",
+  "eg1420": "e.g. 14.20",
+  "eg15000": "e.g. 150.00",
+  "eg150": "e.g. 1.50",
+  "eg4": "e.g. 4",
+  "eg005": "e.g. 0.05",
+  "eg550": "e.g. 5.50",
+  "eg320": "e.g. 3.20",
+  "eg15": "e.g. 15",
+  "eg200Or150": "e.g. +2.00 or -1.50",
+  "eg7": "e.g. 7",
+  "daysAhead": "Days Ahead",
+  "default30Days": "Default: 30 days",
+  "selectTheDateToSummarize": "Select the date to summarize",
+  "forecastPeriodDays": "Forecast Period (days)",
+  "default7Days": "Default: 7 days",
+  "analysisPeriod": "Analysis Period",
+  "invoiceImage": "Invoice Image",
+  "takeAPhotoOrUploadAnInvoiceImage": "Take a photo or upload an invoice image",
+  "selectAProductToGenerateDescriptionFor": "Select a product to generate description for",
+  "barcode": "الباركود",
+  "enterOrScanABarcode": "Enter or scan a barcode",
+  "customerSegment": "Customer Segment",
+  "optionalTargetASpecificSegment": "Optional: target a specific segment",
+  "vipCustomers": "VIP Customers",
+  "newCustomers": "New Customers",
+  "atriskChurning": "At-Risk (Churning)",
+  "frequentBuyers": "Frequent Buyers",
+  "allCustomers": "All Customers",
+  "searchQuery": "Search Query",
+  "whatWouldYouLikeToFind": "What would you like to find?",
+  "messageType": "Message Type",
+  "sms": "SMS",
+  "whatsapp": "WhatsApp",
+  "whatIsTheMessageAbout": "What is the message about?",
+  "egRamadanSaleNewProductLaunchLoyaltyReward": "e.g., Ramadan sale, new product launch, loyalty reward...",
+  "socialPlatform": "Social Platform",
+  "instagram": "Instagram",
+  "tiktok": "TikTok",
+  "facebook": "Facebook",
+  "xTwitter": "X (Twitter)",
+  "snapchat": "Snapchat",
+  "contentTopic": "Content Topic",
+  "egSummerCollectionStoreOpeningFlashSale": "e.g., Summer collection, Store opening, Flash sale",
+  "featuredProduct": "Featured Product",
+  "optionalHighlightASpecificProduct": "Optional: highlight a specific product",
+  "fromLanguage": "From Language",
+  "autodetect": "Auto-detect",
+  "arabic": "Arabic",
+  "english": "English",
+  "toLanguage": "To Language",
+  "textToTranslate": "Text to Translate",
+  "enterTheTextYouWantToTranslate": "Enter the text you want to translate",
+  "postupdateHealthCheckFailed": "Post-update health check failed",
+  "failedToHoldCart": "Failed to hold cart",
+  "previewCustomerDisplayDebug": "Preview customer display (debug)",
+  "customerDisplayPreview": "Customer Display Preview",
+  "txn202604210001": "TXN-20260421-0001",
+  "egTerminal001": "e.g. terminal-001",
+  "reassign": "Reassign",
+  "system": "System",
+  "vat": "VAT",
+  "receiptPrinter": "Receipt Printer",
+  "thermalOrLaserPrinterForReceipts": "Thermal or laser printer for receipts",
+  "barcodeQrScanner": "Barcode / QR Scanner",
+  "usbOrBluetoothScanner": "USB or Bluetooth scanner",
+  "cashDrawer": "Cash Drawer",
+  "connectedViaPrinterOrUsb": "Connected via printer or USB",
+  "customerDisplayCfd": "Customer Display (CFD)",
+  "secondScreenShowingItemsToCustomer": "Second screen showing items to customer",
+  "setUpLater": "Set Up Later",
+  "skipForNowYouCanAddProductsFromTheCatalogAnytime": "Skip for now — you can add products from the catalog anytime",
+  "useBusinessTypeDefaults": "Use Business Type Defaults",
+  "uploadCsvFile": "Upload CSV File",
+  "importProductsFromYourOwnSpreadsheet": "Import products from your own spreadsheet",
+  "chooseCsvFile": "Choose CSV File",
+  "csvImportIsAvailableInCatalogAfterSetup": "CSV import is available in Catalog after setup.",
+  "email1examplecomEmail2examplecom": "email1@example.com, email2@example.com",
+  "action": "إجراء",
+  "userType": "نوع المستخدم",
+  "value": "القيمة",
+  "label": "التسمية",
+  "type": "النوع"
 }

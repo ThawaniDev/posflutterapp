@@ -60,7 +60,9 @@ class _PlanDetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final features = plan['features'] as List? ?? [];
+    final allFeatures = plan['features'] as List? ?? [];
+    final hideUnselected = plan['hide_unselected_features'] as bool? ?? false;
+    final features = hideUnselected ? allFeatures.where((f) => (f as Map)['is_enabled'] == true).toList() : allFeatures;
     final limits = plan['limits'] as List? ?? [];
 
     return Column(

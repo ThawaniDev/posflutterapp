@@ -165,12 +165,12 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
           ],
 
           // ── Quick Navigation ─────────────────────────────
-          _SectionHeader(title: 'Manage', icon: Icons.arrow_forward, color: AppColors.info),
+          _SectionHeader(title: l10n.manage, icon: Icons.arrow_forward, color: AppColors.info),
           AppSpacing.gapH8,
           _QuickNavGrid(
             items: [
               _NavItem(
-                label: 'Alerts',
+                label: l10n.alerts,
                 icon: Icons.warning_amber_rounded,
                 color: AppColors.error,
                 route: Routes.adminSecurityAlerts,
@@ -193,9 +193,9 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
                 color: AppColors.purple,
                 route: Routes.adminSecurityIp,
               ),
-              _NavItem(label: 'Policies', icon: Icons.policy, color: AppColors.warning, route: Routes.adminSecurityPolicies),
+              _NavItem(label: l10n.policies, icon: Icons.policy, color: AppColors.warning, route: Routes.adminSecurityPolicies),
               _NavItem(
-                label: 'Trusted Devices',
+                label: l10n.trustedDevices,
                 icon: Icons.verified_user,
                 color: AppColors.success,
                 route: Routes.adminSecurityTrustedDevices,

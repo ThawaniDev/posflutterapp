@@ -147,7 +147,7 @@ class FeatureInputConfig {
       fields: [
         FeatureField(
           key: 'product',
-          label: 'Product',
+          label: 'product',
           labelAr: 'المنتج',
           type: FeatureFieldType.product,
           required: true,
@@ -162,7 +162,7 @@ class FeatureInputConfig {
       fields: [
         FeatureField(
           key: 'barcode',
-          label: 'Barcode',
+          label: 'barcode',
           labelAr: 'الباركود',
           type: FeatureFieldType.barcode,
           required: true,

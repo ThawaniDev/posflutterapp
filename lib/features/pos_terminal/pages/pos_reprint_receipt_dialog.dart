@@ -94,7 +94,7 @@ class _PosReprintReceiptDialogState extends ConsumerState<PosReprintReceiptDialo
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: l10n.posReprintReceiptNumber,
-                      hintText: 'TXN-20260421-0001',
+                      hintText: l10n.txn202604210001,
                       prefixIcon: const Icon(Icons.qr_code_2),
                     ),
                     onSubmitted: (_) => _lookup(),

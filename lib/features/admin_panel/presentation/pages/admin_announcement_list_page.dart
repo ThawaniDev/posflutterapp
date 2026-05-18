@@ -71,8 +71,8 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search announcements...',
+                    decoration: InputDecoration(
+                      hintText: l10n.searchAnnouncements,
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),

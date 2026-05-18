@@ -28,7 +28,7 @@ class _AdminSecurityPoliciesPageState extends ConsumerState<AdminSecurityPolicie
     final state = ref.watch(securityPolicyListProvider);
 
     return PosListPage(
-      title: 'Security Policies',
+      title: l10n.securityPolicies,
       child: switch (state) {
         SecurityPolicyListLoading() => const PosLoading(),
         SecurityPolicyListError(message: final msg) => PosErrorState(
@@ -44,7 +44,7 @@ class _AdminSecurityPoliciesPageState extends ConsumerState<AdminSecurityPolicie
   Widget _buildPolicies(Map<String, dynamic> data) {
     final items = (data['data'] as List<dynamic>?) ?? [];
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No security policies found');
+      return PosEmptyState(title: l10n.noSecurityPoliciesFound);
     }
 
     return RefreshIndicator(
@@ -71,6 +71,8 @@ class _PolicyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final name = _formatPolicyName(policy['policy_key']?.toString() ?? policy['name']?.toString() ?? 'Policy');
     final description = policy['description']?.toString();
 
@@ -93,7 +95,7 @@ class _PolicyCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.edit_outlined, size: 20),
-                  tooltip: 'Edit policy',
+                  tooltip: l10n.editPolicy,
                   onPressed: () => _showEditDialog(context),
                 ),
               ],
@@ -175,6 +177,8 @@ class _EditPolicyDialogState extends ConsumerState<_EditPolicyDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       title: Text('Edit: $_policyName'),
       content: SizedBox(
@@ -189,13 +193,13 @@ class _EditPolicyDialogState extends ConsumerState<_EditPolicyDialog> {
               )
             : PosTextField(
                 controller: _valueController,
-                label: 'Value',
-                hint: 'Enter new value',
+                label: l10n.value,
+                hint: l10n.enterNewValue,
                 keyboardType: TextInputType.number,
               ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         PosButton(label: _loading ? 'Saving…' : 'Save', onPressed: _loading ? () {} : _save),
       ],
     );

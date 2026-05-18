@@ -71,7 +71,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search responses...',
+                      hintText: l10n.searchResponses,
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear),

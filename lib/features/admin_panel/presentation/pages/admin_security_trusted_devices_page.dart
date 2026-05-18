@@ -35,7 +35,7 @@ class _AdminSecurityTrustedDevicesPageState extends ConsumerState<AdminSecurityT
     final state = ref.watch(securityTrustedDeviceListProvider);
 
     return PosListPage(
-      title: 'Trusted Devices',
+      title: l10n.trustedDevices,
       showSearch: true,
       onSearchChanged: (q) {
         _searchQuery = q;
@@ -56,7 +56,7 @@ class _AdminSecurityTrustedDevicesPageState extends ConsumerState<AdminSecurityT
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No trusted devices');
+      return PosEmptyState(title: l10n.noTrustedDevices);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -66,14 +66,14 @@ class _AdminSecurityTrustedDevicesPageState extends ConsumerState<AdminSecurityT
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'Admin', flex: 2),
-            PosTableColumn(title: 'Device Name', flex: 2),
-            PosTableColumn(title: 'IP Address', width: 130),
-            PosTableColumn(title: 'User Agent', flex: 2),
-            PosTableColumn(title: 'Trusted At', width: 140),
-            PosTableColumn(title: 'Last Used', width: 140),
-            PosTableColumn(title: 'Actions', width: 80),
+          columns: [
+            PosTableColumn(title: l10n.admin, flex: 2),
+            PosTableColumn(title: l10n.deviceName, flex: 2),
+            PosTableColumn(title: l10n.ipAddress, width: 130),
+            PosTableColumn(title: l10n.userAgent, flex: 2),
+            PosTableColumn(title: l10n.trustedAt, width: 140),
+            PosTableColumn(title: l10n.lastUsed, width: 140),
+            PosTableColumn(title: l10n.actions, width: 80),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {
@@ -145,25 +145,28 @@ class _RevokeTrustButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final l10n = AppLocalizations.of(context)!;
     return IconButton(
       icon: const Icon(Icons.shield_outlined, size: 18, color: AppColors.error),
-      tooltip: 'Revoke trust',
+      tooltip: l10n.revokeTrust,
       onPressed: () => _revoke(context, ref),
     );
   }
 
   Future<void> _revoke(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Revoke Device Trust'),
-        content: const Text('Remove trust for this device? The admin will need to re-verify on next login from this device.'),
+        title: Text(l10n.revokeDeviceTrust),
+        content: Text(l10n.removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Revoke'),
+            child: Text(l10n.revoke),
           ),
         ],
       ),

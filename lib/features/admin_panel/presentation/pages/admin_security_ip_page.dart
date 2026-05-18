@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Tabbed page for IP Allowlist and IP Blocklist management.
 class AdminSecurityIpPage extends ConsumerStatefulWidget {
@@ -35,14 +36,16 @@ class _AdminSecurityIpPageState extends ConsumerState<AdminSecurityIpPage> with 
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('IP Management'),
+        title: Text(l10n.ipManagement),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Allowlist'),
-            Tab(text: 'Blocklist'),
+          tabs: [
+            Tab(text: l10n.allowlist),
+            Tab(text: l10n.blocklist),
           ],
         ),
       ),
@@ -65,6 +68,8 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(securityIpAllowlistProvider);
     return Column(
       children: [
@@ -73,7 +78,7 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              PosButton(label: 'Add IP / CIDR', icon: Icons.add, onPressed: () => _showAddDialog(context, isAllowlist: true)),
+              PosButton(label: l10n.addIpCidr, icon: Icons.add, onPressed: () => _showAddDialog(context, isAllowlist: true)),
             ],
           ),
         ),
@@ -90,21 +95,22 @@ class _AllowlistTabState extends ConsumerState<_AllowlistTab> {
   }
 
   Widget _buildTable(Map<String, dynamic> data, {required bool isAllowlist}) {
+    final l10n = AppLocalizations.of(context)!;
     final items = (data['data'] as List<dynamic>?) ?? [];
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No entries in allowlist');
+      return PosEmptyState(title: l10n.noEntriesInAllowlist);
     }
     final rows = items.cast<Map<String, dynamic>>();
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: PosDataTable<Map<String, dynamic>>(
-        columns: const [
-          PosTableColumn(title: 'IP / CIDR', flex: 2),
-          PosTableColumn(title: 'Label', flex: 2),
-          PosTableColumn(title: 'Type', width: 80),
-          PosTableColumn(title: 'Added By', flex: 1),
-          PosTableColumn(title: 'Expires', width: 140),
-          PosTableColumn(title: 'Actions', width: 70),
+        columns: [
+          PosTableColumn(title: l10n.ipCidr, flex: 2),
+          PosTableColumn(title: l10n.label, flex: 2),
+          PosTableColumn(title: l10n.type, width: 80),
+          PosTableColumn(title: l10n.addedBy, flex: 1),
+          PosTableColumn(title: l10n.expires, width: 140),
+          PosTableColumn(title: l10n.actions, width: 70),
         ],
         items: rows,
         cellBuilder: (item, colIndex, _) => switch (colIndex) {
@@ -160,6 +166,8 @@ class _BlocklistTabState extends ConsumerState<_BlocklistTab> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(securityIpBlocklistProvider);
     return Column(
       children: [
@@ -169,7 +177,7 @@ class _BlocklistTabState extends ConsumerState<_BlocklistTab> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               PosButton(
-                label: 'Block IP / CIDR',
+                label: l10n.blockIpCidr,
                 icon: Icons.block,
                 variant: PosButtonVariant.danger,
                 onPressed: () => _showAddDialog(context),
@@ -190,22 +198,23 @@ class _BlocklistTabState extends ConsumerState<_BlocklistTab> {
   }
 
   Widget _buildTable(Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final items = (data['data'] as List<dynamic>?) ?? [];
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No entries in blocklist');
+      return PosEmptyState(title: l10n.noEntriesInBlocklist);
     }
     final rows = items.cast<Map<String, dynamic>>();
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: PosDataTable<Map<String, dynamic>>(
-        columns: const [
-          PosTableColumn(title: 'IP / CIDR', flex: 2),
-          PosTableColumn(title: 'Reason', flex: 2),
-          PosTableColumn(title: 'Type', width: 80),
-          PosTableColumn(title: 'Hit Count', width: 90),
-          PosTableColumn(title: 'Blocked By', flex: 1),
-          PosTableColumn(title: 'Expires', width: 140),
-          PosTableColumn(title: 'Actions', width: 70),
+        columns: [
+          PosTableColumn(title: l10n.ipCidr, flex: 2),
+          PosTableColumn(title: l10n.reason, flex: 2),
+          PosTableColumn(title: l10n.type, width: 80),
+          PosTableColumn(title: l10n.hitCount, width: 90),
+          PosTableColumn(title: l10n.blockedBy, flex: 1),
+          PosTableColumn(title: l10n.expires, width: 140),
+          PosTableColumn(title: l10n.actions, width: 70),
         ],
         items: rows,
         cellBuilder: (item, colIndex, _) => switch (colIndex) {
@@ -263,25 +272,28 @@ class _DeleteEntryButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final l10n = AppLocalizations.of(context)!;
     return IconButton(
       icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
-      tooltip: 'Remove',
+      tooltip: l10n.remove,
       onPressed: () => _delete(context, ref),
     );
   }
 
   Future<void> _delete(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Remove Entry'),
+        title: Text(l10n.removeEntry),
         content: Text('Remove this IP from the ${isAllowlist ? 'allowlist' : 'blocklist'}?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Remove'),
+            child: Text(l10n.remove),
           ),
         ],
       ),
@@ -333,6 +345,8 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       title: Text(widget.isAllowlist ? 'Add to Allowlist' : 'Block IP / CIDR'),
       content: SizedBox(
@@ -340,7 +354,7 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PosTextField(controller: _ipController, label: 'IP Address or CIDR', hint: 'e.g. 192.168.1.1 or 10.0.0.0/24'),
+            PosTextField(controller: _ipController, label: l10n.ipAddressOrCidr, hint: l10n.eg19216811Or1000024),
             const SizedBox(height: AppSpacing.sm),
             PosTextField(
               controller: _labelController,
@@ -348,12 +362,12 @@ class _AddIpDialogState extends ConsumerState<_AddIpDialog> {
               hint: widget.isAllowlist ? 'Describe this IP' : 'Why is this IP blocked?',
             ),
             const SizedBox(height: AppSpacing.sm),
-            PosTextField(controller: _expiryController, label: 'Expiry Date (optional)', hint: 'YYYY-MM-DD'),
+            PosTextField(controller: _expiryController, label: l10n.expiryDateOptional, hint: l10n.yyyymmdd),
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         PosButton(
           label: _loading ? 'Adding…' : (widget.isAllowlist ? 'Add to Allowlist' : 'Block'),
           variant: widget.isAllowlist ? PosButtonVariant.primary : PosButtonVariant.danger,

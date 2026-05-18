@@ -148,7 +148,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _grossWeightCtrl,
                     label: l10n.jewelryGrossWeightG,
-                    hint: 'e.g. 15.50',
+                    hint: l10n.eg1550,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
@@ -157,7 +157,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _netWeightCtrl,
                     label: l10n.jewelryNetWeightG,
-                    hint: 'e.g. 14.20',
+                    hint: l10n.eg1420,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
@@ -179,7 +179,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             PosTextField(
               controller: _makingChargesValueCtrl,
               label: l10n.jewelryMakingChargesValue,
-              hint: 'e.g. 150.00',
+              hint: l10n.eg15000,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -193,7 +193,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _stoneWeightCtrl,
                     label: l10n.jewelryWeightCarat,
-                    hint: 'e.g. 1.50',
+                    hint: l10n.eg150,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
@@ -202,7 +202,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _stoneCountCtrl,
                     label: l10n.jewelryCount,
-                    hint: 'e.g. 4',
+                    hint: l10n.eg4,
                     keyboardType: TextInputType.number,
                   ),
                 ),

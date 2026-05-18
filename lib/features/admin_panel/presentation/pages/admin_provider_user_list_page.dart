@@ -83,7 +83,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search by name, email, or phone...',
+                hintText: l10n.searchByNameEmailOrPhone,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),

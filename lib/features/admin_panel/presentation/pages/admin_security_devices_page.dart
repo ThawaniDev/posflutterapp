@@ -45,7 +45,7 @@ class _AdminSecurityDevicesPageState extends ConsumerState<AdminSecurityDevicesP
     final state = ref.watch(securityDeviceListProvider);
 
     return PosListPage(
-      title: 'Provider Devices',
+      title: l10n.providerDevices,
       showSearch: true,
       onSearchChanged: (q) {
         _searchQuery = q;
@@ -101,7 +101,7 @@ class _AdminSecurityDevicesPageState extends ConsumerState<AdminSecurityDevicesP
     final meta = data['meta'] as Map<String, dynamic>?;
 
     if (items.isEmpty) {
-      return const PosEmptyState(title: 'No devices found');
+      return PosEmptyState(title: l10n.noDevicesFound);
     }
 
     final rows = items.cast<Map<String, dynamic>>();
@@ -111,14 +111,14 @@ class _AdminSecurityDevicesPageState extends ConsumerState<AdminSecurityDevicesP
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosDataTable<Map<String, dynamic>>(
-          columns: const [
-            PosTableColumn(title: 'Device Name', flex: 2),
-            PosTableColumn(title: 'Store', flex: 1),
-            PosTableColumn(title: 'Serial / IMEI', width: 140),
-            PosTableColumn(title: 'Platform', width: 90),
-            PosTableColumn(title: 'Status', width: 100),
-            PosTableColumn(title: 'Last Seen', width: 140),
-            PosTableColumn(title: 'Actions', width: 80),
+          columns: [
+            PosTableColumn(title: l10n.deviceName, flex: 2),
+            PosTableColumn(title: l10n.store, flex: 1),
+            PosTableColumn(title: l10n.serialImei, width: 140),
+            PosTableColumn(title: l10n.platform, width: 90),
+            PosTableColumn(title: l10n.status, width: 100),
+            PosTableColumn(title: l10n.lastSeen, width: 140),
+            PosTableColumn(title: l10n.actions, width: 80),
           ],
           items: rows,
           cellBuilder: (item, colIndex, _) => switch (colIndex) {
@@ -200,6 +200,8 @@ class _DeviceActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final l10n = AppLocalizations.of(context)!;
     final status = device['status']?.toString() ?? '';
     final id = device['id']?.toString() ?? '';
 
@@ -215,13 +217,13 @@ class _DeviceActions extends ConsumerWidget {
         }
       },
       itemBuilder: (_) => [
-        const PopupMenuItem(
+        PopupMenuItem(
           value: 'wipe',
           child: Row(
             children: [
               Icon(Icons.phonelink_erase, size: 16, color: AppColors.error),
               SizedBox(width: 8),
-              Text('Remote Wipe', style: TextStyle(color: AppColors.error)),
+              Text(l10n.remoteWipe, style: TextStyle(color: AppColors.error)),
             ],
           ),
         ),
@@ -230,19 +232,20 @@ class _DeviceActions extends ConsumerWidget {
   }
 
   Future<void> _wipeDevice(BuildContext context, WidgetRef ref, String id) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Remote Wipe Device'),
+        title: Text(l10n.remoteWipeDevice),
         content: const Text(
           'This will remotely wipe the device. This action cannot be undone. All POS data on the device will be erased.',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Wipe Device'),
+            child: Text(l10n.wipeDevice),
           ),
         ],
       ),

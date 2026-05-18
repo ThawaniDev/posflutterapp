@@ -8011,7 +8011,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get terminalsEdit => 'সম্পাদনা';
+  String get terminalsEdit => 'নাম পরিবর্তন';
 
   @override
   String get terminalsInactive => 'Inactive';
@@ -8024,7 +8024,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get terminalsNoTerminalsSubtitle =>
-      'যোগ করুন your first পিওএস terminal থেকে get started.';
+      'টার্মিনালগুলি ব্যাকএন্ড থেকে পরিচালিত হয়।';
 
   @override
   String get terminalsOff => 'বন্ধ';
@@ -8036,7 +8036,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get terminalsSearch => 'টার্মিনাল অনুসন্ধান করুন...';
 
   @override
-  String get terminalsSubtitle => 'Manage পিওএস terminal registers';
+  String get terminalsSubtitle => 'পিওএস টার্মিনাল রেজিস্টার দেখুন';
 
   @override
   String get terminalsTitle => 'টার্মিনাল';
@@ -17654,6 +17654,21 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
+  String softPosReachAmountThreshold(String amount) {
+    return 'বিনামূল্যে সাবস্ক্রিপশন আনলক করতে SoftPOS-এ $amount SAR বিক্রয় করুন';
+  }
+
+  @override
+  String softPosAmountProgress(
+    String current,
+    String total,
+    String remaining,
+    String remainingLabel,
+  ) {
+    return '$current / $total SAR ($remaining SAR $remainingLabel)';
+  }
+
+  @override
   String get subDaysRemaining => 'বাকি দিন';
 
   @override
@@ -17716,8 +17731,18 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
+  String subSoftPosFreeAfterAmount(String amount) {
+    return '$amount SAR SoftPOS বিক্রয়ের পর বিনামূল্যে';
+  }
+
+  @override
   String subSoftPosFreeExplainer(int threshold, String period) {
     return '$period-এর মধ্যে $thresholdটি কার্ড পেমেন্ট গ্রহণ করতে SoftPOS ব্যবহার করুন এবং আপনার সাবস্ক্রিপশন বিনামূল্যে হয়ে যাবে!';
+  }
+
+  @override
+  String subSoftPosFreeExplainerAmount(String amount, String period) {
+    return '$period-এর মধ্যে $amount SAR কার্ড পেমেন্ট গ্রহণ করতে SoftPOS ব্যবহার করুন এবং আপনার সাবস্ক্রিপশন বিনামূল্যে হয়ে যাবে!';
   }
 
   @override
@@ -20171,4 +20196,612 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get catalogGridView => 'গ্রিড দৃশ্য';
+
+  @override
+  String get wameedPos => 'Wameed POS';
+
+  @override
+  String get customerDisplay => 'Customer Display';
+
+  @override
+  String get cartIsEmpty => 'Cart is empty';
+
+  @override
+  String get paymentSuccessful => 'Payment Successful';
+
+  @override
+  String get yourCartIsEmpty => 'Your cart is empty';
+
+  @override
+  String get misc50halalas => '50 Halalas';
+
+  @override
+  String get misc25halalas => '25 Halalas';
+
+  @override
+  String get misc10halalas => '10 Halalas';
+
+  @override
+  String get misc5halalas => '5 Halalas';
+
+  @override
+  String get misc968xxxxxxxx => '+968 XXXX XXXX';
+
+  @override
+  String get impersonate => 'Impersonate';
+
+  @override
+  String get usageStatistics => 'Usage Statistics';
+
+  @override
+  String get orders30d => 'Orders (30d)';
+
+  @override
+  String get registers => 'Registers';
+
+  @override
+  String get noPosTerminalsRegistered => 'No POS terminals registered';
+
+  @override
+  String get organizationNotFound => 'Organization not found';
+
+  @override
+  String get impersonationActive => 'Impersonation Active';
+
+  @override
+  String get youAreNowImpersonating => 'You are now impersonating:';
+
+  @override
+  String get extend30Min => 'Extend (30 min)';
+
+  @override
+  String get endSession => 'End Session';
+
+  @override
+  String get internalNote => 'Internal Note';
+
+  @override
+  String get addANoteVisibleOnlyToAdmins =>
+      'Add a note visible only to admins...';
+
+  @override
+  String get noInternalNotesYet => 'No internal notes yet';
+
+  @override
+  String get registrationApproved => 'Registration Approved';
+
+  @override
+  String get temporaryPassword => 'Temporary Password';
+
+  @override
+  String get searchAlerts => 'Search alerts...';
+
+  @override
+  String get searchPages => 'Search pages...';
+
+  @override
+  String get searchVersions => 'Search versions...';
+
+  @override
+  String get trustedDevices => 'Trusted Devices';
+
+  @override
+  String get noTrustedDevices => 'No trusted devices';
+
+  @override
+  String get admin => 'Admin';
+
+  @override
+  String get deviceName => 'Device Name';
+
+  @override
+  String get ipAddress => 'IP Address';
+
+  @override
+  String get userAgent => 'User Agent';
+
+  @override
+  String get trustedAt => 'Trusted At';
+
+  @override
+  String get lastUsed => 'Last Used';
+
+  @override
+  String get revokeTrust => 'Revoke trust';
+
+  @override
+  String get revokeDeviceTrust => 'Revoke Device Trust';
+
+  @override
+  String get removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi =>
+      'Remove trust for this device? The admin will need to re-verify on next login from this device.';
+
+  @override
+  String get revoke => 'Revoke';
+
+  @override
+  String get searchStores => 'Search stores...';
+
+  @override
+  String get manage => 'Manage';
+
+  @override
+  String get alerts => 'Alerts';
+
+  @override
+  String get policies => 'Policies';
+
+  @override
+  String get searchEvents => 'Search events...';
+
+  @override
+  String get searchResponses => 'Search responses...';
+
+  @override
+  String get securityPolicies => 'Security Policies';
+
+  @override
+  String get noSecurityPoliciesFound => 'No security policies found';
+
+  @override
+  String get editPolicy => 'Edit policy';
+
+  @override
+  String get enterNewValue => 'Enter new value';
+
+  @override
+  String get noActivityLogs => 'No activity logs';
+
+  @override
+  String get entity => 'Entity';
+
+  @override
+  String get timestamp => 'Timestamp';
+
+  @override
+  String get searchAdmins => 'Search admins...';
+
+  @override
+  String get securityAuditLog => 'Security Audit Log';
+
+  @override
+  String get noAuditLogEntries => 'No audit log entries';
+
+  @override
+  String get adminSessions => 'Admin Sessions';
+
+  @override
+  String get activeOnly => 'Active only';
+
+  @override
+  String get revokeAllSessions => 'Revoke All Sessions';
+
+  @override
+  String get noSessionsFound => 'No sessions found';
+
+  @override
+  String get lastActive => 'Last Active';
+
+  @override
+  String get revoked => 'Revoked';
+
+  @override
+  String get revokeSession => 'Revoke session';
+
+  @override
+  String get revokeSession2 => 'Revoke Session';
+
+  @override
+  String get areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm =>
+      'Are you sure you want to revoke this session? The user will be logged out immediately.';
+
+  @override
+  String get thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI =>
+      'This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.';
+
+  @override
+  String get adminUserIdOptional => 'Admin User ID (optional)';
+
+  @override
+  String get leaveBlankToRevokeAll => 'Leave blank to revoke all';
+
+  @override
+  String get providerDevices => 'Provider Devices';
+
+  @override
+  String get noDevicesFound => 'No devices found';
+
+  @override
+  String get serialImei => 'Serial / IMEI';
+
+  @override
+  String get platform => 'Platform';
+
+  @override
+  String get lastSeen => 'Last Seen';
+
+  @override
+  String get remoteWipe => 'Remote Wipe';
+
+  @override
+  String get remoteWipeDevice => 'Remote Wipe Device';
+
+  @override
+  String get wipeDevice => 'Wipe Device';
+
+  @override
+  String get searchNotificationLogs => 'Search notification logs...';
+
+  @override
+  String get maximumRetries => 'Maximum Retries';
+
+  @override
+  String get numberOfRetryAttempts110 => 'Number of retry attempts (1-10)';
+
+  @override
+  String get retryIntervalHours => 'Retry Interval (hours)';
+
+  @override
+  String get timeBetweenRetryAttempts1168Hours =>
+      'Time between retry attempts (1-168 hours)';
+
+  @override
+  String get gracePeriodDays => 'Grace Period (days)';
+
+  @override
+  String get daysAfterFailureBeforeSuspension130 =>
+      'Days after failure before suspension (1-30)';
+
+  @override
+  String get org => 'ORG';
+
+  @override
+  String get ipManagement => 'IP Management';
+
+  @override
+  String get allowlist => 'Allowlist';
+
+  @override
+  String get blocklist => 'Blocklist';
+
+  @override
+  String get addIpCidr => 'Add IP / CIDR';
+
+  @override
+  String get noEntriesInAllowlist => 'No entries in allowlist';
+
+  @override
+  String get ipCidr => 'IP / CIDR';
+
+  @override
+  String get addedBy => 'Added By';
+
+  @override
+  String get expires => 'Expires';
+
+  @override
+  String get blockIpCidr => 'Block IP / CIDR';
+
+  @override
+  String get noEntriesInBlocklist => 'No entries in blocklist';
+
+  @override
+  String get hitCount => 'Hit Count';
+
+  @override
+  String get blockedBy => 'Blocked By';
+
+  @override
+  String get removeEntry => 'Remove Entry';
+
+  @override
+  String get ipAddressOrCidr => 'IP Address or CIDR';
+
+  @override
+  String get eg19216811Or1000024 => 'e.g. 192.168.1.1 or 10.0.0.0/24';
+
+  @override
+  String get expiryDateOptional => 'Expiry Date (optional)';
+
+  @override
+  String get yyyymmdd => 'YYYY-MM-DD';
+
+  @override
+  String get severity => 'Severity';
+
+  @override
+  String get createdAt => 'Created At';
+
+  @override
+  String get searchByInvoiceNumber => 'Search by invoice number...';
+
+  @override
+  String get searchByDescriptionOrSerial =>
+      'Search by description or serial...';
+
+  @override
+  String get failedOnly => 'Failed only';
+
+  @override
+  String get noLoginAttemptsFound => 'No login attempts found';
+
+  @override
+  String get emailIdentifier => 'Email / Identifier';
+
+  @override
+  String get failureReason => 'Failure Reason';
+
+  @override
+  String get attemptedAt => 'Attempted At';
+
+  @override
+  String get searchAnnouncements => 'Search announcements...';
+
+  @override
+  String get gatewayName => 'Gateway Name';
+
+  @override
+  String get webhookUrl => 'Webhook URL';
+
+  @override
+  String get searchByNameEmailOrPhone => 'Search by name, email, or phone...';
+
+  @override
+  String get eg1550 => 'e.g. 15.50';
+
+  @override
+  String get eg1420 => 'e.g. 14.20';
+
+  @override
+  String get eg15000 => 'e.g. 150.00';
+
+  @override
+  String get eg150 => 'e.g. 1.50';
+
+  @override
+  String get eg4 => 'e.g. 4';
+
+  @override
+  String get eg005 => 'e.g. 0.05';
+
+  @override
+  String get eg550 => 'e.g. 5.50';
+
+  @override
+  String get eg320 => 'e.g. 3.20';
+
+  @override
+  String get eg15 => 'e.g. 15';
+
+  @override
+  String get eg200Or150 => 'e.g. +2.00 or -1.50';
+
+  @override
+  String get eg7 => 'e.g. 7';
+
+  @override
+  String get daysAhead => 'Days Ahead';
+
+  @override
+  String get default30Days => 'Default: 30 days';
+
+  @override
+  String get selectTheDateToSummarize => 'Select the date to summarize';
+
+  @override
+  String get forecastPeriodDays => 'Forecast Period (days)';
+
+  @override
+  String get default7Days => 'Default: 7 days';
+
+  @override
+  String get analysisPeriod => 'Analysis Period';
+
+  @override
+  String get invoiceImage => 'Invoice Image';
+
+  @override
+  String get takeAPhotoOrUploadAnInvoiceImage =>
+      'Take a photo or upload an invoice image';
+
+  @override
+  String get selectAProductToGenerateDescriptionFor =>
+      'Select a product to generate description for';
+
+  @override
+  String get enterOrScanABarcode => 'Enter or scan a barcode';
+
+  @override
+  String get customerSegment => 'Customer Segment';
+
+  @override
+  String get optionalTargetASpecificSegment =>
+      'Optional: target a specific segment';
+
+  @override
+  String get vipCustomers => 'VIP Customers';
+
+  @override
+  String get newCustomers => 'New Customers';
+
+  @override
+  String get atriskChurning => 'At-Risk (Churning)';
+
+  @override
+  String get frequentBuyers => 'Frequent Buyers';
+
+  @override
+  String get allCustomers => 'All Customers';
+
+  @override
+  String get searchQuery => 'Search Query';
+
+  @override
+  String get whatWouldYouLikeToFind => 'What would you like to find?';
+
+  @override
+  String get messageType => 'Message Type';
+
+  @override
+  String get sms => 'SMS';
+
+  @override
+  String get whatsapp => 'WhatsApp';
+
+  @override
+  String get whatIsTheMessageAbout => 'What is the message about?';
+
+  @override
+  String get egRamadanSaleNewProductLaunchLoyaltyReward =>
+      'e.g., Ramadan sale, new product launch, loyalty reward...';
+
+  @override
+  String get socialPlatform => 'Social Platform';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get tiktok => 'TikTok';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get xTwitter => 'X (Twitter)';
+
+  @override
+  String get snapchat => 'Snapchat';
+
+  @override
+  String get contentTopic => 'Content Topic';
+
+  @override
+  String get egSummerCollectionStoreOpeningFlashSale =>
+      'e.g., Summer collection, Store opening, Flash sale';
+
+  @override
+  String get featuredProduct => 'Featured Product';
+
+  @override
+  String get optionalHighlightASpecificProduct =>
+      'Optional: highlight a specific product';
+
+  @override
+  String get fromLanguage => 'From Language';
+
+  @override
+  String get autodetect => 'Auto-detect';
+
+  @override
+  String get arabic => 'Arabic';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get toLanguage => 'To Language';
+
+  @override
+  String get textToTranslate => 'Text to Translate';
+
+  @override
+  String get enterTheTextYouWantToTranslate =>
+      'Enter the text you want to translate';
+
+  @override
+  String get postupdateHealthCheckFailed => 'Post-update health check failed';
+
+  @override
+  String get failedToHoldCart => 'Failed to hold cart';
+
+  @override
+  String get previewCustomerDisplayDebug => 'Preview customer display (debug)';
+
+  @override
+  String get customerDisplayPreview => 'Customer Display Preview';
+
+  @override
+  String get txn202604210001 => 'TXN-20260421-0001';
+
+  @override
+  String get egTerminal001 => 'e.g. terminal-001';
+
+  @override
+  String get reassign => 'Reassign';
+
+  @override
+  String get system => 'System';
+
+  @override
+  String get vat => 'VAT';
+
+  @override
+  String get receiptPrinter => 'Receipt Printer';
+
+  @override
+  String get thermalOrLaserPrinterForReceipts =>
+      'Thermal or laser printer for receipts';
+
+  @override
+  String get barcodeQrScanner => 'Barcode / QR Scanner';
+
+  @override
+  String get usbOrBluetoothScanner => 'USB or Bluetooth scanner';
+
+  @override
+  String get cashDrawer => 'Cash Drawer';
+
+  @override
+  String get connectedViaPrinterOrUsb => 'Connected via printer or USB';
+
+  @override
+  String get customerDisplayCfd => 'Customer Display (CFD)';
+
+  @override
+  String get secondScreenShowingItemsToCustomer =>
+      'Second screen showing items to customer';
+
+  @override
+  String get setUpLater => 'Set Up Later';
+
+  @override
+  String get skipForNowYouCanAddProductsFromTheCatalogAnytime =>
+      'Skip for now — you can add products from the catalog anytime';
+
+  @override
+  String get useBusinessTypeDefaults => 'Use Business Type Defaults';
+
+  @override
+  String get uploadCsvFile => 'Upload CSV File';
+
+  @override
+  String get importProductsFromYourOwnSpreadsheet =>
+      'Import products from your own spreadsheet';
+
+  @override
+  String get chooseCsvFile => 'Choose CSV File';
+
+  @override
+  String get csvImportIsAvailableInCatalogAfterSetup =>
+      'CSV import is available in Catalog after setup.';
+
+  @override
+  String get email1examplecomEmail2examplecom =>
+      'email1@example.com, email2@example.com';
+
+  @override
+  String get action => 'Action';
+
+  @override
+  String get userType => 'User Type';
+
+  @override
+  String get value => 'Value';
+
+  @override
+  String get label => 'Label';
+
+  @override
+  String get type => 'Type';
 }

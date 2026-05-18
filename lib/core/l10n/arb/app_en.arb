@@ -929,19 +929,42 @@
   "pharmacyPrescriptions": "Prescriptions",
   "pharmacyExpiryAlerts": "Expiry Alerts",
   "pharmacyExpiryAlertsTitle": "Expiry Alerts ({days} days)",
-  "@pharmacyExpiryAlertsTitle": {"placeholders": {"days": {"type": "int"}}},
+  "@pharmacyExpiryAlertsTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyDaysFilter": "Days",
   "pharmacyNoExpiryAlerts": "No items expiring within the selected period",
   "pharmacySeverityExpired": "Expired",
   "pharmacySeverityCritical": "Critical",
   "pharmacySeverityWarning": "Warning",
   "pharmacyDaysUntilExpiry": "{days} days",
-  "@pharmacyDaysUntilExpiry": {"placeholders": {"days": {"type": "int"}}},
+  "@pharmacyDaysUntilExpiry": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyExpiryDate": "Expires: {date}",
-  "@pharmacyExpiryDate": {"placeholders": {"date": {"type": "String"}}},
+  "@pharmacyExpiryDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "pharmacyQtyAvailable": "Qty: {qty}",
-  "@pharmacyQtyAvailable": {"placeholders": {"qty": {"type": "int"}}},
-
+  "@pharmacyQtyAvailable": {
+    "placeholders": {
+      "qty": {
+        "type": "int"
+      }
+    }
+  },
   "pharmacyNewPrescription": "New Prescription",
   "pharmacyPatientName": "Patient Name",
   "pharmacyDoctorName": "Doctor Name",
@@ -983,7 +1006,6 @@
   "restaurantPerson": "Person",
   "restaurantSumEntered": "Sum entered",
   "restaurantConfirmSplit": "Confirm Split",
-
   "accountingTitle": "Accounting Integration",
   "accountingConnect": "Connect Provider",
   "accountingDisconnect": "Disconnect",
@@ -1086,7 +1108,13 @@
   "staffDocumentExpired": "Expired",
   "staffDocumentExpiringSoon": "Expiring Soon",
   "staffDocumentDaysLeft": "{days} days left",
-  "@staffDocumentDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "@staffDocumentDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "staffDeleteDocumentConfirm": "Delete this document?",
   "staffTrainingSessions": "Training",
   "staffNoTrainingSessions": "No training sessions",
@@ -1096,9 +1124,21 @@
   "staffTrainingActive": "Active",
   "staffTrainingCompleted": "Completed",
   "staffTrainingDuration": "{minutes} min",
-  "@staffTrainingDuration": {"placeholders": {"minutes": {"type": "int"}}},
+  "@staffTrainingDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "staffTrainingTransactions": "{count} transactions",
-  "@staffTrainingTransactions": {"placeholders": {"count": {"type": "int"}}},
+  "@staffTrainingTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "staffTrainingNotes": "Training notes (optional)",
   "staffTrainingEndNotes": "End notes (optional)",
   "staffTrainingTransactionsCount": "Transactions practiced",
@@ -2540,7 +2580,6 @@
   "inventoryWastePercent": "Waste %",
   "inventoryYield": "Yield",
   "inventoryYieldQuantity": "Yield Quantity",
-
   "inventoryStocktakes": "Stocktakes",
   "inventoryStocktakesSubtitle": "Conduct physical inventory counts",
   "inventoryNewStocktake": "New Stocktake",
@@ -2574,7 +2613,6 @@
   "inventoryStartedAt": "Started",
   "inventoryAllStatuses": "All Statuses",
   "inventoryAllCategories": "All Categories",
-
   "inventoryWasteRecords": "Waste Records",
   "inventoryWasteRecordsSubtitle": "Track and analyse product waste",
   "inventoryRecordWaste": "Record Waste",
@@ -2591,7 +2629,6 @@
   "inventoryNoWasteRecordsHint": "Record product waste to track losses",
   "inventoryTotalRecords": "Total Records",
   "inventoryTotalWasteCost": "Total Waste Cost",
-
   "inventoryExpiryDashboard": "Expiry Dashboard",
   "inventoryExpiryDashboardSubtitle": "Monitor batches nearing or past expiry",
   "inventoryExpired": "Expired",
@@ -2606,7 +2643,9 @@
   "inventoryAllBatchesSafe": "No batches expiring in the next {days} days",
   "@inventoryAllBatchesSafe": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "inventoryExpiredBatches": "Expired Batches",
@@ -2616,12 +2655,15 @@
   "inventoryMarkAsWastedConfirm": "Mark {quantity} units of {product} as wasted?",
   "@inventoryMarkAsWastedConfirm": {
     "placeholders": {
-      "quantity": { "type": "double" },
-      "product": { "type": "String" }
+      "quantity": {
+        "type": "double"
+      },
+      "product": {
+        "type": "String"
+      }
     }
   },
   "inventoryNoBatches": "No batches",
-
   "inventoryBatchNumber": "Batch Number",
   "inventoryBatchNumberHint": "e.g. BATCH-001",
   "inventoryOptional": "Optional",
@@ -3107,15 +3149,15 @@
       }
     }
   },
-  "terminalsEdit": "Edit",
+  "terminalsEdit": "Change Name",
   "terminalsInactive": "Inactive",
   "terminalsNever": "Never",
   "terminalsNoTerminals": "No terminals found",
-  "terminalsNoTerminalsSubtitle": "Add your first POS terminal to get started.",
+  "terminalsNoTerminalsSubtitle": "Terminals are managed from the backend.",
   "terminalsOff": "Off",
   "terminalsOn": "On",
   "terminalsSearch": "Search terminals...",
-  "terminalsSubtitle": "Manage POS terminal registers",
+  "terminalsSubtitle": "View POS terminal registers",
   "terminalsTitle": "Terminals",
   "terminalsToggleFailed": "Failed to update terminal status.",
   "terminalsToggleMessage": "{action} terminal \"{name}\"?",
@@ -5681,7 +5723,6 @@
   "electronicsCheckImeiServer": "Check Duplicate",
   "electronicsImeiDuplicate": "IMEI already registered",
   "electronicsImeiUnique": "IMEI is unique",
-
   "electronicsImeiHint": "15-digit IMEI number",
   "electronicsImei2Optional": "IMEI 2 (optional)",
   "electronicsDualSimImei": "Dual SIM IMEI",
@@ -6989,7 +7030,6 @@
   "backupEnableAutoBackup": "Enable Auto-Backup",
   "backupEnableAutoBackupHint": "Automatically create backups on a scheduled interval.",
   "backupNoLoaded": "No backups loaded",
-  "noBackupsYet": "No backups yet",
   "backupNow": "Backup Now",
   "backupNowTitle": "Create Manual Backup",
   "backupNowHint": "This will create a full backup of your store data.",
@@ -7058,7 +7098,9 @@
   "backupEstimatedDurationSeconds": "{seconds}s",
   "@backupEstimatedDurationSeconds": {
     "placeholders": {
-      "seconds": {"type": "String"}
+      "seconds": {
+        "type": "String"
+      }
     }
   },
   "backupRestoreProgress": "Restoring...",
@@ -7095,7 +7137,9 @@
   "backupRecordsCount": "{count} records",
   "@backupRecordsCount": {
     "placeholders": {
-      "count": {"type": "String"}
+      "count": {
+        "type": "String"
+      }
     }
   },
   "backupDbVersion": "DB Version",
@@ -7379,6 +7423,31 @@
       }
     }
   },
+  "softPosReachAmountThreshold": "Reach {amount} SAR in SoftPOS sales to unlock free subscription",
+  "@softPosReachAmountThreshold": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosAmountProgress": "{current} / {total} SAR ({remaining} SAR {remainingLabel})",
+  "@softPosAmountProgress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      },
+      "remainingLabel": {
+        "type": "String"
+      }
+    }
+  },
   "subDaysRemaining": "Days Left",
   "subNextPayment": "Next Payment",
   "subPaymentMethod": "Payment Method",
@@ -7425,11 +7494,30 @@
       }
     }
   },
+  "subSoftPosFreeAfterAmount": "FREE after {amount} SAR in SoftPOS sales",
+  "@subSoftPosFreeAfterAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "subSoftPosFreeExplainer": "Use SoftPOS to accept {threshold} card payments within {period} and your subscription becomes free!",
   "@subSoftPosFreeExplainer": {
     "placeholders": {
       "threshold": {
         "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeExplainerAmount": "Use SoftPOS to accept {amount} SAR in card sales within {period} and your subscription becomes free!",
+  "@subSoftPosFreeExplainerAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       },
       "period": {
         "type": "String"
@@ -7820,7 +7908,13 @@
   "zatcaLastSuccess": "Last Successful Submission",
   "zatcaLastError": "Last Error",
   "zatcaCertificateExpiresIn": "Expires in {days} days",
-  "@zatcaCertificateExpiresIn": {"placeholders": {"days": {"type": "int"}}},
+  "@zatcaCertificateExpiresIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "zatcaInvoiceDetail": "Invoice Detail",
   "zatcaRetrySubmission": "Retry Submission",
   "zatcaResponseCode": "Response Code",
@@ -7828,20 +7922,30 @@
   "zatcaErrors": "Errors",
   "zatcaSubmissionAttempts": "Attempts",
   "zatcaClearedXml": "Cleared XML",
-  "zatcaQrCode": "QR Code",
   "zatcaAlreadyAccepted": "Invoice already accepted",
   "zatcaViewDetail": "View Detail",
   "zatcaNoCertificate": "No active certificate",
   "zatcaTamperedDevices": "{count} tampered devices",
-  "@zatcaTamperedDevices": {"placeholders": {"count": {"type": "int"}}},
-
+  "@zatcaTamperedDevices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reportsScheduledTitle": "Scheduled Reports",
   "reportsSlowMoversTab": "Slow Movers",
   "reportsMarginAnalysis": "Margin Analysis",
   "reportsCategoryContribution": "Category Contribution",
   "reportsNoSlowMovers": "No slow-moving products found",
   "reportsSlowMoversCount": "{count} slow mover(s)",
-  "@reportsSlowMoversCount": {"placeholders": {"count": {"type": "int"}}},
+  "@reportsSlowMoversCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reportsAvgMargin": "Avg. Margin",
   "reportsNoMarginData": "No margin data available",
   "reportsNoCategoryContribution": "No category data available",
@@ -7859,12 +7963,30 @@
   "reportsScheduledWeekly": "Weekly",
   "reportsScheduledMonthly": "Monthly",
   "reportsScheduledNext": "Next: {date}",
-  "@reportsScheduledNext": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsScheduledNext": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledLast": "Last: {date}",
-  "@reportsScheduledLast": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsScheduledLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledDelete": "Delete Schedule",
   "reportsScheduledDeleteConfirm": "Delete schedule \"{name}\"?",
-  "@reportsScheduledDeleteConfirm": {"placeholders": {"name": {"type": "String"}}},
+  "@reportsScheduledDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "reportsScheduledEmpty": "No scheduled reports yet",
   "reportsScheduledFormat": "Format",
   "reportsComparePeriod": "Period Comparison",
@@ -7872,9 +7994,21 @@
   "reportsCompareTo": "To",
   "reportsExpiryTab": "Expiry",
   "reportsExpiryDate": "Expires: {date}",
-  "@reportsExpiryDate": {"placeholders": {"date": {"type": "String"}}},
+  "@reportsExpiryDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "reportsExpiryDaysLeft": "{days} days left",
-  "@reportsExpiryDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "@reportsExpiryDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "reportsExpiryExpired": "Expired",
   "reportsExpiryCritical": "Critical (≤7 days)",
   "reportsExpiryWarning": "Warning (≤30 days)",
@@ -7888,17 +8022,34 @@
   "reportsNoDeliveryData": "No delivery commission data",
   "reportsAutoRefreshing": "Auto-refreshing every 60s",
   "reportsLastRefreshed": "Last refreshed: {time}",
-  "@reportsLastRefreshed": {"placeholders": {"time": {"type": "String"}}},
+  "@reportsLastRefreshed": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "reportsSubscriptionRequired": "Upgrade required to access this report",
   "reportsUpgradeRequired": "This feature is available on higher plans",
   "reportsNoSchedulesYet": "No scheduled reports yet",
   "reportNDays": "{days} days",
-  "@reportNDays": {"placeholders": {"days": {"type": "int"}}},
+  "@reportNDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "reportNInStock": "{n} in stock",
-  "@reportNInStock": {"placeholders": {"n": {"type": "int"}}},
+  "@reportNInStock": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "reportsBestSellers": "Best Sellers",
   "reportsType": "Report Type",
-
   "bakeryEditCakeOrder": "Edit Cake Order",
   "bakeryNewCakeOrder": "New Cake Order",
   "bakeryUpdateOrder": "Update Order",
@@ -7906,7 +8057,6 @@
   "bakeryEditRecipe": "Edit Recipe",
   "bakeryUpdateRecipe": "Update Recipe",
   "bakeryCreateRecipe": "Create Recipe",
-
   "electronicsEditImeiRecord": "Edit IMEI Record",
   "electronicsNewImeiRecord": "New IMEI Record",
   "electronicsUpdateRecord": "Update Record",
@@ -7914,7 +8064,6 @@
   "electronicsEditRepairJob": "Edit Repair Job",
   "electronicsUpdateJob": "Update Job",
   "electronicsCreateJob": "Create Job",
-
   "floristEditArrangement": "Edit Arrangement",
   "floristNewArrangementTitle": "New Arrangement",
   "floristUpdateArrangement": "Update Arrangement",
@@ -7923,7 +8072,6 @@
   "floristEditSubscription": "Edit Subscription",
   "floristUpdateSubscription": "Update Subscription",
   "floristCreateSubscription": "Create Subscription",
-
   "jewelryEditProductDetail": "Edit Product Detail",
   "jewelryPriceCalculator": "Price Calculator",
   "jewelrySelectRate": "Select Metal Rate",
@@ -7935,7 +8083,6 @@
   "jewelryNewProductDetail": "New Jewelry Detail",
   "jewelryUpdateDetail": "Update Detail",
   "jewelryCreateDetail": "Create Detail",
-
   "pharmacyEditPrescription": "Edit Prescription",
   "pharmacyUpdatePrescription": "Update Prescription",
   "pharmacyCreatePrescription": "Create Prescription",
@@ -7943,14 +8090,11 @@
   "pharmacyNewDrugSchedule": "New Drug Schedule",
   "pharmacyUpdateSchedule": "Update Schedule",
   "pharmacyCreateSchedule": "Create Schedule",
-
   "restaurantUpdateReservation": "Update Reservation",
   "restaurantCreateReservation": "Create Reservation",
   "restaurantEditTable": "Edit Table",
-  "restaurantNewTable": "New Table",
   "restaurantUpdateTable": "Update Table",
   "restaurantCreateTable": "Create Table",
-
   "paymentListTitle": "Payment History",
   "paymentListFilters": "Filters",
   "paymentListEmpty": "No payments found",
@@ -7983,7 +8127,6 @@
   "refundReference": "Reference Number",
   "refundSubmit": "Process Refund",
   "refundCreatedSuccess": "Refund processed successfully",
-
   "giftCardManage": "Manage",
   "giftCardManageEmpty": "No gift cards found",
   "giftCardManageFilterStatus": "Filter by status",
@@ -7991,7 +8134,9 @@
   "giftCardDeactivateConfirm": "Are you sure you want to deactivate gift card {code}?",
   "@giftCardDeactivateConfirm": {
     "placeholders": {
-      "code": { "type": "String" }
+      "code": {
+        "type": "String"
+      }
     }
   },
   "giftCardDeactivateAction": "Deactivate",
@@ -8000,14 +8145,12 @@
   "giftCardStatusRedeemed": "Redeemed",
   "giftCardStatusExpired": "Expired",
   "giftCardStatusDeactivated": "Deactivated",
-
   "expenseEditTitle": "Edit Expense",
   "expenseDeleteTitle": "Delete Expense",
   "expenseDeleteConfirm": "Are you sure you want to delete this expense?",
   "expenseDeletedSuccess": "Expense deleted",
   "expenseUpdatedSuccess": "Expense updated",
   "expensesInfoMessage": "Track and manage all store expenses. Swipe left to delete, tap the edit icon to update.",
-
   "cashSessionDetailTitle": "Session Detail",
   "cashSessionEventsTab": "Cash Events",
   "cashSessionExpensesTab": "Expenses",
@@ -8019,15 +8162,11 @@
   "cashSessionOpenedAt": "Opened",
   "cashSessionClosedAt": "Closed",
   "cashSessionsInfoMessage": "View all cash sessions and their details. Tap a session to see cash events and expenses.",
-
   "dailySummaryExpensesBreakdown": "Expenses by Category",
   "dailySummaryNoExpenses": "No expenses recorded",
   "dailySummaryInfoMessage": "View today's sales summary including revenue, expenses, and session data.",
   "finReconInfoMessage": "Review and confirm financial reconciliation for a date range. Export PDF for records.",
-
   "allCategories": "All Categories",
-  "newExpense": "New Expense",
-
   "syncConnecting": "Connecting to server...",
   "syncCheckingConnectivity": "Checking connectivity...",
   "syncNoInternet": "No internet connection. Please connect and try again.",
@@ -8040,26 +8179,36 @@
   "syncPendingCount": "{count} pending",
   "@syncPendingCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncLastSyncInfo": "Last sync: {direction} · {records} records",
   "@syncLastSyncInfo": {
     "placeholders": {
-      "direction": {"type": "String"},
-      "records": {"type": "int"}
+      "direction": {
+        "type": "String"
+      },
+      "records": {
+        "type": "int"
+      }
     }
   },
   "syncPendingConflictsCount": "{count} conflicts",
   "@syncPendingConflictsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncFailedCount": "{count} failed",
   "@syncFailedCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncLogsTitle": "Sync Logs",
@@ -8070,24 +8219,24 @@
   "syncLogsDuration": "{ms}ms",
   "@syncLogsDuration": {
     "placeholders": {
-      "ms": {"type": "int"}
+      "ms": {
+        "type": "int"
+      }
     }
   },
   "syncLogsRecordsCount": "{count} records",
   "@syncLogsRecordsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-  "syncLogs": "Sync Logs",
   "syncLogHistory": "Sync Log History",
   "viewAllLogs": "View All Logs",
-
   "validityPeriod": "Validity",
-  "usage": "Usage",
   "noExpiry": "No expiry",
   "guest": "Guest",
-
   "dailyUsageLast30Days": "Daily Usage (Last 30 Days)",
   "noUsageData": "No usage data yet",
   "usageHistory": "Usage History",
@@ -8097,32 +8246,36 @@
   "autoUses": "Auto Applied Uses",
   "usageLimitProgress": "Usage Limit",
   "notApplicable": "N/A",
-
   "orderId": "Order",
   "customer": "Customer",
   "date": "Date",
-
   "copyCode": "Copy Code",
   "codeCopied": "Code copied to clipboard",
   "used": "Used",
   "promoNoFoundSubtitle": "Create your first promotion to start driving sales",
   "promoCouponsEmptySubtitle": "Generate coupon codes for this promotion",
-
   "showingOf": "{count} of {total}",
   "@showingOf": {
     "placeholders": {
-      "count": {"type": "String"},
-      "total": {"type": "String"}
+      "count": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
   "pageOf": "Page {page} of {total}",
   "@pageOf": {
     "placeholders": {
-      "page": {"type": "String"},
-      "total": {"type": "String"}
+      "page": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
-
   "analyticsSelectDateRange": "Select Date Range",
   "analyticsActiveStores": "Active Stores",
   "analyticsNewSignups": "New Signups",
@@ -8151,7 +8304,9 @@
   "analyticsMonitoringStores": "Monitoring {count} stores",
   "@analyticsMonitoringStores": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "analyticsStoresMonitored": "Stores Monitored",
@@ -8191,12 +8346,10 @@
   "adminInProgressTickets": "In Progress",
   "adminResolvedTickets": "Resolved",
   "adminClosedTickets": "Closed",
-
   "onboardingSelectBusinessType": "Select Business Type",
   "onboardingBusinessTypeDefaultsTitle": "Included Defaults",
   "onboardingBusinessTypeDefaultsLoading": "Loading defaults…",
   "onboardingBusinessTypeNoDefaults": "No defaults available for this business type",
-
   "onboardingHardwareStepTitle": "Hardware Setup",
   "onboardingHardwareStepSubtitle": "Let us know which hardware you have connected",
   "onboardingHardwarePrinterLabel": "Receipt Printer",
@@ -8208,7 +8361,6 @@
   "onboardingHardwareCustomerDisplayLabel": "Customer Display (CFD)",
   "onboardingHardwareCustomerDisplayDesc": "Second screen facing the customer",
   "onboardingHardwareInfoNote": "You can add or change hardware at any time from the Hardware settings page.",
-
   "onboardingProductsStepTitle": "Product Setup",
   "onboardingProductsStepSubtitle": "Choose how to add your products",
   "onboardingProductsOptionLaterLabel": "Set up later",
@@ -8218,7 +8370,6 @@
   "onboardingProductsOptionCsvLabel": "Upload product list (CSV)",
   "onboardingProductsOptionCsvSubtitle": "Import your existing product catalog",
   "onboardingProductsUploadCsv": "Choose CSV File",
-
   "onboardingStaffStepTitle": "Invite Staff",
   "onboardingStaffStepSubtitle": "Add your first team member (optional)",
   "onboardingStaffNameLabel": "Full Name",
@@ -8229,19 +8380,15 @@
   "onboardingStaffRoleSupervisor": "Supervisor",
   "onboardingStaffRoleAdmin": "Admin",
   "onboardingStaffSkipNote": "You can skip this step and invite staff later from the Team settings page.",
-
   "onboardingReviewHardware": "Hardware",
   "onboardingReviewNoneSelected": "None selected",
   "onboardingReviewProducts": "Products",
   "onboardingReviewStaff": "Staff Member",
   "onboardingReviewStaffNone": "None (invite later)",
-
   "helpArticlesTitle": "Help Center",
   "helpArticlesSearchHint": "Search articles…",
   "helpArticlesCategoryAll": "All",
-  "helpArticleNotFound": "Article not found"
-,
-
+  "helpArticleNotFound": "Article not found",
   "auDashboard": "Update Dashboard",
   "auDashboardTitle": "App Update Management",
   "auTotalReleases": "Total Releases",
@@ -8279,116 +8426,31 @@
   "configMaintenanceMode": "Maintenance Mode",
   "configMaintenanceActive": "System is under maintenance",
   "configMaintenanceExpected": "Expected to end: {time}",
-  "@configMaintenanceExpected": {"placeholders": {"time": {"type": "String"}}},
+  "@configMaintenanceExpected": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "configTax": "Tax Configuration",
   "configVatRate": "VAT Rate",
   "configVatEnabled": "VAT Enabled",
   "configSecurityPolicies": "Security Policies",
   "configSessionTimeout": "Session Timeout",
   "configSessionTimeoutMinutes": "{count} minutes",
-  "@configSessionTimeoutMinutes": {"placeholders": {"count": {"type": "int"}}},
-  "configPinMinLength": "Minimum PIN Length",
-  "configMaxFailedAttempts": "Max Failed Login Attempts",
-  "configLockoutDuration": "Lockout Duration",
-  "configBiometricDefault": "Biometric Enabled by Default",
-  "configRequireReauth": "Require Re-auth on Wake"
-,
-
-  "auDashboard": "Update Dashboard",
-  "auDashboardTitle": "App Update Management",
-  "auTotalReleases": "Total Releases",
-  "auActiveReleases": "Active Releases",
-  "auInstallationRate": "Installation Rate",
-  "auInstalledCount": "Installed",
-  "auFailedCount": "Failed",
-  "auLast30Days": "Last 30 days",
-  "auLatestByPlatform": "Latest by Platform",
-  "auAdoptionFunnel": "Adoption Funnel",
-  "auFunnelNote": "Active release installations in the past 30 days",
-  "auRollbackCandidates": "Auto-Rollback Candidates",
-  "auFailureRate": "Failure Rate",
-  "auReview": "Review",
-  "auRecentFailures": "Recent Failures",
-  "auNoActiveRelease": "No active release",
-  "auNoReleasesYet": "No releases yet",
-  "auUnknownError": "Unknown error",
-  "auFileIntegrity": "File Integrity",
-  "auFileIntegrityHelper": "SHA-256 checksum and file size for update integrity verification",
-  "auFileChecksum": "File Checksum (SHA-256)",
-  "auFileChecksumHelper": "64-character hex digest of the release binary",
-  "auFileSizeBytes": "File Size (bytes)",
-  "auFileSizeHelper": "Exact byte count of the release binary",
-  "auStatRecordDetails": "Record Details",
-  "auErrorDetails": "Error Details",
-  "auErrorMessage": "Error Message",
-  "auAddRelease": "Add Release",
-  "auViewAllStats": "View All Stats",
-  "commonTimestamps": "Timestamps",
-  "commonCreatedAt": "Created At",
-  "commonUpdatedAt": "Updated At",
-  "commonTime": "Time",
-  "configFeatureFlags": "Feature Flags",
-  "configMaintenanceMode": "Maintenance Mode",
-  "configMaintenanceActive": "System is under maintenance",
-  "configTax": "Tax Configuration",
-  "configVatRate": "VAT Rate",
-  "configVatEnabled": "VAT Enabled",
-  "configSecurityPolicies": "Security Policies",
-  "configSessionTimeout": "Session Timeout",
-  "configPinMinLength": "Minimum PIN Length",
-  "configMaxFailedAttempts": "Max Failed Login Attempts",
-  "configLockoutDuration": "Lockout Duration",
-  "configBiometricDefault": "Biometric Enabled by Default",
-  "configRequireReauth": "Require Re-auth on Wake"
-,
-
-  "auDashboard": "Update Dashboard",
-  "auDashboardTitle": "App Update Management",
-  "auTotalReleases": "Total Releases",
-  "auActiveReleases": "Active Releases",
-  "auInstallationRate": "Installation Rate",
-  "auInstalledCount": "Installed",
-  "auFailedCount": "Failed",
-  "auLast30Days": "Last 30 days",
-  "auLatestByPlatform": "Latest by Platform",
-  "auAdoptionFunnel": "Adoption Funnel",
-  "auFunnelNote": "Active release installations in the past 30 days",
-  "auRollbackCandidates": "Auto-Rollback Candidates",
-  "auFailureRate": "Failure Rate",
-  "auReview": "Review",
-  "auRecentFailures": "Recent Failures",
-  "auNoActiveRelease": "No active release",
-  "auNoReleasesYet": "No releases yet",
-  "auUnknownError": "Unknown error",
-  "auFileIntegrity": "File Integrity",
-  "auFileIntegrityHelper": "SHA-256 checksum and file size for update integrity verification",
-  "auFileChecksum": "File Checksum (SHA-256)",
-  "auFileChecksumHelper": "64-character hex digest of the release binary",
-  "auFileSizeBytes": "File Size (bytes)",
-  "auFileSizeHelper": "Exact byte count of the release binary",
-  "auStatRecordDetails": "Record Details",
-  "auErrorDetails": "Error Details",
-  "auErrorMessage": "Error Message",
-  "auAddRelease": "Add Release",
-  "auViewAllStats": "View All Stats",
-  "commonTimestamps": "Timestamps",
-  "commonCreatedAt": "Created At",
-  "commonUpdatedAt": "Updated At",
-  "commonTime": "Time",
-  "configFeatureFlags": "Feature Flags",
-  "configMaintenanceMode": "Maintenance Mode",
-  "configMaintenanceActive": "System is under maintenance",
-  "configTax": "Tax Configuration",
-  "configVatRate": "VAT Rate",
-  "configVatEnabled": "VAT Enabled",
-  "configSecurityPolicies": "Security Policies",
-  "configSessionTimeout": "Session Timeout",
+  "@configSessionTimeoutMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "configPinMinLength": "Minimum PIN Length",
   "configMaxFailedAttempts": "Max Failed Login Attempts",
   "configLockoutDuration": "Lockout Duration",
   "configBiometricDefault": "Biometric Enabled by Default",
   "configRequireReauth": "Require Re-auth on Wake",
-
   "labelPrinterLanguage": "Printer Language",
   "labelPrinterLanguageZpl": "ZPL (Zebra)",
   "labelPrinterLanguageTspl": "TSPL (TSC)",
@@ -8405,17 +8467,20 @@
   "labelFilterByTemplate": "Filter by Template",
   "labelApplyFilter": "Apply Filter",
   "labelClearFilter": "Clear Filter",
-
   "hardwareSkuLabel": "SKU: {sku}",
   "@hardwareSkuLabel": {
     "placeholders": {
-      "sku": { "type": "String" }
+      "sku": {
+        "type": "String"
+      }
     }
   },
   "labelsExpiryDate": "EXP: {date}",
   "@labelsExpiryDate": {
     "placeholders": {
-      "date": { "type": "String" }
+      "date": {
+        "type": "String"
+      }
     }
   },
   "accountingAccessToken": "Access Token",
@@ -8516,173 +8581,235 @@
   "accountingConnectProvider": "Connect {provider}",
   "@accountingConnectProvider": {
     "placeholders": {
-      "provider": {"type": "String"}
+      "provider": {
+        "type": "String"
+      }
     }
   },
   "accountingEntriesCount": "{count} entries",
   "@accountingEntriesCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aiRunFeature": "Run {featureName}",
   "@aiRunFeature": {
     "placeholders": {
-      "featureName": {"type": "String"}
+      "featureName": {
+        "type": "String"
+      }
     }
   },
   "cashMgmtFloatLabel": "Opening Float: {amount}",
   "@cashMgmtFloatLabel": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "catalogImportRowError": "Row {row}: {message}",
   "@catalogImportRowError": {
     "placeholders": {
-      "row": {"type": "int"},
-      "message": {"type": "String"}
+      "row": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
     }
   },
   "commonItemsCount": "{count} items",
   "@commonItemsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "paginationPageOf": "Page {page} of {total}",
   "@paginationPageOf": {
     "placeholders": {
-      "page": {"type": "int"},
-      "total": {"type": "int"}
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "pcButtonsCount": "{count} buttons",
   "@pcButtonsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "posCurrentDiscount": "Discount: {amount}",
   "@posCurrentDiscount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "posProductAddedWeighed": "{name} added ({qty} kg)",
   "@posProductAddedWeighed": {
     "placeholders": {
-      "name": {"type": "String"},
-      "qty": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
     }
   },
   "posReprintReceiptNumber": "Receipt Number",
   "promotionsCouponType": "Type: {type}",
   "@promotionsCouponType": {
     "placeholders": {
-      "type": {"type": "String"}
+      "type": {
+        "type": "String"
+      }
     }
   },
   "receiptVatNumber": "VAT No: {number}",
   "@receiptVatNumber": {
     "placeholders": {
-      "number": {"type": "String"}
+      "number": {
+        "type": "String"
+      }
     }
   },
   "securityAuditIp": "IP: {ip}",
   "@securityAuditIp": {
     "placeholders": {
-      "ip": {"type": "String"}
+      "ip": {
+        "type": "String"
+      }
     }
   },
   "securityAuditUser": "User: {userType}",
   "@securityAuditUser": {
     "placeholders": {
-      "userType": {"type": "String"}
+      "userType": {
+        "type": "String"
+      }
     }
   },
   "settingsVersionPublishedAt": "Published: {date}",
   "@settingsVersionPublishedAt": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "staffPermissionsLoadError": "Error loading permissions: {message}",
   "@staffPermissionsLoadError": {
     "placeholders": {
-      "message": {"type": "String"}
+      "message": {
+        "type": "String"
+      }
     }
   },
   "subscriptionUpgradePrompt": "Upgrade your plan to access {featureName}",
   "@subscriptionUpgradePrompt": {
     "placeholders": {
-      "featureName": {"type": "String"}
+      "featureName": {
+        "type": "String"
+      }
     }
   },
   "termFormBillingCardFeeValue": "{value}%",
   "@termFormBillingCardFeeValue": {
     "placeholders": {
-      "value": {"type": "String"}
+      "value": {
+        "type": "String"
+      }
     }
   },
   "termFormBillingMadaRateValue": "{value}%",
   "@termFormBillingMadaRateValue": {
     "placeholders": {
-      "value": {"type": "String"}
+      "value": {
+        "type": "String"
+      }
     }
   },
   "thawaniHttpStatus": "HTTP {status}",
   "@thawaniHttpStatus": {
     "placeholders": {
-      "status": {"type": "String"}
+      "status": {
+        "type": "String"
+      }
     }
   },
   "transactionSerialNumber": "S/N: {serial}",
   "@transactionSerialNumber": {
     "placeholders": {
-      "serial": {"type": "String"}
+      "serial": {
+        "type": "String"
+      }
     }
   },
   "zatcaCertificateId": "Certificate: {id}",
   "@zatcaCertificateId": {
     "placeholders": {
-      "id": {"type": "String"}
+      "id": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceSerialLabel": "Serial: {serial}",
   "@zatcaDeviceSerialLabel": {
     "placeholders": {
-      "serial": {"type": "String"}
+      "serial": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceStatusLabel": "Status: {status}",
   "@zatcaDeviceStatusLabel": {
     "placeholders": {
-      "status": {"type": "String"}
+      "status": {
+        "type": "String"
+      }
     }
   },
   "zatcaDeviceUuidLabel": "UUID: {uuid}",
   "@zatcaDeviceUuidLabel": {
     "placeholders": {
-      "uuid": {"type": "String"}
+      "uuid": {
+        "type": "String"
+      }
     }
   },
   "zatcaInvoicesCount": "{count} invoices",
   "@zatcaInvoicesCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "zatcaLastErrorMessage": "Error: {message}",
   "@zatcaLastErrorMessage": {
     "placeholders": {
-      "message": {"type": "String"}
+      "message": {
+        "type": "String"
+      }
     }
   },
   "zatcaVatAmountLabel": "VAT: {amount}",
   "@zatcaVatAmountLabel": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "catalogEditProduct": "Edit Product",
@@ -8690,5 +8817,201 @@
   "catalogUpdateProduct": "Update Product",
   "catalogCreateProduct": "Create Product",
   "catalogListView": "List View",
-  "catalogGridView": "Grid View"
+  "catalogGridView": "Grid View",
+  "wameedPos": "Wameed POS",
+  "customerDisplay": "Customer Display",
+  "cartIsEmpty": "Cart is empty",
+  "paymentSuccessful": "Payment Successful",
+  "yourCartIsEmpty": "Your cart is empty",
+  "misc50halalas": "50 Halalas",
+  "misc25halalas": "25 Halalas",
+  "misc10halalas": "10 Halalas",
+  "misc5halalas": "5 Halalas",
+  "misc968xxxxxxxx": "+968 XXXX XXXX",
+  "impersonate": "Impersonate",
+  "usageStatistics": "Usage Statistics",
+  "orders30d": "Orders (30d)",
+  "registers": "Registers",
+  "noPosTerminalsRegistered": "No POS terminals registered",
+  "organizationNotFound": "Organization not found",
+  "impersonationActive": "Impersonation Active",
+  "youAreNowImpersonating": "You are now impersonating:",
+  "extend30Min": "Extend (30 min)",
+  "endSession": "End Session",
+  "internalNote": "Internal Note",
+  "addANoteVisibleOnlyToAdmins": "Add a note visible only to admins...",
+  "noInternalNotesYet": "No internal notes yet",
+  "registrationApproved": "Registration Approved",
+  "temporaryPassword": "Temporary Password",
+  "searchAlerts": "Search alerts...",
+  "searchPages": "Search pages...",
+  "searchVersions": "Search versions...",
+  "trustedDevices": "Trusted Devices",
+  "noTrustedDevices": "No trusted devices",
+  "admin": "Admin",
+  "deviceName": "Device Name",
+  "ipAddress": "IP Address",
+  "userAgent": "User Agent",
+  "trustedAt": "Trusted At",
+  "lastUsed": "Last Used",
+  "revokeTrust": "Revoke trust",
+  "revokeDeviceTrust": "Revoke Device Trust",
+  "removeTrustForThisDeviceTheAdminWillNeedToReverifyOnNextLogi": "Remove trust for this device? The admin will need to re-verify on next login from this device.",
+  "revoke": "Revoke",
+  "searchStores": "Search stores...",
+  "manage": "Manage",
+  "alerts": "Alerts",
+  "policies": "Policies",
+  "searchEvents": "Search events...",
+  "searchResponses": "Search responses...",
+  "securityPolicies": "Security Policies",
+  "noSecurityPoliciesFound": "No security policies found",
+  "editPolicy": "Edit policy",
+  "enterNewValue": "Enter new value",
+  "noActivityLogs": "No activity logs",
+  "entity": "Entity",
+  "timestamp": "Timestamp",
+  "searchAdmins": "Search admins...",
+  "securityAuditLog": "Security Audit Log",
+  "noAuditLogEntries": "No audit log entries",
+  "adminSessions": "Admin Sessions",
+  "activeOnly": "Active only",
+  "revokeAllSessions": "Revoke All Sessions",
+  "noSessionsFound": "No sessions found",
+  "lastActive": "Last Active",
+  "revoked": "Revoked",
+  "revokeSession": "Revoke session",
+  "revokeSession2": "Revoke Session",
+  "areYouSureYouWantToRevokeThisSessionTheUserWillBeLoggedOutIm": "Are you sure you want to revoke this session? The user will be logged out immediately.",
+  "thisWillRevokeAllActiveSessionsOptionallySpecifyAnAdminUserI": "This will revoke all active sessions. Optionally specify an admin user ID to revoke only their sessions.",
+  "adminUserIdOptional": "Admin User ID (optional)",
+  "leaveBlankToRevokeAll": "Leave blank to revoke all",
+  "providerDevices": "Provider Devices",
+  "noDevicesFound": "No devices found",
+  "serialImei": "Serial / IMEI",
+  "platform": "Platform",
+  "lastSeen": "Last Seen",
+  "remoteWipe": "Remote Wipe",
+  "remoteWipeDevice": "Remote Wipe Device",
+  "wipeDevice": "Wipe Device",
+  "searchNotificationLogs": "Search notification logs...",
+  "maximumRetries": "Maximum Retries",
+  "numberOfRetryAttempts110": "Number of retry attempts (1-10)",
+  "retryIntervalHours": "Retry Interval (hours)",
+  "timeBetweenRetryAttempts1168Hours": "Time between retry attempts (1-168 hours)",
+  "gracePeriodDays": "Grace Period (days)",
+  "daysAfterFailureBeforeSuspension130": "Days after failure before suspension (1-30)",
+  "org": "ORG",
+  "ipManagement": "IP Management",
+  "allowlist": "Allowlist",
+  "blocklist": "Blocklist",
+  "addIpCidr": "Add IP / CIDR",
+  "noEntriesInAllowlist": "No entries in allowlist",
+  "ipCidr": "IP / CIDR",
+  "addedBy": "Added By",
+  "expires": "Expires",
+  "blockIpCidr": "Block IP / CIDR",
+  "noEntriesInBlocklist": "No entries in blocklist",
+  "hitCount": "Hit Count",
+  "blockedBy": "Blocked By",
+  "removeEntry": "Remove Entry",
+  "ipAddressOrCidr": "IP Address or CIDR",
+  "eg19216811Or1000024": "e.g. 192.168.1.1 or 10.0.0.0/24",
+  "expiryDateOptional": "Expiry Date (optional)",
+  "yyyymmdd": "YYYY-MM-DD",
+  "severity": "Severity",
+  "createdAt": "Created At",
+  "searchByInvoiceNumber": "Search by invoice number...",
+  "searchByDescriptionOrSerial": "Search by description or serial...",
+  "failedOnly": "Failed only",
+  "noLoginAttemptsFound": "No login attempts found",
+  "emailIdentifier": "Email / Identifier",
+  "failureReason": "Failure Reason",
+  "attemptedAt": "Attempted At",
+  "searchAnnouncements": "Search announcements...",
+  "gatewayName": "Gateway Name",
+  "webhookUrl": "Webhook URL",
+  "searchByNameEmailOrPhone": "Search by name, email, or phone...",
+  "eg1550": "e.g. 15.50",
+  "eg1420": "e.g. 14.20",
+  "eg15000": "e.g. 150.00",
+  "eg150": "e.g. 1.50",
+  "eg4": "e.g. 4",
+  "eg005": "e.g. 0.05",
+  "eg550": "e.g. 5.50",
+  "eg320": "e.g. 3.20",
+  "eg15": "e.g. 15",
+  "eg200Or150": "e.g. +2.00 or -1.50",
+  "eg7": "e.g. 7",
+  "daysAhead": "Days Ahead",
+  "default30Days": "Default: 30 days",
+  "selectTheDateToSummarize": "Select the date to summarize",
+  "forecastPeriodDays": "Forecast Period (days)",
+  "default7Days": "Default: 7 days",
+  "analysisPeriod": "Analysis Period",
+  "invoiceImage": "Invoice Image",
+  "takeAPhotoOrUploadAnInvoiceImage": "Take a photo or upload an invoice image",
+  "selectAProductToGenerateDescriptionFor": "Select a product to generate description for",
+  "enterOrScanABarcode": "Enter or scan a barcode",
+  "customerSegment": "Customer Segment",
+  "optionalTargetASpecificSegment": "Optional: target a specific segment",
+  "vipCustomers": "VIP Customers",
+  "newCustomers": "New Customers",
+  "atriskChurning": "At-Risk (Churning)",
+  "frequentBuyers": "Frequent Buyers",
+  "allCustomers": "All Customers",
+  "searchQuery": "Search Query",
+  "whatWouldYouLikeToFind": "What would you like to find?",
+  "messageType": "Message Type",
+  "sms": "SMS",
+  "whatsapp": "WhatsApp",
+  "whatIsTheMessageAbout": "What is the message about?",
+  "egRamadanSaleNewProductLaunchLoyaltyReward": "e.g., Ramadan sale, new product launch, loyalty reward...",
+  "socialPlatform": "Social Platform",
+  "instagram": "Instagram",
+  "tiktok": "TikTok",
+  "facebook": "Facebook",
+  "xTwitter": "X (Twitter)",
+  "snapchat": "Snapchat",
+  "contentTopic": "Content Topic",
+  "egSummerCollectionStoreOpeningFlashSale": "e.g., Summer collection, Store opening, Flash sale",
+  "featuredProduct": "Featured Product",
+  "optionalHighlightASpecificProduct": "Optional: highlight a specific product",
+  "fromLanguage": "From Language",
+  "autodetect": "Auto-detect",
+  "arabic": "Arabic",
+  "english": "English",
+  "toLanguage": "To Language",
+  "textToTranslate": "Text to Translate",
+  "enterTheTextYouWantToTranslate": "Enter the text you want to translate",
+  "postupdateHealthCheckFailed": "Post-update health check failed",
+  "failedToHoldCart": "Failed to hold cart",
+  "previewCustomerDisplayDebug": "Preview customer display (debug)",
+  "customerDisplayPreview": "Customer Display Preview",
+  "txn202604210001": "TXN-20260421-0001",
+  "egTerminal001": "e.g. terminal-001",
+  "reassign": "Reassign",
+  "system": "System",
+  "vat": "VAT",
+  "receiptPrinter": "Receipt Printer",
+  "thermalOrLaserPrinterForReceipts": "Thermal or laser printer for receipts",
+  "barcodeQrScanner": "Barcode / QR Scanner",
+  "usbOrBluetoothScanner": "USB or Bluetooth scanner",
+  "cashDrawer": "Cash Drawer",
+  "connectedViaPrinterOrUsb": "Connected via printer or USB",
+  "customerDisplayCfd": "Customer Display (CFD)",
+  "secondScreenShowingItemsToCustomer": "Second screen showing items to customer",
+  "setUpLater": "Set Up Later",
+  "skipForNowYouCanAddProductsFromTheCatalogAnytime": "Skip for now — you can add products from the catalog anytime",
+  "useBusinessTypeDefaults": "Use Business Type Defaults",
+  "uploadCsvFile": "Upload CSV File",
+  "importProductsFromYourOwnSpreadsheet": "Import products from your own spreadsheet",
+  "chooseCsvFile": "Choose CSV File",
+  "csvImportIsAvailableInCatalogAfterSetup": "CSV import is available in Catalog after setup.",
+  "email1examplecomEmail2examplecom": "email1@example.com, email2@example.com",
+  "action": "Action",
+  "userType": "User Type",
+  "value": "Value",
+  "label": "Label",
+  "type": "Type"
 }

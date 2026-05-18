@@ -96,7 +96,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search by invoice number...',
+                    hintText: l10n.searchByInvoiceNumber,
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),

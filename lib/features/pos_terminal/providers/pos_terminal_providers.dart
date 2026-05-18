@@ -252,51 +252,9 @@ class TerminalsNotifier extends StateNotifier<TerminalsState> {
     load(page: 1);
   }
 
-  Future<bool> createTerminal(Map<String, dynamic> data) async {
+  Future<bool> renameTerminal(String id, String name) async {
     try {
-      await _repo.createTerminal(data);
-      await load(page: 1);
-      return true;
-    } on DioException catch (e) {
-      state = TerminalsError(message: _extractError(e));
-      return false;
-    } catch (e) {
-      state = TerminalsError(message: e.toString());
-      return false;
-    }
-  }
-
-  Future<bool> updateTerminal(String id, Map<String, dynamic> data) async {
-    try {
-      await _repo.updateTerminal(id, data);
-      await load(page: 1);
-      return true;
-    } on DioException catch (e) {
-      state = TerminalsError(message: _extractError(e));
-      return false;
-    } catch (e) {
-      state = TerminalsError(message: e.toString());
-      return false;
-    }
-  }
-
-  Future<bool> deleteTerminal(String id) async {
-    try {
-      await _repo.deleteTerminal(id);
-      await load(page: 1);
-      return true;
-    } on DioException catch (e) {
-      state = TerminalsError(message: _extractError(e));
-      return false;
-    } catch (e) {
-      state = TerminalsError(message: e.toString());
-      return false;
-    }
-  }
-
-  Future<bool> toggleTerminalStatus(String id) async {
-    try {
-      await _repo.toggleTerminalStatus(id);
+      await _repo.renameTerminal(id, name);
       await load(page: 1);
       return true;
     } on DioException catch (e) {

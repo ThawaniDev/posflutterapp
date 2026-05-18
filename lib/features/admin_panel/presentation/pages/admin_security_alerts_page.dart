@@ -92,7 +92,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
             width: 140,
             child: PosDropdown<String?>(
               value: _severityFilter,
-              label: 'Severity',
+              label: l10n.severity,
               items: [
                 DropdownMenuItem(value: null, child: Text(l10n.all)),
                 ..._severities.map((s) => DropdownMenuItem(value: s, child: Text(_capitalize(s)))),
@@ -140,12 +140,12 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
           children: [
             PosDataTable<Map<String, dynamic>>(
               columns: [
-                const PosTableColumn(title: 'Severity', width: 100),
+                PosTableColumn(title: l10n.severity, width: 100),
                 PosTableColumn(title: l10n.adminAlertType, width: 160),
                 PosTableColumn(title: l10n.adminDescription, flex: 2),
                 PosTableColumn(title: l10n.adminIpAddress, width: 140),
                 PosTableColumn(title: l10n.status, width: 120),
-                const PosTableColumn(title: 'Created At', width: 140),
+                PosTableColumn(title: l10n.createdAt, width: 140),
                 PosTableColumn(title: l10n.actions, width: 80),
               ],
               items: rows,
@@ -306,6 +306,8 @@ class _ResolveAlertDialogState extends State<_ResolveAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       title: Text(widget.l10n.adminResolveAlert),
       content: PosTextField(

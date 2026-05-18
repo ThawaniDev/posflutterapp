@@ -19,14 +19,19 @@ class PlanComparisonTable extends StatelessWidget {
     final langCode = Localizations.localeOf(context).languageCode;
     if (plans.isEmpty) return const SizedBox.shrink();
 
-    // Gather all unique feature keys across all plans
+    // Gather all unique feature keys across all plans.
+    // Plans with hide_unselected_features=true only contribute their ENABLED keys
+    // so their disabled features don't pollute the comparison table.
     final allFeatureKeys = <String>{};
     final allLimitKeys = <String>{};
     for (final plan in plans) {
       if (plan.features != null) {
         for (final f in plan.features!) {
           final key = f['feature_key']?.toString() ?? '';
-          if (key.isNotEmpty) allFeatureKeys.add(key);
+          if (key.isEmpty) continue;
+          // Skip disabled features for plans that hide them
+          if (plan.hideUnselectedFeatures && !(f['is_enabled'] as bool? ?? false)) continue;
+          allFeatureKeys.add(key);
         }
       }
       if (plan.limits != null) {
@@ -100,6 +105,10 @@ class PlanComparisonTable extends StatelessWidget {
                     return const Icon(Icons.close, color: AppColors.error, size: 18);
                   }
                   final isEnabled = feature['is_enabled'] as bool? ?? false;
+                  // For plans that hide unselected features, show nothing for disabled
+                  if (!isEnabled && plan.hideUnselectedFeatures) {
+                    return const Text('—', style: TextStyle(color: Colors.transparent));
+                  }
                   return isEnabled
                       ? const Icon(Icons.check_circle, color: AppColors.success, size: 18)
                       : const Icon(Icons.close, color: AppColors.error, size: 18);

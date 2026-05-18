@@ -307,11 +307,11 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
             Icon(Icons.check_circle, color: AppColors.success),
             AppSpacing.gapW8,
-            Text('Registration Approved'),
+            Text(l10n.registrationApproved),
           ],
         ),
         content: Column(
@@ -329,7 +329,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Temporary Password', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+                  Text(l10n.temporaryPassword, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
                   AppSpacing.gapH4,
                   SelectableText(
                     tempPassword,

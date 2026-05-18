@@ -103,7 +103,7 @@ class _ThawaniOrdersPageState extends ConsumerState<ThawaniOrdersPage> {
       _load();
     } else {
       final s = ref.read(thawaniOrderActionProvider);
-      _showSnack(s is ThawaniOrderActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniOrderActionError ? s.message: l10n.error, isError: true);
     }
   }
 
@@ -117,7 +117,7 @@ class _ThawaniOrdersPageState extends ConsumerState<ThawaniOrdersPage> {
       _load();
     } else {
       final s = ref.read(thawaniOrderActionProvider);
-      _showSnack(s is ThawaniOrderActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniOrderActionError ? s.message: l10n.error, isError: true);
     }
   }
 
@@ -129,7 +129,7 @@ class _ThawaniOrdersPageState extends ConsumerState<ThawaniOrdersPage> {
       _load();
     } else {
       final s = ref.read(thawaniOrderActionProvider);
-      _showSnack(s is ThawaniOrderActionError ? s.message : 'Error', isError: true);
+      _showSnack(s is ThawaniOrderActionError ? s.message: l10n.error, isError: true);
     }
   }
 

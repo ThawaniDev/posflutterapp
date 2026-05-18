@@ -15,8 +15,6 @@ class Routes {
   static const String posShiftOpen = '/pos/shift/open';
   static const String posSessions = '/pos/sessions';
   static const String posTerminals = '/pos/terminals';
-  static const String posTerminalAdd = '/pos/terminals/add';
-  static const String posTerminalEdit = '/pos/terminals/:id/edit';
   // Customer-facing display (CFD) — second screen mode showing the cart in
   // real time to the customer. Path includes the active session id so the
   // CFD can fetch the right cart.

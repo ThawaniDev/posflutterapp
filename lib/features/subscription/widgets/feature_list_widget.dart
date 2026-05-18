@@ -6,7 +6,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Widget that displays a list of plan features with check/cross indicators.
 class FeatureListWidget extends StatelessWidget {
-
   const FeatureListWidget({super.key, required this.plan, this.showLimits = true});
   final SubscriptionPlan plan;
   final bool showLimits;
@@ -14,7 +13,11 @@ class FeatureListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final features = plan.features ?? [];
+    // When hide_unselected_features is true, only show what the plan includes.
+    final allFeatures = plan.features ?? [];
+    final features = plan.hideUnselectedFeatures
+        ? allFeatures.where((f) => f['is_enabled'] as bool? ?? false).toList()
+        : allFeatures;
     final limits = plan.limits ?? [];
 
     if (features.isEmpty && limits.isEmpty) {

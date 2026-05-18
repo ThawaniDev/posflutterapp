@@ -3049,15 +3049,15 @@
       }
     }
   },
-  "terminalsEdit": "সম্পাদনা",
+  "terminalsEdit": "নাম পরিবর্তন",
   "terminalsInactive": "Inactive",
   "terminalsNever": "কখনো না",
   "terminalsNoTerminals": "কোনো টার্মিনাল পাওয়া যায়নি",
-  "terminalsNoTerminalsSubtitle": "যোগ করুন your first পিওএস terminal থেকে get started.",
+  "terminalsNoTerminalsSubtitle": "টার্মিনালগুলি ব্যাকএন্ড থেকে পরিচালিত হয়।",
   "terminalsOff": "বন্ধ",
   "terminalsOn": "চালু",
   "terminalsSearch": "টার্মিনাল অনুসন্ধান করুন...",
-  "terminalsSubtitle": "Manage পিওএস terminal registers",
+  "terminalsSubtitle": "পিওএস টার্মিনাল রেজিস্টার দেখুন",
   "terminalsTitle": "টার্মিনাল",
   "terminalsToggleFailed": "ব্যর্থ থেকে update terminal status.",
   "terminalsToggleMessage": "{action} terminal \"{name}\"?",
@@ -6665,6 +6665,31 @@
   "softPosRemaining": "অবশিষ্ট",
   "softPosTransactions": "লেনদেন",
   "softPosReachThreshold": "ফ্রি SoftPOS আনলক করতে {threshold}টি লেনদেন সম্পন্ন করুন",
+  "softPosReachAmountThreshold": "বিনামূল্যে সাবস্ক্রিপশন আনলক করতে SoftPOS-এ {amount} SAR বিক্রয় করুন",
+  "@softPosReachAmountThreshold": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "softPosAmountProgress": "{current} / {total} SAR ({remaining} SAR {remainingLabel})",
+  "@softPosAmountProgress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      },
+      "remainingLabel": {
+        "type": "String"
+      }
+    }
+  },
   "softPosSaving": "আপনি প্রতি মাসে {amount} সাশ্রয় করছেন!",
   "subBillingCycleMonthly": "মাসিক",
   "subBillingCycleYearly": "বার্ষিক",
@@ -7050,11 +7075,30 @@
       }
     }
   },
+  "subSoftPosFreeAfterAmount": "{amount} SAR SoftPOS বিক্রয়ের পর বিনামূল্যে",
+  "@subSoftPosFreeAfterAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "subSoftPosFreeExplainer": "{period}-এর মধ্যে {threshold}টি কার্ড পেমেন্ট গ্রহণ করতে SoftPOS ব্যবহার করুন এবং আপনার সাবস্ক্রিপশন বিনামূল্যে হয়ে যাবে!",
   "@subSoftPosFreeExplainer": {
     "placeholders": {
       "threshold": {
         "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "subSoftPosFreeExplainerAmount": "{period}-এর মধ্যে {amount} SAR কার্ড পেমেন্ট গ্রহণ করতে SoftPOS ব্যবহার করুন এবং আপনার সাবস্ক্রিপশন বিনামূল্যে হয়ে যাবে!",
+  "@subSoftPosFreeExplainerAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       },
       "period": {
         "type": "String"

@@ -1,5 +1,4 @@
 class SubscriptionPlan {
-
   const SubscriptionPlan({
     required this.id,
     required this.name,
@@ -13,10 +12,13 @@ class SubscriptionPlan {
     this.gracePeriodDays,
     this.isActive = true,
     this.isHighlighted = false,
+    this.hideFromPublic = false,
+    this.hideUnselectedFeatures = false,
     this.sortOrder,
     this.businessType,
     this.softposFreeEligible = false,
     this.softposFreeThreshold,
+    this.softposFreeThresholdAmount,
     this.softposFreeThresholdPeriod,
     this.features,
     this.limits,
@@ -38,10 +40,13 @@ class SubscriptionPlan {
       gracePeriodDays: (json['grace_period_days'] as num?)?.toInt(),
       isActive: json['is_active'] as bool? ?? true,
       isHighlighted: json['is_highlighted'] as bool? ?? false,
+      hideFromPublic: json['hide_from_public'] as bool? ?? false,
+      hideUnselectedFeatures: json['hide_unselected_features'] as bool? ?? false,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       businessType: json['business_type'] as String?,
       softposFreeEligible: json['softpos_free_eligible'] as bool? ?? false,
       softposFreeThreshold: (json['softpos_free_threshold'] as num?)?.toInt(),
+      softposFreeThresholdAmount: (json['softpos_free_threshold_amount'] as num?)?.toDouble(),
       softposFreeThresholdPeriod: json['softpos_free_threshold_period'] as String?,
       features: json['features'] != null
           ? (json['features'] as List).map((e) => Map<String, dynamic>.from(e as Map)).toList()
@@ -63,10 +68,18 @@ class SubscriptionPlan {
   final int? gracePeriodDays;
   final bool isActive;
   final bool isHighlighted;
+
+  /// When true this plan is not listed on the public pricing page.
+  final bool hideFromPublic;
+
+  /// When true, sidebar items whose feature_key is disabled for this plan
+  /// are hidden entirely rather than shown as a locked/greyed-out item.
+  final bool hideUnselectedFeatures;
   final int? sortOrder;
   final String? businessType;
   final bool softposFreeEligible;
   final int? softposFreeThreshold;
+  final double? softposFreeThresholdAmount;
   final String? softposFreeThresholdPeriod;
   final List<Map<String, dynamic>>? features;
   final List<Map<String, dynamic>>? limits;
@@ -103,10 +116,13 @@ class SubscriptionPlan {
       'grace_period_days': gracePeriodDays,
       'is_active': isActive,
       'is_highlighted': isHighlighted,
+      'hide_from_public': hideFromPublic,
+      'hide_unselected_features': hideUnselectedFeatures,
       'sort_order': sortOrder,
       'business_type': businessType,
       'softpos_free_eligible': softposFreeEligible,
       'softpos_free_threshold': softposFreeThreshold,
+      'softpos_free_threshold_amount': softposFreeThresholdAmount,
       'softpos_free_threshold_period': softposFreeThresholdPeriod,
       'features': features,
       'limits': limits,
@@ -128,10 +144,13 @@ class SubscriptionPlan {
     int? gracePeriodDays,
     bool? isActive,
     bool? isHighlighted,
+    bool? hideFromPublic,
+    bool? hideUnselectedFeatures,
     int? sortOrder,
     String? businessType,
     bool? softposFreeEligible,
     int? softposFreeThreshold,
+    double? softposFreeThresholdAmount,
     String? softposFreeThresholdPeriod,
     List<Map<String, dynamic>>? features,
     List<Map<String, dynamic>>? limits,
@@ -151,10 +170,13 @@ class SubscriptionPlan {
       gracePeriodDays: gracePeriodDays ?? this.gracePeriodDays,
       isActive: isActive ?? this.isActive,
       isHighlighted: isHighlighted ?? this.isHighlighted,
+      hideFromPublic: hideFromPublic ?? this.hideFromPublic,
+      hideUnselectedFeatures: hideUnselectedFeatures ?? this.hideUnselectedFeatures,
       sortOrder: sortOrder ?? this.sortOrder,
       businessType: businessType ?? this.businessType,
       softposFreeEligible: softposFreeEligible ?? this.softposFreeEligible,
       softposFreeThreshold: softposFreeThreshold ?? this.softposFreeThreshold,
+      softposFreeThresholdAmount: softposFreeThresholdAmount ?? this.softposFreeThresholdAmount,
       softposFreeThresholdPeriod: softposFreeThresholdPeriod ?? this.softposFreeThresholdPeriod,
       features: features ?? this.features,
       limits: limits ?? this.limits,

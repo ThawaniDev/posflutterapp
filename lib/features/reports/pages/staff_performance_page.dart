@@ -114,7 +114,7 @@ class _StaffList extends StatelessWidget {
             ),
             ReportKpiCard(
               label: l10n.reportsAvgPerStaff,
-              value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : '\u00810',
+              value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : formatCurrency(0),
               icon: Icons.person_rounded,
               color: AppColors.warning,
             ),

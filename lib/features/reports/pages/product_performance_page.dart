@@ -161,7 +161,7 @@ class _SlowMoversTab extends ConsumerWidget {
                     child: Column(
                       children: List.generate(products.length, (i) {
                         final p = products[i];
-                        final qty = (p['quantity_sold'] as num?)?.toInt() ?? 0;
+                        final qty = (p['total_quantity'] as num?)?.toInt() ?? 0;
                         final days = (p['days_since_last_sale'] as num?)?.toInt() ?? 0;
                         final stock = (p['current_stock'] as num?)?.toInt() ?? 0;
                         return Column(
@@ -239,7 +239,7 @@ class _MarginAnalysisContent extends ConsumerWidget {
                       ReportKpiCard(
                         label: l10n.reportsTotalProfit,
                         value: formatCurrency(
-                          products.fold<double>(0, (s, p) => s + (double.tryParse(p['total_profit'].toString()) ?? 0)),
+                          products.fold<double>(0, (s, p) => s + (double.tryParse(p['profit'].toString()) ?? 0)),
                         ),
                         icon: Icons.trending_up_rounded,
                         color: AppColors.success,
@@ -255,7 +255,7 @@ class _MarginAnalysisContent extends ConsumerWidget {
                         final p = products[i];
                         final marginPct = double.tryParse(p['margin_percent'].toString()) ?? 0;
                         final revenue = double.tryParse(p['total_revenue'].toString()) ?? 0;
-                        final profit = double.tryParse(p['total_profit'].toString()) ?? 0;
+                        final profit = double.tryParse(p['profit'].toString()) ?? 0;
                         final marginColor = marginPct >= 30
                             ? AppColors.success
                             : marginPct >= 15
@@ -321,7 +321,7 @@ class _CategoryContributionTab extends ConsumerWidget {
                       children: List.generate(categories.length, (i) {
                         final c = categories[i];
                         final revenue = double.tryParse(c['total_revenue'].toString()) ?? 0;
-                        final qty = (c['quantity_sold'] as num?)?.toInt() ?? 0;
+                        final qty = (c['total_quantity'] as num?)?.toInt() ?? 0;
                         final totalRev = categories.fold<double>(
                           0,
                           (s, x) => s + (double.tryParse(x['total_revenue'].toString()) ?? 0),

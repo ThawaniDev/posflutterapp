@@ -626,29 +626,29 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.xl),
         _buildHardwareToggle(
           icon: Icons.print_rounded,
-          title: 'Receipt Printer',
-          subtitle: 'Thermal or laser printer for receipts',
+          title: l10n.receiptPrinter,
+          subtitle: l10n.thermalOrLaserPrinterForReceipts,
           value: _hasPrinter,
           onChanged: (v) => setState(() => _hasPrinter = v),
         ),
         _buildHardwareToggle(
           icon: Icons.qr_code_scanner_rounded,
-          title: 'Barcode / QR Scanner',
-          subtitle: 'USB or Bluetooth scanner',
+          title: l10n.barcodeQrScanner,
+          subtitle: l10n.usbOrBluetoothScanner,
           value: _hasScanner,
           onChanged: (v) => setState(() => _hasScanner = v),
         ),
         _buildHardwareToggle(
           icon: Icons.point_of_sale_rounded,
-          title: 'Cash Drawer',
-          subtitle: 'Connected via printer or USB',
+          title: l10n.cashDrawer,
+          subtitle: l10n.connectedViaPrinterOrUsb,
           value: _hasCashDrawer,
           onChanged: (v) => setState(() => _hasCashDrawer = v),
         ),
         _buildHardwareToggle(
           icon: Icons.tv_rounded,
-          title: 'Customer Display (CFD)',
-          subtitle: 'Second screen showing items to customer',
+          title: l10n.customerDisplayCfd,
+          subtitle: l10n.secondScreenShowingItemsToCustomer,
           value: _hasCustomerDisplay,
           onChanged: (v) => setState(() => _hasCustomerDisplay = v),
         ),
@@ -721,13 +721,13 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         _buildProductOption(
           value: _productSetupNone,
           icon: Icons.schedule_rounded,
-          title: 'Set Up Later',
-          subtitle: 'Skip for now — you can add products from the catalog anytime',
+          title: l10n.setUpLater,
+          subtitle: l10n.skipForNowYouCanAddProductsFromTheCatalogAnytime,
         ),
         _buildProductOption(
           value: _productSetupTemplate,
           icon: Icons.auto_awesome_rounded,
-          title: 'Use Business Type Defaults',
+          title: l10n.useBusinessTypeDefaults,
           subtitle: _selectedBusinessType != null
               ? 'Import the pre-built catalog for your business type'
               : 'Select a business type first to unlock this option',
@@ -736,19 +736,19 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         _buildProductOption(
           value: _productSetupCsv,
           icon: Icons.upload_file_rounded,
-          title: 'Upload CSV File',
-          subtitle: 'Import products from your own spreadsheet',
+          title: l10n.uploadCsvFile,
+          subtitle: l10n.importProductsFromYourOwnSpreadsheet,
         ),
         if (_productSetupChoice == _productSetupCsv) ...[
           const SizedBox(height: AppSpacing.lg),
           OutlinedButton.icon(
             icon: const Icon(Icons.file_upload_outlined),
-            label: const Text('Choose CSV File'),
+            label: Text(l10n.chooseCsvFile),
             style: OutlinedButton.styleFrom(foregroundColor: AppColors.primary),
             onPressed: () {
               // CSV import is handled in the catalog module — navigate there post-wizard
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('CSV import is available in Catalog after setup.'), duration: Duration(seconds: 3)),
+                SnackBar(content: Text(l10n.csvImportIsAvailableInCatalogAfterSetup), duration: const Duration(seconds: 3)),
               );
             },
           ),
@@ -920,7 +920,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         ),
         const SizedBox(height: AppSpacing.xxxl),
         // Summary cards
-        _buildSummaryItem('Store Name', _nameController.text.isNotEmpty ? _nameController.text : 'Not set'),
+        _buildSummaryItem('Store Name', _nameController.text.isNotEmpty ? _nameController.text: l10n.notSet),
         _buildSummaryItem('Business Type', _selectedBusinessType ?? 'Not set'),
         _buildSummaryItem('Tax Rate', '${_taxRateController.text}%'),
         _buildSummaryItem(

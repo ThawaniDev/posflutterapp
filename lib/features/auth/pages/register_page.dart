@@ -124,7 +124,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       controller: _phoneController,
                       decoration: InputDecoration(
                         labelText: l10n.authPhoneOptional,
-                        hintText: '+968 XXXX XXXX',
+                        hintText: l10n.misc968xxxxxxxx,
                         prefixIcon: const Icon(Icons.phone_outlined),
                       ),
                       keyboardType: TextInputType.phone,

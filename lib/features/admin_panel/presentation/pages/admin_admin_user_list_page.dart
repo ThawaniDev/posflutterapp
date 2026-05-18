@@ -76,7 +76,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search admins...',
+                hintText: l10n.searchAdmins,
                 prefixIcon: const Icon(Icons.search),
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
