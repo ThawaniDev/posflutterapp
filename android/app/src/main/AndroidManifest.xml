@@ -3,6 +3,20 @@
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-permission android:name="android.permission.NFC"/>
     <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+
+    <!-- Network: required for TCP socket printing and local network scan -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- Bluetooth: list bonded devices + print via SPP.
+         - BLUETOOTH / BLUETOOTH_ADMIN cover API ≤ 30 (normal permissions, no runtime prompt).
+         - BLUETOOTH_CONNECT covers API 31+ for getBondedDevices() and SPP connect.
+         - No BLUETOOTH_SCAN / location needed: we only access already-paired devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+    <uses-permission android:name="com.landi.printer.perm.NORMAL_FUNC"/>
     <application
         android:label="Wameed POS"
         android:name="${applicationName}"
@@ -41,6 +55,7 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <package android:name="com.sdksuite.omnidriver"/>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

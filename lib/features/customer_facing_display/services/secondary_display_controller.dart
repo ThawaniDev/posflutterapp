@@ -74,6 +74,7 @@ class SecondaryDisplayController {
       // Without this filter, single-screen test devices may return a phantom
       // display that throws `InvalidDisplayException` on show().
       final displays = await _manager.getDisplays(category: DISPLAY_CATEGORY_PRESENTATION) ?? const <Display?>[];
+
       Display? chosen;
       for (final d in displays) {
         if (d?.displayId != null) {

@@ -33,6 +33,8 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_customer_search_dialog
 import 'package:wameedpos/features/pos_terminal/pages/pos_cash_event_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_shift_report_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_reprint_receipt_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_hardware_setup_sheet.dart';
+import 'package:wameedpos/core/providers/app_settings_providers.dart' show localeProvider;
 import 'package:wameedpos/features/pos_terminal/widgets/age_verification_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/manager_pin_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/widgets/modifier_picker_dialog.dart';
@@ -764,6 +766,57 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     }
   }
 
+  void _handleHardwareSetup() {
+    showPosHardwareSetupSheet(context);
+  }
+
+  void _showLanguagePicker() {
+    final l10n = AppLocalizations.of(context)!;
+    final currentCode = ref.read(localeProvider)?.languageCode ?? Localizations.localeOf(context).languageCode;
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.language_rounded, size: 20),
+                  const SizedBox(width: 10),
+                  Text(l10n.appBarLanguage, style: AppTypography.titleMedium),
+                ],
+              ),
+            ),
+            const Divider(height: 1),
+            for (final (code, label) in [
+              ('en', l10n.languageEnglish),
+              ('ar', l10n.languageArabic),
+              ('bn', l10n.languageBengali),
+              ('ur', l10n.languageUrdu),
+            ])
+              ListTile(
+                leading: Text(switch (code) {
+                  'ar' => '🇸🇦',
+                  'bn' => '🇧🇩',
+                  'ur' => '🇵🇰',
+                  _ => '🇬🇧',
+                }, style: const TextStyle(fontSize: 22)),
+                title: Text(label),
+                trailing: currentCode == code ? const Icon(Icons.check_rounded, color: AppColors.primary) : null,
+                onTap: () {
+                  ref.read(localeProvider.notifier).set(Locale(code));
+                  Navigator.pop(ctx);
+                },
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
   // ─── Build ────────────────────────────────────────────────────
 
   @override
@@ -808,19 +861,26 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
             body: isMobile
                 ? _buildMobileBody(isDark, sessionState.session)
-                : Row(
+                : Column(
                     children: [
+                      _buildTopBar(isDark, sessionState.session),
                       Expanded(
-                        flex: 3,
-                        child: Column(
+                        child: Row(
+                          textDirection: TextDirection.ltr,
                           children: [
-                            _buildTopBar(isDark, sessionState.session),
-                            _buildSearchBar(isDark),
-                            Expanded(child: _buildProductGrid(isDark)),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  _buildSearchBar(isDark),
+                                  Expanded(child: _buildProductGrid(isDark)),
+                                ],
+                              ),
+                            ),
+                            Expanded(flex: 3, child: _buildCartPanel(isDark)),
                           ],
                         ),
                       ),
-                      SizedBox(width: 480, child: _buildCartPanel(isDark)),
                     ],
                   ),
           ),
@@ -949,6 +1009,10 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   );
                 case 'reprint':
                   showDialog(context: context, builder: (_) => const PosReprintReceiptDialog());
+                case 'hardware':
+                  _handleHardwareSetup();
+                case 'language':
+                  _showLanguagePicker();
                 case 'cfd':
                   // On physical dual-screen devices (Landi C20 PRO) the
                   // secondary display is already active.  Push the current
@@ -1028,6 +1092,24 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 child: ListTile(
                   leading: const Icon(Icons.receipt_long, size: 20),
                   title: Text(AppLocalizations.of(context)!.posReprintReceipt),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'hardware',
+                child: ListTile(
+                  leading: const Icon(Icons.print_rounded, size: 20, color: AppColors.primary),
+                  title: Text(AppLocalizations.of(context)!.posHardwareSetup),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'language',
+                child: ListTile(
+                  leading: const Icon(Icons.language_rounded, size: 20),
+                  title: Text(AppLocalizations.of(context)!.appBarLanguage),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1290,6 +1372,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final showOpenPrice = settings?.enableOpenPriceItems ?? false;
     final showQuickAdd = settings?.enableQuickAddProducts ?? false;
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
@@ -1398,6 +1481,53 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               AppSpacing.gapW8,
             ],
             PosButton(
+              label: AppLocalizations.of(context)!.posHardwareSetup,
+              icon: Icons.print_rounded,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleHardwareSetup,
+            ),
+            AppSpacing.gapW8,
+            // Language switcher — compact popup on the top bar
+            Builder(
+              builder: (ctx) {
+                final l10n = AppLocalizations.of(ctx)!;
+                final currentCode = ref.watch(localeProvider)?.languageCode ?? Localizations.localeOf(ctx).languageCode;
+                return PopupMenuButton<String>(
+                  tooltip: l10n.appBarLanguage,
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.language_rounded, size: 18),
+                      const SizedBox(width: 4),
+                      Text(currentCode.toUpperCase(), style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                  onSelected: (code) => ref.read(localeProvider.notifier).set(Locale(code)),
+                  itemBuilder: (_) => [
+                    for (final (code, flag, label) in [
+                      ('en', '🇬🇧', l10n.languageEnglish),
+                      ('ar', '🇸🇦', l10n.languageArabic),
+                      ('bn', '🇧🇩', l10n.languageBengali),
+                      ('ur', '🇵🇰', l10n.languageUrdu),
+                    ])
+                      PopupMenuItem(
+                        value: code,
+                        child: Row(
+                          children: [
+                            Text(flag, style: const TextStyle(fontSize: 18)),
+                            const SizedBox(width: 10),
+                            Expanded(child: Text(label)),
+                            if (currentCode == code) const Icon(Icons.check_rounded, size: 16, color: AppColors.primary),
+                          ],
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+            AppSpacing.gapW8,
+            PosButton(
               label: AppLocalizations.of(context)!.posEndShift,
               icon: Icons.logout_rounded,
               variant: PosButtonVariant.danger,
@@ -1485,8 +1615,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
           childAspectRatio: 0.82,
           crossAxisSpacing: AppSpacing.md,
           mainAxisSpacing: AppSpacing.md,
@@ -1568,7 +1698,10 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     itemCount: cart.items.length,
                     separatorBuilder: (_, __) =>
                         Divider(height: 1, color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                    itemBuilder: (context, index) => _CartItemTile(item: cart.items[index], index: index, isDark: isDark),
+                    itemBuilder: (context, index) => Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: _CartItemTile(item: cart.items[index], index: index, isDark: isDark),
+                    ),
                   ),
           ),
 

@@ -6,7 +6,6 @@ import 'package:wameedpos/features/hardware/services/receipt_printer_service.dar
 
 /// Cash drawer configuration
 class CashDrawerConfig {
-
   const CashDrawerConfig({
     this.triggerMethod = 'printer_kick',
     this.pin = 0,
@@ -102,5 +101,23 @@ class CashDrawerService {
   /// Test the cash drawer
   Future<bool> test() async {
     return open();
+  }
+
+  /// Probe whether the cash drawer's trigger path is reachable.
+  ///
+  /// A cash drawer has no independent connection — it is kicked through the
+  /// receipt printer. When a dedicated printer IP is configured we can do a
+  /// lightweight TCP check; otherwise there is nothing to probe and the
+  /// drawer's readiness follows the receipt printer (handled by the manager).
+  Future<bool> probeConnection() async {
+    if (_config.printerIp == null || _config.printerIp!.isEmpty) return false;
+    try {
+      final socket = await Socket.connect(_config.printerIp!, _config.printerPort, timeout: const Duration(seconds: 3));
+      socket.destroy();
+      return true;
+    } catch (e) {
+      debugPrint('CashDrawerService probe error: $e');
+      return false;
+    }
   }
 }

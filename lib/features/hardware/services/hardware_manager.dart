@@ -14,7 +14,6 @@ import 'package:wameedpos/features/hardware/services/weighing_scale_service.dart
 
 /// Peripheral connection status
 class PeripheralStatus {
-
   const PeripheralStatus({
     required this.type,
     this.isConfigured = false,
@@ -114,13 +113,22 @@ class HardwareManager {
         case HardwareDeviceType.barcodeScanner:
           barcodeScanner.configure(ScannerConfig.fromJson(configJson));
           barcodeScanner.startListening();
-          _updateStatus(type, isConnected: true);
-          return true;
+          // A keyboard-wedge / HID scanner has no probeable connection — the
+          // closest truthful signal is whether the input listener is active.
+          _updateStatus(type, isConnected: barcodeScanner.isListening);
+          return barcodeScanner.isListening;
 
         case HardwareDeviceType.cashDrawer:
-          cashDrawer.configure(CashDrawerConfig.fromJson(configJson));
-          _updateStatus(type, isConnected: true);
-          return true;
+          final drawerConfig = CashDrawerConfig.fromJson(configJson);
+          cashDrawer.configure(drawerConfig, printerService: receiptPrinter);
+          // The drawer is kicked through the receipt printer. If it has its own
+          // network IP we can probe it; otherwise its readiness follows the
+          // receipt printer's connection.
+          final drawerConnected = (drawerConfig.printerIp != null && drawerConfig.printerIp!.isNotEmpty)
+              ? await cashDrawer.probeConnection()
+              : (_statuses[HardwareDeviceType.receiptPrinter]?.isConnected ?? false);
+          _updateStatus(type, isConnected: drawerConnected);
+          return drawerConnected;
 
         case HardwareDeviceType.customerDisplay:
           customerDisplay.configure(CustomerDisplayConfig.fromJson(configJson));
@@ -136,8 +144,9 @@ class HardwareManager {
 
         case HardwareDeviceType.labelPrinter:
           labelPrinter.configure(LabelPrinterConfig.fromJson(configJson));
-          _updateStatus(type, isConnected: true);
-          return true;
+          final labelConnected = await labelPrinter.probeConnection();
+          _updateStatus(type, isConnected: labelConnected);
+          return labelConnected;
 
         case HardwareDeviceType.cardTerminal:
           cardTerminal.configure(CardTerminalConfig.fromJson(configJson));

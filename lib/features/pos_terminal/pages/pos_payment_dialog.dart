@@ -6,10 +6,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart' show currentUserProvider;
 import 'package:wameedpos/features/customer_facing_display/providers/secondary_display_providers.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/services/digital_receipt_service.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_state.dart' show NetworkScanComplete;
+import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart' show DetectedDevice;
 import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart' show myStoreProvider;
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart' show StoreLoaded;
@@ -199,7 +203,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   }
 
   /// Guards SoftPOS method selection by syncing the active register's EdfaPay
-  /// token into secure storage before allowing the leg to switch.
+  /// token into secure storage before allowing the leg to switch, then
+  /// pre-warms the SDK so terminal binding (if needed) happens now — before
+  /// the user clicks "Pay" — rather than blocking the final payment step.
   Future<void> _selectSoftPosMethod(int index) async {
     final service = ref.read(softPosServiceProvider);
     if (!service.isAvailable) {
@@ -215,6 +221,20 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       return;
     }
     setState(() => _legs[index].method = PaymentMethod.softPos);
+
+    // Pre-warm: initialise the EdfaPay SDK now (terminal binding UI if
+    // needed appears here, before payment), so _completePayment is instant.
+    if (!service.isInitiated || sync.changed) {
+      try {
+        await ref.read(softPosProvider.notifier).initWithToken(token: sync.token!, environment: 'production');
+        final initState = ref.read(softPosProvider);
+        if (mounted && initState is SoftPosError) {
+          setState(() => _error = initState.message);
+        }
+      } catch (_) {
+        // Non-fatal here — _completePayment will retry and surface any error.
+      }
+    }
   }
 
   Future<_SoftPosTokenSync> _syncSoftPosTokenFromActiveRegister({required bool refreshRegisters}) async {
@@ -496,6 +516,10 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
         final settings = ref.read(currentStoreSettingsProvider);
 
+        // Build receipt lines NOW using the local `cart` snapshot captured before
+        // completeSale was called (the provider cart is already cleared above).
+        final receiptLines = _buildSaleReceiptLines(saleState, cart, settings);
+
         // Auto-open cash drawer when a cash payment leg was used
         if (_legs.any((l) => l.method == PaymentMethod.cash)) {
           try {
@@ -504,12 +528,24 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         }
 
         // Auto-print receipt when enabled in settings.
+        bool autoPrinted = false;
+        PrinterStatusCode? autoPrintErrorCode;
         if (settings?.autoPrintReceipt ?? false) {
           try {
+            final printerSel = ref.read(activePrinterProvider);
             final printer = ref.read(hardwareManagerProvider).receiptPrinter;
-            await printer.printReceipt(_buildSaleReceiptLines(saleState, cart, settings));
+            // Configure to whichever printer was auto-selected/user-selected.
+            if (printerSel != null) printer.configure(printerSel.config);
+            final status = await printer.checkStatus();
+            if (!status.isReady) {
+              autoPrintErrorCode = status.code;
+            } else {
+              final ok = await printer.printReceipt(receiptLines);
+              autoPrinted = ok;
+              if (!ok) autoPrintErrorCode = PrinterStatusCode.notConnected;
+            }
           } catch (_) {
-            // Silent failure; user can re-print from receipt dialog.
+            autoPrintErrorCode = PrinterStatusCode.error;
           }
         }
 
@@ -527,7 +563,13 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
         if (mounted) {
           Navigator.pop(context);
-          _showReceiptDialog(saleState, customerForReceipt);
+          _showReceiptDialog(
+            saleState,
+            customerForReceipt,
+            receiptLines: receiptLines,
+            autoPrinted: autoPrinted,
+            autoPrintErrorCode: autoPrintErrorCode,
+          );
         }
       } else if (saleState is SaleError) {
         setState(() => _error = saleState.message);
@@ -537,125 +579,22 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     }
   }
 
-  void _showReceiptDialog(SaleCompleted state, Customer? customer) {
+  void _showReceiptDialog(
+    SaleCompleted state,
+    Customer? customer, {
+    required List<ReceiptLine> receiptLines,
+    bool autoPrinted = false,
+    PrinterStatusCode? autoPrintErrorCode,
+  }) {
     showDialog(
       context: context,
-      builder: (ctx) => Dialog(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 400),
-          child: Padding(
-            padding: AppSpacing.paddingAll24,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.10), shape: BoxShape.circle),
-                  child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 36),
-                ),
-                AppSpacing.gapH16,
-                Text(AppLocalizations.of(context)!.posPaymentSuccessful, style: AppTypography.headlineSmall),
-                AppSpacing.gapH8,
-                Text(
-                  AppLocalizations.of(context)!.posTransactionNumber(state.transactionNumber),
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
-                ),
-                AppSpacing.gapH8,
-                Text(
-                  AppLocalizations.of(context)!.amountWithSar(state.totalAmount.toStringAsFixed(2)),
-                  style: AppTypography.headlineLarge.copyWith(color: AppColors.primary),
-                ),
-                // Card scheme badge — only shown for SoftPOS payments
-                if (_softPosResult?.cardScheme != null) ...[
-                  AppSpacing.gapH8,
-                  CardSchemeBadge(scheme: _softPosResult!.cardScheme, size: 14),
-                ],
-                if (state.changeGiven != null && state.changeGiven! > 0) ...[
-                  AppSpacing.gapH4,
-                  Text(
-                    AppLocalizations.of(context)!.posChangeAmount(state.changeGiven!.toStringAsFixed(2)),
-                    style: AppTypography.bodyMedium.copyWith(color: AppColors.success),
-                  ),
-                ],
-                if (customer != null) ...[
-                  AppSpacing.gapH16,
-                  Text(AppLocalizations.of(context)!.customersSendReceipt, style: AppTypography.bodyMedium),
-                  AppSpacing.gapH8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if ((customer.email ?? '').isNotEmpty)
-                        IconButton(
-                          tooltip: AppLocalizations.of(context)!.customersReceiptViaEmail,
-                          icon: const Icon(Icons.email_outlined),
-                          onPressed: () async {
-                            try {
-                              await ref
-                                  .read(digitalReceiptServiceProvider)
-                                  .sendEmail(customerId: customer.id, orderId: state.transactionId, destination: customer.email);
-                              if (ctx.mounted) {
-                                showPosSuccessSnackbar(ctx, AppLocalizations.of(ctx)!.customersReceiptSent);
-                              }
-                            } catch (e) {
-                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
-                            }
-                          },
-                        ),
-                      if (customer.phone.isNotEmpty)
-                        IconButton(
-                          tooltip: AppLocalizations.of(context)!.customersReceiptViaWhatsapp,
-                          icon: const Icon(Icons.chat_outlined),
-                          onPressed: () async {
-                            try {
-                              await ref
-                                  .read(digitalReceiptServiceProvider)
-                                  .sendWhatsApp(
-                                    customerId: customer.id,
-                                    orderId: state.transactionId,
-                                    phone: customer.phone,
-                                    receiptUrl: 'Receipt #${state.transactionNumber}',
-                                  );
-                            } catch (e) {
-                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
-                            }
-                          },
-                        ),
-                      if (customer.phone.isNotEmpty)
-                        IconButton(
-                          tooltip: AppLocalizations.of(context)!.customersReceiptViaSms,
-                          icon: const Icon(Icons.sms_outlined),
-                          onPressed: () async {
-                            try {
-                              await ref
-                                  .read(digitalReceiptServiceProvider)
-                                  .sendSms(
-                                    customerId: customer.id,
-                                    orderId: state.transactionId,
-                                    phone: customer.phone,
-                                    body: 'Receipt #${state.transactionNumber}',
-                                  );
-                            } catch (e) {
-                              if (ctx.mounted) showPosErrorSnackbar(ctx, e.toString());
-                            }
-                          },
-                        ),
-                    ],
-                  ),
-                ],
-                AppSpacing.gapH24,
-                PosButton(
-                  label: AppLocalizations.of(context)!.posDone,
-                  isFullWidth: true,
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                    ref.read(saleProvider.notifier).reset();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+      builder: (ctx) => _ReceiptSuccessDialog(
+        saleState: state,
+        customer: customer,
+        receiptLines: receiptLines,
+        autoPrinted: autoPrinted,
+        autoPrintErrorCode: autoPrintErrorCode,
+        cardScheme: _softPosResult?.cardScheme,
       ),
     );
   }
@@ -1333,30 +1272,114 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   }
 
   List<ReceiptLine> _buildSaleReceiptLines(SaleCompleted sale, CartState cart, StoreSettings? settings) {
-    final lines = <ReceiptLine>[
-      if ((settings?.receiptHeader ?? '').isNotEmpty)
-        ReceiptLine.text(settings!.receiptHeader!, alignment: PrintAlignment.center, bold: true),
-      ReceiptLine.text('# ${sale.transactionNumber}', alignment: PrintAlignment.center),
-      if (settings?.receiptShowDate ?? true)
-        ReceiptLine.text(DateTime.now().toString().substring(0, 19), alignment: PrintAlignment.center),
-      ReceiptLine.separator(),
-      for (final item in cart.items)
+    // Resolve store identity + cashier from the live providers so the receipt
+    // mirrors the store's configured profile instead of hard-coded values.
+    final storeState = ref.read(myStoreProvider);
+    final store = storeState is StoreLoaded ? storeState.store : null;
+    final cashier = ref.read(currentUserProvider);
+
+    // Every element below is gated on the store's receipt settings so the
+    // owner controls what shows and what is hidden from /settings/receipt.
+    final showLogo = settings?.receiptShowLogo ?? true;
+    final showAddress = settings?.receiptShowAddress ?? true;
+    final showPhone = settings?.receiptShowPhone ?? true;
+    final showDate = settings?.receiptShowDate ?? true;
+    final showCashier = settings?.receiptShowCashier ?? true;
+    final showTax = settings?.receiptShowTaxBreakdown ?? true;
+    final showBarcode = settings?.receiptShowBarcode ?? true;
+    final lang = settings?.receiptLanguage ?? 'ar';
+
+    final taxLabel = settings?.taxLabel ?? 'VAT';
+    final taxNumber = (settings?.taxNumber?.trim().isNotEmpty ?? false) ? settings!.taxNumber!.trim() : store?.vatNumber?.trim();
+
+    final lines = <ReceiptLine>[];
+
+    // ─── Branding / store identity ───────────────────────────
+    // The store logo is printed as a raster image by the graphics path; in the
+    // text receipt the store name is the brand line. `showLogo` controls
+    // whether it is emphasised (double-size) at the very top.
+    if (store?.name.trim().isNotEmpty ?? false) {
+      lines.add(ReceiptLine.text(store!.name.trim(), alignment: PrintAlignment.center, bold: true, doubleSize: showLogo));
+    }
+    if (showAddress) {
+      final address = [store?.address, store?.city].where((e) => (e?.trim().isNotEmpty ?? false)).join(', ');
+      if (address.isNotEmpty) lines.add(ReceiptLine.text(address, alignment: PrintAlignment.center));
+    }
+    if (showPhone && (store?.phone?.trim().isNotEmpty ?? false)) {
+      lines.add(ReceiptLine.text(store!.phone!.trim(), alignment: PrintAlignment.center));
+    }
+    if (taxNumber?.isNotEmpty ?? false) {
+      lines.add(ReceiptLine.text('$taxLabel: $taxNumber', alignment: PrintAlignment.center));
+    }
+    if ((settings?.receiptHeader ?? '').trim().isNotEmpty) {
+      lines.add(ReceiptLine.text(settings!.receiptHeader!.trim(), alignment: PrintAlignment.center));
+    }
+    lines.add(ReceiptLine.separator());
+
+    // ─── Transaction meta ────────────────────────────────────
+    lines.add(ReceiptLine.text('# ${sale.transactionNumber}', alignment: PrintAlignment.center));
+    if (showDate) {
+      lines.add(ReceiptLine.text(DateTime.now().toString().substring(0, 19), alignment: PrintAlignment.center));
+    }
+    if (showCashier && (cashier?.name.trim().isNotEmpty ?? false)) {
+      lines.add(
+        ReceiptLine.text(
+          '${_receiptLabel('Cashier', 'الكاشير', lang)}: ${cashier!.name.trim()}',
+          alignment: PrintAlignment.center,
+        ),
+      );
+    }
+    lines.add(ReceiptLine.separator());
+
+    // ─── Items ───────────────────────────────────────────────
+    for (final item in cart.items) {
+      lines.add(
         ReceiptLine.twoColumn(
           '${item.product.name}  x${item.quantity.toStringAsFixed(item.quantity == item.quantity.floor() ? 0 : 2)}',
           (item.unitPrice * item.quantity).toStringAsFixed(2),
         ),
-      ReceiptLine.separator(),
-      ReceiptLine.twoColumn('Subtotal', cart.subtotal.toStringAsFixed(2)),
-      if (cart.discountTotal > 0) ReceiptLine.twoColumn('Discount', '-${cart.discountTotal.toStringAsFixed(2)}'),
-      if ((settings?.receiptShowTaxBreakdown ?? true) && cart.taxAmount > 0)
-        ReceiptLine.twoColumn(settings?.taxLabel ?? 'Tax', cart.taxAmount.toStringAsFixed(2)),
-      ReceiptLine.twoColumn('TOTAL', sale.totalAmount.toStringAsFixed(2), bold: true),
-      ReceiptLine.separator(),
-      if ((settings?.receiptFooter ?? '').isNotEmpty)
-        ReceiptLine.text(settings!.receiptFooter!, alignment: PrintAlignment.center),
-      ReceiptLine.feed(2),
-    ];
+      );
+    }
+    lines.add(ReceiptLine.separator());
+
+    // ─── Totals ──────────────────────────────────────────────
+    lines.add(ReceiptLine.twoColumn(_receiptLabel('Subtotal', 'الإجمالي الفرعي', lang), cart.subtotal.toStringAsFixed(2)));
+    if (cart.discountTotal > 0) {
+      lines.add(ReceiptLine.twoColumn(_receiptLabel('Discount', 'الخصم', lang), '-${cart.discountTotal.toStringAsFixed(2)}'));
+    }
+    if (showTax && cart.taxAmount > 0) {
+      lines.add(ReceiptLine.twoColumn(taxLabel, cart.taxAmount.toStringAsFixed(2)));
+    }
+    lines.add(ReceiptLine.twoColumn(_receiptLabel('TOTAL', 'الإجمالي', lang), sale.totalAmount.toStringAsFixed(2), bold: true));
+    lines.add(ReceiptLine.separator());
+
+    // ─── Footer ──────────────────────────────────────────────
+    if ((settings?.receiptFooter ?? '').trim().isNotEmpty) {
+      lines.add(ReceiptLine.text(settings!.receiptFooter!.trim(), alignment: PrintAlignment.center));
+    }
+
+    // ─── ZATCA QR (TLV) — only when present and enabled ───────
+    if (showBarcode && (sale.zatcaQrCode?.trim().isNotEmpty ?? false)) {
+      lines.add(ReceiptLine.feed());
+      lines.add(ReceiptLine.qr(sale.zatcaQrCode!.trim()));
+    }
+
+    lines.add(ReceiptLine.feed(2));
     return lines;
+  }
+
+  /// Choose a receipt label according to the store's `receipt_language` setting
+  /// (`ar`, `en`, or `both`). Dynamic content (store name, items) keeps its own
+  /// language; only the fixed labels are localised here.
+  String _receiptLabel(String en, String ar, String lang) {
+    switch (lang) {
+      case 'ar':
+        return ar;
+      case 'both':
+        return '$ar / $en';
+      default:
+        return en;
+    }
   }
 
   List<double> _quickDenominations() {
@@ -1372,6 +1395,456 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final roundUp100 = (total / 100).ceil() * 100.0;
     if (roundUp100 > total && !denominations.contains(roundUp100)) denominations.add(roundUp100);
     return denominations.take(4).toList();
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Receipt Success Dialog
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum _PrintPhase { idle, checking, printing, success, error }
+
+class _ReceiptSuccessDialog extends ConsumerStatefulWidget {
+  const _ReceiptSuccessDialog({
+    required this.saleState,
+    this.customer,
+    required this.receiptLines,
+    this.autoPrinted = false,
+    this.autoPrintErrorCode,
+    this.cardScheme,
+  });
+
+  final SaleCompleted saleState;
+  final Customer? customer;
+  final List<ReceiptLine> receiptLines;
+  final bool autoPrinted;
+  final PrinterStatusCode? autoPrintErrorCode;
+  final String? cardScheme;
+
+  @override
+  ConsumerState<_ReceiptSuccessDialog> createState() => _ReceiptSuccessDialogState();
+}
+
+class _ReceiptSuccessDialogState extends ConsumerState<_ReceiptSuccessDialog> {
+  _PrintPhase _phase = _PrintPhase.idle;
+  PrinterStatusCode? _errorCode;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoPrinted) {
+      _phase = _PrintPhase.success;
+    } else if (widget.autoPrintErrorCode != null) {
+      _phase = _PrintPhase.error;
+      _errorCode = widget.autoPrintErrorCode;
+    }
+  }
+
+  /// Map a printer status code to a localized, user-friendly message.
+  String _errorMessage(AppLocalizations l10n) {
+    if (_errorCode == PrinterStatusCode.notConfigured) {
+      return l10n.posPrinterNotConfigured;
+    }
+    // not connected / out of paper / generic failure all collapse to the
+    // message the cashier needs to act on.
+    return l10n.posPrinterNotConnectedOrPaper;
+  }
+
+  Future<void> _printReceipt() async {
+    final printerSel = ref.read(activePrinterProvider);
+
+    if (printerSel == null) {
+      setState(() {
+        _phase = _PrintPhase.error;
+        _errorCode = PrinterStatusCode.notConfigured;
+      });
+      return;
+    }
+
+    setState(() {
+      _phase = _PrintPhase.checking;
+      _errorCode = null;
+    });
+
+    try {
+      final printer = ref.read(hardwareManagerProvider).receiptPrinter;
+      // Apply the active selection (built-in / network / BT / user-picked).
+      printer.configure(printerSel.config);
+
+      // Probe status before sending data so we can show a precise error.
+      final status = await printer.checkStatus();
+      if (!status.isReady) {
+        if (mounted) {
+          setState(() {
+            _phase = _PrintPhase.error;
+            _errorCode = status.code;
+          });
+        }
+        return;
+      }
+
+      if (mounted) setState(() => _phase = _PrintPhase.printing);
+      final ok = await printer.printReceipt(widget.receiptLines);
+      if (!mounted) return;
+      setState(() {
+        if (ok) {
+          _phase = _PrintPhase.success;
+        } else {
+          _phase = _PrintPhase.error;
+          _errorCode = PrinterStatusCode.notConnected;
+        }
+      });
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _phase = _PrintPhase.error;
+          _errorCode = PrinterStatusCode.error;
+        });
+      }
+    }
+  }
+
+  /// Shows a bottom sheet listing all available printers so the cashier can
+  /// switch before printing.
+  void _showPrinterPicker(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (ctx) => Consumer(
+        builder: (ctx, ref, _) {
+          final builtIn = ref.watch(builtInPrinterProvider).valueOrNull;
+          final scan = ref.watch(networkScanProvider);
+          final detected = switch (scan) {
+            NetworkScanComplete(:final devices) => devices.where((d) => d.type == HardwareDeviceType.receiptPrinter).toList(),
+            _ => <DetectedDevice>[],
+          };
+
+          final items = <_PrinterOption>[
+            if (builtIn != null) _PrinterOption(selection: builtIn, icon: Icons.print),
+            for (final d in detected.where((d) => d.connectionType == 'network'))
+              _PrinterOption(
+                selection: PrinterSelection(
+                  label: d.name,
+                  config: PrinterConfig(connectionType: 'network', ipAddress: d.address, port: d.port ?? 9100),
+                ),
+                icon: Icons.wifi,
+              ),
+            for (final d in detected.where((d) => d.connectionType == 'bluetooth'))
+              _PrinterOption(
+                selection: PrinterSelection(
+                  label: d.name,
+                  config: PrinterConfig(connectionType: 'bluetooth', bluetoothAddress: d.address),
+                ),
+                icon: Icons.bluetooth,
+              ),
+          ];
+
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.posSelectPrinter, style: AppTypography.titleMedium),
+                AppSpacing.gapH12,
+                if (items.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Text(
+                      l10n.posNoPrinterDetected,
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(ctx)),
+                    ),
+                  )
+                else
+                  ...items.map(
+                    (item) => ListTile(
+                      leading: Icon(item.icon),
+                      title: Text(item.selection.label),
+                      subtitle: Text(
+                        item.selection.isBuiltIn
+                            ? item.selection.config.usbDevicePath ?? ''
+                            : item.selection.config.ipAddress ?? item.selection.config.bluetoothAddress ?? '',
+                        style: AppTypography.micro.copyWith(
+                          color: isDark ? AppColors.textMutedDark : Colors.grey.shade500,
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                      selected: ref.watch(selectedPrinterProvider)?.label == item.selection.label,
+                      onTap: () {
+                        ref.read(selectedPrinterProvider.notifier).state = item.selection;
+                        Navigator.pop(ctx);
+                      },
+                    ),
+                  ),
+                AppSpacing.gapH8,
+                // "Auto-select" reset option
+                if (ref.watch(selectedPrinterProvider) != null)
+                  TextButton(
+                    onPressed: () {
+                      ref.read(selectedPrinterProvider.notifier).state = null;
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text('Auto-select'),
+                  ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildPrinterSection(AppLocalizations l10n) {
+    // Active printer indicator row (shown in all non-idle states too)
+    final printerRow = Consumer(
+      builder: (ctx, ref, _) {
+        final active = ref.watch(activePrinterProvider);
+        if (active == null) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: GestureDetector(
+            onTap: () => _showPrinterPicker(ctx),
+            child: Row(
+              children: [
+                Icon(active.isBuiltIn ? Icons.print_rounded : Icons.wifi, size: 14, color: AppColors.mutedFor(ctx)),
+                AppSpacing.gapW4,
+                Expanded(
+                  child: Text(
+                    l10n.posActivePrinterLabel(active.label),
+                    style: AppTypography.micro.copyWith(color: AppColors.mutedFor(ctx)),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Text(
+                  l10n.posChangePrinter,
+                  style: AppTypography.micro.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        printerRow,
+        switch (_phase) {
+          _PrintPhase.success => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.print_rounded, color: AppColors.success, size: 18),
+                AppSpacing.gapW8,
+                Text(
+                  l10n.posReceiptPrinted,
+                  style: AppTypography.bodySmall.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          _PrintPhase.checking || _PrintPhase.printing => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary)),
+              AppSpacing.gapW8,
+              Text(
+                _phase == _PrintPhase.checking ? l10n.posCheckingPrinter : l10n.posPrintingReceipt,
+                style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+              ),
+            ],
+          ),
+          _PrintPhase.error => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.08), borderRadius: AppRadius.borderSm),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.print_disabled_outlined, color: AppColors.error, size: 18),
+                    AppSpacing.gapW8,
+                    Flexible(
+                      child: Text(
+                        _errorMessage(l10n),
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.error),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              AppSpacing.gapH8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PosButton(
+                    label: l10n.posRetryPrint,
+                    variant: PosButtonVariant.outline,
+                    icon: Icons.print_outlined,
+                    size: PosButtonSize.sm,
+                    onPressed: _printReceipt,
+                  ),
+                  AppSpacing.gapW8,
+                  PosButton(
+                    label: l10n.posChangePrinter,
+                    variant: PosButtonVariant.ghost,
+                    icon: Icons.swap_horiz,
+                    size: PosButtonSize.sm,
+                    onPressed: () => _showPrinterPicker(context),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          _PrintPhase.idle => PosButton(
+            label: l10n.posPrintReceipt,
+            variant: PosButtonVariant.outline,
+            icon: Icons.print_outlined,
+            isFullWidth: true,
+            onPressed: _printReceipt,
+          ),
+        },
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Dialog(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 400),
+        child: Padding(
+          padding: AppSpacing.paddingAll24,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // ── Success icon ──────────────────────────────────────
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.10), shape: BoxShape.circle),
+                  child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 36),
+                ),
+                AppSpacing.gapH16,
+                Text(l10n.posPaymentSuccessful, style: AppTypography.headlineSmall),
+                AppSpacing.gapH8,
+                Text(
+                  l10n.posTransactionNumber(widget.saleState.transactionNumber),
+                  style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
+                ),
+                AppSpacing.gapH8,
+                Text(
+                  l10n.amountWithSar(widget.saleState.totalAmount.toStringAsFixed(2)),
+                  style: AppTypography.headlineLarge.copyWith(color: AppColors.primary),
+                ),
+                // Card scheme badge — only shown for SoftPOS payments
+                if (widget.cardScheme != null) ...[AppSpacing.gapH8, CardSchemeBadge(scheme: widget.cardScheme, size: 14)],
+                if (widget.saleState.changeGiven != null && widget.saleState.changeGiven! > 0) ...[
+                  AppSpacing.gapH4,
+                  Text(
+                    l10n.posChangeAmount(widget.saleState.changeGiven!.toStringAsFixed(2)),
+                    style: AppTypography.bodyMedium.copyWith(color: AppColors.success),
+                  ),
+                ],
+
+                // ── Print section ─────────────────────────────────────
+                AppSpacing.gapH16,
+                _buildPrinterSection(l10n),
+
+                // ── Digital receipt ───────────────────────────────────
+                if (widget.customer != null) ...[
+                  AppSpacing.gapH16,
+                  Text(l10n.customersSendReceipt, style: AppTypography.bodyMedium),
+                  AppSpacing.gapH8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if ((widget.customer!.email ?? '').isNotEmpty)
+                        IconButton(
+                          tooltip: l10n.customersReceiptViaEmail,
+                          icon: const Icon(Icons.email_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendEmail(
+                                    customerId: widget.customer!.id,
+                                    orderId: widget.saleState.transactionId,
+                                    destination: widget.customer!.email,
+                                  );
+                              if (context.mounted) showPosSuccessSnackbar(context, l10n.customersReceiptSent);
+                            } catch (e) {
+                              if (context.mounted) showPosErrorSnackbar(context, e.toString());
+                            }
+                          },
+                        ),
+                      if (widget.customer!.phone.isNotEmpty)
+                        IconButton(
+                          tooltip: l10n.customersReceiptViaWhatsapp,
+                          icon: const Icon(Icons.chat_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendWhatsApp(
+                                    customerId: widget.customer!.id,
+                                    orderId: widget.saleState.transactionId,
+                                    phone: widget.customer!.phone,
+                                    receiptUrl: 'Receipt #${widget.saleState.transactionNumber}',
+                                  );
+                            } catch (e) {
+                              if (context.mounted) showPosErrorSnackbar(context, e.toString());
+                            }
+                          },
+                        ),
+                      if (widget.customer!.phone.isNotEmpty)
+                        IconButton(
+                          tooltip: l10n.customersReceiptViaSms,
+                          icon: const Icon(Icons.sms_outlined),
+                          onPressed: () async {
+                            try {
+                              await ref
+                                  .read(digitalReceiptServiceProvider)
+                                  .sendSms(
+                                    customerId: widget.customer!.id,
+                                    orderId: widget.saleState.transactionId,
+                                    phone: widget.customer!.phone,
+                                    body: 'Receipt #${widget.saleState.transactionNumber}',
+                                  );
+                            } catch (e) {
+                              if (context.mounted) showPosErrorSnackbar(context, e.toString());
+                            }
+                          },
+                        ),
+                    ],
+                  ),
+                ],
+
+                AppSpacing.gapH24,
+                PosButton(
+                  label: l10n.posDone,
+                  isFullWidth: true,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    ref.read(saleProvider.notifier).reset();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -1421,4 +1894,12 @@ class _MethodCard extends StatelessWidget {
       ),
     );
   }
+}
+
+// ─── Printer Picker helpers ────────────────────────────────
+
+class _PrinterOption {
+  const _PrinterOption({required this.selection, required this.icon});
+  final PrinterSelection selection;
+  final IconData icon;
 }

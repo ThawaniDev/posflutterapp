@@ -16699,6 +16699,125 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hardwareCertified => 'معتمد';
 
   @override
+  String get hardwareReceiptPrinter => 'طابعة الإيصالات';
+
+  @override
+  String get hardwareWeighingScale => 'ميزان';
+
+  @override
+  String get hardwareLabelPrinter => 'طابعة الملصقات';
+
+  @override
+  String get hardwareCardTerminal => 'جهاز الدفع بالبطاقة';
+
+  @override
+  String get hardwareNfcReader => 'قارئ NFC';
+
+  @override
+  String get hardwareOffline => 'غير متصل';
+
+  @override
+  String get hardwareError => 'خطأ';
+
+  @override
+  String get hardwareNoActiveDevices => 'لا توجد أجهزة نشطة';
+
+  @override
+  String get hardwareNoActiveDevicesHint =>
+      'قم بإعداد الأجهزة أعلاه لعرض حالة الاتصال';
+
+  @override
+  String get hardwareConnUsb => 'USB';
+
+  @override
+  String get hardwareConnNetwork => 'واي فاي / الشبكة';
+
+  @override
+  String get hardwareConnBluetooth => 'بلوتوث';
+
+  @override
+  String get hardwareConnSerial => 'تسلسلي / COM';
+
+  @override
+  String get hardwareKeyboardWedgeTitle =>
+      'ماسح الباركود (إدخال لوحة المفاتيح)';
+
+  @override
+  String get hardwareHidScanner => 'ماسح USB HID';
+
+  @override
+  String get hardwareUsbKeyboardWedge => 'USB / إدخال لوحة المفاتيح';
+
+  @override
+  String get hardwareWedgeActiveHint =>
+      'جاهز لاستقبال الإدخال من أي ماسح باركود يعمل عبر لوحة المفاتيح (USB/HID)';
+
+  @override
+  String get hardwareWedgeInactiveHint =>
+      'غير نشط — سيبدأ الماسح عندما يكون التطبيق جاهزًا';
+
+  @override
+  String get hardwareWedgeReady => 'جاهز';
+
+  @override
+  String get hardwareInactive => 'غير نشط';
+
+  @override
+  String get hardwareNetworkScanHint =>
+      'افحص شبكتك المحلية لاكتشاف الطابعات والشاشات';
+
+  @override
+  String hardwareScanningProgress(String scanned, String total) {
+    return 'جارٍ الفحص... $scanned/$total عنوان';
+  }
+
+  @override
+  String get hardwareNoNetworkDevices => 'لم يتم العثور على أجهزة على الشبكة';
+
+  @override
+  String get hardwareBluetoothDevices => 'أجهزة البلوتوث';
+
+  @override
+  String get hardwareBluetoothHint =>
+      'الطابعات والأجهزة الطرفية المقترنة عبر البلوتوث';
+
+  @override
+  String get hardwareNoBluetooth => 'لا توجد أجهزة بلوتوث مقترنة';
+
+  @override
+  String get hardwareLocalDevicesTitle => 'الأجهزة المحلية وأجهزة الشبكة';
+
+  @override
+  String get hardwareLocalDevicesHint =>
+      'يعرض الأجهزة المتصلة بهذا الجهاز أو المتاحة على شبكته المحلية — دون الحاجة إلى حساب أو إعداد من الخادم.';
+
+  @override
+  String get hardwareRescan => 'إعادة الفحص';
+
+  @override
+  String hardwareScanningRange(String subnet) {
+    return 'نطاق الشبكة: $subnet.x';
+  }
+
+  @override
+  String get hardwareActiveJustNow => 'نشط الآن';
+
+  @override
+  String hardwareActiveMinutesAgo(String minutes) {
+    return 'نشط منذ $minutes دقيقة';
+  }
+
+  @override
+  String hardwareActiveHoursAgo(String hours) {
+    return 'نشط منذ $hours ساعة';
+  }
+
+  @override
+  String hardwareActiveDaysAgo(String days) {
+    return 'نشط منذ $days يوم';
+  }
+
+  @override
   String get auLoadingHistory => 'جارٍ تحميل السجل...';
 
   @override
@@ -18051,6 +18170,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posPrintFailed => 'فشلت طباعة الإيصال';
+
+  @override
+  String get posPrintReceipt => 'طباعة الإيصال';
+
+  @override
+  String get posReceiptPrinted => 'تمت طباعة الإيصال';
+
+  @override
+  String get posSelectPrinter => 'اختيار الطابعة';
+
+  @override
+  String posActivePrinterLabel(String name) {
+    return 'الطابعة: $name';
+  }
+
+  @override
+  String get posChangePrinter => 'تغيير';
+
+  @override
+  String get posNoPrinterDetected =>
+      'لم يتم اكتشاف طابعة على هذا الجهاز أو شبكته';
+
+  @override
+  String get posCheckingPrinter => 'جارٍ فحص الطابعة…';
+
+  @override
+  String get posRetryPrint => 'إعادة المحاولة';
+
+  @override
+  String get posPrinterNotConfigured =>
+      'لا توجد طابعة مُهيأة. قم بإعدادها من الإعدادات.';
+
+  @override
+  String get posPrinterNotConnectedOrPaper => 'الطابعة غير متصلة أو نفد الورق';
 
   @override
   String get posCfdIdleMessage => 'أهلاً وسهلاً';
@@ -19794,6 +19947,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posReprintReceipt => 'إعادة طباعة الإيصال';
+
+  @override
+  String get posHardwareSetup => 'الطابعات والماسحات';
+
+  @override
+  String get posHardwareSetupSubtitle =>
+      'إدارة الطابعات وماسحات الباركود المتصلة';
 
   @override
   String get posReturnRecentSales => 'مبيعات حديثة للإرجاع';

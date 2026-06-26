@@ -28,6 +28,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_presentation_display/flutter_presentation_display.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -45,11 +46,13 @@ class SecondaryDisplayApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final l10n = AppLocalizations.of(context)!;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: l10n.customerDisplay,
+      // title is only shown in the system app-switcher on the device;
+      // using a hardcoded string avoids calling AppLocalizations.of(context)!
+      // on the root BuildContext (above any Localizations ancestor), which
+      // would throw a null-check error and crash the secondary-display engine.
+      title: 'Customer Display',
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
@@ -57,6 +60,13 @@ class SecondaryDisplayApp extends StatelessWidget {
         fontFamily: AppTypography.fontFamily,
         useMaterial3: true,
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       onGenerateRoute: secondaryDisplayRoute,
       initialRoute: 'presentation',
     );
@@ -136,7 +146,6 @@ class _PreviewCartBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final logoUrl = payload['logo_url']?.toString();
     final storeName = payload['store_name']?.toString();
@@ -260,7 +269,6 @@ class _PreviewReceiptBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
     final total = _num(payload['total']);
     final change = _num(payload['change']);
@@ -397,8 +405,7 @@ class _CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final logoUrl = data['logo_url']?.toString();
     final storeName = data['store_name']?.toString();
     final items = (data['items'] as List?) ?? const [];
@@ -438,7 +445,10 @@ class _CartView extends StatelessWidget {
           Expanded(
             child: items.isEmpty
                 ? Center(
-                    child: Text(l10n.yourCartIsEmpty, style: TextStyle(fontSize: 24, color: Colors.black38)),
+                    child: Text(
+                      l10n?.yourCartIsEmpty ?? 'Your cart is empty',
+                      style: const TextStyle(fontSize: 24, color: Colors.black38),
+                    ),
                   )
                 : ListView.separated(
                     itemCount: items.length,

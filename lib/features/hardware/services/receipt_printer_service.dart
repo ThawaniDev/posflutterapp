@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 /// ESC/POS command constants
 class EscPos {
@@ -96,9 +97,38 @@ enum PrintAlignment {
   }
 }
 
+/// Status code for a printer health probe.
+enum PrinterStatusCode {
+  /// Printer is reachable and ready.
+  ready,
+
+  /// No printer configuration has been saved.
+  notConfigured,
+
+  /// Configuration exists but the device is unreachable.
+  notConnected,
+
+  /// Printer reports out-of-paper condition.
+  outOfPaper,
+
+  /// Unexpected error during status probe.
+  error,
+}
+
+/// Result returned by [ReceiptPrinterService.checkStatus].
+class PrinterStatusResult {
+  const PrinterStatusResult({required this.code, this.message});
+
+  final PrinterStatusCode code;
+
+  /// Optional human-readable description.
+  final String? message;
+
+  bool get isReady => code == PrinterStatusCode.ready;
+}
+
 /// Represents a single line or command in a receipt
 class ReceiptLine {
-
   const ReceiptLine({
     this.text,
     this.alignment = PrintAlignment.left,
@@ -161,12 +191,12 @@ class ReceiptLine {
 
 /// Printer configuration data
 class PrinterConfig {
-
   const PrinterConfig({
     required this.connectionType,
     this.ipAddress,
     this.port = 9100,
     this.usbDevicePath,
+    this.bluetoothAddress,
     this.paperWidth = PaperWidth.mm80,
     this.autoCut = true,
     this.density = PrintDensity.normal,
@@ -179,6 +209,7 @@ class PrinterConfig {
       ipAddress: json['ip'] as String? ?? json['ip_address'] as String?,
       port: json['port'] as int? ?? 9100,
       usbDevicePath: json['usb_device_path'] as String?,
+      bluetoothAddress: json['bluetooth_address'] as String?,
       paperWidth: json['paper_width'] == 58 ? PaperWidth.mm58 : PaperWidth.mm80,
       autoCut: json['auto_cut'] as bool? ?? true,
       density: PrintDensity.values.firstWhere(
@@ -192,6 +223,7 @@ class PrinterConfig {
   final String? ipAddress;
   final int port;
   final String? usbDevicePath;
+  final String? bluetoothAddress; // BT MAC address (e.g. AA:BB:CC:DD:EE:FF)
   final PaperWidth paperWidth;
   final bool autoCut;
   final PrintDensity density;
@@ -202,6 +234,7 @@ class PrinterConfig {
     'ip': ipAddress,
     'port': port,
     'usb_device_path': usbDevicePath,
+    'bluetooth_address': bluetoothAddress,
     'paper_width': paperWidth == PaperWidth.mm58 ? 58 : 80,
     'auto_cut': autoCut,
     'density': density.name,
@@ -210,6 +243,29 @@ class PrinterConfig {
 }
 
 /// Receipt printer service — handles ESC/POS command generation and network/USB printing
+
+// ─── Printer Selection ──────────────────────────────────────────────────────
+
+/// Represents a resolved printer that the POS will use.
+///
+/// Priority order (resolved by `activePrinterProvider`):
+///   1. User-selected via the printer picker in the receipt dialog
+///   2. Built-in USB/serial printer (auto-detected device file)
+///   3. First network printer found in the local scan
+///   4. First Bluetooth printer from the bonded device list
+class PrinterSelection {
+  const PrinterSelection({required this.label, required this.config, this.isBuiltIn = false});
+
+  /// Human-readable name shown in the UI (e.g. "Built-in Printer", "192.168.1.5").
+  final String label;
+
+  /// Configuration used to print the receipt.
+  final PrinterConfig config;
+
+  /// True when this is the terminal's own integrated printer.
+  final bool isBuiltIn;
+}
+
 class ReceiptPrinterService {
   PrinterConfig? _config;
   Socket? _socket;
@@ -220,6 +276,46 @@ class ReceiptPrinterService {
 
   void configure(PrinterConfig config) {
     _config = config;
+  }
+
+  /// Probe the printer and return its current status without sending print data.
+  ///
+  /// For network printers: performs a short TCP connect.
+  /// For USB/internal printers (e.g. Landi C20 Pro built-in): checks that the
+  /// device file exists and is accessible.
+  Future<PrinterStatusResult> checkStatus() async {
+    if (_config == null) {
+      return const PrinterStatusResult(code: PrinterStatusCode.notConfigured);
+    }
+    try {
+      if (_config!.connectionType == 'network') {
+        if (_config!.ipAddress == null || _config!.ipAddress!.isEmpty) {
+          return const PrinterStatusResult(code: PrinterStatusCode.notConfigured);
+        }
+        final socket = await Socket.connect(_config!.ipAddress!, _config!.port, timeout: const Duration(seconds: 3));
+        socket.destroy();
+        _isConnected = true;
+        return const PrinterStatusResult(code: PrinterStatusCode.ready);
+      } else if (_config!.connectionType == 'usb') {
+        final path = _config!.usbDevicePath;
+        if (path == null || path.isEmpty) {
+          return const PrinterStatusResult(code: PrinterStatusCode.notConfigured);
+        }
+        final file = File(path);
+        if (!await file.exists()) {
+          return PrinterStatusResult(code: PrinterStatusCode.notConnected, message: 'USB device not found at $path');
+        }
+        _isConnected = true;
+        return const PrinterStatusResult(code: PrinterStatusCode.ready);
+      }
+      // Bluetooth or unknown type — optimistically report ready if configured.
+      return const PrinterStatusResult(code: PrinterStatusCode.ready);
+    } on SocketException catch (e) {
+      _isConnected = false;
+      return PrinterStatusResult(code: PrinterStatusCode.notConnected, message: e.message);
+    } catch (e) {
+      return PrinterStatusResult(code: PrinterStatusCode.error, message: e.toString());
+    }
   }
 
   /// Connect to the printer
@@ -345,6 +441,58 @@ class ReceiptPrinterService {
     return Uint8List.fromList(bytes);
   }
 
+  /// Generate plain receipt text for Android vendor printer services that do
+  /// not expose a raw ESC/POS byte API to third-party apps.
+  String buildPlainReceipt(List<ReceiptLine> lines) {
+    final buffer = StringBuffer();
+    final charsPerLine = _config?.paperWidth.charsPerLine ?? 48;
+
+    for (final line in lines) {
+      if (line.separator) {
+        final char = line.text ?? '-';
+        buffer.writeln(char * charsPerLine);
+        continue;
+      }
+
+      if (line.feedLines > 0) {
+        for (int i = 0; i < line.feedLines; i++) {
+          buffer.writeln();
+        }
+        continue;
+      }
+
+      if (line.leftText != null && line.rightText != null) {
+        final left = line.leftText!;
+        final right = line.rightText!;
+        final spaces = charsPerLine - left.length - right.length;
+        buffer.writeln(left + (' ' * (spaces > 0 ? spaces : 1)) + right);
+        continue;
+      }
+
+      if (line.barcode != null) {
+        buffer.writeln(line.barcode);
+        continue;
+      }
+
+      if (line.qrCode != null) {
+        // QR codes are rendered as a real image by the native printer path
+        // (see MainActivity.printSerialText `qr` arg); skip the raw text here
+        // so the built-in printer does not print the TLV payload as gibberish.
+        continue;
+      }
+
+      if (line.text != null) {
+        buffer.writeln(line.text);
+      }
+    }
+
+    buffer
+      ..writeln()
+      ..writeln()
+      ..writeln();
+    return buffer.toString();
+  }
+
   /// Send raw bytes to the printer
   Future<bool> sendBytes(Uint8List data) async {
     if (_config == null) return false;
@@ -357,6 +505,35 @@ class ReceiptPrinterService {
         await socket.close();
         return true;
       }
+      if (_config!.connectionType == 'usb') {
+        // Route through the native channel so Android opens the character
+        // device with FileOutputStream (which the kernel requires for serial
+        // line-discipline initialisation on ttyHS devices like Landi C20 Pro).
+        // Dart's RandomAccessFile opens O_WRONLY only, which can cause the
+        // ttyHS driver to accept the write silently but discard the data.
+        final path = _config!.usbDevicePath;
+        if (path == null || path.isEmpty) return false;
+        try {
+          const ch = MethodChannel('wameedpos/bluetooth');
+          final ok = await ch.invokeMethod<bool>('printSerial', {'path': path, 'data': data});
+          return ok ?? false;
+        } catch (e) {
+          debugPrint('ReceiptPrinterService USB printSerial error: $e');
+          return false;
+        }
+      }
+      if (_config!.connectionType == 'bluetooth') {
+        // Send via the native Bluetooth SPP channel (MainActivity).
+        final address = _config!.bluetoothAddress;
+        if (address == null || address.isEmpty) return false;
+        try {
+          const ch = MethodChannel('wameedpos/bluetooth');
+          final ok = await ch.invokeMethod<bool>('printBluetooth', {'address': address, 'data': data});
+          return ok ?? false;
+        } catch (_) {
+          return false;
+        }
+      }
       return false;
     } catch (e) {
       debugPrint('ReceiptPrinterService sendBytes error: $e');
@@ -366,6 +543,32 @@ class ReceiptPrinterService {
 
   /// Print receipt from lines
   Future<bool> printReceipt(List<ReceiptLine> lines) async {
+    if (_config?.connectionType == 'usb') {
+      final path = _config!.usbDevicePath;
+      if (path == null || path.isEmpty) return false;
+      try {
+        const ch = MethodChannel('wameedpos/bluetooth');
+        // Pull the first QR payload (e.g. the ZATCA TLV) out of the line list so
+        // the native side can render it as a real scannable code instead of text.
+        String? qrData;
+        for (final l in lines) {
+          if (l.qrCode != null && l.qrCode!.isNotEmpty) {
+            qrData = l.qrCode;
+            break;
+          }
+        }
+        final ok = await ch.invokeMethod<bool>('printSerialText', {
+          'path': path,
+          'text': buildPlainReceipt(lines),
+          if (qrData != null) 'qr': qrData,
+        });
+        return ok ?? false;
+      } catch (e) {
+        debugPrint('ReceiptPrinterService USB printSerialText error: $e');
+        return false;
+      }
+    }
+
     final data = buildReceipt(lines);
     return sendBytes(data);
   }

@@ -6,6 +6,7 @@ import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 import 'package:wameedpos/features/hardware/repositories/hardware_repository.dart';
 import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
 import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart' show PrinterConfig, PrinterSelection;
 
 // ─── Config List Provider ──────────────────────────────────
 class HardwareConfigListNotifier extends StateNotifier<HardwareConfigListState> {
@@ -157,9 +158,31 @@ final peripheralStatusProvider = StreamProvider<Map<HardwareDeviceType, Peripher
   return ref.watch(hardwareManagerProvider).statusStream;
 });
 
+// ─── Live Status Initializer ───────────────────────────────
+/// Initializes the [HardwareManager] from the currently-loaded configurations
+/// so the peripheral status stream reflects *real* connection attempts rather
+/// than a dormant/empty status map. Recomputes whenever the configuration list
+/// changes (e.g. after add/remove/test) so the dashboard stays accurate.
+final hardwareLiveStatusInitProvider = FutureProvider.autoDispose<void>((ref) async {
+  final configState = ref.watch(hardwareConfigListProvider);
+  final configs = switch (configState) {
+    HardwareConfigListLoaded(:final configs) => configs,
+    _ => const <HardwareConfiguration>[],
+  };
+  if (configs.isEmpty) return;
+  await ref.read(hardwareManagerProvider).initializeAll(configs);
+});
+
 // ─── Auto Detector Provider ────────────────────────────────
 final hardwareAutoDetectorProvider = Provider<HardwareAutoDetector>((ref) {
   return HardwareAutoDetector();
+});
+
+// ─── Detected Subnet Provider ──────────────────────────────
+/// Detects the local /24 subnet from the device's network interfaces so the UI
+/// can show which range is being scanned. Purely local — no backend.
+final detectedSubnetProvider = FutureProvider.autoDispose<String?>((ref) {
+  return ref.watch(hardwareAutoDetectorProvider).detectSubnet();
 });
 
 // ─── Network Scan State ────────────────────────────────────
@@ -172,15 +195,22 @@ class NetworkScanNotifier extends StateNotifier<NetworkScanState> {
     state = const NetworkScanRunning(scanned: 0, total: 254);
     try {
       final detectedSubnet = subnet ?? await _detector.detectSubnet() ?? '192.168.1';
-      final devices = await _detector.scanAll(
-        subnet: detectedSubnet,
-        onProgress: (scanned, total) {
-          if (mounted) {
-            state = NetworkScanRunning(scanned: scanned, total: total);
-          }
-        },
-      );
-      state = NetworkScanComplete(devices: devices);
+
+      // Run network probe + bonded-BT listing in parallel.
+      // BT listing is instant (no actual scan); network probe takes ~5 s.
+      final results = await Future.wait<List<DetectedDevice>>([
+        _detector.scanAll(
+          subnet: detectedSubnet,
+          onProgress: (scanned, total) {
+            if (mounted) {
+              state = NetworkScanRunning(scanned: scanned, total: total);
+            }
+          },
+        ),
+        _detector.scanBondedBluetoothDevices(),
+      ]);
+
+      state = NetworkScanComplete(devices: [...results[0], ...results[1]]);
     } catch (e) {
       state = NetworkScanError(e.toString());
     }
@@ -191,4 +221,55 @@ class NetworkScanNotifier extends StateNotifier<NetworkScanState> {
 
 final networkScanProvider = StateNotifierProvider<NetworkScanNotifier, NetworkScanState>((ref) {
   return NetworkScanNotifier(ref.watch(hardwareAutoDetectorProvider));
+});
+
+// ─── Printer Selection ─────────────────────────────────────
+
+/// Checks for the device's own built-in printer (USB/serial device file).
+/// Purely local — no network, no backend.
+final builtInPrinterProvider = FutureProvider.autoDispose<PrinterSelection?>((ref) {
+  return ref.read(hardwareAutoDetectorProvider).detectBuiltInPrinter();
+});
+
+/// User-overridden printer. `null` = auto-select from detected devices.
+final selectedPrinterProvider = StateProvider<PrinterSelection?>((ref) => null);
+
+/// Resolves the printer to use for the next receipt, in priority order:
+///   1. User has explicitly chosen a printer (via the picker in the receipt dialog).
+///   2. Built-in USB/serial printer detected on this terminal.
+///   3. First receipt printer found in the local network scan.
+///   4. First Bluetooth-bonded receipt printer.
+final activePrinterProvider = Provider<PrinterSelection?>((ref) {
+  // 1 — User pick
+  final userPick = ref.watch(selectedPrinterProvider);
+  if (userPick != null) return userPick;
+
+  // 2 — Built-in (Landi / Sunmi / PAX internal printer)
+  final builtIn = ref.watch(builtInPrinterProvider).valueOrNull;
+  if (builtIn != null) return builtIn;
+
+  // 3 & 4 — From the local scan results
+  final scan = ref.watch(networkScanProvider);
+  if (scan is NetworkScanComplete) {
+    final printers = scan.devices.where((d) => d.type == HardwareDeviceType.receiptPrinter).toList();
+    // Prefer network over Bluetooth
+    for (final d in printers) {
+      if (d.connectionType == 'network' && (d.address?.isNotEmpty ?? false)) {
+        return PrinterSelection(
+          label: d.name,
+          config: PrinterConfig(connectionType: 'network', ipAddress: d.address, port: d.port ?? 9100),
+        );
+      }
+    }
+    for (final d in printers) {
+      if (d.connectionType == 'bluetooth' && (d.address?.isNotEmpty ?? false)) {
+        return PrinterSelection(
+          label: d.name,
+          config: PrinterConfig(connectionType: 'bluetooth', bluetoothAddress: d.address),
+        );
+      }
+    }
+  }
+
+  return null;
 });

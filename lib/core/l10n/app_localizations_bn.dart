@@ -16820,6 +16820,124 @@ class AppLocalizationsBn extends AppLocalizations {
   String get hardwareCertified => 'প্রত্যয়িত';
 
   @override
+  String get hardwareReceiptPrinter => 'Receipt Printer';
+
+  @override
+  String get hardwareWeighingScale => 'Weighing Scale';
+
+  @override
+  String get hardwareLabelPrinter => 'Label Printer';
+
+  @override
+  String get hardwareCardTerminal => 'Card Terminal';
+
+  @override
+  String get hardwareNfcReader => 'NFC Reader';
+
+  @override
+  String get hardwareOffline => 'Offline';
+
+  @override
+  String get hardwareError => 'Error';
+
+  @override
+  String get hardwareNoActiveDevices => 'No active devices';
+
+  @override
+  String get hardwareNoActiveDevicesHint =>
+      'Configure devices above to see their connection status';
+
+  @override
+  String get hardwareConnUsb => 'USB';
+
+  @override
+  String get hardwareConnNetwork => 'WiFi / Network';
+
+  @override
+  String get hardwareConnBluetooth => 'Bluetooth';
+
+  @override
+  String get hardwareConnSerial => 'Serial / COM';
+
+  @override
+  String get hardwareKeyboardWedgeTitle => 'Barcode Scanner (Keyboard Wedge)';
+
+  @override
+  String get hardwareHidScanner => 'USB HID Scanner';
+
+  @override
+  String get hardwareUsbKeyboardWedge => 'USB / Keyboard Wedge';
+
+  @override
+  String get hardwareWedgeActiveHint =>
+      'Ready to receive input from any USB/HID keyboard-wedge scanner';
+
+  @override
+  String get hardwareWedgeInactiveHint =>
+      'Not active — scanner will start when the app is ready';
+
+  @override
+  String get hardwareWedgeReady => 'Ready';
+
+  @override
+  String get hardwareInactive => 'Inactive';
+
+  @override
+  String get hardwareNetworkScanHint =>
+      'Scan your local network to discover printers and displays';
+
+  @override
+  String hardwareScanningProgress(String scanned, String total) {
+    return 'Scanning... $scanned/$total addresses';
+  }
+
+  @override
+  String get hardwareNoNetworkDevices => 'No devices found on the network';
+
+  @override
+  String get hardwareBluetoothDevices => 'Bluetooth Devices';
+
+  @override
+  String get hardwareBluetoothHint =>
+      'Paired printers and peripherals connected via Bluetooth';
+
+  @override
+  String get hardwareNoBluetooth => 'No paired Bluetooth devices found';
+
+  @override
+  String get hardwareLocalDevicesTitle => 'Local & Network Devices';
+
+  @override
+  String get hardwareLocalDevicesHint =>
+      'Shows hardware connected to this device or reachable on its local network — no account or backend setup required.';
+
+  @override
+  String get hardwareRescan => 'Scan again';
+
+  @override
+  String hardwareScanningRange(String subnet) {
+    return 'Network range: $subnet.x';
+  }
+
+  @override
+  String get hardwareActiveJustNow => 'Active just now';
+
+  @override
+  String hardwareActiveMinutesAgo(String minutes) {
+    return 'Active ${minutes}m ago';
+  }
+
+  @override
+  String hardwareActiveHoursAgo(String hours) {
+    return 'Active ${hours}h ago';
+  }
+
+  @override
+  String hardwareActiveDaysAgo(String days) {
+    return 'Active ${days}d ago';
+  }
+
+  @override
   String get auLoadingHistory => 'ইতিহাস লোড হচ্ছে...';
 
   @override
@@ -18179,6 +18297,41 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get posPrintFailed => 'Failed to print receipt';
+
+  @override
+  String get posPrintReceipt => 'Print Receipt';
+
+  @override
+  String get posReceiptPrinted => 'Receipt printed';
+
+  @override
+  String get posSelectPrinter => 'Select Printer';
+
+  @override
+  String posActivePrinterLabel(String name) {
+    return 'Printer: $name';
+  }
+
+  @override
+  String get posChangePrinter => 'Change';
+
+  @override
+  String get posNoPrinterDetected =>
+      'No printer detected on this device or network';
+
+  @override
+  String get posCheckingPrinter => 'Checking printer…';
+
+  @override
+  String get posRetryPrint => 'Retry Print';
+
+  @override
+  String get posPrinterNotConfigured =>
+      'No printer configured. Set one up in Settings.';
+
+  @override
+  String get posPrinterNotConnectedOrPaper =>
+      'Printer not connected or out of paper';
 
   @override
   String get posCfdIdleMessage => 'Welcome';
@@ -19923,6 +20076,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get posReprintReceipt => 'রসিদ পুনরায় প্রিন্ট করুন';
+
+  @override
+  String get posHardwareSetup => 'Printers & Scanners';
+
+  @override
+  String get posHardwareSetupSubtitle =>
+      'Manage connected printers and barcode scanners';
 
   @override
   String get posReturnRecentSales => 'সাম্প্রতিক বিক্রয় ফেরত';

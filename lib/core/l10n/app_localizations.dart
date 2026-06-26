@@ -31636,6 +31636,210 @@ abstract class AppLocalizations {
   /// **'Certified'**
   String get hardwareCertified;
 
+  /// No description provided for @hardwareReceiptPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Printer'**
+  String get hardwareReceiptPrinter;
+
+  /// No description provided for @hardwareWeighingScale.
+  ///
+  /// In en, this message translates to:
+  /// **'Weighing Scale'**
+  String get hardwareWeighingScale;
+
+  /// No description provided for @hardwareLabelPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Label Printer'**
+  String get hardwareLabelPrinter;
+
+  /// No description provided for @hardwareCardTerminal.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Terminal'**
+  String get hardwareCardTerminal;
+
+  /// No description provided for @hardwareNfcReader.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC Reader'**
+  String get hardwareNfcReader;
+
+  /// No description provided for @hardwareOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get hardwareOffline;
+
+  /// No description provided for @hardwareError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get hardwareError;
+
+  /// No description provided for @hardwareNoActiveDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No active devices'**
+  String get hardwareNoActiveDevices;
+
+  /// No description provided for @hardwareNoActiveDevicesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure devices above to see their connection status'**
+  String get hardwareNoActiveDevicesHint;
+
+  /// No description provided for @hardwareConnUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'USB'**
+  String get hardwareConnUsb;
+
+  /// No description provided for @hardwareConnNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi / Network'**
+  String get hardwareConnNetwork;
+
+  /// No description provided for @hardwareConnBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get hardwareConnBluetooth;
+
+  /// No description provided for @hardwareConnSerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial / COM'**
+  String get hardwareConnSerial;
+
+  /// No description provided for @hardwareKeyboardWedgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode Scanner (Keyboard Wedge)'**
+  String get hardwareKeyboardWedgeTitle;
+
+  /// No description provided for @hardwareHidScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'USB HID Scanner'**
+  String get hardwareHidScanner;
+
+  /// No description provided for @hardwareUsbKeyboardWedge.
+  ///
+  /// In en, this message translates to:
+  /// **'USB / Keyboard Wedge'**
+  String get hardwareUsbKeyboardWedge;
+
+  /// No description provided for @hardwareWedgeActiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to receive input from any USB/HID keyboard-wedge scanner'**
+  String get hardwareWedgeActiveHint;
+
+  /// No description provided for @hardwareWedgeInactiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Not active — scanner will start when the app is ready'**
+  String get hardwareWedgeInactiveHint;
+
+  /// No description provided for @hardwareWedgeReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get hardwareWedgeReady;
+
+  /// No description provided for @hardwareInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get hardwareInactive;
+
+  /// No description provided for @hardwareNetworkScanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan your local network to discover printers and displays'**
+  String get hardwareNetworkScanHint;
+
+  /// No description provided for @hardwareScanningProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning... {scanned}/{total} addresses'**
+  String hardwareScanningProgress(String scanned, String total);
+
+  /// No description provided for @hardwareNoNetworkDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No devices found on the network'**
+  String get hardwareNoNetworkDevices;
+
+  /// No description provided for @hardwareBluetoothDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth Devices'**
+  String get hardwareBluetoothDevices;
+
+  /// No description provided for @hardwareBluetoothHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paired printers and peripherals connected via Bluetooth'**
+  String get hardwareBluetoothHint;
+
+  /// No description provided for @hardwareNoBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'No paired Bluetooth devices found'**
+  String get hardwareNoBluetooth;
+
+  /// No description provided for @hardwareLocalDevicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local & Network Devices'**
+  String get hardwareLocalDevicesTitle;
+
+  /// No description provided for @hardwareLocalDevicesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows hardware connected to this device or reachable on its local network — no account or backend setup required.'**
+  String get hardwareLocalDevicesHint;
+
+  /// No description provided for @hardwareRescan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan again'**
+  String get hardwareRescan;
+
+  /// No description provided for @hardwareScanningRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Network range: {subnet}.x'**
+  String hardwareScanningRange(String subnet);
+
+  /// No description provided for @hardwareActiveJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Active just now'**
+  String get hardwareActiveJustNow;
+
+  /// No description provided for @hardwareActiveMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Active {minutes}m ago'**
+  String hardwareActiveMinutesAgo(String minutes);
+
+  /// No description provided for @hardwareActiveHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Active {hours}h ago'**
+  String hardwareActiveHoursAgo(String hours);
+
+  /// No description provided for @hardwareActiveDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Active {days}d ago'**
+  String hardwareActiveDaysAgo(String days);
+
   /// No description provided for @auLoadingHistory.
   ///
   /// In en, this message translates to:
@@ -34116,6 +34320,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to print receipt'**
   String get posPrintFailed;
+
+  /// No description provided for @posPrintReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Receipt'**
+  String get posPrintReceipt;
+
+  /// No description provided for @posReceiptPrinted.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printed'**
+  String get posReceiptPrinted;
+
+  /// No description provided for @posSelectPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Printer'**
+  String get posSelectPrinter;
+
+  /// No description provided for @posActivePrinterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer: {name}'**
+  String posActivePrinterLabel(String name);
+
+  /// No description provided for @posChangePrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get posChangePrinter;
+
+  /// No description provided for @posNoPrinterDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'No printer detected on this device or network'**
+  String get posNoPrinterDetected;
+
+  /// No description provided for @posCheckingPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking printer…'**
+  String get posCheckingPrinter;
+
+  /// No description provided for @posRetryPrint.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry Print'**
+  String get posRetryPrint;
+
+  /// No description provided for @posPrinterNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'No printer configured. Set one up in Settings.'**
+  String get posPrinterNotConfigured;
+
+  /// No description provided for @posPrinterNotConnectedOrPaper.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer not connected or out of paper'**
+  String get posPrinterNotConnectedOrPaper;
 
   /// No description provided for @posCfdIdleMessage.
   ///
@@ -37452,6 +37716,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reprint Receipt'**
   String get posReprintReceipt;
+
+  /// No description provided for @posHardwareSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Printers & Scanners'**
+  String get posHardwareSetup;
+
+  /// No description provided for @posHardwareSetupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage connected printers and barcode scanners'**
+  String get posHardwareSetupSubtitle;
 
   /// No description provided for @posReturnRecentSales.
   ///

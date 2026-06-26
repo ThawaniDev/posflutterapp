@@ -226,6 +226,23 @@ class LabelPrinterService {
     }
   }
 
+  /// Probe whether the label printer is reachable.
+  ///
+  /// Performs a lightweight TCP connection check for network printers.
+  /// Returns `false` for USB/other transports (no reliable probe available).
+  Future<bool> probeConnection() async {
+    if (_config.connectionType != 'network') return false;
+    if (_config.ipAddress == null || _config.ipAddress!.isEmpty) return false;
+    try {
+      final socket = await Socket.connect(_config.ipAddress!, _config.port, timeout: const Duration(seconds: 3));
+      socket.destroy();
+      return true;
+    } catch (e) {
+      debugPrint('LabelPrinterService probe error: $e');
+      return false;
+    }
+  }
+
   /// Print product labels.
   ///
   /// When `connectionType == 'pdf'` (or `language == 'pdf'`), or when no

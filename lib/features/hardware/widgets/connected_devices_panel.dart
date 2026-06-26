@@ -4,393 +4,120 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/features/hardware/enums/connection_type.dart';
-import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
-import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
-import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 
-/// Real-time connected devices panel showing all peripherals grouped by connection type.
-class ConnectedDevicesPanel extends ConsumerWidget {
+/// Local-only hardware panel.
+///
+/// Shows peripherals connected to THIS machine or discoverable on its local
+/// network range. Intentionally backend-free: no account, no stored
+/// configuration, no remote APIs — only what is physically reachable now.
+class ConnectedDevicesPanel extends ConsumerStatefulWidget {
   const ConnectedDevicesPanel({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConnectedDevicesPanel> createState() => _ConnectedDevicesPanelState();
+}
+
+class _ConnectedDevicesPanelState extends ConsumerState<ConnectedDevicesPanel> {
+  @override
+  void initState() {
+    super.initState();
+    // Auto-discover on first open. Only start a scan when idle so we don't
+    // restart one already running or re-run after returning to the page.
+    Future.microtask(() {
+      if (!mounted) return;
+      if (ref.read(networkScanProvider) is NetworkScanIdle) {
+        ref.read(networkScanProvider.notifier).scan();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final configState = ref.watch(hardwareConfigListProvider);
-    final statusAsync = ref.watch(peripheralStatusProvider);
-    final networkScanState = ref.watch(networkScanProvider);
-
-    // Get configured devices
-    final configs = switch (configState) {
-      HardwareConfigListLoaded(:final configs) => configs,
-      _ => <HardwareConfiguration>[],
-    };
-
-    // Get live statuses
-    final statuses = statusAsync.when(
-      data: (s) => s,
-      loading: () => ref.read(hardwareManagerProvider).statuses,
-      error: (_, __) => ref.read(hardwareManagerProvider).statuses,
-    );
-
-    // Group configs by connection type
-    final byConnection = <ConnectionType, List<_DeviceInfo>>{};
-    for (final config in configs) {
-      if (config.isActive != true) continue;
-      final status = statuses[config.deviceType];
-      final info = _DeviceInfo(config: config, status: status);
-      byConnection.putIfAbsent(config.connectionType, () => []).add(info);
-    }
-
-    // Count totals
-    final totalConfigured = configs.where((c) => c.isActive == true).length;
-    final totalConnected = statuses.values.where((s) => s.isConnected).length;
+    final scanState = ref.watch(networkScanProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── Summary bar ──
-        _SummaryBar(totalConfigured: totalConfigured, totalConnected: totalConnected, isDark: isDark),
+        // ── Intro: explains this is a local-only view ──
+        _IntroBanner(isDark: isDark),
 
         AppSpacing.gapH16,
 
-        // ── Keyboard-wedge barcode scanner (always-visible on web) ──
+        // ── Local input device: keyboard-wedge / HID barcode scanner ──
         _KeyboardWedgeScannerCard(isDark: isDark),
 
         AppSpacing.gapH12,
 
-        // ── Connection type groups ──
-        if (byConnection.isEmpty)
-          _EmptyState(isDark: isDark)
-        else ...[
-          if (context.isPhone)
-            ...byConnection.entries.map(
-              (e) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: _ConnectionGroup(connectionType: e.key, devices: e.value, isDark: isDark),
-              ),
-            )
-          else
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final entries = byConnection.entries.toList();
-                final crossCount = constraints.maxWidth > 900 ? 3 : 2;
-                return Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: entries
-                      .map(
-                        (e) => SizedBox(
-                          width: (constraints.maxWidth - 12 * (crossCount - 1)) / crossCount,
-                          child: _ConnectionGroup(connectionType: e.key, devices: e.value, isDark: isDark),
-                        ),
-                      )
-                      .toList(),
-                );
-              },
-            ),
-        ],
+        // ── Devices reachable on this machine's local network ──
+        _NetworkDevicesCard(scanState: scanState, isDark: isDark),
 
         AppSpacing.gapH12,
 
-        // ── Network Scan ──
-        _NetworkScanSection(scanState: networkScanState, ref: ref, isDark: isDark),
+        // ── Bluetooth-paired peripherals ──
+        _BluetoothDevicesCard(scanState: scanState, isDark: isDark),
       ],
     );
   }
 }
 
-// ─── Summary Bar ───────────────────────────────────────────
-class _SummaryBar extends StatelessWidget {
-  const _SummaryBar({required this.totalConfigured, required this.totalConnected, required this.isDark});
-
-  final int totalConfigured;
-  final int totalConnected;
+// ─── Local & Network Devices ───────────────────────────────────────────
+class _IntroBanner extends StatelessWidget {
+  const _IntroBanner({required this.isDark});
   final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final disconnected = totalConfigured - totalConnected;
-    return Row(
-      children: [
-        _SummaryChip(
-          icon: Icons.devices,
-          label: l10n.hardwareConfiguredCount(totalConfigured.toString()),
-          color: isDark ? AppColors.textMutedDark : AppColors.textPrimaryLight,
-          isDark: isDark,
-        ),
-        AppSpacing.gapW12,
-        _SummaryChip(
-          icon: Icons.check_circle,
-          label: l10n.hardwareConnectedCount(totalConnected.toString()),
-          color: AppColors.success,
-          isDark: isDark,
-        ),
-        if (disconnected > 0) ...[
-          AppSpacing.gapW12,
-          _SummaryChip(
-            icon: Icons.error_outline,
-            label: l10n.hardwareOfflineCount(disconnected.toString()),
-            color: AppColors.error,
-            isDark: isDark,
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class _SummaryChip extends StatelessWidget {
-  const _SummaryChip({required this.icon, required this.label, required this.color, required this.isDark});
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final bool isDark;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        borderRadius: AppRadius.borderSm,
-        border: Border.all(color: color.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: color),
-          AppSpacing.gapW4,
-          Text(label, style: AppTypography.labelSmall.copyWith(color: color)),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Empty State ───────────────────────────────────────────
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.isDark});
-  final bool isDark;
-
-  @override
-  Widget build(BuildContext context) {
     return PosCard(
       borderRadius: AppRadius.borderMd,
-      color: isDark ? AppColors.surfaceDark : null,
+      color: AppColors.info.withValues(alpha: isDark ? 0.12 : 0.06),
       child: Padding(
-        padding: AppSpacing.paddingAll24,
-        child: Center(
-          child: Column(
-            children: [
-              Icon(Icons.devices_other, size: 48, color: isDark ? AppColors.textMutedDark : Colors.grey.shade400),
-              AppSpacing.gapH12,
-              Text(
-                'No active devices',
-                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
+        padding: AppSpacing.paddingAll16,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(Icons.lan_outlined, size: 20, color: AppColors.info),
+            AppSpacing.gapW8,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.hardwareLocalDevicesTitle, style: AppTypography.titleSmall),
+                  AppSpacing.gapH4,
+                  Text(
+                    l10n.hardwareLocalDevicesHint,
+                    style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
+                  ),
+                ],
               ),
-              AppSpacing.gapH4,
-              Text(
-                'Configure devices above to see their connection status',
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// ─── Connection Type Group ─────────────────────────────────
-class _ConnectionGroup extends StatelessWidget {
-  const _ConnectionGroup({required this.connectionType, required this.devices, required this.isDark});
-
-  final ConnectionType connectionType;
-  final List<_DeviceInfo> devices;
-  final bool isDark;
-
-  String get _label => switch (connectionType) {
-    ConnectionType.usb => 'USB',
-    ConnectionType.network => 'WiFi / Network',
-    ConnectionType.bluetooth => 'Bluetooth',
-    ConnectionType.serial => 'Serial / COM',
-  };
-
-  IconData get _icon => switch (connectionType) {
-    ConnectionType.usb => Icons.usb,
-    ConnectionType.network => Icons.wifi,
-    ConnectionType.bluetooth => Icons.bluetooth,
-    ConnectionType.serial => Icons.cable,
-  };
-
-  Color get _accentColor => switch (connectionType) {
-    ConnectionType.usb => const Color(0xFF5C6BC0),
-    ConnectionType.network => const Color(0xFF26A69A),
-    ConnectionType.bluetooth => const Color(0xFF42A5F5),
-    ConnectionType.serial => const Color(0xFFFF7043),
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final connected = devices.where((d) => d.status?.isConnected == true).length;
-    return PosCard(
-      borderRadius: AppRadius.borderMd,
-      color: isDark ? AppColors.surfaceDark : null,
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: _accentColor.withValues(alpha: isDark ? 0.15 : 0.08),
-              border: Border(bottom: BorderSide(color: _accentColor.withValues(alpha: 0.2))),
-            ),
-            child: Row(
-              children: [
-                Icon(_icon, size: 20, color: _accentColor),
-                AppSpacing.gapW8,
-                Expanded(
-                  child: Text(_label, style: AppTypography.titleSmall.copyWith(color: _accentColor)),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(color: _accentColor.withValues(alpha: 0.15), borderRadius: AppRadius.borderSm),
-                  child: Text(
-                    '$connected/${devices.length}',
-                    style: AppTypography.micro.copyWith(color: _accentColor, fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Device rows
-          ...devices.map((d) => _DeviceRow(device: d, isDark: isDark)),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Device Row ────────────────────────────────────────────
-class _DeviceRow extends StatelessWidget {
-  const _DeviceRow({required this.device, required this.isDark});
-
-  final _DeviceInfo device;
-  final bool isDark;
-
-  IconData _deviceIcon(HardwareDeviceType type) => switch (type) {
-    HardwareDeviceType.receiptPrinter => Icons.print,
-    HardwareDeviceType.barcodeScanner => Icons.qr_code_scanner,
-    HardwareDeviceType.cashDrawer => Icons.point_of_sale,
-    HardwareDeviceType.customerDisplay => Icons.desktop_windows,
-    HardwareDeviceType.weighingScale => Icons.scale,
-    HardwareDeviceType.labelPrinter => Icons.label,
-    HardwareDeviceType.cardTerminal => Icons.credit_card,
-    HardwareDeviceType.nfcReader => Icons.nfc,
-  };
-
-  String _deviceLabel(HardwareDeviceType type) => switch (type) {
-    HardwareDeviceType.receiptPrinter => 'Receipt Printer',
-    HardwareDeviceType.barcodeScanner => 'Barcode Scanner',
-    HardwareDeviceType.cashDrawer => 'Cash Drawer',
-    HardwareDeviceType.customerDisplay => 'Customer Display',
-    HardwareDeviceType.weighingScale => 'Weighing Scale',
-    HardwareDeviceType.labelPrinter => 'Label Printer',
-    HardwareDeviceType.cardTerminal => 'Card Terminal',
-    HardwareDeviceType.nfcReader => 'NFC Reader',
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final isConnected = device.status?.isConnected ?? false;
-    final hasError = device.status?.errorMessage != null && device.status!.errorMessage!.isNotEmpty;
-    final name = device.config.deviceName ?? _deviceLabel(device.config.deviceType);
-
-    final statusColor = isConnected
-        ? AppColors.success
-        : (hasError ? AppColors.error : (AppColors.mutedFor(context)));
-    final statusText = isConnected ? 'Connected' : (hasError ? 'Error' : 'Offline');
-    final statusIcon = isConnected ? Icons.circle : (hasError ? Icons.warning_amber_rounded : Icons.circle_outlined);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: (AppColors.borderFor(context)).withValues(alpha: 0.5))),
-      ),
-      child: Row(
-        children: [
-          Icon(_deviceIcon(device.config.deviceType), size: 22, color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
-          AppSpacing.gapW8,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w500)),
-                if (hasError)
-                  Text(
-                    device.status!.errorMessage!,
-                    style: AppTypography.micro.copyWith(color: AppColors.error),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                if (device.status?.lastActivity != null && !hasError)
-                  Text(
-                    _formatLastActivity(device.status!.lastActivity!),
-                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
-                  ),
-              ],
-            ),
-          ),
-          // Status indicator
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(statusIcon, size: isConnected ? 8 : 12, color: statusColor),
-              AppSpacing.gapW4,
-              Text(
-                statusText,
-                style: AppTypography.micro.copyWith(color: statusColor, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _formatLastActivity(DateTime dt) {
-    final diff = DateTime.now().difference(dt);
-    if (diff.inSeconds < 60) return 'Active just now';
-    if (diff.inMinutes < 60) return 'Active ${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return 'Active ${diff.inHours}h ago';
-    return 'Active ${diff.inDays}d ago';
-  }
-}
-
-// ─── Network Scan Section ──────────────────────────────────
-class _NetworkScanSection extends StatelessWidget {
-  const _NetworkScanSection({required this.scanState, required this.ref, required this.isDark});
+// ─── Network Devices ──────────────────────────────────
+class _NetworkDevicesCard extends ConsumerWidget {
+  const _NetworkDevicesCard({required this.scanState, required this.isDark});
 
   final NetworkScanState scanState;
-  final WidgetRef ref;
   final bool isDark;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final subnet = ref.watch(detectedSubnetProvider).valueOrNull;
+    final isRunning = scanState is NetworkScanRunning;
+
     return PosCard(
       borderRadius: AppRadius.borderMd,
       color: isDark ? AppColors.surfaceDark : null,
@@ -403,16 +130,31 @@ class _NetworkScanSection extends StatelessWidget {
               children: [
                 Icon(Icons.radar, size: 20, color: isDark ? AppColors.textMutedDark : Colors.grey.shade700),
                 AppSpacing.gapW8,
-                Expanded(child: Text(l10n.networkDiscovery, style: AppTypography.titleSmall)),
-                switch (scanState) {
-                  NetworkScanIdle() || NetworkScanComplete() || NetworkScanError() => PosButton(
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.networkDiscovery, style: AppTypography.titleSmall),
+                      if (subnet != null)
+                        Text(
+                          l10n.hardwareScanningRange(subnet),
+                          style: AppTypography.micro.copyWith(
+                            color: isDark ? AppColors.textMutedDark : Colors.grey.shade500,
+                            fontFamily: 'monospace',
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (isRunning)
+                  const SizedBox(width: 20, height: 20, child: PosLoading(size: 20))
+                else
+                  PosButton(
                     onPressed: () => ref.read(networkScanProvider.notifier).scan(),
                     variant: PosButtonVariant.ghost,
-                    icon: Icons.search,
-                    label: l10n.hardwareScan,
+                    icon: Icons.refresh,
+                    label: scanState is NetworkScanComplete ? l10n.hardwareRescan : l10n.hardwareScan,
                   ),
-                  NetworkScanRunning() => const SizedBox(width: 20, height: 20, child: PosLoading(size: 20)),
-                },
               ],
             ),
 
@@ -420,7 +162,7 @@ class _NetworkScanSection extends StatelessWidget {
               NetworkScanIdle() => Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'Scan your local network to discover printers and displays',
+                  l10n.hardwareNetworkScanHint,
                   style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                 ),
               ),
@@ -436,7 +178,7 @@ class _NetworkScanSection extends StatelessWidget {
                     ),
                     AppSpacing.gapH8,
                     Text(
-                      'Scanning... $scanned/$total addresses',
+                      l10n.hardwareScanningProgress(scanned.toString(), total.toString()),
                       style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                     ),
                   ],
@@ -446,9 +188,19 @@ class _NetworkScanSection extends StatelessWidget {
               NetworkScanComplete(:final devices) => Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: devices.isEmpty
-                    ? Text(
-                        'No devices found on the network',
-                        style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
+                    ? Row(
+                        children: [
+                          Icon(Icons.search_off, size: 18, color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
+                          AppSpacing.gapW8,
+                          Expanded(
+                            child: Text(
+                              l10n.hardwareNoNetworkDevices,
+                              style: AppTypography.bodySmall.copyWith(
+                                color: isDark ? AppColors.textMutedDark : Colors.grey.shade600,
+                              ),
+                            ),
+                          ),
+                        ],
                       )
                     : Column(
                         children: devices.map((d) => _DetectedDeviceRow(device: d, isDark: isDark)).toList(),
@@ -515,8 +267,13 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final scanner = ref.read(hardwareManagerProvider).barcodeScanner;
     final isListening = scanner.isListening;
+    // A keyboard-wedge listener being active is an app *input capability*, not a
+    // connected hardware device, so present it with a neutral/informational
+    // indicator rather than a green "connected" style.
+    const activeColor = AppColors.info;
 
     return PosCard(
       borderRadius: AppRadius.borderMd,
@@ -538,7 +295,7 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                 AppSpacing.gapW8,
                 Expanded(
                   child: Text(
-                    'Barcode Scanner (Keyboard Wedge)',
+                    l10n.hardwareKeyboardWedgeTitle,
                     style: AppTypography.titleSmall.copyWith(color: const Color(0xFF5C6BC0)),
                   ),
                 ),
@@ -556,13 +313,11 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        kIsWeb ? 'USB HID Scanner' : 'USB / Keyboard Wedge',
+                        kIsWeb ? l10n.hardwareHidScanner : l10n.hardwareUsbKeyboardWedge,
                         style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        isListening
-                            ? 'Listening for keyboard-wedge barcode input'
-                            : 'Not active — scanner will start when the app is ready',
+                        isListening ? l10n.hardwareWedgeActiveHint : l10n.hardwareWedgeInactiveHint,
                         style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
                       ),
                     ],
@@ -572,15 +327,15 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      isListening ? Icons.circle : Icons.circle_outlined,
-                      size: isListening ? 8 : 12,
-                      color: isListening ? AppColors.success : (AppColors.mutedFor(context)),
+                      isListening ? Icons.radio_button_checked : Icons.circle_outlined,
+                      size: 12,
+                      color: isListening ? activeColor : (AppColors.mutedFor(context)),
                     ),
                     AppSpacing.gapW4,
                     Text(
-                      isListening ? 'Listening' : 'Inactive',
+                      isListening ? l10n.hardwareWedgeReady : l10n.hardwareInactive,
                       style: AppTypography.micro.copyWith(
-                        color: isListening ? AppColors.success : (AppColors.mutedFor(context)),
+                        color: isListening ? activeColor : (AppColors.mutedFor(context)),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -595,10 +350,78 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
   }
 }
 
-// ─── Internal data class ───────────────────────────────────
-class _DeviceInfo {
+// (Removed config-based device list — this panel is local-discovery only.)
 
-  const _DeviceInfo({required this.config, this.status});
-  final HardwareConfiguration config;
-  final PeripheralStatus? status;
+// ─── Bluetooth Devices Card ──────────────────────────────
+
+class _BluetoothDevicesCard extends StatelessWidget {
+  const _BluetoothDevicesCard({required this.scanState, required this.isDark});
+
+  final NetworkScanState scanState;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    // Only extract BT devices when a scan has finished.
+    final btDevices = switch (scanState) {
+      NetworkScanComplete(:final devices) => devices.where((d) => d.connectionType == 'bluetooth').toList(),
+      _ => <DetectedDevice>[],
+    };
+
+    // Show nothing during idle/running (BT appears as soon as scan completes).
+    if (scanState is NetworkScanIdle || scanState is NetworkScanRunning) {
+      return const SizedBox.shrink();
+    }
+
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
+      color: isDark ? AppColors.surfaceDark : null,
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.bluetooth, size: 20, color: isDark ? AppColors.textMutedDark : Colors.grey.shade700),
+                AppSpacing.gapW8,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.hardwareBluetoothDevices, style: AppTypography.titleSmall),
+                      Text(
+                        l10n.hardwareBluetoothHint,
+                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            if (btDevices.isEmpty)
+              Row(
+                children: [
+                  Icon(Icons.bluetooth_disabled, size: 18, color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: Text(
+                      l10n.hardwareNoBluetooth,
+                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
+                    ),
+                  ),
+                ],
+              )
+            else
+              Column(
+                children: btDevices.map((d) => _DetectedDeviceRow(device: d, isDark: isDark)).toList(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }

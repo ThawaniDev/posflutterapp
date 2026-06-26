@@ -197,11 +197,13 @@ class SaleCompleted extends SaleState {
     required this.transactionNumber,
     required this.totalAmount,
     this.changeGiven,
+    this.zatcaQrCode,
   });
   final String transactionId;
   final String transactionNumber;
   final double totalAmount;
   final double? changeGiven;
+  final String? zatcaQrCode;
 }
 
 class SaleError extends SaleState {

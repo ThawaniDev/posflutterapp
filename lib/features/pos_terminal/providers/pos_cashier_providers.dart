@@ -319,6 +319,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
         transactionNumber: transaction.transactionNumber,
         totalAmount: transaction.totalAmount,
         changeGiven: change > 0 ? change : null,
+        zatcaQrCode: transaction.zatcaQrCode,
       );
       return true;
     } on DioException catch (e) {
@@ -359,6 +360,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
         transactionId: transaction.id,
         transactionNumber: transaction.transactionNumber,
         totalAmount: transaction.totalAmount,
+        zatcaQrCode: transaction.zatcaQrCode,
       );
       return true;
     } on DioException catch (e) {

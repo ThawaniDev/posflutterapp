@@ -6987,6 +6987,78 @@
   "hardwareScan": "Scan",
   "hardwareNoCertified": "No certified hardware found",
   "hardwareCertified": "Certified",
+  "hardwareReceiptPrinter": "Receipt Printer",
+  "hardwareWeighingScale": "Weighing Scale",
+  "hardwareLabelPrinter": "Label Printer",
+  "hardwareCardTerminal": "Card Terminal",
+  "hardwareNfcReader": "NFC Reader",
+  "hardwareOffline": "Offline",
+  "hardwareError": "Error",
+  "hardwareNoActiveDevices": "No active devices",
+  "hardwareNoActiveDevicesHint": "Configure devices above to see their connection status",
+  "hardwareConnUsb": "USB",
+  "hardwareConnNetwork": "WiFi / Network",
+  "hardwareConnBluetooth": "Bluetooth",
+  "hardwareConnSerial": "Serial / COM",
+  "hardwareKeyboardWedgeTitle": "Barcode Scanner (Keyboard Wedge)",
+  "hardwareHidScanner": "USB HID Scanner",
+  "hardwareUsbKeyboardWedge": "USB / Keyboard Wedge",
+  "hardwareWedgeActiveHint": "Ready to receive input from any USB/HID keyboard-wedge scanner",
+  "hardwareWedgeInactiveHint": "Not active — scanner will start when the app is ready",
+  "hardwareWedgeReady": "Ready",
+  "hardwareInactive": "Inactive",
+  "hardwareNetworkScanHint": "Scan your local network to discover printers and displays",
+  "hardwareScanningProgress": "Scanning... {scanned}/{total} addresses",
+  "@hardwareScanningProgress": {
+    "placeholders": {
+      "scanned": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareNoNetworkDevices": "No devices found on the network",
+  "hardwareBluetoothDevices": "Bluetooth Devices",
+  "hardwareBluetoothHint": "Paired printers and peripherals connected via Bluetooth",
+  "hardwareNoBluetooth": "No paired Bluetooth devices found",
+  "hardwareLocalDevicesTitle": "Local & Network Devices",
+  "hardwareLocalDevicesHint": "Shows hardware connected to this device or reachable on its local network — no account or backend setup required.",
+  "hardwareRescan": "Scan again",
+  "hardwareScanningRange": "Network range: {subnet}.x",
+  "@hardwareScanningRange": {
+    "placeholders": {
+      "subnet": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveJustNow": "Active just now",
+  "hardwareActiveMinutesAgo": "Active {minutes}m ago",
+  "@hardwareActiveMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveHoursAgo": "Active {hours}h ago",
+  "@hardwareActiveHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveDaysAgo": "Active {days}d ago",
+  "@hardwareActiveDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "auLoadingHistory": "Loading history...",
   "auNoUpdateHistory": "No update history",
   "auHealthCheckFailed": "Post-update health check failed",
@@ -7780,6 +7852,23 @@
   "posSessionTimedOut": "Session timed out due to inactivity",
   "posPrintingReceipt": "Printing receipt…",
   "posPrintFailed": "Failed to print receipt",
+  "posPrintReceipt": "Print Receipt",
+  "posReceiptPrinted": "Receipt printed",
+  "posSelectPrinter": "Select Printer",
+  "posActivePrinterLabel": "Printer: {name}",
+  "@posActivePrinterLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "posChangePrinter": "Change",
+  "posNoPrinterDetected": "No printer detected on this device or network",
+  "posCheckingPrinter": "Checking printer…",
+  "posRetryPrint": "Retry Print",
+  "posPrinterNotConfigured": "No printer configured. Set one up in Settings.",
+  "posPrinterNotConnectedOrPaper": "Printer not connected or out of paper",
   "posCfdIdleMessage": "Welcome",
   "posSaleType": "Sale Type",
   "posSaleTypeDineIn": "Dine in",
@@ -8541,6 +8630,8 @@
   "posItemNote": "Item Note",
   "posPrintSentToPrinter": "Sent to Printer",
   "posReprintReceipt": "Reprint Receipt",
+  "posHardwareSetup": "Printers & Scanners",
+  "posHardwareSetupSubtitle": "Manage connected printers and barcode scanners",
   "posReturnRecentSales": "Return Recent Sales",
   "posShiftAlreadyOpen": "Shift Already Open",
   "posShiftAlreadyOpenDesc": "A shift is already open. Please resume or close it first.",

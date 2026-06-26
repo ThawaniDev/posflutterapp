@@ -6729,6 +6729,78 @@
   "hardwareScan": "مسح",
   "hardwareNoCertified": "لم يتم العثور على أجهزة معتمدة",
   "hardwareCertified": "معتمد",
+  "hardwareReceiptPrinter": "طابعة الإيصالات",
+  "hardwareWeighingScale": "ميزان",
+  "hardwareLabelPrinter": "طابعة الملصقات",
+  "hardwareCardTerminal": "جهاز الدفع بالبطاقة",
+  "hardwareNfcReader": "قارئ NFC",
+  "hardwareOffline": "غير متصل",
+  "hardwareError": "خطأ",
+  "hardwareNoActiveDevices": "لا توجد أجهزة نشطة",
+  "hardwareNoActiveDevicesHint": "قم بإعداد الأجهزة أعلاه لعرض حالة الاتصال",
+  "hardwareConnUsb": "USB",
+  "hardwareConnNetwork": "واي فاي / الشبكة",
+  "hardwareConnBluetooth": "بلوتوث",
+  "hardwareConnSerial": "تسلسلي / COM",
+  "hardwareKeyboardWedgeTitle": "ماسح الباركود (إدخال لوحة المفاتيح)",
+  "hardwareHidScanner": "ماسح USB HID",
+  "hardwareUsbKeyboardWedge": "USB / إدخال لوحة المفاتيح",
+  "hardwareWedgeActiveHint": "جاهز لاستقبال الإدخال من أي ماسح باركود يعمل عبر لوحة المفاتيح (USB/HID)",
+  "hardwareWedgeInactiveHint": "غير نشط — سيبدأ الماسح عندما يكون التطبيق جاهزًا",
+  "hardwareWedgeReady": "جاهز",
+  "hardwareInactive": "غير نشط",
+  "hardwareNetworkScanHint": "افحص شبكتك المحلية لاكتشاف الطابعات والشاشات",
+  "hardwareScanningProgress": "جارٍ الفحص... {scanned}/{total} عنوان",
+  "@hardwareScanningProgress": {
+    "placeholders": {
+      "scanned": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareNoNetworkDevices": "لم يتم العثور على أجهزة على الشبكة",
+  "hardwareBluetoothDevices": "أجهزة البلوتوث",
+  "hardwareBluetoothHint": "الطابعات والأجهزة الطرفية المقترنة عبر البلوتوث",
+  "hardwareNoBluetooth": "لا توجد أجهزة بلوتوث مقترنة",
+  "hardwareLocalDevicesTitle": "الأجهزة المحلية وأجهزة الشبكة",
+  "hardwareLocalDevicesHint": "يعرض الأجهزة المتصلة بهذا الجهاز أو المتاحة على شبكته المحلية — دون الحاجة إلى حساب أو إعداد من الخادم.",
+  "hardwareRescan": "إعادة الفحص",
+  "hardwareScanningRange": "نطاق الشبكة: {subnet}.x",
+  "@hardwareScanningRange": {
+    "placeholders": {
+      "subnet": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveJustNow": "نشط الآن",
+  "hardwareActiveMinutesAgo": "نشط منذ {minutes} دقيقة",
+  "@hardwareActiveMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveHoursAgo": "نشط منذ {hours} ساعة",
+  "@hardwareActiveHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareActiveDaysAgo": "نشط منذ {days} يوم",
+  "@hardwareActiveDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "auLoadingHistory": "جارٍ تحميل السجل...",
   "auNoUpdateHistory": "لا يوجد سجل تحديث",
   "auHealthCheckFailed": "فشل فحص الصحة بعد التحديث",
@@ -7456,6 +7528,23 @@
   "posSessionTimedOut": "انتهت الجلسة بسبب عدم النشاط",
   "posPrintingReceipt": "جارِ طباعة الإيصال…",
   "posPrintFailed": "فشلت طباعة الإيصال",
+  "posPrintReceipt": "طباعة الإيصال",
+  "posReceiptPrinted": "تمت طباعة الإيصال",
+  "posSelectPrinter": "اختيار الطابعة",
+  "posActivePrinterLabel": "الطابعة: {name}",
+  "@posActivePrinterLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "posChangePrinter": "تغيير",
+  "posNoPrinterDetected": "لم يتم اكتشاف طابعة على هذا الجهاز أو شبكته",
+  "posCheckingPrinter": "جارٍ فحص الطابعة…",
+  "posRetryPrint": "إعادة المحاولة",
+  "posPrinterNotConfigured": "لا توجد طابعة مُهيأة. قم بإعدادها من الإعدادات.",
+  "posPrinterNotConnectedOrPaper": "الطابعة غير متصلة أو نفد الورق",
   "posCfdIdleMessage": "أهلاً وسهلاً",
   "posSaleType": "نوع الطلب",
   "posSaleTypeDineIn": "صالة",
@@ -8217,6 +8306,8 @@
   "posItemNote": "ملاحظة العنصر",
   "posPrintSentToPrinter": "تم الإرسال إلى الطابعة",
   "posReprintReceipt": "إعادة طباعة الإيصال",
+  "posHardwareSetup": "الطابعات والماسحات",
+  "posHardwareSetupSubtitle": "إدارة الطابعات وماسحات الباركود المتصلة",
   "posReturnRecentSales": "مبيعات حديثة للإرجاع",
   "posShiftAlreadyOpen": "الوردية مفتوحة بالفعل",
   "posShiftAlreadyOpenDesc": "هناك وردية مفتوحة بالفعل. يرجى استئنافها أو إغلاقها أولاً.",

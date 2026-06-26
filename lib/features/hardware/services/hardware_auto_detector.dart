@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart' show PrinterConfig, PrinterSelection;
 
 /// Detected device info
 class DetectedDevice {
-
   const DetectedDevice({
     required this.type,
     required this.name,
@@ -173,5 +174,92 @@ class HardwareAutoDetector {
       default:
         return 'Device';
     }
+  }
+
+  // ─── Bluetooth ──────────────────────────────────────────────────────────────
+
+  static const _btChannel = MethodChannel('wameedpos/bluetooth');
+
+  /// Returns the list of **bonded (paired)** Bluetooth devices on Android.
+  ///
+  /// No scan is performed — pairing is done once by the cashier, so this is
+  /// instant and does not require location permission or a discovery scan.
+  /// Returns [] on non-Android platforms or if Bluetooth is unavailable.
+  Future<List<DetectedDevice>> scanBondedBluetoothDevices() async {
+    if (!Platform.isAndroid) return [];
+    try {
+      final raw = await _btChannel.invokeListMethod<Map>('getBondedDevices') ?? [];
+      return raw.map((d) {
+        final name = d['name'] as String? ?? 'Bluetooth Device';
+        return DetectedDevice(
+          type: _btDeviceType(name),
+          name: name,
+          connectionType: 'bluetooth',
+          address: d['address'] as String?,
+        );
+      }).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  HardwareDeviceType _btDeviceType(String name) {
+    final n = name.toLowerCase();
+    if (n.contains('print') ||
+        n.contains('pt-') ||
+        n.contains('rp-') ||
+        n.contains('tm-') ||
+        n.contains('tsp') ||
+        n.contains('star') ||
+        n.contains('epson') ||
+        n.contains('bixolon') ||
+        n.contains('sewoo') ||
+        n.contains('citizen') ||
+        n.contains('imin') ||
+        n.contains('sunmi') ||
+        n.contains('pos') ||
+        n.contains('landi') ||
+        n.contains('pax')) {
+      return HardwareDeviceType.receiptPrinter;
+    }
+    if (n.contains('scan') || n.contains('barcode') || n.contains('hs-') || n.contains('cs-')) {
+      return HardwareDeviceType.barcodeScanner;
+    }
+    return HardwareDeviceType.receiptPrinter; // safe default for POS context
+  }
+
+  // ─── Built-in Printer ───────────────────────────────────────────────────────
+
+  /// Detects the internal printer on Android POS terminals by probing
+  /// well-known device-file paths (no backend, no network).
+  ///
+  /// Supported terminals: Landi C20 Pro, PAX A-series, Sunmi V2/T2, iMin D4.
+  Future<PrinterSelection?> detectBuiltInPrinter() async {
+    if (!Platform.isAndroid) return null;
+    // Device-file paths used by built-in thermal printers on common Android
+    // POS terminals. Landi C20 Pro paths confirmed via ADB (0777 world-writable):
+    //   /dev/ttyHS2 — the actual char-device
+    //   /dev/ttyS3  — OEM symlink → /dev/ttyHS2
+    const paths = [
+      '/dev/ttyHS2', // Landi C20 Pro (confirmed, 0777 world-writable)
+      '/dev/ttyS3', // Landi C20 Pro symlink → /dev/ttyHS2
+      '/dev/printer', // PAX A-series, some Landi variants
+      '/dev/ttyS1', // Sunmi V2 / some iMin
+      '/dev/ttyS2',
+      '/dev/usb/lp0', // Generic USB class printer
+      '/dev/usb/lp1',
+    ];
+    for (final path in paths) {
+      try {
+        if (await File(path).exists()) {
+          return PrinterSelection(
+            label: 'Built-in Printer',
+            config: PrinterConfig(connectionType: 'usb', usbDevicePath: path),
+            isBuiltIn: true,
+          );
+        }
+      } catch (_) {}
+    }
+    return null;
   }
 }
