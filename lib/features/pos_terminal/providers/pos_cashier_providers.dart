@@ -1,7 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart' show Value;
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.dart';
+import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_sync_service.dart';
 import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
 import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
@@ -276,12 +284,14 @@ class PosCustomersNotifier extends StateNotifier<PosCustomersState> {
 // ─── Sale Provider (checkout flow) ──────────────────────────────
 
 final saleProvider = StateNotifierProvider<SaleNotifier, SaleState>((ref) {
-  return SaleNotifier(ref.watch(posTerminalRepositoryProvider));
+  return SaleNotifier(ref.watch(posTerminalRepositoryProvider), ref);
 });
 
 class SaleNotifier extends StateNotifier<SaleState> {
-  SaleNotifier(this._repo) : super(const SaleIdle());
+  SaleNotifier(this._repo, this._ref) : super(const SaleIdle());
   final PosTerminalRepository _repo;
+  final Ref _ref;
+  static const _uuid = Uuid();
 
   Future<bool> completeSale({
     required String sessionId,
@@ -292,28 +302,39 @@ class SaleNotifier extends StateNotifier<SaleState> {
     String? saleType,
   }) async {
     state = const SaleProcessing();
+
+    // Client-side identity so the sale can be deduplicated by the server even
+    // if an online POST commits but its response is lost (idempotent on
+    // `client_uuid` → `external_id="offline:{uuid}"`, shared with batch replay).
+    final clientUuid = _uuid.v4();
+    final session = _resolveActiveSession();
+    final registerId = session?.registerId;
+    final transactionNumber = _offlineTransactionNumber(registerId, clientUuid);
+
+    final data = <String, dynamic>{
+      'type': 'sale',
+      'client_uuid': clientUuid,
+      if (registerId != null) 'register_id': registerId,
+      'pos_session_id': sessionId,
+      if (saleType != null) 'sale_type': saleType,
+      'subtotal': cart.subtotal,
+      'discount_amount': cart.discountTotal > 0 ? cart.discountTotal : null,
+      'tax_amount': cart.taxAmount,
+      'tip_amount': tipAmount > 0 ? tipAmount : null,
+      'total_amount': cart.totalAmount + tipAmount,
+      'items': cart.items.map((i) => i.toTransactionItemJson()).toList(),
+      'payments': payments,
+      if (cart.customer != null) 'customer_id': cart.customer!.id,
+      if (cart.notes != null) 'notes': cart.notes,
+      if (cart.taxExempt) 'is_tax_exempt': true,
+      if (cart.taxExemption != null) 'tax_exemption': cart.taxExemption!.toJson(),
+      if (approvalToken != null) 'approval_token': approvalToken,
+    };
+
+    final change = _changeFrom(payments);
+
     try {
-      final data = {
-        'type': 'sale',
-        'pos_session_id': sessionId,
-        if (saleType != null) 'sale_type': saleType,
-        'subtotal': cart.subtotal,
-        'discount_amount': cart.discountTotal > 0 ? cart.discountTotal : null,
-        'tax_amount': cart.taxAmount,
-        'tip_amount': tipAmount > 0 ? tipAmount : null,
-        'total_amount': cart.totalAmount + tipAmount,
-        'items': cart.items.map((i) => i.toTransactionItemJson()).toList(),
-        'payments': payments,
-        if (cart.customer != null) 'customer_id': cart.customer!.id,
-        if (cart.notes != null) 'notes': cart.notes,
-        if (cart.taxExempt) 'is_tax_exempt': true,
-        if (cart.taxExemption != null) 'tax_exemption': cart.taxExemption!.toJson(),
-        if (approvalToken != null) 'approval_token': approvalToken,
-      };
       final transaction = await _repo.createTransaction(data);
-      final change = payments
-          .where((p) => p['method'] == 'cash' && p['change_given'] != null)
-          .fold<double>(0, (sum, p) => sum + (double.tryParse(p['change_given'].toString()) ?? 0.0));
       state = SaleCompleted(
         transactionId: transaction.id,
         transactionNumber: transaction.transactionNumber,
@@ -323,10 +344,128 @@ class SaleNotifier extends StateNotifier<SaleState> {
       );
       return true;
     } on DioException catch (e) {
+      // Distinguish a network/connectivity failure (server never responded)
+      // from a server-side rejection (validation, insufficient stock, expired
+      // plan…). Only the former is safe to queue for offline replay — replaying
+      // a request the server actively rejected would just fail again forever.
+      if (_isNetworkFailure(e)) {
+        final queued = await _queueOfflineSale(
+          clientUuid: clientUuid,
+          transactionNumber: transactionNumber,
+          registerId: registerId,
+          sessionId: sessionId,
+          cart: cart,
+          payments: payments,
+          tipAmount: tipAmount,
+          payload: data,
+        );
+        if (queued) {
+          state = SaleCompleted(
+            transactionId: clientUuid,
+            transactionNumber: transactionNumber,
+            totalAmount: cart.totalAmount + tipAmount,
+            changeGiven: change > 0 ? change : null,
+            isOffline: true,
+          );
+          // Best-effort: kick the drainer in case connectivity is flapping.
+          unawaited(_ref.read(posOfflineSyncServiceProvider).drain());
+          return true;
+        }
+      }
       state = SaleError(message: _extractError(e));
       return false;
     } catch (e) {
       state = SaleError(message: e.toString());
+      return false;
+    }
+  }
+
+  PosSession? _resolveActiveSession() {
+    final s = _ref.read(activeSessionProvider);
+    return s is ActiveSessionLoaded ? s.session : null;
+  }
+
+  /// Register-prefixed provisional number for an offline receipt. Combines the
+  /// timestamp with a short slice of the client UUID to stay unique even when
+  /// two sales land in the same millisecond on the same register. The number
+  /// is also what the server persists for the replayed offline sale.
+  String _offlineTransactionNumber(String? registerId, String clientUuid) {
+    final prefix = (registerId != null && registerId.length >= 4) ? registerId.substring(0, 4).toUpperCase() : 'POS';
+    final suffix = clientUuid.replaceAll('-', '').substring(0, 6).toUpperCase();
+    return 'OFF-$prefix-${DateTime.now().millisecondsSinceEpoch}-$suffix';
+  }
+
+  double _changeFrom(List<Map<String, dynamic>> payments) => payments
+      .where((p) => p['method'] == 'cash' && p['change_given'] != null)
+      .fold<double>(0, (sum, p) => sum + (double.tryParse(p['change_given'].toString()) ?? 0.0));
+
+  bool _isNetworkFailure(DioException e) {
+    if (e.response != null) return false; // server responded → genuine rejection
+    return e.type == DioExceptionType.connectionError ||
+        e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.sendTimeout ||
+        e.type == DioExceptionType.receiveTimeout ||
+        e.type == DioExceptionType.unknown;
+  }
+
+  /// Persist the sale locally and enqueue it for replay. Returns false if the
+  /// local write itself fails (then the caller surfaces a hard error).
+  Future<bool> _queueOfflineSale({
+    required String clientUuid,
+    required String transactionNumber,
+    required String? registerId,
+    required String sessionId,
+    required CartState cart,
+    required List<Map<String, dynamic>> payments,
+    required double tipAmount,
+    required Map<String, dynamic> payload,
+  }) async {
+    try {
+      final db = _ref.read(posOfflineDatabaseProvider);
+      final session = _resolveActiveSession();
+      final now = DateTime.now();
+      final itemsJson = jsonEncode(cart.items.map((i) => i.toTransactionItemJson()).toList());
+
+      // Local mirror so the sale appears in offline history / can be reprinted.
+      if (session != null) {
+        await db.saveTransaction(
+          LocalTransactionsCompanion.insert(
+            clientUuid: clientUuid,
+            transactionNumber: transactionNumber,
+            type: 'sale',
+            status: 'completed',
+            storeId: session.storeId,
+            registerId: Value(registerId),
+            cashierId: session.cashierId,
+            customerId: Value(cart.customer?.id),
+            sessionId: Value(sessionId),
+            subtotal: cart.subtotal,
+            taxAmount: Value(cart.taxAmount),
+            discountAmount: Value(cart.discountTotal),
+            totalAmount: cart.totalAmount + tipAmount,
+            itemsJson: itemsJson,
+            paymentsJson: jsonEncode(payments),
+            createdAt: now,
+          ),
+        );
+      }
+
+      // The batch endpoint requires `transaction_number`; the online attempt
+      // deliberately omits it so the server assigns the authoritative number
+      // when online. Inject the provisional number only into the queued copy.
+      final queuedPayload = <String, dynamic>{...payload, 'transaction_number': transactionNumber};
+      await db.enqueue(
+        LocalSyncQueueCompanion.insert(
+          clientUuid: clientUuid,
+          kind: 'transaction',
+          payloadJson: jsonEncode(queuedPayload),
+          createdAt: now,
+          nextAttemptAt: now,
+        ),
+      );
+      return true;
+    } catch (e) {
+      debugPrint('[SaleNotifier] Failed to queue offline sale: $e');
       return false;
     }
   }

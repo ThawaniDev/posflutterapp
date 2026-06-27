@@ -106,16 +106,19 @@ class AppShell extends ConsumerWidget {
                     data: mqData,
                     child: Column(
                       children: [
-                        Material(
-                          elevation: 1,
-                          child: Container(
-                            height: 56,
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
-                              children: [
-                                const Expanded(child: BranchSelector()),
-                                ...actions,
-                              ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Material(
+                            elevation: 1,
+                            child: Container(
+                              height: 56,
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: BranchSelector()),
+                                  ...actions,
+                                ],
+                              ),
                             ),
                           ),
                         ),

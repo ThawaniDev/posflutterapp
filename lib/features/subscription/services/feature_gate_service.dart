@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,6 +157,13 @@ class FeatureGateService extends ChangeNotifier {
 
       notifyListeners();
       debugPrint('[FeatureGateService] Entitlements synced: ${_featureCache.length} features, ${_limitsCache.length} limits');
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 403) {
+        // Propagate 403 so callers (e.g. SubscriptionSyncService) can back off.
+        debugPrint('[FeatureGateService] Sync failed with 403: using cached data');
+        rethrow;
+      }
+      debugPrint('[FeatureGateService] Sync failed, using cached data: $e');
     } catch (e) {
       debugPrint('[FeatureGateService] Sync failed, using cached data: $e');
     }
@@ -279,6 +287,21 @@ class FeatureGateService extends ChangeNotifier {
   bool get hasActiveSubscription {
     final status = _subscriptionStatus?['status'] as String?;
     return status == 'active' || status == 'trial' || status == 'grace';
+  }
+
+  /// Whether the POS should be hard-blocked due to subscription state.
+  ///
+  /// Returns `true` ONLY when there is a confirmed lapsed status
+  /// (`expired` or `cancelled`). Fails **open** for every other case —
+  /// including `null`/unknown status — so the POS is never wrongly locked
+  /// out before the first sync, on a fresh install, or when a sync fails
+  /// with no cache. Grace period is allowed through (a banner is shown).
+  /// Server-side `plan.active` middleware remains the authoritative gate.
+  bool get isPosBlocked {
+    final status = _subscriptionStatus?['status'] as String?;
+    if (status == null) return false; // fail-open: never lock out on missing data
+    const blockedStates = {'expired', 'cancelled', 'paused'};
+    return blockedStates.contains(status);
   }
 
   /// Whether the SoftPOS free tier is active.

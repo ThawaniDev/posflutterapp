@@ -228,11 +228,26 @@ class PosTerminalApiService {
 
   // ─── Active Registers (for cashier shift opening) ──────────────
 
-  Future<List<Register>> listActiveRegisters() async {
-    final response = await _dio.get(ApiEndpoints.posRegisters);
+  /// Fetches active registers, passing the device's EdfaPay UUID as the
+  /// `X-Device-Id` header so the backend can auto-assign or match.
+  /// Returns either [List<Register>] or throws [RegisterDeviceError].
+  Future<List<Register>> listActiveRegisters({String? deviceId}) async {
+    final options = deviceId != null && deviceId.isNotEmpty ? Options(headers: {'X-Device-Id': deviceId}) : null;
+    final response = await _dio.get(ApiEndpoints.posRegisters, options: options);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
     return list.map((j) => Register.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  /// Claim a specific register for this device.
+  /// Called when multiple unclaimed registers are returned and the cashier picks one.
+  Future<Register> claimRegisterDevice(String registerId, {required String deviceId}) async {
+    final response = await _dio.post(
+      '${ApiEndpoints.posRegisters}/$registerId/claim',
+      options: Options(headers: {'X-Device-Id': deviceId}),
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 
   // ─── Terminals (Registers) ────────────────────────────────────

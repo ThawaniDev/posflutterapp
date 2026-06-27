@@ -75,7 +75,9 @@ class PosTerminalRepository {
   Future<void> deleteHeldCart(String id) => _apiService.deleteHeldCart(id);
 
   // Terminals (Registers)
-  Future<List<Register>> listActiveRegisters() => _apiService.listActiveRegisters();
+  Future<List<Register>> listActiveRegisters({String? deviceId}) => _apiService.listActiveRegisters(deviceId: deviceId);
+  Future<Register> claimRegisterDevice(String registerId, {required String deviceId}) =>
+      _apiService.claimRegisterDevice(registerId, deviceId: deviceId);
   Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) =>
       _apiService.listTerminals(page: page, perPage: perPage, search: search);
   Future<Register> renameTerminal(String id, String name) => _apiService.renameTerminal(id, name);

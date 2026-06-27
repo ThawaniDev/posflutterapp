@@ -6160,6 +6160,29 @@
     }
   },
   "subGraceEndsToday": "فترة السماح تنتهي اليوم. جدد فوراً.",
+  "subPaywallTitle": "تم تعليق الوصول إلى نقطة البيع",
+  "subPaywallRenewDescription": "جدد اشتراكك لمواصلة استخدام نقطة البيع. بياناتك محفوظة وستُستعاد فوراً.",
+  "subPaywallCancelledMessage": "تم إلغاء اشتراكك. اشترك في خطة جديدة لاستعادة الوصول الكامل.",
+  "subPaywallPausedMessage": "اشتراكك متوقف حالياً. استأنف أو اشترك في خطة جديدة.",
+  "subPaywallNoSubMessage": "لم يتم العثور على اشتراك نشط. اختر خطة للبدء في استخدام نقطة البيع.",
+  "subPaywallCheckStatus": "التحقق من الحالة",
+  "subPaywallChecking": "جارٍ التحقق...",
+  "subPaywallExpiredOn": "انتهت صلاحيته: {date}",
+  "@subPaywallExpiredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaywallPlanActive": "الخطة: {name}",
+  "@subPaywallPlanActive": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "subInvoice": "فاتورة",
   "subCreated": "تاريخ الإنشاء",
   "subDueDateLabel": "تاريخ الاستحقاق",

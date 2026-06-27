@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
@@ -14,21 +15,27 @@ final subscriptionSyncServiceProvider = Provider<SubscriptionSyncService>((ref) 
 /// Runs on a heartbeat interval and updates the [FeatureGateService] cache.
 /// The POS relies on this to stay current with plan changes without manual refresh.
 class SubscriptionSyncService {
-
   SubscriptionSyncService(this._featureGateService);
   final FeatureGateService _featureGateService;
 
   Timer? _heartbeatTimer;
   bool _isSyncing = false;
 
-  /// Heartbeat sync interval (60 seconds as per the feature doc)
-  static const _syncInterval = Duration(seconds: 60);
+  /// Normal heartbeat interval (once per hour).
+  static const _syncInterval = Duration(hours: 1);
+
+  /// Extended back-off interval used after a 403 permission-denied response.
+  /// No point hammering the server when the user lacks subscription.view.
+  static const _permissionDeniedBackoff = Duration(hours: 24);
 
   /// Cached entitlement data from last sync
   Map<String, dynamic>? _lastEntitlementData;
 
   /// Start periodic sync.
+  ///
+  /// Safe to call multiple times — returns immediately if already running.
   void startSync() {
+    if (_heartbeatTimer != null && _heartbeatTimer!.isActive) return;
     _heartbeatTimer?.cancel();
     _heartbeatTimer = Timer.periodic(_syncInterval, (_) => sync());
 
@@ -68,6 +75,15 @@ class SubscriptionSyncService {
       };
 
       debugPrint('[SubscriptionSyncService] Sync completed successfully');
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 403) {
+        // User lacks subscription.view permission — back off to avoid flooding.
+        debugPrint('[SubscriptionSyncService] Permission denied (403). Backing off for 24 h.');
+        _heartbeatTimer?.cancel();
+        _heartbeatTimer = Timer.periodic(_permissionDeniedBackoff, (_) => sync());
+      } else {
+        debugPrint('[SubscriptionSyncService] Sync failed: $e');
+      }
     } catch (e) {
       debugPrint('[SubscriptionSyncService] Sync failed: $e');
     } finally {

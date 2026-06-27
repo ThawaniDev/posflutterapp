@@ -30232,6 +30232,60 @@ abstract class AppLocalizations {
   /// **'Grace period ends today. Renew immediately.'**
   String get subGraceEndsToday;
 
+  /// No description provided for @subPaywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'POS Access Suspended'**
+  String get subPaywallTitle;
+
+  /// No description provided for @subPaywallRenewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew your subscription to continue using the Point of Sale. Your data is safe and will be restored immediately.'**
+  String get subPaywallRenewDescription;
+
+  /// No description provided for @subPaywallCancelledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription has been cancelled. Subscribe to a new plan to restore full access.'**
+  String get subPaywallCancelledMessage;
+
+  /// No description provided for @subPaywallPausedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription is currently paused. Resume or subscribe to a new plan.'**
+  String get subPaywallPausedMessage;
+
+  /// No description provided for @subPaywallNoSubMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No active subscription found. Choose a plan to start using the POS.'**
+  String get subPaywallNoSubMessage;
+
+  /// No description provided for @subPaywallCheckStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Status'**
+  String get subPaywallCheckStatus;
+
+  /// No description provided for @subPaywallChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking...'**
+  String get subPaywallChecking;
+
+  /// No description provided for @subPaywallExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired: {date}'**
+  String subPaywallExpiredOn(String date);
+
+  /// No description provided for @subPaywallPlanActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan: {name}'**
+  String subPaywallPlanActive(String name);
+
   /// No description provided for @subInvoice.
   ///
   /// In en, this message translates to:

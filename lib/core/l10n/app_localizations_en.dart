@@ -15958,6 +15958,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subGraceEndsToday => 'Grace period ends today. Renew immediately.';
 
   @override
+  String get subPaywallTitle => 'POS Access Suspended';
+
+  @override
+  String get subPaywallRenewDescription =>
+      'Renew your subscription to continue using the Point of Sale. Your data is safe and will be restored immediately.';
+
+  @override
+  String get subPaywallCancelledMessage =>
+      'Your subscription has been cancelled. Subscribe to a new plan to restore full access.';
+
+  @override
+  String get subPaywallPausedMessage =>
+      'Your subscription is currently paused. Resume or subscribe to a new plan.';
+
+  @override
+  String get subPaywallNoSubMessage =>
+      'No active subscription found. Choose a plan to start using the POS.';
+
+  @override
+  String get subPaywallCheckStatus => 'Check Status';
+
+  @override
+  String get subPaywallChecking => 'Checking...';
+
+  @override
+  String subPaywallExpiredOn(String date) {
+    return 'Expired: $date';
+  }
+
+  @override
+  String subPaywallPlanActive(String name) {
+    return 'Plan: $name';
+  }
+
+  @override
   String get subInvoice => 'Invoice';
 
   @override

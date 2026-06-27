@@ -30,6 +30,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_presentation_display/flutter_presentation_display.dart';
+import 'package:video_player/video_player.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 
@@ -341,6 +342,12 @@ class _SecondaryDisplayScreenState extends State<_SecondaryDisplayScreen> {
     final type = data['type']?.toString() ?? 'idle';
     switch (type) {
       case 'cart':
+        // Show the video idle screen when the cart is empty — no point
+        // displaying an empty-cart message to the customer.
+        final items = data['items'] as List?;
+        if (items == null || items.isEmpty) {
+          return _IdleView(key: const ValueKey('idle'), data: data);
+        }
         return _CartView(key: const ValueKey('cart'), data: data);
       case 'receipt':
         return _ReceiptView(key: const ValueKey('receipt'), data: data);
@@ -353,46 +360,100 @@ class _SecondaryDisplayScreenState extends State<_SecondaryDisplayScreen> {
   }
 }
 
-// ─── Idle view (store logo centred) ───────────────────────────────────
+// ─── Idle view (looping promo video + optional store overlay) ─────────
 
-class _IdleView extends StatelessWidget {
+class _IdleView extends StatefulWidget {
   const _IdleView({super.key, required this.data});
   final Map<String, dynamic> data;
 
   @override
-  Widget build(BuildContext context) {
-    final logoUrl = data['logo_url']?.toString();
-    final storeName = data['store_name']?.toString();
-    final welcome = data['welcome']?.toString();
+  State<_IdleView> createState() => _IdleViewState();
+}
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 360, maxHeight: 360),
-            child: (logoUrl != null && logoUrl.isNotEmpty)
-                ? Image.network(logoUrl, fit: BoxFit.contain, errorBuilder: (_, __, ___) => _wameedFallbackLogo())
-                : _wameedFallbackLogo(),
+class _IdleViewState extends State<_IdleView> {
+  late VideoPlayerController _controller;
+  bool _initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/videos/secondary_screen_preview_video.mp4')
+      ..setLooping(true)
+      ..setVolume(0) // silent on customer display
+      ..initialize().then((_) {
+        if (mounted) {
+          setState(() => _initialized = true);
+          _controller.play();
+        }
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final storeName = widget.data['store_name']?.toString();
+    final welcome = widget.data['welcome']?.toString();
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // ── Looping background video ──────────────────────────────
+        if (_initialized)
+          FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: _controller.value.size.width,
+              height: _controller.value.size.height,
+              child: VideoPlayer(_controller),
+            ),
+          )
+        else
+          // Fallback while video loads: black background
+          Container(color: Colors.black),
+
+        // ── Store name / welcome overlay at the bottom ────────────
+        if ((storeName != null && storeName.isNotEmpty) || (welcome != null && welcome.isNotEmpty))
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Colors.black.withValues(alpha: 0.72)],
+                ),
+              ),
+              padding: const EdgeInsets.fromLTRB(32, 48, 32, 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (storeName != null && storeName.isNotEmpty)
+                    Text(
+                      storeName,
+                      style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  if (welcome != null && welcome.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      welcome,
+                      style: const TextStyle(fontSize: 26, color: Colors.white70),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
-          if (storeName != null && storeName.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            Text(
-              storeName,
-              style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Colors.black87),
-              textAlign: TextAlign.center,
-            ),
-          ],
-          if (welcome != null && welcome.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Text(
-              welcome,
-              style: const TextStyle(fontSize: 26, color: Colors.black54),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ],
-      ),
+      ],
     );
   }
 }

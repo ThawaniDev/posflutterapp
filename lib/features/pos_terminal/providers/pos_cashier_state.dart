@@ -198,12 +198,17 @@ class SaleCompleted extends SaleState {
     required this.totalAmount,
     this.changeGiven,
     this.zatcaQrCode,
+    this.isOffline = false,
   });
   final String transactionId;
   final String transactionNumber;
   final double totalAmount;
   final double? changeGiven;
   final String? zatcaQrCode;
+
+  /// True when the sale could not reach the server and was persisted to the
+  /// local queue for automatic replay once connectivity returns.
+  final bool isOffline;
 }
 
 class SaleError extends SaleState {

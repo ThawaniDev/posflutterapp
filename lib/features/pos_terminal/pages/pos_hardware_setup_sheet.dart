@@ -574,7 +574,7 @@ class _EdfaPayDeviceIdCard extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('EdfaPay Device ID', style: AppTypography.titleSmall),
+                  Text('WameedPOS Device ID', style: AppTypography.titleSmall),
                   AppSpacing.gapH4,
                   deviceIdAsync.when(
                     loading: () => const SizedBox(height: 14, width: 14, child: PosLoading(size: 14)),

@@ -15900,6 +15900,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get subGraceEndsToday => 'فترة السماح تنتهي اليوم. جدد فوراً.';
 
   @override
+  String get subPaywallTitle => 'تم تعليق الوصول إلى نقطة البيع';
+
+  @override
+  String get subPaywallRenewDescription =>
+      'جدد اشتراكك لمواصلة استخدام نقطة البيع. بياناتك محفوظة وستُستعاد فوراً.';
+
+  @override
+  String get subPaywallCancelledMessage =>
+      'تم إلغاء اشتراكك. اشترك في خطة جديدة لاستعادة الوصول الكامل.';
+
+  @override
+  String get subPaywallPausedMessage =>
+      'اشتراكك متوقف حالياً. استأنف أو اشترك في خطة جديدة.';
+
+  @override
+  String get subPaywallNoSubMessage =>
+      'لم يتم العثور على اشتراك نشط. اختر خطة للبدء في استخدام نقطة البيع.';
+
+  @override
+  String get subPaywallCheckStatus => 'التحقق من الحالة';
+
+  @override
+  String get subPaywallChecking => 'جارٍ التحقق...';
+
+  @override
+  String subPaywallExpiredOn(String date) {
+    return 'انتهت صلاحيته: $date';
+  }
+
+  @override
+  String subPaywallPlanActive(String name) {
+    return 'الخطة: $name';
+  }
+
+  @override
   String get subInvoice => 'فاتورة';
 
   @override

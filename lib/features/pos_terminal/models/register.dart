@@ -41,6 +41,11 @@ class Register {
     this.lastTransactionAt,
     this.isSoftposReady,
     this.adminNotes,
+    this.trsm,
+    this.providerTid,
+    this.providerMid,
+    this.locationLat,
+    this.locationLng,
     this.createdAt,
     this.updatedAt,
   });
@@ -96,6 +101,12 @@ class Register {
       lastTransactionAt: json['last_transaction_at'] != null ? DateTime.parse(json['last_transaction_at'] as String) : null,
       isSoftposReady: json['is_softpos_ready'] as bool?,
       adminNotes: json['admin_notes'] as String?,
+      // EdfaPay terminal identity
+      trsm: json['trsm'] as String?,
+      providerTid: json['provider_tid'] as String?,
+      providerMid: json['provider_mid'] as String?,
+      locationLat: (json['location_lat'] as num?)?.toDouble(),
+      locationLng: (json['location_lng'] as num?)?.toDouble(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -152,6 +163,13 @@ class Register {
   final DateTime? lastTransactionAt;
   final bool? isSoftposReady;
   final String? adminNotes;
+
+  // EdfaPay terminal identity
+  final String? trsm;
+  final String? providerTid;
+  final String? providerMid;
+  final double? locationLat;
+  final double? locationLng;
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -211,6 +229,11 @@ class Register {
     DateTime? lastTransactionAt,
     bool? isSoftposReady,
     String? adminNotes,
+    String? trsm,
+    String? providerTid,
+    String? providerMid,
+    double? locationLat,
+    double? locationLng,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -253,6 +276,11 @@ class Register {
       lastTransactionAt: lastTransactionAt ?? this.lastTransactionAt,
       isSoftposReady: isSoftposReady ?? this.isSoftposReady,
       adminNotes: adminNotes ?? this.adminNotes,
+      trsm: trsm ?? this.trsm,
+      providerTid: providerTid ?? this.providerTid,
+      providerMid: providerMid ?? this.providerMid,
+      locationLat: locationLat ?? this.locationLat,
+      locationLng: locationLng ?? this.locationLng,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

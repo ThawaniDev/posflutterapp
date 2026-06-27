@@ -4,6 +4,7 @@ import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
+import 'package:wameedpos/features/softpos/providers/softpos_providers.dart' show softPosDeviceIdProvider;
 
 // ─── Sessions Provider ──────────────────────────────────────────
 
@@ -187,7 +188,9 @@ String _extractError(DioException e) {
 
 final activeRegistersProvider = FutureProvider<List<Register>>((ref) async {
   final repo = ref.watch(posTerminalRepositoryProvider);
-  return repo.listActiveRegisters();
+  // Pass this device's EdfaPay UUID so the backend can auto-assign/match.
+  final deviceId = await ref.watch(softPosDeviceIdProvider.future);
+  return repo.listActiveRegisters(deviceId: deviceId);
 });
 
 /// Shifts currently open for the authenticated cashier. Surfaced in the

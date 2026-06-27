@@ -16021,6 +16021,41 @@ class AppLocalizationsBn extends AppLocalizations {
       'গ্রেস পিরিয়ড আজ শেষ হচ্ছে। অবিলম্বে নবায়ন করুন।';
 
   @override
+  String get subPaywallTitle => 'POS অ্যাক্সেস স্থগিত';
+
+  @override
+  String get subPaywallRenewDescription =>
+      'POS ব্যবহার চালিয়ে যাওয়ার জন্য আপনার সাবস্ক্রিপশন নবায়ন করুন। আপনার ডেটা সুরক্ষিত আছে এবং তাৎক্ষণিকভাবে পুনরুদ্ধার হবে।';
+
+  @override
+  String get subPaywallCancelledMessage =>
+      'আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে। সম্পূর্ণ অ্যাক্সেস পুনরুদ্ধার করতে নতুন প্ল্যানে সাবস্ক্রাইব করুন।';
+
+  @override
+  String get subPaywallPausedMessage =>
+      'আপনার সাবস্ক্রিপশন বাতিল রয়েছে। পুনরায় শুরু করুন বা নতুন প্ল্যানে সাবস্ক্রাইব করুন।';
+
+  @override
+  String get subPaywallNoSubMessage =>
+      'কোনো সক্রিয় সাবস্ক্রিপশন পাওয়া যায়নি। POS ব্যবহার শুরু করতে একটি প্ল্যান বেছুন।';
+
+  @override
+  String get subPaywallCheckStatus => 'স্ট্যাটাস চেক করুন';
+
+  @override
+  String get subPaywallChecking => 'যাচাই হচ্ছে...';
+
+  @override
+  String subPaywallExpiredOn(String date) {
+    return 'মেয়াদ শেষ: $date';
+  }
+
+  @override
+  String subPaywallPlanActive(String name) {
+    return 'প্ল্যান: $name';
+  }
+
+  @override
   String get subInvoice => 'চালান';
 
   @override

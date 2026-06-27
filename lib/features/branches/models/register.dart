@@ -1,17 +1,23 @@
 import 'package:wameedpos/features/branches/enums/register_platform.dart';
 
 class Register {
-
   const Register({
     required this.id,
     required this.storeId,
     required this.name,
-    required this.deviceId,
+    this.deviceId,
     this.appVersion,
     this.platform,
     this.lastSyncAt,
     this.isOnline,
     this.isActive,
+    this.softposEnabled = false,
+    this.edfapayToken,
+    this.trsm,
+    this.providerTid,
+    this.providerMid,
+    this.locationLat,
+    this.locationLng,
     this.createdAt,
     this.updatedAt,
   });
@@ -21,12 +27,19 @@ class Register {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       name: json['name'] as String,
-      deviceId: json['device_id'] as String,
+      deviceId: json['device_id'] as String?,
       appVersion: json['app_version'] as String?,
       platform: RegisterPlatform.tryFromValue(json['platform'] as String?),
       lastSyncAt: json['last_sync_at'] != null ? DateTime.parse(json['last_sync_at'] as String) : null,
       isOnline: json['is_online'] as bool?,
       isActive: json['is_active'] as bool?,
+      softposEnabled: json['softpos_enabled'] as bool? ?? false,
+      edfapayToken: json['edfapay_token'] as String?,
+      trsm: json['trsm'] as String?,
+      providerTid: json['provider_tid'] as String?,
+      providerMid: json['provider_mid'] as String?,
+      locationLat: (json['location_lat'] as num?)?.toDouble(),
+      locationLng: (json['location_lng'] as num?)?.toDouble(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -34,12 +47,19 @@ class Register {
   final String id;
   final String storeId;
   final String name;
-  final String deviceId;
+  final String? deviceId;
   final String? appVersion;
   final RegisterPlatform? platform;
   final DateTime? lastSyncAt;
   final bool? isOnline;
   final bool? isActive;
+  final bool softposEnabled;
+  final String? edfapayToken;
+  final String? trsm;
+  final String? providerTid;
+  final String? providerMid;
+  final double? locationLat;
+  final double? locationLng;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 

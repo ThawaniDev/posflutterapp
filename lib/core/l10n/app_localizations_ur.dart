@@ -15994,6 +15994,41 @@ class AppLocalizationsUr extends AppLocalizations {
       'مہلت کی مدت آج ختم ہو رہی ہے۔ فوری طور پر تجدید کریں۔';
 
   @override
+  String get subPaywallTitle => 'POS رسائی معطل ہے';
+
+  @override
+  String get subPaywallRenewDescription =>
+      'POS استعمال جاری رکھنے کے لیے اپنی سبسکرپشن تجدید کریں۔ آپ کا ڈیٹا محفوظ ہے اور فوری بحال ہو جائے گا۔';
+
+  @override
+  String get subPaywallCancelledMessage =>
+      'آپ کی سبسکرپشن منسوخ ہو گئی ہے۔ مکمل رسائی بحال کرنے کے لیے نئے پلان میں شامل ہوں۔';
+
+  @override
+  String get subPaywallPausedMessage =>
+      'آپ کی سبسکرپشن ابھی معطل ہے۔ دوبارہ شروع کریں یا نئے پلان میں شامل ہوں۔';
+
+  @override
+  String get subPaywallNoSubMessage =>
+      'کوئی فعال سبسکرپشن نہیں ملی۔ POS استعمال شروع کرنے کے لیے پلان منتخب کریں۔';
+
+  @override
+  String get subPaywallCheckStatus => 'اسٹیٹس چیک کریں';
+
+  @override
+  String get subPaywallChecking => 'جانچ ہو رہی ہے...';
+
+  @override
+  String subPaywallExpiredOn(String date) {
+    return 'میعاد ختم: $date';
+  }
+
+  @override
+  String subPaywallPlanActive(String name) {
+    return 'پلان: $name';
+  }
+
+  @override
   String get subInvoice => 'انوائس';
 
   @override

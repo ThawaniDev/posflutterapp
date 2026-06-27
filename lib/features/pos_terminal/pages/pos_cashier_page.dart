@@ -41,6 +41,8 @@ import 'package:wameedpos/features/pos_terminal/widgets/modifier_picker_dialog.d
 import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
+import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
+import 'package:wameedpos/features/subscription/widgets/subscription_paywall_overlay.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
   const PosCashierPage({super.key});
@@ -183,6 +185,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
   // ─── Actions ──────────────────────────────────────────────────
 
   void _handlePay() {
+    // Hard-block if subscription is expired/cancelled/paused.
+    if (ref.read(featureGateServiceProvider).isPosBlocked) return;
     final cart = ref.read(cartProvider);
     final session = ref.read(activeSessionProvider);
     if (cart.isEmpty || session is! ActiveSessionLoaded) return;
@@ -821,7 +825,6 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final sessionState = ref.watch(activeSessionProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -857,32 +860,40 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         return Focus(
           autofocus: true,
           onKeyEvent: _handleKeyEvent,
-          child: Scaffold(
-            backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-            body: isMobile
-                ? _buildMobileBody(isDark, sessionState.session)
-                : Column(
-                    children: [
-                      _buildTopBar(isDark, sessionState.session),
-                      Expanded(
-                        child: Row(
-                          textDirection: TextDirection.ltr,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                children: [
-                                  _buildSearchBar(isDark),
-                                  Expanded(child: _buildProductGrid(isDark)),
-                                ],
-                              ),
+          child: Stack(
+            children: [
+              Scaffold(
+                backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+                body: isMobile
+                    ? _buildMobileBody(isDark, sessionState.session)
+                    : Column(
+                        children: [
+                          _buildTopBar(isDark, sessionState.session),
+                          Expanded(
+                            child: Row(
+                              textDirection: TextDirection.ltr,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    children: [
+                                      _buildSearchBar(isDark),
+                                      Expanded(child: _buildProductGrid(isDark)),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(flex: 3, child: _buildCartPanel(isDark)),
+                              ],
                             ),
-                            Expanded(flex: 3, child: _buildCartPanel(isDark)),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+              ),
+              // Block POS access when subscription is expired/cancelled/paused.
+              // The overlay watches FeatureGateService and auto-dismisses after
+              // a successful sync brings the subscription back to active.
+              if (ref.watch(featureGateServiceProvider).isPosBlocked) const SubscriptionPaywallOverlay(),
+            ],
           ),
         );
       },
@@ -1373,7 +1384,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final showQuickAdd = settings?.enableQuickAddProducts ?? false;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.xl, bottom: AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         border: Border(bottom: BorderSide(color: AppColors.borderFor(context))),

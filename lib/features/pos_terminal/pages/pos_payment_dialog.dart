@@ -1742,6 +1742,30 @@ class _ReceiptSuccessDialogState extends ConsumerState<_ReceiptSuccessDialog> {
                   l10n.posTransactionNumber(widget.saleState.transactionNumber),
                   style: AppTypography.bodyMedium.copyWith(color: AppColors.mutedFor(context)),
                 ),
+                if (widget.saleState.isOffline) ...[
+                  AppSpacing.gapH8,
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.warning.withValues(alpha: 0.12),
+                      borderRadius: AppRadius.borderMd,
+                      border: Border.all(color: AppColors.warning.withValues(alpha: 0.4)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.cloud_off_rounded, color: AppColors.warning, size: 16),
+                        AppSpacing.gapW8,
+                        Flexible(
+                          child: Text(
+                            l10n.posOfflineQueued,
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.warning, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
                 AppSpacing.gapH8,
                 Text(
                   l10n.amountWithSar(widget.saleState.totalAmount.toStringAsFixed(2)),

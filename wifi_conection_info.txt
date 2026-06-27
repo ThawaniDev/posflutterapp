@@ -1,0 +1,11 @@
+python3 -c "
+import socket, concurrent.futures
+ip='192.168.100.174'
+def probe(p):
+    try: s=socket.socket(); s.settimeout(0.5); s.connect((ip,p)); s.close(); return p
+    except: return None
+ports=list(range(33000,46000))
+with concurrent.futures.ThreadPoolExecutor(256) as ex:
+    for r in ex.map(probe,ports):
+        if r: print('port:',r)
+" && adb connect 192.168.100.174:PORT

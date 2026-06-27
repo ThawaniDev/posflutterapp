@@ -6418,6 +6418,29 @@
     }
   },
   "subGraceEndsToday": "Grace period ends today. Renew immediately.",
+  "subPaywallTitle": "POS Access Suspended",
+  "subPaywallRenewDescription": "Renew your subscription to continue using the Point of Sale. Your data is safe and will be restored immediately.",
+  "subPaywallCancelledMessage": "Your subscription has been cancelled. Subscribe to a new plan to restore full access.",
+  "subPaywallPausedMessage": "Your subscription is currently paused. Resume or subscribe to a new plan.",
+  "subPaywallNoSubMessage": "No active subscription found. Choose a plan to start using the POS.",
+  "subPaywallCheckStatus": "Check Status",
+  "subPaywallChecking": "Checking...",
+  "subPaywallExpiredOn": "Expired: {date}",
+  "@subPaywallExpiredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaywallPlanActive": "Plan: {name}",
+  "@subPaywallPlanActive": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "subInvoice": "Invoice",
   "subCreated": "Created",
   "subDueDateLabel": "Due Date",

@@ -38,6 +38,9 @@ dependencies:
   # Audio
   audioplayers: ^6.1.0
 
+  # Video (secondary screen idle loop)
+  video_player: ^2.9.2
+
   # UI & Theming
   cupertino_icons: ^1.0.8
   fl_chart: ^0.70.2
@@ -137,6 +140,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/audio/
+    - assets/videos/
 
   fonts:
     - family: Cairo

@@ -6782,6 +6782,29 @@
     }
   },
   "subGraceEndsToday": "مہلت کی مدت آج ختم ہو رہی ہے۔ فوری طور پر تجدید کریں۔",
+  "subPaywallTitle": "POS رسائی معطل ہے",
+  "subPaywallRenewDescription": "POS استعمال جاری رکھنے کے لیے اپنی سبسکرپشن تجدید کریں۔ آپ کا ڈیٹا محفوظ ہے اور فوری بحال ہو جائے گا۔",
+  "subPaywallCancelledMessage": "آپ کی سبسکرپشن منسوخ ہو گئی ہے۔ مکمل رسائی بحال کرنے کے لیے نئے پلان میں شامل ہوں۔",
+  "subPaywallPausedMessage": "آپ کی سبسکرپشن ابھی معطل ہے۔ دوبارہ شروع کریں یا نئے پلان میں شامل ہوں۔",
+  "subPaywallNoSubMessage": "کوئی فعال سبسکرپشن نہیں ملی۔ POS استعمال شروع کرنے کے لیے پلان منتخب کریں۔",
+  "subPaywallCheckStatus": "اسٹیٹس چیک کریں",
+  "subPaywallChecking": "جانچ ہو رہی ہے...",
+  "subPaywallExpiredOn": "میعاد ختم: {date}",
+  "@subPaywallExpiredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaywallPlanActive": "پلان: {name}",
+  "@subPaywallPlanActive": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "subInvoice": "انوائس",
   "subCreated": "بنایا گیا",
   "subDueDateLabel": "آخری تاریخ",

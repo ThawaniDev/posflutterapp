@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.dart';
 import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
@@ -16,6 +17,12 @@ class PosOfflineSyncService {
   PosOfflineSyncService({required this.db, required this.api, required this.connectivity}) {
     _connectivitySubscription = connectivity.onConnectivityChanged.listen(_handleConnectivity);
   }
+
+  /// Test-only constructor that does NOT subscribe to connectivity_plus (whose
+  /// platform channel is unavailable in unit tests). Drain still works against
+  /// an in-memory database.
+  @visibleForTesting
+  PosOfflineSyncService.forTesting({required this.db, required this.api, required this.connectivity});
 
   final PosOfflineDatabase db;
   final PosTerminalApiService api;
@@ -61,11 +68,21 @@ class PosOfflineSyncService {
         final softPosEntries = entries.where((e) => e.kind == 'softpos_transaction').toList();
 
         if (transactionEntries.isNotEmpty) {
-          await _flushBatch(
-            entries: transactionEntries,
-            send: (payloads) => api.batchTransactions({'register_id': payloads.first['register_id'], 'transactions': payloads}),
-            extractResults: (response) => (response['results'] as List).cast<Map<String, dynamic>>(),
-          );
+          // The batch endpoint takes a single register_id for the whole batch,
+          // so group entries by their payload register_id (normally one register
+          // per device, but stay correct if a device was reassigned mid-queue).
+          final byRegister = <String, List<LocalSyncQueueData>>{};
+          for (final e in transactionEntries) {
+            final reg = (jsonDecode(e.payloadJson) as Map<String, dynamic>)['register_id'] as String? ?? '';
+            byRegister.putIfAbsent(reg, () => []).add(e);
+          }
+          for (final group in byRegister.values) {
+            await _flushBatch(
+              entries: group,
+              send: (payloads) => api.batchTransactions({'register_id': payloads.first['register_id'], 'transactions': payloads}),
+              extractResults: (response) => (response['results'] as List).cast<Map<String, dynamic>>(),
+            );
+          }
         }
         if (adjustmentEntries.isNotEmpty) {
           await _flushBatch(
@@ -120,7 +137,10 @@ class PosOfflineSyncService {
         final status = result?['status'] as String? ?? 'failed';
         if (status == 'created' || status == 'duplicate') {
           await db.markEntryStatus(entry.id, 'done');
-          final serverId = result?['transaction_id'] as String?;
+          // The batch endpoint returns the full transaction object under
+          // `transaction`; fall back to a flat `transaction_id` for safety.
+          final tx = result?['transaction'];
+          final serverId = (tx is Map ? tx['id'] as String? : null) ?? result?['transaction_id'] as String?;
           if (serverId != null) {
             await db.markTransactionSynced(entry.clientUuid, serverId);
           }

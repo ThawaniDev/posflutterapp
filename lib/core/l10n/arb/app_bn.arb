@@ -6783,6 +6783,29 @@
     }
   },
   "subGraceEndsToday": "গ্রেস পিরিয়ড আজ শেষ হচ্ছে। অবিলম্বে নবায়ন করুন।",
+  "subPaywallTitle": "POS অ্যাক্সেস স্থগিত",
+  "subPaywallRenewDescription": "POS ব্যবহার চালিয়ে যাওয়ার জন্য আপনার সাবস্ক্রিপশন নবায়ন করুন। আপনার ডেটা সুরক্ষিত আছে এবং তাৎক্ষণিকভাবে পুনরুদ্ধার হবে।",
+  "subPaywallCancelledMessage": "আপনার সাবস্ক্রিপশন বাতিল করা হয়েছে। সম্পূর্ণ অ্যাক্সেস পুনরুদ্ধার করতে নতুন প্ল্যানে সাবস্ক্রাইব করুন।",
+  "subPaywallPausedMessage": "আপনার সাবস্ক্রিপশন বাতিল রয়েছে। পুনরায় শুরু করুন বা নতুন প্ল্যানে সাবস্ক্রাইব করুন।",
+  "subPaywallNoSubMessage": "কোনো সক্রিয় সাবস্ক্রিপশন পাওয়া যায়নি। POS ব্যবহার শুরু করতে একটি প্ল্যান বেছুন।",
+  "subPaywallCheckStatus": "স্ট্যাটাস চেক করুন",
+  "subPaywallChecking": "যাচাই হচ্ছে...",
+  "subPaywallExpiredOn": "মেয়াদ শেষ: {date}",
+  "@subPaywallExpiredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaywallPlanActive": "প্ল্যান: {name}",
+  "@subPaywallPlanActive": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "subInvoice": "চালান",
   "subCreated": "তৈরি",
   "subDueDateLabel": "নির্ধারিত তারিখ",
