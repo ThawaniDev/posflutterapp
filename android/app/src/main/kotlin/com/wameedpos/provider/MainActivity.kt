@@ -114,22 +114,6 @@ class MainActivity : FlutterFragmentActivity() {
                             result.success(ok)
                         }.start()
                     }
-                    // Returns the EdfaPay device ID derived from Settings.Secure.ANDROID_ID.
-                    // Format: {id[0:8]}-{id[8:12]}-{id[12:16]}-0000-0000{id[8:16]}
-                    "getDeviceId" -> {
-                        try {
-                            val androidId = android.provider.Settings.Secure.getString(
-                                contentResolver,
-                                android.provider.Settings.Secure.ANDROID_ID,
-                            ) ?: "0000000000000000"
-                            // Pad to exactly 16 hex chars so slicing is safe.
-                            val id = androidId.padStart(16, '0').takeLast(16)
-                            val edfapayId = "${id.substring(0, 8)}-${id.substring(8, 12)}-${id.substring(12, 16)}-0000-0000${id.substring(8, 16)}"
-                            result.success(edfapayId)
-                        } catch (e: Exception) {
-                            result.error("ERROR", e.message, null)
-                        }
-                    }
                     else -> result.notImplemented()
                 }
             }
@@ -186,11 +170,14 @@ class MainActivity : FlutterFragmentActivity() {
             }
 
             if (printOmniDriverCanvasImage(omniClass, omni, loader, receiptText, qr)) {
+                // Canvas path doesn't issue a cut; fire one via IPrinter.
+                cutPaperOmni(omniClass, omni, loader)
                 return true
             }
 
             Log.w(tag, "OmniDriver canvas image print failed; trying canvas text fallback")
             if (printOmniDriverCanvasText(omniClass, omni, loader, receiptText)) {
+                cutPaperOmni(omniClass, omni, loader)
                 return true
             }
 
@@ -265,7 +252,10 @@ class MainActivity : FlutterFragmentActivity() {
 
     private fun buildReceiptBitmap(receiptText: String, qrData: String?, loader: ClassLoader): Bitmap {
         val paperWidth = 576
-        val horizontalPadding = 10f
+        // 8 px padding each side → 560 px drawable width; with the monospace
+        // advance at ~13.3 px/char this fits 42 chars (the new PaperWidth.mm80
+        // charsPerLine) with comfortable margin before breakText wraps.
+        val horizontalPadding = 8f
         val verticalPadding = 12f
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.BLACK
@@ -286,7 +276,10 @@ class MainActivity : FlutterFragmentActivity() {
         val qrSize = qrMatrix?.size ?: 0
         val qrBlockHeight = if (qrSize > 0) qrSize + lineHeight * 2 else 0
 
-        val bitmapHeight = (textHeight + qrBlockHeight + lineHeight * 2).coerceAtLeast(lineHeight * 4)
+        // Add at least 10 blank line-heights of whitespace below the last content line.
+        // The Landi C20 Pro's cutter sits ~24 mm above the print head; at ~7 px/mm on the
+        // 576-px-wide canvas that is ~168 px ≈ 6 line-heights.  We use 10 to be safe.
+        val bitmapHeight = (textHeight + qrBlockHeight + lineHeight * 10).coerceAtLeast(lineHeight * 4)
         val bitmap = Bitmap.createBitmap(paperWidth, bitmapHeight, Bitmap.Config.RGB_565)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
@@ -469,11 +462,14 @@ class MainActivity : FlutterFragmentActivity() {
                     return false
                 }
             }
-            invokeOmniResult(printer, "feedLine", arrayOf(Int::class.javaPrimitiveType!!), 4)
+            invokeOmniResult(printer, "feedLine", arrayOf(Int::class.javaPrimitiveType!!), 8)
 
             val printed = startOmniPrint(printer, loader, "positioned")
             if (printed) {
                 Log.i(tag, "OmniDriver positioned print succeeded: chars=${receiptText.length}")
+                // Attempt paper cut after successful print (gracefully no-ops if driver
+                // doesn't expose cutPaper on this firmware version).
+                invokeOmniResult(printer, "cutPaper", arrayOf(Int::class.javaPrimitiveType!!), 0)
             }
             printed
         } catch (throwable: Throwable) {
@@ -482,6 +478,28 @@ class MainActivity : FlutterFragmentActivity() {
         } finally {
             if (printer != null) {
                 invokeOmniResult(printer, "closeDevice", emptyArray())
+            }
+        }
+    }
+
+    // Attempt a full paper cut via the IPrinter interface.
+    // Gracefully no-ops if the driver version doesn't expose cutPaper.
+    private fun cutPaperOmni(omniClass: Class<*>, omni: Any, loader: DexClassLoader) {
+        var printer: Any? = null
+        try {
+            val printerBinder = omniClass.getMethod("getPrinter", Bundle::class.java)
+                .invoke(omni, Bundle()) as? IBinder ?: return
+            val printerStub = loader.loadClass("com.sdksuite.omnidriver.aidl.printer.IPrinter\$Stub")
+            printer = printerStub.getMethod("asInterface", IBinder::class.java)
+                .invoke(null, printerBinder) ?: return
+            invokeOmniResult(printer, "openDevice", arrayOf(Int::class.javaPrimitiveType!!), 0)
+            invokeOmniResult(printer, "feedLine", arrayOf(Int::class.javaPrimitiveType!!), 2)
+            invokeOmniResult(printer, "cutPaper", arrayOf(Int::class.javaPrimitiveType!!), 0)
+        } catch (e: Throwable) {
+            Log.w(tag, "cutPaperOmni failed (non-fatal): ${e.message}")
+        } finally {
+            if (printer != null) {
+                try { invokeOmniResult(printer, "closeDevice", emptyArray()) } catch (_: Throwable) {}
             }
         }
     }

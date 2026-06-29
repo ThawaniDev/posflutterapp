@@ -1,0 +1,19 @@
+include: package:flutter_lints/flutter.yaml
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+#linter:
+#  rules:
+#    prefer_single_quotes: true
+#
+#analyzer:
+#  strong-mode:
+#    implicit-casts: false
+#  errors:
+#    avoid_print: warning
+#  language:
+#    strict-inference: true
+
+formatter:
+  line-length: 250
+

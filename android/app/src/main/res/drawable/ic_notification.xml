@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Notification icon for flutter_local_notifications.
+  Android 5+ requires notification icons to be in 'drawable', not 'mipmap',
+  and they must use white/transparent (no full-colour launcher icons).
+  This simple layer-list adapts the launcher mipmap as a white inset on a
+  transparent background so it passes the notification icon validator.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/ic_launcher"
+            android:tint="@android:color/white" />
+    </item>
+</layer-list>

@@ -70,6 +70,7 @@ dependencies:
 
   # Payment Gateway
   flutter_paytabs_bridge: ^2.7.2
+  lottie: ^3.3.3
 
   # EdfaPay SoftPOS (NFC tap-to-pay on Android)
   edfapay_softpos_sdk: ^1.0.6+6
@@ -141,6 +142,7 @@ flutter:
     - assets/icons/
     - assets/audio/
     - assets/videos/
+    - assets/lotties/
 
   fonts:
     - family: Cairo
@@ -157,3 +159,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/Cairo-Black.ttf
           weight: 900
+
+dependency_overrides:
+  edfapay_softpos_sdk:
+    path: local_packages/edfapay_softpos_sdk

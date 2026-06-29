@@ -28,6 +28,7 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_open_shift_dialog.dart
 import 'package:wameedpos/features/pos_terminal/pages/pos_close_shift_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_payment_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_held_carts_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_quick_catalog_add_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_return_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_customer_search_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_cash_event_dialog.dart';
@@ -63,6 +64,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       // Background-sync customer directory so the lookup overlay can serve
       // matches even when offline (spec §6.4 — Drift cache).
       ref.read(customerSyncProvider.notifier).sync();
+      // Ensure the store profile is loaded (and cached offline) so printed
+      // receipts always carry the store name, CR & VAT numbers — even on the
+      // very first sale and when the device is offline.
+      if (ref.read(myStoreProvider) is! StoreLoaded) {
+        ref.read(myStoreProvider.notifier).load();
+      }
       // Flip the customer-facing display to the live cart view.
       if (isSecondaryDisplaySupported) _pushCartToSecondary();
     });
@@ -195,11 +202,21 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       showPosErrorSnackbar(context, AppLocalizations.of(context)!.posCustomerRequired);
       return;
     }
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (_) => PosPaymentDialog(totalAmount: cart.totalAmount, sessionId: session.session.id),
-    );
+    ).whenComplete(() {
+      // The payment dialog hijacks the customer-facing display for the SoftPOS
+      // tap-card / success / failure prompts. Once it closes, restore the live
+      // view: the running cart, or the idle screen when the sale cleared it.
+      if (!mounted || !isSecondaryDisplaySupported) return;
+      if (ref.read(cartProvider).isEmpty) {
+        _pushIdleToSecondary();
+      } else {
+        _pushCartToSecondary();
+      }
+    });
   }
 
   Future<void> _handleHoldCart() async {
@@ -320,7 +337,11 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       await _addProductToCart(product);
       _searchController.clear();
     } else {
-      if (mounted) showPosErrorSnackbar(context, AppLocalizations.of(context)!.posProductNotFound);
+      // Product not found — offer to quick-add it to the catalog and cart.
+      if (mounted) {
+        _searchController.clear();
+        await showPosQuickCatalogAddDialog(context, ref, barcode: barcode);
+      }
     }
   }
 
@@ -666,87 +687,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
   }
 
-  Future<void> _handleQuickAddProduct() async {
-    final settings = ref.read(currentStoreSettingsProvider);
-    if (!(settings?.enableQuickAddProducts ?? false)) {
-      showPosErrorSnackbar(context, AppLocalizations.of(context)!.posQuickAddProductsDisabled);
-      return;
-    }
-
-    final nameCtrl = TextEditingController();
-    final priceCtrl = TextEditingController();
-    final skuCtrl = TextEditingController();
-
-    final result = await showDialog<Map<String, dynamic>?>(
-      context: context,
-      builder: (ctx) {
-        final l10n = AppLocalizations.of(ctx)!;
-        return Dialog(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 420),
-            child: Padding(
-              padding: AppSpacing.paddingAll24,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(l10n.posQuickAddProduct, style: AppTypography.headlineSmall),
-                  AppSpacing.gapH16,
-                  PosTextField(controller: nameCtrl, label: l10n.posOpenPriceName, autofocus: true),
-                  AppSpacing.gapH12,
-                  PosTextField(
-                    controller: priceCtrl,
-                    label: l10n.posOpenPricePrice,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  ),
-                  AppSpacing.gapH12,
-                  PosTextField(controller: skuCtrl, label: l10n.sku),
-                  AppSpacing.gapH16,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: PosButton(
-                          label: l10n.commonCancel,
-                          variant: PosButtonVariant.outline,
-                          onPressed: () => Navigator.pop(ctx, null),
-                        ),
-                      ),
-                      AppSpacing.gapW12,
-                      Expanded(
-                        child: PosButton(
-                          label: l10n.posOpenPriceAdd,
-                          onPressed: () {
-                            final name = nameCtrl.text.trim();
-                            final price = double.tryParse(priceCtrl.text.trim()) ?? 0;
-                            if (name.isEmpty || price <= 0) return;
-                            Navigator.pop(ctx, {
-                              'name': name,
-                              'sell_price': price,
-                              if (skuCtrl.text.trim().isNotEmpty) 'sku': skuCtrl.text.trim(),
-                              'is_active': true,
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-    if (result == null) return;
-
-    try {
-      final repo = ref.read(catalogRepositoryProvider);
-      final created = await repo.createProduct(result);
-      ref.read(cartProvider.notifier).addProduct(created);
-      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(created.name));
-    } catch (e) {
-      if (mounted) showPosErrorSnackbar(context, e.toString());
-    }
+  Future<void> _handleQuickAddProduct({String? barcode}) async {
+    await showPosQuickCatalogAddDialog(context, ref, barcode: barcode);
   }
 
   Future<void> _handleLogout() async {
@@ -1381,7 +1323,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final showHold = settings?.enableHoldOrders ?? true;
     final showRefunds = settings?.enableRefunds ?? true;
     final showOpenPrice = settings?.enableOpenPriceItems ?? false;
-    final showQuickAdd = settings?.enableQuickAddProducts ?? false;
+    // Always show the Add Product button so cashiers can quickly add new items.
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.xl, bottom: AppSpacing.md),
@@ -1433,20 +1375,13 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               onPressed: cart.isNotEmpty ? _handleNotes : null,
             ),
             AppSpacing.gapW8,
+            // Transactions — open recent receipts with print support
             PosButton(
-              label: AppLocalizations.of(context)!.posVoidLast,
-              icon: Icons.backspace_outlined,
+              label: AppLocalizations.of(context)!.posReprintReceipt,
+              icon: Icons.receipt_long_outlined,
               variant: PosButtonVariant.outline,
               size: PosButtonSize.md,
-              onPressed: cart.isNotEmpty ? _handleVoidLastItem : null,
-            ),
-            AppSpacing.gapW8,
-            PosButton(
-              label: AppLocalizations.of(context)!.posTaxExempt,
-              icon: Icons.receipt_long_outlined,
-              variant: cart.taxExempt ? PosButtonVariant.primary : PosButtonVariant.outline,
-              size: PosButtonSize.md,
-              onPressed: cart.isNotEmpty ? _handleTaxExempt : null,
+              onPressed: () => showDialog(context: context, builder: (_) => const PosReprintReceiptDialog()),
             ),
             if (showOpenPrice) ...[
               AppSpacing.gapW8,
@@ -1458,16 +1393,16 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 onPressed: _handleOpenPriceItem,
               ),
             ],
-            if (showQuickAdd) ...[
-              AppSpacing.gapW8,
-              PosButton(
-                label: AppLocalizations.of(context)!.posQuickAddProduct,
-                icon: Icons.add_box_outlined,
-                variant: PosButtonVariant.outline,
-                size: PosButtonSize.md,
-                onPressed: _handleQuickAddProduct,
-              ),
-            ],
+            // Add Product button — always shown so cashiers can add new items
+            // directly from the checkout page (barcode pre-filled when not found).
+            AppSpacing.gapW8,
+            PosButton(
+              label: AppLocalizations.of(context)!.posQuickAddProduct,
+              icon: Icons.add_box_outlined,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.md,
+              onPressed: _handleQuickAddProduct,
+            ),
             AppSpacing.gapW12,
             Container(width: 1, height: 32, color: AppColors.borderFor(context)),
             AppSpacing.gapW12,

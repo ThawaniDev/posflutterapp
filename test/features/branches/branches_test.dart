@@ -103,4 +103,45 @@ void main() {
       expect(const BranchListError('err'), isA<BranchListState>());
     });
   });
+
+  group('Store legal fields', () {
+    test('parses effective CR and VAT numbers from API fallback fields', () {
+      final store = Store.fromJson({
+        'id': 'store-1',
+        'organization_id': 'org-1',
+        'name': 'Main Branch',
+        'slug': 'main-branch',
+        'business_type': 'grocery',
+        'cr_number': null,
+        'vat_number': null,
+        'organization_cr_number': 'ORG-CR-123',
+        'organization_vat_number': 'ORG-VAT-456',
+        'effective_cr_number': 'ORG-CR-123',
+        'effective_vat_number': 'ORG-VAT-456',
+      });
+
+      expect(store.crNumber, isNull);
+      expect(store.vatNumber, isNull);
+      expect(store.organizationCrNumber, 'ORG-CR-123');
+      expect(store.organizationVatNumber, 'ORG-VAT-456');
+      expect(store.effectiveCrNumber, 'ORG-CR-123');
+      expect(store.effectiveVatNumber, 'ORG-VAT-456');
+    });
+
+    test('derives effective CR and VAT from nested organization when explicit fields are absent', () {
+      final store = Store.fromJson({
+        'id': 'store-1',
+        'organization_id': 'org-1',
+        'name': 'Main Branch',
+        'slug': 'main-branch',
+        'business_type': 'grocery',
+        'cr_number': 'STORE-CR-789',
+        'vat_number': '',
+        'organization': {'cr_number': 'ORG-CR-123', 'vat_number': 'ORG-VAT-456'},
+      });
+
+      expect(store.effectiveCrNumber, 'STORE-CR-789');
+      expect(store.effectiveVatNumber, 'ORG-VAT-456');
+    });
+  });
 }

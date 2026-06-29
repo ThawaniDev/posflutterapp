@@ -4,6 +4,7 @@ import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
 import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════
@@ -29,6 +30,41 @@ void main() {
 
     test('all 8 device types exist', () {
       expect(HardwareDeviceType.values, hasLength(8));
+    });
+  });
+
+  group('ReceiptPrinterService', () {
+    test('wraps long centered text within 80mm plain receipt width', () {
+      final printer = ReceiptPrinterService()
+        ..configure(const PrinterConfig(connectionType: 'usb', usbDevicePath: '/dev/null', paperWidth: PaperWidth.mm80));
+
+      final receipt = printer.buildPlainReceipt([
+        ReceiptLine.text(
+          'VERY LONG STORE NAME THAT WOULD OTHERWISE OVERFLOW THE LANDI 80MM RECEIPT WIDTH',
+          alignment: PrintAlignment.center,
+        ),
+      ]);
+
+      final lines = receipt.split('\n').where((line) => line.trim().isNotEmpty).toList();
+      expect(lines.length, greaterThan(1));
+      expect(lines.every((line) => line.length <= PaperWidth.mm80.charsPerLine), isTrue);
+      expect(lines.first.startsWith(' '), isTrue);
+    });
+
+    test('keeps VAT and CR header lines printable on Landi 80mm', () {
+      final printer = ReceiptPrinterService()
+        ..configure(const PrinterConfig(connectionType: 'usb', usbDevicePath: '/dev/null', paperWidth: PaperWidth.mm80));
+
+      final receipt = printer.buildPlainReceipt([
+        ReceiptLine.text('الرقم الضريبي / VAT: 300000000000003', alignment: PrintAlignment.center),
+        ReceiptLine.text('السجل التجاري / CR No.: 1010123456', alignment: PrintAlignment.center),
+      ]);
+
+      final lines = receipt.split('\n').where((line) => line.trim().isNotEmpty).toList();
+      expect(lines, isNotEmpty);
+      expect(lines.every((line) => line.length <= PaperWidth.mm80.charsPerLine), isTrue);
+      expect(receipt, contains('300000000000003'));
+      expect(receipt, contains('1010123456'));
     });
   });
 

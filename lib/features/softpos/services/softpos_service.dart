@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:edfapay_softpos_sdk/edfapay_softpos_sdk.dart';
 import 'package:edfapay_softpos_sdk/enums/env.dart';
 import 'package:edfapay_softpos_sdk/enums/flow_type.dart';
@@ -87,7 +89,7 @@ class SoftPosService {
     // Apply Wameed theme
     await _applyTheme(logoPath: logoPath);
 
-    EdfaPayPlugin.enableLogs(false); // disable verbose logs in production
+    EdfaPayPlugin.enableLogs(kDebugMode); // verbose only in debug builds
 
     // EdfaPayPlugin.initiate() is fire-and-forget — onSuccess/onError fire
     // asynchronously via the platform channel.  Use a Completer so that
@@ -95,22 +97,32 @@ class SoftPosService {
     // succeeded or failed; without this the caller reads SoftPosInitialising
     // and bails out immediately.
     final completer = Completer<void>();
+    bool timedOut = false;
+
+    debugPrint('[SoftPOS] initiate() dispatched to native SDK');
 
     EdfaPayPlugin.initiate(
       credentials: credentials,
       onError: (e) {
+        if (timedOut) return;
         _isInitiated = false;
         final msg = _extractError(e);
+        debugPrint('[SoftPOS] initiate() onError: $msg');
         onError?.call(msg);
         if (!completer.isCompleted) completer.complete();
       },
       onTerminalBindingTask: (bindingTask) {
+        debugPrint(
+          '[SoftPOS] onTerminalBindingTask fired — ${bindingTask.terminals.length} terminals — showing native binding UI',
+        );
         // Use the SDK's built-in terminal selection UI; completer is resolved
         // by onSuccess/onError after binding completes.
         bindingTask.bind();
       },
       onSuccess: (sessionId) {
+        if (timedOut) return;
         _isInitiated = true;
+        debugPrint('[SoftPOS] initiate() onSuccess: sessionId=$sessionId');
         onSuccess?.call(sessionId ?? '');
         if (!completer.isCompleted) completer.complete();
       },
@@ -120,11 +132,18 @@ class SoftPosService {
     // the platform layer) don't hang the UI forever.
     return completer.future.timeout(
       const Duration(seconds: 30),
-      onTimeout: () {
-        if (!_isInitiated) {
-          final msg = 'SoftPOS initialization timed out. Please try again.';
-          onError?.call(msg);
-        }
+      onTimeout: () async {
+        timedOut = true;
+        if (_isInitiated) return;
+        // Log whether the backend session exists (diagnostic only — we cannot
+        // use getSessionId() as a success signal because the Alcineo EMV kernel
+        // is only initialised when onSuccess fires via the native callback).
+        try {
+          final sessionId = await EdfaPayPlugin.getSessionId();
+          debugPrint('[SoftPOS] initiate() timed out. Backend session: $sessionId');
+        } catch (_) {}
+        const msg = 'SoftPOS initialization timed out. Please try again.';
+        onError?.call(msg);
       },
     );
   }
@@ -290,6 +309,27 @@ class SoftPosService {
       if (status == 'APPROVED' || rc == '000' || ac.isNotEmpty) {
         // Payload shows bank approval, so fall through and extract card data.
       } else {
+        // With FlowType.DETAIL the SDK fires onPaymentProcessComplete when the
+        // user closes the result screen — code '9999' is EdfaPay's generic
+        // "flow ended with failure" code.  The real acquirer response code lives
+        // in `response_message_code` inside the raw payload.
+        final effectiveCode = rc.isNotEmpty ? rc : (code ?? '');
+
+        // Error 940/941/942 = terminal/TRSM system error.
+        if (effectiveCode == '940' || effectiveCode == '941' || effectiveCode == '942') {
+          return SoftPosPaymentResult.failure(
+            'SoftPOS terminal error (code $effectiveCode). '
+            'The terminal session has expired or needs re-binding. '
+            'Go to Settings → Hardware Setup → SoftPOS, clear and re-save the token to re-initialise.',
+          );
+        }
+        // 9999 = user closed the EdfaPay result screen after a decline.
+        if (code == '9999') {
+          final innerMsg = raw?['message'] as String?;
+          return SoftPosPaymentResult.failure(
+            innerMsg ?? 'Payment was unsuccessful. Please try again or use a different payment method.',
+          );
+        }
         final msg = raw?['message'] as String? ?? 'Payment declined (code: $code).';
         return SoftPosPaymentResult.failure(msg);
       }

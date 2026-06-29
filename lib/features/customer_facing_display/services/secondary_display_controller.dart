@@ -163,6 +163,16 @@ class SecondaryDisplayController {
     await _send(payload);
   }
 
+  /// Show the Lottie success animation with the paid amount.
+  Future<void> pushPaymentSuccess({required double total, String currency = ''}) async {
+    await _send(<String, dynamic>{'type': 'payment_success', 'total': total, 'currency': currency});
+  }
+
+  /// Show the Lottie failure animation with an Arabic reason message.
+  Future<void> pushPaymentFailure({String message = ''}) async {
+    await _send(<String, dynamic>{'type': 'payment_failure', 'message': message});
+  }
+
   Future<void> _send(Map<String, dynamic> payload) async {
     // Always remember the latest payload so the in-app preview can render it
     // even when no physical secondary display is attached.

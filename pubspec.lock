@@ -404,10 +404,9 @@ packages:
   edfapay_softpos_sdk:
     dependency: "direct main"
     description:
-      name: edfapay_softpos_sdk
-      sha256: ab87742f6c9fbc078d6f13557a1da7db956e0bf899ce667ab18965a87d0cce25
-      url: "https://pub.dev"
-    source: hosted
+      path: "local_packages/edfapay_softpos_sdk"
+      relative: true
+    source: path
     version: "1.0.6+6"
   equatable:
     dependency: transitive
@@ -1044,6 +1043,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  lottie:
+    dependency: "direct main"
+    description:
+      name: lottie
+      sha256: "8b6359a7422167014aa73ce763fa133fb832065dcc0ac4d1dec1f603a5cef7d0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.3"
   markdown:
     dependency: transitive
     description:

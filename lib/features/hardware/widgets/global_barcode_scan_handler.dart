@@ -12,6 +12,7 @@ import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/services/barcode_scanner_service.dart';
 import 'package:wameedpos/features/hardware/widgets/barcode_product_popup.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_quick_catalog_add_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
@@ -119,12 +120,22 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
       if (!mounted) return;
 
       if (isOnPosCashier && product != null) {
-        // On POS cashier: add to cart directly (the cashier page handles its own scan)
-        // Don't show popup — let the cashier page's own handler deal with it
+        // Add directly to the cart — the scanner fires through this handler,
+        // not through the search field's onSubmitted, so we must handle it here.
+        ref.read(cartProvider.notifier).addProduct(product);
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
         return;
       }
 
-      // Show the product popup
+      // On POS cashier with an unknown barcode: show the quick-add dialog so
+      // the cashier can immediately create the product and add it to cart
+      // without leaving the checkout page.
+      if (isOnPosCashier && product == null) {
+        await showPosQuickCatalogAddDialog(context, ref, barcode: barcode);
+        return;
+      }
+
+      // Show the product popup (non-POS pages)
       final action = await showBarcodeProductPopup(context, barcode: barcode, product: product);
 
       if (!mounted || action == null) return;

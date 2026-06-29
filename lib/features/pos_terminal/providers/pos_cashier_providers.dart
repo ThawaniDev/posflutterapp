@@ -18,15 +18,37 @@ import 'package:wameedpos/features/pos_terminal/widgets/tax_exempt_dialog.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/customers/services/customer_search_service.dart';
+import 'package:wameedpos/features/settings/models/store_settings.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 // ─── Cart Provider ──────────────────────────────────────────────
 
 final cartProvider = StateNotifierProvider<CartNotifier, CartState>((ref) {
-  return CartNotifier();
+  final notifier = CartNotifier();
+  // Sync the tax-inclusion flag whenever store settings change so every
+  // new item added to the cart uses the correct tax calculation mode.
+  ref.listen<StoreSettings?>(currentStoreSettingsProvider, (prev, next) {
+    if (next != null) notifier.setPricesIncludeTax(next.pricesIncludeTax);
+  }, fireImmediately: true);
+  return notifier;
 });
 
 class CartNotifier extends StateNotifier<CartState> {
   CartNotifier() : super(const CartState());
+
+  bool _pricesIncludeTax = true; // default true (Saudi VAT-inclusive)
+
+  /// Called by the provider listener and can also be called manually.
+  void setPricesIncludeTax(bool value) {
+    if (_pricesIncludeTax == value) return;
+    _pricesIncludeTax = value;
+    // Re-compute existing items so the cart totals update immediately
+    // if the setting changes while the cart is non-empty.
+    if (state.items.isNotEmpty) {
+      final updated = state.items.map((i) => i.copyWith(pricesIncludeTax: value)).toList();
+      state = state.copyWith(items: updated);
+    }
+  }
 
   void addProduct(Product product, {double qty = 1, List<Map<String, dynamic>>? modifierSelections}) {
     // Items with modifiers always create a new line so the customer can mix
@@ -53,7 +75,13 @@ class CartNotifier extends StateNotifier<CartState> {
       state = state.copyWith(
         items: [
           ...state.items,
-          CartItem(product: product, quantity: qty, unitPrice: price, modifierSelections: modifierSelections),
+          CartItem(
+            product: product,
+            quantity: qty,
+            unitPrice: price,
+            modifierSelections: modifierSelections,
+            pricesIncludeTax: _pricesIncludeTax,
+          ),
         ],
       );
     }
@@ -143,6 +171,7 @@ class CartNotifier extends StateNotifier<CartState> {
             unitPrice: double.tryParse(map['unit_price'].toString()) ?? 0.0,
             discountAmount: (map['discount_amount'] != null ? double.tryParse(map['discount_amount'].toString()) : null),
             notes: map['notes'] as String?,
+            pricesIncludeTax: _pricesIncludeTax,
           ),
         );
       }

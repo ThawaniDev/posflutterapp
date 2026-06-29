@@ -30,6 +30,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_presentation_display/flutter_presentation_display.dart';
+import 'package:lottie/lottie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -97,6 +98,10 @@ class SecondaryDisplayPreview extends StatelessWidget {
             ? _PreviewReceiptBody(payload: payload)
             : type == 'awaiting_payment'
             ? _AwaitingPaymentView(data: payload)
+            : type == 'payment_success'
+            ? _PaymentSuccessView(data: payload)
+            : type == 'payment_failure'
+            ? _PaymentFailureView(data: payload)
             : _PreviewIdleBody(payload: payload),
       ),
     );
@@ -353,6 +358,10 @@ class _SecondaryDisplayScreenState extends State<_SecondaryDisplayScreen> {
         return _ReceiptView(key: const ValueKey('receipt'), data: data);
       case 'awaiting_payment':
         return _AwaitingPaymentView(key: const ValueKey('awaiting'), data: data);
+      case 'payment_success':
+        return _PaymentSuccessView(key: const ValueKey('payment_success'), data: data);
+      case 'payment_failure':
+        return _PaymentFailureView(key: const ValueKey('payment_failure'), data: data);
       case 'idle':
       default:
         return _IdleView(key: const ValueKey('idle'), data: data);
@@ -737,6 +746,12 @@ class _AwaitingPaymentViewState extends State<_AwaitingPaymentView> with TickerP
                   textAlign: TextAlign.end,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFFFD8209)),
                 ),
+                const SizedBox(height: 4),
+                const Text(
+                  'ضع بطاقتك في هذا المكان',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xFF994E00)),
+                ),
               ],
             ),
           ),
@@ -887,4 +902,91 @@ class _ArrowToCornerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ArrowToCornerPainter old) => old.progress != progress;
+}
+
+// ─── Payment success (Lottie + Arabic) ────────────────────────────────
+
+class _PaymentSuccessView extends StatelessWidget {
+  const _PaymentSuccessView({super.key, required this.data});
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    final total = _num(data['total']);
+    final currency = _displayCurrency(data['currency']);
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/lotties/success_lottie.json',
+                width: 220,
+                height: 220,
+                repeat: false,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'تمت عملية الدفع بنجاح',
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.w800, color: Color(0xFF1A7F37)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'المبلغ المدفوع: ${total.toStringAsFixed(3)} $currency',
+                style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: Color(0xFF1F2933)),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Payment failure (Lottie + Arabic) ────────────────────────────────
+
+class _PaymentFailureView extends StatelessWidget {
+  const _PaymentFailureView({super.key, required this.data});
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    final message = data['message']?.toString().trim() ?? '';
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/lotties/failure_lottie.json',
+                width: 200,
+                height: 200,
+                repeat: false,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'فشلت عملية الدفع',
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.w800, color: Color(0xFFD32F2F)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                message.isNotEmpty ? message : 'يرجى المحاولة مرة أخرى أو التواصل مع الكاشير',
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: Color(0xFF555555)),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

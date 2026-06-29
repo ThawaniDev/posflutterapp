@@ -63,7 +63,9 @@ class PushNotificationService {
   // ─── Local Notifications Setup ───────────────────────
 
   Future<void> _initLocalNotifications() async {
-    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+    // Use a drawable-based icon (required on Android 5+; mipmap launcher icons
+    // are rejected by the flutter_local_notifications validator at runtime).
+    const androidInit = AndroidInitializationSettings('@drawable/ic_notification');
     const iosInit = DarwinInitializationSettings();
     const initSettings = InitializationSettings(android: androidInit, iOS: iosInit);
 

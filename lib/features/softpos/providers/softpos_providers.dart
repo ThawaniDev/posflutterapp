@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart' show Value;
-import 'package:flutter/services.dart';
+import 'package:edfapay_softpos_sdk/edfapay_softpos_sdk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wameedpos/features/pos_terminal/data/local/pos_offline_database.dart';
@@ -41,14 +41,10 @@ final softPosEnvironmentProvider = FutureProvider<String>((ref) async {
 
 /// The EdfaPay device ID for this handset — shown in Settings so operators
 /// can find the device on the EdfaPay dashboard without logging in to it.
-///
-/// Format (confirmed for Landi C20 Pro):
-///   `{androidId[0:8]}-{androidId[8:12]}-{androidId[12:16]}-0000-0000{androidId[8:16]}`
+/// Uses EdfaPayPlugin.Utils.getDeviceId() so it always matches the dashboard.
 final softPosDeviceIdProvider = FutureProvider<String?>((ref) async {
   try {
-    const ch = MethodChannel('wameedpos/bluetooth');
-    final id = await ch.invokeMethod<String>('getDeviceId');
-    return id;
+    return await EdfaPayPlugin.Utils.getDeviceId();
   } catch (_) {
     return null;
   }

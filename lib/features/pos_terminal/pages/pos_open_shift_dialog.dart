@@ -96,7 +96,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
       // to manually re-enter the token in Hardware Settings.
       final fresh = ref.read(activeRegistersProvider).asData?.value ?? [];
       final selectedRegister = fresh.where((r) => r.id == _selectedRegisterId).firstOrNull;
-      if (selectedRegister != null && selectedRegister.softposEnabled && (selectedRegister.edfapayToken?.isNotEmpty ?? false)) {
+      if (selectedRegister != null && (selectedRegister.edfapayToken?.isNotEmpty ?? false)) {
         await ref.read(softPosProvider.notifier).saveConfig(token: selectedRegister.edfapayToken!, environment: 'production');
         ref.invalidate(softPosTokenProvider);
       }
@@ -436,7 +436,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                     // storage so the cashier can use SoftPOS immediately.
                     final registers = ref.read(activeRegistersProvider).asData?.value ?? [];
                     final reg = registers.where((r) => r.id == s.registerId).firstOrNull;
-                    if (reg != null && reg.softposEnabled && (reg.edfapayToken?.isNotEmpty ?? false)) {
+                    if (reg != null && (reg.edfapayToken?.isNotEmpty ?? false)) {
                       await ref.read(softPosProvider.notifier).saveConfig(token: reg.edfapayToken!, environment: 'production');
                       ref.invalidate(softPosTokenProvider);
                     }

@@ -1,7 +1,14 @@
 import 'package:wameedpos/features/branches/enums/business_type.dart';
 
-class Store {
+String? _firstNonBlank(Iterable<String?> values) {
+  for (final value in values) {
+    final trimmed = value?.trim();
+    if (trimmed != null && trimmed.isNotEmpty) return trimmed;
+  }
+  return null;
+}
 
+class Store {
   const Store({
     required this.id,
     required this.organizationId,
@@ -44,6 +51,10 @@ class Store {
     this.seatingCapacity,
     this.crNumber,
     this.vatNumber,
+    this.organizationCrNumber,
+    this.organizationVatNumber,
+    this.effectiveCrNumber,
+    this.effectiveVatNumber,
     this.municipalLicense,
     this.licenseExpiryDate,
     this.socialLinks,
@@ -103,6 +114,26 @@ class Store {
       seatingCapacity: (json['seating_capacity'] as num?)?.toInt(),
       crNumber: json['cr_number'] as String?,
       vatNumber: json['vat_number'] as String?,
+      organizationCrNumber:
+          json['organization_cr_number'] as String? ??
+          (json['organization'] is Map ? (json['organization'] as Map)['cr_number'] as String? : null),
+      organizationVatNumber:
+          json['organization_vat_number'] as String? ??
+          (json['organization'] is Map ? (json['organization'] as Map)['vat_number'] as String? : null),
+      effectiveCrNumber:
+          json['effective_cr_number'] as String? ??
+          _firstNonBlank([
+            json['cr_number'] as String?,
+            json['organization_cr_number'] as String?,
+            json['organization'] is Map ? (json['organization'] as Map)['cr_number'] as String? : null,
+          ]),
+      effectiveVatNumber:
+          json['effective_vat_number'] as String? ??
+          _firstNonBlank([
+            json['vat_number'] as String?,
+            json['organization_vat_number'] as String?,
+            json['organization'] is Map ? (json['organization'] as Map)['vat_number'] as String? : null,
+          ]),
       municipalLicense: json['municipal_license'] as String?,
       licenseExpiryDate: json['license_expiry_date'] as String?,
       socialLinks: json['social_links'] is Map ? json['social_links'] as Map<String, dynamic> : null,
@@ -160,6 +191,10 @@ class Store {
   final int? seatingCapacity;
   final String? crNumber;
   final String? vatNumber;
+  final String? organizationCrNumber;
+  final String? organizationVatNumber;
+  final String? effectiveCrNumber;
+  final String? effectiveVatNumber;
   final String? municipalLicense;
   final String? licenseExpiryDate;
   final Map<String, dynamic>? socialLinks;
@@ -214,6 +249,10 @@ class Store {
       if (seatingCapacity != null) 'seating_capacity': seatingCapacity,
       if (crNumber != null) 'cr_number': crNumber,
       if (vatNumber != null) 'vat_number': vatNumber,
+      if (organizationCrNumber != null) 'organization_cr_number': organizationCrNumber,
+      if (organizationVatNumber != null) 'organization_vat_number': organizationVatNumber,
+      if (effectiveCrNumber != null) 'effective_cr_number': effectiveCrNumber,
+      if (effectiveVatNumber != null) 'effective_vat_number': effectiveVatNumber,
       if (municipalLicense != null) 'municipal_license': municipalLicense,
       if (licenseExpiryDate != null) 'license_expiry_date': licenseExpiryDate,
       if (socialLinks != null) 'social_links': socialLinks,

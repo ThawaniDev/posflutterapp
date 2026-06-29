@@ -12,6 +12,7 @@ class CartItem {
     this.notes,
     this.ageVerified = false,
     this.modifierSelections,
+    this.pricesIncludeTax = true,
   });
   final Product product;
   final double quantity;
@@ -20,16 +21,12 @@ class CartItem {
   final DiscountType? discountType;
   final double? discountValue;
   final String? notes;
-
-  /// Set to true once the cashier has verified the customer's age for an
-  /// age-restricted product. Persisted on the backend as `age_verified`.
   final bool ageVerified;
-
-  /// Selected modifier options for this line item. Each entry is a map
-  /// shaped like the backend `modifier_selections` payload:
-  ///   { modifier_group_id, modifier_option_id, name, price_adjustment, quantity }
-  /// `price_adjustment` is summed into the per-unit price below.
   final List<Map<String, dynamic>>? modifierSelections;
+
+  /// Whether the [unitPrice] already includes VAT/tax.
+  /// When true, tax is extracted from the price (not added on top).
+  final bool pricesIncludeTax;
 
   /// Total per-unit add-on cost from selected modifiers (e.g. extra cheese
   /// + large size). Multiplied by `quantity` when computing the line total.
@@ -51,10 +48,20 @@ class CartItem {
     return rate > 1 ? rate / 100 : rate;
   }
 
-  double get subtotal => quantity * (unitPrice + modifierAdjustment) - (discountAmount ?? 0);
+  /// Gross line amount (quantity × price − item discount) — what the customer pays.
+  double get grossAmount => quantity * (unitPrice + modifierAdjustment) - (discountAmount ?? 0);
 
-  double get taxAmount => subtotal * taxRate;
+  /// Net (ex-VAT) subtotal used for display and receipt reporting.
+  /// • When [pricesIncludeTax] = true  → extracts the net from the inclusive price.
+  /// • When [pricesIncludeTax] = false → equal to the gross (tax is added on top).
+  double get subtotal => pricesIncludeTax ? grossAmount / (1 + taxRate) : grossAmount;
 
+  /// VAT/tax component of this line.
+  /// • When [pricesIncludeTax] = true  → extracted from the inclusive price.
+  /// • When [pricesIncludeTax] = false → calculated as net × taxRate.
+  double get taxAmount => pricesIncludeTax ? grossAmount - subtotal : subtotal * taxRate;
+
+  /// Total customer-facing line total (= subtotal + taxAmount = grossAmount).
   double get lineTotal => subtotal + taxAmount;
 
   CartItem copyWith({
@@ -67,6 +74,7 @@ class CartItem {
     String? notes,
     bool? ageVerified,
     List<Map<String, dynamic>>? modifierSelections,
+    bool? pricesIncludeTax,
   }) {
     return CartItem(
       product: product ?? this.product,
@@ -78,6 +86,7 @@ class CartItem {
       notes: notes ?? this.notes,
       ageVerified: ageVerified ?? this.ageVerified,
       modifierSelections: modifierSelections ?? this.modifierSelections,
+      pricesIncludeTax: pricesIncludeTax ?? this.pricesIncludeTax,
     );
   }
 

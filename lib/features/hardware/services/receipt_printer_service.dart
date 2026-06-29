@@ -76,7 +76,10 @@ enum PrintDensity {
 /// Paper widths
 enum PaperWidth {
   mm58(32),
-  mm80(48);
+  // 40 chars fits the Landi C20 Pro's bitmap renderer (576 px wide canvas)
+  // with margin. Network/BT ESC-POS printers can handle 48 but 40 keeps
+  // both paths aligned without any line wrapping.
+  mm80(40);
 
   const PaperWidth(this.charsPerLine);
   final int charsPerLine;
@@ -383,8 +386,10 @@ class ReceiptPrinterService {
         if (line.bold) bytes.addAll(EscPos.boldOn);
         bytes.addAll(EscPos.alignLeft);
 
-        final left = line.leftText!;
         final right = line.rightText!;
+        final maxLeft = charsPerLine - right.length - 1;
+        // Truncate left side so right column is always at a fixed position.
+        final left = line.leftText!.length > maxLeft ? line.leftText!.substring(0, maxLeft) : line.leftText!;
         final spaces = charsPerLine - left.length - right.length;
         final padded = left + (' ' * (spaces > 0 ? spaces : 1)) + right;
         bytes.addAll(padded.codeUnits);
@@ -419,8 +424,10 @@ class ReceiptPrinterService {
         if (line.doubleWidth) bytes.addAll(EscPos.doubleWidthOn);
         if (line.doubleHeight) bytes.addAll(EscPos.doubleHeightOn);
 
-        bytes.addAll(line.text!.codeUnits);
-        bytes.addAll(EscPos.lineFeed);
+        for (final text in _wrapText(line.text!, charsPerLine)) {
+          bytes.addAll(text.codeUnits);
+          bytes.addAll(EscPos.lineFeed);
+        }
 
         if (line.doubleSize || line.doubleWidth || line.doubleHeight) {
           bytes.addAll(EscPos.doubleSizeOff);
@@ -430,10 +437,10 @@ class ReceiptPrinterService {
       }
     }
 
-    // Feed and cut
-    bytes.addAll(EscPos.lineFeed);
-    bytes.addAll(EscPos.lineFeed);
-    bytes.addAll(EscPos.lineFeed);
+    // Feed enough lines to clear the head-to-cutter gap, then cut.
+    for (int i = 0; i < 6; i++) {
+      bytes.addAll(EscPos.lineFeed);
+    }
     if (_config?.autoCut ?? true) {
       bytes.addAll(EscPos.feedAndCut);
     }
@@ -462,8 +469,9 @@ class ReceiptPrinterService {
       }
 
       if (line.leftText != null && line.rightText != null) {
-        final left = line.leftText!;
         final right = line.rightText!;
+        final maxLeft = charsPerLine - right.length - 1;
+        final left = line.leftText!.length > maxLeft ? line.leftText!.substring(0, maxLeft) : line.leftText!;
         final spaces = charsPerLine - left.length - right.length;
         buffer.writeln(left + (' ' * (spaces > 0 ? spaces : 1)) + right);
         continue;
@@ -482,15 +490,54 @@ class ReceiptPrinterService {
       }
 
       if (line.text != null) {
-        buffer.writeln(line.text);
+        // Centering via leading spaces works because buildReceiptBitmap uses
+        // Typeface.MONOSPACE where every glyph (including space) has the same
+        // advance width. N spaces therefore = exact visual centering.
+        for (var text in _wrapText(line.text!, charsPerLine)) {
+          switch (line.alignment) {
+            case PrintAlignment.center:
+              final pad = ((charsPerLine - text.length) / 2).floor();
+              if (pad > 0) text = ' ' * pad + text;
+            case PrintAlignment.right:
+              final pad = charsPerLine - text.length;
+              if (pad > 0) text = ' ' * pad + text;
+            case PrintAlignment.left:
+              break;
+          }
+          buffer.writeln(text);
+        }
       }
     }
 
-    buffer
-      ..writeln()
-      ..writeln()
-      ..writeln();
+    // 8 blank lines ≈ 28 mm of feed on 80 mm paper, enough to clear the
+    // Landi C20 Pro's head-to-cutter gap (~24 mm) before the cut fires.
+    for (int i = 0; i < 8; i++) {
+      buffer.writeln();
+    }
     return buffer.toString();
+  }
+
+  List<String> _wrapText(String text, int charsPerLine) {
+    if (charsPerLine <= 0 || text.length <= charsPerLine) return [text];
+
+    final wrapped = <String>[];
+    for (final rawLine in text.split('\n')) {
+      var remaining = rawLine.trimRight();
+      if (remaining.isEmpty) {
+        wrapped.add('');
+        continue;
+      }
+
+      while (remaining.length > charsPerLine) {
+        final window = remaining.substring(0, charsPerLine);
+        final breakAt = window.lastIndexOf(' ');
+        final cut = breakAt > charsPerLine ~/ 2 ? breakAt : charsPerLine;
+        wrapped.add(remaining.substring(0, cut).trimRight());
+        remaining = remaining.substring(cut).trimLeft();
+      }
+      wrapped.add(remaining);
+    }
+    return wrapped;
   }
 
   /// Send raw bytes to the printer

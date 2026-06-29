@@ -97,7 +97,11 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   @override
   void initState() {
     super.initState();
-    _legs = [_PaymentLeg(method: PaymentMethod.cash, amount: widget.totalAmount)];
+    // Default to SoftPOS on Android — initialization happens lazily in
+    // _completePayment, so we don't need isInitiated here.
+    final softPosService = ref.read(softPosServiceProvider);
+    final defaultMethod = softPosService.isAvailable ? PaymentMethod.softPos : PaymentMethod.cash;
+    _legs = [_PaymentLeg(method: defaultMethod, amount: widget.totalAmount)];
     _cashTendered = widget.totalAmount;
     _cashTenderedController.text = widget.totalAmount.toStringAsFixed(2);
   }
@@ -129,6 +133,11 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     return (logoUrl: null, storeName: null);
   }
 
+  Future<void> _ensureStoreLoadedForReceipt() async {
+    if (ref.read(myStoreProvider) is StoreLoaded) return;
+    await ref.read(myStoreProvider.notifier).load().catchError((_) {});
+  }
+
   void _pushAwaitingPaymentToSecondary(double amount) {
     if (!isSecondaryDisplaySupported) return;
     final settings = ref.read(currentStoreSettingsProvider);
@@ -145,34 +154,25 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         );
   }
 
-  void _restoreCartOnSecondary() {
+  void _pushPaymentSuccessToSecondary(double amount) {
     if (!isSecondaryDisplaySupported) return;
-    final cart = ref.read(cartProvider);
     final settings = ref.read(currentStoreSettingsProvider);
-    final branding = _storeBranding();
-    final items = cart.items
-        .map(
-          (item) => <String, dynamic>{
-            'name': item.product.name,
-            'quantity': item.quantity,
-            'unit_price': item.unitPrice,
-            'line_total': item.subtotal,
-          },
-        )
-        .toList();
-    final discount = (cart.manualDiscount ?? 0) + cart.items.fold<double>(0, (s, i) => s + (i.discountAmount ?? 0));
-    ref
-        .read(secondaryDisplayControllerProvider)
-        .pushCart(
-          items: items,
-          subtotal: cart.subtotal,
-          discount: discount,
-          tax: cart.taxAmount,
-          total: cart.totalAmount,
-          currency: settings?.currencySymbol ?? '',
-          logoUrl: branding.logoUrl,
-          storeName: branding.storeName,
-        );
+    ref.read(secondaryDisplayControllerProvider).pushPaymentSuccess(total: amount, currency: settings?.currencySymbol ?? '');
+  }
+
+  void _pushPaymentFailureToSecondary(String? englishMessage) {
+    if (!isSecondaryDisplaySupported) return;
+    final msg = _arabicFailureMessage(englishMessage);
+    ref.read(secondaryDisplayControllerProvider).pushPaymentFailure(message: msg);
+  }
+
+  static String _arabicFailureMessage(String? msg) {
+    if (msg == null) return 'يرجى المحاولة مرة أخرى أو التواصل مع الكاشير';
+    final lower = msg.toLowerCase();
+    if (lower.contains('timed out') || lower.contains('timeout')) return 'انتهت مهلة العملية، يرجى المحاولة مرة أخرى';
+    if (lower.contains('cancel')) return 'تم إلغاء عملية الدفع';
+    if (lower.contains('declin')) return 'تم رفض البطاقة، يرجى استخدام وسيلة دفع أخرى';
+    return 'يرجى المحاولة مرة أخرى أو التواصل مع الكاشير';
   }
 
   void _addSplitMethod() {
@@ -203,9 +203,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
   }
 
   /// Guards SoftPOS method selection by syncing the active register's EdfaPay
-  /// token into secure storage before allowing the leg to switch, then
-  /// pre-warms the SDK so terminal binding (if needed) happens now — before
-  /// the user clicks "Pay" — rather than blocking the final payment step.
+  /// token into secure storage before allowing the leg to switch.
   Future<void> _selectSoftPosMethod(int index) async {
     final service = ref.read(softPosServiceProvider);
     if (!service.isAvailable) {
@@ -221,20 +219,6 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       return;
     }
     setState(() => _legs[index].method = PaymentMethod.softPos);
-
-    // Pre-warm: initialise the EdfaPay SDK now (terminal binding UI if
-    // needed appears here, before payment), so _completePayment is instant.
-    if (!service.isInitiated || sync.changed) {
-      try {
-        await ref.read(softPosProvider.notifier).initWithToken(token: sync.token!, environment: 'production');
-        final initState = ref.read(softPosProvider);
-        if (mounted && initState is SoftPosError) {
-          setState(() => _error = initState.message);
-        }
-      } catch (_) {
-        // Non-fatal here — _completePayment will retry and surface any error.
-      }
-    }
   }
 
   Future<_SoftPosTokenSync> _syncSoftPosTokenFromActiveRegister({required bool refreshRegisters}) async {
@@ -255,7 +239,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       final register = registers.where((r) => r.id == sessionState.session.registerId).firstOrNull;
       final registerToken = register?.edfapayToken?.trim();
 
-      if (register != null && register.softposEnabled && registerToken != null && registerToken.isNotEmpty) {
+      // Use the token from the register whenever it is present, regardless of
+      // the softposEnabled flag — having a token IS the meaningful signal.
+      if (register != null && registerToken != null && registerToken.isNotEmpty) {
         if (registerToken != token) {
           await ref.read(softPosProvider.notifier).saveConfig(token: registerToken, environment: 'production');
           ref.invalidate(softPosTokenProvider);
@@ -446,17 +432,17 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
           try {
             result = await service.purchase(amount: leg.amount.toStringAsFixed(2), orderId: orderId);
           } catch (_) {
-            _restoreCartOnSecondary();
+            _pushPaymentFailureToSecondary(null);
             rethrow;
           }
           if (!result.success) {
-            _restoreCartOnSecondary();
+            _pushPaymentFailureToSecondary(result.errorMessage);
             setState(() => _error = result.errorMessage ?? AppLocalizations.of(context)!.softposPaymentFailed);
             return;
           }
           _softPosResult = result;
         }
-        _restoreCartOnSecondary();
+        _pushPaymentSuccessToSecondary(softPosLegs.last.amount);
       }
 
       final cart = ref.read(cartProvider);
@@ -514,6 +500,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         final customerForReceipt = ref.read(cartProvider).customer;
         ref.read(cartProvider.notifier).clear();
 
+        await _ensureStoreLoadedForReceipt();
         final settings = ref.read(currentStoreSettingsProvider);
 
         // Build receipt lines NOW using the local `cart` snapshot captured before
@@ -1237,10 +1224,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     );
   }
 
-  // Primary methods shown as cards. Other methods (gift card, store credit, etc.)
-  // can be added as additional split legs and chosen here too — keeping the
-  // surface small to match real-world POS workflows.
-  List<PaymentMethod> get _quickMethods => const [PaymentMethod.cash, PaymentMethod.card, PaymentMethod.softPos];
+  // SoftPOS is listed first so tap-to-pay is the default suggestion.
+  // Cash and card follow as fallback options.
+  List<PaymentMethod> get _quickMethods => const [PaymentMethod.softPos, PaymentMethod.cash, PaymentMethod.card];
 
   String _methodLabel(PaymentMethod m) {
     final l10n = AppLocalizations.of(context)!;
@@ -1290,82 +1276,163 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     final lang = settings?.receiptLanguage ?? 'ar';
 
     final taxLabel = settings?.taxLabel ?? 'VAT';
-    final taxNumber = (settings?.taxNumber?.trim().isNotEmpty ?? false) ? settings!.taxNumber!.trim() : store?.vatNumber?.trim();
+    final vatNum = _firstNonBlank([store?.effectiveVatNumber, store?.vatNumber, settings?.taxNumber]);
+    final crNum = _firstNonBlank([store?.effectiveCrNumber, store?.crNumber]);
 
     final lines = <ReceiptLine>[];
+    final now = DateTime.now();
+    final dateStr =
+        '${now.month.toString().padLeft(2, '0')}/'
+        '${now.day.toString().padLeft(2, '0')}/'
+        '${now.year}  '
+        '${now.hour.toString().padLeft(2, '0')}:'
+        '${now.minute.toString().padLeft(2, '0')}';
 
-    // ─── Branding / store identity ───────────────────────────
-    // The store logo is printed as a raster image by the graphics path; in the
-    // text receipt the store name is the brand line. `showLogo` controls
-    // whether it is emphasised (double-size) at the very top.
+    // ─── 1. Header (merchant details) ────────────────────────
+    // Very first line: "فاتورة ضريبية" (VAT Invoice) always centered and bold
+    lines.add(
+      ReceiptLine.text(_receiptLabel('VAT Invoice', 'فاتورة ضريبية', lang), alignment: PrintAlignment.center, bold: true),
+    );
     if (store?.name.trim().isNotEmpty ?? false) {
-      lines.add(ReceiptLine.text(store!.name.trim(), alignment: PrintAlignment.center, bold: true, doubleSize: showLogo));
+      final displayName = lang == 'ar' && (store!.nameAr?.trim().isNotEmpty ?? false)
+          ? store.nameAr!.trim()
+          : store!.name.trim().toUpperCase();
+      lines.add(ReceiptLine.text(displayName, alignment: PrintAlignment.center, bold: true, doubleSize: showLogo));
+    }
+    if (vatNum?.isNotEmpty ?? false) {
+      lines.add(ReceiptLine.text(_legalReceiptLine(taxLabel, 'الرقم الضريبي', lang, vatNum!), alignment: PrintAlignment.center));
+    }
+    if (crNum?.isNotEmpty ?? false) {
+      lines.add(ReceiptLine.text(_legalReceiptLine('CR No.', 'السجل التجاري', lang, crNum!), alignment: PrintAlignment.center));
     }
     if (showAddress) {
-      final address = [store?.address, store?.city].where((e) => (e?.trim().isNotEmpty ?? false)).join(', ');
-      if (address.isNotEmpty) lines.add(ReceiptLine.text(address, alignment: PrintAlignment.center));
+      if (store?.address?.trim().isNotEmpty ?? false) {
+        lines.add(ReceiptLine.text(store!.address!.trim(), alignment: PrintAlignment.center));
+      }
+      if (store?.city?.trim().isNotEmpty ?? false) {
+        lines.add(ReceiptLine.text(store!.city!.trim(), alignment: PrintAlignment.center));
+      }
+      if (store?.region?.trim().isNotEmpty ?? false) {
+        lines.add(ReceiptLine.text(store!.region!.trim(), alignment: PrintAlignment.center));
+      }
     }
     if (showPhone && (store?.phone?.trim().isNotEmpty ?? false)) {
       lines.add(ReceiptLine.text(store!.phone!.trim(), alignment: PrintAlignment.center));
     }
-    if (taxNumber?.isNotEmpty ?? false) {
-      lines.add(ReceiptLine.text('$taxLabel: $taxNumber', alignment: PrintAlignment.center));
-    }
     if ((settings?.receiptHeader ?? '').trim().isNotEmpty) {
       lines.add(ReceiptLine.text(settings!.receiptHeader!.trim(), alignment: PrintAlignment.center));
     }
-    lines.add(ReceiptLine.separator());
+    lines.add(ReceiptLine.separator(char: '.'));
 
-    // ─── Transaction meta ────────────────────────────────────
-    lines.add(ReceiptLine.text('# ${sale.transactionNumber}', alignment: PrintAlignment.center));
-    if (showDate) {
-      lines.add(ReceiptLine.text(DateTime.now().toString().substring(0, 19), alignment: PrintAlignment.center));
-    }
-    if (showCashier && (cashier?.name.trim().isNotEmpty ?? false)) {
-      lines.add(
-        ReceiptLine.text(
-          '${_receiptLabel('Cashier', 'الكاشير', lang)}: ${cashier!.name.trim()}',
-          alignment: PrintAlignment.center,
-        ),
-      );
-    }
-    lines.add(ReceiptLine.separator());
-
-    // ─── Items ───────────────────────────────────────────────
+    // ─── 2. Itemised transaction list ────────────────────────
     for (final item in cart.items) {
-      lines.add(
-        ReceiptLine.twoColumn(
-          '${item.product.name}  x${item.quantity.toStringAsFixed(item.quantity == item.quantity.floor() ? 0 : 2)}',
-          (item.unitPrice * item.quantity).toStringAsFixed(2),
-        ),
-      );
+      final qty = item.quantity;
+      final qtyStr = qty == qty.floor() ? qty.toStringAsFixed(0) : qty.toStringAsFixed(2);
+      // Net line total: includes per-unit modifier add-ons and subtracts any
+      // line-level discount, so the printed item lines always sum to Sub Total.
+      final lineTotal = item.subtotal.toStringAsFixed(3);
+      // Show plain name for qty=1, qty-prefix for multiples.
+      final label = qty == 1.0 ? item.product.name : '$qtyStr x ${item.product.name}';
+      lines.add(ReceiptLine.twoColumn(label, lineTotal));
     }
-    lines.add(ReceiptLine.separator());
+    lines.add(ReceiptLine.separator(char: '.'));
 
-    // ─── Totals ──────────────────────────────────────────────
-    lines.add(ReceiptLine.twoColumn(_receiptLabel('Subtotal', 'الإجمالي الفرعي', lang), cart.subtotal.toStringAsFixed(2)));
-    if (cart.discountTotal > 0) {
-      lines.add(ReceiptLine.twoColumn(_receiptLabel('Discount', 'الخصم', lang), '-${cart.discountTotal.toStringAsFixed(2)}'));
+    // ─── 3. Financial breakdown ───────────────────────────────
+    // Sub Total is the sum of the net line totals above (after item-level
+    // discounts/modifiers). Only the order-level (manual) discount is itemised
+    // here — line discounts are already baked into the lines — so the receipt
+    // always foots: Sub Total − Discount + Tax (+ Tip) = TOTAL.
+    lines.add(ReceiptLine.twoColumn(_receiptLabel('Sub Total', 'المجموع', lang), cart.subtotal.toStringAsFixed(3)));
+    final manualDiscount = cart.manualDiscount ?? 0;
+    if (manualDiscount > 0) {
+      lines.add(ReceiptLine.twoColumn(_receiptLabel('Discount', 'الخصم', lang), '-${manualDiscount.toStringAsFixed(3)}'));
     }
     if (showTax && cart.taxAmount > 0) {
-      lines.add(ReceiptLine.twoColumn(taxLabel, cart.taxAmount.toStringAsFixed(2)));
+      // Localise the tax label — never print the raw English "VAT" key on Arabic receipts.
+      final localTaxLabel = lang == 'ar' ? 'الضريبة' : (lang == 'both' ? 'الضريبة / $taxLabel' : taxLabel);
+      lines.add(ReceiptLine.twoColumn(localTaxLabel, cart.taxAmount.toStringAsFixed(3)));
     }
-    lines.add(ReceiptLine.twoColumn(_receiptLabel('TOTAL', 'الإجمالي', lang), sale.totalAmount.toStringAsFixed(2), bold: true));
-    lines.add(ReceiptLine.separator());
+    if (_tipAmount > 0) {
+      lines.add(ReceiptLine.twoColumn(_receiptLabel('Tip', 'إكرامية', lang), _tipAmount.toStringAsFixed(3)));
+    }
+    lines.add(ReceiptLine.separator(char: '.'));
+    lines.add(ReceiptLine.twoColumn(_receiptLabel('TOTAL', 'الإجمالي', lang), sale.totalAmount.toStringAsFixed(3), bold: true));
+    lines.add(ReceiptLine.separator(char: '.'));
 
-    // ─── Footer ──────────────────────────────────────────────
-    if ((settings?.receiptFooter ?? '').trim().isNotEmpty) {
-      lines.add(ReceiptLine.text(settings!.receiptFooter!.trim(), alignment: PrintAlignment.center));
+    // ─── 4. Payment method + transaction metadata ─────────────
+    for (final leg in _legs) {
+      lines.add(
+        ReceiptLine.twoColumn(
+          _receiptLabel('Paid By', 'طريقة الدفع', lang),
+          _receiptLabel(_englishPaymentMethodName(leg.method), _arabicPaymentMethodName(leg.method), lang),
+        ),
+      );
+      if (leg.method == PaymentMethod.cash && _cashTendered > 0) {
+        lines.add(ReceiptLine.twoColumn(_receiptLabel('Cash', 'المدفوع', lang), _cashTendered.toStringAsFixed(3)));
+        if (_changeGiven > 0) {
+          lines.add(ReceiptLine.twoColumn(_receiptLabel('Change', 'الباقي', lang), _changeGiven.toStringAsFixed(3)));
+        }
+      }
+    }
+    lines.add(ReceiptLine.feed());
+    if (showDate) lines.add(ReceiptLine.text(dateStr));
+    lines.add(ReceiptLine.text('${_receiptLabel("Transaction ID", "رقم المعاملة", lang)}: ${sale.transactionNumber}'));
+    if (showCashier && (cashier?.name.trim().isNotEmpty ?? false)) {
+      lines.add(ReceiptLine.text('${_receiptLabel("Cashier", "الكاشير", lang)}: ${cashier!.name.trim()}'));
     }
 
-    // ─── ZATCA QR (TLV) — only when present and enabled ───────
+    // ─── 5. Footer ────────────────────────────────────────────
+    lines.add(ReceiptLine.feed());
+    final footer = (settings?.receiptFooter ?? '').trim();
+    lines.add(
+      ReceiptLine.text(
+        footer.isNotEmpty ? footer : _receiptLabel('Thank You For Your Visit!', 'شكراً لزيارتك!', lang),
+        alignment: PrintAlignment.center,
+      ),
+    );
+
+    // ─── ZATCA QR ─────────────────────────────────────────────
     if (showBarcode && (sale.zatcaQrCode?.trim().isNotEmpty ?? false)) {
       lines.add(ReceiptLine.feed());
       lines.add(ReceiptLine.qr(sale.zatcaQrCode!.trim()));
     }
 
-    lines.add(ReceiptLine.feed(2));
+    lines.add(ReceiptLine.feed(4));
     return lines;
+  }
+
+  static String _englishPaymentMethodName(PaymentMethod method) {
+    switch (method) {
+      case PaymentMethod.cash:
+        return 'Cash';
+      case PaymentMethod.card:
+        return 'Card';
+      case PaymentMethod.softPos:
+        return 'Card'; // NFC/SoftPOS is a card payment
+      case PaymentMethod.giftCard:
+        return 'Gift Card';
+      case PaymentMethod.loyaltyPoints:
+        return 'Loyalty';
+      default:
+        return method.name;
+    }
+  }
+
+  static String _arabicPaymentMethodName(PaymentMethod method) {
+    switch (method) {
+      case PaymentMethod.cash:
+        return 'نقداً';
+      case PaymentMethod.card:
+        return 'بطاقة';
+      case PaymentMethod.softPos:
+        return 'بطاقة'; // NFC tap-to-pay = card payment
+      case PaymentMethod.giftCard:
+        return 'بطاقة هدية';
+      case PaymentMethod.loyaltyPoints:
+        return 'نقاط ولاء';
+      default:
+        return method.name;
+    }
   }
 
   /// Choose a receipt label according to the store's `receipt_language` setting
@@ -1380,6 +1447,23 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       default:
         return en;
     }
+  }
+
+  String _legalReceiptLine(String en, String ar, String lang, String number) {
+    final label = switch (lang) {
+      'ar' => ar,
+      'both' => '$ar / $en',
+      _ => en,
+    };
+    return '$label: $number';
+  }
+
+  String? _firstNonBlank(Iterable<String?> values) {
+    for (final value in values) {
+      final trimmed = value?.trim();
+      if (trimmed != null && trimmed.isNotEmpty) return trimmed;
+    }
+    return null;
   }
 
   List<double> _quickDenominations() {

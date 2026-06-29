@@ -1,11 +1,30 @@
-python3 -c "
+ip='192.168.8.71'
+port=$(python3 - <<PY
 import socket, concurrent.futures
-ip='192.168.100.174'
+ip = '$ip'
 def probe(p):
-    try: s=socket.socket(); s.settimeout(0.5); s.connect((ip,p)); s.close(); return p
-    except: return None
-ports=list(range(33000,46000))
+    try:
+        s = socket.socket()
+        s.settimeout(0.5)
+        s.connect((ip, p))
+        s.close()
+        return p
+    except Exception:
+        return None
+
+ports = list(range(33000, 46000))
 with concurrent.futures.ThreadPoolExecutor(256) as ex:
-    for r in ex.map(probe,ports):
-        if r: print('port:',r)
-" && adb connect 192.168.100.174:PORT
+    for result in ex.map(probe, ports):
+        if result:
+            print(result)
+            break
+PY
+)
+
+if [ -z "$port" ]; then
+  echo "No open ADB TCP port found on $ip"
+  exit 1
+fi
+
+echo "ADB port: $port"
+adb connect "$ip:$port"

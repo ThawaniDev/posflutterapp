@@ -1,0 +1,67 @@
+group 'com.edfapay.fplugin'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("com.edfapay.softpos.build:com.edfapay.softpos.build.gradle.plugin:2.0.0")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.edfapay.softpos.build'
+
+
+android {
+    namespace 'com.edfapay.fplugin'
+    compileSdk 36
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 29
+    }
+
+    dependencies {
+        implementation("com.edfapay:sa-edfapay-revamp:1.0.6.4")
+//        implementation project(":native-sdk")
+    }
+}
+
+configurations.configureEach {
+    exclude group: "com.github.edfapay.emv", module: "mastercard-debug"
+//    exclude group: "com.github.edfapay.emv", module: "mastercard-release"
+
+    exclude group: "com.github.edfapay.emv", module: "discovery-corec-release"
+    exclude group: "com.github.edfapay.emv", module: "discovery-readerc-release"
+
+//    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
